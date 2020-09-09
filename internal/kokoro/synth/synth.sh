@@ -7,6 +7,8 @@
 set -e -x
 
 cd $(dirname $0)/../../..
+go version
+go env
 
 pushd google-api-go-generator
 make all

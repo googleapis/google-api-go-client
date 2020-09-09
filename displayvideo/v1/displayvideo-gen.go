@@ -87,6 +87,14 @@ const (
 	// entities and reports
 	DisplayVideoScope = "https://www.googleapis.com/auth/display-video"
 
+	// Create, see, and edit Display & Video 360 Campaign entities and see
+	// billing invoices
+	DisplayVideoMediaplanningScope = "https://www.googleapis.com/auth/display-video-mediaplanning"
+
+	// New Service:
+	// https://www.googleapis.com/auth/display-video-user-management
+	DisplayVideoUserManagementScope = "https://www.googleapis.com/auth/display-video-user-management"
+
 	// View and manage your reports in DoubleClick Bid Manager
 	DoubleclickbidmanagerScope = "https://www.googleapis.com/auth/doubleclickbidmanager"
 )
@@ -95,6 +103,8 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/display-video",
+		"https://www.googleapis.com/auth/display-video-mediaplanning",
+		"https://www.googleapis.com/auth/display-video-user-management",
 		"https://www.googleapis.com/auth/doubleclickbidmanager",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -127,6 +137,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Advertisers = NewAdvertisersService(s)
 	s.CombinedAudiences = NewCombinedAudiencesService(s)
+	s.CustomBiddingAlgorithms = NewCustomBiddingAlgorithmsService(s)
 	s.CustomLists = NewCustomListsService(s)
 	s.FirstAndThirdPartyAudiences = NewFirstAndThirdPartyAudiencesService(s)
 	s.FloodlightGroups = NewFloodlightGroupsService(s)
@@ -137,6 +148,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Partners = NewPartnersService(s)
 	s.Sdfdownloadtasks = NewSdfdownloadtasksService(s)
 	s.TargetingTypes = NewTargetingTypesService(s)
+	s.Users = NewUsersService(s)
 	return s, nil
 }
 
@@ -148,6 +160,8 @@ type Service struct {
 	Advertisers *AdvertisersService
 
 	CombinedAudiences *CombinedAudiencesService
+
+	CustomBiddingAlgorithms *CustomBiddingAlgorithmsService
 
 	CustomLists *CustomListsService
 
@@ -168,6 +182,8 @@ type Service struct {
 	Sdfdownloadtasks *SdfdownloadtasksService
 
 	TargetingTypes *TargetingTypesService
+
+	Users *UsersService
 }
 
 func (s *Service) userAgent() string {
@@ -375,6 +391,15 @@ type CombinedAudiencesService struct {
 	s *Service
 }
 
+func NewCustomBiddingAlgorithmsService(s *Service) *CustomBiddingAlgorithmsService {
+	rs := &CustomBiddingAlgorithmsService{s: s}
+	return rs
+}
+
+type CustomBiddingAlgorithmsService struct {
+	s *Service
+}
+
 func NewCustomListsService(s *Service) *CustomListsService {
 	rs := &CustomListsService{s: s}
 	return rs
@@ -453,6 +478,7 @@ type MediaService struct {
 func NewPartnersService(s *Service) *PartnersService {
 	rs := &PartnersService{s: s}
 	rs.Channels = NewPartnersChannelsService(s)
+	rs.TargetingTypes = NewPartnersTargetingTypesService(s)
 	return rs
 }
 
@@ -460,6 +486,8 @@ type PartnersService struct {
 	s *Service
 
 	Channels *PartnersChannelsService
+
+	TargetingTypes *PartnersTargetingTypesService
 }
 
 func NewPartnersChannelsService(s *Service) *PartnersChannelsService {
@@ -480,6 +508,27 @@ func NewPartnersChannelsSitesService(s *Service) *PartnersChannelsSitesService {
 }
 
 type PartnersChannelsSitesService struct {
+	s *Service
+}
+
+func NewPartnersTargetingTypesService(s *Service) *PartnersTargetingTypesService {
+	rs := &PartnersTargetingTypesService{s: s}
+	rs.AssignedTargetingOptions = NewPartnersTargetingTypesAssignedTargetingOptionsService(s)
+	return rs
+}
+
+type PartnersTargetingTypesService struct {
+	s *Service
+
+	AssignedTargetingOptions *PartnersTargetingTypesAssignedTargetingOptionsService
+}
+
+func NewPartnersTargetingTypesAssignedTargetingOptionsService(s *Service) *PartnersTargetingTypesAssignedTargetingOptionsService {
+	rs := &PartnersTargetingTypesAssignedTargetingOptionsService{s: s}
+	return rs
+}
+
+type PartnersTargetingTypesAssignedTargetingOptionsService struct {
 	s *Service
 }
 
@@ -525,6 +574,15 @@ type TargetingTypesTargetingOptionsService struct {
 	s *Service
 }
 
+func NewUsersService(s *Service) *UsersService {
+	rs := &UsersService{s: s}
+	return rs
+}
+
+type UsersService struct {
+	s *Service
+}
+
 // ActiveViewVideoViewabilityMetricConfig: Configuration for custom
 // Active View video viewability metrics.
 type ActiveViewVideoViewabilityMetricConfig struct {
@@ -532,15 +590,10 @@ type ActiveViewVideoViewabilityMetricConfig struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// MinimumDuration: The minimum visible video duration required (in
-	// seconds) in order for an
-	// impression to be recorded.
-	//
-	// You must specify
-	// minimum_duration,
-	// minimum_quartile
-	// or both. If both are specified, an impression meets the metric
-	// criteria if
-	// either requirement is met (whichever happens first).
+	// seconds) in order for an impression to be recorded. You must specify
+	// minimum_duration, minimum_quartile or both. If both are specified, an
+	// impression meets the metric criteria if either requirement is met
+	// (whichever happens first).
 	//
 	// Possible values:
 	//   "VIDEO_DURATION_UNSPECIFIED" - Value is not specified or is unknown
@@ -568,15 +621,10 @@ type ActiveViewVideoViewabilityMetricConfig struct {
 	MinimumDuration string `json:"minimumDuration,omitempty"`
 
 	// MinimumQuartile: The minimum visible video duration required, based
-	// on the video quartiles,
-	// in order for an impression to be recorded.
-	//
-	// You must specify
-	// minimum_duration,
-	// minimum_quartile
-	// or both. If both are specified, an impression meets the metric
-	// criteria if
-	// either requirement is met (whichever happens first).
+	// on the video quartiles, in order for an impression to be recorded.
+	// You must specify minimum_duration, minimum_quartile or both. If both
+	// are specified, an impression meets the metric criteria if either
+	// requirement is met (whichever happens first).
 	//
 	// Possible values:
 	//   "VIDEO_DURATION_QUARTILE_UNSPECIFIED" - Value is not specified or
@@ -589,8 +637,8 @@ type ActiveViewVideoViewabilityMetricConfig struct {
 	MinimumQuartile string `json:"minimumQuartile,omitempty"`
 
 	// MinimumViewability: Required. The minimum percentage of the video
-	// ad's pixels visible on the screen in
-	// order for an impression to be recorded.
+	// ad's pixels visible on the screen in order for an impression to be
+	// recorded.
 	//
 	// Possible values:
 	//   "VIEWABILITY_PERCENT_UNSPECIFIED" - Value is not specified or is
@@ -603,8 +651,7 @@ type ActiveViewVideoViewabilityMetricConfig struct {
 	MinimumViewability string `json:"minimumViewability,omitempty"`
 
 	// MinimumVolume: Required. The minimum percentage of the video ad's
-	// volume required in order for an
-	// impression to be recorded.
+	// volume required in order for an impression to be recorded.
 	//
 	// Possible values:
 	//   "VIDEO_VOLUME_PERCENT_UNSPECIFIED" - Value is not specified or is
@@ -696,22 +743,16 @@ type Advertiser struct {
 	// accessed.
 	DataAccessConfig *AdvertiserDataAccessConfig `json:"dataAccessConfig,omitempty"`
 
-	// DisplayName: Required. The display name of the advertiser.
-	//
-	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	// DisplayName: Required. The display name of the advertiser. Must be
+	// UTF-8 encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EntityStatus: Required. Controls whether or not insertion orders and
-	// line items of the
-	// advertiser can spend their budgets and bid on inventory.
-	//
-	// * Accepted values are `ENTITY_STATUS_ACTIVE`
-	// and
-	// `ENTITY_STATUS_SCHEDULED_FOR_DELETION`.
-	// * If set to
+	// line items of the advertiser can spend their budgets and bid on
+	// inventory. * Accepted values are `ENTITY_STATUS_ACTIVE` and
+	// `ENTITY_STATUS_SCHEDULED_FOR_DELETION`. * If set to
 	// `ENTITY_STATUS_SCHEDULED_FOR_DELETION`, the advertiser will be
-	// deleted 30
-	// days from when it was first scheduled for deletion.
+	// deleted 30 days from when it was first scheduled for deletion.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
@@ -719,9 +760,8 @@ type Advertiser struct {
 	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
 	// budget.
 	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
-	// budget spending are disabled. An
-	// entity can be deleted after archived. Deleted entities cannot be
-	// retrieved.
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
 	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
 	// budget spending are disabled.
 	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
@@ -733,11 +773,10 @@ type Advertiser struct {
 	// GeneralConfig: Required. General settings of the advertiser.
 	GeneralConfig *AdvertiserGeneralConfig `json:"generalConfig,omitempty"`
 
-	// IntegrationDetails: Integration details of the advertiser.
-	// Only integrationCode is currently
-	// applicable to advertiser. Other fields of IntegrationDetails are
-	// not
-	// supported and will be ignored if provided.
+	// IntegrationDetails: Integration details of the advertiser. Only
+	// integrationCode is currently applicable to advertiser. Other fields
+	// of IntegrationDetails are not supported and will be ignored if
+	// provided.
 	IntegrationDetails *IntegrationDetails `json:"integrationDetails,omitempty"`
 
 	// Name: Output only. The resource name of the advertiser.
@@ -787,13 +826,11 @@ func (s *Advertiser) MarshalJSON() ([]byte, error) {
 // advertiser.
 type AdvertiserAdServerConfig struct {
 	// CmHybridConfig: The configuration for advertisers that use both
-	// Campaign Manager (CM) and
-	// third-party ad servers.
+	// Campaign Manager (CM) and third-party ad servers.
 	CmHybridConfig *CmHybridConfig `json:"cmHybridConfig,omitempty"`
 
 	// ThirdPartyOnlyConfig: The configuration for advertisers that use
-	// third-party ad servers
-	// only.
+	// third-party ad servers only.
 	ThirdPartyOnlyConfig *ThirdPartyOnlyConfig `json:"thirdPartyOnlyConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CmHybridConfig") to
@@ -828,34 +865,23 @@ type AdvertiserCreativeConfig struct {
 	DynamicCreativeEnabled bool `json:"dynamicCreativeEnabled,omitempty"`
 
 	// IasClientId: An ID for configuring campaign monitoring provided by
-	// Integral Ad Service
-	// (IAS). The DV360 system will append an IAS "Campaign Monitor"
-	// tag
-	// containing this ID to the creative tag.
+	// Integral Ad Service (IAS). The DV360 system will append an IAS
+	// "Campaign Monitor" tag containing this ID to the creative tag.
 	IasClientId int64 `json:"iasClientId,omitempty,string"`
 
 	// ObaComplianceDisabled: Whether or not to use DV360's Online
-	// Behavioral Advertising (OBA)
-	// compliance.
-	//
-	// Warning: Changing OBA settings may cause the audit status of your
-	// creatives
-	// to be reset by some ad exchanges, making them ineligible to serve
-	// until
-	// they are re-approved.
+	// Behavioral Advertising (OBA) compliance. Warning: Changing OBA
+	// settings may cause the audit status of your creatives to be reset by
+	// some ad exchanges, making them ineligible to serve until they are
+	// re-approved.
 	ObaComplianceDisabled bool `json:"obaComplianceDisabled,omitempty"`
 
 	// VideoCreativeDataSharingAuthorized: By setting this field to `true`,
-	// you, on behalf of your company,
-	// authorize Google to use video creatives associated with this Display
-	// &
-	// Video 360 advertiser to provide reporting and features related to
-	// the
-	// advertiser's television campaigns.
-	//
-	// Applicable only when the advertiser has a
-	// CM hybrid ad server
-	// configuration.
+	// you, on behalf of your company, authorize Google to use video
+	// creatives associated with this Display & Video 360 advertiser to
+	// provide reporting and features related to the advertiser's television
+	// campaigns. Applicable only when the advertiser has a CM hybrid ad
+	// server configuration.
 	VideoCreativeDataSharingAuthorized bool `json:"videoCreativeDataSharingAuthorized,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -886,9 +912,7 @@ func (s *AdvertiserCreativeConfig) MarshalJSON() ([]byte, error) {
 // AdvertiserDataAccessConfig: Settings that control how advertiser
 // related data may be accessed.
 type AdvertiserDataAccessConfig struct {
-	// SdfConfig: Structured Data Files (SDF) settings for the
-	// advertiser.
-	//
+	// SdfConfig: Structured Data Files (SDF) settings for the advertiser.
 	// If not specified, the SDF settings of the parent partner are used.
 	SdfConfig *AdvertiserSdfConfig `json:"sdfConfig,omitempty"`
 
@@ -918,73 +942,35 @@ func (s *AdvertiserDataAccessConfig) MarshalJSON() ([]byte, error) {
 // AdvertiserGeneralConfig: General settings of an advertiser.
 type AdvertiserGeneralConfig struct {
 	// CurrencyCode: Required. Immutable. Advertiser's currency in ISO 4217
-	// format.
-	//
-	// Accepted codes and the currencies they represent are:
-	//
-	// Currency Code : Currency Name
-	//
-	// * `ARS` : Argentine Peso
-	// * `AUD` : Australian Dollar
-	// * `BRL` : Brazilian Real
-	// * `CAD` : Canadian Dollar
-	// * `CHF` : Swiss Franc
-	// * `CLP` : Chilean Peso
-	// * `CNY` : Chinese Yuan
-	// * `COP` : Colombian Peso
-	// * `CZK` : Czech Koruna
-	// * `DKK` : Danish Krone
-	// * `EGP` : Egyption Pound
-	// * `EUR` : Euro
-	// * `GBP` : British Pound
-	// * `HKD` : Hong Kong Dollar
-	// * `HUF` : Hungarian Forint
-	// * `IDR` : Indonesian Rupiah
-	// * `ILS` : Israeli Shekel
-	// * `INR` : Indian Rupee
-	// * `JPY` : Japanese Yen
-	// * `KRW` : South Korean Won
-	// * `MXN` : Mexican Pesos
-	// * `MYR` : Malaysian Ringgit
-	// * `NGN` : Nigerian Naira
-	// * `NOK` : Norwegian Krone
-	// * `NZD` : New Zealand Dollar
-	// * `PEN` : Peruvian Nuevo Sol
-	// * `PLN` : Polish Zloty
-	// * `RON` : New Romanian Leu
-	// * `RUB` : Russian Ruble
-	// * `SEK` : Swedish Krona
-	// * `TRY` : Turkish Lira
-	// * `TWD` : New Taiwan Dollar
-	// * `USD` : US Dollar
-	// * `ZAR` : South African Rand
+	// format. Accepted codes and the currencies they represent are:
+	// Currency Code : Currency Name * `ARS` : Argentine Peso * `AUD` :
+	// Australian Dollar * `BRL` : Brazilian Real * `CAD` : Canadian Dollar
+	// * `CHF` : Swiss Franc * `CLP` : Chilean Peso * `CNY` : Chinese Yuan *
+	// `COP` : Colombian Peso * `CZK` : Czech Koruna * `DKK` : Danish Krone
+	// * `EGP` : Egyption Pound * `EUR` : Euro * `GBP` : British Pound *
+	// `HKD` : Hong Kong Dollar * `HUF` : Hungarian Forint * `IDR` :
+	// Indonesian Rupiah * `ILS` : Israeli Shekel * `INR` : Indian Rupee *
+	// `JPY` : Japanese Yen * `KRW` : South Korean Won * `MXN` : Mexican
+	// Pesos * `MYR` : Malaysian Ringgit * `NGN` : Nigerian Naira * `NOK` :
+	// Norwegian Krone * `NZD` : New Zealand Dollar * `PEN` : Peruvian Nuevo
+	// Sol * `PLN` : Polish Zloty * `RON` : New Romanian Leu * `RUB` :
+	// Russian Ruble * `SEK` : Swedish Krona * `TRY` : Turkish Lira * `TWD`
+	// : New Taiwan Dollar * `USD` : US Dollar * `ZAR` : South African Rand
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// DomainUrl: Required. The domain URL of the advertiser's primary
-	// website.
-	// The system will send this information to publishers that require
-	// website
-	// URL to associate a campaign with an advertiser.
-	//
-	// Provide a URL with no path or query string, beginning with `http:`
-	// or
-	// `https:`.
-	// For example, http://www.example.com
+	// website. The system will send this information to publishers that
+	// require website URL to associate a campaign with an advertiser.
+	// Provide a URL with no path or query string, beginning with `http:` or
+	// `https:`. For example, http://www.example.com
 	DomainUrl string `json:"domainUrl,omitempty"`
 
 	// TimeZone: Output only. The standard TZ database name of the
-	// advertiser's time zone.
-	// For example, `America/New_York`.
-	//
-	// See more
-	// at:
-	// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-	//
-	// For CM hybrid advertisers, the time zone is the same as that of
-	// the
+	// advertiser's time zone. For example, `America/New_York`. See more at:
+	// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones For CM
+	// hybrid advertisers, the time zone is the same as that of the
 	// associated CM account; for third-party only advertisers, the time
-	// zone is
-	// the same as that of the parent partner.
+	// zone is the same as that of the parent partner.
 	TimeZone string `json:"timeZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
@@ -1014,25 +1000,15 @@ func (s *AdvertiserGeneralConfig) MarshalJSON() ([]byte, error) {
 // advertiser.
 type AdvertiserSdfConfig struct {
 	// OverridePartnerSdfConfig: Whether or not this advertiser overrides
-	// the SDF configuration of its
-	// parent partner.
-	//
-	// By default, an advertiser inherits the SDF configuration from the
-	// parent
-	// partner. To override the partner configuration, set this field to
-	// `true`
-	// and provide the new configuration in
-	// sdfConfig.
+	// the SDF configuration of its parent partner. By default, an
+	// advertiser inherits the SDF configuration from the parent partner. To
+	// override the partner configuration, set this field to `true` and
+	// provide the new configuration in sdfConfig.
 	OverridePartnerSdfConfig bool `json:"overridePartnerSdfConfig,omitempty"`
 
-	// SdfConfig: The SDF configuration for the advertiser.
-	//
-	// * Required when
-	// overridePartnerSdfConfig
-	// is `true`.
-	// * Output only when
-	// overridePartnerSdfConfig
-	// is `false`.
+	// SdfConfig: The SDF configuration for the advertiser. * Required when
+	// overridePartnerSdfConfig is `true`. * Output only when
+	// overridePartnerSdfConfig is `false`.
 	SdfConfig *SdfConfig `json:"sdfConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1064,8 +1040,8 @@ func (s *AdvertiserSdfConfig) MarshalJSON() ([]byte, error) {
 // of an advertiser.
 type AdvertiserTargetingConfig struct {
 	// ExemptTvFromViewabilityTargeting: Whether or not connected TV devices
-	// are exempt from viewability targeting
-	// for all video line items under the advertiser.
+	// are exempt from viewability targeting for all video line items under
+	// the advertiser.
 	ExemptTvFromViewabilityTargeting bool `json:"exemptTvFromViewabilityTargeting,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1094,27 +1070,21 @@ func (s *AdvertiserTargetingConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AgeRangeAssignedTargetingOptionDetails: Represents a targetable age
-// range. This will be populated in the details
-// field of an AssignedTargetingOption when
-// targeting_type is
+// range. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_AGE_RANGE`.
 type AgeRangeAssignedTargetingOptionDetails struct {
 	// AgeRange: Output only. The age range of an audience. We only support
-	// targeting a continuous age
-	// range of an audience. Thus, the age range represented in this field
-	// can be
-	// 1) targeted solely, or, 2) part of a larger continuous age range. The
-	// reach
-	// of a continuous age range targeting can be expanded by also targeting
-	// an
-	// audience of an unknown age.
+	// targeting a continuous age range of an audience. Thus, the age range
+	// represented in this field can be 1) targeted solely, or, 2) part of a
+	// larger continuous age range. The reach of a continuous age range
+	// targeting can be expanded by also targeting an audience of an unknown
+	// age.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
-	// specified in this version. This enum is
-	// a placeholder for default value and does not represent a real age
-	// range
-	// option.
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real age range option.
 	//   "AGE_RANGE_18_24" - The age range of the audience is 18 to 24.
 	//   "AGE_RANGE_25_34" - The age range of the audience is 25 to 34.
 	//   "AGE_RANGE_35_44" - The age range of the audience is 35 to 44.
@@ -1124,8 +1094,7 @@ type AgeRangeAssignedTargetingOptionDetails struct {
 	//   "AGE_RANGE_UNKNOWN" - The age range of the audience is unknown.
 	AgeRange string `json:"ageRange,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_AGE_RANGE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -1153,19 +1122,15 @@ func (s *AgeRangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // AgeRangeTargetingOptionDetails: Represents a targetable age range.
-// This will be populated in the
-// age_range_details field when
-// targeting_type is
-// `TARGETING_TYPE_AGE_RANGE`.
+// This will be populated in the age_range_details field when
+// targeting_type is `TARGETING_TYPE_AGE_RANGE`.
 type AgeRangeTargetingOptionDetails struct {
 	// AgeRange: Output only. The age range of an audience.
 	//
 	// Possible values:
 	//   "AGE_RANGE_UNSPECIFIED" - Default value when age range is not
-	// specified in this version. This enum is
-	// a placeholder for default value and does not represent a real age
-	// range
-	// option.
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real age range option.
 	//   "AGE_RANGE_18_24" - The age range of the audience is 18 to 24.
 	//   "AGE_RANGE_25_34" - The age range of the audience is 25 to 34.
 	//   "AGE_RANGE_35_44" - The age range of the audience is 35 to 44.
@@ -1199,18 +1164,12 @@ func (s *AgeRangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // AppAssignedTargetingOptionDetails: Details for assigned app targeting
-// option. This will be populated in the
-// details field of an AssignedTargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_APP`.
+// option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is `TARGETING_TYPE_APP`.
 type AppAssignedTargetingOptionDetails struct {
-	// AppId: Required. The ID of the app.
-	//
-	// Android's Play store app uses bundle ID, for
-	// example
-	// `com.google.android.gm`. Apple's App store app ID uses 9 digit
-	// string, for
-	// example `422689480`.
+	// AppId: Required. The ID of the app. Android's Play store app uses
+	// bundle ID, for example `com.google.android.gm`. Apple's App store app
+	// ID uses 9 digit string, for example `422689480`.
 	AppId string `json:"appId,omitempty"`
 
 	// DisplayName: Output only. The display name of the app.
@@ -1243,12 +1202,9 @@ func (s *AppAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // AppCategoryAssignedTargetingOptionDetails: Details for assigned app
-// category targeting option. This will be
-// populated in the
-// app_category_details field of
-// an AssignedTargetingOption when
-// targeting_type
-// is `TARGETING_TYPE_APP_CATEGORY`.
+// category targeting option. This will be populated in the
+// app_category_details field of an AssignedTargetingOption when
+// targeting_type is `TARGETING_TYPE_APP_CATEGORY`.
 type AppCategoryAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the app category.
 	DisplayName string `json:"displayName,omitempty"`
@@ -1256,10 +1212,8 @@ type AppCategoryAssignedTargetingOptionDetails struct {
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id field
-	// when
-	// targeting_type is
-	// `TARGETING_TYPE_APP_CATEGORY`.
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_APP_CATEGORY`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -1286,14 +1240,10 @@ func (s *AppCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error
 }
 
 // AppCategoryTargetingOptionDetails: Represents a targetable collection
-// of apps. A collection lets you target
-// dynamic groups of related apps that are maintained by the platform,
-// for
-// example `All Apps/Google Play/Games`. This will be populated in
-// the
-// app_category_details field when
-// targeting_type is
-// `TARGETING_TYPE_APP_CATEGORY`.
+// of apps. A collection lets you target dynamic groups of related apps
+// that are maintained by the platform, for example `All Apps/Google
+// Play/Games`. This will be populated in the app_category_details field
+// when targeting_type is `TARGETING_TYPE_APP_CATEGORY`.
 type AppCategoryTargetingOptionDetails struct {
 	// DisplayName: Output only. The name of the app collection.
 	DisplayName string `json:"displayName,omitempty"`
@@ -1323,15 +1273,13 @@ func (s *AppCategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 
 // Asset: A single asset.
 type Asset struct {
-	// Content: The asset content.
-	// For uploaded assets, the content is the serving path.
+	// Content: The asset content. For uploaded assets, the content is the
+	// serving path.
 	Content string `json:"content,omitempty"`
 
 	// MediaId: Media ID of the uploaded asset. This is a unique identifier
-	// for the asset.
-	// This ID can be passed to other API calls, e.g.
-	// CreateCreative to associate
-	// the asset with a creative.
+	// for the asset. This ID can be passed to other API calls, e.g.
+	// CreateCreative to associate the asset with a creative.
 	MediaId int64 `json:"mediaId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -1371,192 +1319,99 @@ type AssetAssociation struct {
 	//   "ASSET_ROLE_BACKUP" - The asset is a backup asset of the creative.
 	//   "ASSET_ROLE_POLITE_LOAD" - The asset is a polite load asset of the
 	// creative.
-	//   "ASSET_ROLE_HEADLINE" - Headline of a native creative.
-	//
-	// The content must be UTF-8 encoded with a length of no more
-	// than 25 characters.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
-	//   "ASSET_ROLE_LONG_HEADLINE" - Long headline of a native
-	// creative.
-	//
-	// The content must be UTF-8 encoded with a length of no more
-	// than 50 characters.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
-	//   "ASSET_ROLE_BODY" - Body text of a native creative.
-	//
-	// The content must be UTF-8 encoded with a length of no more
-	// than 90 characters.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
-	//   "ASSET_ROLE_LONG_BODY" - Long body text of a native creative.
-	//
-	// The content must be UTF-8 encoded with a length of no more
-	// than 150 characters.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_HEADLINE" - Headline of a native creative. The content
+	// must be UTF-8 encoded with a length of no more than 25 characters.
+	// This role is only supported in following creative_type: *
+	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_LONG_HEADLINE" - Long headline of a native creative.
+	// The content must be UTF-8 encoded with a length of no more than 50
+	// characters. This role is only supported in following creative_type: *
+	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_BODY" - Body text of a native creative. The content
+	// must be UTF-8 encoded with a length of no more than 90 characters.
+	// This role is only supported in following creative_type: *
+	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
+	//   "ASSET_ROLE_LONG_BODY" - Long body text of a native creative. The
+	// content must be UTF-8 encoded with a length of no more than 150
+	// characters. This role is only supported in following creative_type: *
+	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_CAPTION_URL" - A short, friendly version of the landing
-	// page URL to show in the creative.
-	// This URL gives people an idea of where they'll arrive after they
-	// click on
-	// the creative.
-	//
-	// The content must be UTF-8 encoded with a length of no more
-	// than 30 characters.
-	//
+	// page URL to show in the creative. This URL gives people an idea of
+	// where they'll arrive after they click on the creative. The content
+	// must be UTF-8 encoded with a length of no more than 30 characters.
 	// For example, if the landing page URL is
-	// 'http://www.example.com/page',
-	// the caption URL can be 'example.com'.
+	// 'http://www.example.com/page', the caption URL can be 'example.com'.
 	// The protocol (http://) is optional, but the URL can't contain spaces
-	// or
-	// special characters.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// or special characters. This role is only supported in following
+	// creative_type: * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_CALL_TO_ACTION" - The text to use on the call-to-action
-	// button of a native creative.
-	//
-	// The content must be UTF-8 encoded with a length of no more
-	// than 15 characters.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// button of a native creative. The content must be UTF-8 encoded with a
+	// length of no more than 15 characters. This role is only supported in
+	// following creative_type: * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_ADVERTISER_NAME" - The text that identifies the
-	// advertiser or brand name.
-	//
-	// The content must be UTF-8 encoded with a length of no more
-	// than 25 characters.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// advertiser or brand name. The content must be UTF-8 encoded with a
+	// length of no more than 25 characters. This role is only supported in
+	// following creative_type: * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	//   "ASSET_ROLE_PRICE" - The purchase price of your app in the Google
-	// play store or iOS app store
-	// (for example, $5.99).
-	//
-	// Note that this value is not automatically synced with the actual
-	// value
-	// listed in the store. It will always be the one provided when save
-	// the
-	// creative.
-	//
-	// The content must be UTF-8 encoded with a length of no more
-	// than 15 characters.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// play store or iOS app store (for example, $5.99). Note that this
+	// value is not automatically synced with the actual value listed in the
+	// store. It will always be the one provided when save the creative. The
+	// content must be UTF-8 encoded with a length of no more than 15
+	// characters. This role is only supported in following creative_type: *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
 	//   "ASSET_ROLE_ANDROID_APP_ID" - The ID of an Android app in the
-	// Google play store.
-	//
-	// You can find this ID in the App’s Google Play Store URL after
-	// ‘id’. For
-	// example,
-	// in
-	// https://play.google.com/store/apps/details?id=com.company.appname
-	// the
-	// identifier is com.company.appname.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// Google play store. You can find this ID in the App’s Google Play
+	// Store URL after ‘id’. For example, in
+	// https://play.google.com/store/apps/details?id=com.company.appname the
+	// identifier is com.company.appname. This role is only supported in
+	// following creative_type: * `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
 	//   "ASSET_ROLE_IOS_APP_ID" - The ID of an iOS app in the Apple app
-	// store.
-	//
-	// This ID number can be found in the Apple App Store URL as the string
-	// of
-	// numbers directly after "id". For example,
-	// in
+	// store. This ID number can be found in the Apple App Store URL as the
+	// string of numbers directly after "id". For example, in
 	// https://apps.apple.com/us/app/gmail-email-by-google/id422689480 the
-	// ID is
-	// 422689480.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// ID is 422689480. This role is only supported in following
+	// creative_type: * `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
 	//   "ASSET_ROLE_RATING" - The rating of an app in the Google play store
-	// or iOS app store.
-	//
-	// Note that this value is not automatically synced with the actual
-	// rating
-	// in the store. It will always be the one provided when save the
-	// creative.
-	//
-	// This role is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	//   "ASSET_ROLE_ICON" - The icon of a creative.
-	//
-	// This role is only supported and required in
-	// following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	// or iOS app store. Note that this value is not automatically synced
+	// with the actual rating in the store. It will always be the one
+	// provided when save the creative. This role is only supported in
+	// following creative_type: * `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
+	//   "ASSET_ROLE_ICON" - The icon of a creative. This role is only
+	// supported and required in following creative_type: *
+	// `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
 	//   "ASSET_ROLE_COVER_IMAGE" - The cover image of a native video
-	// creative.
-	//
-	// This role is only supported and required in
-	// following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// creative. This role is only supported and required in following
+	// creative_type: * `CREATIVE_TYPE_VIDEO`
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Asset") to
@@ -1583,14 +1438,11 @@ func (s *AssetAssociation) MarshalJSON() ([]byte, error) {
 }
 
 // AssignedInventorySource: An assignment between a targetable inventory
-// source and an inventory source
-// group.
+// source and an inventory source group.
 type AssignedInventorySource struct {
 	// AssignedInventorySourceId: Output only. The unique ID of the assigned
-	// inventory source. The ID is only
-	// unique within a given inventory source group. It may be reused in
-	// other
-	// contexts.
+	// inventory source. The ID is only unique within a given inventory
+	// source group. It may be reused in other contexts.
 	AssignedInventorySourceId int64 `json:"assignedInventorySourceId,omitempty,string"`
 
 	// InventorySourceId: Required. The ID of the inventory source entity
@@ -1631,22 +1483,19 @@ func (s *AssignedInventorySource) MarshalJSON() ([]byte, error) {
 }
 
 // AssignedLocation: An assignment between a location list and a
-// relevant targeting option.
-// Currently, geo region targeting options are the only supported option
-// for
-// assignment.
+// relevant targeting option. Currently, geo region targeting options
+// are the only supported option for assignment.
 type AssignedLocation struct {
 	// AssignedLocationId: Output only. The unique ID of the assigned
-	// location. The ID is only unique within a
-	// location list. It may be reused in other contexts.
+	// location. The ID is only unique within a location list. It may be
+	// reused in other contexts.
 	AssignedLocationId int64 `json:"assignedLocationId,omitempty,string"`
 
 	// Name: Output only. The resource name of the assigned location.
 	Name string `json:"name,omitempty"`
 
 	// TargetingOptionId: Required. The ID of the targeting option assigned
-	// to the location list. Must be of
-	// type TARGETING_TYPE_GEO_REGION.
+	// to the location list. Must be of type TARGETING_TYPE_GEO_REGION.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1678,144 +1527,112 @@ func (s *AssignedLocation) MarshalJSON() ([]byte, error) {
 }
 
 // AssignedTargetingOption: A single assigned targeting option, which
-// defines the state of a targeting
-// option for an entity with targeting settings.
+// defines the state of a targeting option for an entity with targeting
+// settings.
 type AssignedTargetingOption struct {
 	// AgeRangeDetails: Age range details. This field will be populated when
-	// the
-	// TargetingType is `TARGETING_TYPE_AGE_RANGE`.
+	// the TargetingType is `TARGETING_TYPE_AGE_RANGE`.
 	AgeRangeDetails *AgeRangeAssignedTargetingOptionDetails `json:"ageRangeDetails,omitempty"`
 
 	// AppCategoryDetails: App category details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_APP_CATEGORY`.
+	// populated when the TargetingType is `TARGETING_TYPE_APP_CATEGORY`.
 	AppCategoryDetails *AppCategoryAssignedTargetingOptionDetails `json:"appCategoryDetails,omitempty"`
 
-	// AppDetails: App details. This field will be populated when
-	// the
+	// AppDetails: App details. This field will be populated when the
 	// TargetingType is `TARGETING_TYPE_APP`.
 	AppDetails *AppAssignedTargetingOptionDetails `json:"appDetails,omitempty"`
 
 	// AssignedTargetingOptionId: Output only. The unique ID of the assigned
-	// targeting option. The ID is only unique
-	// within a given line item and targeting type. It may be reused in
-	// other
-	// contexts.
+	// targeting option. The ID is only unique within a given line item and
+	// targeting type. It may be reused in other contexts.
 	AssignedTargetingOptionId string `json:"assignedTargetingOptionId,omitempty"`
 
 	// AudienceGroupDetails: Audience targeting details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_AUDIENCE_GROUP`.
+	// populated when the TargetingType is `TARGETING_TYPE_AUDIENCE_GROUP`.
 	// You can only target one audience group option per line item.
 	AudienceGroupDetails *AudienceGroupAssignedTargetingOptionDetails `json:"audienceGroupDetails,omitempty"`
 
 	// AuthorizedSellerStatusDetails: Authorized seller status details. This
-	// field will be populated when the
-	// TargetingType is `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
-	//
-	// You can only target one authorized seller status option per line
-	// item.
-	//
-	// If a line item doesn't have an authorized seller status option,
-	// all
-	// authorized sellers indicated as DIRECT or RESELLER in the ads.txt
-	// file
-	// are targeted by default.
+	// field will be populated when the TargetingType is
+	// `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`. You can only target one
+	// authorized seller status option per line item. If a line item doesn't
+	// have an authorized seller status option, all authorized sellers
+	// indicated as DIRECT or RESELLER in the ads.txt file are targeted by
+	// default.
 	AuthorizedSellerStatusDetails *AuthorizedSellerStatusAssignedTargetingOptionDetails `json:"authorizedSellerStatusDetails,omitempty"`
 
 	// BrowserDetails: Browser details. This field will be populated when
-	// the
-	// TargetingType is `TARGETING_TYPE_BROWSER`.
+	// the TargetingType is `TARGETING_TYPE_BROWSER`.
 	BrowserDetails *BrowserAssignedTargetingOptionDetails `json:"browserDetails,omitempty"`
 
 	// CarrierAndIspDetails: Carrier and ISP details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_CARRIER_AND_ISP`.
+	// populated when the TargetingType is `TARGETING_TYPE_CARRIER_AND_ISP`.
 	CarrierAndIspDetails *CarrierAndIspAssignedTargetingOptionDetails `json:"carrierAndIspDetails,omitempty"`
 
 	// CategoryDetails: Category details. This field will be populated when
-	// the TargetingType is
-	// `TARGETING_TYPE_CATEGORY`.
-	//
-	// Targeting a category will also target its subcategories. If a
-	// category is
-	// excluded from targeting and a subcategory is included, the exclusion
-	// will
-	// take precedence.
+	// the TargetingType is `TARGETING_TYPE_CATEGORY`. Targeting a category
+	// will also target its subcategories. If a category is excluded from
+	// targeting and a subcategory is included, the exclusion will take
+	// precedence.
 	CategoryDetails *CategoryAssignedTargetingOptionDetails `json:"categoryDetails,omitempty"`
 
 	// ChannelDetails: Channel details. This field will be populated when
-	// the
-	// TargetingType is `TARGETING_TYPE_CHANNEL`.
+	// the TargetingType is `TARGETING_TYPE_CHANNEL`.
 	ChannelDetails *ChannelAssignedTargetingOptionDetails `json:"channelDetails,omitempty"`
 
 	// ContentInstreamPositionDetails: Content instream position details.
-	// This field will be populated when the
-	// TargetingType is `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
+	// This field will be populated when the TargetingType is
+	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
 	ContentInstreamPositionDetails *ContentInstreamPositionAssignedTargetingOptionDetails `json:"contentInstreamPositionDetails,omitempty"`
 
 	// ContentOutstreamPositionDetails: Content outstream position details.
-	// This field will be populated when the
-	// TargetingType is `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
+	// This field will be populated when the TargetingType is
+	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 	ContentOutstreamPositionDetails *ContentOutstreamPositionAssignedTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
 
 	// DayAndTimeDetails: Day and time details. This field will be populated
-	// when the
-	// TargetingType is `TARGETING_TYPE_DAY_AND_TIME`.
+	// when the TargetingType is `TARGETING_TYPE_DAY_AND_TIME`.
 	DayAndTimeDetails *DayAndTimeAssignedTargetingOptionDetails `json:"dayAndTimeDetails,omitempty"`
 
 	// DeviceMakeModelDetails: Device make and model details. This field
-	// will be populated when the
-	// TargetingType is `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
+	// will be populated when the TargetingType is
+	// `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
 	DeviceMakeModelDetails *DeviceMakeModelAssignedTargetingOptionDetails `json:"deviceMakeModelDetails,omitempty"`
 
 	// DeviceTypeDetails: Device Type details. This field will be populated
-	// when the
-	// TargetingType is
-	// `TARGETING_TYPE_DEVICE_TYPE`.
+	// when the TargetingType is `TARGETING_TYPE_DEVICE_TYPE`.
 	DeviceTypeDetails *DeviceTypeAssignedTargetingOptionDetails `json:"deviceTypeDetails,omitempty"`
 
 	// DigitalContentLabelExclusionDetails: Digital content label details.
-	// This field will be populated when the
-	// TargetingType is
-	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
-	//
-	// Digital content labels are targeting exclusions. Advertiser level
-	// digital
-	// content label exclusions, if set, are always applied in serving
-	// (even
-	// though they aren't visible in line item settings). Line item settings
-	// can
+	// This field will be populated when the TargetingType is
+	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`. Digital content
+	// labels are targeting exclusions. Advertiser level digital content
+	// label exclusions, if set, are always applied in serving (even though
+	// they aren't visible in line item settings). Line item settings can
 	// exclude content labels in addition to advertiser exclusions, but
-	// can't
-	// override them. A line item won't serve if all the digital content
-	// labels
-	// are excluded.
+	// can't override them. A line item won't serve if all the digital
+	// content labels are excluded.
 	DigitalContentLabelExclusionDetails *DigitalContentLabelAssignedTargetingOptionDetails `json:"digitalContentLabelExclusionDetails,omitempty"`
 
 	// EnvironmentDetails: Environment details. This field will be populated
-	// when the
-	// TargetingType is `TARGETING_TYPE_ENVIRONMENT`.
+	// when the TargetingType is `TARGETING_TYPE_ENVIRONMENT`.
 	EnvironmentDetails *EnvironmentAssignedTargetingOptionDetails `json:"environmentDetails,omitempty"`
 
 	// ExchangeDetails: Exchange details. This field will be populated when
-	// the
-	// TargetingType is `TARGETING_TYPE_EXCHANGE`.
+	// the TargetingType is `TARGETING_TYPE_EXCHANGE`.
 	ExchangeDetails *ExchangeAssignedTargetingOptionDetails `json:"exchangeDetails,omitempty"`
 
-	// GenderDetails: Gender details. This field will be populated when
-	// the
+	// GenderDetails: Gender details. This field will be populated when the
 	// TargetingType is `TARGETING_TYPE_GENDER`.
 	GenderDetails *GenderAssignedTargetingOptionDetails `json:"genderDetails,omitempty"`
 
 	// GeoRegionDetails: Geographic region details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_GEO_REGION`.
+	// populated when the TargetingType is `TARGETING_TYPE_GEO_REGION`.
 	GeoRegionDetails *GeoRegionAssignedTargetingOptionDetails `json:"geoRegionDetails,omitempty"`
 
 	// HouseholdIncomeDetails: Household income details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_HOUSEHOLD_INCOME`.
+	// populated when the TargetingType is
+	// `TARGETING_TYPE_HOUSEHOLD_INCOME`.
 	HouseholdIncomeDetails *HouseholdIncomeAssignedTargetingOptionDetails `json:"householdIncomeDetails,omitempty"`
 
 	// Inheritance: Output only. The inheritance status of the assigned
@@ -1827,35 +1644,29 @@ type AssignedTargetingOption struct {
 	//   "NOT_INHERITED" - The assigned targeting option is not inherited
 	// from higher level entity.
 	//   "INHERITED_FROM_PARTNER" - The assigned targeting option is
-	// inherited from partner targeting
-	// settings.
+	// inherited from partner targeting settings.
 	//   "INHERITED_FROM_ADVERTISER" - The assigned targeting option is
-	// inherited from advertiser targeting
-	// settings.
+	// inherited from advertiser targeting settings.
 	Inheritance string `json:"inheritance,omitempty"`
 
 	// InventorySourceDetails: Inventory source details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_INVENTORY_SOURCE`.
+	// populated when the TargetingType is
+	// `TARGETING_TYPE_INVENTORY_SOURCE`.
 	InventorySourceDetails *InventorySourceAssignedTargetingOptionDetails `json:"inventorySourceDetails,omitempty"`
 
 	// InventorySourceGroupDetails: Inventory source group details. This
-	// field will be populated when the
-	// TargetingType is `TARGETING_TYPE_INVENTORY_SOURCE_GROUP`.
+	// field will be populated when the TargetingType is
+	// `TARGETING_TYPE_INVENTORY_SOURCE_GROUP`.
 	InventorySourceGroupDetails *InventorySourceGroupAssignedTargetingOptionDetails `json:"inventorySourceGroupDetails,omitempty"`
 
 	// KeywordDetails: Keyword details. This field will be populated when
-	// the TargetingType is
-	// `TARGETING_TYPE_KEYWORD`.
-	//
-	// A maximum of 5000 direct negative keywords can be assigned to a
-	// line item. No limit on number of positive keywords that can be
-	// assigned.
+	// the TargetingType is `TARGETING_TYPE_KEYWORD`. A maximum of 5000
+	// direct negative keywords can be assigned to a line item. No limit on
+	// number of positive keywords that can be assigned.
 	KeywordDetails *KeywordAssignedTargetingOptionDetails `json:"keywordDetails,omitempty"`
 
 	// LanguageDetails: Language details. This field will be populated when
-	// the TargetingType is
-	// `TARGETING_TYPE_LANGUAGE`.
+	// the TargetingType is `TARGETING_TYPE_LANGUAGE`.
 	LanguageDetails *LanguageAssignedTargetingOptionDetails `json:"languageDetails,omitempty"`
 
 	// Name: Output only. The resource name for this assigned targeting
@@ -1863,57 +1674,47 @@ type AssignedTargetingOption struct {
 	Name string `json:"name,omitempty"`
 
 	// NegativeKeywordListDetails: Keyword details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST`.
-	//
-	// A maximum of 4 negative keyword lists can be assigned to a line item.
+	// populated when the TargetingType is
+	// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST`. A maximum of 4 negative
+	// keyword lists can be assigned to a line item.
 	NegativeKeywordListDetails *NegativeKeywordListAssignedTargetingOptionDetails `json:"negativeKeywordListDetails,omitempty"`
 
 	// OnScreenPositionDetails: On screen position details. This field will
-	// be populated when the
-	// TargetingType is `TARGETING_TYPE_ON_SCREEN_POSITION`.
+	// be populated when the TargetingType is
+	// `TARGETING_TYPE_ON_SCREEN_POSITION`.
 	OnScreenPositionDetails *OnScreenPositionAssignedTargetingOptionDetails `json:"onScreenPositionDetails,omitempty"`
 
 	// OperatingSystemDetails: Operating system details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_OPERATING_SYSTEM`.
+	// populated when the TargetingType is
+	// `TARGETING_TYPE_OPERATING_SYSTEM`.
 	OperatingSystemDetails *OperatingSystemAssignedTargetingOptionDetails `json:"operatingSystemDetails,omitempty"`
 
 	// ParentalStatusDetails: Parental status details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_PARENTAL_STATUS`.
+	// populated when the TargetingType is `TARGETING_TYPE_PARENTAL_STATUS`.
 	ParentalStatusDetails *ParentalStatusAssignedTargetingOptionDetails `json:"parentalStatusDetails,omitempty"`
 
 	// ProximityLocationListDetails: Proximity location list details. This
-	// field will be populated when the
-	// TargetingType is
+	// field will be populated when the TargetingType is
 	// `TARGETING_TYPE_PROXIMITY_LOCATION_LIST`.
 	ProximityLocationListDetails *ProximityLocationListAssignedTargetingOptionDetails `json:"proximityLocationListDetails,omitempty"`
 
 	// RegionalLocationListDetails: Regional location list details. This
-	// field will be populated when the
-	// TargetingType is `TARGETING_TYPE_REGIONAL_LOCATION_LIST`.
+	// field will be populated when the TargetingType is
+	// `TARGETING_TYPE_REGIONAL_LOCATION_LIST`.
 	RegionalLocationListDetails *RegionalLocationListAssignedTargetingOptionDetails `json:"regionalLocationListDetails,omitempty"`
 
 	// SensitiveCategoryExclusionDetails: Sensitive category details. This
-	// field will be populated when the
-	// TargetingType is
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
-	//
-	// Sensitive categories are targeting exclusions. Advertiser level
-	// sensitive
-	// category exclusions, if set, are always applied in serving (even
-	// though
-	// they aren't visible in line item settings). Line item settings
-	// can
-	// exclude sensitive categories in addition to advertiser exclusions,
-	// but
-	// can't override them.
+	// field will be populated when the TargetingType is
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`. Sensitive categories
+	// are targeting exclusions. Advertiser level sensitive category
+	// exclusions, if set, are always applied in serving (even though they
+	// aren't visible in line item settings). Line item settings can exclude
+	// sensitive categories in addition to advertiser exclusions, but can't
+	// override them.
 	SensitiveCategoryExclusionDetails *SensitiveCategoryAssignedTargetingOptionDetails `json:"sensitiveCategoryExclusionDetails,omitempty"`
 
 	// SubExchangeDetails: Sub-exchange details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_SUB_EXCHANGE`.
+	// populated when the TargetingType is `TARGETING_TYPE_SUB_EXCHANGE`.
 	SubExchangeDetails *SubExchangeAssignedTargetingOptionDetails `json:"subExchangeDetails,omitempty"`
 
 	// TargetingType: Output only. Identifies the type of this assigned
@@ -1937,8 +1738,7 @@ type AssignedTargetingOption struct {
 	//   "TARGETING_TYPE_REGIONAL_LOCATION_LIST" - Target ads to the
 	// specified regions on a regional location list.
 	//   "TARGETING_TYPE_PROXIMITY_LOCATION_LIST" - Target ads to the
-	// specified points of interest on a proximity location
-	// list.
+	// specified points of interest on a proximity location list.
 	//   "TARGETING_TYPE_GENDER" - Target ads to a specific gender (for
 	// example, female or male).
 	//   "TARGETING_TYPE_VIDEO_PLAYER_SIZE" - Target a specific video player
@@ -1946,19 +1746,17 @@ type AssignedTargetingOption struct {
 	//   "TARGETING_TYPE_USER_REWARDED_CONTENT" - Target user rewarded
 	// content for video ads.
 	//   "TARGETING_TYPE_PARENTAL_STATUS" - Target ads to a specific
-	// parental status (for example, parent or not a
-	// parent).
+	// parental status (for example, parent or not a parent).
 	//   "TARGETING_TYPE_CONTENT_INSTREAM_POSITION" - Target video or audio
-	// ads in a specific content instream position (for
-	// example, pre-roll, mid-roll, or post-roll).
+	// ads in a specific content instream position (for example, pre-roll,
+	// mid-roll, or post-roll).
 	//   "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION" - Target ads in a
 	// specific content outstream position.
 	//   "TARGETING_TYPE_DEVICE_TYPE" - Target ads to a specific device type
 	// (for example, tablet or connected TV).
 	//   "TARGETING_TYPE_AUDIENCE_GROUP" - Target ads to an audience or
-	// groups of audiences.
-	// Singleton field, at most one can exist on a single Lineitem at a
-	// time.
+	// groups of audiences. Singleton field, at most one can exist on a
+	// single Lineitem at a time.
 	//   "TARGETING_TYPE_BROWSER" - Target ads to specific web browsers (for
 	// example, Chrome).
 	//   "TARGETING_TYPE_HOUSEHOLD_INCOME" - Target ads to a specific
@@ -1966,23 +1764,21 @@ type AssignedTargetingOption struct {
 	//   "TARGETING_TYPE_ON_SCREEN_POSITION" - Target ads in a specific on
 	// screen position.
 	//   "TARGETING_TYPE_THIRD_PARTY_VERIFIER" - Filter web sites through
-	// third party verification (for example, IAS or
-	// DoubleVerify).
+	// third party verification (for example, IAS or DoubleVerify).
 	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites
-	// by specific digital content label ratings (for example,
-	// DL-MA: suitable only for mature audiences).
+	// by specific digital content label ratings (for example, DL-MA:
+	// suitable only for mature audiences).
 	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website
 	// content by sensitive categories (for example, adult).
 	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment
 	// (for example, web or app).
 	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
-	// carrier or internet service provider
-	// (ISP) (for example, Comcast or Orange).
+	// carrier or internet service provider (ISP) (for example, Comcast or
+	// Orange).
 	//   "TARGETING_TYPE_OPERATING_SYSTEM" - Target ads to a specific
 	// operating system (for example, macOS).
 	//   "TARGETING_TYPE_DEVICE_MAKE_MODEL" - Target ads to a specific
-	// device make or model (for example, Roku or
-	// Samsung).
+	// device make or model (for example, Roku or Samsung).
 	//   "TARGETING_TYPE_KEYWORD" - Target ads to a specific keyword (for
 	// example, dog or retriever).
 	//   "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST" - Target ads to a specific
@@ -1990,8 +1786,7 @@ type AssignedTargetingOption struct {
 	//   "TARGETING_TYPE_VIEWABILITY" - Target ads to a specific viewability
 	// (for example, 80% viewable).
 	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content
-	// category (for example, arts &
-	// entertainment).
+	// category (for example, arts & entertainment).
 	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from
 	// specific deals and auction packages.
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
@@ -2009,31 +1804,27 @@ type AssignedTargetingOption struct {
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ThirdPartyVerifierDetails: Third party verification details. This
-	// field will be populated when the
-	// TargetingType is `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
+	// field will be populated when the TargetingType is
+	// `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
 	ThirdPartyVerifierDetails *ThirdPartyVerifierAssignedTargetingOptionDetails `json:"thirdPartyVerifierDetails,omitempty"`
 
-	// UrlDetails: URL details. This field will be populated when
-	// the
+	// UrlDetails: URL details. This field will be populated when the
 	// TargetingType is `TARGETING_TYPE_URL`.
 	UrlDetails *UrlAssignedTargetingOptionDetails `json:"urlDetails,omitempty"`
 
 	// UserRewardedContentDetails: User rewarded content details. This field
-	// will be populated when the
-	// TargetingType is
+	// will be populated when the TargetingType is
 	// `TARGETING_TYPE_USER_REWARDED_CONTENT`.
 	UserRewardedContentDetails *UserRewardedContentAssignedTargetingOptionDetails `json:"userRewardedContentDetails,omitempty"`
 
 	// VideoPlayerSizeDetails: Video player size details. This field will be
-	// populated when the
-	// TargetingType is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
+	// populated when the TargetingType is
+	// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	VideoPlayerSizeDetails *VideoPlayerSizeAssignedTargetingOptionDetails `json:"videoPlayerSizeDetails,omitempty"`
 
 	// ViewabilityDetails: Viewability details. This field will be populated
-	// when the TargetingType
-	// is `TARGETING_TYPE_VIEWABILITY`.
-	//
-	// You can only target one viewability option per line item.
+	// when the TargetingType is `TARGETING_TYPE_VIEWABILITY`. You can only
+	// target one viewability option per line item.
 	ViewabilityDetails *ViewabilityAssignedTargetingOptionDetails `json:"viewabilityDetails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2064,61 +1855,133 @@ func (s *AssignedTargetingOption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AssignedUserRole: A single assigned user role, which defines a user's
+// authorized interaction with a specified partner or advertiser.
+type AssignedUserRole struct {
+	// AdvertiserId: The ID of the advertiser that the assigend user role
+	// applies to.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// AssignedUserRoleId: Output only. The ID of the assigned user role.
+	AssignedUserRoleId string `json:"assignedUserRoleId,omitempty"`
+
+	// PartnerId: The ID of the partner that the assigned user role applies
+	// to.
+	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// UserRole: Required. The user role to assign to a user for the entity.
+	//
+	// Possible values:
+	//   "USER_ROLE_UNSPECIFIED" - Default value when the user role is not
+	// specified or is unknown in this version.
+	//   "ADMIN" - The user can manage campaigns, creatives, insertion
+	// orders, line items, and reports for the entity. They can view and
+	// edit billing information, create or modify users, and enable or
+	// disable exchanges. This role can only be assigned for a partner
+	// entity.
+	//   "ADMIN_PARTNER_CLIENT" - The user can manage campaigns, creatives,
+	// insertion orders, line items, and reports for the entity. They can
+	// create and modify other `ADMIN_PARTNER_CLIENT` users and view billing
+	// information. They cannot view revenue models, markups, or any other
+	// reseller-sensitive fields. This role can only be assigned for a
+	// partner entity.
+	//   "STANDARD" - The user can manage campaigns, creatives, insertion
+	// orders, line items, and reports for the entity. They cannot create
+	// and modify users or view billing information.
+	//   "STANDARD_PLANNER" - The user can view all campaigns, creatives,
+	// insertion orders, line items, and reports for the entity, including
+	// all cost data. They can create and modify planning-related features,
+	// including plans and inventory.
+	//   "STANDARD_PLANNER_LIMITED" - The user can view all campaigns,
+	// creatives, insertion orders, line items, and reports for the entity.
+	// They can create or modify planning-related features, including plans
+	// and inventory. They have no access to cost data and cannot start,
+	// accept, or negotiate deals.
+	//   "STANDARD_PARTNER_CLIENT" - The user can manage campaigns,
+	// creatives, insertion orders, line items, and reports for the entity.
+	// They cannot create or modify other users or view billing information.
+	// They cannot view revenue models, markups, or any other
+	// reseller-sensitive fields. This role can only be assigned for an
+	// advertiser entity.
+	//   "READ_ONLY" - The user can only build reports and view data for the
+	// entity.
+	//   "REPORTING_ONLY" - The user can only create and manage reports.
+	//   "LIMITED_REPORTING_ONLY" - The user can only create and manage the
+	// following client-safe reports: General, Audience Performance,
+	// Cross-Partner, Keyword, Order ID, Category, and Third-Party Data
+	// Provider.
+	//   "CREATIVE" - The user can view media plan information they need to
+	// collaborate, but can't view cost-related data or Marketplace.
+	//   "CREATIVE_ADMIN" - The user can view media plan information they
+	// need to collaborate, but can't view cost-related data or Marketplace.
+	// In addition, they can add other creative admins or creative users to
+	// the entity.
+	UserRole string `json:"userRole,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AssignedUserRole) MarshalJSON() ([]byte, error) {
+	type NoMethod AssignedUserRole
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AudienceGroupAssignedTargetingOptionDetails: Assigned audience group
-// targeting option details. This will be populated in
-// the details field of an AssignedTargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_AUDIENCE_GROUP`.
-// The relation between each group is UNION, except
-// for
-// excluded_first_and_third_party_audience_group
-// and
+// targeting option details. This will be populated in the details field
+// of an AssignedTargetingOption when targeting_type is
+// `TARGETING_TYPE_AUDIENCE_GROUP`. The relation between each group is
+// UNION, except for excluded_first_and_third_party_audience_group and
 // excluded_google_audience_group, of which COMPLEMENT is UNION'ed with
-// other
-// groups.
+// other groups.
 type AudienceGroupAssignedTargetingOptionDetails struct {
 	// ExcludedFirstAndThirdPartyAudienceGroup: The first and third party
-	// audience ids and recencies of the excluded
-	// first and third party audience group. Used for negative targeting.
-	// Its
-	// COMPLEMENT is used to UNION other audience groups.
+	// audience ids and recencies of the excluded first and third party
+	// audience group. Used for negative targeting. Its COMPLEMENT is used
+	// to UNION other audience groups.
 	ExcludedFirstAndThirdPartyAudienceGroup *FirstAndThirdPartyAudienceGroup `json:"excludedFirstAndThirdPartyAudienceGroup,omitempty"`
 
 	// ExcludedGoogleAudienceGroup: The Google audience ids of the excluded
-	// Google audience group.
-	// Used for negative targeting. It's COMPLEMENT is used to UNION
-	// other
-	// audience groups.
-	// Only contains Affinity, In-market and Installed-apps type Google
-	// audiences.
-	// All items are logically ‘OR’ of each other.
+	// Google audience group. Used for negative targeting. It's COMPLEMENT
+	// is used to UNION other audience groups. Only contains Affinity,
+	// In-market and Installed-apps type Google audiences. All items are
+	// logically ‘OR’ of each other.
 	ExcludedGoogleAudienceGroup *GoogleAudienceGroup `json:"excludedGoogleAudienceGroup,omitempty"`
 
 	// IncludedCombinedAudienceGroup: The combined audience ids of the
-	// included combined audience group.
-	// Contains combined audience ids only.
+	// included combined audience group. Contains combined audience ids
+	// only.
 	IncludedCombinedAudienceGroup *CombinedAudienceGroup `json:"includedCombinedAudienceGroup,omitempty"`
 
 	// IncludedCustomListGroup: The custom list ids of the included custom
-	// list group.
-	// Contains custom list ids only.
+	// list group. Contains custom list ids only.
 	IncludedCustomListGroup *CustomListGroup `json:"includedCustomListGroup,omitempty"`
 
 	// IncludedFirstAndThirdPartyAudienceGroups: The first and third party
-	// audience ids and recencies of included first
-	// and third party audience groups. Each first and third party audience
-	// group
-	// contains first and third party audience ids only.
-	// The relation between each first and third party audience group
-	// is
-	// INTERSECTION, and the result is UNION'ed with other audience
-	// groups.
-	// Repeated groups with same settings will be ignored.
+	// audience ids and recencies of included first and third party audience
+	// groups. Each first and third party audience group contains first and
+	// third party audience ids only. The relation between each first and
+	// third party audience group is INTERSECTION, and the result is
+	// UNION'ed with other audience groups. Repeated groups with same
+	// settings will be ignored.
 	IncludedFirstAndThirdPartyAudienceGroups []*FirstAndThirdPartyAudienceGroup `json:"includedFirstAndThirdPartyAudienceGroups,omitempty"`
 
 	// IncludedGoogleAudienceGroup: The Google audience ids of the included
-	// Google audience group.
-	// Contains Google audience ids only.
+	// Google audience group. Contains Google audience ids only.
 	IncludedGoogleAudienceGroup *GoogleAudienceGroup `json:"includedGoogleAudienceGroup,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2177,10 +2040,93 @@ func (s *AudioVideoOffset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AuditAdvertiserResponse: Response message for
+// AdvertiserService.AuditAdvertiser.
+type AuditAdvertiserResponse struct {
+	// AdGroupCriteriaCount: The number of individual targeting options from
+	// the following targeting types that are assigned to a line item under
+	// this advertiser. These individual targeting options count towards the
+	// limit of 4500000 ad group targeting options per advertiser.
+	// Qualifying Targeting types: * Channels, URLs, apps, and collections *
+	// Demographic * Google Audiences, including Affinity, Custom Affinity,
+	// and In-market audiences * Inventory source * Keyword * Mobile app
+	// category * User lists * Video targeting * Viewability
+	AdGroupCriteriaCount int64 `json:"adGroupCriteriaCount,omitempty,string"`
+
+	// CampaignCriteriaCount: The number of individual targeting options
+	// from the following targeting types that are assigned to a line item
+	// under this advertiser. These individual targeting options count
+	// towards the limit of 900000 campaign targeting options per
+	// advertiser. Qualifying Targeting types: * Position * Browser *
+	// Connection speed * Day and time * Device and operating system *
+	// Digital content label * Sensitive categories * Environment *
+	// Geography, including business chains and proximity * ISP * Language *
+	// Third-party verification
+	CampaignCriteriaCount int64 `json:"campaignCriteriaCount,omitempty,string"`
+
+	// ChannelsCount: The number of channels created under this advertiser.
+	// These channels count towards the limit of 1000 channels per
+	// advertiser.
+	ChannelsCount int64 `json:"channelsCount,omitempty,string"`
+
+	// NegativeKeywordListsCount: The number of negative keyword lists
+	// created under this advertiser. These negative keyword lists count
+	// towards the limit of 20 negative keyword lists per advertiser.
+	NegativeKeywordListsCount int64 `json:"negativeKeywordListsCount,omitempty,string"`
+
+	// NegativelyTargetedChannelsCount: The number of negatively targeted
+	// channels created under this advertiser. These negatively targeted
+	// channels count towards the limit of 5 negatively targeted channels
+	// per advertiser.
+	NegativelyTargetedChannelsCount int64 `json:"negativelyTargetedChannelsCount,omitempty,string"`
+
+	// UsedCampaignsCount: The number of ACTIVE and PAUSED campaigns under
+	// this advertiser. These campaigns count towards the limit of 9999
+	// campaigns per advertiser.
+	UsedCampaignsCount int64 `json:"usedCampaignsCount,omitempty,string"`
+
+	// UsedInsertionOrdersCount: The number of ACTIVE, PAUSED and DRAFT
+	// insertion orders under this advertiser. These insertion orders count
+	// towards the limit of 9999 insertion orders per advertiser.
+	UsedInsertionOrdersCount int64 `json:"usedInsertionOrdersCount,omitempty,string"`
+
+	// UsedLineItemsCount: The number of ACTIVE, PAUSED, and DRAFT line
+	// items under this advertiser. These line items count towards the limit
+	// of 9999 line items per advertiser.
+	UsedLineItemsCount int64 `json:"usedLineItemsCount,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdGroupCriteriaCount") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdGroupCriteriaCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuditAdvertiserResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AuditAdvertiserResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuthorizedSellerStatusAssignedTargetingOptionDetails: Represents an
-// assigned authorized seller status. This will be populated in
-// the details field of an AssignedTargetingOption when
-// targeting_type is
+// assigned authorized seller status. This will be populated in the
+// details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
 type AuthorizedSellerStatusAssignedTargetingOptionDetails struct {
 	// AuthorizedSellerStatus: Output only. The authorized seller status to
@@ -2188,25 +2134,20 @@ type AuthorizedSellerStatusAssignedTargetingOptionDetails struct {
 	//
 	// Possible values:
 	//   "AUTHORIZED_SELLER_STATUS_UNSPECIFIED" - Default value when
-	// authorized seller status is not specified in this
-	// version. This enum is a placeholder for default value and does
-	// not
-	// represent a real authorized seller status option.
+	// authorized seller status is not specified in this version. This enum
+	// is a placeholder for default value and does not represent a real
+	// authorized seller status option.
 	//   "AUTHORIZED_SELLER_STATUS_AUTHORIZED_DIRECT_SELLERS_ONLY" - Only
 	// authorized sellers that directly own the inventory being monetized,
-	// as
-	// indicated by a DIRECT declaration in the ads.txt file.
+	// as indicated by a DIRECT declaration in the ads.txt file.
 	//
 	// "AUTHORIZED_SELLER_STATUS_AUTHORIZED_AND_NON_PARTICIPATING_PUBLISHERS"
 	//  - All authorized sellers, including publishers that have not posted
-	// an
-	// ads.txt file. Display & Video 360 automatically disallows
-	// unauthorized
-	// sellers.
+	// an ads.txt file. Display & Video 360 automatically disallows
+	// unauthorized sellers.
 	AuthorizedSellerStatus string `json:"authorizedSellerStatus,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -2236,33 +2177,25 @@ func (s *AuthorizedSellerStatusAssignedTargetingOptionDetails) MarshalJSON() ([]
 }
 
 // AuthorizedSellerStatusTargetingOptionDetails: Represents a targetable
-// authorized seller status. This will be populated
-// in
-// the
-// authorized_seller_status_details
-// field when targeting_type
-// is
+// authorized seller status. This will be populated in the
+// authorized_seller_status_details field when targeting_type is
 // `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
 type AuthorizedSellerStatusTargetingOptionDetails struct {
 	// AuthorizedSellerStatus: Output only. The authorized seller status.
 	//
 	// Possible values:
 	//   "AUTHORIZED_SELLER_STATUS_UNSPECIFIED" - Default value when
-	// authorized seller status is not specified in this
-	// version. This enum is a placeholder for default value and does
-	// not
-	// represent a real authorized seller status option.
+	// authorized seller status is not specified in this version. This enum
+	// is a placeholder for default value and does not represent a real
+	// authorized seller status option.
 	//   "AUTHORIZED_SELLER_STATUS_AUTHORIZED_DIRECT_SELLERS_ONLY" - Only
 	// authorized sellers that directly own the inventory being monetized,
-	// as
-	// indicated by a DIRECT declaration in the ads.txt file.
+	// as indicated by a DIRECT declaration in the ads.txt file.
 	//
 	// "AUTHORIZED_SELLER_STATUS_AUTHORIZED_AND_NON_PARTICIPATING_PUBLISHERS"
 	//  - All authorized sellers, including publishers that have not posted
-	// an
-	// ads.txt file. Display & Video 360 automatically disallows
-	// unauthorized
-	// sellers.
+	// an ads.txt file. Display & Video 360 automatically disallows
+	// unauthorized sellers.
 	AuthorizedSellerStatus string `json:"authorizedSellerStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2290,49 +2223,32 @@ func (s *AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BiddingStrategy: Settings that control the bid strategy.
-// Bid strategy determines the bid price.
+// BiddingStrategy: Settings that control the bid strategy. Bid strategy
+// determines the bid price.
 type BiddingStrategy struct {
 	// FixedBid: A strategy that uses a fixed bid price.
 	FixedBid *FixedBidStrategy `json:"fixedBid,omitempty"`
 
 	// MaximizeSpendAutoBid: A strategy that automatically adjusts the bid
-	// to optimize to your
-	// performance goal while spending the full budget.
-	//
-	// At insertion order level, the
-	// markup_type of line items
-	// cannot be set to `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`. In
-	// addition,
-	// when
-	// performance_goal_type
-	// is one of:
-	//
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED` ,
-	//
-	// the line_item_type
-	// of the insertion order line items must be either:
-	//
-	// * `LINE_ITEM_TYPE_DISPLAY_DEFAULT`
-	// * `LINE_ITEM_TYPE_VIDEO_DEFAULT` ,
-	//
-	// and when
-	// performance_goal_type
-	// is either:
-	//
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA`
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN`
-	//
-	// the line_item_type
+	// to optimize to your performance goal while spending the full budget.
+	// At insertion order level, the markup_type of line items cannot be set
+	// to `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`. In addition, when
+	// performance_goal_type is one of: *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED` , the
+	// line_item_type of the insertion order line items must be either: *
+	// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` * `LINE_ITEM_TYPE_VIDEO_DEFAULT` ,
+	// and when performance_goal_type is either: *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN` the line_item_type
 	// of the insertion order line items must be
 	// `LINE_ITEM_TYPE_VIDEO_DEFAULT`.
 	MaximizeSpendAutoBid *MaximizeSpendBidStrategy `json:"maximizeSpendAutoBid,omitempty"`
 
 	// PerformanceGoalAutoBid: A strategy that automatically adjusts the bid
-	// to meet or beat a specified
-	// performance goal. It is to be used only for a line item entity.
+	// to meet or beat a specified performance goal. It is to be used only
+	// for a line item entity.
 	PerformanceGoalAutoBid *PerformanceGoalBidStrategy `json:"performanceGoalAutoBid,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FixedBid") to
@@ -2359,23 +2275,19 @@ func (s *BiddingStrategy) MarshalJSON() ([]byte, error) {
 }
 
 // BrowserAssignedTargetingOptionDetails: Details for assigned browser
-// targeting option. This will be populated in
-// the details field of an AssignedTargetingOption when
-// targeting_type is
+// targeting option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_BROWSER`.
 type BrowserAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the browser.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Negative: Indicates if this option is being negatively targeted. All
-	// assigned browser
-	// targeting options on the same line item must have the same value for
-	// this
-	// field.
+	// assigned browser targeting options on the same line item must have
+	// the same value for this field.
 	Negative bool `json:"negative,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_BROWSER`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -2403,9 +2315,7 @@ func (s *BrowserAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // BrowserTargetingOptionDetails: Represents a targetable browser. This
-// will be populated in the
-// browser_details field when
-// targeting_type is
+// will be populated in the browser_details field when targeting_type is
 // `TARGETING_TYPE_BROWSER`.
 type BrowserTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the browser.
@@ -2435,17 +2345,14 @@ func (s *BrowserTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // BulkEditAdvertiserAssignedTargetingOptionsRequest: Request message
-// for
-// BulkEditAdvertiserAssignedTargetingOptions.
+// for BulkEditAdvertiserAssignedTargetingOptions.
 type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	// CreateRequests: The assigned targeting options to create in batch,
-	// specified as a list of
-	// `CreateAssignedTargetingOptionsRequest`.
+	// specified as a list of `CreateAssignedTargetingOptionsRequest`.
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 
 	// DeleteRequests: The assigned targeting options to delete in batch,
-	// specified as a list of
-	// `DeleteAssignedTargetingOptionsRequest`.
+	// specified as a list of `DeleteAssignedTargetingOptionsRequest`.
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
@@ -2474,9 +2381,8 @@ func (s *BulkEditAdvertiserAssignedTargetingOptionsRequest) MarshalJSON() ([]byt
 
 type BulkEditAdvertiserAssignedTargetingOptionsResponse struct {
 	// CreatedAssignedTargetingOptions: The list of assigned targeting
-	// options that have been successfully created.
-	//
-	// This list will be absent if empty.
+	// options that have been successfully created. This list will be absent
+	// if empty.
 	CreatedAssignedTargetingOptions []*AssignedTargetingOption `json:"createdAssignedTargetingOptions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2512,28 +2418,21 @@ func (s *BulkEditAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]by
 // AssignedInventorySourceService.BulkEdit.
 type BulkEditAssignedInventorySourcesRequest struct {
 	// AdvertiserId: The ID of the advertiser that owns the parent inventory
-	// source group.
-	//
-	// The parent partner does not have access to these assigned
-	// inventory
-	// sources.
+	// source group. The parent partner does not have access to these
+	// assigned inventory sources.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// CreatedAssignedInventorySources: The assigned inventory sources to
-	// create in bulk, specified as a list of
-	// AssignedInventorySources.
+	// create in bulk, specified as a list of AssignedInventorySources.
 	CreatedAssignedInventorySources []*AssignedInventorySource `json:"createdAssignedInventorySources,omitempty"`
 
 	// DeletedAssignedInventorySources: The IDs of the assigned inventory
-	// sources to delete in bulk, specified as a
-	// list of
+	// sources to delete in bulk, specified as a list of
 	// assigned_inventory_source_ids.
 	DeletedAssignedInventorySources googleapi.Int64s `json:"deletedAssignedInventorySources,omitempty"`
 
 	// PartnerId: The ID of the partner that owns the inventory source
-	// group.
-	//
-	// Only this partner has write access to these assigned inventory
+	// group. Only this partner has write access to these assigned inventory
 	// sources.
 	PartnerId int64 `json:"partnerId,omitempty,string"`
 
@@ -2564,9 +2463,7 @@ func (s *BulkEditAssignedInventorySourcesRequest) MarshalJSON() ([]byte, error) 
 // AssignedInventorySourceService.BulkEdit.
 type BulkEditAssignedInventorySourcesResponse struct {
 	// AssignedInventorySources: The list of assigned inventory sources that
-	// have been successfully created.
-	//
-	// This list will be absent if empty.
+	// have been successfully created. This list will be absent if empty.
 	AssignedInventorySources []*AssignedInventorySource `json:"assignedInventorySources,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2602,13 +2499,11 @@ func (s *BulkEditAssignedInventorySourcesResponse) MarshalJSON() ([]byte, error)
 // AssignedLocationService.BulkEditAssignedLocations.
 type BulkEditAssignedLocationsRequest struct {
 	// CreatedAssignedLocations: The assigned locations to create in bulk,
-	// specified as a list of
-	// AssignedLocations.
+	// specified as a list of AssignedLocations.
 	CreatedAssignedLocations []*AssignedLocation `json:"createdAssignedLocations,omitempty"`
 
 	// DeletedAssignedLocations: The IDs of the assigned locations to delete
-	// in bulk, specified as a list of
-	// assigned_location_ids.
+	// in bulk, specified as a list of assigned_location_ids.
 	DeletedAssignedLocations googleapi.Int64s `json:"deletedAssignedLocations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2640,9 +2535,7 @@ func (s *BulkEditAssignedLocationsRequest) MarshalJSON() ([]byte, error) {
 // AssignedLocationService.BulkEditAssignedLocations.
 type BulkEditAssignedLocationsResponse struct {
 	// AssignedLocations: The list of assigned locations that have been
-	// successfully created.
-	//
-	// This list will be absent if empty.
+	// successfully created. This list will be absent if empty.
 	AssignedLocations []*AssignedLocation `json:"assignedLocations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2673,18 +2566,87 @@ func (s *BulkEditAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BulkEditLineItemAssignedTargetingOptionsRequest: Request message
-// for
+// BulkEditAssignedUserRolesRequest: Request message for
+// BulkEditAssignedUserRoles.
+type BulkEditAssignedUserRolesRequest struct {
+	// CreatedAssignedUserRoles: The assigned user roles to create in batch,
+	// specified as a list of AssignedUserRoles.
+	CreatedAssignedUserRoles []*AssignedUserRole `json:"createdAssignedUserRoles,omitempty"`
+
+	// DeletedAssignedUserRoles: The assigned user roles to delete in batch,
+	// specified as a list of assigned_user_role_ids. The format of
+	// assigned_user_role_id is `entityType-entityid`, for example
+	// `partner-123`.
+	DeletedAssignedUserRoles []string `json:"deletedAssignedUserRoles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreatedAssignedUserRoles") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedAssignedUserRoles")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditAssignedUserRolesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditAssignedUserRolesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BulkEditAssignedUserRolesResponse struct {
+	// CreatedAssignedUserRoles: The list of assigned user roles that have
+	// been successfully created. This list will be absent if empty.
+	CreatedAssignedUserRoles []*AssignedUserRole `json:"createdAssignedUserRoles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreatedAssignedUserRoles") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreatedAssignedUserRoles")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditAssignedUserRolesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditAssignedUserRolesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BulkEditLineItemAssignedTargetingOptionsRequest: Request message for
 // BulkEditLineItemAssignedTargetingOptions.
 type BulkEditLineItemAssignedTargetingOptionsRequest struct {
 	// CreateRequests: The assigned targeting options to create in batch,
-	// specified as a list of
-	// `CreateAssignedTargetingOptionsRequest`.
+	// specified as a list of `CreateAssignedTargetingOptionsRequest`.
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 
 	// DeleteRequests: The assigned targeting options to delete in batch,
-	// specified as a list of
-	// `DeleteAssignedTargetingOptionsRequest`.
+	// specified as a list of `DeleteAssignedTargetingOptionsRequest`.
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
@@ -2713,9 +2675,8 @@ func (s *BulkEditLineItemAssignedTargetingOptionsRequest) MarshalJSON() ([]byte,
 
 type BulkEditLineItemAssignedTargetingOptionsResponse struct {
 	// CreatedAssignedTargetingOptions: The list of assigned targeting
-	// options that have been successfully created.
-	//
-	// This list will be absent if empty.
+	// options that have been successfully created. This list will be absent
+	// if empty.
 	CreatedAssignedTargetingOptions []*AssignedTargetingOption `json:"createdAssignedTargetingOptions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2751,13 +2712,11 @@ func (s *BulkEditLineItemAssignedTargetingOptionsResponse) MarshalJSON() ([]byte
 // NegativeKeywordService.BulkEditNegativeKeywords.
 type BulkEditNegativeKeywordsRequest struct {
 	// CreatedNegativeKeywords: The negative keywords to create in batch,
-	// specified as a list of
-	// NegativeKeywords.
+	// specified as a list of NegativeKeywords.
 	CreatedNegativeKeywords []*NegativeKeyword `json:"createdNegativeKeywords,omitempty"`
 
 	// DeletedNegativeKeywords: The negative keywords to delete in batch,
-	// specified as a list of
-	// keyword_values.
+	// specified as a list of keyword_values.
 	DeletedNegativeKeywords []string `json:"deletedNegativeKeywords,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2789,9 +2748,7 @@ func (s *BulkEditNegativeKeywordsRequest) MarshalJSON() ([]byte, error) {
 // NegativeKeywordService.BulkEditNegativeKeywords.
 type BulkEditNegativeKeywordsResponse struct {
 	// NegativeKeywords: The list of negative keywords that have been
-	// successfully created.
-	//
-	// This list will be absent if empty.
+	// successfully created. This list will be absent if empty.
 	NegativeKeywords []*NegativeKeyword `json:"negativeKeywords,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2822,6 +2779,78 @@ func (s *BulkEditNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BulkEditPartnerAssignedTargetingOptionsRequest: Request message for
+// BulkEditPartnerAssignedTargetingOptions.
+type BulkEditPartnerAssignedTargetingOptionsRequest struct {
+	// CreateRequests: The assigned targeting options to create in batch,
+	// specified as a list of `CreateAssignedTargetingOptionsRequest`.
+	// Supported targeting types: * `TARGETING_TYPE_CHANNEL`
+	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
+
+	// DeleteRequests: The assigned targeting options to delete in batch,
+	// specified as a list of `DeleteAssignedTargetingOptionsRequest`.
+	// Supported targeting types: * `TARGETING_TYPE_CHANNEL`
+	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateRequests") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditPartnerAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditPartnerAssignedTargetingOptionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BulkEditPartnerAssignedTargetingOptionsResponse struct {
+	// CreatedAssignedTargetingOptions: The list of assigned targeting
+	// options that have been successfully created. This list will be absent
+	// if empty.
+	CreatedAssignedTargetingOptions []*AssignedTargetingOption `json:"createdAssignedTargetingOptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreatedAssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CreatedAssignedTargetingOptions") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkEditPartnerAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkEditPartnerAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BulkEditSitesRequest: Request message for SiteService.BulkEditSites.
 type BulkEditSitesRequest struct {
 	// AdvertiserId: The ID of the advertiser that owns the parent channel.
@@ -2832,8 +2861,7 @@ type BulkEditSitesRequest struct {
 	CreatedSites []*Site `json:"createdSites,omitempty"`
 
 	// DeletedSites: The sites to delete in batch, specified as a list of
-	// site
-	// url_or_app_ids.
+	// site url_or_app_ids.
 	DeletedSites []string `json:"deletedSites,omitempty"`
 
 	// PartnerId: The ID of the partner that owns the parent channel.
@@ -2865,9 +2893,8 @@ func (s *BulkEditSitesRequest) MarshalJSON() ([]byte, error) {
 // BulkEditSitesResponse: Response message for
 // SiteService.BulkEditSites.
 type BulkEditSitesResponse struct {
-	// Sites: The list of sites that have been successfully created.
-	//
-	// This list will be absent if empty.
+	// Sites: The list of sites that have been successfully created. This
+	// list will be absent if empty.
 	Sites []*Site `json:"sites,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2898,23 +2925,15 @@ func (s *BulkEditSitesResponse) MarshalJSON() ([]byte, error) {
 }
 
 type BulkListAdvertiserAssignedTargetingOptionsResponse struct {
-	// AssignedTargetingOptions: The list of assigned targeting
-	// options.
-	//
+	// AssignedTargetingOptions: The list of assigned targeting options.
 	// This list will be absent if empty.
 	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
 
 	// NextPageToken: A token identifying the next page of results. This
-	// value should be
-	// specified as the
-	// pageToken
-	// in a subsequent BulkListAdvertiserAssignedTargetingOptionsRequest
-	// to
-	// fetch the next page of results. This token will be absent if there
-	// are no
-	// more
-	// assigned_targeting_options
-	// to return.
+	// value should be specified as the pageToken in a subsequent
+	// BulkListAdvertiserAssignedTargetingOptionsRequest to fetch the next
+	// page of results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2947,22 +2966,15 @@ func (s *BulkListAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]by
 }
 
 type BulkListLineItemAssignedTargetingOptionsResponse struct {
-	// AssignedTargetingOptions: The list of assigned targeting
-	// options.
-	//
+	// AssignedTargetingOptions: The list of assigned targeting options.
 	// This list will be absent if empty.
 	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
 
 	// NextPageToken: A token identifying the next page of results. This
-	// value should be
-	// specified as the
-	// pageToken in
-	// a subsequent BulkListLineItemAssignedTargetingOptionsRequest to
-	// fetch
-	// the next page of results. This token will be absent if there are no
-	// more
-	// assigned_targeting_options
-	// to return.
+	// value should be specified as the pageToken in a subsequent
+	// BulkListLineItemAssignedTargetingOptionsRequest to fetch the next
+	// page of results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3011,20 +3023,14 @@ type Campaign struct {
 	// the system.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
-	// DisplayName: Required. The display name of the campaign.
-	//
-	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	// DisplayName: Required. The display name of the campaign. Must be
+	// UTF-8 encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EntityStatus: Required. Controls whether or not the insertion orders
-	// under this campaign
-	// can spend their budgets and bid on inventory.
-	//
-	// * Accepted values are `ENTITY_STATUS_ACTIVE`,
-	// `ENTITY_STATUS_ARCHIVED`, and
-	// `ENTITY_STATUS_PAUSED`.
-	// * For
-	// CreateCampaign method,
+	// under this campaign can spend their budgets and bid on inventory. *
+	// Accepted values are `ENTITY_STATUS_ACTIVE`, `ENTITY_STATUS_ARCHIVED`,
+	// and `ENTITY_STATUS_PAUSED`. * For CreateCampaign method,
 	// `ENTITY_STATUS_ARCHIVED` is not allowed.
 	//
 	// Possible values:
@@ -3033,9 +3039,8 @@ type Campaign struct {
 	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
 	// budget.
 	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
-	// budget spending are disabled. An
-	// entity can be deleted after archived. Deleted entities cannot be
-	// retrieved.
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
 	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
 	// budget spending are disabled.
 	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
@@ -3085,31 +3090,21 @@ func (s *Campaign) MarshalJSON() ([]byte, error) {
 // a campaign.
 type CampaignFlight struct {
 	// PlannedDates: Required. The dates that the campaign is expected to
-	// run. They are resolved
-	// relative to the parent advertiser's time zone.
-	//
-	// * The dates specified here will not affect serving. They are used
-	// to
+	// run. They are resolved relative to the parent advertiser's time zone.
+	// * The dates specified here will not affect serving. They are used to
 	// generate alerts and warnings. For example, if the flight date of any
-	// child
-	// insertion order is outside the range of these dates, the user
-	// interface
-	// will show a warning.
-	// * `start_date` is required and must be the current date or later.
-	// * `end_date` is optional. If specified, it must be the `start_date`
-	// or
-	// later.
-	// * Any specified date must be before the year 2037.
+	// child insertion order is outside the range of these dates, the user
+	// interface will show a warning. * `start_date` is required and must be
+	// the current date or later. * `end_date` is optional. If specified, it
+	// must be the `start_date` or later. * Any specified date must be
+	// before the year 2037.
 	PlannedDates *DateRange `json:"plannedDates,omitempty"`
 
 	// PlannedSpendAmountMicros: The amount the campaign is expected to
-	// spend for its given
-	// planned_dates. This will not limit serving,
-	// but will be used for tracking spend in the DV360 UI.
-	//
-	// The amount is in micros. Must be greater than or equal to 0. For
-	// example,
-	// 500000000 represents 500 standard units of the currency.
+	// spend for its given planned_dates. This will not limit serving, but
+	// will be used for tracking spend in the DV360 UI. The amount is in
+	// micros. Must be greater than or equal to 0. For example, 500000000
+	// represents 500 standard units of the currency.
 	PlannedSpendAmountMicros int64 `json:"plannedSpendAmountMicros,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "PlannedDates") to
@@ -3151,19 +3146,12 @@ type CampaignGoal struct {
 	//   "CAMPAIGN_GOAL_TYPE_ONLINE_ACTION" - Drive online action or visits.
 	CampaignGoalType string `json:"campaignGoalType,omitempty"`
 
-	// PerformanceGoal: Required. The performance goal of the
-	// campaign.
-	//
-	// Acceptable values for
-	// performance_goal_type are:
-	//
-	// * `PERFORMANCE_GOAL_TYPE_CPM`
-	// * `PERFORMANCE_GOAL_TYPE_CPC`
-	// * `PERFORMANCE_GOAL_TYPE_CPA`
-	// * `PERFORMANCE_GOAL_TYPE_CPIAVC`
-	// * `PERFORMANCE_GOAL_TYPE_CTR`
-	// * `PERFORMANCE_GOAL_TYPE_VIEWABILITY`
-	// * `PERFORMANCE_GOAL_TYPE_OTHER`
+	// PerformanceGoal: Required. The performance goal of the campaign.
+	// Acceptable values for performance_goal_type are: *
+	// `PERFORMANCE_GOAL_TYPE_CPM` * `PERFORMANCE_GOAL_TYPE_CPC` *
+	// `PERFORMANCE_GOAL_TYPE_CPA` * `PERFORMANCE_GOAL_TYPE_CPIAVC` *
+	// `PERFORMANCE_GOAL_TYPE_CTR` * `PERFORMANCE_GOAL_TYPE_VIEWABILITY` *
+	// `PERFORMANCE_GOAL_TYPE_OTHER`
 	PerformanceGoal *PerformanceGoal `json:"performanceGoal,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CampaignGoalType") to
@@ -3191,24 +3179,19 @@ func (s *CampaignGoal) MarshalJSON() ([]byte, error) {
 }
 
 // CarrierAndIspAssignedTargetingOptionDetails: Details for assigned
-// carrier and ISP targeting option. This will be populated
-// in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// carrier and ISP targeting option. This will be populated in the
+// details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_CARRIER_AND_ISP`.
 type CarrierAndIspAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the carrier or ISP.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Negative: Indicates if this option is being negatively targeted. All
-	// assigned carrier
-	// and ISP targeting options on the same line item must have the same
-	// value
-	// for this field.
+	// assigned carrier and ISP targeting options on the same line item must
+	// have the same value for this field.
 	Negative bool `json:"negative,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_CARRIER_AND_ISP`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -3236,10 +3219,8 @@ func (s *CarrierAndIspAssignedTargetingOptionDetails) MarshalJSON() ([]byte, err
 }
 
 // CarrierAndIspTargetingOptionDetails: Represents a targetable carrier
-// or ISP. This will be populated in the
-// carrier_and_isp_details field of
-// a TargetingOption when
-// targeting_type is
+// or ISP. This will be populated in the carrier_and_isp_details field
+// of a TargetingOption when targeting_type is
 // `TARGETING_TYPE_CARRIER_AND_ISP`.
 type CarrierAndIspTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the carrier or ISP.
@@ -3280,10 +3261,8 @@ func (s *CarrierAndIspTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // CategoryAssignedTargetingOptionDetails: Assigned category targeting
-// option details. This will be populated in the
-// category_details field when
-// targeting_type is
-// `TARGETING_TYPE_CATEGORY`.
+// option details. This will be populated in the category_details field
+// when targeting_type is `TARGETING_TYPE_CATEGORY`.
 type CategoryAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the category.
 	DisplayName string `json:"displayName,omitempty"`
@@ -3291,10 +3270,8 @@ type CategoryAssignedTargetingOptionDetails struct {
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id field
-	// when
-	// targeting_type is
-	// `TARGETING_TYPE_CATEGORY`.
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CATEGORY`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -3321,10 +3298,8 @@ func (s *CategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // CategoryTargetingOptionDetails: Represents a targetable category.
-// This will be populated in the
-// category_details field of a
-// TargetingOption when targeting_type is
-// `TARGETING_TYPE_CATEGORY`.
+// This will be populated in the category_details field of a
+// TargetingOption when targeting_type is `TARGETING_TYPE_CATEGORY`.
 type CategoryTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the category.
 	DisplayName string `json:"displayName,omitempty"`
@@ -3362,8 +3337,8 @@ type Channel struct {
 	// system.
 	ChannelId int64 `json:"channelId,omitempty,string"`
 
-	// DisplayName: Required. The display name of the channel.
-	// Must be UTF-8 encoded with a maximum length of 240 bytes.
+	// DisplayName: Required. The display name of the channel. Must be UTF-8
+	// encoded with a maximum length of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Output only. The resource name of the channel.
@@ -3400,24 +3375,19 @@ func (s *Channel) MarshalJSON() ([]byte, error) {
 }
 
 // ChannelAssignedTargetingOptionDetails: Details for assigned channel
-// targeting option. This will be populated in
-// the details field of an AssignedTargetingOption when
-// targeting_type is
+// targeting option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_CHANNEL`.
 type ChannelAssignedTargetingOptionDetails struct {
 	// ChannelId: Required. ID of the channel. Should refer to the channel
-	// ID
-	// field on a
-	// [Partner-owned channel](partners.channels#Channel.FIELDS.channel_id)
-	// or
+	// ID field on a [Partner-owned
+	// channel](partners.channels#Channel.FIELDS.channel_id) or
 	// [advertiser-owned
-	// channel](advertisers.channels#Channel.FIELDS.channel_id)
-	// resource.
+	// channel](advertisers.channels#Channel.FIELDS.channel_id) resource.
 	ChannelId int64 `json:"channelId,omitempty,string"`
 
 	// Negative: Indicates if this option is being negatively targeted. For
-	// advertiser
-	// level assigned targeting option, this field must be true.
+	// advertiser level assigned targeting option, this field must be true.
 	Negative bool `json:"negative,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
@@ -3444,12 +3414,10 @@ func (s *ChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // CmHybridConfig: Settings for advertisers that use both Campaign
-// Manager (CM) and third-party
-// ad servers.
+// Manager (CM) and third-party ad servers.
 type CmHybridConfig struct {
 	// CmAccountId: Required. Immutable. Account ID of the CM Floodlight
-	// configuration linked with the DV360
-	// advertiser.
+	// configuration linked with the DV360 advertiser.
 	CmAccountId int64 `json:"cmAccountId,omitempty,string"`
 
 	// CmFloodlightConfigId: Required. Immutable. ID of the CM Floodlight
@@ -3457,22 +3425,16 @@ type CmHybridConfig struct {
 	CmFloodlightConfigId int64 `json:"cmFloodlightConfigId,omitempty,string"`
 
 	// CmFloodlightLinkingAuthorized: Required. Immutable. By setting this
-	// field to `true`, you, on behalf of your company,
-	// authorize the sharing of information from the given
-	// Floodlight
-	// configuration to this Display & Video 360 advertiser.
+	// field to `true`, you, on behalf of your company, authorize the
+	// sharing of information from the given Floodlight configuration to
+	// this Display & Video 360 advertiser.
 	CmFloodlightLinkingAuthorized bool `json:"cmFloodlightLinkingAuthorized,omitempty"`
 
 	// CmSyncableSiteIds: A list of CM sites whose placements will be synced
-	// to DV360 as creatives.
-	//
-	// If absent or empty in
-	// CreateAdvertiser method, the system
-	// will automatically create a CM site.
-	//
-	// Removing sites from this list may cause DV360 creatives synced from
-	// CM to
-	// be deleted. At least one site must be specified.
+	// to DV360 as creatives. If absent or empty in CreateAdvertiser method,
+	// the system will automatically create a CM site. Removing sites from
+	// this list may cause DV360 creatives synced from CM to be deleted. At
+	// least one site must be specified.
 	CmSyncableSiteIds googleapi.Int64s `json:"cmSyncableSiteIds,omitempty"`
 
 	// Dv360ToCmCostReportingEnabled: Whether or not to report DV360 cost to
@@ -3546,8 +3508,7 @@ type CombinedAudience struct {
 	// audience. Assigned by the system.
 	CombinedAudienceId int64 `json:"combinedAudienceId,omitempty,string"`
 
-	// DisplayName: Output only. The display name of the combined
-	// audience.
+	// DisplayName: Output only. The display name of the combined audience.
 	// .
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -3582,16 +3543,14 @@ func (s *CombinedAudience) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CombinedAudienceGroup: Details of combined audience group.
-// All combined audience targeting settings are logically ‘OR’ of
-// each other.
+// CombinedAudienceGroup: Details of combined audience group. All
+// combined audience targeting settings are logically ‘OR’ of each
+// other.
 type CombinedAudienceGroup struct {
 	// Settings: Required. All combined audience targeting settings in
-	// combined audience group.
-	// Repeated settings with same id will be ignored.
-	// The number of combined audience settings should be no more than five,
-	// error
-	// will be thrown otherwise.
+	// combined audience group. Repeated settings with same id will be
+	// ignored. The number of combined audience settings should be no more
+	// than five, error will be thrown otherwise.
 	Settings []*CombinedAudienceTargetingSetting `json:"settings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Settings") to
@@ -3621,8 +3580,7 @@ func (s *CombinedAudienceGroup) MarshalJSON() ([]byte, error) {
 // targeting setting.
 type CombinedAudienceTargetingSetting struct {
 	// CombinedAudienceId: Required. Combined audience id of combined
-	// audience targeting setting.
-	// This id is combined_audience_id.
+	// audience targeting setting. This id is combined_audience_id.
 	CombinedAudienceId int64 `json:"combinedAudienceId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CombinedAudienceId")
@@ -3650,23 +3608,17 @@ func (s *CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 }
 
 // ContentInstreamPositionAssignedTargetingOptionDetails: Assigned
-// content instream position targeting option details. This will
-// be
-// populated in the
-// content_instream_position_details
-// field when
-// targeting_type is
-// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
+// content instream position targeting option details. This will be
+// populated in the content_instream_position_details field when
+// targeting_type is `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
 type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	// ContentInstreamPosition: Output only. The content instream position
 	// for video or audio ads.
 	//
 	// Possible values:
 	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
-	// is not specified in this version. This enum is a
-	// place holder for a default value and does not represent a real in
-	// stream ad
-	// position.
+	// is not specified in this version. This enum is a place holder for a
+	// default value and does not represent a real in stream ad position.
 	//   "CONTENT_INSTREAM_POSITION_PRE_ROLL" - Ads that play before
 	// streaming content.
 	//   "CONTENT_INSTREAM_POSITION_MID_ROLL" - Ads that play between the
@@ -3675,10 +3627,8 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	// streaming content.
 	ContentInstreamPosition string `json:"contentInstreamPosition,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id field
-	// when
-	// targeting_type is
-	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3707,22 +3657,17 @@ func (s *ContentInstreamPositionAssignedTargetingOptionDetails) MarshalJSON() ([
 }
 
 // ContentInstreamPositionTargetingOptionDetails: Represents a
-// targetable content instream position, which could be used by
-// video and audio ads. This will be populated in
-// the
-// content_instream_position_details
-// field when targeting_type
-// is
+// targetable content instream position, which could be used by video
+// and audio ads. This will be populated in the
+// content_instream_position_details field when targeting_type is
 // `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
 type ContentInstreamPositionTargetingOptionDetails struct {
 	// ContentInstreamPosition: Output only. The content instream position.
 	//
 	// Possible values:
 	//   "CONTENT_INSTREAM_POSITION_UNSPECIFIED" - Content instream position
-	// is not specified in this version. This enum is a
-	// place holder for a default value and does not represent a real in
-	// stream ad
-	// position.
+	// is not specified in this version. This enum is a place holder for a
+	// default value and does not represent a real in stream ad position.
 	//   "CONTENT_INSTREAM_POSITION_PRE_ROLL" - Ads that play before
 	// streaming content.
 	//   "CONTENT_INSTREAM_POSITION_MID_ROLL" - Ads that play between the
@@ -3757,22 +3702,17 @@ func (s *ContentInstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, e
 }
 
 // ContentOutstreamPositionAssignedTargetingOptionDetails: Assigned
-// content outstream position targeting option details. This will
-// be
-// populated in the
-// content_outstream_position_details
-// field when
-// targeting_type is
-// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
+// content outstream position targeting option details. This will be
+// populated in the content_outstream_position_details field when
+// targeting_type is `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	// ContentOutstreamPosition: Output only. The content outstream
 	// position.
 	//
 	// Possible values:
 	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
-	// position is not specified in this version. This enum is a
-	// place holder for a default value and does not represent a real
-	// content
+	// position is not specified in this version. This enum is a place
+	// holder for a default value and does not represent a real content
 	// outstream position.
 	//   "CONTENT_OUTSTREAM_POSITION_UNKNOWN" - The ad position is unknown
 	// in the content outstream.
@@ -3781,18 +3721,15 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	//   "CONTENT_OUTSTREAM_POSITION_IN_BANNER" - Ads that display on the
 	// top and the sides of a page.
 	//   "CONTENT_OUTSTREAM_POSITION_IN_FEED" - Ads that appear in a
-	// scrollable stream of content. A feed is typically
-	// editorial (e.g. a list of articles or news) or listings (e.g. a list
-	// of
-	// products or services).
+	// scrollable stream of content. A feed is typically editorial (e.g. a
+	// list of articles or news) or listings (e.g. a list of products or
+	// services).
 	//   "CONTENT_OUTSTREAM_POSITION_INTERSTITIAL" - Ads shown before or
 	// between content loads.
 	ContentOutstreamPosition string `json:"contentOutstreamPosition,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id field
-	// when
-	// targeting_type is
-	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3821,12 +3758,9 @@ func (s *ContentOutstreamPositionAssignedTargetingOptionDetails) MarshalJSON() (
 }
 
 // ContentOutstreamPositionTargetingOptionDetails: Represents a
-// targetable content outstream position, which could be used by
-// display and video ads. This will be populated in
-// the
-// content_outstream_position_details
-// field when targeting_type
-// is
+// targetable content outstream position, which could be used by display
+// and video ads. This will be populated in the
+// content_outstream_position_details field when targeting_type is
 // `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 type ContentOutstreamPositionTargetingOptionDetails struct {
 	// ContentOutstreamPosition: Output only. The content outstream
@@ -3834,9 +3768,8 @@ type ContentOutstreamPositionTargetingOptionDetails struct {
 	//
 	// Possible values:
 	//   "CONTENT_OUTSTREAM_POSITION_UNSPECIFIED" - Content outstream
-	// position is not specified in this version. This enum is a
-	// place holder for a default value and does not represent a real
-	// content
+	// position is not specified in this version. This enum is a place
+	// holder for a default value and does not represent a real content
 	// outstream position.
 	//   "CONTENT_OUTSTREAM_POSITION_UNKNOWN" - The ad position is unknown
 	// in the content outstream.
@@ -3845,10 +3778,9 @@ type ContentOutstreamPositionTargetingOptionDetails struct {
 	//   "CONTENT_OUTSTREAM_POSITION_IN_BANNER" - Ads that display on the
 	// top and the sides of a page.
 	//   "CONTENT_OUTSTREAM_POSITION_IN_FEED" - Ads that appear in a
-	// scrollable stream of content. A feed is typically
-	// editorial (e.g. a list of articles or news) or listings (e.g. a list
-	// of
-	// products or services).
+	// scrollable stream of content. A feed is typically editorial (e.g. a
+	// list of articles or news) or listings (e.g. a list of products or
+	// services).
 	//   "CONTENT_OUTSTREAM_POSITION_INTERSTITIAL" - Ads shown before or
 	// between content loads.
 	ContentOutstreamPosition string `json:"contentOutstreamPosition,omitempty"`
@@ -3879,28 +3811,19 @@ func (s *ContentOutstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, 
 }
 
 // ConversionCountingConfig: Settings that control how conversions are
-// counted.
-//
-// All post-click conversions will be counted. A percentage value can be
-// set
-// for post-view conversions counting.
+// counted. All post-click conversions will be counted. A percentage
+// value can be set for post-view conversions counting.
 type ConversionCountingConfig struct {
 	// FloodlightActivityConfigs: The Floodlight activity configs used to
-	// track conversions.
-	//
-	// The number of conversions counted is the sum of all of the
-	// conversions
-	// counted by all of the Floodlight activity IDs specified in this
-	// field.
+	// track conversions. The number of conversions counted is the sum of
+	// all of the conversions counted by all of the Floodlight activity IDs
+	// specified in this field.
 	FloodlightActivityConfigs []*TrackingFloodlightActivityConfig `json:"floodlightActivityConfigs,omitempty"`
 
 	// PostViewCountPercentageMillis: The percentage of post-view
-	// conversions to count, in millis (1/1000 of a
-	// percent). Must be between 0 and 100000 inclusive.
-	//
-	// For example, to track 50% of the post-click conversions, set a value
-	// of
-	// 50000.
+	// conversions to count, in millis (1/1000 of a percent). Must be
+	// between 0 and 100000 inclusive. For example, to track 50% of the
+	// post-click conversions, set a value of 50000.
 	PostViewCountPercentageMillis int64 `json:"postViewCountPercentageMillis,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3963,9 +3886,8 @@ func (s *CounterEvent) MarshalJSON() ([]byte, error) {
 // CreateAssetRequest: A request message for CreateAsset.
 type CreateAssetRequest struct {
 	// Filename: Required. The filename of the asset, including the file
-	// extension.
-	//
-	// The filename must be UTF-8 encoded with a maximum size of 240 bytes.
+	// extension. The filename must be UTF-8 encoded with a maximum size of
+	// 240 bytes.
 	Filename string `json:"filename,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filename") to
@@ -4024,8 +3946,8 @@ func (s *CreateAssetResponse) MarshalJSON() ([]byte, error) {
 }
 
 // CreateAssignedTargetingOptionsRequest: A request listing which
-// assigned targeting options of a given targeting type
-// should be created and added.
+// assigned targeting options of a given targeting type should be
+// created and added.
 type CreateAssignedTargetingOptionsRequest struct {
 	// AssignedTargetingOptions: Required. The assigned targeting options to
 	// create and add.
@@ -4052,8 +3974,7 @@ type CreateAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_REGIONAL_LOCATION_LIST" - Target ads to the
 	// specified regions on a regional location list.
 	//   "TARGETING_TYPE_PROXIMITY_LOCATION_LIST" - Target ads to the
-	// specified points of interest on a proximity location
-	// list.
+	// specified points of interest on a proximity location list.
 	//   "TARGETING_TYPE_GENDER" - Target ads to a specific gender (for
 	// example, female or male).
 	//   "TARGETING_TYPE_VIDEO_PLAYER_SIZE" - Target a specific video player
@@ -4061,19 +3982,17 @@ type CreateAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_USER_REWARDED_CONTENT" - Target user rewarded
 	// content for video ads.
 	//   "TARGETING_TYPE_PARENTAL_STATUS" - Target ads to a specific
-	// parental status (for example, parent or not a
-	// parent).
+	// parental status (for example, parent or not a parent).
 	//   "TARGETING_TYPE_CONTENT_INSTREAM_POSITION" - Target video or audio
-	// ads in a specific content instream position (for
-	// example, pre-roll, mid-roll, or post-roll).
+	// ads in a specific content instream position (for example, pre-roll,
+	// mid-roll, or post-roll).
 	//   "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION" - Target ads in a
 	// specific content outstream position.
 	//   "TARGETING_TYPE_DEVICE_TYPE" - Target ads to a specific device type
 	// (for example, tablet or connected TV).
 	//   "TARGETING_TYPE_AUDIENCE_GROUP" - Target ads to an audience or
-	// groups of audiences.
-	// Singleton field, at most one can exist on a single Lineitem at a
-	// time.
+	// groups of audiences. Singleton field, at most one can exist on a
+	// single Lineitem at a time.
 	//   "TARGETING_TYPE_BROWSER" - Target ads to specific web browsers (for
 	// example, Chrome).
 	//   "TARGETING_TYPE_HOUSEHOLD_INCOME" - Target ads to a specific
@@ -4081,23 +4000,21 @@ type CreateAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_ON_SCREEN_POSITION" - Target ads in a specific on
 	// screen position.
 	//   "TARGETING_TYPE_THIRD_PARTY_VERIFIER" - Filter web sites through
-	// third party verification (for example, IAS or
-	// DoubleVerify).
+	// third party verification (for example, IAS or DoubleVerify).
 	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites
-	// by specific digital content label ratings (for example,
-	// DL-MA: suitable only for mature audiences).
+	// by specific digital content label ratings (for example, DL-MA:
+	// suitable only for mature audiences).
 	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website
 	// content by sensitive categories (for example, adult).
 	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment
 	// (for example, web or app).
 	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
-	// carrier or internet service provider
-	// (ISP) (for example, Comcast or Orange).
+	// carrier or internet service provider (ISP) (for example, Comcast or
+	// Orange).
 	//   "TARGETING_TYPE_OPERATING_SYSTEM" - Target ads to a specific
 	// operating system (for example, macOS).
 	//   "TARGETING_TYPE_DEVICE_MAKE_MODEL" - Target ads to a specific
-	// device make or model (for example, Roku or
-	// Samsung).
+	// device make or model (for example, Roku or Samsung).
 	//   "TARGETING_TYPE_KEYWORD" - Target ads to a specific keyword (for
 	// example, dog or retriever).
 	//   "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST" - Target ads to a specific
@@ -4105,8 +4022,7 @@ type CreateAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_VIEWABILITY" - Target ads to a specific viewability
 	// (for example, 80% viewable).
 	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content
-	// category (for example, arts &
-	// entertainment).
+	// category (for example, arts & entertainment).
 	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from
 	// specific deals and auction packages.
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
@@ -4161,22 +4077,19 @@ type CreateSdfDownloadTaskRequest struct {
 	InventorySourceFilter *InventorySourceFilter `json:"inventorySourceFilter,omitempty"`
 
 	// ParentEntityFilter: Filters on selected file types. The entities in
-	// each file are filtered
-	//  by a chosen set of filter entities. The filter entities must be the
-	// same
-	//  type as, or a parent type of, the selected file types.
+	// each file are filtered by a chosen set of filter entities. The filter
+	// entities must be the same type as, or a parent type of, the selected
+	// file types.
 	ParentEntityFilter *ParentEntityFilter `json:"parentEntityFilter,omitempty"`
 
 	// PartnerId: The ID of the partner to download SDF for.
 	PartnerId int64 `json:"partnerId,omitempty,string"`
 
-	// Version: Required. The SDF version of the downloaded file. If set
-	// to
+	// Version: Required. The SDF version of the downloaded file. If set to
 	// `SDF_VERSION_UNSPECIFIED`, this will default to the version specified
-	// by
-	// the advertiser or partner identified by `root_id`. An advertiser
-	// inherits
-	// its SDF version from its partner unless configured otherwise.
+	// by the advertiser or partner identified by `root_id`. An advertiser
+	// inherits its SDF version from its partner unless configured
+	// otherwise.
 	//
 	// Possible values:
 	//   "SDF_VERSION_UNSPECIFIED" - SDF version value is not specified or
@@ -4215,22 +4128,16 @@ func (s *CreateSdfDownloadTaskRequest) MarshalJSON() ([]byte, error) {
 
 // Creative: A single Creative.
 type Creative struct {
-	// AdditionalDimensions: Additional dimensions.
-	// Applicable when creative_type is one of:
-	//
-	// * `CREATIVE_TYPE_STANDARD`
-	// * `CREATIVE_TYPE_EXPANDABLE`
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_TEMPLATED_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_LIGHTBOX`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_PUBLISHER_HOSTED`
-	//
-	// If this field is specified, width_pixels and
-	// height_pixels are both required and must be
-	// greater than or equal to 0.
+	// AdditionalDimensions: Additional dimensions. Applicable when
+	// creative_type is one of: * `CREATIVE_TYPE_STANDARD` *
+	// `CREATIVE_TYPE_EXPANDABLE` * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_TEMPLATED_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` * `CREATIVE_TYPE_LIGHTBOX` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_PUBLISHER_HOSTED` If this field is specified,
+	// width_pixels and height_pixels are both required and must be greater
+	// than or equal to 0.
 	AdditionalDimensions []*Dimensions `json:"additionalDimensions,omitempty"`
 
 	// AdvertiserId: Output only. The unique ID of the advertiser the
@@ -4241,76 +4148,47 @@ type Creative struct {
 	// creative tag.
 	AppendedTag string `json:"appendedTag,omitempty"`
 
-	// Assets: Required. Assets associated to this creative.
-	// Assets can be associated to the creative in one of following
-	// roles:
-	//
-	// * `ASSET_ROLE_UNSPECIFIED`
-	// * `ASSET_ROLE_MAIN`
-	// * `ASSET_ROLE_BACKUP`
-	// * `ASSET_ROLE_POLITE_LOAD`
+	// Assets: Required. Assets associated to this creative. Assets can be
+	// associated to the creative in one of following roles: *
+	// `ASSET_ROLE_UNSPECIFIED` * `ASSET_ROLE_MAIN` * `ASSET_ROLE_BACKUP` *
+	// `ASSET_ROLE_POLITE_LOAD`
 	Assets []*AssetAssociation `json:"assets,omitempty"`
 
 	// CmPlacementId: Output only. The unique ID of the Campaign Manager
-	// placement associated with the
-	// creative.
-	// This field is only applicable for creatives that are synced from
-	// Campaign
-	// Manager.
+	// placement associated with the creative. This field is only applicable
+	// for creatives that are synced from Campaign Manager.
 	CmPlacementId int64 `json:"cmPlacementId,omitempty,string"`
 
 	// CmTrackingAd: The Campaign Manager tracking ad associated with the
-	// creative.
-	//
-	// Optional for the following creative_type when
-	// created by an advertiser that uses both Campaign Manager and
-	// third-party ad
-	// serving:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	//
-	// Output only for other cases.
+	// creative. Optional for the following creative_type when created by an
+	// advertiser that uses both Campaign Manager and third-party ad
+	// serving: * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` Output only for other
+	// cases.
 	CmTrackingAd *CmTrackingAd `json:"cmTrackingAd,omitempty"`
 
 	// CompanionCreativeIds: The IDs of companion creatives for a video
-	// creative.
-	//
-	// You can assign existing display creatives (with image or HTML5
-	// assets)
-	// to serve surrounding the publisher's video player. Companions
-	// display
-	// around the video player while the video is playing and remain after
-	// the
-	// video has completed.
-	//
-	// Creatives contain additional dimensions
-	// can not be companion creatives.
-	//
-	// This field is only supported for following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_AUDIO`
-	// * `CREATIVE_TYPE_VIDEO`
+	// creative. You can assign existing display creatives (with image or
+	// HTML5 assets) to serve surrounding the publisher's video player.
+	// Companions display around the video player while the video is playing
+	// and remain after the video has completed. Creatives contain
+	// additional dimensions can not be companion creatives. This field is
+	// only supported for following creative_type: * `CREATIVE_TYPE_AUDIO` *
+	// `CREATIVE_TYPE_VIDEO`
 	CompanionCreativeIds googleapi.Int64s `json:"companionCreativeIds,omitempty"`
 
-	// CounterEvents: Counter events for a rich media creative.
-	// Counters track the number of times that a user interacts with any
-	// part of a
+	// CounterEvents: Counter events for a rich media creative. Counters
+	// track the number of times that a user interacts with any part of a
 	// rich media creative in a specified way (mouse-overs, mouse-outs,
-	// clicks,
-	// taps, data loading, keyboard entries, etc.).
-	// Any event that can be captured in the creative can be recorded as
-	// a
-	// counter.
-	// Leave it empty or unset for creatives containing image assets only.
+	// clicks, taps, data loading, keyboard entries, etc.). Any event that
+	// can be captured in the creative can be recorded as a counter. Leave
+	// it empty or unset for creatives containing image assets only.
 	CounterEvents []*CounterEvent `json:"counterEvents,omitempty"`
 
 	// CreateTime: Output only. The timestamp when the creative was created.
-	// Assigned by
-	// the system.
+	// Assigned by the system.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// CreativeAttributes: Output only. A list of attributes of the creative
@@ -4335,117 +4213,71 @@ type Creative struct {
 	// Possible values:
 	//   "CREATIVE_TYPE_UNSPECIFIED" - Type value is not specified or is
 	// unknown in this version.
-	//   "CREATIVE_TYPE_STANDARD" - Standard display creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is one of the following:
-	//
-	// * `HOSTING_SOURCE_HOSTED`
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//   "CREATIVE_TYPE_EXPANDABLE" - Expandable creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is `HOSTING_SOURCE_THIRD_PARTY`
-	//   "CREATIVE_TYPE_VIDEO" - Video creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is one of the following:
-	//
-	// * `HOSTING_SOURCE_HOSTED`
-	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_STANDARD" - Standard display creative. Create and
+	// update methods are supported for this creative type if the
+	// hosting_source is one of the following: * `HOSTING_SOURCE_HOSTED` *
+	// `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_EXPANDABLE" - Expandable creative. Create and update
+	// methods are supported for this creative type if the hosting_source is
+	// `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_VIDEO" - Video creative. Create and update methods
+	// are supported for this creative type if the hosting_source is one of
+	// the following: * `HOSTING_SOURCE_HOSTED` *
+	// `HOSTING_SOURCE_THIRD_PARTY`
 	//   "CREATIVE_TYPE_NATIVE" - Native creative rendered by publishers
-	// with assets from advertiser.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	// with assets from advertiser. Create and update methods are supported
+	// for this creative type if the hosting_source is
+	// `HOSTING_SOURCE_HOSTED`
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL" - Templated app install
-	// mobile creative (banner).
-	//
-	// Create and update methods are **not** supported for this creative
-	// type.
-	//   "CREATIVE_TYPE_NATIVE_SITE_SQUARE" - Square native
-	// creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
+	// mobile creative (banner). Create and update methods are **not**
+	// supported for this creative type.
+	//   "CREATIVE_TYPE_NATIVE_SITE_SQUARE" - Square native creative. Create
+	// and update methods are supported for this creative type if the
 	// hosting_source is `HOSTING_SOURCE_HOSTED`
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_INTERSTITIAL" - Interstitial
-	// creative including both display and video.
-	//
-	// Create and update methods are **not** supported for this creative
-	// type.
+	// creative including both display and video. Create and update methods
+	// are **not** supported for this creative type.
 	//   "CREATIVE_TYPE_LIGHTBOX" - Responsive and expandable Lightbox
-	// creative.
-	//
-	// Create and update methods are **not** supported for this creative
-	// type.
-	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL" - Native app install
-	// creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
+	// creative. Create and update methods are **not** supported for this
+	// creative type.
+	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL" - Native app install creative.
+	// Create and update methods are supported for this creative type if the
 	// hosting_source is `HOSTING_SOURCE_HOSTED`
 	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE" - Square native app
-	// install creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is `HOSTING_SOURCE_HOSTED`
-	//   "CREATIVE_TYPE_AUDIO" - Audio creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is `HOSTING_SOURCE_HOSTED`
-	//   "CREATIVE_TYPE_PUBLISHER_HOSTED" - Publisher hosted
-	// creative.
-	//
+	// install creative. Create and update methods are supported for this
+	// creative type if the hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_AUDIO" - Audio creative. Create and update methods
+	// are supported for this creative type if the hosting_source is
+	// `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_PUBLISHER_HOSTED" - Publisher hosted creative.
 	// Create and update methods are **not** supported for this creative
 	// type.
-	//   "CREATIVE_TYPE_NATIVE_VIDEO" - Native video creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
+	//   "CREATIVE_TYPE_NATIVE_VIDEO" - Native video creative. Create and
+	// update methods are supported for this creative type if the
 	// hosting_source is `HOSTING_SOURCE_HOSTED`
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO" - Templated app install
-	// mobile video creative.
-	//
-	// Create and update methods are **not** supported for this creative
-	// type.
+	// mobile video creative. Create and update methods are **not**
+	// supported for this creative type.
 	CreativeType string `json:"creativeType,omitempty"`
 
-	// Dimensions: Required. Primary dimensions of the creative.
-	// Applicable to all creative types. The value of
-	// width_pixels and
-	// height_pixels defaults to `0`
-	// when creative_type is one of:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
-	// * `CREATIVE_TYPE_TEMPLATED_APP_INSTALL_INTERSTITIAL`
-	// * `CREATIVE_TYPE_AUDIO`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
-	// * `CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO`
+	// Dimensions: Required. Primary dimensions of the creative. Applicable
+	// to all creative types. The value of width_pixels and height_pixels
+	// defaults to `0` when creative_type is one of: * `CREATIVE_TYPE_VIDEO`
+	// * `CREATIVE_TYPE_TEMPLATED_APP_INSTALL_INTERSTITIAL` *
+	// `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_NATIVE_VIDEO` *
+	// `CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO`
 	Dimensions *Dimensions `json:"dimensions,omitempty"`
 
-	// DisplayName: Required. The display name of the creative.
-	//
-	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	// DisplayName: Required. The display name of the creative. Must be
+	// UTF-8 encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Dynamic: Output only. Indicates whether the creative is dynamic.
 	Dynamic bool `json:"dynamic,omitempty"`
 
 	// EntityStatus: Required. Controls whether or not the creative can
-	// serve.
-	//
-	// Accepted values are:
-	//
-	// * `ENTITY_STATUS_ACTIVE`
-	// * `ENTITY_STATUS_ARCHIVED`
-	// * `ENTITY_STATUS_PAUSED`
+	// serve. Accepted values are: * `ENTITY_STATUS_ACTIVE` *
+	// `ENTITY_STATUS_ARCHIVED` * `ENTITY_STATUS_PAUSED`
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
@@ -4453,9 +4285,8 @@ type Creative struct {
 	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
 	// budget.
 	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
-	// budget spending are disabled. An
-	// entity can be deleted after archived. Deleted entities cannot be
-	// retrieved.
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
 	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
 	// budget spending are disabled.
 	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
@@ -4464,50 +4295,27 @@ type Creative struct {
 	// for deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
 
-	// ExitEvents: Required. Exit events for this creative.
-	// An exit (also known as a click tag) is any area in your creative
-	// that
-	// someone can click or tap to open an advertiser's landing page.
-	// Every creative must include at least one exit.
-	// You can add an exit to your creative in any of the following ways:
-	//
-	// * Use Google Web Designer's tap area.
-	// * Define a JavaScript variable called "clickTag".
-	// * Use the Enabler (Enabler.exit()) to track exits in rich media
-	// formats.
+	// ExitEvents: Required. Exit events for this creative. An exit (also
+	// known as a click tag) is any area in your creative that someone can
+	// click or tap to open an advertiser's landing page. Every creative
+	// must include at least one exit. You can add an exit to your creative
+	// in any of the following ways: * Use Google Web Designer's tap area. *
+	// Define a JavaScript variable called "clickTag". * Use the Enabler
+	// (Enabler.exit()) to track exits in rich media formats.
 	ExitEvents []*ExitEvent `json:"exitEvents,omitempty"`
 
 	// ExpandOnHover: Optional. Indicates the creative will automatically
-	// expand on hover.
-	//
-	// Optional and only valid for third-party expandable
-	// creatives.
-	// Third-party expandable creatives are creatives with following
-	// hosting
-	// source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_EXPANDABLE`
+	// expand on hover. Optional and only valid for third-party expandable
+	// creatives. Third-party expandable creatives are creatives with
+	// following hosting source: * `HOSTING_SOURCE_THIRD_PARTY` combined
+	// with following creative_type: * `CREATIVE_TYPE_EXPANDABLE`
 	ExpandOnHover bool `json:"expandOnHover,omitempty"`
 
 	// ExpandingDirection: Optional. Specifies the expanding direction of
-	// the creative.
-	//
-	// Required and only valid for third-party expandable
-	// creatives.
-	//
-	// Third-party expandable creatives are creatives with following
-	// hosting
-	// source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_EXPANDABLE`
+	// the creative. Required and only valid for third-party expandable
+	// creatives. Third-party expandable creatives are creatives with
+	// following hosting source: * `HOSTING_SOURCE_THIRD_PARTY` combined
+	// with following creative_type: * `CREATIVE_TYPE_EXPANDABLE`
 	//
 	// Possible values:
 	//   "EXPANDING_DIRECTION_UNSPECIFIED" - The expanding direction is not
@@ -4537,204 +4345,114 @@ type Creative struct {
 	// Possible values:
 	//   "HOSTING_SOURCE_UNSPECIFIED" - Hosting source is not specified or
 	// is unknown in this version.
-	//   "HOSTING_SOURCE_CM" - A creative synced from Campaign
-	// Manager.
-	//
+	//   "HOSTING_SOURCE_CM" - A creative synced from Campaign Manager.
 	// Create and update methods are **not** supported for this hosting
 	// type.
 	//   "HOSTING_SOURCE_THIRD_PARTY" - A creative hosted by a third-party
-	// ad server (3PAS).
-	//
-	// Create and update methods are supported for this hosting type if
-	// the
-	// creative_type is one of the following:
-	//
-	// * `CREATIVE_TYPE_EXPANDABLE`
-	// * `CREATIVE_TYPE_STANDARD`
-	// * `CREATIVE_TYPE_VIDEO`
+	// ad server (3PAS). Create and update methods are supported for this
+	// hosting type if the creative_type is one of the following: *
+	// `CREATIVE_TYPE_EXPANDABLE` * `CREATIVE_TYPE_STANDARD` *
+	// `CREATIVE_TYPE_VIDEO`
 	//   "HOSTING_SOURCE_HOSTED" - A creative created in DV360 and hosted by
-	// Campaign Manager.
-	//
-	// Create and update methods are supported for this hosting type if
-	// the
-	// creative_type is one of the following:
-	//
-	// * `CREATIVE_TYPE_AUDIO`
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
-	// * `CREATIVE_TYPE_STANDARD`
-	// * `CREATIVE_TYPE_VIDEO`
+	// Campaign Manager. Create and update methods are supported for this
+	// hosting type if the creative_type is one of the following: *
+	// `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` * `CREATIVE_TYPE_NATIVE_VIDEO` *
+	// `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_VIDEO`
 	//   "HOSTING_SOURCE_RICH_MEDIA" - A rich media creative created in
-	// Studio and hosted by Campaign Manager.
-	//
-	// Create and update methods are **not** supported for this hosting
-	// type.
+	// Studio and hosted by Campaign Manager. Create and update methods are
+	// **not** supported for this hosting type.
 	HostingSource string `json:"hostingSource,omitempty"`
 
 	// Html5Video: Output only. Indicates the third-party VAST tag creative
-	// requires HTML5 Video support.
-	//
-	// Output only and only valid for third-party VAST tag
-	// creatives.
-	//
-	// Third-party VAST tag creatives are creatives with
-	// following
-	// hosting_source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// requires HTML5 Video support. Output only and only valid for
+	// third-party VAST tag creatives. Third-party VAST tag creatives are
+	// creatives with following hosting_source: *
+	// `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: *
+	// `CREATIVE_TYPE_VIDEO`
 	Html5Video bool `json:"html5Video,omitempty"`
 
 	// IasCampaignMonitoring: Indicates whether Integral Ad Science (IAS)
-	// campaign monitoring is enabled.
-	// To enable this for the creative, make sure
-	// the
-	// Advertiser.creative_config.ias_client_id
-	// has been set to your IAS client ID.
+	// campaign monitoring is enabled. To enable this for the creative, make
+	// sure the Advertiser.creative_config.ias_client_id has been set to
+	// your IAS client ID.
 	IasCampaignMonitoring bool `json:"iasCampaignMonitoring,omitempty"`
 
 	// IntegrationCode: ID information used to link this creative to an
-	// external system.
-	// Must be UTF-8 encoded with a length of no more than 10,000
-	// characters.
+	// external system. Must be UTF-8 encoded with a length of no more than
+	// 10,000 characters.
 	IntegrationCode string `json:"integrationCode,omitempty"`
 
 	// JsTrackerUrl: JavaScript measurement URL from supported third-party
-	// verification
-	// providers (ComScore, DoubleVerify, IAS, Moat). HTML script tags are
-	// not
-	// supported.
-	//
-	// This field is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// verification providers (ComScore, DoubleVerify, IAS, Moat). HTML
+	// script tags are not supported. This field is only supported in
+	// following creative_type: * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	JsTrackerUrl string `json:"jsTrackerUrl,omitempty"`
 
 	// LineItemIds: Output only. The IDs of the line items this creative is
-	// associated with.
-	//
-	// To associate a creative to a line item, use
+	// associated with. To associate a creative to a line item, use
 	// LineItem.creative_ids instead.
 	LineItemIds googleapi.Int64s `json:"lineItemIds,omitempty"`
 
-	// MediaDuration: Output only. Media duration of the
-	// creative.
-	// Applicable when creative_type
-	// is one of:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
-	// * `CREATIVE_TYPE_AUDIO`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
-	// * `CREATIVE_TYPE_PUBLISHER_HOSTED`
+	// MediaDuration: Output only. Media duration of the creative.
+	// Applicable when creative_type is one of: * `CREATIVE_TYPE_VIDEO` *
+	// `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_NATIVE_VIDEO` *
+	// `CREATIVE_TYPE_PUBLISHER_HOSTED`
 	MediaDuration string `json:"mediaDuration,omitempty"`
 
 	// Name: Output only. The resource name of the creative.
 	Name string `json:"name,omitempty"`
 
-	// Notes: User notes for this creative.
-	// Must be UTF-8 encoded with a length of no more than 20,000
-	// characters.
+	// Notes: User notes for this creative. Must be UTF-8 encoded with a
+	// length of no more than 20,000 characters.
 	Notes string `json:"notes,omitempty"`
 
-	// ObaIcon: Specifies the OBA icon for a video creative.
-	//
-	// This field is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// ObaIcon: Specifies the OBA icon for a video creative. This field is
+	// only supported in following creative_type: * `CREATIVE_TYPE_VIDEO`
 	ObaIcon *ObaIcon `json:"obaIcon,omitempty"`
 
 	// ProgressOffset: Amount of time to play the video before counting a
-	// view.
-	//
-	// This field is required when skippable is true.
-	//
-	// This field is only supported for the following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// view. This field is required when skippable is true. This field is
+	// only supported for the following creative_type: *
+	// `CREATIVE_TYPE_VIDEO`
 	ProgressOffset *AudioVideoOffset `json:"progressOffset,omitempty"`
 
 	// RequireHtml5: Optional. Indicates that the creative relies on HTML5
-	// to render properly.
-	//
-	// Optional and only valid for third-party tag creatives.
-	// Third-party tag creatives are creatives with
-	// following
-	// hosting_source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_STANDARD`
-	// * `CREATIVE_TYPE_EXPANDABLE`
+	// to render properly. Optional and only valid for third-party tag
+	// creatives. Third-party tag creatives are creatives with following
+	// hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with
+	// following creative_type: * `CREATIVE_TYPE_STANDARD` *
+	// `CREATIVE_TYPE_EXPANDABLE`
 	RequireHtml5 bool `json:"requireHtml5,omitempty"`
 
 	// RequireMraid: Optional. Indicates that the creative requires MRAID
-	// (Mobile Rich Media Ad Interface
-	// Definitions system).
-	//
-	// Set this if the creative relies on mobile gestures for interactivity,
-	// such
-	// as swiping or tapping.
-	//
-	// Optional and only valid for third-party tag creatives.
-	//
-	// Third-party tag creatives are creatives with
-	// following
-	// hosting_source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_STANDARD`
-	// * `CREATIVE_TYPE_EXPANDABLE`
+	// (Mobile Rich Media Ad Interface Definitions system). Set this if the
+	// creative relies on mobile gestures for interactivity, such as swiping
+	// or tapping. Optional and only valid for third-party tag creatives.
+	// Third-party tag creatives are creatives with following
+	// hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with
+	// following creative_type: * `CREATIVE_TYPE_STANDARD` *
+	// `CREATIVE_TYPE_EXPANDABLE`
 	RequireMraid bool `json:"requireMraid,omitempty"`
 
 	// RequirePingForAttribution: Optional. Indicates that the creative will
-	// wait for a return ping for attribution.
-	//
-	// Only valid when using a Campaign Manager tracking ad with a
-	// third-party ad
-	// server parameter and the ${DC_DBM_TOKEN} macro.
-	//
-	// Optional and only valid for third-party tag creatives or third-party
-	// VAST
-	// tag creatives.
-	//
-	// Third-party tag creatives are creatives with
-	// following
-	// hosting_source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_STANDARD`
-	// * `CREATIVE_TYPE_EXPANDABLE`
-	//
-	// Third-party VAST tag creatives are creatives with
-	// following
-	// hosting_source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// wait for a return ping for attribution. Only valid when using a
+	// Campaign Manager tracking ad with a third-party ad server parameter
+	// and the ${DC_DBM_TOKEN} macro. Optional and only valid for
+	// third-party tag creatives or third-party VAST tag creatives.
+	// Third-party tag creatives are creatives with following
+	// hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with
+	// following creative_type: * `CREATIVE_TYPE_STANDARD` *
+	// `CREATIVE_TYPE_EXPANDABLE` Third-party VAST tag creatives are
+	// creatives with following hosting_source: *
+	// `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: *
+	// `CREATIVE_TYPE_VIDEO`
 	RequirePingForAttribution bool `json:"requirePingForAttribution,omitempty"`
 
 	// ReviewStatus: Output only. The current status of the creative review
@@ -4742,161 +4460,85 @@ type Creative struct {
 	ReviewStatus *ReviewStatusInfo `json:"reviewStatus,omitempty"`
 
 	// SkipOffset: Amount of time to play the video before the skip button
-	// appears.
-	//
-	// This field is required when skippable is true.
-	//
-	// This field is only supported for the following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// appears. This field is required when skippable is true. This field is
+	// only supported for the following creative_type: *
+	// `CREATIVE_TYPE_VIDEO`
 	SkipOffset *AudioVideoOffset `json:"skipOffset,omitempty"`
 
-	// Skippable: Whether the user can choose to skip a video
-	// creative.
-	//
-	// This field is only supported for the following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// Skippable: Whether the user can choose to skip a video creative. This
+	// field is only supported for the following creative_type: *
+	// `CREATIVE_TYPE_VIDEO`
 	Skippable bool `json:"skippable,omitempty"`
 
 	// ThirdPartyTag: Optional. The original third-party tag used for the
-	// creative.
-	//
-	// Required and only valid for third-party tag creatives.
-	//
-	// Third-party tag creatives are creatives with
-	// following
-	// hosting_source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_STANDARD`
-	// * `CREATIVE_TYPE_EXPANDABLE`
+	// creative. Required and only valid for third-party tag creatives.
+	// Third-party tag creatives are creatives with following
+	// hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with
+	// following creative_type: * `CREATIVE_TYPE_STANDARD` *
+	// `CREATIVE_TYPE_EXPANDABLE`
 	ThirdPartyTag string `json:"thirdPartyTag,omitempty"`
 
 	// ThirdPartyUrls: Tracking URLs from third parties to track
-	// interactions with a video
-	// creative.
-	//
-	// This field is only supported for the following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_AUDIO`
-	// * `CREATIVE_TYPE_VIDEO`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// interactions with a video creative. This field is only supported for
+	// the following creative_type: * `CREATIVE_TYPE_AUDIO` *
+	// `CREATIVE_TYPE_VIDEO` * `CREATIVE_TYPE_NATIVE_VIDEO`
 	ThirdPartyUrls []*ThirdPartyUrl `json:"thirdPartyUrls,omitempty"`
 
-	// TimerEvents: Timer custom events for a rich media creative.
-	// Timers track the time during which a user views and interacts with
-	// a
-	// specified part of a rich media creative.
-	// A creative can have multiple timer events, each timed
-	// independently.
-	// Leave it empty or unset for creatives containing image assets only.
+	// TimerEvents: Timer custom events for a rich media creative. Timers
+	// track the time during which a user views and interacts with a
+	// specified part of a rich media creative. A creative can have multiple
+	// timer events, each timed independently. Leave it empty or unset for
+	// creatives containing image assets only.
 	TimerEvents []*TimerEvent `json:"timerEvents,omitempty"`
 
 	// TrackerUrls: Tracking URLs for analytics providers or third-party ad
-	// technology vendors.
-	//
-	// The URLs must start with https (except on inventory that doesn't
-	// require
-	// SSL compliance).
-	// If using macros in your URL, use only macros supported by Display &
-	// Video
-	// 360.
-	//
-	// Standard URLs only, no IMG or SCRIPT tags.
-	//
-	// This field is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_NATIVE`
-	// * `CREATIVE_TYPE_NATIVE_SITE_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL`
-	// * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// technology vendors. The URLs must start with https (except on
+	// inventory that doesn't require SSL compliance). If using macros in
+	// your URL, use only macros supported by Display & Video 360. Standard
+	// URLs only, no IMG or SCRIPT tags. This field is only supported in
+	// following creative_type: * `CREATIVE_TYPE_NATIVE` *
+	// `CREATIVE_TYPE_NATIVE_SITE_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL` *
+	// `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` *
+	// `CREATIVE_TYPE_NATIVE_VIDEO`
 	TrackerUrls []string `json:"trackerUrls,omitempty"`
 
-	// Transcodes: Output only. Audio/Video transcodes.
-	//
-	// Display & Video 360 transcodes the main asset into a number of
-	// alternative
-	// versions that use different file formats or have different
-	// properties
-	// (resolution, audio bit rate, and video bit rate), each designed
-	// for
-	// specific video players or bandwidths.
-	//
-	// These transcodes give a publisher's system more options to choose
-	// from for
-	// each impression on your video and ensures that the appropriate file
-	// serves
-	// based on the viewer’s connection and screen size.
-	//
-	// This field is only supported in following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
-	// * `CREATIVE_TYPE_NATIVE_VIDEO`
+	// Transcodes: Output only. Audio/Video transcodes. Display & Video 360
+	// transcodes the main asset into a number of alternative versions that
+	// use different file formats or have different properties (resolution,
+	// audio bit rate, and video bit rate), each designed for specific video
+	// players or bandwidths. These transcodes give a publisher's system
+	// more options to choose from for each impression on your video and
+	// ensures that the appropriate file serves based on the viewer’s
+	// connection and screen size. This field is only supported in following
+	// creative_type: * `CREATIVE_TYPE_VIDEO` * `CREATIVE_TYPE_NATIVE_VIDEO`
 	// * `CREATIVE_TYPE_AUDIO`
 	Transcodes []*Transcode `json:"transcodes,omitempty"`
 
 	// UniversalAdId: Optional. An optional creative identifier provided by
-	// a registry that is unique
-	// across all platforms.
-	//
-	// Universal Ad ID is part of the VAST 4.0 standard. It can be modified
-	// after
-	// the creative is created.
-	//
-	// This field is only supported for the following
-	// creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// a registry that is unique across all platforms. Universal Ad ID is
+	// part of the VAST 4.0 standard. It can be modified after the creative
+	// is created. This field is only supported for the following
+	// creative_type: * `CREATIVE_TYPE_VIDEO`
 	UniversalAdId *UniversalAdId `json:"universalAdId,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the creative was last
-	// updated. Assigned by
-	// the system.
+	// updated. Assigned by the system.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// VastTagUrl: Optional. The URL of the VAST tag for a third-party VAST
-	// tag creative.
-	//
-	// Required and only valid for third-party VAST tag
-	// creatives.
-	//
-	// Third-party VAST tag creatives are creatives with
-	// following
-	// hosting_source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// tag creative. Required and only valid for third-party VAST tag
+	// creatives. Third-party VAST tag creatives are creatives with
+	// following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined
+	// with following creative_type: * `CREATIVE_TYPE_VIDEO`
 	VastTagUrl string `json:"vastTagUrl,omitempty"`
 
 	// Vpaid: Output only. Indicates the third-party VAST tag creative
-	// requires VPAID (Digital Video
-	// Player-Ad Interface).
-	//
-	// Output only and only valid for third-party VAST tag
-	// creatives.
-	//
-	// Third-party VAST tag creatives are creatives with
-	// following
-	// hosting_source:
-	//
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//
-	// combined with following creative_type:
-	//
-	// * `CREATIVE_TYPE_VIDEO`
+	// requires VPAID (Digital Video Player-Ad Interface). Output only and
+	// only valid for third-party VAST tag creatives. Third-party VAST tag
+	// creatives are creatives with following hosting_source: *
+	// `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: *
+	// `CREATIVE_TYPE_VIDEO`
 	Vpaid bool `json:"vpaid,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4937,98 +4579,59 @@ type CreativeConfig struct {
 	// Possible values:
 	//   "CREATIVE_TYPE_UNSPECIFIED" - Type value is not specified or is
 	// unknown in this version.
-	//   "CREATIVE_TYPE_STANDARD" - Standard display creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is one of the following:
-	//
-	// * `HOSTING_SOURCE_HOSTED`
-	// * `HOSTING_SOURCE_THIRD_PARTY`
-	//   "CREATIVE_TYPE_EXPANDABLE" - Expandable creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is `HOSTING_SOURCE_THIRD_PARTY`
-	//   "CREATIVE_TYPE_VIDEO" - Video creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is one of the following:
-	//
-	// * `HOSTING_SOURCE_HOSTED`
-	// * `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_STANDARD" - Standard display creative. Create and
+	// update methods are supported for this creative type if the
+	// hosting_source is one of the following: * `HOSTING_SOURCE_HOSTED` *
+	// `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_EXPANDABLE" - Expandable creative. Create and update
+	// methods are supported for this creative type if the hosting_source is
+	// `HOSTING_SOURCE_THIRD_PARTY`
+	//   "CREATIVE_TYPE_VIDEO" - Video creative. Create and update methods
+	// are supported for this creative type if the hosting_source is one of
+	// the following: * `HOSTING_SOURCE_HOSTED` *
+	// `HOSTING_SOURCE_THIRD_PARTY`
 	//   "CREATIVE_TYPE_NATIVE" - Native creative rendered by publishers
-	// with assets from advertiser.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is `HOSTING_SOURCE_HOSTED`
+	// with assets from advertiser. Create and update methods are supported
+	// for this creative type if the hosting_source is
+	// `HOSTING_SOURCE_HOSTED`
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL" - Templated app install
-	// mobile creative (banner).
-	//
-	// Create and update methods are **not** supported for this creative
-	// type.
-	//   "CREATIVE_TYPE_NATIVE_SITE_SQUARE" - Square native
-	// creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
+	// mobile creative (banner). Create and update methods are **not**
+	// supported for this creative type.
+	//   "CREATIVE_TYPE_NATIVE_SITE_SQUARE" - Square native creative. Create
+	// and update methods are supported for this creative type if the
 	// hosting_source is `HOSTING_SOURCE_HOSTED`
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_INTERSTITIAL" - Interstitial
-	// creative including both display and video.
-	//
-	// Create and update methods are **not** supported for this creative
-	// type.
+	// creative including both display and video. Create and update methods
+	// are **not** supported for this creative type.
 	//   "CREATIVE_TYPE_LIGHTBOX" - Responsive and expandable Lightbox
-	// creative.
-	//
-	// Create and update methods are **not** supported for this creative
-	// type.
-	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL" - Native app install
-	// creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
+	// creative. Create and update methods are **not** supported for this
+	// creative type.
+	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL" - Native app install creative.
+	// Create and update methods are supported for this creative type if the
 	// hosting_source is `HOSTING_SOURCE_HOSTED`
 	//   "CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE" - Square native app
-	// install creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is `HOSTING_SOURCE_HOSTED`
-	//   "CREATIVE_TYPE_AUDIO" - Audio creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
-	// hosting_source is `HOSTING_SOURCE_HOSTED`
-	//   "CREATIVE_TYPE_PUBLISHER_HOSTED" - Publisher hosted
-	// creative.
-	//
+	// install creative. Create and update methods are supported for this
+	// creative type if the hosting_source is `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_AUDIO" - Audio creative. Create and update methods
+	// are supported for this creative type if the hosting_source is
+	// `HOSTING_SOURCE_HOSTED`
+	//   "CREATIVE_TYPE_PUBLISHER_HOSTED" - Publisher hosted creative.
 	// Create and update methods are **not** supported for this creative
 	// type.
-	//   "CREATIVE_TYPE_NATIVE_VIDEO" - Native video creative.
-	//
-	// Create and update methods are supported for this creative type if
-	// the
+	//   "CREATIVE_TYPE_NATIVE_VIDEO" - Native video creative. Create and
+	// update methods are supported for this creative type if the
 	// hosting_source is `HOSTING_SOURCE_HOSTED`
 	//   "CREATIVE_TYPE_TEMPLATED_APP_INSTALL_VIDEO" - Templated app install
-	// mobile video creative.
-	//
-	// Create and update methods are **not** supported for this creative
-	// type.
+	// mobile video creative. Create and update methods are **not**
+	// supported for this creative type.
 	CreativeType string `json:"creativeType,omitempty"`
 
-	// DisplayCreativeConfig: The configuration for display
-	// creatives.
-	// Applicable when creative_type is
-	// `CREATIVE_TYPE_STANDARD`.
+	// DisplayCreativeConfig: The configuration for display creatives.
+	// Applicable when creative_type is `CREATIVE_TYPE_STANDARD`.
 	DisplayCreativeConfig *InventorySourceDisplayCreativeConfig `json:"displayCreativeConfig,omitempty"`
 
-	// VideoCreativeConfig: The configuration for video
-	// creatives.
-	// Applicable when creative_type is
-	// `CREATIVE_TYPE_VIDEO`.
+	// VideoCreativeConfig: The configuration for video creatives.
+	// Applicable when creative_type is `CREATIVE_TYPE_VIDEO`.
 	VideoCreativeConfig *InventorySourceVideoCreativeConfig `json:"videoCreativeConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreativeType") to
@@ -5054,16 +4657,94 @@ func (s *CreativeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CustomBiddingAlgorithm: A single custom bidding algorithm.
+type CustomBiddingAlgorithm struct {
+	// AdvertiserId: Immutable. The unique ID of the advertiser that owns
+	// the custom bidding algorithm.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// CustomBiddingAlgorithmId: Output only. The unique ID of the custom
+	// bidding algorithm. Assigned by the system.
+	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
+
+	// CustomBiddingAlgorithmType: Required. Immutable. The type of custom
+	// bidding algorithm.
+	//
+	// Possible values:
+	//   "CUSTOM_BIDDING_ALGORITHM_TYPE_UNSPECIFIED" - Algorithm type is not
+	// specified or is unknown in this version.
+	//   "SCRIPT_BASED" - Algorithm generated through customer-uploaded
+	// custom bidding script files.
+	//   "ADS_DATA_HUB_BASED" - Algorithm created through Ads Data Hub
+	// product.
+	CustomBiddingAlgorithmType string `json:"customBiddingAlgorithmType,omitempty"`
+
+	// DisplayName: Required. The display name of the custom bidding
+	// algorithm. Must be UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityStatus: Controls whether or not the custom bidding algorithm
+	// can be used as a bidding strategy. Accepted values are: *
+	// `ENTITY_STATUS_ACTIVE` * `ENTITY_STATUS_ARCHIVED`
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// Name: Output only. The resource name of the custom bidding algorithm.
+	Name string `json:"name,omitempty"`
+
+	// PartnerId: Immutable. The unique ID of the partner that owns the
+	// custom bidding algorithm.
+	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomBiddingAlgorithm) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomBiddingAlgorithm
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CustomList: Describes a custom list entity, such as a custom affinity
-// or custom intent
-// audience list.
+// or custom intent audience list.
 type CustomList struct {
 	// CustomListId: Output only. The unique ID of the custom list. Assigned
 	// by the system.
 	CustomListId int64 `json:"customListId,omitempty,string"`
 
-	// DisplayName: Output only. The display name of the custom list.
-	// .
+	// DisplayName: Output only. The display name of the custom list. .
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Output only. The resource name of the custom list.
@@ -5096,13 +4777,11 @@ func (s *CustomList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CustomListGroup: Details of custom list group.
-// All custom list targeting settings are logically ‘OR’ of each
-// other.
+// CustomListGroup: Details of custom list group. All custom list
+// targeting settings are logically ‘OR’ of each other.
 type CustomListGroup struct {
 	// Settings: Required. All custom list targeting settings in custom list
-	// group.
-	// Repeated settings with same id will be ignored.
+	// group. Repeated settings with same id will be ignored.
 	Settings []*CustomListTargetingSetting `json:"settings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Settings") to
@@ -5130,8 +4809,7 @@ func (s *CustomListGroup) MarshalJSON() ([]byte, error) {
 
 // CustomListTargetingSetting: Details of custom list targeting setting.
 type CustomListTargetingSetting struct {
-	// CustomListId: Required. Custom id of custom list targeting
-	// setting.
+	// CustomListId: Required. Custom id of custom list targeting setting.
 	// This id is custom_list_id.
 	CustomListId int64 `json:"customListId,omitempty,string"`
 
@@ -5159,36 +4837,26 @@ func (s *CustomListTargetingSetting) MarshalJSON() ([]byte, error) {
 }
 
 // Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day
-// and time zone are either specified elsewhere or are not significant.
-// The date
-// is relative to the Proleptic Gregorian Calendar. This can
-// represent:
-//
-// * A full date, with non-zero year, month and day values
-// * A month and day value, with a zero year, e.g. an anniversary
-// * A year on its own, with zero month and day values
-// * A year and month value, with a zero day, e.g. a credit card
-// expiration date
-//
-// Related types are google.type.TimeOfDay and
+// The time of day and time zone are either specified elsewhere or are
+// not significant. The date is relative to the Proleptic Gregorian
+// Calendar. This can represent: * A full date, with non-zero year,
+// month and day values * A month and day value, with a zero year, e.g.
+// an anniversary * A year on its own, with zero month and day values *
+// A year and month value, with a zero day, e.g. a credit card
+// expiration date Related types are google.type.TimeOfDay and
 // `google.protobuf.Timestamp`.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0
-	// if specifying a year by itself or a year and month where the day is
-	// not
-	// significant.
+	// month, or 0 if specifying a year by itself or a year and month where
+	// the day is not significant.
 	Day int64 `json:"day,omitempty"`
 
 	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
-	// without a
-	// month and day.
+	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
 	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without
-	// a year.
+	// without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
@@ -5217,13 +4885,11 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 // DateRange: A date range.
 type DateRange struct {
 	// EndDate: The upper bound of the date range, inclusive. Must specify a
-	// positive value
-	// for `year`, `month`, and `day`.
+	// positive value for `year`, `month`, and `day`.
 	EndDate *Date `json:"endDate,omitempty"`
 
 	// StartDate: The lower bound of the date range, inclusive. Must specify
-	// a positive value
-	// for `year`, `month`, and `day`.
+	// a positive value for `year`, `month`, and `day`.
 	StartDate *Date `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
@@ -5250,11 +4916,9 @@ func (s *DateRange) MarshalJSON() ([]byte, error) {
 }
 
 // DayAndTimeAssignedTargetingOptionDetails: Representation of a segment
-// of time defined on a specific day of the week and
-// with a start and end time.
-// The time represented by `start_hour` must be before the time
-// represented by
-// `end_hour`.
+// of time defined on a specific day of the week and with a start and
+// end time. The time represented by `start_hour` must be before the
+// time represented by `end_hour`.
 type DayAndTimeAssignedTargetingOptionDetails struct {
 	// DayOfWeek: Required. The day of the week for this day and time
 	// targeting setting.
@@ -5271,18 +4935,15 @@ type DayAndTimeAssignedTargetingOptionDetails struct {
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
 	// EndHour: Required. The end hour for day and time targeting. Must be
-	// between 1 (1 hour after
-	// start of day) and 24 (end of day).
+	// between 1 (1 hour after start of day) and 24 (end of day).
 	EndHour int64 `json:"endHour,omitempty"`
 
 	// StartHour: Required. The start hour for day and time targeting. Must
-	// be between 0 (start of day)
-	// and 23 (1 hour before end of day).
+	// be between 0 (start of day) and 23 (1 hour before end of day).
 	StartHour int64 `json:"startHour,omitempty"`
 
 	// TimeZoneResolution: Required. The mechanism used to determine which
-	// timezone to use for this day and time
-	// targeting setting.
+	// timezone to use for this day and time targeting setting.
 	//
 	// Possible values:
 	//   "TIME_ZONE_RESOLUTION_UNSPECIFIED" - Time zone resolution is either
@@ -5317,8 +4978,8 @@ func (s *DayAndTimeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error)
 }
 
 // DeleteAssignedTargetingOptionsRequest: A request listing which
-// assigned targeting options of a given targeting type
-// should be deleted.
+// assigned targeting options of a given targeting type should be
+// deleted.
 type DeleteAssignedTargetingOptionsRequest struct {
 	// AssignedTargetingOptionIds: Required. The assigned targeting option
 	// IDs to delete.
@@ -5345,8 +5006,7 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_REGIONAL_LOCATION_LIST" - Target ads to the
 	// specified regions on a regional location list.
 	//   "TARGETING_TYPE_PROXIMITY_LOCATION_LIST" - Target ads to the
-	// specified points of interest on a proximity location
-	// list.
+	// specified points of interest on a proximity location list.
 	//   "TARGETING_TYPE_GENDER" - Target ads to a specific gender (for
 	// example, female or male).
 	//   "TARGETING_TYPE_VIDEO_PLAYER_SIZE" - Target a specific video player
@@ -5354,19 +5014,17 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_USER_REWARDED_CONTENT" - Target user rewarded
 	// content for video ads.
 	//   "TARGETING_TYPE_PARENTAL_STATUS" - Target ads to a specific
-	// parental status (for example, parent or not a
-	// parent).
+	// parental status (for example, parent or not a parent).
 	//   "TARGETING_TYPE_CONTENT_INSTREAM_POSITION" - Target video or audio
-	// ads in a specific content instream position (for
-	// example, pre-roll, mid-roll, or post-roll).
+	// ads in a specific content instream position (for example, pre-roll,
+	// mid-roll, or post-roll).
 	//   "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION" - Target ads in a
 	// specific content outstream position.
 	//   "TARGETING_TYPE_DEVICE_TYPE" - Target ads to a specific device type
 	// (for example, tablet or connected TV).
 	//   "TARGETING_TYPE_AUDIENCE_GROUP" - Target ads to an audience or
-	// groups of audiences.
-	// Singleton field, at most one can exist on a single Lineitem at a
-	// time.
+	// groups of audiences. Singleton field, at most one can exist on a
+	// single Lineitem at a time.
 	//   "TARGETING_TYPE_BROWSER" - Target ads to specific web browsers (for
 	// example, Chrome).
 	//   "TARGETING_TYPE_HOUSEHOLD_INCOME" - Target ads to a specific
@@ -5374,23 +5032,21 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_ON_SCREEN_POSITION" - Target ads in a specific on
 	// screen position.
 	//   "TARGETING_TYPE_THIRD_PARTY_VERIFIER" - Filter web sites through
-	// third party verification (for example, IAS or
-	// DoubleVerify).
+	// third party verification (for example, IAS or DoubleVerify).
 	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites
-	// by specific digital content label ratings (for example,
-	// DL-MA: suitable only for mature audiences).
+	// by specific digital content label ratings (for example, DL-MA:
+	// suitable only for mature audiences).
 	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website
 	// content by sensitive categories (for example, adult).
 	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment
 	// (for example, web or app).
 	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
-	// carrier or internet service provider
-	// (ISP) (for example, Comcast or Orange).
+	// carrier or internet service provider (ISP) (for example, Comcast or
+	// Orange).
 	//   "TARGETING_TYPE_OPERATING_SYSTEM" - Target ads to a specific
 	// operating system (for example, macOS).
 	//   "TARGETING_TYPE_DEVICE_MAKE_MODEL" - Target ads to a specific
-	// device make or model (for example, Roku or
-	// Samsung).
+	// device make or model (for example, Roku or Samsung).
 	//   "TARGETING_TYPE_KEYWORD" - Target ads to a specific keyword (for
 	// example, dog or retriever).
 	//   "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST" - Target ads to a specific
@@ -5398,8 +5054,7 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_VIEWABILITY" - Target ads to a specific viewability
 	// (for example, 80% viewable).
 	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content
-	// category (for example, arts &
-	// entertainment).
+	// category (for example, arts & entertainment).
 	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from
 	// specific deals and auction packages.
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
@@ -5442,11 +5097,8 @@ func (s *DeleteAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceMakeModelAssignedTargetingOptionDetails: Assigned device make
-// and model targeting option details. This will be
-// populated in the
-// device_make_model_details
-// field when
-// targeting_type is
+// and model targeting option details. This will be populated in the
+// device_make_model_details field when targeting_type is
 // `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
 type DeviceMakeModelAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the device make and
@@ -5456,10 +5108,8 @@ type DeviceMakeModelAssignedTargetingOptionDetails struct {
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id field
-	// when
-	// targeting_type is
-	// `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -5486,12 +5136,9 @@ func (s *DeviceMakeModelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, e
 }
 
 // DeviceMakeModelTargetingOptionDetails: Represents a targetable device
-// make and model. This will be populated in
-// the
-// device_make_model_details
-// field of a TargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
+// make and model. This will be populated in the
+// device_make_model_details field of a TargetingOption when
+// targeting_type is `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
 type DeviceMakeModelTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the device make and
 	// model.
@@ -5521,20 +5168,16 @@ func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceTypeAssignedTargetingOptionDetails: Targeting details for
-// device type. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// device type. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_DEVICE_TYPE`.
 type DeviceTypeAssignedTargetingOptionDetails struct {
 	// DeviceType: Output only. The display name of the device type.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
-	// specified in this version. This
-	// enum is a placeholder for default value and does not represent a
-	// real
-	// device type option.
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real device type option.
 	//   "DEVICE_TYPE_COMPUTER" - The device type is computer.
 	//   "DEVICE_TYPE_CONNECTED_TV" - The device type is connected TV.
 	//   "DEVICE_TYPE_SMART_PHONE" - The device type is smart phone..
@@ -5568,19 +5211,15 @@ func (s *DeviceTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error)
 }
 
 // DeviceTypeTargetingOptionDetails: Represents a targetable device
-// type. This will be populated in the
-// device_type_details field of a
-// TargetingOption when targeting_type is
-// `TARGETING_TYPE_DEVICE_TYPE`.
+// type. This will be populated in the device_type_details field of a
+// TargetingOption when targeting_type is `TARGETING_TYPE_DEVICE_TYPE`.
 type DeviceTypeTargetingOptionDetails struct {
 	// DeviceType: Output only. The device type that is used to be targeted.
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Default value when device type is not
-	// specified in this version. This
-	// enum is a placeholder for default value and does not represent a
-	// real
-	// device type option.
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real device type option.
 	//   "DEVICE_TYPE_COMPUTER" - The device type is computer.
 	//   "DEVICE_TYPE_CONNECTED_TV" - The device type is connected TV.
 	//   "DEVICE_TYPE_SMART_PHONE" - The device type is smart phone..
@@ -5611,10 +5250,8 @@ func (s *DeviceTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // DigitalContentLabelAssignedTargetingOptionDetails: Targeting details
-// for digital content label. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// for digital content label. This will be populated in the details
+// field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
 type DigitalContentLabelAssignedTargetingOptionDetails struct {
 	// ContentRatingTier: Output only. The display name of the digital
@@ -5622,9 +5259,8 @@ type DigitalContentLabelAssignedTargetingOptionDetails struct {
 	//
 	// Possible values:
 	//   "CONTENT_RATING_TIER_UNSPECIFIED" - Content label is not specified
-	// in this version. This enum is a place
-	// holder for a default value and does not represent a real content
-	// rating.
+	// in this version. This enum is a place holder for a default value and
+	// does not represent a real content rating.
 	//   "CONTENT_RATING_TIER_UNRATED" - Content that has not been labeled.
 	//   "CONTENT_RATING_TIER_GENERAL" - Content suitable for general
 	// audiences.
@@ -5665,21 +5301,17 @@ func (s *DigitalContentLabelAssignedTargetingOptionDetails) MarshalJSON() ([]byt
 }
 
 // DigitalContentLabelTargetingOptionDetails: Represents a targetable
-// digital content label rating tier. This will be
-// populated in the
-// digital_content_label_details
-// field of the TargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
+// digital content label rating tier. This will be populated in the
+// digital_content_label_details field of the TargetingOption when
+// targeting_type is `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
 type DigitalContentLabelTargetingOptionDetails struct {
 	// ContentRatingTier: Output only. An enum for the content label brand
 	// safety tiers.
 	//
 	// Possible values:
 	//   "CONTENT_RATING_TIER_UNSPECIFIED" - Content label is not specified
-	// in this version. This enum is a place
-	// holder for a default value and does not represent a real content
-	// rating.
+	// in this version. This enum is a place holder for a default value and
+	// does not represent a real content rating.
 	//   "CONTENT_RATING_TIER_UNRATED" - Content that has not been labeled.
 	//   "CONTENT_RATING_TIER_GENERAL" - Content suitable for general
 	// audiences.
@@ -5755,8 +5387,7 @@ type DoubleVerify struct {
 	//
 	// Possible values:
 	//   "AGE_RATING_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any age rating
-	// options.
+	// doesn't specify any age rating options.
 	//   "APP_AGE_RATE_UNKNOWN" - Apps with unknown age rating.
 	//   "APP_AGE_RATE_4_PLUS" - Apps rated for Everyone (4+).
 	//   "APP_AGE_RATE_9_PLUS" - Apps rated for Everyone (9+).
@@ -5814,8 +5445,7 @@ type DoubleVerifyAppStarRating struct {
 	//
 	// Possible values:
 	//   "APP_STAR_RATE_UNSPECIFIED" - This enum is only a placeholder and
-	// it doesn't specify any app star
-	// rating options.
+	// it doesn't specify any app star rating options.
 	//   "APP_STAR_RATE_1_POINT_5_LESS" - Official Apps with rating < 1.5
 	// Stars.
 	//   "APP_STAR_RATE_2_LESS" - Official Apps with rating < 2 Stars.
@@ -5865,8 +5495,7 @@ type DoubleVerifyBrandSafetyCategories struct {
 	//
 	// Possible values:
 	//   "HIGHER_SEVERITY_UNSPECIFIED" - This enum is only a placeholder and
-	// it doesn't specify any high
-	// severity categories.
+	// it doesn't specify any high severity categories.
 	//   "ADULT_CONTENT_PORNOGRAPHY" - Adult Content: Pornography, Mature
 	// Topics & Nudity.
 	//   "COPYRIGHT_INFRINGEMENT" - Copyright Infringement.
@@ -5885,8 +5514,7 @@ type DoubleVerifyBrandSafetyCategories struct {
 	//
 	// Possible values:
 	//   "MEDIUM_SEVERITY_UNSPECIFIED" - This enum is only a placeholder and
-	// it doesn't specify any medium
-	// severity categories.
+	// it doesn't specify any medium severity categories.
 	//   "AD_SERVERS" - Ad Servers.
 	//   "ADULT_CONTENT_SWIMSUIT" - Adult Content: Swimsuit.
 	//   "ALTERNATIVE_LIFESTYLES" - Controversial Subjects: Alternative
@@ -5943,35 +5571,25 @@ type DoubleVerifyDisplayViewability struct {
 	//
 	// Possible values:
 	//   "IAB_VIEWED_RATE_UNSPECIFIED" - This enum is only a placeholder and
-	// it doesn't specify any IAB viewed
-	// rate options.
+	// it doesn't specify any IAB viewed rate options.
 	//   "IAB_VIEWED_RATE_80_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 80% or
-	// higher.
+	// to maximize IAB viewable rate 80% or higher.
 	//   "IAB_VIEWED_RATE_75_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 75% or
-	// higher.
+	// to maximize IAB viewable rate 75% or higher.
 	//   "IAB_VIEWED_RATE_70_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 70% or
-	// higher.
+	// to maximize IAB viewable rate 70% or higher.
 	//   "IAB_VIEWED_RATE_65_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 65% or
-	// higher.
+	// to maximize IAB viewable rate 65% or higher.
 	//   "IAB_VIEWED_RATE_60_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 60% or
-	// higher.
+	// to maximize IAB viewable rate 60% or higher.
 	//   "IAB_VIEWED_RATE_55_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 55% or
-	// higher.
+	// to maximize IAB viewable rate 55% or higher.
 	//   "IAB_VIEWED_RATE_50_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 50% or
-	// higher.
+	// to maximize IAB viewable rate 50% or higher.
 	//   "IAB_VIEWED_RATE_40_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 40% or
-	// higher.
+	// to maximize IAB viewable rate 40% or higher.
 	//   "IAB_VIEWED_RATE_30_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 30% or
-	// higher.
+	// to maximize IAB viewable rate 30% or higher.
 	Iab string `json:"iab,omitempty"`
 
 	// ViewableDuring: Target web and app inventory to maximize 100%
@@ -5979,17 +5597,13 @@ type DoubleVerifyDisplayViewability struct {
 	//
 	// Possible values:
 	//   "AVERAGE_VIEW_DURATION_UNSPECIFIED" - This enum is only a
-	// placeholder and it doesn't specify any average view
-	// duration options.
+	// placeholder and it doesn't specify any average view duration options.
 	//   "AVERAGE_VIEW_DURATION_5_SEC" - Target web and app inventory to
-	// maximize 100% viewable duration 5
-	// seconds or more.
+	// maximize 100% viewable duration 5 seconds or more.
 	//   "AVERAGE_VIEW_DURATION_10_SEC" - Target web and app inventory to
-	// maximize 100% viewable duration 10
-	// seconds or more.
+	// maximize 100% viewable duration 10 seconds or more.
 	//   "AVERAGE_VIEW_DURATION_15_SEC" - Target web and app inventory to
-	// maximize 100% viewable duration 15
-	// seconds or more.
+	// maximize 100% viewable duration 15 seconds or more.
 	ViewableDuring string `json:"viewableDuring,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Iab") to
@@ -6025,8 +5639,7 @@ type DoubleVerifyFraudInvalidTraffic struct {
 	//
 	// Possible values:
 	//   "FRAUD_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any fraud and
-	// invalid traffic options.
+	// doesn't specify any fraud and invalid traffic options.
 	//   "AD_IMPRESSION_FRAUD_100" - 100% Fraud & IVT.
 	//   "AD_IMPRESSION_FRAUD_50" - 50% or Higher Fraud & IVT.
 	//   "AD_IMPRESSION_FRAUD_25" - 25% or Higher Fraud & IVT.
@@ -6066,13 +5679,11 @@ func (s *DoubleVerifyFraudInvalidTraffic) MarshalJSON() ([]byte, error) {
 // viewability settings.
 type DoubleVerifyVideoViewability struct {
 	// PlayerImpressionRate: Target inventory to maximize impressions with
-	// 400x300 or greater player
-	// size.
+	// 400x300 or greater player size.
 	//
 	// Possible values:
 	//   "PLAYER_SIZE_400X300_UNSPECIFIED" - This enum is only a placeholder
-	// and it doesn't specify any impressions
-	// options.
+	// and it doesn't specify any impressions options.
 	//   "PLAYER_SIZE_400X300_95" - Sites with 95%+ of impressions.
 	//   "PLAYER_SIZE_400X300_70" - Sites with 70%+ of impressions.
 	//   "PLAYER_SIZE_400X300_25" - Sites with 25%+ of impressions.
@@ -6083,35 +5694,25 @@ type DoubleVerifyVideoViewability struct {
 	//
 	// Possible values:
 	//   "VIDEO_IAB_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any video IAB
-	// viewable rate options.
+	// doesn't specify any video IAB viewable rate options.
 	//   "IAB_VIEWABILITY_80_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 80% or
-	// higher.
+	// to maximize IAB viewable rate 80% or higher.
 	//   "IAB_VIEWABILITY_75_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 75% or
-	// higher.
+	// to maximize IAB viewable rate 75% or higher.
 	//   "IAB_VIEWABILITY_70_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 70% or
-	// higher.
+	// to maximize IAB viewable rate 70% or higher.
 	//   "IAB_VIEWABILITY_65_PERCENT_HIHGER" - Target web and app inventory
-	// to maximize IAB viewable rate 65% or
-	// higher.
+	// to maximize IAB viewable rate 65% or higher.
 	//   "IAB_VIEWABILITY_60_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 60% or
-	// higher.
+	// to maximize IAB viewable rate 60% or higher.
 	//   "IAB_VIEWABILITY_55_PERCENT_HIHGER" - Target web and app inventory
-	// to maximize IAB viewable rate 55% or
-	// higher.
+	// to maximize IAB viewable rate 55% or higher.
 	//   "IAB_VIEWABILITY_50_PERCENT_HIGHER" - Target web and app inventory
-	// to maximize IAB viewable rate 50% or
-	// higher.
+	// to maximize IAB viewable rate 50% or higher.
 	//   "IAB_VIEWABILITY_40_PERCENT_HIHGER" - Target web and app inventory
-	// to maximize IAB viewable rate 40% or
-	// higher.
+	// to maximize IAB viewable rate 40% or higher.
 	//   "IAB_VIEWABILITY_30_PERCENT_HIHGER" - Target web and app inventory
-	// to maximize IAB viewable rate 30% or
-	// higher.
+	// to maximize IAB viewable rate 30% or higher.
 	VideoIab string `json:"videoIab,omitempty"`
 
 	// VideoViewableRate: Target web inventory to maximize fully viewable
@@ -6119,8 +5720,7 @@ type DoubleVerifyVideoViewability struct {
 	//
 	// Possible values:
 	//   "VIDEO_VIEWABLE_RATE_UNSPECIFIED" - This enum is only a placeholder
-	// and it doesn't specify any video
-	// viewable rate options.
+	// and it doesn't specify any video viewable rate options.
 	//   "VIEWED_PERFORMANCE_40_PERCENT_HIGHER" - Target web inventory to
 	// maximize fully viewable rate 40% or higher.
 	//   "VIEWED_PERFORMANCE_35_PERCENT_HIGHER" - Target web inventory to
@@ -6161,17 +5761,11 @@ func (s *DoubleVerifyVideoViewability) MarshalJSON() ([]byte, error) {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -6179,41 +5773,31 @@ type Empty struct {
 }
 
 // EnvironmentAssignedTargetingOptionDetails: Assigned environment
-// targeting option details. This will be populated
-// in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// targeting option details. This will be populated in the details field
+// of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_ENVIRONMENT`.
 type EnvironmentAssignedTargetingOptionDetails struct {
 	// Environment: Output only. The serving environment.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
-	// specified in this version. This enum
-	// is a placeholder for default value and does not represent a
-	// real
-	// environment option.
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real environment option.
 	//   "ENVIRONMENT_WEB_OPTIMIZED" - Target inventory displayed in
-	// browsers. This includes inventory that was
-	// designed for the device it was viewed on, such as mobile websites
-	// viewed on
-	// a mobile device. ENVIRONMENT_WEB_NOT_OPTIMIZED, if targeted, should
-	// be
-	// deleted prior to the deletion of this targeting option.
+	// browsers. This includes inventory that was designed for the device it
+	// was viewed on, such as mobile websites viewed on a mobile device.
+	// ENVIRONMENT_WEB_NOT_OPTIMIZED, if targeted, should be deleted prior
+	// to the deletion of this targeting option.
 	//   "ENVIRONMENT_WEB_NOT_OPTIMIZED" - Target inventory displayed in
-	// browsers. This includes inventory that was
-	// not designed for the device but viewed on it, such as websites
-	// optimized
-	// for desktop but viewed on a mobile device. ENVIRONMENT_WEB_OPTIMIZED
-	// should
-	// be targeted prior to the addition of this targeting option.
+	// browsers. This includes inventory that was not designed for the
+	// device but viewed on it, such as websites optimized for desktop but
+	// viewed on a mobile device. ENVIRONMENT_WEB_OPTIMIZED should be
+	// targeted prior to the addition of this targeting option.
 	//   "ENVIRONMENT_APP" - Target inventory displayed in apps.
 	Environment string `json:"environment,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
-	// TargetingOption of type `TARGETING_TYPE_ENVIRONMENT` (e.g.,
-	// "508010"
+	// TargetingOptionId: Required. The targeting_option_id of a
+	// TargetingOption of type `TARGETING_TYPE_ENVIRONMENT` (e.g., "508010"
 	// for targeting the `ENVIRONMENT_WEB_OPTIMIZED` option).
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -6241,33 +5825,26 @@ func (s *EnvironmentAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error
 }
 
 // EnvironmentTargetingOptionDetails: Represents a targetable
-// environment. This will be populated in the
-// environment_details field of a
-// TargetingOption when targeting_type is
+// environment. This will be populated in the environment_details field
+// of a TargetingOption when targeting_type is
 // `TARGETING_TYPE_ENVIRONMENT`.
 type EnvironmentTargetingOptionDetails struct {
 	// Environment: Output only. The serving environment.
 	//
 	// Possible values:
 	//   "ENVIRONMENT_UNSPECIFIED" - Default value when environment is not
-	// specified in this version. This enum
-	// is a placeholder for default value and does not represent a
-	// real
-	// environment option.
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real environment option.
 	//   "ENVIRONMENT_WEB_OPTIMIZED" - Target inventory displayed in
-	// browsers. This includes inventory that was
-	// designed for the device it was viewed on, such as mobile websites
-	// viewed on
-	// a mobile device. ENVIRONMENT_WEB_NOT_OPTIMIZED, if targeted, should
-	// be
-	// deleted prior to the deletion of this targeting option.
+	// browsers. This includes inventory that was designed for the device it
+	// was viewed on, such as mobile websites viewed on a mobile device.
+	// ENVIRONMENT_WEB_NOT_OPTIMIZED, if targeted, should be deleted prior
+	// to the deletion of this targeting option.
 	//   "ENVIRONMENT_WEB_NOT_OPTIMIZED" - Target inventory displayed in
-	// browsers. This includes inventory that was
-	// not designed for the device but viewed on it, such as websites
-	// optimized
-	// for desktop but viewed on a mobile device. ENVIRONMENT_WEB_OPTIMIZED
-	// should
-	// be targeted prior to the addition of this targeting option.
+	// browsers. This includes inventory that was not designed for the
+	// device but viewed on it, such as websites optimized for desktop but
+	// viewed on a mobile device. ENVIRONMENT_WEB_OPTIMIZED should be
+	// targeted prior to the addition of this targeting option.
 	//   "ENVIRONMENT_APP" - Target inventory displayed in apps.
 	Environment string `json:"environment,omitempty"`
 
@@ -6295,13 +5872,11 @@ func (s *EnvironmentTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // ExchangeAssignedTargetingOptionDetails: Details for assigned exchange
-// targeting option. This will be populated in
-// the details field of an AssignedTargetingOption when
-// targeting_type is
+// targeting option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_EXCHANGE`.
 type ExchangeAssignedTargetingOptionDetails struct {
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_EXCHANGE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -6325,6 +5900,142 @@ type ExchangeAssignedTargetingOptionDetails struct {
 
 func (s *ExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ExchangeAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExchangeConfig: Settings that control which exchanges are enabled for
+// a partner.
+type ExchangeConfig struct {
+	// EnabledExchanges: All enabled exchanges in the partner. Duplicate
+	// enabled exchanges will be ignored.
+	EnabledExchanges []*ExchangeConfigEnabledExchange `json:"enabledExchanges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnabledExchanges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnabledExchanges") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExchangeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExchangeConfigEnabledExchange: An enabled exchange in the partner.
+type ExchangeConfigEnabledExchange struct {
+	// Exchange: The enabled exchange.
+	//
+	// Possible values:
+	//   "EXCHANGE_UNSPECIFIED" - Exchange is not specified or is unknown in
+	// this version.
+	//   "EXCHANGE_GOOGLE_AD_MANAGER" - Google Ad Manager.
+	//   "EXCHANGE_APPNEXUS" - AppNexus.
+	//   "EXCHANGE_BRIGHTROLL" - BrightRoll Exchange for Video from Yahoo!.
+	//   "EXCHANGE_ADFORM" - Adform.
+	//   "EXCHANGE_ADMETA" - Admeta.
+	//   "EXCHANGE_ADMIXER" - Admixer.
+	//   "EXCHANGE_ADSMOGO" - AdsMogo.
+	//   "EXCHANGE_ADSWIZZ" - AdsWizz.
+	//   "EXCHANGE_BIDSWITCH" - BidSwitch.
+	//   "EXCHANGE_BRIGHTROLL_DISPLAY" - BrightRoll Exchange for Display
+	// from Yahoo!.
+	//   "EXCHANGE_CADREON" - Cadreon.
+	//   "EXCHANGE_DAILYMOTION" - Dailymotion.
+	//   "EXCHANGE_FIVE" - Five.
+	//   "EXCHANGE_FLUCT" - Fluct.
+	//   "EXCHANGE_FREEWHEEL" - FreeWheel SSP.
+	//   "EXCHANGE_GENIEE" - Geniee.
+	//   "EXCHANGE_GUMGUM" - GumGum.
+	//   "EXCHANGE_IMOBILE" - i-mobile.
+	//   "EXCHANGE_IBILLBOARD" - iBILLBOARD.
+	//   "EXCHANGE_IMPROVE_DIGITAL" - Improve Digital.
+	//   "EXCHANGE_INDEX" - Index Exchange.
+	//   "EXCHANGE_KARGO" - Kargo.
+	//   "EXCHANGE_MICROAD" - MicroAd.
+	//   "EXCHANGE_MOPUB" - MoPub.
+	//   "EXCHANGE_NEND" - Nend.
+	//   "EXCHANGE_ONE_BY_AOL_DISPLAY" - ONE by AOL: Display Market Place.
+	//   "EXCHANGE_ONE_BY_AOL_MOBILE" - ONE by AOL: Mobile.
+	//   "EXCHANGE_ONE_BY_AOL_VIDEO" - ONE by AOL: Video.
+	//   "EXCHANGE_OOYALA" - Ooyala.
+	//   "EXCHANGE_OPENX" - OpenX.
+	//   "EXCHANGE_PERMODO" - Permodo.
+	//   "EXCHANGE_PLATFORMONE" - Platform One.
+	//   "EXCHANGE_PLATFORMID" - PlatformId.
+	//   "EXCHANGE_PUBMATIC" - PubMatic.
+	//   "EXCHANGE_PULSEPOINT" - PulsePoint.
+	//   "EXCHANGE_REVENUEMAX" - RevenueMax.
+	//   "EXCHANGE_RUBICON" - Rubicon.
+	//   "EXCHANGE_SMARTCLIP" - SmartClip.
+	//   "EXCHANGE_SMARTRTB" - SmartRTB+.
+	//   "EXCHANGE_SMARTSTREAMTV" - SmartstreamTv.
+	//   "EXCHANGE_SOVRN" - Sovrn.
+	//   "EXCHANGE_SPOTXCHANGE" - SpotXchange.
+	//   "EXCHANGE_STROER" - Ströer SSP.
+	//   "EXCHANGE_TEADSTV" - TeadsTv.
+	//   "EXCHANGE_TELARIA" - Telaria.
+	//   "EXCHANGE_TVN" - TVN.
+	//   "EXCHANGE_UNITED" - United.
+	//   "EXCHANGE_YIELDLAB" - Yieldlab.
+	//   "EXCHANGE_YIELDMO" - Yieldmo.
+	//   "EXCHANGE_UNRULYX" - UnrulyX
+	//   "EXCHANGE_OPEN8" - Open8
+	//   "EXCHANGE_TRITON" - Triton.
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift
+	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_INMOBI" - InMobi.
+	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_AJA" - Aja.
+	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
+	//   "EXCHANGE_WAZE" - Waze.
+	Exchange string `json:"exchange,omitempty"`
+
+	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
+	// The field is only relevant when Google Ad Manager is the enabled
+	// exchange.
+	GoogleAdManagerAgencyId string `json:"googleAdManagerAgencyId,omitempty"`
+
+	// GoogleAdManagerBuyerNetworkId: Output only. Network ID of Google Ad
+	// Manager. The field is only relevant when Google Ad Manager is the
+	// enabled exchange.
+	GoogleAdManagerBuyerNetworkId string `json:"googleAdManagerBuyerNetworkId,omitempty"`
+
+	// SeatId: Output only. Seat ID of the enabled exchange.
+	SeatId string `json:"seatId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exchange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exchange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExchangeConfigEnabledExchange) MarshalJSON() ([]byte, error) {
+	type NoMethod ExchangeConfigEnabledExchange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6432,11 +6143,8 @@ func (s *ExchangeReviewStatus) MarshalJSON() ([]byte, error) {
 }
 
 // ExchangeTargetingOptionDetails: Represents a targetable exchange.
-// This will be populated in the
-// exchange_details field
-// of a TargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_EXCHANGE`.
+// This will be populated in the exchange_details field of a
+// TargetingOption when targeting_type is `TARGETING_TYPE_EXCHANGE`.
 type ExchangeTargetingOptionDetails struct {
 	// Exchange: Output only. The type of exchange.
 	//
@@ -6530,15 +6238,13 @@ func (s *ExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 
 // ExitEvent: Exit event of the creative.
 type ExitEvent struct {
-	// Name: The name of the click tag of the exit event.
-	//
-	// The name must be unique within one creative.
-	//
-	// Leave it empty or unset for creatives containing image assets only.
+	// Name: The name of the click tag of the exit event. The name must be
+	// unique within one creative. Leave it empty or unset for creatives
+	// containing image assets only.
 	Name string `json:"name,omitempty"`
 
-	// ReportingName: The name used to identify this event in reports.
-	// Leave it empty or unset for creatives containing image assets only.
+	// ReportingName: The name used to identify this event in reports. Leave
+	// it empty or unset for creatives containing image assets only.
 	ReportingName string `json:"reportingName,omitempty"`
 
 	// Type: Required. The type of the exit event.
@@ -6547,16 +6253,13 @@ type ExitEvent struct {
 	//   "EXIT_EVENT_TYPE_UNSPECIFIED" - Exit event type is not specified or
 	// is unknown in this version.
 	//   "EXIT_EVENT_TYPE_DEFAULT" - The exit event is the default one.
-	//   "EXIT_EVENT_TYPE_BACKUP" - The exit event is a backup exit
-	// event.
+	//   "EXIT_EVENT_TYPE_BACKUP" - The exit event is a backup exit event.
 	// There could be multiple backup exit events in a creative.
 	Type string `json:"type,omitempty"`
 
-	// Url: Required. The click through URL of the exit event.
-	// This is required when type is:
-	//
-	// * `EXIT_EVENT_TYPE_DEFAULT`
-	// * `EXIT_EVENT_TYPE_BACKUP`
+	// Url: Required. The click through URL of the exit event. This is
+	// required when type is: * `EXIT_EVENT_TYPE_DEFAULT` *
+	// `EXIT_EVENT_TYPE_BACKUP`
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -6583,22 +6286,15 @@ func (s *ExitEvent) MarshalJSON() ([]byte, error) {
 }
 
 // FirstAndThirdPartyAudience: Describes a first or third party audience
-// list used for targeting.
-// First party audiences are created via usage of client data.
-// Third party audiences are provided by Third Party data providers and
-// can only
-// be licensed to customers.
+// list used for targeting. First party audiences are created via usage
+// of client data. Third party audiences are provided by Third Party
+// data providers and can only be licensed to customers.
 type FirstAndThirdPartyAudience struct {
 	// ActiveDisplayAudienceSize: Output only. The estimated audience size
-	// for the Display network in the past month.
-	//
-	// If the size is less than 1000, the number will be hidden and 0 will
-	// be
-	// returned due to privacy reasons. Otherwise, the number will be
-	// rounded off
-	// to two significant digits.
-	//
-	// Only returned in GET request.
+	// for the Display network in the past month. If the size is less than
+	// 1000, the number will be hidden and 0 will be returned due to privacy
+	// reasons. Otherwise, the number will be rounded off to two significant
+	// digits. Only returned in GET request.
 	ActiveDisplayAudienceSize int64 `json:"activeDisplayAudienceSize,omitempty,string"`
 
 	// AudienceSource: Output only. The source of the audience.
@@ -6620,90 +6316,61 @@ type FirstAndThirdPartyAudience struct {
 	//   "AUDIENCE_TYPE_UNSPECIFIED" - Default value when type is not
 	// specified or is unknown.
 	//   "CUSTOMER_MATCH_CONTACT_INFO" - Audience was generated through
-	// matching customers to known contact
-	// information.
+	// matching customers to known contact information.
 	//   "CUSTOMER_MATCH_DEVICE_ID" - Audience was generated through
-	// matching customers to known Mobile device
-	// IDs.
+	// matching customers to known Mobile device IDs.
 	//   "CUSTOMER_MATCH_USER_ID" - Audience was generated through matching
 	// customers to known User IDs.
 	//   "ACTIVITY_BASED" - Audience was created based on campaign activity.
 	//   "FREQUENCY_CAP" - Audience was created based on excluding the
-	// number of impressions they
-	// were served.
+	// number of impressions they were served.
 	//   "TAG_BASED" - Audience was created based on custom variables
 	// attached to pixel.
 	//   "YOUTUBE_USERS" - Audience was created based on past interactions
-	// with videos, TrueView
-	// ads, or YouTube channel.
+	// with videos, YouTube ads, or YouTube channel.
 	//   "LICENSED" - Subtype of third party audience type.
 	AudienceType string `json:"audienceType,omitempty"`
 
-	// Description: The user-provided description of the audience.
-	//
-	// Only applicable to first party audiences.
+	// Description: The user-provided description of the audience. Only
+	// applicable to first party audiences.
 	Description string `json:"description,omitempty"`
 
 	// DisplayAudienceSize: Output only. The estimated audience size for the
-	// Display network.
-	//
-	// If the size is less than 1000, the number will be hidden and 0 will
-	// be
-	// returned due to privacy reasons. Otherwise, the number will be
-	// rounded off
-	// to two significant digits.
-	//
-	// Only returned in GET request.
+	// Display network. If the size is less than 1000, the number will be
+	// hidden and 0 will be returned due to privacy reasons. Otherwise, the
+	// number will be rounded off to two significant digits. Only returned
+	// in GET request.
 	DisplayAudienceSize int64 `json:"displayAudienceSize,omitempty,string"`
 
 	// DisplayDesktopAudienceSize: Output only. The estimated desktop
-	// audience size in Display network.
-	//
-	// If the size is less than 1000, the number will be hidden and 0 will
-	// be
-	// returned due to privacy reasons. Otherwise, the number will be
-	// rounded off
-	// to two significant digits.
-	//
-	// Only applicable to first party audiences.
-	//
-	// Only returned in GET request.
+	// audience size in Display network. If the size is less than 1000, the
+	// number will be hidden and 0 will be returned due to privacy reasons.
+	// Otherwise, the number will be rounded off to two significant digits.
+	// Only applicable to first party audiences. Only returned in GET
+	// request.
 	DisplayDesktopAudienceSize int64 `json:"displayDesktopAudienceSize,omitempty,string"`
 
 	// DisplayMobileAppAudienceSize: Output only. The estimated mobile app
-	// audience size in Display network.
-	//
-	// If the size is less than 1000, the number will be hidden and 0 will
-	// be
-	// returned due to privacy reasons. Otherwise, the number will be
-	// rounded off
-	// to two significant digits.
-	//
-	// Only applicable to first party audiences.
-	//
-	// Only returned in GET request.
+	// audience size in Display network. If the size is less than 1000, the
+	// number will be hidden and 0 will be returned due to privacy reasons.
+	// Otherwise, the number will be rounded off to two significant digits.
+	// Only applicable to first party audiences. Only returned in GET
+	// request.
 	DisplayMobileAppAudienceSize int64 `json:"displayMobileAppAudienceSize,omitempty,string"`
 
 	// DisplayMobileWebAudienceSize: Output only. The estimated mobile web
-	// audience size in Display network.
-	//
-	// If the size is less than 1000, the number will be hidden and 0 will
-	// be
-	// returned due to privacy reasons. Otherwise, the number will be
-	// rounded off
-	// to two significant digits.
-	//
-	// Only applicable to first party audiences.
-	//
-	// Only returned in GET request.
+	// audience size in Display network. If the size is less than 1000, the
+	// number will be hidden and 0 will be returned due to privacy reasons.
+	// Otherwise, the number will be rounded off to two significant digits.
+	// Only applicable to first party audiences. Only returned in GET
+	// request.
 	DisplayMobileWebAudienceSize int64 `json:"displayMobileWebAudienceSize,omitempty,string"`
 
 	// DisplayName: The display name of the first and third party audience.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// FirstAndThirdPartyAudienceId: Output only. The unique ID of the first
-	// and third party audience. Assigned by the
-	// system.
+	// and third party audience. Assigned by the system.
 	FirstAndThirdPartyAudienceId int64 `json:"firstAndThirdPartyAudienceId,omitempty,string"`
 
 	// FirstAndThirdPartyAudienceType: Output only. Whether the audience is
@@ -6719,24 +6386,15 @@ type FirstAndThirdPartyAudience struct {
 	FirstAndThirdPartyAudienceType string `json:"firstAndThirdPartyAudienceType,omitempty"`
 
 	// GmailAudienceSize: Output only. The estimated audience size for Gmail
-	// network.
-	//
-	// If the size is less than 1000, the number will be hidden and 0 will
-	// be
-	// returned due to privacy reasons. Otherwise, the number will be
-	// rounded off
-	// to two significant digits.
-	//
-	// Only applicable to first party audiences.
-	//
-	// Only returned in GET request.
+	// network. If the size is less than 1000, the number will be hidden and
+	// 0 will be returned due to privacy reasons. Otherwise, the number will
+	// be rounded off to two significant digits. Only applicable to first
+	// party audiences. Only returned in GET request.
 	GmailAudienceSize int64 `json:"gmailAudienceSize,omitempty,string"`
 
 	// MembershipDurationDays: The duration in days that an entry remains in
-	// the audience after the
-	// qualifying event.
-	//
-	// Only applicable to first party audiences.
+	// the audience after the qualifying event. Only applicable to first
+	// party audiences.
 	MembershipDurationDays int64 `json:"membershipDurationDays,omitempty,string"`
 
 	// Name: Output only. The resource name of the first and third party
@@ -6744,17 +6402,10 @@ type FirstAndThirdPartyAudience struct {
 	Name string `json:"name,omitempty"`
 
 	// YoutubeAudienceSize: Output only. The estimated audience size for
-	// YouTube network.
-	//
-	// If the size is less than 1000, the number will be hidden and 0 will
-	// be
-	// returned due to privacy reasons. Otherwise, the number will be
-	// rounded off
-	// to two significant digits.
-	//
-	// Only applicable to first party audiences.
-	//
-	// Only returned in GET request.
+	// YouTube network. If the size is less than 1000, the number will be
+	// hidden and 0 will be returned due to privacy reasons. Otherwise, the
+	// number will be rounded off to two significant digits. Only applicable
+	// to first party audiences. Only returned in GET request.
 	YoutubeAudienceSize int64 `json:"youtubeAudienceSize,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6787,15 +6438,12 @@ func (s *FirstAndThirdPartyAudience) MarshalJSON() ([]byte, error) {
 }
 
 // FirstAndThirdPartyAudienceGroup: Details of first and third party
-// audience group.
-// All first and third party audience targeting settings are logically
-// ‘OR’ of
-// each other.
+// audience group. All first and third party audience targeting settings
+// are logically ‘OR’ of each other.
 type FirstAndThirdPartyAudienceGroup struct {
 	// Settings: Required. All first and third party audience targeting
-	// settings in first and
-	// third party audience group.
-	// Repeated settings with same id are not allowed.
+	// settings in first and third party audience group. Repeated settings
+	// with same id are not allowed.
 	Settings []*FirstAndThirdPartyAudienceTargetingSetting `json:"settings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Settings") to
@@ -6825,19 +6473,15 @@ func (s *FirstAndThirdPartyAudienceGroup) MarshalJSON() ([]byte, error) {
 // third party audience targeting setting.
 type FirstAndThirdPartyAudienceTargetingSetting struct {
 	// FirstAndThirdPartyAudienceId: Required. First and third party
-	// audience id of the first and third party audience
-	// targeting setting. This id is
-	// first_and_third_party_audience_id.
+	// audience id of the first and third party audience targeting setting.
+	// This id is first_and_third_party_audience_id.
 	FirstAndThirdPartyAudienceId int64 `json:"firstAndThirdPartyAudienceId,omitempty,string"`
 
 	// Recency: The recency of the first and third party audience targeting
-	// setting.
-	// Only applicable to first party audiences, otherwise
-	// will be ignored. For more info, refer
-	// to
-	// https://support.google.com/displayvideo/answer/2949947#recency
-	// When
-	//  unspecified, no recency limit will be used.
+	// setting. Only applicable to first party audiences, otherwise will be
+	// ignored. For more info, refer to
+	// https://support.google.com/displayvideo/answer/2949947#recency When
+	// unspecified, no recency limit will be used.
 	//
 	// Possible values:
 	//   "RECENCY_NO_LIMIT" - No limit of recency.
@@ -6899,16 +6543,11 @@ func (s *FirstAndThirdPartyAudienceTargetingSetting) MarshalJSON() ([]byte, erro
 // FixedBidStrategy: A strategy that uses a fixed bidding price.
 type FixedBidStrategy struct {
 	// BidAmountMicros: The fixed bid amount, in micros of the advertiser's
-	// currency.
-	// For insertion order entity,
-	// bid_amount_micros should be set as 0.
-	// For line item entity,
-	// bid_amount_micros must be greater
-	// than or equal to billable unit of the given currency and smaller than
-	// or
-	// equal to the upper limit 1000000000.
-	//
-	// For example, 1500000 represents 1.5 standard units of the currency.
+	// currency. For insertion order entity, bid_amount_micros should be set
+	// as 0. For line item entity, bid_amount_micros must be greater than or
+	// equal to billable unit of the given currency and smaller than or
+	// equal to the upper limit 1000000000. For example, 1500000 represents
+	// 1.5 standard units of the currency.
 	BidAmountMicros int64 `json:"bidAmountMicros,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BidAmountMicros") to
@@ -6938,43 +6577,24 @@ func (s *FixedBidStrategy) MarshalJSON() ([]byte, error) {
 // FloodlightGroup: A single Floodlight group.
 type FloodlightGroup struct {
 	// ActiveViewConfig: The Active View video viewability metric
-	// configuration for the Floodlight
-	// group.
+	// configuration for the Floodlight group.
 	ActiveViewConfig *ActiveViewVideoViewabilityMetricConfig `json:"activeViewConfig,omitempty"`
 
 	// CustomVariables: User-defined custom variables owned by the
-	// Floodlight group.
-	// Use custom Floodlight variables to create reporting data that is
-	// tailored
-	// to your unique business needs. Custom Floodlight variables use the
-	// keys
-	// `U1=`, `U2=`, and so on, and can take any values that you choose to
-	// pass to
-	// them. You can use them to track virtually any type of data that you
-	// collect
-	// about your customers, such as the genre of movie that a customer
-	// purchases,
-	// the country to which the item is shipped, and so on.
-	//
-	// Custom Floodlight variables may not be used to pass any data that
-	// could be
-	// used or recognized as personally identifiable information
-	// (PII).
-	//
-	// Example:
-	// `custom_variables {
-	//   fields {
-	//     "U1": value { number_value: 123.4 },
-	//     "U2": value { string_value: "MyVariable2" },
-	//     "U3": value { string_value: "MyVariable3" }
-	//   }
-	// }`
-	//
-	// Acceptable values for keys are "U1" through "U100", inclusive.
-	// String
-	// values must be less than 64 characters long, and cannot contain
-	// the
-	// following characters: "<>`.
+	// Floodlight group. Use custom Floodlight variables to create reporting
+	// data that is tailored to your unique business needs. Custom
+	// Floodlight variables use the keys `U1=`, `U2=`, and so on, and can
+	// take any values that you choose to pass to them. You can use them to
+	// track virtually any type of data that you collect about your
+	// customers, such as the genre of movie that a customer purchases, the
+	// country to which the item is shipped, and so on. Custom Floodlight
+	// variables may not be used to pass any data that could be used or
+	// recognized as personally identifiable information (PII). Example:
+	// `custom_variables { fields { "U1": value { number_value: 123.4 },
+	// "U2": value { string_value: "MyVariable2" }, "U3": value {
+	// string_value: "MyVariable3" } } }` Acceptable values for keys are
+	// "U1" through "U100", inclusive. String values must be less than 64
+	// characters long, and cannot contain the following characters: "<>`.
 	CustomVariables googleapi.RawMessage `json:"customVariables,omitempty"`
 
 	// DisplayName: Required. The display name of the Floodlight group.
@@ -6985,9 +6605,7 @@ type FloodlightGroup struct {
 	FloodlightGroupId int64 `json:"floodlightGroupId,omitempty,string"`
 
 	// LookbackWindow: Required. The lookback window for the Floodlight
-	// group.
-	// Both click_days and
-	// impression_days are required. Acceptable
+	// group. Both click_days and impression_days are required. Acceptable
 	// values for both are `0` to `90`, inclusive.
 	LookbackWindow *LookbackWindow `json:"lookbackWindow,omitempty"`
 
@@ -7034,27 +6652,21 @@ func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
 }
 
 // FrequencyCap: Settings that control the number of times a user may be
-// shown with the same
-// ad during a given time period.
+// shown with the same ad during a given time period.
 type FrequencyCap struct {
 	// MaxImpressions: The maximum number of times a user may be shown with
-	// the same ad
-	// during this period. Must be greater than 0.
-	//
-	// Applicable when unlimited is `false`.
+	// the same ad during this period. Must be greater than 0. Applicable
+	// when unlimited is `false`.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
-	// TimeUnit: The time unit in which the frequency cap will be
-	// applied.
-	//
+	// TimeUnit: The time unit in which the frequency cap will be applied.
 	// Applicable when unlimited is `false`.
 	//
 	// Possible values:
 	//   "TIME_UNIT_UNSPECIFIED" - Time unit value is not specified or is
 	// unknown in this version.
 	//   "TIME_UNIT_LIFETIME" - The frequency cap will be applied to the
-	// whole life time of the line
-	// item.
+	// whole life time of the line item.
 	//   "TIME_UNIT_MONTHS" - The frequency cap will be applied to a number
 	// of months.
 	//   "TIME_UNIT_WEEKS" - The frequency cap will be applied to a number
@@ -7067,26 +6679,19 @@ type FrequencyCap struct {
 	// of minutes.
 	TimeUnit string `json:"timeUnit,omitempty"`
 
-	// TimeUnitCount: The number of time_unit the frequency cap
-	// will
-	// last.
-	//
-	// Applicable when unlimited is `false`.
-	// The following restrictions apply based on the value of
-	// time_unit:
-	//
-	// * `TIME_UNIT_LIFETIME` - this field is output only and will
-	// default to 1
-	// * `TIME_UNIT_MONTHS` - must be between 1 and 2
-	// * `TIME_UNIT_WEEKS` - must be between 1 and 4
-	// * `TIME_UNIT_DAYS` - must be between 1 and 6
-	// * `TIME_UNIT_HOURS` - must be between 1 and 23
-	// * `TIME_UNIT_MINUTES` - must be between 1 and 59
+	// TimeUnitCount: The number of time_unit the frequency cap will last.
+	// Applicable when unlimited is `false`. The following restrictions
+	// apply based on the value of time_unit: * `TIME_UNIT_LIFETIME` - this
+	// field is output only and will default to 1 * `TIME_UNIT_MONTHS` -
+	// must be between 1 and 2 * `TIME_UNIT_WEEKS` - must be between 1 and 4
+	// * `TIME_UNIT_DAYS` - must be between 1 and 6 * `TIME_UNIT_HOURS` -
+	// must be between 1 and 23 * `TIME_UNIT_MINUTES` - must be between 1
+	// and 59
 	TimeUnitCount int64 `json:"timeUnitCount,omitempty"`
 
 	// Unlimited: Whether unlimited frequency capping is applied. When this
-	// field is set to
-	// `true`, the remaining frequency cap fields are not applicable.
+	// field is set to `true`, the remaining frequency cap fields are not
+	// applicable.
 	Unlimited bool `json:"unlimited,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxImpressions") to
@@ -7114,25 +6719,22 @@ func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
 }
 
 // GenderAssignedTargetingOptionDetails: Details for assigned gender
-// targeting option. This will be populated in
-// the details field of an AssignedTargetingOption when
-// targeting_type is
+// targeting option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARTGETING_TYPE_GENDER`.
 type GenderAssignedTargetingOptionDetails struct {
 	// Gender: Output only. The gender of the audience.
 	//
 	// Possible values:
 	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
-	// in this version. This enum is a
-	// place holder for default value and does not represent a real gender
-	// option.
+	// in this version. This enum is a place holder for default value and
+	// does not represent a real gender option.
 	//   "GENDER_MALE" - The audience gender is male.
 	//   "GENDER_FEMALE" - The audience gender is female.
 	//   "GENDER_UNKNOWN" - The audience gender is unknown.
 	Gender string `json:"gender,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_GENDER`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -7160,18 +6762,15 @@ func (s *GenderAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // GenderTargetingOptionDetails: Represents a targetable gender. This
-// will be populated in the
-// gender_details field of a TargetingOption
-// when targeting_type is
-// `TARGETING_TYPE_GENDER`.
+// will be populated in the gender_details field of a TargetingOption
+// when targeting_type is `TARGETING_TYPE_GENDER`.
 type GenderTargetingOptionDetails struct {
 	// Gender: Output only. The gender of an audience.
 	//
 	// Possible values:
 	//   "GENDER_UNSPECIFIED" - Default value when gender is not specified
-	// in this version. This enum is a
-	// place holder for default value and does not represent a real gender
-	// option.
+	// in this version. This enum is a place holder for default value and
+	// does not represent a real gender option.
 	//   "GENDER_MALE" - The audience gender is male.
 	//   "GENDER_FEMALE" - The audience gender is female.
 	//   "GENDER_UNKNOWN" - The audience gender is unknown.
@@ -7201,10 +6800,8 @@ func (s *GenderTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // GeoRegionAssignedTargetingOptionDetails: Details for assigned
-// geographic region targeting option. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// geographic region targeting option. This will be populated in the
+// details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_GEO_REGION`.
 type GeoRegionAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the geographic region
@@ -7261,8 +6858,7 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_GEO_REGION`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -7290,10 +6886,8 @@ func (s *GeoRegionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) 
 }
 
 // GeoRegionTargetingOptionDetails: Represents a targetable geographic
-// region. This will be populated in the
-// geo_region_details field when
-// targeting_type is
-// `TARGETING_TYPE_GEO_REGION`.
+// region. This will be populated in the geo_region_details field when
+// targeting_type is `TARGETING_TYPE_GEO_REGION`.
 type GeoRegionTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the geographic region
 	// (e.g., "Ontario, Canada").
@@ -7369,19 +6963,17 @@ func (s *GeoRegionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAudience: Describes a Google audience resource.
-// Includes Google audience lists.
+// GoogleAudience: Describes a Google audience resource. Includes Google
+// audience lists.
 type GoogleAudience struct {
-	// DisplayName: Output only. The display name of the Google audience.
-	// .
+	// DisplayName: Output only. The display name of the Google audience. .
 	DisplayName string `json:"displayName,omitempty"`
 
 	// GoogleAudienceId: Output only. The unique ID of the Google audience.
 	// Assigned by the system.
 	GoogleAudienceId int64 `json:"googleAudienceId,omitempty,string"`
 
-	// GoogleAudienceType: Output only. The type of Google audience.
-	// .
+	// GoogleAudienceType: Output only. The type of Google audience. .
 	//
 	// Possible values:
 	//   "GOOGLE_AUDIENCE_TYPE_UNSPECIFIED" - Default value when type is not
@@ -7424,13 +7016,11 @@ func (s *GoogleAudience) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAudienceGroup: Details of Google audience group.
-// All Google audience targeting settings are logically ‘OR’ of each
-// other.
+// GoogleAudienceGroup: Details of Google audience group. All Google
+// audience targeting settings are logically ‘OR’ of each other.
 type GoogleAudienceGroup struct {
 	// Settings: Required. All Google audience targeting settings in Google
-	// audience group.
-	// Repeated settings with same id will be ignored.
+	// audience group. Repeated settings with same id will be ignored.
 	Settings []*GoogleAudienceTargetingSetting `json:"settings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Settings") to
@@ -7460,8 +7050,7 @@ func (s *GoogleAudienceGroup) MarshalJSON() ([]byte, error) {
 // setting.
 type GoogleAudienceTargetingSetting struct {
 	// GoogleAudienceId: Required. Google audience id of the Google audience
-	// targeting setting.
-	// This id is google_audience_id.
+	// targeting setting. This id is google_audience_id.
 	GoogleAudienceId int64 `json:"googleAudienceId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "GoogleAudienceId") to
@@ -7521,20 +7110,17 @@ func (s *GoogleBytestreamMedia) MarshalJSON() ([]byte, error) {
 }
 
 // HouseholdIncomeAssignedTargetingOptionDetails: Details for assigned
-// household income targeting option. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// household income targeting option. This will be populated in the
+// details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_HOUSEHOLD_INCOME`.
 type HouseholdIncomeAssignedTargetingOptionDetails struct {
 	// HouseholdIncome: Output only. The household income of the audience.
 	//
 	// Possible values:
 	//   "HOUSEHOLD_INCOME_UNSPECIFIED" - Default value when household
-	// income is not specified in this version. This
-	// enum is a placeholder for default value and does not represent a
-	// real
-	// household income option.
+	// income is not specified in this version. This enum is a placeholder
+	// for default value and does not represent a real household income
+	// option.
 	//   "HOUSEHOLD_INCOME_UNKNOWN" - The household income of the audience
 	// is unknown.
 	//   "HOUSEHOLD_INCOME_LOWER_50_PERCENT" - The audience is in the lower
@@ -7551,8 +7137,7 @@ type HouseholdIncomeAssignedTargetingOptionDetails struct {
 	// of U.S. household incomes.
 	HouseholdIncome string `json:"householdIncome,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_HOUSEHOLD_INCOME`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -7581,21 +7166,17 @@ func (s *HouseholdIncomeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, e
 }
 
 // HouseholdIncomeTargetingOptionDetails: Represents a targetable
-// household income. This will be populated in
-// the
-// household_income_details field of
-// a TargetingOption when targeting_type
-// is
-// `TARGETING_TYPE_HOUSEHOLD_INCOME`.
+// household income. This will be populated in the
+// household_income_details field of a TargetingOption when
+// targeting_type is `TARGETING_TYPE_HOUSEHOLD_INCOME`.
 type HouseholdIncomeTargetingOptionDetails struct {
 	// HouseholdIncome: Output only. The household income of an audience.
 	//
 	// Possible values:
 	//   "HOUSEHOLD_INCOME_UNSPECIFIED" - Default value when household
-	// income is not specified in this version. This
-	// enum is a placeholder for default value and does not represent a
-	// real
-	// household income option.
+	// income is not specified in this version. This enum is a placeholder
+	// for default value and does not represent a real household income
+	// option.
 	//   "HOUSEHOLD_INCOME_UNKNOWN" - The household income of the audience
 	// is unknown.
 	//   "HOUSEHOLD_INCOME_LOWER_50_PERCENT" - The audience is in the lower
@@ -7639,45 +7220,31 @@ func (s *HouseholdIncomeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // IdFilter: A filtering option that filters entities by their entity
 // IDs.
 type IdFilter struct {
-	// AdGroupAdIds: TrueView Ads to download by ID. All IDs must belong to
-	// the same
-	// Advertiser or
-	// Partner specified in
+	// AdGroupAdIds: YouTube Ads to download by ID. All IDs must belong to
+	// the same Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest.
 	AdGroupAdIds googleapi.Int64s `json:"adGroupAdIds,omitempty"`
 
-	// AdGroupIds: TrueView Ad Groups to download by ID. All IDs must belong
-	// to the same
-	// Advertiser or
-	// Partner specified in
+	// AdGroupIds: YouTube Ad Groups to download by ID. All IDs must belong
+	// to the same Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest.
 	AdGroupIds googleapi.Int64s `json:"adGroupIds,omitempty"`
 
 	// CampaignIds: Campaigns to download by ID. All IDs must belong to the
-	// same
-	// Advertiser or
-	// Partner specified in
-	// CreateSdfDownloadTaskRequest.
+	// same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	CampaignIds googleapi.Int64s `json:"campaignIds,omitempty"`
 
 	// InsertionOrderIds: Insertion Orders to download by ID. All IDs must
-	// belong to the same
-	// Advertiser or
-	// Partner specified in
+	// belong to the same Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest.
 	InsertionOrderIds googleapi.Int64s `json:"insertionOrderIds,omitempty"`
 
 	// LineItemIds: Line Items to download by ID. All IDs must belong to the
-	// same
-	// Advertiser or
-	// Partner specified in
-	// CreateSdfDownloadTaskRequest.
+	// same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	LineItemIds googleapi.Int64s `json:"lineItemIds,omitempty"`
 
 	// MediaProductIds: Media Products to download by ID. All IDs must
-	// belong to the same
-	// Advertiser or
-	// Partner specified in
+	// belong to the same Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest.
 	MediaProductIds googleapi.Int64s `json:"mediaProductIds,omitempty"`
 
@@ -7711,8 +7278,7 @@ type InsertionOrder struct {
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
 	// BidStrategy: Optional. The bidding strategy of the insertion order.
-	// By default,
-	// fixed_bid is set.
+	// By default, fixed_bid is set.
 	BidStrategy *BiddingStrategy `json:"bidStrategy,omitempty"`
 
 	// Budget: Required. The budget allocation settings of the insertion
@@ -7723,27 +7289,18 @@ type InsertionOrder struct {
 	// the insertion order belongs to.
 	CampaignId int64 `json:"campaignId,omitempty,string"`
 
-	// DisplayName: Required. The display name of the insertion order.
-	//
-	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	// DisplayName: Required. The display name of the insertion order. Must
+	// be UTF-8 encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EntityStatus: Required. Controls whether or not the insertion order
-	// can spend its budget
-	// and bid on inventory.
-	//
-	// * For
-	// CreateInsertionOrder method,
-	// only `ENTITY_STATUS_DRAFT` is allowed. To activate an insertion
-	// order, use
-	// UpdateInsertionOrder method
-	// and update the status to `ENTITY_STATUS_ACTIVE` after creation.
-	// * An insertion order cannot be changed back to `ENTITY_STATUS_DRAFT`
-	// status
-	// from any other status.
-	// * An insertion order cannot be set to `ENTITY_STATUS_ACTIVE` if its
-	// parent
-	// campaign is not active.
+	// can spend its budget and bid on inventory. * For CreateInsertionOrder
+	// method, only `ENTITY_STATUS_DRAFT` is allowed. To activate an
+	// insertion order, use UpdateInsertionOrder method and update the
+	// status to `ENTITY_STATUS_ACTIVE` after creation. * An insertion order
+	// cannot be changed back to `ENTITY_STATUS_DRAFT` status from any other
+	// status. * An insertion order cannot be set to `ENTITY_STATUS_ACTIVE`
+	// if its parent campaign is not active.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
@@ -7751,9 +7308,8 @@ type InsertionOrder struct {
 	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
 	// budget.
 	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
-	// budget spending are disabled. An
-	// entity can be deleted after archived. Deleted entities cannot be
-	// retrieved.
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
 	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
 	// budget spending are disabled.
 	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
@@ -7781,22 +7337,16 @@ type InsertionOrder struct {
 	// order.
 	Pacing *Pacing `json:"pacing,omitempty"`
 
-	// PartnerCosts: The partner costs associated with the insertion
-	// order.
-	//
-	// If absent or empty in
-	// CreateInsertionOrder
-	// method, the newly created insertion order will inherit partner costs
-	// from
-	// the partner settings.
+	// PartnerCosts: The partner costs associated with the insertion order.
+	// If absent or empty in CreateInsertionOrder method, the newly created
+	// insertion order will inherit partner costs from the partner settings.
 	PartnerCosts []*PartnerCost `json:"partnerCosts,omitempty"`
 
 	// PerformanceGoal: Required. Performance goal of the insertion order.
 	PerformanceGoal *PerformanceGoal `json:"performanceGoal,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the insertion order was
-	// last updated.
-	// Assigned by the system.
+	// last updated. Assigned by the system.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7830,42 +7380,31 @@ func (s *InsertionOrder) MarshalJSON() ([]byte, error) {
 // budget is allocated.
 type InsertionOrderBudget struct {
 	// AutomationType: The type of automation used to manage bid and budget
-	// for
-	// the insertion order.
-	//
-	// If this field is unspecified in creation, the value defaults
-	// to
-	// `INSERTION_ORDER_AUTOMATION_TYPE_NONE`.
+	// for the insertion order. If this field is unspecified in creation,
+	// the value defaults to `INSERTION_ORDER_AUTOMATION_TYPE_NONE`.
 	//
 	// Possible values:
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_UNSPECIFIED" - Insertion order
-	// automation option is not specified or is unknown in
-	// this version.
+	// automation option is not specified or is unknown in this version.
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_BUDGET" - Automatic budget
-	// allocation. Allow the system to automatically shift
-	// budget to owning line items to optimize performance defined
-	// by
-	// performance_goal. No automation
-	// on bid settings.
+	// allocation. Allow the system to automatically shift budget to owning
+	// line items to optimize performance defined by performance_goal. No
+	// automation on bid settings.
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_NONE" - No automation of bid or
-	// budget on insertion order level.
-	// Bid and budget must be manually configured at the line item level.
+	// budget on insertion order level. Bid and budget must be manually
+	// configured at the line item level.
 	//   "INSERTION_ORDER_AUTOMATION_TYPE_BID_BUDGET" - Allow the system to
-	// automatically adjust bids and shift budget to
-	// owning line items to optimize performance defined
-	// by
-	// performance_goal.
+	// automatically adjust bids and shift budget to owning line items to
+	// optimize performance defined by performance_goal.
 	AutomationType string `json:"automationType,omitempty"`
 
 	// BudgetSegments: Required. The list of budget segments. Use a budget
-	// segment to specify
-	// a specific budget for a given period of time an insertion order is
-	// running.
+	// segment to specify a specific budget for a given period of time an
+	// insertion order is running.
 	BudgetSegments []*InsertionOrderBudgetSegment `json:"budgetSegments,omitempty"`
 
 	// BudgetUnit: Required. Immutable. The budget unit specifies whether
-	// the budget is currency based or
-	// impression based.
+	// the budget is currency based or impression based.
 	//
 	// Possible values:
 	//   "BUDGET_UNIT_UNSPECIFIED" - Type value is not specified or is
@@ -7902,39 +7441,28 @@ func (s *InsertionOrderBudget) MarshalJSON() ([]byte, error) {
 // single budget segment.
 type InsertionOrderBudgetSegment struct {
 	// BudgetAmountMicros: Required. The budget amount the insertion order
-	// will spend for the given
-	// date_range.
-	// The amount is in micros. Must be greater than 0. For example,
-	// 500000000
-	// represents 500 standard units of the currency.
+	// will spend for the given date_range. The amount is in micros. Must be
+	// greater than 0. For example, 500000000 represents 500 standard units
+	// of the currency.
 	BudgetAmountMicros int64 `json:"budgetAmountMicros,omitempty,string"`
 
 	// CampaignBudgetId: The ID of the campaign budget linked to this
-	// insertion order budget
-	// segment.
+	// insertion order budget segment.
 	CampaignBudgetId int64 `json:"campaignBudgetId,omitempty,string"`
 
 	// DateRange: Required. The start and end date settings of the budget
-	// segment. They are resolved
-	// relative to the parent advertiser's time zone.
-	//
-	// * When creating a new budget segment, both `start_date` and
-	// `end_date`
-	// must be in the future.
-	// * An existing budget segment with a `start_date` in the past has a
-	// mutable
-	// `end_date` but an immutable `start_date`.
-	// * `end_date` must be the `start_date` or later, both before the year
-	// 2037.
+	// segment. They are resolved relative to the parent advertiser's time
+	// zone. * When creating a new budget segment, both `start_date` and
+	// `end_date` must be in the future. * An existing budget segment with a
+	// `start_date` in the past has a mutable `end_date` but an immutable
+	// `start_date`. * `end_date` must be the `start_date` or later, both
+	// before the year 2037.
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// Description: The budget segment description. It can be used to enter
-	// Purchase Order
-	// information for each budget segment and have that information printed
-	// on
-	// the invoices.
-	//
-	// Must be UTF-8 encoded with a length of no more than 80 characters.
+	// Purchase Order information for each budget segment and have that
+	// information printed on the invoices. Must be UTF-8 encoded with a
+	// length of no more than 80 characters.
 	Description string `json:"description,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BudgetAmountMicros")
@@ -7968,8 +7496,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "PERFORMANCE_VIEWABILITY_UNSPECIFIED" - This enum is only a
-	// placeholder and it doesn't specify any display
-	// viewability options.
+	// placeholder and it doesn't specify any display viewability options.
 	//   "PERFORMANCE_VIEWABILITY_40" - Target 40% Viewability or Higher.
 	//   "PERFORMANCE_VIEWABILITY_50" - Target 50% Viewability or Higher.
 	//   "PERFORMANCE_VIEWABILITY_60" - Target 60% Viewability or Higher.
@@ -7983,8 +7510,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "SUSPICIOUS_ACTIVITY_UNSPECIFIED" - This enum is only a placeholder
-	// and it doesn't specify any ad fraud
-	// prevention options.
+	// and it doesn't specify any ad fraud prevention options.
 	//   "SUSPICIOUS_ACTIVITY_HR" - Ad Fraud - Exclude High Risk.
 	//   "SUSPICIOUS_ACTIVITY_HMR" - Ad Fraud - Exclude High and Moderate
 	// Risk.
@@ -8003,8 +7529,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "ALCOHOL_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any alcohol
-	// options.
+	// doesn't specify any alcohol options.
 	//   "ALCOHOL_HR" - Alcohol - Exclude High Risk.
 	//   "ALCOHOL_HMR" - Alcohol - Exclude High and Moderate Risk.
 	ExcludedAlcoholRisk string `json:"excludedAlcoholRisk,omitempty"`
@@ -8022,8 +7547,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "GAMBLING_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any gambling
-	// options.
+	// doesn't specify any gambling options.
 	//   "GAMBLING_HR" - Gambling - Exclude High Risk.
 	//   "GAMBLING_HMR" - Gambling - Exclude High and Moderate Risk.
 	ExcludedGamblingRisk string `json:"excludedGamblingRisk,omitempty"`
@@ -8032,8 +7556,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "HATE_SPEECH_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any hate speech
-	// options.
+	// doesn't specify any hate speech options.
 	//   "HATE_SPEECH_HR" - Hate Speech - Exclude High Risk.
 	//   "HATE_SPEECH_HMR" - Hate Speech - Exclude High and Moderate Risk.
 	ExcludedHateSpeechRisk string `json:"excludedHateSpeechRisk,omitempty"`
@@ -8042,8 +7565,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "ILLEGAL_DOWNLOADS_UNSPECIFIED" - This enum is only a placeholder
-	// and it doesn't specify any illegal
-	// downloads options.
+	// and it doesn't specify any illegal downloads options.
 	//   "ILLEGAL_DOWNLOADS_HR" - Illegal Downloads - Exclude High Risk.
 	//   "ILLEGAL_DOWNLOADS_HMR" - Illegal Downloads - Exclude High and
 	// Moderate Risk.
@@ -8053,8 +7575,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "OFFENSIVE_LANGUAGE_UNSPECIFIED" - This enum is only a placeholder
-	// and it doesn't specify any language
-	// options.
+	// and it doesn't specify any language options.
 	//   "OFFENSIVE_LANGUAGE_HR" - Offensive Language - Exclude High Risk.
 	//   "OFFENSIVE_LANGUAGE_HMR" - Offensive Language - Exclude High and
 	// Moderate Risk.
@@ -8064,8 +7585,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "VIOLENCE_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any violence
-	// options.
+	// doesn't specify any violence options.
 	//   "VIOLENCE_HR" - Violence - Exclude High Risk.
 	//   "VIOLENCE_HMR" - Violence - Exclude High and Moderate Risk.
 	ExcludedViolenceRisk string `json:"excludedViolenceRisk,omitempty"`
@@ -8075,8 +7595,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "TRAQ_UNSPECIFIED" - This enum is only a placeholder and it doesn't
-	// specify any true
-	// advertising quality scores.
+	// specify any true advertising quality scores.
 	//   "TRAQ_250" - TRAQ score 250-1000.
 	//   "TRAQ_500" - TRAQ score 500-1000.
 	//   "TRAQ_600" - TRAQ score 600-1000.
@@ -8091,8 +7610,7 @@ type IntegralAdScience struct {
 	//
 	// Possible values:
 	//   "VIDEO_VIEWABILITY_UNSPECIFIED" - This enum is only a placeholder
-	// and it doesn't specify any video
-	// viewability options.
+	// and it doesn't specify any video viewability options.
 	//   "VIDEO_VIEWABILITY_40" - 40%+ in view (IAB video viewability
 	// standard).
 	//   "VIDEO_VIEWABILITY_50" - 50%+ in view (IAB video viewability
@@ -8129,18 +7647,14 @@ func (s *IntegralAdScience) MarshalJSON() ([]byte, error) {
 
 // IntegrationDetails: Integration details of an entry.
 type IntegrationDetails struct {
-	// Details: Additional details of the entry in string format.
-	//
-	// Must be UTF-8 encoded with a length of no more than 1000 characters.
+	// Details: Additional details of the entry in string format. Must be
+	// UTF-8 encoded with a length of no more than 1000 characters.
 	Details string `json:"details,omitempty"`
 
 	// IntegrationCode: An external identifier to be associated with the
-	// entry.
-	// The integration code will show up together with the entry in
-	// many
-	// places in the system, for example, reporting.
-	//
-	// Must be UTF-8 encoded with a length of no more than 500 characters.
+	// entry. The integration code will show up together with the entry in
+	// many places in the system, for example, reporting. Must be UTF-8
+	// encoded with a length of no more than 500 characters.
 	IntegrationCode string `json:"integrationCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -8180,29 +7694,20 @@ type InventorySource struct {
 	// non-guaranteed delivery.
 	Commitment string `json:"commitment,omitempty"`
 
-	// CreativeConfigs: The creative requirements of the inventory
-	// source.
-	//
+	// CreativeConfigs: The creative requirements of the inventory source.
 	// Not applicable for auction packages.
 	CreativeConfigs []*CreativeConfig `json:"creativeConfigs,omitempty"`
 
 	// DealId: The ID in the exchange space that uniquely identifies the
-	// inventory source.
-	//
-	// Must be unique across buyers within each exchange but not
-	// necessarily
-	// unique across exchanges.
+	// inventory source. Must be unique across buyers within each exchange
+	// but not necessarily unique across exchanges.
 	DealId string `json:"dealId,omitempty"`
 
-	// DeliveryMethod: The delivery method of the inventory source.
-	//
-	// * For non-guaranteed inventory sources, the only acceptable value
-	// is
-	// `INVENTORY_SOURCE_DELIVERY_METHOD_PROGRAMMATIC`.
-	// * For guaranteed inventory sources, acceptable values
-	// are
-	// `INVENTORY_SOURCE_DELIVERY_METHOD_TAG`
-	// and
+	// DeliveryMethod: The delivery method of the inventory source. * For
+	// non-guaranteed inventory sources, the only acceptable value is
+	// `INVENTORY_SOURCE_DELIVERY_METHOD_PROGRAMMATIC`. * For guaranteed
+	// inventory sources, acceptable values are
+	// `INVENTORY_SOURCE_DELIVERY_METHOD_TAG` and
 	// `INVENTORY_SOURCE_DELIVERY_METHOD_PROGRAMMATIC`.
 	//
 	// Possible values:
@@ -8214,9 +7719,8 @@ type InventorySource struct {
 	// tag.
 	DeliveryMethod string `json:"deliveryMethod,omitempty"`
 
-	// DisplayName: The display name of the inventory source.
-	//
-	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	// DisplayName: The display name of the inventory source. Must be UTF-8
+	// encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Exchange: The exchange to which the inventory source belongs.
@@ -8316,8 +7820,7 @@ type InventorySource struct {
 	TimeRange *TimeRange `json:"timeRange,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the inventory source was
-	// last updated. Assigned by the
-	// system.
+	// last updated. Assigned by the system.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8348,16 +7851,12 @@ func (s *InventorySource) MarshalJSON() ([]byte, error) {
 }
 
 // InventorySourceAssignedTargetingOptionDetails: Targeting details for
-// inventory source. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// inventory source. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_INVENTORY_SOURCE`.
 type InventorySourceAssignedTargetingOptionDetails struct {
 	// InventorySourceId: Required. ID of the inventory source. Should refer
-	// to the
-	// inventory_source_id field of an
-	// InventorySource resource.
+	// to the inventory_source_id field of an InventorySource resource.
 	InventorySourceId int64 `json:"inventorySourceId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "InventorySourceId")
@@ -8388,8 +7887,7 @@ func (s *InventorySourceAssignedTargetingOptionDetails) MarshalJSON() ([]byte, e
 // creatives.
 type InventorySourceDisplayCreativeConfig struct {
 	// CreativeSize: The size requirements for display creatives that can be
-	// assigned to the
-	// inventory source.
+	// assigned to the inventory source.
 	CreativeSize *Dimensions `json:"creativeSize,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreativeSize") to
@@ -8419,11 +7917,8 @@ func (s *InventorySourceDisplayCreativeConfig) MarshalJSON() ([]byte, error) {
 // Source entities.
 type InventorySourceFilter struct {
 	// InventorySourceIds: Inventory Sources to download by ID. All IDs must
-	// belong to the same
-	// Advertiser or
-	// Partner specified in
-	// CreateSdfDownloadTaskRequest. Leave empty to download all
-	// Inventory
+	// belong to the same Advertiser or Partner specified in
+	// CreateSdfDownloadTaskRequest. Leave empty to download all Inventory
 	// Sources for the selected Advertiser or Partner.
 	InventorySourceIds googleapi.Int64s `json:"inventorySourceIds,omitempty"`
 
@@ -8454,9 +7949,7 @@ func (s *InventorySourceFilter) MarshalJSON() ([]byte, error) {
 // InventorySourceGroup: A collection of targetable inventory sources.
 type InventorySourceGroup struct {
 	// DisplayName: Required. The display name of the inventory source
-	// group.
-	//
-	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	// group. Must be UTF-8 encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// InventorySourceGroupId: Output only. The unique ID of the inventory
@@ -8494,16 +7987,13 @@ func (s *InventorySourceGroup) MarshalJSON() ([]byte, error) {
 }
 
 // InventorySourceGroupAssignedTargetingOptionDetails: Targeting details
-// for inventory source group. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// for inventory source group. This will be populated in the details
+// field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_INVENTORY_SOURCE_GROUP`.
 type InventorySourceGroupAssignedTargetingOptionDetails struct {
 	// InventorySourceGroupId: Required. ID of the inventory source group.
-	// Should refer to the
-	// inventory_source_group_id
-	// field of an InventorySourceGroup resource.
+	// Should refer to the inventory_source_group_id field of an
+	// InventorySourceGroup resource.
 	InventorySourceGroupId int64 `json:"inventorySourceGroupId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -8535,43 +8025,31 @@ func (s *InventorySourceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]by
 // source.
 type InventorySourceStatus struct {
 	// ConfigStatus: Output only. The configuration status of the inventory
-	// source.
-	//
-	// Only applicable for guaranteed inventory sources.
-	// Acceptable values are `INVENTORY_SOURCE_CONFIG_STATUS_PENDING`
-	// and
-	// `INVENTORY_SOURCE_CONFIG_STATUS_COMPLETED`.
-	//
-	// An inventory source must be configured (fill in the required fields,
-	// choose
-	// creatives, and select a default campaign) before it can serve.
+	// source. Only applicable for guaranteed inventory sources. Acceptable
+	// values are `INVENTORY_SOURCE_CONFIG_STATUS_PENDING` and
+	// `INVENTORY_SOURCE_CONFIG_STATUS_COMPLETED`. An inventory source must
+	// be configured (fill in the required fields, choose creatives, and
+	// select a default campaign) before it can serve.
 	//
 	// Possible values:
 	//   "INVENTORY_SOURCE_CONFIG_STATUS_UNSPECIFIED" - The approval status
 	// is not specified or is unknown in this version.
 	//   "INVENTORY_SOURCE_CONFIG_STATUS_PENDING" - The beginning state of a
-	// guaranteed inventory source. The inventory
-	// source in this state needs to be configured.
+	// guaranteed inventory source. The inventory source in this state needs
+	// to be configured.
 	//   "INVENTORY_SOURCE_CONFIG_STATUS_COMPLETED" - The state after the
 	// buyer configures a guaranteed inventory source.
 	ConfigStatus string `json:"configStatus,omitempty"`
 
 	// EntityPauseReason: The user-provided reason for pausing this
-	// inventory source.
-	//
-	// Must not exceed 100 characters.
-	//
-	// Only applicable when entity_status
-	// is set to `ENTITY_STATUS_PAUSED`.
+	// inventory source. Must not exceed 100 characters. Only applicable
+	// when entity_status is set to `ENTITY_STATUS_PAUSED`.
 	EntityPauseReason string `json:"entityPauseReason,omitempty"`
 
-	// EntityStatus: Whether or not the inventory source is
-	// servable.
-	//
+	// EntityStatus: Whether or not the inventory source is servable.
 	// Acceptable values are `ENTITY_STATUS_ACTIVE`,
-	// `ENTITY_STATUS_ARCHIVED`, and
-	// `ENTITY_STATUS_PAUSED`.
-	// Default value is `ENTITY_STATUS_ACTIVE`.
+	// `ENTITY_STATUS_ARCHIVED`, and `ENTITY_STATUS_PAUSED`. Default value
+	// is `ENTITY_STATUS_ACTIVE`.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
@@ -8579,9 +8057,8 @@ type InventorySourceStatus struct {
 	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
 	// budget.
 	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
-	// budget spending are disabled. An
-	// entity can be deleted after archived. Deleted entities cannot be
-	// retrieved.
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
 	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
 	// budget spending are disabled.
 	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
@@ -8591,22 +8068,15 @@ type InventorySourceStatus struct {
 	EntityStatus string `json:"entityStatus,omitempty"`
 
 	// SellerPauseReason: Output only. The seller-provided reason for
-	// pausing this inventory source.
-	//
-	// Only applicable for inventory sources synced directly from
-	// the
-	// publishers and when seller_status
-	// is set to `ENTITY_STATUS_PAUSED`.
+	// pausing this inventory source. Only applicable for inventory sources
+	// synced directly from the publishers and when seller_status is set to
+	// `ENTITY_STATUS_PAUSED`.
 	SellerPauseReason string `json:"sellerPauseReason,omitempty"`
 
 	// SellerStatus: Output only. The status set by the seller for the
-	// inventory source.
-	//
-	// Only applicable for inventory sources synced directly from
-	// the
-	// publishers.
-	// Acceptable values are `ENTITY_STATUS_ACTIVE` and
-	// `ENTITY_STATUS_PAUSED`.
+	// inventory source. Only applicable for inventory sources synced
+	// directly from the publishers. Acceptable values are
+	// `ENTITY_STATUS_ACTIVE` and `ENTITY_STATUS_PAUSED`.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
@@ -8614,9 +8084,8 @@ type InventorySourceStatus struct {
 	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
 	// budget.
 	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
-	// budget spending are disabled. An
-	// entity can be deleted after archived. Deleted entities cannot be
-	// retrieved.
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
 	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
 	// budget spending are disabled.
 	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
@@ -8652,8 +8121,7 @@ func (s *InventorySourceStatus) MarshalJSON() ([]byte, error) {
 // creatives.
 type InventorySourceVideoCreativeConfig struct {
 	// Duration: The duration requirements for the video creatives that can
-	// be assigned to
-	// the inventory source.
+	// be assigned to the inventory source.
 	Duration string `json:"duration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to
@@ -8680,18 +8148,14 @@ func (s *InventorySourceVideoCreativeConfig) MarshalJSON() ([]byte, error) {
 }
 
 // KeywordAssignedTargetingOptionDetails: Details for assigned keyword
-// targeting option. This will be populated in the
-// details field of an AssignedTargetingOption when
-// targeting_type is
+// targeting option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_KEYWORD`.
 type KeywordAssignedTargetingOptionDetails struct {
-	// Keyword: Required. The keyword, for example `car
-	// insurance`.
-	//
-	// Positive keyword cannot be offensive word.
-	// Must be UTF-8 encoded with a maximum size of 255 bytes. Maximum
-	// number
-	// of characters is 80. Maximum number of words is 10.
+	// Keyword: Required. The keyword, for example `car insurance`. Positive
+	// keyword cannot be offensive word. Must be UTF-8 encoded with a
+	// maximum size of 255 bytes. Maximum number of characters is 80.
+	// Maximum number of words is 10.
 	Keyword string `json:"keyword,omitempty"`
 
 	// Negative: Indicates if this option is being negatively targeted.
@@ -8721,9 +8185,8 @@ func (s *KeywordAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // LanguageAssignedTargetingOptionDetails: Details for assigned language
-// targeting option. This will be populated in the
-// details field of an AssignedTargetingOption when
-// targeting_type is
+// targeting option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_LANGUAGE`.
 type LanguageAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the language (e.g.,
@@ -8731,14 +8194,11 @@ type LanguageAssignedTargetingOptionDetails struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Negative: Indicates if this option is being negatively targeted. All
-	// assigned
-	// language targeting options on the same line item must have the same
-	// value
-	// for this field.
+	// assigned language targeting options on the same line item must have
+	// the same value for this field.
 	Negative bool `json:"negative,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_LANGUAGE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -8766,10 +8226,8 @@ func (s *LanguageAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // LanguageTargetingOptionDetails: Represents a targetable language.
-// This will be populated in the
-// language_details field when
-// targeting_type is
-// `TARGETING_TYPE_LANGUAGE`.
+// This will be populated in the language_details field when
+// targeting_type is `TARGETING_TYPE_LANGUAGE`.
 type LanguageTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the language (e.g.,
 	// "French").
@@ -8820,27 +8278,18 @@ type LineItem struct {
 	// CreativeIds: The IDs of the creatives associated with the line item.
 	CreativeIds googleapi.Int64s `json:"creativeIds,omitempty"`
 
-	// DisplayName: Required. The display name of the line item.
-	//
-	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	// DisplayName: Required. The display name of the line item. Must be
+	// UTF-8 encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// EntityStatus: Required. Controls whether or not the line item can
-	// spend its budget and
-	// bid on inventory.
-	//
-	// * For CreateLineItem method, only
-	// `ENTITY_STATUS_DRAFT` is allowed. To activate a line item,
-	// use
-	// UpdateLineItem method and update the
-	// status to `ENTITY_STATUS_ACTIVE` after creation.
-	// * A line item cannot be changed back to `ENTITY_STATUS_DRAFT` status
-	// from
-	// any other status.
-	// * If the line item's parent insertion order is not active, the line
-	// item
-	// can't spend its budget even if its own status is
-	// `ENTITY_STATUS_ACTIVE`.
+	// spend its budget and bid on inventory. * For CreateLineItem method,
+	// only `ENTITY_STATUS_DRAFT` is allowed. To activate a line item, use
+	// UpdateLineItem method and update the status to `ENTITY_STATUS_ACTIVE`
+	// after creation. * A line item cannot be changed back to
+	// `ENTITY_STATUS_DRAFT` status from any other status. * If the line
+	// item's parent insertion order is not active, the line item can't
+	// spend its budget even if its own status is `ENTITY_STATUS_ACTIVE`.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
@@ -8848,9 +8297,8 @@ type LineItem struct {
 	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
 	// budget.
 	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
-	// budget spending are disabled. An
-	// entity can be deleted after archived. Deleted entities cannot be
-	// retrieved.
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
 	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
 	// budget spending are disabled.
 	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
@@ -8898,6 +8346,8 @@ type LineItem struct {
 	// on mobile app inventory.
 	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INVENTORY" - Video ads served on
 	// mobile app inventory.
+	//   "LINE_ITEM_TYPE_AUDIO_DEFAULT" - Rtb Audio ads sold for a variety
+	// of environments.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// Name: Output only. The resource name of the line item.
@@ -8906,12 +8356,9 @@ type LineItem struct {
 	// Pacing: Required. The budget spending speed setting of the line item.
 	Pacing *Pacing `json:"pacing,omitempty"`
 
-	// PartnerCosts: The partner costs associated with the line item.
-	//
-	// If absent or empty in CreateLineItem
-	// method, the newly created line item will inherit partner costs from
-	// its
-	// parent insertion order.
+	// PartnerCosts: The partner costs associated with the line item. If
+	// absent or empty in CreateLineItem method, the newly created line item
+	// will inherit partner costs from its parent insertion order.
 	PartnerCosts []*PartnerCost `json:"partnerCosts,omitempty"`
 
 	// PartnerRevenueModel: Required. The partner revenue model setting of
@@ -8951,11 +8398,8 @@ func (s *LineItem) MarshalJSON() ([]byte, error) {
 
 // LineItemBudget: Settings that control how budget is allocated.
 type LineItemBudget struct {
-	// BudgetAllocationType: Required. The type of the budget
-	// allocation.
-	//
-	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC` is only applicable
-	// when
+	// BudgetAllocationType: Required. The type of the budget allocation.
+	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC` is only applicable when
 	// automatic budget allocation is enabled for the parent insertion
 	// order.
 	//
@@ -8971,10 +8415,8 @@ type LineItemBudget struct {
 	BudgetAllocationType string `json:"budgetAllocationType,omitempty"`
 
 	// BudgetUnit: Output only. The budget unit specifies whether the budget
-	// is currency based
-	// or impression based. This value is inherited from the parent
-	// insertion
-	// order.
+	// is currency based or impression based. This value is inherited from
+	// the parent insertion order.
 	//
 	// Possible values:
 	//   "BUDGET_UNIT_UNSPECIFIED" - Type value is not specified or is
@@ -8984,25 +8426,15 @@ type LineItemBudget struct {
 	BudgetUnit string `json:"budgetUnit,omitempty"`
 
 	// MaxAmount: The maximum budget amount the line item will spend. Must
-	// be greater than 0.
-	//
-	// When budget_allocation_type is:
-	//
-	// * `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC`, this field is
-	// immutable
-	// and is set by the system.
-	// * `LINE_ITEM_BUDGET_ALLOCATION_TYPE_FIXED`, if
-	// budget_unit is:
-	//     - `BUDGET_UNIT_CURRENCY`, this field represents maximum budget
-	// amount
-	//     to spend, in micros of the advertiser's currency. For example,
-	// 1500000
-	//     represents 1.5 standard units of the currency.
-	//     - `BUDGET_UNIT_IMPRESSIONS`, this field represents the maximum
-	// number
-	//     of impressions to serve.
-	// * `LINE_ITEM_BUDGET_ALLOCATION_TYPE_UNLIMITED`, this field is
-	// not
+	// be greater than 0. When budget_allocation_type is: *
+	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_AUTOMATIC`, this field is immutable
+	// and is set by the system. * `LINE_ITEM_BUDGET_ALLOCATION_TYPE_FIXED`,
+	// if budget_unit is: - `BUDGET_UNIT_CURRENCY`, this field represents
+	// maximum budget amount to spend, in micros of the advertiser's
+	// currency. For example, 1500000 represents 1.5 standard units of the
+	// currency. - `BUDGET_UNIT_IMPRESSIONS`, this field represents the
+	// maximum number of impressions to serve. *
+	// `LINE_ITEM_BUDGET_ALLOCATION_TYPE_UNLIMITED`, this field is not
 	// applicable and will be ignored by the system.
 	MaxAmount int64 `json:"maxAmount,omitempty,string"`
 
@@ -9035,20 +8467,13 @@ func (s *LineItemBudget) MarshalJSON() ([]byte, error) {
 // item.
 type LineItemFlight struct {
 	// DateRange: The flight start and end dates of the line item. They are
-	// resolved
-	// relative to the parent advertiser's time zone.
-	//
-	// * Required when
-	// flight_date_type is
-	// `LINE_ITEM_FLIGHT_DATE_TYPE_CUSTOM`. Output only otherwise.
-	// * When creating a new flight, both `start_date` and `end_date` must
-	// be in
-	// the future.
-	// * An existing flight with a `start_date` in the past has a
-	// mutable
-	// `end_date` but an immutable `start_date`.
-	// * `end_date` must be the `start_date` or later, both before the year
-	// 2037.
+	// resolved relative to the parent advertiser's time zone. * Required
+	// when flight_date_type is `LINE_ITEM_FLIGHT_DATE_TYPE_CUSTOM`. Output
+	// only otherwise. * When creating a new flight, both `start_date` and
+	// `end_date` must be in the future. * An existing flight with a
+	// `start_date` in the past has a mutable `end_date` but an immutable
+	// `start_date`. * `end_date` must be the `start_date` or later, both
+	// before the year 2037.
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// FlightDateType: Required. The type of the line item's flight dates.
@@ -9085,26 +8510,18 @@ func (s *LineItemFlight) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListAdvertiserAssignedTargetingOptionsResponse: Response message
-// for
+// ListAdvertiserAssignedTargetingOptionsResponse: Response message for
 // ListAdvertiserAssignedTargetingOptions.
 type ListAdvertiserAssignedTargetingOptionsResponse struct {
-	// AssignedTargetingOptions: The list of assigned targeting
-	// options.
-	//
+	// AssignedTargetingOptions: The list of assigned targeting options.
 	// This list will be absent if empty.
 	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
 
 	// NextPageToken: A token identifying the next page of results. This
-	// value should be
-	// specified as the
-	// pageToken in a
-	// subsequent ListAdvertiserAssignedTargetingOptionsRequest to fetch
-	// the
-	// next page of results. This token will be absent if there are no
-	// more
-	// assigned_targeting_options
-	// to return.
+	// value should be specified as the pageToken in a subsequent
+	// ListAdvertiserAssignedTargetingOptionsRequest to fetch the next page
+	// of results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9137,17 +8554,13 @@ func (s *ListAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, 
 }
 
 type ListAdvertisersResponse struct {
-	// Advertisers: The list of advertisers.
-	//
-	// This list will be absent if empty.
+	// Advertisers: The list of advertisers. This list will be absent if
+	// empty.
 	Advertisers []*Advertiser `json:"advertisers,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListAdvertisers` method to retrieve
-	// the
-	// next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListAdvertisers` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9177,23 +8590,17 @@ func (s *ListAdvertisersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListAssignedInventorySourcesResponse: Response message
-// for
+// ListAssignedInventorySourcesResponse: Response message for
 // AssignedInventorySourceService.ListAssignedInventorySources.
 type ListAssignedInventorySourcesResponse struct {
-	// AssignedInventorySources: The list of assigned inventory
-	// sources.
-	//
+	// AssignedInventorySources: The list of assigned inventory sources.
 	// This list will be absent if empty.
 	AssignedInventorySources []*AssignedInventorySource `json:"assignedInventorySources,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	//
-	// Pass this value in the
-	// page_token field
-	// in the subsequent call to `ListAssignedInventorySources` method
-	// to
-	// retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListAssignedInventorySources` method to retrieve the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9225,21 +8632,16 @@ func (s *ListAssignedInventorySourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListAssignedLocationsResponse: Response message
-// for
+// ListAssignedLocationsResponse: Response message for
 // AssignedLocationService.ListAssignedLocations.
 type ListAssignedLocationsResponse struct {
-	// AssignedLocations: The list of assigned locations.
-	//
-	// This list will be absent if empty.
+	// AssignedLocations: The list of assigned locations. This list will be
+	// absent if empty.
 	AssignedLocations []*AssignedLocation `json:"assignedLocations,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	//
-	// Pass this value in the
-	// page_token field
-	// in the subsequent call to `ListAssignedLocations` method to
-	// retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListAssignedLocations` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9271,16 +8673,12 @@ func (s *ListAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListCampaignsResponse struct {
-	// Campaigns: The list of campaigns.
-	//
-	// This list will be absent if empty.
+	// Campaigns: The list of campaigns. This list will be absent if empty.
 	Campaigns []*Campaign `json:"campaigns,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the page_token field
-	// in the subsequent call to `ListCampaigns` method to retrieve the next
-	// page
-	// of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListCampaigns` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9311,16 +8709,12 @@ func (s *ListCampaignsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListChannelsResponse struct {
-	// Channels: The list of channels.
-	//
-	// This list will be absent if empty.
+	// Channels: The list of channels. This list will be absent if empty.
 	Channels []*Channel `json:"channels,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the page_token field
-	// in the subsequent call to `ListChannels` method to retrieve the next
-	// page
-	// of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListChannels` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9351,17 +8745,13 @@ func (s *ListChannelsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListCombinedAudiencesResponse struct {
-	// CombinedAudiences: The list of combined audiences.
-	//
-	// This list will be absent if empty.
+	// CombinedAudiences: The list of combined audiences. This list will be
+	// absent if empty.
 	CombinedAudiences []*CombinedAudience `json:"combinedAudiences,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListCombinedAudiences` method to
-	// retrieve
-	// the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListCombinedAudiences` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9393,16 +8783,12 @@ func (s *ListCombinedAudiencesResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListCreativesResponse struct {
-	// Creatives: The list of creatives.
-	//
-	// This list will be absent if empty.
+	// Creatives: The list of creatives. This list will be absent if empty.
 	Creatives []*Creative `json:"creatives,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the page_token field
-	// in the subsequent call to `ListCreativesRequest` method to retrieve
-	// the
-	// next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListCreativesRequest` method to retrieve the next page of results.
 	// If this field is null, it means this is the last page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -9433,18 +8819,54 @@ func (s *ListCreativesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListCustomBiddingAlgorithmsResponse struct {
+	// CustomBiddingAlgorithms: The list of custom bidding algorithms. This
+	// list will be absent if empty.
+	CustomBiddingAlgorithms []*CustomBiddingAlgorithm `json:"customBiddingAlgorithms,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListCustomBiddingAlgorithmsRequest` method to retrieve the next page
+	// of results. If this field is null, it means this is the last page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomBiddingAlgorithms") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomBiddingAlgorithms")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCustomBiddingAlgorithmsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomBiddingAlgorithmsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListCustomListsResponse struct {
-	// CustomLists: The list of custom lists.
-	//
-	// This list will be absent if empty.
+	// CustomLists: The list of custom lists. This list will be absent if
+	// empty.
 	CustomLists []*CustomList `json:"customLists,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListCustomLists` method to retrieve
-	// the
-	// next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListCustomLists` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9476,18 +8898,14 @@ func (s *ListCustomListsResponse) MarshalJSON() ([]byte, error) {
 
 type ListFirstAndThirdPartyAudiencesResponse struct {
 	// FirstAndThirdPartyAudiences: The list of first and third party
-	// audiences. Audience size properties will
-	// not be included.
-	//
-	// This list will be absent if empty.
+	// audiences. Audience size properties will not be included. This list
+	// will be absent if empty.
 	FirstAndThirdPartyAudiences []*FirstAndThirdPartyAudience `json:"firstAndThirdPartyAudiences,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListFirstAndThirdPartyAudiences`
-	// method to
-	// retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListFirstAndThirdPartyAudiences` method to retrieve the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9520,17 +8938,13 @@ func (s *ListFirstAndThirdPartyAudiencesResponse) MarshalJSON() ([]byte, error) 
 }
 
 type ListGoogleAudiencesResponse struct {
-	// GoogleAudiences: The list of Google audiences.
-	//
-	// This list will be absent if empty.
+	// GoogleAudiences: The list of Google audiences. This list will be
+	// absent if empty.
 	GoogleAudiences []*GoogleAudience `json:"googleAudiences,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListGoogleAudiences` method to
-	// retrieve
-	// the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListGoogleAudiences` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9562,16 +8976,13 @@ func (s *ListGoogleAudiencesResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListInsertionOrdersResponse struct {
-	// InsertionOrders: The list of insertion orders.
-	//
-	// This list will be absent if empty.
+	// InsertionOrders: The list of insertion orders. This list will be
+	// absent if empty.
 	InsertionOrders []*InsertionOrder `json:"insertionOrders,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the page_token
-	// field in the subsequent call to `ListInsertionOrders` method to
-	// retrieve
-	// the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListInsertionOrders` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9605,17 +9016,14 @@ func (s *ListInsertionOrdersResponse) MarshalJSON() ([]byte, error) {
 // ListInventorySourceGroupsResponse: Response message for
 // InventorySourceGroupService.ListInventorySourceGroups.
 type ListInventorySourceGroupsResponse struct {
-	// InventorySourceGroups: The list of inventory source groups.
-	//
-	// This list will be absent if empty.
+	// InventorySourceGroups: The list of inventory source groups. This list
+	// will be absent if empty.
 	InventorySourceGroups []*InventorySourceGroup `json:"inventorySourceGroups,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListInventorySourceGroups` method
-	// to
-	// retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListInventorySourceGroups` method to retrieve the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9648,17 +9056,13 @@ func (s *ListInventorySourceGroupsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListInventorySourcesResponse struct {
-	// InventorySources: The list of inventory sources.
-	//
-	// This list will be absent if empty.
+	// InventorySources: The list of inventory sources. This list will be
+	// absent if empty.
 	InventorySources []*InventorySource `json:"inventorySources,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListInventorySources` method to
-	// retrieve
-	// the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListInventorySources` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9689,26 +9093,18 @@ func (s *ListInventorySourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListLineItemAssignedTargetingOptionsResponse: Response message
-// for
+// ListLineItemAssignedTargetingOptionsResponse: Response message for
 // ListLineItemAssignedTargetingOptions.
 type ListLineItemAssignedTargetingOptionsResponse struct {
-	// AssignedTargetingOptions: The list of assigned targeting
-	// options.
-	//
+	// AssignedTargetingOptions: The list of assigned targeting options.
 	// This list will be absent if empty.
 	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
 
 	// NextPageToken: A token identifying the next page of results. This
-	// value should be
-	// specified as the
-	// pageToken in a
-	// subsequent ListLineItemAssignedTargetingOptionsRequest to fetch
-	// the
-	// next page of results. This token will be absent if there are no
-	// more
-	// assigned_targeting_options
-	// to return.
+	// value should be specified as the pageToken in a subsequent
+	// ListLineItemAssignedTargetingOptionsRequest to fetch the next page of
+	// results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9741,17 +9137,12 @@ func (s *ListLineItemAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, er
 }
 
 type ListLineItemsResponse struct {
-	// LineItems: The list of line items.
-	//
-	// This list will be absent if empty.
+	// LineItems: The list of line items. This list will be absent if empty.
 	LineItems []*LineItem `json:"lineItems,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListLineItems` method to retrieve
-	// the
-	// next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListLineItems` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9782,18 +9173,13 @@ func (s *ListLineItemsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListLocationListsResponse struct {
-	// LocationLists: The list of location lists.
-	//
-	// This list will be absent if empty.
+	// LocationLists: The list of location lists. This list will be absent
+	// if empty.
 	LocationLists []*LocationList `json:"locationLists,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	//
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListLocationLists` method to
-	// retrieve the
-	// next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListLocationLists` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9826,18 +9212,14 @@ func (s *ListLocationListsResponse) MarshalJSON() ([]byte, error) {
 // ListNegativeKeywordListsResponse: Response message for
 // NegativeKeywordListService.ListNegativeKeywordLists.
 type ListNegativeKeywordListsResponse struct {
-	// NegativeKeywordLists: The list of negative keyword lists.
-	//
-	// This list will be absent if empty.
+	// NegativeKeywordLists: The list of negative keyword lists. This list
+	// will be absent if empty.
 	NegativeKeywordLists []*NegativeKeywordList `json:"negativeKeywordLists,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	//
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListNegativeKeywordLists` method
-	// to
-	// retrieve the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListNegativeKeywordLists` method to retrieve the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9872,17 +9254,13 @@ func (s *ListNegativeKeywordListsResponse) MarshalJSON() ([]byte, error) {
 // ListNegativeKeywordsResponse: Response message for
 // NegativeKeywordService.ListNegativeKeywords.
 type ListNegativeKeywordsResponse struct {
-	// NegativeKeywords: The list of negative keywords.
-	//
-	// This list will be absent if empty.
+	// NegativeKeywords: The list of negative keywords. This list will be
+	// absent if empty.
 	NegativeKeywords []*NegativeKeyword `json:"negativeKeywords,omitempty"`
 
-	// NextPageToken: A token to retrieve the next page of results.
-	//
-	// Pass this value in the page_token
-	// field in the subsequent call to `ListNegativeKeywords` method to
-	// retrieve
-	// the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListNegativeKeywords` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9913,19 +9291,91 @@ func (s *ListNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListSitesResponse: Response message for SiteService.ListSites.
-type ListSitesResponse struct {
-	// NextPageToken: A token to retrieve the next page of results.
-	//
-	// Pass this value in the page_token field
-	// in the subsequent call to `ListSites` method to retrieve the next
-	// page
-	// of results.
+type ListPartnerAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting options.
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be specified as the pageToken in a subsequent
+	// ListPartnerAssignedTargetingOptionsRequest to fetch the next page of
+	// results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Sites: The list of sites.
-	//
-	// This list will be absent if empty.
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPartnerAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPartnerAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListPartnersResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListPartners` method to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Partners: The list of partners. This list will be absent if empty.
+	Partners []*Partner `json:"partners,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPartnersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPartnersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListSitesResponse: Response message for SiteService.ListSites.
+type ListSitesResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListSites` method to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Sites: The list of sites. This list will be absent if empty.
 	Sites []*Site `json:"sites,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9955,21 +9405,16 @@ func (s *ListSitesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListTargetingOptionsResponse: Response message
-// for
+// ListTargetingOptionsResponse: Response message for
 // ListTargetingOptions.
 type ListTargetingOptionsResponse struct {
-	// NextPageToken: A token to retrieve the next page of results.
-	// Pass this value in the
-	// page_token
-	// field in the subsequent call to `ListTargetingOptions` method to
-	// retrieve
-	// the next page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListTargetingOptions` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// TargetingOptions: The list of targeting options.
-	//
-	// This list will be absent if empty.
+	// TargetingOptions: The list of targeting options. This list will be
+	// absent if empty.
 	TargetingOptions []*TargetingOption `json:"targetingOptions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9999,14 +9444,51 @@ func (s *ListTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListUsersResponse struct {
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListUsers` method to retrieve the next page of results. This token
+	// will be absent if there are no more results to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Users: The list of users. This list will be absent if empty.
+	Users []*User `json:"users,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListUsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUsersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LocationList: A list of locations used for targeting.
 type LocationList struct {
 	// AdvertiserId: Required. Immutable. The unique ID of the advertiser
 	// the location list belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// DisplayName: Required. The display name of the location list.
-	// Must be UTF-8 encoded with a maximum size of 240 bytes.
+	// DisplayName: Required. The display name of the location list. Must be
+	// UTF-8 encoded with a maximum size of 240 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LocationListId: Output only. The unique ID of the location list.
@@ -10056,17 +9538,14 @@ func (s *LocationList) MarshalJSON() ([]byte, error) {
 }
 
 // LookbackWindow: Specifies how many days into the past to look when
-// determining whether to
-// record a conversion.
+// determining whether to record a conversion.
 type LookbackWindow struct {
 	// ClickDays: Lookback window, in days, from the last time a given user
-	// clicked on one of
-	// your ads.
+	// clicked on one of your ads.
 	ClickDays int64 `json:"clickDays,omitempty"`
 
 	// ImpressionDays: Lookback window, in days, from the last time a given
-	// user viewed one of
-	// your ads.
+	// user viewed one of your ads.
 	ImpressionDays int64 `json:"impressionDays,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClickDays") to
@@ -10093,25 +9572,24 @@ func (s *LookbackWindow) MarshalJSON() ([]byte, error) {
 }
 
 // MaximizeSpendBidStrategy: A strategy that automatically adjusts the
-// bid to optimize a specified
-// performance goal while spending the full budget.
+// bid to optimize a specified performance goal while spending the full
+// budget.
 type MaximizeSpendBidStrategy struct {
+	// CustomBiddingAlgorithmId: The ID of the Custom Bidding Algorithm used
+	// by this strategy. Only applicable when performance_goal_type is set
+	// to `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`.
+	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
+
 	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be
-	// bid, in micros of the advertiser's
-	// currency. Must be greater than or equal to a billable unit of the
-	// given
-	// currency.
-	//
-	// For example, 1500000 represents 1.5 standard units of the currency.
+	// bid, in micros of the advertiser's currency. Must be greater than or
+	// equal to a billable unit of the given currency. For example, 1500000
+	// represents 1.5 standard units of the currency.
 	MaxAverageCpmBidAmountMicros int64 `json:"maxAverageCpmBidAmountMicros,omitempty,string"`
 
 	// PerformanceGoalType: Required. The type of the performance goal that
-	// the bidding strategy
-	// tries to minimize while spending the full
-	// budget.
-	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM` is not
-	// supported for
-	// this strategy.
+	// the bidding strategy tries to minimize while spending the full
+	// budget. `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM` is not
+	// supported for this strategy.
 	//
 	// Possible values:
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_UNSPECIFIED" - Type value
@@ -10120,6 +9598,8 @@ type MaximizeSpendBidStrategy struct {
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC" - Cost per click.
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM" - Viewable
 	// CPM.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO" - Custom
+	// bidding algorithm.
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA" - Completed inview
 	// and audible views.
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN" - Inview time over
@@ -10129,7 +9609,7 @@ type MaximizeSpendBidStrategy struct {
 	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "MaxAverageCpmBidAmountMicros") to unconditionally include in API
+	// "CustomBiddingAlgorithmId") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -10137,13 +9617,13 @@ type MaximizeSpendBidStrategy struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "MaxAverageCpmBidAmountMicros") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomBiddingAlgorithmId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -10153,23 +9633,56 @@ func (s *MaximizeSpendBidStrategy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MeasurementConfig: Measurement settings of a partner.
+type MeasurementConfig struct {
+	// Dv360ToCmCostReportingEnabled: Whether or not to report DV360 cost to
+	// CM.
+	Dv360ToCmCostReportingEnabled bool `json:"dv360ToCmCostReportingEnabled,omitempty"`
+
+	// Dv360ToCmDataSharingEnabled: Whether or not to include DV360 data in
+	// CM data transfer reports.
+	Dv360ToCmDataSharingEnabled bool `json:"dv360ToCmDataSharingEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "Dv360ToCmCostReportingEnabled") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "Dv360ToCmCostReportingEnabled") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MeasurementConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MeasurementConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Money: Represents an amount of money with its currency type.
 type Money struct {
 	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
-	// Nanos: Number of nano (10^-9) units of the amount.
-	// The value must be between -999,999,999 and +999,999,999 inclusive.
-	// If `units` is positive, `nanos` must be positive or zero.
-	// If `units` is zero, `nanos` can be positive, zero, or negative.
-	// If `units` is negative, `nanos` must be negative or zero.
-	// For example $-1.75 is represented as `units`=-1 and
-	// `nanos`=-750,000,000.
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be
+	// between -999,999,999 and +999,999,999 inclusive. If `units` is
+	// positive, `nanos` must be positive or zero. If `units` is zero,
+	// `nanos` can be positive, zero, or negative. If `units` is negative,
+	// `nanos` must be negative or zero. For example $-1.75 is represented
+	// as `units`=-1 and `nanos`=-750,000,000.
 	Nanos int64 `json:"nanos,omitempty"`
 
-	// Units: The whole units of the amount.
-	// For example if `currencyCode` is "USD", then 1 unit is one US
-	// dollar.
+	// Units: The whole units of the amount. For example if `currencyCode`
+	// is "USD", then 1 unit is one US dollar.
 	Units int64 `json:"units,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
@@ -10199,17 +9712,11 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // negative keyword list.
 type NegativeKeyword struct {
 	// KeywordValue: Required. Immutable. The negatively targeted keyword,
-	// for example `car insurance`.
-	//
-	// Must be UTF-8 encoded with a maximum size of 255 bytes. Maximum
-	// number
-	// of characters is 80. Maximum number of words is 10.
-	//
-	// Valid characters are restricted to ASCII characters only. The
-	// only
-	// URL-escaping permitted is for representing whitespace between
-	// words.
-	// Leading or trailing whitespace is ignored.
+	// for example `car insurance`. Must be UTF-8 encoded with a maximum
+	// size of 255 bytes. Maximum number of characters is 80. Maximum number
+	// of words is 10. Valid characters are restricted to ASCII characters
+	// only. The only URL-escaping permitted is for representing whitespace
+	// between words. Leading or trailing whitespace is ignored.
 	KeywordValue string `json:"keywordValue,omitempty"`
 
 	// Name: Output only. The resource name of the negative keyword.
@@ -10248,8 +9755,7 @@ type NegativeKeywordList struct {
 	// negative keyword list belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// DisplayName: Required. The display name of the negative keyword
-	// list.
+	// DisplayName: Required. The display name of the negative keyword list.
 	// Must be UTF-8 encoded with a maximum size of 255 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -10288,15 +9794,13 @@ func (s *NegativeKeywordList) MarshalJSON() ([]byte, error) {
 }
 
 // NegativeKeywordListAssignedTargetingOptionDetails: Targeting details
-// for negative keyword list. This will be populated in the
-// details field of an AssignedTargetingOption when
-// targeting_type is
+// for negative keyword list. This will be populated in the details
+// field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST`.
 type NegativeKeywordListAssignedTargetingOptionDetails struct {
 	// NegativeKeywordListId: Required. ID of the negative keyword list.
-	// Should refer to the
-	// negative_keyword_list_id
-	// field of a NegativeKeywordList resource.
+	// Should refer to the negative_keyword_list_id field of a
+	// NegativeKeywordList resource.
 	NegativeKeywordListId int64 `json:"negativeKeywordListId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -10326,23 +9830,16 @@ func (s *NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byt
 
 // ObaIcon: OBA Icon for a Creative
 type ObaIcon struct {
-	// ClickTrackingUrl: Required. The click tracking URL of the OBA
-	// icon.
-	//
-	// Only URLs of the following domains are allowed:
-	//
-	// * https://info.evidon.com
-	// * https://l.betrad.com
+	// ClickTrackingUrl: Required. The click tracking URL of the OBA icon.
+	// Only URLs of the following domains are allowed: *
+	// https://info.evidon.com * https://l.betrad.com
 	ClickTrackingUrl string `json:"clickTrackingUrl,omitempty"`
 
 	// Dimensions: The dimensions of the OBA icon.
 	Dimensions *Dimensions `json:"dimensions,omitempty"`
 
-	// LandingPageUrl: Required. The landing page URL of the OBA icon.
-	//
-	// Only URLs of the following domains are allowed:
-	//
-	// * https://info.evidon.com
+	// LandingPageUrl: Required. The landing page URL of the OBA icon. Only
+	// URLs of the following domains are allowed: * https://info.evidon.com
 	// * https://l.betrad.com
 	LandingPageUrl string `json:"landingPageUrl,omitempty"`
 
@@ -10370,13 +9867,9 @@ type ObaIcon struct {
 	// ResourceUrl: The URL of the OBA icon resource.
 	ResourceUrl string `json:"resourceUrl,omitempty"`
 
-	// ViewTrackingUrl: Required. The view tracking URL of the OBA
-	// icon.
-	//
-	// Only URLs of the following domains are allowed:
-	//
-	// * https://info.evidon.com
-	// * https://l.betrad.com
+	// ViewTrackingUrl: Required. The view tracking URL of the OBA icon.
+	// Only URLs of the following domains are allowed: *
+	// https://info.evidon.com * https://l.betrad.com
 	ViewTrackingUrl string `json:"viewTrackingUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClickTrackingUrl") to
@@ -10404,21 +9897,16 @@ func (s *ObaIcon) MarshalJSON() ([]byte, error) {
 }
 
 // OnScreenPositionAssignedTargetingOptionDetails: On screen position
-// targeting option details. This will be
-// populated in the
-// on_screen_position_details
-// field when
-// targeting_type is
+// targeting option details. This will be populated in the
+// on_screen_position_details field when targeting_type is
 // `TARGETING_TYPE_ON_SCREEN_POSITION`.
 type OnScreenPositionAssignedTargetingOptionDetails struct {
 	// OnScreenPosition: Output only. The on screen position.
 	//
 	// Possible values:
 	//   "ON_SCREEN_POSITION_UNSPECIFIED" - On screen position is not
-	// specified in this version. This enum is a place
-	// holder for a default value and does not represent a real on
-	// screen
-	// position.
+	// specified in this version. This enum is a place holder for a default
+	// value and does not represent a real on screen position.
 	//   "ON_SCREEN_POSITION_UNKNOWN" - The ad position is unknown on the
 	// screen.
 	//   "ON_SCREEN_POSITION_ABOVE_THE_FOLD" - The ad is located above the
@@ -10427,10 +9915,8 @@ type OnScreenPositionAssignedTargetingOptionDetails struct {
 	// fold.
 	OnScreenPosition string `json:"onScreenPosition,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id field
-	// when
-	// targeting_type is
-	// `TARGETING_TYPE_ON_SCREEN_POSITION`.
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_ON_SCREEN_POSITION`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OnScreenPosition") to
@@ -10458,22 +9944,16 @@ func (s *OnScreenPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, 
 }
 
 // OnScreenPositionTargetingOptionDetails: Represents a targetable on
-// screen position, which could be used by display
-// and video ads. This will be populated in
-// the
-// on_screen_position_details
-// field when
-// targeting_type is
-// `TARGETING_TYPE_ON_SCREEN_POSITION`.
+// screen position, which could be used by display and video ads. This
+// will be populated in the on_screen_position_details field when
+// targeting_type is `TARGETING_TYPE_ON_SCREEN_POSITION`.
 type OnScreenPositionTargetingOptionDetails struct {
 	// OnScreenPosition: Output only. The on screen position.
 	//
 	// Possible values:
 	//   "ON_SCREEN_POSITION_UNSPECIFIED" - On screen position is not
-	// specified in this version. This enum is a place
-	// holder for a default value and does not represent a real on
-	// screen
-	// position.
+	// specified in this version. This enum is a place holder for a default
+	// value and does not represent a real on screen position.
 	//   "ON_SCREEN_POSITION_UNKNOWN" - The ad position is unknown on the
 	// screen.
 	//   "ON_SCREEN_POSITION_ABOVE_THE_FOLD" - The ad is located above the
@@ -10507,11 +9987,8 @@ func (s *OnScreenPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // OperatingSystemAssignedTargetingOptionDetails: Assigned operating
-// system targeting option details. This will be
-// populated in the
-// operating_system_details
-// field when
-// targeting_type is
+// system targeting option details. This will be populated in the
+// operating_system_details field when targeting_type is
 // `TARGETING_TYPE_OPERATING_SYSTEM`.
 type OperatingSystemAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the operating system.
@@ -10520,10 +9997,8 @@ type OperatingSystemAssignedTargetingOptionDetails struct {
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
 
-	// TargetingOptionId: Required. The targeting option ID populated
-	// in
-	// targeting_option_id field when
-	// targeting_type is
+	// TargetingOptionId: Required. The targeting option ID populated in
+	// targeting_option_id field when targeting_type is
 	// `TARGETING_TYPE_OPERATING_SYSTEM`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -10551,12 +10026,9 @@ func (s *OperatingSystemAssignedTargetingOptionDetails) MarshalJSON() ([]byte, e
 }
 
 // OperatingSystemTargetingOptionDetails: Represents a targetable
-// operating system. This will be populated in
-// the
-// operating_system_details field
-// of a TargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_OPERATING_SYSTEM`.
+// operating system. This will be populated in the
+// operating_system_details field of a TargetingOption when
+// targeting_type is `TARGETING_TYPE_OPERATING_SYSTEM`.
 type OperatingSystemTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the operating system.
 	DisplayName string `json:"displayName,omitempty"`
@@ -10585,52 +10057,38 @@ func (s *OperatingSystemTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
+// the result of a network API call.
 type Operation struct {
 	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
+	// progress. If `true`, the operation is completed, and either `error`
+	// or `response` is available.
 	Done bool `json:"done,omitempty"`
 
 	// Error: The error result of the operation in case of failure or
 	// cancellation.
 	Error *Status `json:"error,omitempty"`
 
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
+	// Metadata: Service-specific metadata associated with the operation. It
+	// typically contains progress information and common metadata such as
+	// create time. Some services might not provide such metadata. Any
+	// method that returns a long-running operation should document the
+	// metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 
 	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should be a resource name ending with
+	// service that originally returns it. If you use the default HTTP
+	// mapping, the `name` should be a resource name ending with
 	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If
+	// the original method returns no data on success, such as `Delete`, the
+	// response is `google.protobuf.Empty`. If the original method is
+	// standard `Get`/`Create`/`Update`, the response should be the
+	// resource. For other methods, the response should have the type
+	// `XxxResponse`, where `Xxx` is the original method name. For example,
+	// if the original method name is `TakeSnapshot()`, the inferred
+	// response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -10663,46 +10121,27 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // Pacing: Settings that control the rate at which a budget is spent.
 type Pacing struct {
 	// DailyMaxImpressions: Maximum number of impressions to serve every
-	// day.
-	//
-	// Applicable when the budget is impression based. Must be greater than
-	// 0.
+	// day. Applicable when the budget is impression based. Must be greater
+	// than 0.
 	DailyMaxImpressions int64 `json:"dailyMaxImpressions,omitempty,string"`
 
 	// DailyMaxMicros: Maximum currency amount to spend every day in micros
-	// of
-	// advertiser's currency.
-	//
-	// Applicable when the budget is currency based. Must be greater than
-	// 0.
-	// For example, for 1.5 standard unit of the currency, set this field
-	// to
-	// 1500000.
-	//
-	// The value assigned will be rounded to whole billable units for
-	// the
-	// relevant currency by the following rules: any positive value less
-	// than a
-	// single billable unit will be rounded up to one billable unit and
-	// any
-	// value larger than a single billable unit will be rounded down to
-	// the
-	// nearest billable value. For example, if the currency's billable unit
-	// is
-	// 0.01, and this field is set to 10257770, it will round down to
-	// 10250000,
-	// a value of 10.25. If set to 505, it will round up to 10000, a value
-	// of
-	// 0.01.
+	// of advertiser's currency. Applicable when the budget is currency
+	// based. Must be greater than 0. For example, for 1.5 standard unit of
+	// the currency, set this field to 1500000. The value assigned will be
+	// rounded to whole billable units for the relevant currency by the
+	// following rules: any positive value less than a single billable unit
+	// will be rounded up to one billable unit and any value larger than a
+	// single billable unit will be rounded down to the nearest billable
+	// value. For example, if the currency's billable unit is 0.01, and this
+	// field is set to 10257770, it will round down to 10250000, a value of
+	// 10.25. If set to 505, it will round up to 10000, a value of 0.01.
 	DailyMaxMicros int64 `json:"dailyMaxMicros,omitempty,string"`
 
 	// PacingPeriod: Required. The time period in which the pacing budget
-	// will be spent.
-	//
-	// When automatic budget allocation is enabled at the insertion order
-	// via
-	// auto_budget_allocation, this
-	// field is output only and defaults to `PACING_PERIOD_FLIGHT`.
+	// will be spent. When automatic budget allocation is enabled at the
+	// insertion order via auto_budget_allocation, this field is output only
+	// and defaults to `PACING_PERIOD_FLIGHT`.
 	//
 	// Possible values:
 	//   "PACING_PERIOD_UNSPECIFIED" - Period value is not specified or is
@@ -10714,17 +10153,14 @@ type Pacing struct {
 	PacingPeriod string `json:"pacingPeriod,omitempty"`
 
 	// PacingType: Required. The type of pacing that defines how the budget
-	// amount will be
-	// spent across the pacing_period.
+	// amount will be spent across the pacing_period.
 	//
 	// Possible values:
 	//   "PACING_TYPE_UNSPECIFIED" - Pacing mode value is not specified or
 	// is unknown in this version.
 	//   "PACING_TYPE_AHEAD" - Only applicable to `PACING_PERIOD_FLIGHT`
-	// pacing period.
-	// Ahead pacing attempts to spend faster than evenly, to make sure
-	// the
-	// entire budget is spent by the end of the flight.
+	// pacing period. Ahead pacing attempts to spend faster than evenly, to
+	// make sure the entire budget is spent by the end of the flight.
 	//   "PACING_TYPE_ASAP" - Spend all of pacing budget amount as quick as
 	// possible.
 	//   "PACING_TYPE_EVEN" - Spend a consistent budget amount every period
@@ -10756,8 +10192,7 @@ func (s *Pacing) MarshalJSON() ([]byte, error) {
 }
 
 // ParentEntityFilter: A filtering option that filters on selected file
-// types belonging to a chosen
-// set of filter entities.
+// types belonging to a chosen set of filter entities.
 type ParentEntityFilter struct {
 	// FileType: Required. File types that will be returned.
 	//
@@ -10768,15 +10203,13 @@ type ParentEntityFilter struct {
 	//   "FILE_TYPE_MEDIA_PRODUCT" - Media Product.
 	//   "FILE_TYPE_INSERTION_ORDER" - Insertion Order.
 	//   "FILE_TYPE_LINE_ITEM" - Line Item.
-	//   "FILE_TYPE_AD_GROUP" - TrueView Ad Group.
-	//   "FILE_TYPE_AD" - TrueView Ad.
+	//   "FILE_TYPE_AD_GROUP" - YouTube Ad Group.
+	//   "FILE_TYPE_AD" - YouTube Ad.
 	FileType []string `json:"fileType,omitempty"`
 
 	// FilterIds: The IDs of the specified filter type. This is used to
-	// filter entities to
-	// fetch. If filter type is not `FILTER_TYPE_NONE`, at least one ID must
-	// be
-	// specified.
+	// filter entities to fetch. If filter type is not `FILTER_TYPE_NONE`,
+	// at least one ID must be specified.
 	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
 
 	// FilterType: Required. Filter type used to filter fetched entities.
@@ -10785,41 +10218,28 @@ type ParentEntityFilter struct {
 	//   "FILTER_TYPE_UNSPECIFIED" - Default value when type is unspecified
 	// or is unknown in this version.
 	//   "FILTER_TYPE_NONE" - If selected, no filter will be applied to the
-	// download. Can only be used if
-	// an Advertiser is specified
-	// in CreateSdfDownloadTaskRequest.
-	//   "FILTER_TYPE_ADVERTISER_ID" - Advertiser ID. If selected, all
-	// filter IDs must be Advertiser IDs that
-	// belong to the Partner specified
-	// in CreateSdfDownloadTaskRequest.
-	//   "FILTER_TYPE_CAMPAIGN_ID" - Campaign ID. If selected, all filter
-	// IDs must be Campaign IDs that belong
-	// to the Advertiser or
-	// Partner specified in
+	// download. Can only be used if an Advertiser is specified in
 	// CreateSdfDownloadTaskRequest.
+	//   "FILTER_TYPE_ADVERTISER_ID" - Advertiser ID. If selected, all
+	// filter IDs must be Advertiser IDs that belong to the Partner
+	// specified in CreateSdfDownloadTaskRequest.
+	//   "FILTER_TYPE_CAMPAIGN_ID" - Campaign ID. If selected, all filter
+	// IDs must be Campaign IDs that belong to the Advertiser or Partner
+	// specified in CreateSdfDownloadTaskRequest.
 	//   "FILTER_TYPE_MEDIA_PRODUCT_ID" - Media Product ID. If selected, all
-	// filter IDs must be Media Product IDs
-	// that belong to the Advertiser
-	// or Partner specified in
-	// CreateSdfDownloadTaskRequest. Can only be used for
-	// downloading
-	// `FILE_TYPE_MEDIA_PRODUCT`.
+	// filter IDs must be Media Product IDs that belong to the Advertiser or
+	// Partner specified in CreateSdfDownloadTaskRequest. Can only be used
+	// for downloading `FILE_TYPE_MEDIA_PRODUCT`.
 	//   "FILTER_TYPE_INSERTION_ORDER_ID" - Insertion Order ID. If selected,
-	// all filter IDs must be Insertion Order IDs
-	// that belong to the Advertiser
-	// or Partner specified in
-	// CreateSdfDownloadTaskRequest. Can only be used for
-	// downloading
-	// `FILE_TYPE_INSERTION_ORDER`, `FILE_TYPE_LINE_ITEM`,
-	// `FILE_TYPE_AD_GROUP`,
-	// and `FILE_TYPE_AD`.
-	//   "FILTER_TYPE_LINE_ITEM_ID" - Line Item ID. If selected, all filter
-	// IDs must be Line Item IDs that belong
-	// to the Advertiser or
-	// Partner specified in
-	// CreateSdfDownloadTaskRequest. Can only be used for
-	// downloading
+	// all filter IDs must be Insertion Order IDs that belong to the
+	// Advertiser or Partner specified in CreateSdfDownloadTaskRequest. Can
+	// only be used for downloading `FILE_TYPE_INSERTION_ORDER`,
 	// `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`.
+	//   "FILTER_TYPE_LINE_ITEM_ID" - Line Item ID. If selected, all filter
+	// IDs must be Line Item IDs that belong to the Advertiser or Partner
+	// specified in CreateSdfDownloadTaskRequest. Can only be used for
+	// downloading `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_AD_GROUP`, and
+	// `FILE_TYPE_AD`.
 	FilterType string `json:"filterType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FileType") to
@@ -10846,28 +10266,23 @@ func (s *ParentEntityFilter) MarshalJSON() ([]byte, error) {
 }
 
 // ParentalStatusAssignedTargetingOptionDetails: Details for assigned
-// parental status targeting option. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// parental status targeting option. This will be populated in the
+// details field of an AssignedTargetingOption when targeting_type is
 // `TARTGETING_TYPE_PARENTAL_STATUS`.
 type ParentalStatusAssignedTargetingOptionDetails struct {
 	// ParentalStatus: Output only. The parental status of the audience.
 	//
 	// Possible values:
 	//   "PARENTAL_STATUS_UNSPECIFIED" - Default value when parental status
-	// is not specified in this version. This
-	// enum is a place holder for default value and does not represent a
-	// real
-	// parental status option.
+	// is not specified in this version. This enum is a place holder for
+	// default value and does not represent a real parental status option.
 	//   "PARENTAL_STATUS_PARENT" - The audience is a parent.
 	//   "PARENTAL_STATUS_NOT_A_PARENT" - The audience is not a parent.
 	//   "PARENTAL_STATUS_UNKNOWN" - The parental status of the audience is
 	// unknown.
 	ParentalStatus string `json:"parentalStatus,omitempty"`
 
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_PARENTAL_STATUS`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -10896,21 +10311,16 @@ func (s *ParentalStatusAssignedTargetingOptionDetails) MarshalJSON() ([]byte, er
 }
 
 // ParentalStatusTargetingOptionDetails: Represents a targetable
-// parental status. This will be populated in
-// the
-// parental_status_details field of a
-// TargetingOption when targeting_type
-// is
-// `TARGETING_TYPE_PARENTAL_STATUS`.
+// parental status. This will be populated in the
+// parental_status_details field of a TargetingOption when
+// targeting_type is `TARGETING_TYPE_PARENTAL_STATUS`.
 type ParentalStatusTargetingOptionDetails struct {
 	// ParentalStatus: Output only. The parental status of an audience.
 	//
 	// Possible values:
 	//   "PARENTAL_STATUS_UNSPECIFIED" - Default value when parental status
-	// is not specified in this version. This
-	// enum is a place holder for default value and does not represent a
-	// real
-	// parental status option.
+	// is not specified in this version. This enum is a place holder for
+	// default value and does not represent a real parental status option.
 	//   "PARENTAL_STATUS_PARENT" - The audience is a parent.
 	//   "PARENTAL_STATUS_NOT_A_PARENT" - The audience is not a parent.
 	//   "PARENTAL_STATUS_UNKNOWN" - The parental status of the audience is
@@ -10941,17 +10351,118 @@ func (s *ParentalStatusTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PartnerCost: Settings that control a partner cost.
-//
-// A partner cost is any type of expense involved in running a campaign,
-// other
-// than the costs of purchasing impressions (which is called the media
-// cost)
-// and using third-party audience segment data (data fee). Some examples
-// of
+// Partner: A single partner in Display & Video 360 (DV360).
+type Partner struct {
+	// AdServerConfig: Ad server related settings of the partner.
+	AdServerConfig *PartnerAdServerConfig `json:"adServerConfig,omitempty"`
+
+	// DataAccessConfig: Settings that control how partner data may be
+	// accessed.
+	DataAccessConfig *PartnerDataAccessConfig `json:"dataAccessConfig,omitempty"`
+
+	// DisplayName: The display name of the partner. Must be UTF-8 encoded
+	// with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityStatus: Output only. The status of the partner.
+	//
+	// Possible values:
+	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
+	// specified or is unknown in this version.
+	//   "ENTITY_STATUS_ACTIVE" - The entity is enabled to bid and spend
+	// budget.
+	//   "ENTITY_STATUS_ARCHIVED" - The entity is archived. Bidding and
+	// budget spending are disabled. An entity can be deleted after
+	// archived. Deleted entities cannot be retrieved.
+	//   "ENTITY_STATUS_DRAFT" - The entity is under draft. Bidding and
+	// budget spending are disabled.
+	//   "ENTITY_STATUS_PAUSED" - Bidding and budget spending are paused for
+	// the entity.
+	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled
+	// for deletion.
+	EntityStatus string `json:"entityStatus,omitempty"`
+
+	// ExchangeConfig: Settings that control which exchanges are enabled for
+	// the partner.
+	ExchangeConfig *ExchangeConfig `json:"exchangeConfig,omitempty"`
+
+	// GeneralConfig: General settings of the partner.
+	GeneralConfig *PartnerGeneralConfig `json:"generalConfig,omitempty"`
+
+	// Name: Output only. The resource name of the partner.
+	Name string `json:"name,omitempty"`
+
+	// PartnerId: Output only. The unique ID of the partner. Assigned by the
+	// system.
+	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// UpdateTime: Output only. The timestamp when the partner was last
+	// updated. Assigned by the system.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdServerConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdServerConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Partner) MarshalJSON() ([]byte, error) {
+	type NoMethod Partner
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartnerAdServerConfig: Ad server related settings of a partner.
+type PartnerAdServerConfig struct {
+	// MeasurementConfig: Measurement settings of a partner.
+	MeasurementConfig *MeasurementConfig `json:"measurementConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MeasurementConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MeasurementConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartnerAdServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerAdServerConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartnerCost: Settings that control a partner cost. A partner cost is
+// any type of expense involved in running a campaign, other than the
+// costs of purchasing impressions (which is called the media cost) and
+// using third-party audience segment data (data fee). Some examples of
 // partner costs include the fees for using DV360, a third-party ad
-// server,
-// or a third-party ad serving verification service.
+// server, or a third-party ad serving verification service.
 type PartnerCost struct {
 	// CostType: Required. The type of the partner cost.
 	//
@@ -11013,25 +10524,16 @@ type PartnerCost struct {
 	// fee 5.
 	CostType string `json:"costType,omitempty"`
 
-	// FeeAmount: The CPM fee amount in micros of advertiser's
-	// currency.
-	//
-	// Applicable when the fee_type is
-	// `PARTNER_FEE_TYPE_CPM_FEE`. Must be greater than or equal to 0.
-	//
-	// For example, for 1.5 standard unit of the advertiser's currency,
-	// set
-	// this field to 1500000.
+	// FeeAmount: The CPM fee amount in micros of advertiser's currency.
+	// Applicable when the fee_type is `PARTNER_FEE_TYPE_CPM_FEE`. Must be
+	// greater than or equal to 0. For example, for 1.5 standard unit of the
+	// advertiser's currency, set this field to 1500000.
 	FeeAmount int64 `json:"feeAmount,omitempty,string"`
 
 	// FeePercentageMillis: The media fee percentage in millis (1/1000 of a
-	// percent).
-	//
-	// Applicable when the fee_type is
-	// `PARTNER_FEE_TYPE_MEDIA_FEE`. Must be greater than or equal to
-	// 0.
-	//
-	// For example: 100 represents 0.1%.
+	// percent). Applicable when the fee_type is
+	// `PARTNER_FEE_TYPE_MEDIA_FEE`. Must be greater than or equal to 0. For
+	// example: 100 represents 0.1%.
 	FeePercentageMillis int64 `json:"feePercentageMillis,omitempty,string"`
 
 	// FeeType: Required. The fee type for this partner cost.
@@ -11040,32 +10542,21 @@ type PartnerCost struct {
 	//   "PARTNER_COST_FEE_TYPE_UNSPECIFIED" - Value is not specified or is
 	// unknown in this version.
 	//   "PARTNER_COST_FEE_TYPE_CPM_FEE" - The partner cost is a fixed CPM
-	// fee.
-	//
-	// Not applicable when the partner cost cost_type
-	// is one of:
-	//
-	// * `PARTNER_COST_TYPE_MEDIA_COST_DATA`
-	// * `PARTNER_COST_TYPE_DV360_FEE`.
+	// fee. Not applicable when the partner cost cost_type is one of: *
+	// `PARTNER_COST_TYPE_MEDIA_COST_DATA` * `PARTNER_COST_TYPE_DV360_FEE`.
 	//   "PARTNER_COST_FEE_TYPE_MEDIA_FEE" - The partner cost is a
-	// percentage surcharge based on the media cost.
-	//
-	// Not applicable when the partner cost_type is one
-	// of:
-	//
-	// * `PARTNER_COST_TYPE_SHOP_LOCAL`
-	// * `PARTNER_COST_TYPE_TRUST_METRICS`
-	// * `PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE_VIDEO`
-	// * `PARTNER_COST_TYPE_MOAT_VIDEO`.
+	// percentage surcharge based on the media cost. Not applicable when the
+	// partner cost_type is one of: * `PARTNER_COST_TYPE_SHOP_LOCAL` *
+	// `PARTNER_COST_TYPE_TRUST_METRICS` *
+	// `PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE_VIDEO` *
+	// `PARTNER_COST_TYPE_MOAT_VIDEO`.
 	FeeType string `json:"feeType,omitempty"`
 
-	// InvoiceType: The invoice type for this partner cost.
-	//
-	// * Required when cost_type is one of:
-	//     - `PARTNER_COST_TYPE_ADLOOX`
-	//     - `PARTNER_COST_TYPE_DOUBLE_VERIFY`
-	//     - `PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE`.
-	// * Output only for other types.
+	// InvoiceType: The invoice type for this partner cost. * Required when
+	// cost_type is one of: - `PARTNER_COST_TYPE_ADLOOX` -
+	// `PARTNER_COST_TYPE_DOUBLE_VERIFY` -
+	// `PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE`. * Output only for other
+	// types.
 	//
 	// Possible values:
 	//   "PARTNER_COST_INVOICE_TYPE_UNSPECIFIED" - Type value is not
@@ -11099,33 +10590,84 @@ func (s *PartnerCost) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PartnerDataAccessConfig: Settings that control how partner related
+// data may be accessed.
+type PartnerDataAccessConfig struct {
+	// SdfConfig: Structured Data Files (SDF) settings for the partner. The
+	// SDF configuration for the partner.
+	SdfConfig *SdfConfig `json:"sdfConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SdfConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SdfConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartnerDataAccessConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerDataAccessConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartnerGeneralConfig: General settings of a partner.
+type PartnerGeneralConfig struct {
+	// CurrencyCode: Immutable. Partner's currency in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// TimeZone: Immutable. The standard TZ database name of the partner's
+	// time zone. For example, `America/New_York`. See more at:
+	// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartnerGeneralConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerGeneralConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PartnerRevenueModel: Settings that control how partner revenue is
 // calculated.
 type PartnerRevenueModel struct {
 	// MarkupAmount: Required. The markup amount of the partner revenue
-	// model.
-	// Must be greater than or equal to 0.
-	//
-	// * When the markup_type is set to
-	// be
-	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`, this field represents the
-	// CPM
-	// markup in micros of advertiser's currency. For example,
-	// 1500000
-	// represents 1.5 standard units of the currency.
-	// * When the markup_type is set to
-	// be
-	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_MEDIA_COST_MARKUP`, this
-	// field
-	// represents the media cost percent markup in millis. For example,
-	// 100 represents 0.1% (decimal 0.001).
-	// * When the markup_type is set to
-	// be
+	// model. Must be greater than or equal to 0. * When the markup_type is
+	// set to be `PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM`, this field
+	// represents the CPM markup in micros of advertiser's currency. For
+	// example, 1500000 represents 1.5 standard units of the currency. *
+	// When the markup_type is set to be
+	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_MEDIA_COST_MARKUP`, this field
+	// represents the media cost percent markup in millis. For example, 100
+	// represents 0.1% (decimal 0.001). * When the markup_type is set to be
 	// `PARTNER_REVENUE_MODEL_MARKUP_TYPE_TOTAL_MEDIA_COST_MARKUP`, this
-	// field
-	// represents the total media cost percent markup in millis. For
-	// example,
-	// 100 represents 0.1% (decimal 0.001).
+	// field represents the total media cost percent markup in millis. For
+	// example, 100 represents 0.1% (decimal 0.001).
 	MarkupAmount int64 `json:"markupAmount,omitempty,string"`
 
 	// MarkupType: Required. The markup type of the partner revenue model.
@@ -11136,11 +10678,10 @@ type PartnerRevenueModel struct {
 	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_CPM" - Calculate the partner
 	// revenue based on a fixed CPM.
 	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_MEDIA_COST_MARKUP" - Calculate
-	// the partner revenue based on a percentage surcharge of its
-	// media cost.
+	// the partner revenue based on a percentage surcharge of its media
+	// cost.
 	//   "PARTNER_REVENUE_MODEL_MARKUP_TYPE_TOTAL_MEDIA_COST_MARKUP" -
-	// Calculate the partner revenue based on a percentage surcharge of
-	// its
+	// Calculate the partner revenue based on a percentage surcharge of its
 	// total media cost, which includes all partner costs and data costs.
 	MarkupType string `json:"markupType,omitempty"`
 
@@ -11171,38 +10712,22 @@ func (s *PartnerRevenueModel) MarshalJSON() ([]byte, error) {
 // campaign or insertion order.
 type PerformanceGoal struct {
 	// PerformanceGoalAmountMicros: The goal amount, in micros of the
-	// advertiser's currency.
-	//
-	// Applicable when
-	// performance_goal_type is one of:
-	//
-	// * `PERFORMANCE_GOAL_TYPE_CPM`
-	// * `PERFORMANCE_GOAL_TYPE_CPC`
-	// * `PERFORMANCE_GOAL_TYPE_CPA`
-	// * `PERFORMANCE_GOAL_TYPE_CPIAVC`
-	//
-	// For example 1500000 represents 1.5 standard units of the currency.
+	// advertiser's currency. Applicable when performance_goal_type is one
+	// of: * `PERFORMANCE_GOAL_TYPE_CPM` * `PERFORMANCE_GOAL_TYPE_CPC` *
+	// `PERFORMANCE_GOAL_TYPE_CPA` * `PERFORMANCE_GOAL_TYPE_CPIAVC` For
+	// example 1500000 represents 1.5 standard units of the currency.
 	PerformanceGoalAmountMicros int64 `json:"performanceGoalAmountMicros,omitempty,string"`
 
 	// PerformanceGoalPercentageMicros: The decimal representation of the
-	// goal percentage in micros.
-	//
-	// Applicable when
-	// performance_goal_type is one of:
-	//
-	// * `PERFORMANCE_GOAL_TYPE_CTR`
-	// * `PERFORMANCE_GOAL_TYPE_VIEWABILITY`
-	//
-	// For example, 70000 represents 7% (decimal 0.07).
+	// goal percentage in micros. Applicable when performance_goal_type is
+	// one of: * `PERFORMANCE_GOAL_TYPE_CTR` *
+	// `PERFORMANCE_GOAL_TYPE_VIEWABILITY` For example, 70000 represents 7%
+	// (decimal 0.07).
 	PerformanceGoalPercentageMicros int64 `json:"performanceGoalPercentageMicros,omitempty,string"`
 
 	// PerformanceGoalString: A key performance indicator (KPI) string,
-	// which can be empty.
-	// Must be UTF-8 encoded with a length of no more than 100
-	// characters.
-	//
-	// Applicable when
-	// performance_goal_type is set to
+	// which can be empty. Must be UTF-8 encoded with a length of no more
+	// than 100 characters. Applicable when performance_goal_type is set to
 	// `PERFORMANCE_GOAL_TYPE_OTHER`.
 	PerformanceGoalString string `json:"performanceGoalString,omitempty"`
 
@@ -11220,8 +10745,7 @@ type PerformanceGoal struct {
 	//   "PERFORMANCE_GOAL_TYPE_VIEWABILITY" - The performance goal is set
 	// in Viewability percentage.
 	//   "PERFORMANCE_GOAL_TYPE_CPIAVC" - The performance goal is set as
-	// CPIAVC (cost per impression audible and
-	// visible at completion).
+	// CPIAVC (cost per impression audible and visible at completion).
 	//   "PERFORMANCE_GOAL_TYPE_CPE" - The performance goal is set in CPE
 	// (cost per engagement).
 	//   "PERFORMANCE_GOAL_TYPE_OTHER" - The performance goal is set to
@@ -11254,78 +10778,51 @@ func (s *PerformanceGoal) MarshalJSON() ([]byte, error) {
 }
 
 // PerformanceGoalBidStrategy: A strategy that automatically adjusts the
-// bid to meet or beat a specified
-// performance goal.
+// bid to meet or beat a specified performance goal.
 type PerformanceGoalBidStrategy struct {
+	// CustomBiddingAlgorithmId: The ID of the Custom Bidding Algorithm used
+	// by this strategy. Only applicable when performance_goal_type is set
+	// to `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`.
+	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
+
 	// MaxAverageCpmBidAmountMicros: The maximum average CPM that may be
-	// bid, in micros of the advertiser's
-	// currency. Must be greater than or equal to a billable unit of the
-	// given
-	// currency. Not applicable when
-	// performance_goal_type
-	// is set to `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`.
-	//
-	// For example, 1500000 represents 1.5 standard units of the currency.
+	// bid, in micros of the advertiser's currency. Must be greater than or
+	// equal to a billable unit of the given currency. Not applicable when
+	// performance_goal_type is set to
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`. For example,
+	// 1500000 represents 1.5 standard units of the currency.
 	MaxAverageCpmBidAmountMicros int64 `json:"maxAverageCpmBidAmountMicros,omitempty,string"`
 
 	// PerformanceGoalAmountMicros: Required. The performance goal the
-	// bidding strategy will attempt to
-	// meet or beat, in micros of the advertiser's currency or in micro of
-	// the
-	// ROAS (Return On Advertising Spend) value which is also based
-	// on
-	// advertiser's currency. Must be greater than or equal to a billable
-	// unit of
-	// the given currency and smaller or equal to upper bounds.
-	// Each
-	// performance_goal_type
-	// has its upper bound:
-	//
-	// * when
-	// performance_goal_type
-	// is `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`,
-	// upper bound is 10000.00 USD.
-	// * when
-	// performance_goal_type
-	// is `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`,
-	// upper bound is 1000.00 USD.
-	// * when
-	// performance_goal_type
-	// is `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`, upper bound
-	// is
-	// 1000.00 USD.
-	// * when
-	// performance_goal_type
-	// is `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`, upper bound
-	// is
-	// 1000.00 and lower bound is 0.01.
-	//
-	// Example: If set
-	// to
+	// bidding strategy will attempt to meet or beat, in micros of the
+	// advertiser's currency or in micro of the ROAS (Return On Advertising
+	// Spend) value which is also based on advertiser's currency. Must be
+	// greater than or equal to a billable unit of the given currency and
+	// smaller or equal to upper bounds. Each performance_goal_type has its
+	// upper bound: * when performance_goal_type is
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`, upper bound is 10000.00
+	// USD. * when performance_goal_type is
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`, upper bound is 1000.00
+	// USD. * when performance_goal_type is
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`, upper bound is
+	// 1000.00 USD. * when performance_goal_type is
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`, upper bound is
+	// 1000.00 and lower bound is 0.01. Example: If set to
 	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`, the bid price
-	// will
-	// be based on the probability that each available impression will
-	// be
-	// viewable. For example, if viewable CPM target is $2 and an impression
-	// is
-	// 40% likely to be viewable, the bid price will be $0.80 CPM (40% of
-	// $2).
-	//
-	// For example, 1500000 represents 1.5 standard units of the currency or
-	// ROAS
-	// value.
+	// will be based on the probability that each available impression will
+	// be viewable. For example, if viewable CPM target is $2 and an
+	// impression is 40% likely to be viewable, the bid price will be $0.80
+	// CPM (40% of $2). For example, 1500000 represents 1.5 standard units
+	// of the currency or ROAS value.
 	PerformanceGoalAmountMicros int64 `json:"performanceGoalAmountMicros,omitempty,string"`
 
 	// PerformanceGoalType: Required. The type of the performance goal that
-	// the bidding strategy
-	// will try to meet or beat.
-	//
-	// For line item level usage, the value must be one of:
-	//
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA`
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC`
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`
-	// * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`.
+	// the bidding strategy will try to meet or beat. For line item level
+	// usage, the value must be one of: *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPA` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO`.
 	//
 	// Possible values:
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_UNSPECIFIED" - Type value
@@ -11334,6 +10831,8 @@ type PerformanceGoalBidStrategy struct {
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CPC" - Cost per click.
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM" - Viewable
 	// CPM.
+	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CUSTOM_ALGO" - Custom
+	// bidding algorithm.
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA" - Completed inview
 	// and audible views.
 	//   "BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN" - Inview time over
@@ -11343,7 +10842,7 @@ type PerformanceGoalBidStrategy struct {
 	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "MaxAverageCpmBidAmountMicros") to unconditionally include in API
+	// "CustomBiddingAlgorithmId") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -11351,13 +10850,13 @@ type PerformanceGoalBidStrategy struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "MaxAverageCpmBidAmountMicros") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomBiddingAlgorithmId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -11368,42 +10867,28 @@ func (s *PerformanceGoalBidStrategy) MarshalJSON() ([]byte, error) {
 }
 
 // ProximityLocationListAssignedTargetingOptionDetails: Targeting
-// details for proximity location list. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// details for proximity location list. This will be populated in the
+// details field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_PROXIMITY_LOCATION_LIST`.
 type ProximityLocationListAssignedTargetingOptionDetails struct {
 	// ProximityLocationListId: Required. ID of the proximity location list.
-	// Should refer to the
-	// location_list_id field of a
-	// LocationList resource whose type
-	// is
-	// `TARGETING_LOCATION_TYPE_PROXIMITY`.
+	// Should refer to the location_list_id field of a LocationList resource
+	// whose type is `TARGETING_LOCATION_TYPE_PROXIMITY`.
 	ProximityLocationListId int64 `json:"proximityLocationListId,omitempty,string"`
 
 	// ProximityRadiusRange: Required. Radius range for proximity location
-	// list.
-	// This represents the size of the area around a chosen location that
-	// will be
-	// targeted.
-	//
-	// `All` proximity location targeting under a single line item must have
-	// the
-	// same radius range value. Set this value to match any existing
-	// targeting.
-	// If updated, this field will change the radius range for all
-	// proximity
-	// targeting under the line item.
+	// list. This represents the size of the area around a chosen location
+	// that will be targeted. `All` proximity location targeting under a
+	// single line item must have the same radius range value. Set this
+	// value to match any existing targeting. If updated, this field will
+	// change the radius range for all proximity targeting under the line
+	// item.
 	//
 	// Possible values:
 	//   "PROXIMITY_RADIUS_RANGE_UNSPECIFIED" - The targeted radius range is
-	// not specified or is unknown.
-	// Default value when radius range is not specified in this
-	// version.
-	// This enum is a placeholder for default value and does not represent a
-	// real
-	// radius range option.
+	// not specified or is unknown. Default value when radius range is not
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real radius range option.
 	//   "PROXIMITY_RADIUS_RANGE_SMALL" - The targeted radius range is
 	// small.
 	//   "PROXIMITY_RADIUS_RANGE_MEDIUM" - The targeted radius range is
@@ -11477,12 +10962,9 @@ func (s *PublisherReviewStatus) MarshalJSON() ([]byte, error) {
 
 // RateDetails: The rate related settings of the inventory source.
 type RateDetails struct {
-	// InventorySourceRateType: The rate type.
-	//
-	// Acceptable values are
+	// InventorySourceRateType: The rate type. Acceptable values are
 	// `INVENTORY_SOURCE_RATE_TYPE_CPM_FIXED`,
-	// `INVENTORY_SOURCE_RATE_TYPE_CP
-	// M_FLOOR`, and
+	// `INVENTORY_SOURCE_RATE_TYPE_CPM_FLOOR`, and
 	// `INVENTORY_SOURCE_RATE_TYPE_CPD`.
 	//
 	// Possible values:
@@ -11497,17 +10979,15 @@ type RateDetails struct {
 	InventorySourceRateType string `json:"inventorySourceRateType,omitempty"`
 
 	// MinimumSpend: Output only. The amount that the buyer has committed to
-	// spending on the inventory source
-	// up front.
-	//
-	// Only applicable for guaranteed inventory sources.
+	// spending on the inventory source up front. Only applicable for
+	// guaranteed inventory sources.
 	MinimumSpend *Money `json:"minimumSpend,omitempty"`
 
 	// Rate: The rate for the inventory source.
 	Rate *Money `json:"rate,omitempty"`
 
-	// UnitsPurchased: Required for guaranteed inventory sources.
-	// The number of impressions guaranteed by the seller.
+	// UnitsPurchased: Required for guaranteed inventory sources. The number
+	// of impressions guaranteed by the seller.
 	UnitsPurchased int64 `json:"unitsPurchased,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -11536,20 +11016,16 @@ func (s *RateDetails) MarshalJSON() ([]byte, error) {
 }
 
 // RegionalLocationListAssignedTargetingOptionDetails: Targeting details
-// for regional location list. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
+// for regional location list. This will be populated in the details
+// field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_REGIONAL_LOCATION_LIST`.
 type RegionalLocationListAssignedTargetingOptionDetails struct {
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
 
 	// RegionalLocationListId: Required. ID of the regional location list.
-	// Should refer to the
-	// location_list_id field of a
-	// LocationList resource whose type is
-	// `TARGETING_LOCATION_TYPE_REGIONAL`.
+	// Should refer to the location_list_id field of a LocationList resource
+	// whose type is `TARGETING_LOCATION_TYPE_REGIONAL`.
 	RegionalLocationListId int64 `json:"regionalLocationListId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Negative") to
@@ -11578,13 +11054,8 @@ func (s *RegionalLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]by
 // ReviewStatusInfo: Review statuses for the creative.
 type ReviewStatusInfo struct {
 	// ApprovalStatus: Represents the basic approval needed for a creative
-	// to begin serving.
-	// Summary
-	// of
-	// creative_and_landing_page_review_status
-	// and
-	// content_and_policy_revi
-	// ew_status.
+	// to begin serving. Summary of creative_and_landing_page_review_status
+	// and content_and_policy_review_status.
 	//
 	// Possible values:
 	//   "APPROVAL_STATUS_UNSPECIFIED" - Type value is not specified or is
@@ -11592,12 +11063,11 @@ type ReviewStatusInfo struct {
 	//   "APPROVAL_STATUS_PENDING_NOT_SERVABLE" - The creative is still
 	// under review and not servable.
 	//   "APPROVAL_STATUS_PENDING_SERVABLE" - The creative has passed
-	// creative & landing page
-	// review and is servable, but is awaiting additional
-	// content & policy review.
+	// creative & landing page review and is servable, but is awaiting
+	// additional content & policy review.
 	//   "APPROVAL_STATUS_APPROVED_SERVABLE" - Both creative & landing page
-	// review and
-	// content & policy review are approved. The creative is servable.
+	// review and content & policy review are approved. The creative is
+	// servable.
 	//   "APPROVAL_STATUS_REJECTED_NOT_SERVABLE" - There is an issue with
 	// the creative that must be fixed before it can serve.
 	ApprovalStatus string `json:"approvalStatus,omitempty"`
@@ -11657,8 +11127,7 @@ func (s *ReviewStatusInfo) MarshalJSON() ([]byte, error) {
 // SdfConfig: Structured Data File (SDF) related settings.
 type SdfConfig struct {
 	// AdminEmail: An administrator email address to which the SDF
-	// processing status reports
-	// will be sent.
+	// processing status reports will be sent.
 	AdminEmail string `json:"adminEmail,omitempty"`
 
 	// Version: Required. The version of SDF being used.
@@ -11698,18 +11167,14 @@ func (s *SdfConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SdfDownloadTask: Type for the response returned
-// by [SdfDownloadTaskService.CreateSdfDownloadTask].
+// SdfDownloadTask: Type for the response returned by
+// [SdfDownloadTaskService.CreateSdfDownloadTask].
 type SdfDownloadTask struct {
-	// ResourceName: A resource name to be used in
-	// media.download to Download the prepared
-	// files. Resource names have the
-	// format
-	// `download/sdfdownloadtasks/media/{media_id}`. `media_id` will be
-	// made
+	// ResourceName: A resource name to be used in media.download to
+	// Download the prepared files. Resource names have the format
+	// `download/sdfdownloadtasks/media/{media_id}`. `media_id` will be made
 	// available by the long running operation service once the task status
-	// is
-	// done.
+	// is done.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceName") to
@@ -11735,8 +11200,8 @@ func (s *SdfDownloadTask) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SdfDownloadTaskMetadata: Type for the metadata returned
-// by [SdfDownloadTaskService.CreateSdfDownloadTask].
+// SdfDownloadTaskMetadata: Type for the metadata returned by
+// [SdfDownloadTaskService.CreateSdfDownloadTask].
 type SdfDownloadTaskMetadata struct {
 	// CreateTime: The time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -11782,9 +11247,8 @@ func (s *SdfDownloadTaskMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // SensitiveCategoryAssignedTargetingOptionDetails: Targeting details
-// for sensitive category. This will be populated in the
-// details field of an AssignedTargetingOption when
-// targeting_type is
+// for sensitive category. This will be populated in the details field
+// of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	// ExcludedTargetingOptionId: Required. ID of the sensitive category to
@@ -11796,71 +11260,56 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	//
 	// Possible values:
 	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder
-	// and doesn't specify a DV360 sensitive
-	// category.
+	// and doesn't specify a DV360 sensitive category.
 	//   "SENSITIVE_CATEGORY_ADULT" - Adult or pornographic text, image, or
 	// video content.
 	//   "SENSITIVE_CATEGORY_DEROGATORY" - Content that may be construed as
-	// biased against individuals, groups, or
-	// organizations based on criteria such as race, religion, disability,
-	// sex,
-	// age, veteran status, sexual orientation, gender identity, or
-	// political
+	// biased against individuals, groups, or organizations based on
+	// criteria such as race, religion, disability, sex, age, veteran
+	// status, sexual orientation, gender identity, or political
 	// affiliation. May also indicate discussion of such content, for
-	// instance,
-	// in an academic or journalistic context.
+	// instance, in an academic or journalistic context.
 	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Content related to audio,
 	// video, or software downloads.
 	//   "SENSITIVE_CATEGORY_WEAPONS" - Contains content related to personal
-	// weapons, including knives, guns,
-	// small firearms, and ammunition. Selecting either "weapons"
-	// or
-	// "sensitive social issues" will result in selecting both.
+	// weapons, including knives, guns, small firearms, and ammunition.
+	// Selecting either "weapons" or "sensitive social issues" will result
+	// in selecting both.
 	//   "SENSITIVE_CATEGORY_GAMBLING" - Contains content related to betting
-	// or wagering in a real-world or
-	// online setting.
+	// or wagering in a real-world or online setting.
 	//   "SENSITIVE_CATEGORY_VIOLENCE" - Content which may be considered
-	// graphically violent, gory, gruesome, or
-	// shocking, such as street fighting videos, accident photos,
-	// descriptions
-	// of torture, etc.
+	// graphically violent, gory, gruesome, or shocking, such as street
+	// fighting videos, accident photos, descriptions of torture, etc.
 	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Adult content, as well as
-	// suggestive content that's not explicitly
-	// pornographic. This category includes all pages categorized as adult.
+	// suggestive content that's not explicitly pornographic. This category
+	// includes all pages categorized as adult.
 	//   "SENSITIVE_CATEGORY_PROFANITY" - Prominent use of words considered
-	// indecent, such as curse words and
-	// sexual slang. Pages with only very occasional usage, such as news
-	// sites
-	// that might include such words in a quotation, are not included.
+	// indecent, such as curse words and sexual slang. Pages with only very
+	// occasional usage, such as news sites that might include such words in
+	// a quotation, are not included.
 	//   "SENSITIVE_CATEGORY_ALCOHOL" - Contains content related to
-	// alcoholic beverages, alcohol brands,
-	// recipes, etc.
+	// alcoholic beverages, alcohol brands, recipes, etc.
 	//   "SENSITIVE_CATEGORY_DRUGS" - Contains content related to the
-	// recreational use of legal or illegal
-	// drugs, as well as to drug paraphernalia or cultivation.
+	// recreational use of legal or illegal drugs, as well as to drug
+	// paraphernalia or cultivation.
 	//   "SENSITIVE_CATEGORY_TOBACCO" - Contains content related to tobacco
-	// and tobacco accessories, including
-	// lighters, humidors, ashtrays, etc.
+	// and tobacco accessories, including lighters, humidors, ashtrays, etc.
 	//   "SENSITIVE_CATEGORY_POLITICS" - Political news and media, including
-	// discussions of social, governmental,
-	// and public policy.
+	// discussions of social, governmental, and public policy.
 	//   "SENSITIVE_CATEGORY_RELIGION" - Content related to religious
 	// thought or beliefs.
 	//   "SENSITIVE_CATEGORY_TRAGEDY" - Content related to death, disasters,
 	// accidents, war, etc.
 	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Content related to
-	// motor vehicle, aviation or other transportation
-	// accidents.
+	// motor vehicle, aviation or other transportation accidents.
 	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Issues that evoke
-	// strong, opposing views and spark debate. These include
-	// issues that are controversial in most countries and markets (such
-	// as
-	// abortion), as well as those that are controversial in specific
-	// countries
-	// and markets (such as immigration reform in the United States).
+	// strong, opposing views and spark debate. These include issues that
+	// are controversial in most countries and markets (such as abortion),
+	// as well as those that are controversial in specific countries and
+	// markets (such as immigration reform in the United States).
 	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered
-	// shocking or disturbing, such as violent
-	// news stories, stunts, or toilet humor.
+	// shocking or disturbing, such as violent news stories, stunts, or
+	// toilet humor.
 	SensitiveCategory string `json:"sensitiveCategory,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -11889,83 +11338,65 @@ func (s *SensitiveCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte,
 }
 
 // SensitiveCategoryTargetingOptionDetails: Represents a targetable
-// sensitive category. This will be
-// populated in the
-// sensitive_category_details
-// field of the TargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+// sensitive category. This will be populated in the
+// sensitive_category_details field of the TargetingOption when
+// targeting_type is `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 type SensitiveCategoryTargetingOptionDetails struct {
 	// SensitiveCategory: Output only. An enum for the DV360 Sensitive
 	// category content classifier.
 	//
 	// Possible values:
 	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder
-	// and doesn't specify a DV360 sensitive
-	// category.
+	// and doesn't specify a DV360 sensitive category.
 	//   "SENSITIVE_CATEGORY_ADULT" - Adult or pornographic text, image, or
 	// video content.
 	//   "SENSITIVE_CATEGORY_DEROGATORY" - Content that may be construed as
-	// biased against individuals, groups, or
-	// organizations based on criteria such as race, religion, disability,
-	// sex,
-	// age, veteran status, sexual orientation, gender identity, or
-	// political
+	// biased against individuals, groups, or organizations based on
+	// criteria such as race, religion, disability, sex, age, veteran
+	// status, sexual orientation, gender identity, or political
 	// affiliation. May also indicate discussion of such content, for
-	// instance,
-	// in an academic or journalistic context.
+	// instance, in an academic or journalistic context.
 	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Content related to audio,
 	// video, or software downloads.
 	//   "SENSITIVE_CATEGORY_WEAPONS" - Contains content related to personal
-	// weapons, including knives, guns,
-	// small firearms, and ammunition. Selecting either "weapons"
-	// or
-	// "sensitive social issues" will result in selecting both.
+	// weapons, including knives, guns, small firearms, and ammunition.
+	// Selecting either "weapons" or "sensitive social issues" will result
+	// in selecting both.
 	//   "SENSITIVE_CATEGORY_GAMBLING" - Contains content related to betting
-	// or wagering in a real-world or
-	// online setting.
+	// or wagering in a real-world or online setting.
 	//   "SENSITIVE_CATEGORY_VIOLENCE" - Content which may be considered
-	// graphically violent, gory, gruesome, or
-	// shocking, such as street fighting videos, accident photos,
-	// descriptions
-	// of torture, etc.
+	// graphically violent, gory, gruesome, or shocking, such as street
+	// fighting videos, accident photos, descriptions of torture, etc.
 	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Adult content, as well as
-	// suggestive content that's not explicitly
-	// pornographic. This category includes all pages categorized as adult.
+	// suggestive content that's not explicitly pornographic. This category
+	// includes all pages categorized as adult.
 	//   "SENSITIVE_CATEGORY_PROFANITY" - Prominent use of words considered
-	// indecent, such as curse words and
-	// sexual slang. Pages with only very occasional usage, such as news
-	// sites
-	// that might include such words in a quotation, are not included.
+	// indecent, such as curse words and sexual slang. Pages with only very
+	// occasional usage, such as news sites that might include such words in
+	// a quotation, are not included.
 	//   "SENSITIVE_CATEGORY_ALCOHOL" - Contains content related to
-	// alcoholic beverages, alcohol brands,
-	// recipes, etc.
+	// alcoholic beverages, alcohol brands, recipes, etc.
 	//   "SENSITIVE_CATEGORY_DRUGS" - Contains content related to the
-	// recreational use of legal or illegal
-	// drugs, as well as to drug paraphernalia or cultivation.
+	// recreational use of legal or illegal drugs, as well as to drug
+	// paraphernalia or cultivation.
 	//   "SENSITIVE_CATEGORY_TOBACCO" - Contains content related to tobacco
-	// and tobacco accessories, including
-	// lighters, humidors, ashtrays, etc.
+	// and tobacco accessories, including lighters, humidors, ashtrays, etc.
 	//   "SENSITIVE_CATEGORY_POLITICS" - Political news and media, including
-	// discussions of social, governmental,
-	// and public policy.
+	// discussions of social, governmental, and public policy.
 	//   "SENSITIVE_CATEGORY_RELIGION" - Content related to religious
 	// thought or beliefs.
 	//   "SENSITIVE_CATEGORY_TRAGEDY" - Content related to death, disasters,
 	// accidents, war, etc.
 	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Content related to
-	// motor vehicle, aviation or other transportation
-	// accidents.
+	// motor vehicle, aviation or other transportation accidents.
 	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Issues that evoke
-	// strong, opposing views and spark debate. These include
-	// issues that are controversial in most countries and markets (such
-	// as
-	// abortion), as well as those that are controversial in specific
-	// countries
-	// and markets (such as immigration reform in the United States).
+	// strong, opposing views and spark debate. These include issues that
+	// are controversial in most countries and markets (such as abortion),
+	// as well as those that are controversial in specific countries and
+	// markets (such as immigration reform in the United States).
 	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered
-	// shocking or disturbing, such as violent
-	// news stories, stunts, or toilet humor.
+	// shocking or disturbing, such as violent news stories, stunts, or
+	// toilet humor.
 	SensitiveCategory string `json:"sensitiveCategory,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SensitiveCategory")
@@ -11998,8 +11429,8 @@ type Site struct {
 	// Name: Output only. The resource name of the site.
 	Name string `json:"name,omitempty"`
 
-	// UrlOrAppId: Required. The URL or app ID of the site.
-	// Must be UTF-8 encoded with a maximum length of 240 bytes.
+	// UrlOrAppId: Required. The URL or app ID of the site. Must be UTF-8
+	// encoded with a maximum length of 240 bytes.
 	UrlOrAppId string `json:"urlOrAppId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12030,32 +11461,24 @@ func (s *Site) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for
-// different programming environments, including REST APIs and RPC APIs.
-// It is
-// used by [gRPC](https://github.com/grpc). Each `Status` message
-// contains
-// three pieces of data: error code, error message, and error
-// details.
-//
-// You can find out more about this error model and how to work with it
-// in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// suitable for different programming environments, including REST APIs
+// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the [API Design
+// Guide](https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
 
-	// Details: A list of messages that carry the error details.  There is a
-	// common set of
-	// message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which should be in
-	// English. Any
-	// user-facing error message should be localized and sent in
-	// the
-	// google.rpc.Status.details field, or localized by the client.
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -12082,13 +11505,11 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // SubExchangeAssignedTargetingOptionDetails: Details for assigned
-// sub-exchange targeting option. This will be populated in
-// the details field of an AssignedTargetingOption when
-// targeting_type is
+// sub-exchange targeting option. This will be populated in the details
+// field of an AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_SUB_EXCHANGE`.
 type SubExchangeAssignedTargetingOptionDetails struct {
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
+	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_SUB_EXCHANGE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -12117,10 +11538,8 @@ func (s *SubExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error
 }
 
 // SubExchangeTargetingOptionDetails: Represents a targetable
-// sub-exchange. This will be populated in the
-// sub_exchange_details field
-// of a TargetingOption when
-// targeting_type is
+// sub-exchange. This will be populated in the sub_exchange_details
+// field of a TargetingOption when targeting_type is
 // `TARGETING_TYPE_SUB_EXCHANGE`.
 type SubExchangeTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the sub-exchange.
@@ -12150,8 +11569,7 @@ func (s *SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // TargetingOption: Represents a single targeting option, which is a
-// targetable concept in
-// DV360.
+// targetable concept in DV360.
 type TargetingOption struct {
 	// AgeRangeDetails: Age range details.
 	AgeRangeDetails *AgeRangeTargetingOptionDetails `json:"ageRangeDetails,omitempty"`
@@ -12224,8 +11642,8 @@ type TargetingOption struct {
 	SubExchangeDetails *SubExchangeTargetingOptionDetails `json:"subExchangeDetails,omitempty"`
 
 	// TargetingOptionId: Output only. A unique identifier for this
-	// targeting option. The tuple
-	// {`targeting_type`, `targeting_option_id`} will be unique.
+	// targeting option. The tuple {`targeting_type`, `targeting_option_id`}
+	// will be unique.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// TargetingType: Output only. The type of this targeting option.
@@ -12248,8 +11666,7 @@ type TargetingOption struct {
 	//   "TARGETING_TYPE_REGIONAL_LOCATION_LIST" - Target ads to the
 	// specified regions on a regional location list.
 	//   "TARGETING_TYPE_PROXIMITY_LOCATION_LIST" - Target ads to the
-	// specified points of interest on a proximity location
-	// list.
+	// specified points of interest on a proximity location list.
 	//   "TARGETING_TYPE_GENDER" - Target ads to a specific gender (for
 	// example, female or male).
 	//   "TARGETING_TYPE_VIDEO_PLAYER_SIZE" - Target a specific video player
@@ -12257,19 +11674,17 @@ type TargetingOption struct {
 	//   "TARGETING_TYPE_USER_REWARDED_CONTENT" - Target user rewarded
 	// content for video ads.
 	//   "TARGETING_TYPE_PARENTAL_STATUS" - Target ads to a specific
-	// parental status (for example, parent or not a
-	// parent).
+	// parental status (for example, parent or not a parent).
 	//   "TARGETING_TYPE_CONTENT_INSTREAM_POSITION" - Target video or audio
-	// ads in a specific content instream position (for
-	// example, pre-roll, mid-roll, or post-roll).
+	// ads in a specific content instream position (for example, pre-roll,
+	// mid-roll, or post-roll).
 	//   "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION" - Target ads in a
 	// specific content outstream position.
 	//   "TARGETING_TYPE_DEVICE_TYPE" - Target ads to a specific device type
 	// (for example, tablet or connected TV).
 	//   "TARGETING_TYPE_AUDIENCE_GROUP" - Target ads to an audience or
-	// groups of audiences.
-	// Singleton field, at most one can exist on a single Lineitem at a
-	// time.
+	// groups of audiences. Singleton field, at most one can exist on a
+	// single Lineitem at a time.
 	//   "TARGETING_TYPE_BROWSER" - Target ads to specific web browsers (for
 	// example, Chrome).
 	//   "TARGETING_TYPE_HOUSEHOLD_INCOME" - Target ads to a specific
@@ -12277,23 +11692,21 @@ type TargetingOption struct {
 	//   "TARGETING_TYPE_ON_SCREEN_POSITION" - Target ads in a specific on
 	// screen position.
 	//   "TARGETING_TYPE_THIRD_PARTY_VERIFIER" - Filter web sites through
-	// third party verification (for example, IAS or
-	// DoubleVerify).
+	// third party verification (for example, IAS or DoubleVerify).
 	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites
-	// by specific digital content label ratings (for example,
-	// DL-MA: suitable only for mature audiences).
+	// by specific digital content label ratings (for example, DL-MA:
+	// suitable only for mature audiences).
 	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website
 	// content by sensitive categories (for example, adult).
 	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment
 	// (for example, web or app).
 	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
-	// carrier or internet service provider
-	// (ISP) (for example, Comcast or Orange).
+	// carrier or internet service provider (ISP) (for example, Comcast or
+	// Orange).
 	//   "TARGETING_TYPE_OPERATING_SYSTEM" - Target ads to a specific
 	// operating system (for example, macOS).
 	//   "TARGETING_TYPE_DEVICE_MAKE_MODEL" - Target ads to a specific
-	// device make or model (for example, Roku or
-	// Samsung).
+	// device make or model (for example, Roku or Samsung).
 	//   "TARGETING_TYPE_KEYWORD" - Target ads to a specific keyword (for
 	// example, dog or retriever).
 	//   "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST" - Target ads to a specific
@@ -12301,8 +11714,7 @@ type TargetingOption struct {
 	//   "TARGETING_TYPE_VIEWABILITY" - Target ads to a specific viewability
 	// (for example, 80% viewable).
 	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content
-	// category (for example, arts &
-	// entertainment).
+	// category (for example, arts & entertainment).
 	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from
 	// specific deals and auction packages.
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
@@ -12360,8 +11772,7 @@ func (s *TargetingOption) MarshalJSON() ([]byte, error) {
 // ad servers only.
 type ThirdPartyOnlyConfig struct {
 	// PixelOrderIdReportingEnabled: Whether or not order ID reporting for
-	// pixels is enabled.
-	// This value cannot be changed once set to `true`.
+	// pixels is enabled. This value cannot be changed once set to `true`.
 	PixelOrderIdReportingEnabled bool `json:"pixelOrderIdReportingEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -12390,8 +11801,7 @@ func (s *ThirdPartyOnlyConfig) MarshalJSON() ([]byte, error) {
 }
 
 // ThirdPartyUrl: Tracking URLs from third parties to track interactions
-// with an audio or a
-// video creative.
+// with an audio or a video creative.
 type ThirdPartyUrl struct {
 	// Type: The type of interaction needs to be tracked by the tracking URL
 	//
@@ -12399,21 +11809,17 @@ type ThirdPartyUrl struct {
 	//   "THIRD_PARTY_URL_TYPE_UNSPECIFIED" - The type of third-party URL is
 	// unspecified or is unknown in this version.
 	//   "THIRD_PARTY_URL_TYPE_IMPRESSION" - Used to count impressions of
-	// the creative after the audio or video
-	// buffering is complete.
+	// the creative after the audio or video buffering is complete.
 	//   "THIRD_PARTY_URL_TYPE_CLICK_TRACKING" - Used to track user clicks
 	// on the audio or video.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_START" - Used to track the number
 	// of times a user starts the audio or video.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_FIRST_QUARTILE" - Used to track
-	// the number of times the audio or video plays to 25% of its
-	// length.
+	// the number of times the audio or video plays to 25% of its length.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_MIDPOINT" - Used to track the
-	// number of times the audio or video plays to 50% of its
-	// length.
+	// number of times the audio or video plays to 50% of its length.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_THIRD_QUARTILE" - Used to track
-	// the number of times the audio or video plays to 75% of its
-	// length.
+	// the number of times the audio or video plays to 75% of its length.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_COMPLETE" - Used to track the
 	// number of times the audio or video plays to the end.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_MUTE" - Used to track the number
@@ -12423,25 +11829,22 @@ type ThirdPartyUrl struct {
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_REWIND" - Used to track the
 	// number of times a user replays the audio or video.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_FULLSCREEN" - Used to track the
-	// number of times a user expands the player to
-	// full-screen size.
+	// number of times a user expands the player to full-screen size.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_STOP" - Used to track the number
 	// of times a user stops the audio or video.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_CUSTOM" - Used to track the
-	// number of times a user performs a custom click,
-	// such as clicking on a video hot spot.
+	// number of times a user performs a custom click, such as clicking on a
+	// video hot spot.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_SKIP" - Used to track the number
 	// of times the audio or video was skipped.
 	//   "THIRD_PARTY_URL_TYPE_AUDIO_VIDEO_PROGRESS" - Used to track the
-	// number of times the audio or video plays to an offset
-	// determined by the progress_offset.
+	// number of times the audio or video plays to an offset determined by
+	// the progress_offset.
 	Type string `json:"type,omitempty"`
 
-	// Url: Tracking URL used to track the interaction.
-	//
-	// Provide a URL with optional path or query string, beginning with
-	// `https:`.
-	// For example, https://www.example.com/path
+	// Url: Tracking URL used to track the interaction. Provide a URL with
+	// optional path or query string, beginning with `https:`. For example,
+	// https://www.example.com/path
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -12468,11 +11871,9 @@ func (s *ThirdPartyUrl) MarshalJSON() ([]byte, error) {
 }
 
 // ThirdPartyVerifierAssignedTargetingOptionDetails: Assigned third
-// party verifier targeting option details. This will be
-// populated in the details field of an AssignedTargetingOption
-// when
-// targeting_type is
-// `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
+// party verifier targeting option details. This will be populated in
+// the details field of an AssignedTargetingOption when targeting_type
+// is `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
 type ThirdPartyVerifierAssignedTargetingOptionDetails struct {
 	// Adloox: Third party brand verifier -- Adloox.
 	Adloox *Adloox `json:"adloox,omitempty"`
@@ -12576,15 +11977,13 @@ type TrackingFloodlightActivityConfig struct {
 	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
 
 	// PostClickLookbackWindowDays: Required. The number of days after an ad
-	// has been clicked in which a
-	// conversion may be counted.
-	// Must be between 0 and 90 inclusive.
+	// has been clicked in which a conversion may be counted. Must be
+	// between 0 and 90 inclusive.
 	PostClickLookbackWindowDays int64 `json:"postClickLookbackWindowDays,omitempty"`
 
 	// PostViewLookbackWindowDays: Required. The number of days after an ad
-	// has been viewed in which a
-	// conversion may be counted.
-	// Must be between 0 and 90 inclusive.
+	// has been viewed in which a conversion may be counted. Must be between
+	// 0 and 90 inclusive.
 	PostViewLookbackWindowDays int64 `json:"postViewLookbackWindowDays,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -12616,13 +12015,13 @@ func (s *TrackingFloodlightActivityConfig) MarshalJSON() ([]byte, error) {
 // file.
 type Transcode struct {
 	// AudioBitRateKbps: The bit rate for the audio stream of the transcoded
-	// video, or the bit rate
-	// for the transcoded audio, in kilobits per second.
+	// video, or the bit rate for the transcoded audio, in kilobits per
+	// second.
 	AudioBitRateKbps int64 `json:"audioBitRateKbps,omitempty,string"`
 
 	// AudioSampleRateHz: The sample rate for the audio stream of the
-	// transcoded video, or the sample
-	// rate for the transcoded audio, in hertz.
+	// transcoded video, or the sample rate for the transcoded audio, in
+	// hertz.
 	AudioSampleRateHz int64 `json:"audioSampleRateHz,omitempty,string"`
 
 	// BitRateKbps: The transcoding bit rate of the transcoded video, in
@@ -12687,8 +12086,7 @@ func (s *Transcode) UnmarshalJSON(data []byte) error {
 }
 
 // UniversalAdId: A creative identifier provided by a registry that is
-// unique across all
-// platforms. This is part of the VAST 4.0 standard.
+// unique across all platforms. This is part of the VAST 4.0 standard.
 type UniversalAdId struct {
 	// Id: The unique creative identifier.
 	Id string `json:"id,omitempty"`
@@ -12734,21 +12132,16 @@ func (s *UniversalAdId) MarshalJSON() ([]byte, error) {
 }
 
 // UrlAssignedTargetingOptionDetails: Details for assigned URL targeting
-// option. This will be populated in the
-// details field of an AssignedTargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_URL`.
+// option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is `TARGETING_TYPE_URL`.
 type UrlAssignedTargetingOptionDetails struct {
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
 
-	// Url: Required. The URL, for example `example.com`.
-	//
-	// DV360 supports two levels of subdirectory targeting, for
-	// example
+	// Url: Required. The URL, for example `example.com`. DV360 supports two
+	// levels of subdirectory targeting, for example
 	// `www.example.com/one-subdirectory-level/second-level`, and five
-	// levels of
-	// subdomain targeting, for example
+	// levels of subdomain targeting, for example
 	// `five.four.three.two.one.example.com`.
 	Url string `json:"url,omitempty"`
 
@@ -12775,19 +12168,63 @@ func (s *UrlAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// User: A single user in Display & Video 360.
+type User struct {
+	// AssignedUserRoles: The assigned user roles. Required in CreateUser.
+	// Output only in UpdateUser. Can only be updated through
+	// BulkEditAssignedUserRoles.
+	AssignedUserRoles []*AssignedUserRole `json:"assignedUserRoles,omitempty"`
+
+	// DisplayName: Required. The display name of the user. Must be UTF-8
+	// encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Email: Required. Immutable. The email address used to identify the
+	// user.
+	Email string `json:"email,omitempty"`
+
+	// Name: Output only. The resource name of the user.
+	Name string `json:"name,omitempty"`
+
+	// UserId: Output only. The unique ID of the user. Assigned by the
+	// system.
+	UserId int64 `json:"userId,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AssignedUserRoles")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedUserRoles") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *User) MarshalJSON() ([]byte, error) {
+	type NoMethod User
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UserRewardedContentAssignedTargetingOptionDetails: User rewarded
-// content targeting option details. This will be populated
-// in
-// the
-// user_rewarded_content_details
-// field when
-// targeting_type is
+// content targeting option details. This will be populated in the
+// user_rewarded_content_details field when targeting_type is
 // `TARGETING_TYPE_USER_REWARDED_CONTENT`.
 type UserRewardedContentAssignedTargetingOptionDetails struct {
-	// TargetingOptionId: Required. The targeting_option_id field
-	// when
-	// targeting_type is
-	// `TARGETING_TYPE_USER_REWARDED_CONTENT`.
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_USER_REWARDED_CONTENT`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// UserRewardedContent: Output only. User rewarded content status for
@@ -12827,12 +12264,9 @@ func (s *UserRewardedContentAssignedTargetingOptionDetails) MarshalJSON() ([]byt
 }
 
 // UserRewardedContentTargetingOptionDetails: Represents a targetable
-// user rewarded content status for video ads only. This
-// will be populated in the
-// user_rewarded_content_details
-// field when
-// targeting_type is
-// `TARGETING_TYPE_USER_REWARDED_CONTENT`.
+// user rewarded content status for video ads only. This will be
+// populated in the user_rewarded_content_details field when
+// targeting_type is `TARGETING_TYPE_USER_REWARDED_CONTENT`.
 type UserRewardedContentTargetingOptionDetails struct {
 	// UserRewardedContent: Output only. User rewarded content status for
 	// video ads.
@@ -12871,38 +12305,31 @@ func (s *UserRewardedContentTargetingOptionDetails) MarshalJSON() ([]byte, error
 }
 
 // VideoPlayerSizeAssignedTargetingOptionDetails: Video player size
-// targeting option details. This will be populated in
-// the
-// video_player_size_details
-// field when targeting_type
-// is
-// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
-// Explicitly targeting all options is not supported. Remove all video
-// player
-// size targeting options to achieve this effect.
+// targeting option details. This will be populated in the
+// video_player_size_details field when targeting_type is
+// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`. Explicitly targeting all options
+// is not supported. Remove all video player size targeting options to
+// achieve this effect.
 type VideoPlayerSizeAssignedTargetingOptionDetails struct {
-	// TargetingOptionId: Required. The targeting_option_id field
-	// when
-	// targeting_type is
-	// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// VideoPlayerSize: Output only. The video player size.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
-	// specified in this version. This enum is a place
-	// holder for a default value and does not represent a real video player
-	// size.
+	// specified in this version. This enum is a place holder for a default
+	// value and does not represent a real video player size.
 	//   "VIDEO_PLAYER_SIZE_SMALL" - The dimensions of the video player are
-	// less than 400×300 (desktop), or up
-	// to 20% of screen covered (mobile).
+	// less than 400×300 (desktop), or up to 20% of screen covered
+	// (mobile).
 	//   "VIDEO_PLAYER_SIZE_LARGE" - The dimensions of the video player are
-	// between 400x300 and 1280x720 pixels
-	// (desktop), or 20% to 90% of the screen covered (mobile).
+	// between 400x300 and 1280x720 pixels (desktop), or 20% to 90% of the
+	// screen covered (mobile).
 	//   "VIDEO_PLAYER_SIZE_HD" - The dimensions of the video player are
-	// 1280×720 or greater (desktop), or
-	// over 90% of the screen covered (mobile).
+	// 1280×720 or greater (desktop), or over 90% of the screen covered
+	// (mobile).
 	//   "VIDEO_PLAYER_SIZE_UNKNOWN" - The dimensions of the video player
 	// are unknown.
 	VideoPlayerSize string `json:"videoPlayerSize,omitempty"`
@@ -12932,28 +12359,24 @@ func (s *VideoPlayerSizeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, e
 }
 
 // VideoPlayerSizeTargetingOptionDetails: Represents a targetable video
-// player size. This will be populated in
-// the
-// video_player_size_details
-// field when targeting_type is
-// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
+// player size. This will be populated in the video_player_size_details
+// field when targeting_type is `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 type VideoPlayerSizeTargetingOptionDetails struct {
 	// VideoPlayerSize: Output only. The video player size.
 	//
 	// Possible values:
 	//   "VIDEO_PLAYER_SIZE_UNSPECIFIED" - Video player size is not
-	// specified in this version. This enum is a place
-	// holder for a default value and does not represent a real video player
-	// size.
+	// specified in this version. This enum is a place holder for a default
+	// value and does not represent a real video player size.
 	//   "VIDEO_PLAYER_SIZE_SMALL" - The dimensions of the video player are
-	// less than 400×300 (desktop), or up
-	// to 20% of screen covered (mobile).
+	// less than 400×300 (desktop), or up to 20% of screen covered
+	// (mobile).
 	//   "VIDEO_PLAYER_SIZE_LARGE" - The dimensions of the video player are
-	// between 400x300 and 1280x720 pixels
-	// (desktop), or 20% to 90% of the screen covered (mobile).
+	// between 400x300 and 1280x720 pixels (desktop), or 20% to 90% of the
+	// screen covered (mobile).
 	//   "VIDEO_PLAYER_SIZE_HD" - The dimensions of the video player are
-	// 1280×720 or greater (desktop), or
-	// over 90% of the screen covered (mobile).
+	// 1280×720 or greater (desktop), or over 90% of the screen covered
+	// (mobile).
 	//   "VIDEO_PLAYER_SIZE_UNKNOWN" - The dimensions of the video player
 	// are unknown.
 	VideoPlayerSize string `json:"videoPlayerSize,omitempty"`
@@ -12983,17 +12406,12 @@ func (s *VideoPlayerSizeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 }
 
 // ViewabilityAssignedTargetingOptionDetails: Assigned viewability
-// targeting option details. This will be populated in
-// the
-// viewability_details field of
-// an AssignedTargetingOption when
-// targeting_type is
-// `TARGETING_TYPE_VIEWABILITY`.
+// targeting option details. This will be populated in the
+// viewability_details field of an AssignedTargetingOption when
+// targeting_type is `TARGETING_TYPE_VIEWABILITY`.
 type ViewabilityAssignedTargetingOptionDetails struct {
-	// TargetingOptionId: Required. The targeting_option_id of
-	// a
-	// TargetingOption of type `TARGETING_TYPE_VIEWABILITY` (e.g.,
-	// "509010"
+	// TargetingOptionId: Required. The targeting_option_id of a
+	// TargetingOption of type `TARGETING_TYPE_VIEWABILITY` (e.g., "509010"
 	// for targeting the `VIEWABILITY_10_PERCENT_OR_MORE` option).
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
@@ -13001,10 +12419,8 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 	//
 	// Possible values:
 	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
-	// specified in this version. This enum
-	// is a placeholder for default value and does not represent a
-	// real
-	// viewability option.
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real viewability option.
 	//   "VIEWABILITY_10_PERCENT_OR_MORE" - Bid only on impressions that are
 	// at least 10% likely to be viewable.
 	//   "VIEWABILITY_20_PERCENT_OR_MORE" - Bid only on impressions that are
@@ -13050,19 +12466,16 @@ func (s *ViewabilityAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error
 }
 
 // ViewabilityTargetingOptionDetails: Represents a targetable
-// viewability. This will be populated in the
-// viewability_details field of a
-// TargetingOption when targeting_type is
+// viewability. This will be populated in the viewability_details field
+// of a TargetingOption when targeting_type is
 // `TARGETING_TYPE_VIEWABILITY`.
 type ViewabilityTargetingOptionDetails struct {
 	// Viewability: Output only. The predicted viewability percentage.
 	//
 	// Possible values:
 	//   "VIEWABILITY_UNSPECIFIED" - Default value when viewability is not
-	// specified in this version. This enum
-	// is a placeholder for default value and does not represent a
-	// real
-	// viewability option.
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real viewability option.
 	//   "VIEWABILITY_10_PERCENT_OR_MORE" - Bid only on impressions that are
 	// at least 10% likely to be viewable.
 	//   "VIEWABILITY_20_PERCENT_OR_MORE" - Bid only on impressions that are
@@ -13106,6 +12519,171 @@ func (s *ViewabilityTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "displayvideo.advertisers.audit":
+
+type AdvertisersAuditCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Audit: Audits an advertiser. Returns the counts of used entities per
+// resource type under the advertiser provided. Used entities count
+// towards their respective resource limit. See
+// https://support.google.com/displayvideo/answer/6071450.
+func (r *AdvertisersService) Audit(advertiserId int64) *AdvertisersAuditCall {
+	c := &AdvertisersAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": The specific fields
+// to return. If no mask is specified, all fields in the response proto
+// will be filled. Valid values are: * usedLineItemsCount *
+// usedInsertionOrdersCount * usedCampaignsCount * channelsCount *
+// negativelyTargetedChannelsCount * negativeKeywordListsCount *
+// adGroupCriteriaCount * campaignCriteriaCount
+func (c *AdvertisersAuditCall) ReadMask(readMask string) *AdvertisersAuditCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersAuditCall) Fields(s ...googleapi.Field) *AdvertisersAuditCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersAuditCall) IfNoneMatch(entityTag string) *AdvertisersAuditCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersAuditCall) Context(ctx context.Context) *AdvertisersAuditCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersAuditCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAuditCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}:audit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.audit" call.
+// Exactly one of *AuditAdvertiserResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AuditAdvertiserResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersAuditCall) Do(opts ...googleapi.CallOption) (*AuditAdvertiserResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AuditAdvertiserResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Audits an advertiser. Returns the counts of used entities per resource type under the advertiser provided. Used entities count towards their respective resource limit. See https://support.google.com/displayvideo/answer/6071450.",
+	//   "flatPath": "v1/advertisers/{advertisersId}:audit",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.audit",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to audit.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Optional. The specific fields to return. If no mask is specified, all fields in the response proto will be filled. Valid values are: * usedLineItemsCount * usedInsertionOrdersCount * usedCampaignsCount * channelsCount * negativelyTargetedChannelsCount * negativeKeywordListsCount * adGroupCriteriaCount * campaignCriteriaCount",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}:audit",
+	//   "response": {
+	//     "$ref": "AuditAdvertiserResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
 // method id "displayvideo.advertisers.bulkEditAdvertiserAssignedTargetingOptions":
 
 type AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall struct {
@@ -13118,13 +12696,10 @@ type AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall struct {
 }
 
 // BulkEditAdvertiserAssignedTargetingOptions: Bulk edits targeting
-// options under a single advertiser.
-// The operation will delete the assigned targeting options provided
-// in
-// BulkEditAdvertiserAssignedTargetingOptionsRequest.delete_requests
-// and
-// then create the assigned targeting options provided
-// in
+// options under a single advertiser. The operation will delete the
+// assigned targeting options provided in
+// BulkEditAdvertiserAssignedTargetingOptionsRequest.delete_requests and
+// then create the assigned targeting options provided in
 // BulkEditAdvertiserAssignedTargetingOptionsRequest.create_requests .
 func (r *AdvertisersService) BulkEditAdvertiserAssignedTargetingOptions(advertiserId int64, bulkeditadvertiserassignedtargetingoptionsrequest *BulkEditAdvertiserAssignedTargetingOptionsRequest) *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall {
 	c := &AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13160,7 +12735,7 @@ func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) Header() htt
 
 func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13226,7 +12801,7 @@ func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits targeting options under a single advertiser.\nThe operation will delete the assigned targeting options provided in\nBulkEditAdvertiserAssignedTargetingOptionsRequest.delete_requests and\nthen create the assigned targeting options provided in\nBulkEditAdvertiserAssignedTargetingOptionsRequest.create_requests .",
+	//   "description": "Bulk edits targeting options under a single advertiser. The operation will delete the assigned targeting options provided in BulkEditAdvertiserAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditAdvertiserAssignedTargetingOptionsRequest.create_requests .",
 	//   "flatPath": "v1/advertisers/{advertisersId}:bulkEditAdvertiserAssignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.bulkEditAdvertiserAssignedTargetingOptions",
@@ -13277,64 +12852,43 @@ func (r *AdvertisersService) BulkListAdvertiserAssignedTargetingOptions(advertis
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties.
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by the logical operator `OR`..
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `targetingType`
-//
-// Examples:
-//
-// * targetingType with value
-// TARGETING_TYPE_CHANNEL
-// `targetingType="TARGETING_TYPE_CHANNEL"
-//
-// The length of this field should be no more than 500 characters.
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`.. * A restriction has
+// the form of `{field} {operator} {value}`. * The operator must be
+// `EQUALS (=)`. * Supported fields: - `targetingType` Examples: *
+// targetingType with value TARGETING_TYPE_CHANNEL
+// `targetingType="TARGETING_TYPE_CHANNEL" The length of this field
+// should be no more than 500 characters.
 func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `targetingType` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
+// the list. Acceptable values are: * `targetingType` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. Example:
 // `targetingType desc`.
 func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) OrderBy(orderBy string) *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page
-// size.
-// The size must be an integer between `1` and `5000`. If
-// unspecified,
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The size must be an integer between `1` and `5000`. If unspecified,
 // the default is '5000'. Returns error code `INVALID_ARGUMENT` if an
-// invalid
-// value is specified.
+// invalid value is specified.
 func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) PageSize(pageSize int64) *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token that lets
-// the client fetch the next page of results.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call
-// to
-// `BulkListAdvertiserAssignedTargetingOptions` method.
-// If not specified, the first page of results will be returned.
+// the client fetch the next page of results. Typically, this is the
+// value of next_page_token returned from the previous call to
+// `BulkListAdvertiserAssignedTargetingOptions` method. If not
+// specified, the first page of results will be returned.
 func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) PageToken(pageToken string) *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -13377,7 +12931,7 @@ func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) Header() htt
 
 func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13458,23 +13012,23 @@ func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties.\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR`..\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `targetingType`\n\nExamples:\n\n* targetingType with value TARGETING_TYPE_CHANNEL\n`targetingType=\"TARGETING_TYPE_CHANNEL\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`.. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` Examples: * targetingType with value TARGETING_TYPE_CHANNEL `targetingType=\"TARGETING_TYPE_CHANNEL\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `targetingType` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`targetingType desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `targetingType` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `targetingType desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size.\nThe size must be an integer between `1` and `5000`. If unspecified,\nthe default is '5000'. Returns error code `INVALID_ARGUMENT` if an invalid\nvalue is specified.",
+	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is '5000'. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token that lets the client fetch the next page of results.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to\n`BulkListAdvertiserAssignedTargetingOptions` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token that lets the client fetch the next page of results. Typically, this is the value of next_page_token returned from the previous call to `BulkListAdvertiserAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -13521,9 +13075,9 @@ type AdvertisersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new advertiser.
-// Returns the newly created advertiser if successful.
-// This method can take up to 180 seconds to complete.
+// Create: Creates a new advertiser. Returns the newly created
+// advertiser if successful. This method can take up to 180 seconds to
+// complete.
 func (r *AdvertisersService) Create(advertiser *Advertiser) *AdvertisersCreateCall {
 	c := &AdvertisersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiser = advertiser
@@ -13557,7 +13111,7 @@ func (c *AdvertisersCreateCall) Header() http.Header {
 
 func (c *AdvertisersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13618,7 +13172,7 @@ func (c *AdvertisersCreateCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new advertiser.\nReturns the newly created advertiser if successful.\nThis method can take up to 180 seconds to complete.",
+	//   "description": "Creates a new advertiser. Returns the newly created advertiser if successful. This method can take up to 180 seconds to complete.",
 	//   "flatPath": "v1/advertisers",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.create",
@@ -13648,11 +13202,9 @@ type AdvertisersDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes an advertiser.
-// Deleting an advertiser will delete all of its child resources, for
-// example,
-// campaigns, insertion orders and line items.
-// A deleted advertiser cannot be recovered.
+// Delete: Deletes an advertiser. Deleting an advertiser will delete all
+// of its child resources, for example, campaigns, insertion orders and
+// line items. A deleted advertiser cannot be recovered.
 func (r *AdvertisersService) Delete(advertiserId int64) *AdvertisersDeleteCall {
 	c := &AdvertisersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -13686,7 +13238,7 @@ func (c *AdvertisersDeleteCall) Header() http.Header {
 
 func (c *AdvertisersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13745,7 +13297,7 @@ func (c *AdvertisersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an advertiser.\nDeleting an advertiser will delete all of its child resources, for example,\ncampaigns, insertion orders and line items.\nA deleted advertiser cannot be recovered.",
+	//   "description": "Deletes an advertiser. Deleting an advertiser will delete all of its child resources, for example, campaigns, insertion orders and line items. A deleted advertiser cannot be recovered.",
 	//   "flatPath": "v1/advertisers/{advertisersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.delete",
@@ -13828,7 +13380,7 @@ func (c *AdvertisersGetCall) Header() http.Header {
 
 func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13928,84 +13480,59 @@ type AdvertisersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists advertisers that are accessible to the current user.
-//
-// The order is defined by the order_by
-// parameter.
-//
-// A single partner_id is required.
-// Cross-partner listing is not supported.
+// List: Lists advertisers that are accessible to the current user. The
+// order is defined by the order_by parameter. A single partner_id is
+// required. Cross-partner listing is not supported.
 func (r *AdvertisersService) List() *AdvertisersListCall {
 	c := &AdvertisersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// advertiser properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by `AND` or `OR` logical operators.
-// A
-// sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `entityStatus`
-//
-// Examples:
-//
-// * All active advertisers under a
-// partner:
-// `entityStatus="ENTITY_STATUS_ACTIVE"
-//
-// The length of this field should be no more than 500 characters.
+// advertiser properties. Supported syntax: * Filter expressions are
+// made up of one or more restrictions. * Restrictions can be combined
+// by `AND` or `OR` logical operators. A sequence of restrictions
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
+// fields: . - `advertiserId` . - `displayName` - `entityStatus`
+// Examples: * All active advertisers under a partner:
+// `entityStatus="ENTITY_STATUS_ACTIVE" The length of this field should
+// be no more than 500 characters.
 func (c *AdvertisersListCall) Filter(filter string) *AdvertisersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `displayName` (default)
-// * `entityStatus`
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name. For
-// example,
-// `displayName desc`.
+// the list. Acceptable values are: * `displayName` (default) *
+// `entityStatus` The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. For example, `displayName desc`.
 func (c *AdvertisersListCall) OrderBy(orderBy string) *AdvertisersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`.
+// Must be between `1` and `100`. If unspecified will default to `100`.
 func (c *AdvertisersListCall) PageSize(pageSize int64) *AdvertisersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListAdvertisers` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListAdvertisers` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // PartnerId sets the optional parameter "partnerId": Required. The ID
-// of the partner that the fetched advertisers should all belong to.
-// The system only supports listing advertisers for one partner at a
-// time.
+// of the partner that the fetched advertisers should all belong to. The
+// system only supports listing advertisers for one partner at a time.
 func (c *AdvertisersListCall) PartnerId(partnerId int64) *AdvertisersListCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -14048,7 +13575,7 @@ func (c *AdvertisersListCall) Header() http.Header {
 
 func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14107,35 +13634,35 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*ListAdvertisers
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists advertisers that are accessible to the current user.\n\nThe order is defined by the order_by\nparameter.\n\nA single partner_id is required.\nCross-partner listing is not supported.",
+	//   "description": "Lists advertisers that are accessible to the current user. The order is defined by the order_by parameter. A single partner_id is required. Cross-partner listing is not supported.",
 	//   "flatPath": "v1/advertisers",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering by advertiser properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `entityStatus`\n\nExamples:\n\n* All active advertisers under a partner:\n`entityStatus=\"ENTITY_STATUS_ACTIVE\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by advertiser properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: . - `advertiserId` . - `displayName` - `entityStatus` Examples: * All active advertisers under a partner: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `entityStatus`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. For example,\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. For example, `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListAdvertisers` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListAdvertisers` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "Required. The ID of the partner that the fetched advertisers should all belong to.\nThe system only supports listing advertisers for one partner at a time.",
+	//       "description": "Required. The ID of the partner that the fetched advertisers should all belong to. The system only supports listing advertisers for one partner at a time.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -14184,8 +13711,8 @@ type AdvertisersPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an existing advertiser.
-// Returns the updated advertiser if successful.
+// Patch: Updates an existing advertiser. Returns the updated advertiser
+// if successful.
 func (r *AdvertisersService) Patch(advertiserId int64, advertiser *Advertiser) *AdvertisersPatchCall {
 	c := &AdvertisersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14227,7 +13754,7 @@ func (c *AdvertisersPatchCall) Header() http.Header {
 
 func (c *AdvertisersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14291,7 +13818,7 @@ func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing advertiser.\nReturns the updated advertiser if successful.",
+	//   "description": "Updates an existing advertiser. Returns the updated advertiser if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.patch",
@@ -14340,11 +13867,9 @@ type AdvertisersAssetsUploadCall struct {
 	header_            http.Header
 }
 
-// Upload: Uploads an asset.
-// Returns the ID of the newly uploaded asset if successful.
-// The asset file size should be no more than 10 MB for images, 200 MB
-// for
-// ZIP files, and 1 GB for videos.
+// Upload: Uploads an asset. Returns the ID of the newly uploaded asset
+// if successful. The asset file size should be no more than 10 MB for
+// images, 200 MB for ZIP files, and 1 GB for videos.
 func (r *AdvertisersAssetsService) Upload(advertiserId int64, createassetrequest *CreateAssetRequest) *AdvertisersAssetsUploadCall {
 	c := &AdvertisersAssetsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14418,7 +13943,7 @@ func (c *AdvertisersAssetsUploadCall) Header() http.Header {
 
 func (c *AdvertisersAssetsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14510,7 +14035,7 @@ func (c *AdvertisersAssetsUploadCall) Do(opts ...googleapi.CallOption) (*CreateA
 	}
 	return ret, nil
 	// {
-	//   "description": "Uploads an asset.\nReturns the ID of the newly uploaded asset if successful.\nThe asset file size should be no more than 10 MB for images, 200 MB for\nZIP files, and 1 GB for videos.",
+	//   "description": "Uploads an asset. Returns the ID of the newly uploaded asset if successful. The asset file size should be no more than 10 MB for images, 200 MB for ZIP files, and 1 GB for videos.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/assets",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.assets.upload",
@@ -14564,8 +14089,8 @@ type AdvertisersCampaignsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new campaign.
-// Returns the newly created campaign if successful.
+// Create: Creates a new campaign. Returns the newly created campaign if
+// successful.
 func (r *AdvertisersCampaignsService) Create(advertiserId int64, campaign *Campaign) *AdvertisersCampaignsCreateCall {
 	c := &AdvertisersCampaignsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14600,7 +14125,7 @@ func (c *AdvertisersCampaignsCreateCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14664,7 +14189,7 @@ func (c *AdvertisersCampaignsCreateCall) Do(opts ...googleapi.CallOption) (*Camp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new campaign.\nReturns the newly created campaign if successful.",
+	//   "description": "Creates a new campaign. Returns the newly created campaign if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.campaigns.create",
@@ -14689,7 +14214,8 @@ func (c *AdvertisersCampaignsCreateCall) Do(opts ...googleapi.CallOption) (*Camp
 	//     "$ref": "Campaign"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/display-video"
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
 	//   ]
 	// }
 
@@ -14707,10 +14233,8 @@ type AdvertisersCampaignsDeleteCall struct {
 }
 
 // Delete: Permanently deletes a campaign. A deleted campaign cannot be
-// recovered.
-// The campaign should be archived first, i.e. set
-// entity_status to `ENTITY_STATUS_ARCHIVED`, to be
-// able to delete it.
+// recovered. The campaign should be archived first, i.e. set
+// entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.
 func (r *AdvertisersCampaignsService) Delete(advertiserId int64, campaignId int64) *AdvertisersCampaignsDeleteCall {
 	c := &AdvertisersCampaignsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14745,7 +14269,7 @@ func (c *AdvertisersCampaignsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14805,7 +14329,7 @@ func (c *AdvertisersCampaignsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes a campaign. A deleted campaign cannot be recovered.\nThe campaign should be archived first, i.e. set\nentity_status to `ENTITY_STATUS_ARCHIVED`, to be\nable to delete it.",
+	//   "description": "Permanently deletes a campaign. A deleted campaign cannot be recovered. The campaign should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns/{campaignsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.campaigns.delete",
@@ -14836,7 +14360,8 @@ func (c *AdvertisersCampaignsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/display-video"
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
 	//   ]
 	// }
 
@@ -14899,7 +14424,7 @@ func (c *AdvertisersCampaignsGetCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14993,7 +14518,8 @@ func (c *AdvertisersCampaignsGetCall) Do(opts ...googleapi.CallOption) (*Campaig
 	//     "$ref": "Campaign"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/display-video"
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
 	//   ]
 	// }
 
@@ -15010,14 +14536,10 @@ type AdvertisersCampaignsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists campaigns in an advertiser.
-//
-// The order is defined by the order_by
-// parameter.
-// If a filter by
-// entity_status is not specified, campaigns
-// with
-// `ENTITY_STATUS_ARCHIVED` will not be included in the results.
+// List: Lists campaigns in an advertiser. The order is defined by the
+// order_by parameter. If a filter by entity_status is not specified,
+// campaigns with `ENTITY_STATUS_ARCHIVED` will not be included in the
+// results.
 func (r *AdvertisersCampaignsService) List(advertiserId int64) *AdvertisersCampaignsListCall {
 	c := &AdvertisersCampaignsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15025,66 +14547,43 @@ func (r *AdvertisersCampaignsService) List(advertiserId int64) *AdvertisersCampa
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// campaign properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by `AND` or `OR` logical operators.
-// A
-// sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `entityStatus`
-//
-// Examples:
-//
-// * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns
-// under an
-// advertiser:
-// `(entityStatus="ENTITY_STATUS_ACTIVE"
-// OR
-// entityStatus="ENTITY_STATUS_PAUSED")`
-//
-// The length of this field should be no more than 500 characters.
+// campaign properties. Supported syntax: * Filter expressions are made
+// up of one or more restrictions. * Restrictions can be combined by
+// `AND` or `OR` logical operators. A sequence of restrictions
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
+// fields: - `campaignId` - `displayName` - `entityStatus` Examples: *
+// All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns under
+// an advertiser: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// entityStatus="ENTITY_STATUS_PAUSED")` The length of this field should
+// be no more than 500 characters.
 func (c *AdvertisersCampaignsListCall) Filter(filter string) *AdvertisersCampaignsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `displayName` (default)
-// * `entityStatus`
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * `displayName` (default) *
+// `entityStatus` The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `displayName desc`.
 func (c *AdvertisersCampaignsListCall) OrderBy(orderBy string) *AdvertisersCampaignsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`.
+// Must be between `1` and `100`. If unspecified will default to `100`.
 func (c *AdvertisersCampaignsListCall) PageSize(pageSize int64) *AdvertisersCampaignsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token returned from the
-// previous call to `ListCampaigns` method. If not specified, the first
-// page
-// of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListCampaigns` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersCampaignsListCall) PageToken(pageToken string) *AdvertisersCampaignsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15127,7 +14626,7 @@ func (c *AdvertisersCampaignsListCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15189,7 +14688,7 @@ func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCa
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists campaigns in an advertiser.\n\nThe order is defined by the order_by\nparameter.\nIf a filter by\nentity_status is not specified, campaigns with\n`ENTITY_STATUS_ARCHIVED` will not be included in the results.",
+	//   "description": "Lists campaigns in an advertiser. The order is defined by the order_by parameter. If a filter by entity_status is not specified, campaigns with `ENTITY_STATUS_ARCHIVED` will not be included in the results.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.campaigns.list",
@@ -15206,23 +14705,23 @@ func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCa
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by campaign properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `entityStatus`\n\nExamples:\n\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns under an\nadvertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR\nentityStatus=\"ENTITY_STATUS_PAUSED\")`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by campaign properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `campaignId` - `displayName` - `entityStatus` Examples: * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` campaigns under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\")` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `entityStatus`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token returned from the\nprevious call to `ListCampaigns` method. If not specified, the first page\nof results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListCampaigns` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15232,7 +14731,8 @@ func (c *AdvertisersCampaignsListCall) Do(opts ...googleapi.CallOption) (*ListCa
 	//     "$ref": "ListCampaignsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/display-video"
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
 	//   ]
 	// }
 
@@ -15271,8 +14771,8 @@ type AdvertisersCampaignsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an existing campaign.
-// Returns the updated campaign if successful.
+// Patch: Updates an existing campaign. Returns the updated campaign if
+// successful.
 func (r *AdvertisersCampaignsService) Patch(advertiserId int64, campaignId int64, campaign *Campaign) *AdvertisersCampaignsPatchCall {
 	c := &AdvertisersCampaignsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15315,7 +14815,7 @@ func (c *AdvertisersCampaignsPatchCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15380,7 +14880,7 @@ func (c *AdvertisersCampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campa
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing campaign.\nReturns the updated campaign if successful.",
+	//   "description": "Updates an existing campaign. Returns the updated campaign if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns/{campaignsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.campaigns.patch",
@@ -15420,7 +14920,8 @@ func (c *AdvertisersCampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campa
 	//     "$ref": "Campaign"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/display-video"
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
 	//   ]
 	// }
 
@@ -15480,7 +14981,7 @@ func (c *AdvertisersChannelsCreateCall) Header() http.Header {
 
 func (c *AdvertisersChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15645,7 +15146,7 @@ func (c *AdvertisersChannelsGetCall) Header() http.Header {
 
 func (c *AdvertisersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15770,64 +15271,42 @@ func (r *AdvertisersChannelsService) List(advertiserId int64) *AdvertisersChanne
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// channel fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for channel currently can only contain at most
-// one
-// * restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `displayName`
-//
-// Examples:
-//
-// * All channels for which the display name contains
-// "google":
-// `displayName : "google".
-//
-// The length of this field should be no more than 500 characters.
+// channel fields. Supported syntax: * Filter expressions for channel
+// currently can only contain at most one * restriction. * A restriction
+// has the form of `{field} {operator} {value}`. * The operator must be
+// `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All
+// channels for which the display name contains "google": `displayName :
+// "google". The length of this field should be no more than 500
+// characters.
 func (c *AdvertisersChannelsListCall) Filter(filter string) *AdvertisersChannelsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `displayName` (default)
-// * `channelId`
-//
-// The default sorting order is ascending. To specify descending order
-// for a
-// field, a suffix " desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * `displayName` (default) *
+// `channelId` The default sorting order is ascending. To specify
+// descending order for a field, a suffix " desc" should be added to the
+// field name. Example: `displayName desc`.
 func (c *AdvertisersChannelsListCall) OrderBy(orderBy string) *AdvertisersChannelsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersChannelsListCall) PageSize(pageSize int64) *AdvertisersChannelsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token returned from the
-// previous call to `ListChannels` method. If not specified, the first
-// page
-// of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListChannels` method. If not specified, the first page of results
+// will be returned.
 func (c *AdvertisersChannelsListCall) PageToken(pageToken string) *AdvertisersChannelsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15877,7 +15356,7 @@ func (c *AdvertisersChannelsListCall) Header() http.Header {
 
 func (c *AdvertisersChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15956,23 +15435,23 @@ func (c *AdvertisersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListCha
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by channel fields.\n\nSupported syntax:\n\n* Filter expressions for channel currently can only contain at most one\n* restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All channels for which the display name contains \"google\":\n`displayName : \"google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by channel fields. Supported syntax: * Filter expressions for channel currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All channels for which the display name contains \"google\": `displayName : \"google\"`. The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `channelId`\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `channelId` The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token returned from the\nprevious call to `ListChannels` method. If not specified, the first page\nof results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListChannels` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16077,7 +15556,7 @@ func (c *AdvertisersChannelsPatchCall) Header() http.Header {
 
 func (c *AdvertisersChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16205,12 +15684,9 @@ type AdvertisersChannelsSitesBulkEditCall struct {
 	header_              http.Header
 }
 
-// BulkEdit: Bulk edits sites under a single channel.
-//
-// The operation will delete the sites provided
-// in
-// BulkEditSitesRequest.deleted_sites and then create the sites
-// provided in BulkEditSitesRequest.created_sites.
+// BulkEdit: Bulk edits sites under a single channel. The operation will
+// delete the sites provided in BulkEditSitesRequest.deleted_sites and
+// then create the sites provided in BulkEditSitesRequest.created_sites.
 func (r *AdvertisersChannelsSitesService) BulkEdit(advertiserId int64, channelId int64, bulkeditsitesrequest *BulkEditSitesRequest) *AdvertisersChannelsSitesBulkEditCall {
 	c := &AdvertisersChannelsSitesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16246,7 +15722,7 @@ func (c *AdvertisersChannelsSitesBulkEditCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16311,7 +15787,7 @@ func (c *AdvertisersChannelsSitesBulkEditCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits sites under a single channel.\n\nThe operation will delete the sites provided in\nBulkEditSitesRequest.deleted_sites and then create the sites\nprovided in BulkEditSitesRequest.created_sites.",
+	//   "description": "Bulk edits sites under a single channel. The operation will delete the sites provided in BulkEditSitesRequest.deleted_sites and then create the sites provided in BulkEditSitesRequest.created_sites.",
 	//   "flatPath": "v1/advertisers/{advertiserId}/channels/{channelsId}/sites:bulkEdit",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.channels.sites.bulkEdit",
@@ -16405,7 +15881,7 @@ func (c *AdvertisersChannelsSitesCreateCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16570,7 +16046,7 @@ func (c *AdvertisersChannelsSitesDeleteCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16702,38 +16178,20 @@ func (r *AdvertisersChannelsSitesService) List(advertiserId int64, channelId int
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by site
-// fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for site currently can only contain at most
-// one
-// * restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `urlOrAppId`
-//
-// Examples:
-//
-// * All sites for which the URL or app ID contains
-// "google":
-// `urlOrAppId : "google"
+// fields. Supported syntax: * Filter expressions for site currently can
+// only contain at most one * restriction. * A restriction has the form
+// of `{field} {operator} {value}`. * The operator must be `CONTAINS
+// (:)`. * Supported fields: - `urlOrAppId` Examples: * All sites for
+// which the URL or app ID contains "google": `urlOrAppId : "google"
 func (c *AdvertisersChannelsSitesListCall) Filter(filter string) *AdvertisersChannelsSitesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `urlOrAppId` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for a
-// field, a suffix " desc" should be added to the field name.
-// Example:
+// the list. Acceptable values are: * `urlOrAppId` (default) The default
+// sorting order is ascending. To specify descending order for a field,
+// a suffix " desc" should be added to the field name. Example:
 // `urlOrAppId desc`.
 func (c *AdvertisersChannelsSitesListCall) OrderBy(orderBy string) *AdvertisersChannelsSitesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -16741,23 +16199,19 @@ func (c *AdvertisersChannelsSitesListCall) OrderBy(orderBy string) *AdvertisersC
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersChannelsSitesListCall) PageSize(pageSize int64) *AdvertisersChannelsSitesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-//
-// Typically, this is the value of
-// next_page_token returned from the
-// previous call to `ListSites` method. If not specified, the first
-// page
-// of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListSites` method. If not specified, the first page of results
+// will be returned.
 func (c *AdvertisersChannelsSitesListCall) PageToken(pageToken string) *AdvertisersChannelsSitesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16807,7 +16261,7 @@ func (c *AdvertisersChannelsSitesListCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16896,23 +16350,23 @@ func (c *AdvertisersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by site fields.\n\nSupported syntax:\n\n* Filter expressions for site currently can only contain at most one\n* restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `urlOrAppId`\n\nExamples:\n\n* All sites for which the URL or app ID contains \"google\":\n`urlOrAppId : \"google\"`",
+	//       "description": "Allows filtering by site fields. Supported syntax: * Filter expressions for site currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `urlOrAppId` Examples: * All sites for which the URL or app ID contains \"google\": `urlOrAppId : \"google\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `urlOrAppId` (default)\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`urlOrAppId desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `urlOrAppId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be added to the field name. Example: `urlOrAppId desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token returned from the\nprevious call to `ListSites` method. If not specified, the first page\nof results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListSites` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16966,8 +16420,8 @@ type AdvertisersCreativesCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new creative.
-// Returns the newly created creative if successful.
+// Create: Creates a new creative. Returns the newly created creative if
+// successful.
 func (r *AdvertisersCreativesService) Create(advertiserId int64, creative *Creative) *AdvertisersCreativesCreateCall {
 	c := &AdvertisersCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17002,7 +16456,7 @@ func (c *AdvertisersCreativesCreateCall) Header() http.Header {
 
 func (c *AdvertisersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17066,7 +16520,7 @@ func (c *AdvertisersCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Crea
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new creative.\nReturns the newly created creative if successful.",
+	//   "description": "Creates a new creative. Returns the newly created creative if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/creatives",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.creatives.create",
@@ -17108,11 +16562,10 @@ type AdvertisersCreativesDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes a creative.
-// Returns error code `NOT_FOUND` if the creative does not exist.
-// The creative should be archived first, i.e. set
-// entity_status to `ENTITY_STATUS_ARCHIVED`, before
-// it can be deleted.
+// Delete: Deletes a creative. Returns error code `NOT_FOUND` if the
+// creative does not exist. The creative should be archived first, i.e.
+// set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be
+// deleted.
 func (r *AdvertisersCreativesService) Delete(advertiserId int64, creativeId int64) *AdvertisersCreativesDeleteCall {
 	c := &AdvertisersCreativesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17147,7 +16600,7 @@ func (c *AdvertisersCreativesDeleteCall) Header() http.Header {
 
 func (c *AdvertisersCreativesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17207,7 +16660,7 @@ func (c *AdvertisersCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a creative.\nReturns error code `NOT_FOUND` if the creative does not exist.\nThe creative should be archived first, i.e. set\nentity_status to `ENTITY_STATUS_ARCHIVED`, before\nit can be deleted.",
+	//   "description": "Deletes a creative. Returns error code `NOT_FOUND` if the creative does not exist. The creative should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be deleted.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/creatives/{creativesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.creatives.delete",
@@ -17301,7 +16754,7 @@ func (c *AdvertisersCreativesGetCall) Header() http.Header {
 
 func (c *AdvertisersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17412,14 +16865,10 @@ type AdvertisersCreativesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists creatives in an advertiser.
-//
-// The order is defined by the order_by
-// parameter.
-// If a filter by
-// entity_status is not specified, creatives
-// with
-// `ENTITY_STATUS_ARCHIVED` will not be included in the results.
+// List: Lists creatives in an advertiser. The order is defined by the
+// order_by parameter. If a filter by entity_status is not specified,
+// creatives with `ENTITY_STATUS_ARCHIVED` will not be included in the
+// results.
 func (r *AdvertisersCreativesService) List(advertiserId int64) *AdvertisersCreativesListCall {
 	c := &AdvertisersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17427,111 +16876,71 @@ func (r *AdvertisersCreativesService) List(advertiserId int64) *AdvertisersCreat
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// creative properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restriction for the same field must be combined by `OR`.
-// * Restriction for different fields must be combined by `AND`.
-// * Between `(` and `)` there can only be restrictions combined by
-// `OR`
-// for the same field.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)` for the following fields:
-//     - `entityStatus`
-//     - `creativeType`.
-//     - `dimensions`
-//     - `minDuration`
-//     - `maxDuration`
-//     - `approvalStatus`
-//     - `exchangeReviewStatus`
-//     - `dynamic`
-//     - `creativeId`
-// * The operator must be `HAS (:)` for the following fields:
-//     - `lineItemIds`
-// * For `entityStatus`, `minDuration`, `maxDuration`, and `dynamic`
-// there may
-// be at most one restriction.
-// * For `dimensions`, the value is in the form of
-// "{width}x{height}".
-// * For `exchangeReviewStatus`, the value is in the form
-// of
-// `{exchange}-{reviewStatus}`.
-// * For `minDuration` and `maxDuration`, the value is in the form
-// of
-// "{duration}s". Only seconds are supported with millisecond
-// granularity.
-// * There may be multiple `lineItemIds` restrictions in order to
-// search
-// against multiple possible line item IDs.
-// * There may be multiple `creativeId` restrictions in order to
-// search
-// against multiple possible creative IDs.
-//
-// Examples:
-//
-// * All native creatives: `creativeType="CREATIVE_TYPE_NATIVE"
-// * All active creatives with 300x400 or 50x100
-// dimensions:
-// `entityStatus="ENTITY_STATUS_ACTIVE" AND (dimensions="300x400"
-// OR dimensions="50x100")`
-// * All dynamic creatives that are approved by AdX or
-// AppNexus, with a minimum duration of 5 seconds and
-// 200ms.
-// `dynamic="true" AND minDuration="5.2s"
-// AND
-// (exchangeReviewStatus="EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_AP
-// PROVED"
-// OR
-// exchangeReviewStatus="EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED")`
-// * All video creatives that are associated with line item ID 1 or
-// 2:
+// creative properties. Supported syntax: * Filter expressions are made
+// up of one or more restrictions. * Restriction for the same field must
+// be combined by `OR`. * Restriction for different fields must be
+// combined by `AND`. * Between `(` and `)` there can only be
+// restrictions combined by `OR` for the same field. * A restriction has
+// the form of `{field} {operator} {value}`. * The operator must be
+// `EQUALS (=)` for the following fields: - `entityStatus` -
+// `creativeType`. - `dimensions` - `minDuration` - `maxDuration` -
+// `approvalStatus` - `exchangeReviewStatus` - `dynamic` - `creativeId`
+// * The operator must be `HAS (:)` for the following fields: -
+// `lineItemIds` * For `entityStatus`, `minDuration`, `maxDuration`, and
+// `dynamic` there may be at most one restriction. * For `dimensions`,
+// the value is in the form of "{width}x{height}". * For
+// `exchangeReviewStatus`, the value is in the form of
+// `{exchange}-{reviewStatus}`. * For `minDuration` and `maxDuration`,
+// the value is in the form of "{duration}s". Only seconds are
+// supported with millisecond granularity. * There may be multiple
+// `lineItemIds` restrictions in order to search against multiple
+// possible line item IDs. * There may be multiple `creativeId`
+// restrictions in order to search against multiple possible creative
+// IDs. Examples: * All native creatives:
+// `creativeType="CREATIVE_TYPE_NATIVE" * All active creatives with
+// 300x400 or 50x100 dimensions: `entityStatus="ENTITY_STATUS_ACTIVE"
+// AND (dimensions="300x400" OR dimensions="50x100")` * All dynamic
+// creatives that are approved by AdX or AppNexus, with a minimum
+// duration of 5 seconds and 200ms. `dynamic="true" AND
+// minDuration="5.2s" AND
+// (exchangeReviewStatus="EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROV
+// ED" OR
+// exchangeReviewStatus="EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED")` *
+// All video creatives that are associated with line item ID 1 or 2:
 // `creativeType="CREATIVE_TYPE_VIDEO" AND (lineItemIds:1 OR
-// lineItemIds:2)`
-// * Find creatives by multiple creative IDs:
-// `creativeId=1 OR creativeId=2`
-//
-// The length of this field should be no more than 500 characters.
+// lineItemIds:2)` * Find creatives by multiple creative IDs:
+// `creativeId=1 OR creativeId=2` The length of this field should be no
+// more than 500 characters.
 func (c *AdvertisersCreativesListCall) Filter(filter string) *AdvertisersCreativesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `creativeId` (default)
-// * `createTime`
-// * `mediaDuration`
-// * `dimensions` (sorts by width first, then by height)
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example: `createTime desc`.
+// the list. Acceptable values are: * `creativeId` (default) *
+// `createTime` * `mediaDuration` * `dimensions` (sorts by width first,
+// then by height) The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `createTime desc`.
 func (c *AdvertisersCreativesListCall) OrderBy(orderBy string) *AdvertisersCreativesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersCreativesListCall) PageSize(pageSize int64) *AdvertisersCreativesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListCreatives` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListCreatives` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersCreativesListCall) PageToken(pageToken string) *AdvertisersCreativesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -17574,7 +16983,7 @@ func (c *AdvertisersCreativesListCall) Header() http.Header {
 
 func (c *AdvertisersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17636,7 +17045,7 @@ func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCr
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists creatives in an advertiser.\n\nThe order is defined by the order_by\nparameter.\nIf a filter by\nentity_status is not specified, creatives with\n`ENTITY_STATUS_ARCHIVED` will not be included in the results.",
+	//   "description": "Lists creatives in an advertiser. The order is defined by the order_by parameter. If a filter by entity_status is not specified, creatives with `ENTITY_STATUS_ARCHIVED` will not be included in the results.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/creatives",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.creatives.list",
@@ -17653,23 +17062,23 @@ func (c *AdvertisersCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCr
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by creative properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restriction for the same field must be combined by `OR`.\n* Restriction for different fields must be combined by `AND`.\n* Between `(` and `)` there can only be restrictions combined by `OR`\nfor the same field.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)` for the following fields:\n    - `entityStatus`\n    - `creativeType`.\n    - `dimensions`\n    - `minDuration`\n    - `maxDuration`\n    - `approvalStatus`\n    - `exchangeReviewStatus`\n    - `dynamic`\n    - `creativeId`\n* The operator must be `HAS (:)` for the following fields:\n    - `lineItemIds`\n* For `entityStatus`, `minDuration`, `maxDuration`, and `dynamic` there may\nbe at most one restriction.\n* For `dimensions`, the value is in the form of `\"{width}x{height}\"`.\n* For `exchangeReviewStatus`, the value is in the form of\n`{exchange}-{reviewStatus}`.\n* For `minDuration` and `maxDuration`, the value is in the form of\n`\"{duration}s\"`. Only seconds are supported with millisecond granularity.\n* There may be multiple `lineItemIds` restrictions in order to search\nagainst multiple possible line item IDs.\n* There may be multiple `creativeId` restrictions in order to search\nagainst multiple possible creative IDs.\n\nExamples:\n\n* All native creatives: `creativeType=\"CREATIVE_TYPE_NATIVE\"`\n* All active creatives with 300x400 or 50x100 dimensions:\n`entityStatus=\"ENTITY_STATUS_ACTIVE\" AND (dimensions=\"300x400\"\nOR dimensions=\"50x100\")`\n* All dynamic creatives that are approved by AdX or\nAppNexus, with a minimum duration of 5 seconds and 200ms.\n`dynamic=\"true\" AND minDuration=\"5.2s\" AND\n(exchangeReviewStatus=\"EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROVED\"\nOR exchangeReviewStatus=\"EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED\")`\n* All video creatives that are associated with line item ID 1 or 2:\n`creativeType=\"CREATIVE_TYPE_VIDEO\" AND (lineItemIds:1 OR lineItemIds:2)`\n* Find creatives by multiple creative IDs:\n`creativeId=1 OR creativeId=2`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by creative properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restriction for the same field must be combined by `OR`. * Restriction for different fields must be combined by `AND`. * Between `(` and `)` there can only be restrictions combined by `OR` for the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)` for the following fields: - `entityStatus` - `creativeType`. - `dimensions` - `minDuration` - `maxDuration` - `approvalStatus` - `exchangeReviewStatus` - `dynamic` - `creativeId` * The operator must be `HAS (:)` for the following fields: - `lineItemIds` * For `entityStatus`, `minDuration`, `maxDuration`, and `dynamic` there may be at most one restriction. * For `dimensions`, the value is in the form of `\"{width}x{height}\"`. * For `exchangeReviewStatus`, the value is in the form of `{exchange}-{reviewStatus}`. * For `minDuration` and `maxDuration`, the value is in the form of `\"{duration}s\"`. Only seconds are supported with millisecond granularity. * There may be multiple `lineItemIds` restrictions in order to search against multiple possible line item IDs. * There may be multiple `creativeId` restrictions in order to search against multiple possible creative IDs. Examples: * All native creatives: `creativeType=\"CREATIVE_TYPE_NATIVE\"` * All active creatives with 300x400 or 50x100 dimensions: `entityStatus=\"ENTITY_STATUS_ACTIVE\" AND (dimensions=\"300x400\" OR dimensions=\"50x100\")` * All dynamic creatives that are approved by AdX or AppNexus, with a minimum duration of 5 seconds and 200ms. `dynamic=\"true\" AND minDuration=\"5.2s\" AND (exchangeReviewStatus=\"EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROVED\" OR exchangeReviewStatus=\"EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED\")` * All video creatives that are associated with line item ID 1 or 2: `creativeType=\"CREATIVE_TYPE_VIDEO\" AND (lineItemIds:1 OR lineItemIds:2)` * Find creatives by multiple creative IDs: `creativeId=1 OR creativeId=2` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `creativeId` (default)\n* `createTime`\n* `mediaDuration`\n* `dimensions` (sorts by width first, then by height)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name.\nExample: `createTime desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `creativeId` (default) * `createTime` * `mediaDuration` * `dimensions` (sorts by width first, then by height) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `createTime desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListCreatives` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListCreatives` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -17718,8 +17127,8 @@ type AdvertisersCreativesPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an existing creative.
-// Returns the updated creative if successful.
+// Patch: Updates an existing creative. Returns the updated creative if
+// successful.
 func (r *AdvertisersCreativesService) Patch(advertiserId int64, creativeId int64, creative *Creative) *AdvertisersCreativesPatchCall {
 	c := &AdvertisersCreativesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17762,7 +17171,7 @@ func (c *AdvertisersCreativesPatchCall) Header() http.Header {
 
 func (c *AdvertisersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17827,7 +17236,7 @@ func (c *AdvertisersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creat
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing creative.\nReturns the updated creative if successful.",
+	//   "description": "Updates an existing creative. Returns the updated creative if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/creatives/{creativesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.creatives.patch",
@@ -17884,8 +17293,8 @@ type AdvertisersInsertionOrdersCreateCall struct {
 	header_        http.Header
 }
 
-// Create: Creates a new insertion order.
-// Returns the newly created insertion order if successful.
+// Create: Creates a new insertion order. Returns the newly created
+// insertion order if successful.
 func (r *AdvertisersInsertionOrdersService) Create(advertiserId int64, insertionorder *InsertionOrder) *AdvertisersInsertionOrdersCreateCall {
 	c := &AdvertisersInsertionOrdersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17920,7 +17329,7 @@ func (c *AdvertisersInsertionOrdersCreateCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17984,7 +17393,7 @@ func (c *AdvertisersInsertionOrdersCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new insertion order.\nReturns the newly created insertion order if successful.",
+	//   "description": "Creates a new insertion order. Returns the newly created insertion order if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.insertionOrders.create",
@@ -18026,11 +17435,9 @@ type AdvertisersInsertionOrdersDeleteCall struct {
 	header_          http.Header
 }
 
-// Delete: Deletes an insertion order.
-// Returns error code `NOT_FOUND` if the insertion order does not
-// exist.
-// The insertion order should be archived first, i.e. set
-// entity_status to `ENTITY_STATUS_ARCHIVED`,
+// Delete: Deletes an insertion order. Returns error code `NOT_FOUND` if
+// the insertion order does not exist. The insertion order should be
+// archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`,
 // to be able to delete it.
 func (r *AdvertisersInsertionOrdersService) Delete(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersDeleteCall {
 	c := &AdvertisersInsertionOrdersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -18066,7 +17473,7 @@ func (c *AdvertisersInsertionOrdersDeleteCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18126,7 +17533,7 @@ func (c *AdvertisersInsertionOrdersDeleteCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an insertion order.\nReturns error code `NOT_FOUND` if the insertion order does not exist.\nThe insertion order should be archived first, i.e. set\nentity_status to `ENTITY_STATUS_ARCHIVED`,\nto be able to delete it.",
+	//   "description": "Deletes an insertion order. Returns error code `NOT_FOUND` if the insertion order does not exist. The insertion order should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.insertionOrders.delete",
@@ -18175,8 +17582,8 @@ type AdvertisersInsertionOrdersGetCall struct {
 	header_          http.Header
 }
 
-// Get: Gets an insertion order.
-// Returns error code `NOT_FOUND` if the insertion order does not exist.
+// Get: Gets an insertion order. Returns error code `NOT_FOUND` if the
+// insertion order does not exist.
 func (r *AdvertisersInsertionOrdersService) Get(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersGetCall {
 	c := &AdvertisersInsertionOrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18221,7 +17628,7 @@ func (c *AdvertisersInsertionOrdersGetCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18284,7 +17691,7 @@ func (c *AdvertisersInsertionOrdersGetCall) Do(opts ...googleapi.CallOption) (*I
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an insertion order.\nReturns error code `NOT_FOUND` if the insertion order does not exist.",
+	//   "description": "Gets an insertion order. Returns error code `NOT_FOUND` if the insertion order does not exist.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.insertionOrders.get",
@@ -18332,14 +17739,10 @@ type AdvertisersInsertionOrdersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists insertion orders in an advertiser.
-//
-// The order is defined by the order_by
-// parameter.
-// If a filter by
-// entity_status is not specified, insertion
-// orders with `ENTITY_STATUS_ARCHIVED` will not be included in the
-// results.
+// List: Lists insertion orders in an advertiser. The order is defined
+// by the order_by parameter. If a filter by entity_status is not
+// specified, insertion orders with `ENTITY_STATUS_ARCHIVED` will not be
+// included in the results.
 func (r *AdvertisersInsertionOrdersService) List(advertiserId int64) *AdvertisersInsertionOrdersListCall {
 	c := &AdvertisersInsertionOrdersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18347,70 +17750,52 @@ func (r *AdvertisersInsertionOrdersService) List(advertiserId int64) *Advertiser
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// insertion order properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by `AND` or `OR` logical operators.
-// A
-// sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `campaignId`
-//     - `entityStatus`
-//
-// Examples:
-//
-// * All insertion orders under a campaign: `campaignId="1234"
-// * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion
-// orders
-// under an advertiser:
-// `(entityStatus="ENTITY_STATUS_ACTIVE"
-// OR
-// entityStatus="ENTITY_STATUS_PAUSED")`
-//
-// The length of this field should be no more than 500 characters.
+// insertion order properties. Supported syntax: * Filter expressions
+// are made up of one or more restrictions. * Restrictions can be
+// combined by `AND` or `OR` logical operators. A sequence of
+// restrictions implicitly uses `AND`. * A restriction has the form of
+// `{field} {operator} {value}`. * The operator used on
+// `budget.budget_segments.date_range.end_date` must be LESS THAN (<). *
+// The operators used on all other fields must be `EQUALS (=)`. *
+// Supported fields: - `campaignId` - `displayName` - `entityStatus` -
+// `budget.budget_segments.date_range.end_date` (input as YYYY-MM-DD)
+// Examples: * All insertion orders under a campaign:
+// `campaignId="1234" * All `ENTITY_STATUS_ACTIVE` or
+// `ENTITY_STATUS_PAUSED` insertion orders under an advertiser:
+// `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// entityStatus="ENTITY_STATUS_PAUSED")` * All insertion orders whose
+// budget segments' dates end before March 28, 2019:
+// `budget.budget_segments.date_range.end_date<"2019-03-28" The length
+// of this field should be no more than 500 characters.
 func (c *AdvertisersInsertionOrdersListCall) Filter(filter string) *AdvertisersInsertionOrdersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * "displayName" (default)
-// * "entityStatus"
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * "displayName" (default) *
+// "entityStatus" The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `displayName desc`.
 func (c *AdvertisersInsertionOrdersListCall) OrderBy(orderBy string) *AdvertisersInsertionOrdersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersInsertionOrdersListCall) PageSize(pageSize int64) *AdvertisersInsertionOrdersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token returned
-// from the previous call to `ListInsertionOrders` method. If not
-// specified,
-// the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListInsertionOrders` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersInsertionOrdersListCall) PageToken(pageToken string) *AdvertisersInsertionOrdersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -18453,7 +17838,7 @@ func (c *AdvertisersInsertionOrdersListCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18515,7 +17900,7 @@ func (c *AdvertisersInsertionOrdersListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists insertion orders in an advertiser.\n\nThe order is defined by the order_by\nparameter.\nIf a filter by\nentity_status is not specified, insertion\norders with `ENTITY_STATUS_ARCHIVED` will not be included in the results.",
+	//   "description": "Lists insertion orders in an advertiser. The order is defined by the order_by parameter. If a filter by entity_status is not specified, insertion orders with `ENTITY_STATUS_ARCHIVED` will not be included in the results.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.insertionOrders.list",
@@ -18532,23 +17917,23 @@ func (c *AdvertisersInsertionOrdersListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by insertion order properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `campaignId`\n    - `entityStatus`\n\nExamples:\n\n* All insertion orders under a campaign: `campaignId=\"1234\"`\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion orders\nunder an advertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR\nentityStatus=\"ENTITY_STATUS_PAUSED\")`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by insertion order properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `budget.budget_segments.date_range.end_date` must be LESS THAN (\u003c). * The operators used on all other fields must be `EQUALS (=)`. * Supported fields: - `campaignId` - `displayName` - `entityStatus` - `budget.budget_segments.date_range.end_date` (input as YYYY-MM-DD) Examples: * All insertion orders under a campaign: `campaignId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` insertion orders under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\")` * All insertion orders whose budget segments' dates end before March 28, 2019: `budget.budget_segments.date_range.end_date\u003c\"2019-03-28\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* \"displayName\" (default)\n* \"entityStatus\"\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * \"displayName\" (default) * \"entityStatus\" The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token returned\nfrom the previous call to `ListInsertionOrders` method. If not specified,\nthe first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListInsertionOrders` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -18597,8 +17982,8 @@ type AdvertisersInsertionOrdersPatchCall struct {
 	header_          http.Header
 }
 
-// Patch: Updates an existing insertion order.
-// Returns the updated insertion order if successful.
+// Patch: Updates an existing insertion order. Returns the updated
+// insertion order if successful.
 func (r *AdvertisersInsertionOrdersService) Patch(advertiserId int64, insertionOrderId int64, insertionorder *InsertionOrder) *AdvertisersInsertionOrdersPatchCall {
 	c := &AdvertisersInsertionOrdersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18641,7 +18026,7 @@ func (c *AdvertisersInsertionOrdersPatchCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18706,7 +18091,7 @@ func (c *AdvertisersInsertionOrdersPatchCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing insertion order.\nReturns the updated insertion order if successful.",
+	//   "description": "Updates an existing insertion order. Returns the updated insertion order if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.insertionOrders.patch",
@@ -18765,13 +18150,10 @@ type AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall struct {
 }
 
 // BulkEditLineItemAssignedTargetingOptions: Bulk edits targeting
-// options under a single line item.
-// The operation will delete the assigned targeting options provided
-// in
-// BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests
-// and
-// then create the assigned targeting options provided
-// in
+// options under a single line item. The operation will delete the
+// assigned targeting options provided in
+// BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and
+// then create the assigned targeting options provided in
 // BulkEditLineItemAssignedTargetingOptionsRequest.create_requests .
 func (r *AdvertisersLineItemsService) BulkEditLineItemAssignedTargetingOptions(advertiserId int64, lineItemId int64, bulkeditlineitemassignedtargetingoptionsrequest *BulkEditLineItemAssignedTargetingOptionsRequest) *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall {
 	c := &AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -18808,7 +18190,7 @@ func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18875,7 +18257,7 @@ func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits targeting options under a single line item.\nThe operation will delete the assigned targeting options provided in\nBulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and\nthen create the assigned targeting options provided in\nBulkEditLineItemAssignedTargetingOptionsRequest.create_requests .",
+	//   "description": "Bulk edits targeting options under a single line item. The operation will delete the assigned targeting options provided in BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditLineItemAssignedTargetingOptionsRequest.create_requests .",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}:bulkEditLineItemAssignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkEditLineItemAssignedTargetingOptions",
@@ -18937,34 +18319,17 @@ func (r *AdvertisersLineItemsService) BulkListLineItemAssignedTargetingOptions(a
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties.
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by the logical operator `OR` on the
-// same
-// field.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `targetingType`
-//     - `inheritance`
-//
-// Examples:
-//
-// * AssignedTargetingOptions of targeting
-// type
-// TARGETING_TYPE_PROXIMITY_LOCATION_LIST or
-// TARGETING_TYPE_CHANNEL
-// `targetingType="TARGETING_TYPE_PROXIMITY_LOCATI
-// ON_LIST" OR
-// targetingType="TARGETING_TYPE_CHANNEL"
-// * AssignedTargetingOptions with inheritance status of NOT_INHERITED
-// or
-//   INHERITED_FROM_PARTNER
-// `inheritance="NOT_INHERITED" OR
-// inheritance="INHERITED_FROM_PARTNER"
-//
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR` on the same field. * A
+// restriction has the form of `{field} {operator} {value}`. * The
+// operator must be `EQUALS (=)`. * Supported fields: - `targetingType`
+// - `inheritance` Examples: * AssignedTargetingOptions of targeting
+// type TARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL
+// `targetingType="TARGETING_TYPE_PROXIMITY_LOCATION_LIST" OR
+// targetingType="TARGETING_TYPE_CHANNEL" * AssignedTargetingOptions
+// with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER
+// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
 // The length of this field should be no more than 500 characters.
 func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
 	c.urlParams_.Set("filter", filter)
@@ -18972,41 +18337,29 @@ func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Filte
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `targetingType` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
+// the list. Acceptable values are: * `targetingType` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. Example:
 // `targetingType desc`.
 func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) OrderBy(orderBy string) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page
-// size.
-// The size must be an integer between `1` and `5000`. If
-// unspecified,
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The size must be an integer between `1` and `5000`. If unspecified,
 // the default is '5000'. Returns error code `INVALID_ARGUMENT` if an
-// invalid
-// value is specified.
+// invalid value is specified.
 func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) PageSize(pageSize int64) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token that lets
-// the client fetch the next page of results.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call
-// to
-// `BulkListLineItemAssignedTargetingOptions` method.
-// If not specified, the first page of results will be returned.
+// the client fetch the next page of results. Typically, this is the
+// value of next_page_token returned from the previous call to
+// `BulkListLineItemAssignedTargetingOptions` method. If not specified,
+// the first page of results will be returned.
 func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) PageToken(pageToken string) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -19049,7 +18402,7 @@ func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19132,7 +18485,7 @@ func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Do(op
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties.\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR` on the same\nfield.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `targetingType`\n    - `inheritance`\n\nExamples:\n\n* AssignedTargetingOptions of targeting type\nTARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL\n`targetingType=\"TARGETING_TYPE_PROXIMITY_LOCATION_LIST\" OR\ntargetingType=\"TARGETING_TYPE_CHANNEL\"`\n* AssignedTargetingOptions with inheritance status of NOT_INHERITED or\n  INHERITED_FROM_PARTNER\n`inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` - `inheritance` Examples: * AssignedTargetingOptions of targeting type TARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL `targetingType=\"TARGETING_TYPE_PROXIMITY_LOCATION_LIST\" OR targetingType=\"TARGETING_TYPE_CHANNEL\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19145,18 +18498,18 @@ func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Do(op
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `targetingType` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`targetingType desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `targetingType` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `targetingType desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size.\nThe size must be an integer between `1` and `5000`. If unspecified,\nthe default is '5000'. Returns error code `INVALID_ARGUMENT` if an invalid\nvalue is specified.",
+	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is '5000'. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token that lets the client fetch the next page of results.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to\n`BulkListLineItemAssignedTargetingOptions` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token that lets the client fetch the next page of results. Typically, this is the value of next_page_token returned from the previous call to `BulkListLineItemAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -19204,8 +18557,8 @@ type AdvertisersLineItemsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new line item.
-// Returns the newly created line item if successful.
+// Create: Creates a new line item. Returns the newly created line item
+// if successful.
 func (r *AdvertisersLineItemsService) Create(advertiserId int64, lineitem *LineItem) *AdvertisersLineItemsCreateCall {
 	c := &AdvertisersLineItemsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19240,7 +18593,7 @@ func (c *AdvertisersLineItemsCreateCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19304,7 +18657,7 @@ func (c *AdvertisersLineItemsCreateCall) Do(opts ...googleapi.CallOption) (*Line
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new line item.\nReturns the newly created line item if successful.",
+	//   "description": "Creates a new line item. Returns the newly created line item if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.create",
@@ -19346,11 +18699,10 @@ type AdvertisersLineItemsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes a line item.
-// Returns error code `NOT_FOUND` if the line item does not exist.
-// The line item should be archived first, i.e. set
-// entity_status to `ENTITY_STATUS_ARCHIVED`, to be
-// able to delete it.
+// Delete: Deletes a line item. Returns error code `NOT_FOUND` if the
+// line item does not exist. The line item should be archived first,
+// i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to
+// delete it.
 func (r *AdvertisersLineItemsService) Delete(advertiserId int64, lineItemId int64) *AdvertisersLineItemsDeleteCall {
 	c := &AdvertisersLineItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19385,7 +18737,7 @@ func (c *AdvertisersLineItemsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19445,7 +18797,7 @@ func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a line item.\nReturns error code `NOT_FOUND` if the line item does not exist.\nThe line item should be archived first, i.e. set\nentity_status to `ENTITY_STATUS_ARCHIVED`, to be\nable to delete it.",
+	//   "description": "Deletes a line item. Returns error code `NOT_FOUND` if the line item does not exist. The line item should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.lineItems.delete",
@@ -19539,7 +18891,7 @@ func (c *AdvertisersLineItemsGetCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19650,14 +19002,10 @@ type AdvertisersLineItemsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists line items in an advertiser.
-//
-// The order is defined by the order_by
-// parameter.
-// If a filter by
-// entity_status is not specified, line items
-// with
-// `ENTITY_STATUS_ARCHIVED` will not be included in the results.
+// List: Lists line items in an advertiser. The order is defined by the
+// order_by parameter. If a filter by entity_status is not specified,
+// line items with `ENTITY_STATUS_ARCHIVED` will not be included in the
+// results.
 func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineItemsListCall {
 	c := &AdvertisersLineItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19665,75 +19013,54 @@ func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineI
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by line
-// item properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by `AND` or `OR` logical operators.
-// A
-// sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `campaignId`
-//     - `insertionOrderId`
-//     - `entityStatus`
-//     - `lineItemType`
-//
-// Examples:
-//
-// * All line items under an insertion order:
-// `insertionOrderId="1234"
-// * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`
-// and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an
-// advertiser:
-// `(entityStatus="ENTITY_STATUS_ACTIVE"
-// OR
-// entityStatus="ENTITY_STATUS_PAUSED")
-// AND
-// lineItemType="LINE_ITEM_TYPE_DISPLAY_DEFAULT"
-//
-// The length of this field should be no more than 500 characters.
+// item properties. Supported syntax: * Filter expressions are made up
+// of one or more restrictions. * Restrictions can be combined by `AND`
+// or `OR` logical operators. A sequence of restrictions implicitly uses
+// `AND`. * A restriction has the form of `{field} {operator} {value}`.
+// * The operator used on `flight.dateRange.endDate` must be LESS THAN
+// (<). * The operators used on all other fields must be `EQUALS (=)`. *
+// Supported fields: - `campaignId` - `displayName` - `insertionOrderId`
+// - `entityStatus` - `lineItemId` - `lineItemType` -
+// `flight.dateRange.endDate` (input formatted as YYYY-MM-DD) Examples:
+// * All line items under an insertion order: `insertionOrderId="1234"
+// * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and
+// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser:
+// `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// entityStatus="ENTITY_STATUS_PAUSED") AND
+// lineItemType="LINE_ITEM_TYPE_DISPLAY_DEFAULT" * All line items whose
+// flight dates end before March 28, 2019:
+// `flight.dateRange.endDate<"2019-03-28" The length of this field
+// should be no more than 500 characters.
 func (c *AdvertisersLineItemsListCall) Filter(filter string) *AdvertisersLineItemsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * "displayName" (default)
-// * "entityStatus"
-// * “flight.dateRange.endDate”
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * "displayName" (default) *
+// "entityStatus" * “flight.dateRange.endDate” The default sorting
+// order is ascending. To specify descending order for a field, a suffix
+// "desc" should be added to the field name. Example: `displayName
+// desc`.
 func (c *AdvertisersLineItemsListCall) OrderBy(orderBy string) *AdvertisersLineItemsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersLineItemsListCall) PageSize(pageSize int64) *AdvertisersLineItemsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListLineItems` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListLineItems` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersLineItemsListCall) PageToken(pageToken string) *AdvertisersLineItemsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -19776,7 +19103,7 @@ func (c *AdvertisersLineItemsListCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19838,7 +19165,7 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists line items in an advertiser.\n\nThe order is defined by the order_by\nparameter.\nIf a filter by\nentity_status is not specified, line items with\n`ENTITY_STATUS_ARCHIVED` will not be included in the results.",
+	//   "description": "Lists line items in an advertiser. The order is defined by the order_by parameter. If a filter by entity_status is not specified, line items with `ENTITY_STATUS_ARCHIVED` will not be included in the results.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.lineItems.list",
@@ -19855,23 +19182,23 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by line item properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `campaignId`\n    - `insertionOrderId`\n    - `entityStatus`\n    - `lineItemType`\n\nExamples:\n\n* All line items under an insertion order: `insertionOrderId=\"1234\"`\n* All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`\nand `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser:\n`(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR\nentityStatus=\"ENTITY_STATUS_PAUSED\") AND\nlineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by line item properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `flight.dateRange.endDate` must be LESS THAN (\u003c). * The operators used on all other fields must be `EQUALS (=)`. * Supported fields: - `campaignId` - `displayName` - `insertionOrderId` - `entityStatus` - `lineItemId` - `lineItemType` - `flight.dateRange.endDate` (input formatted as YYYY-MM-DD) Examples: * All line items under an insertion order: `insertionOrderId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND lineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"` * All line items whose flight dates end before March 28, 2019: `flight.dateRange.endDate\u003c\"2019-03-28\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* \"displayName\" (default)\n* \"entityStatus\"\n* “flight.dateRange.endDate”\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * \"displayName\" (default) * \"entityStatus\" * “flight.dateRange.endDate” The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListLineItems` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListLineItems` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -19920,8 +19247,8 @@ type AdvertisersLineItemsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an existing line item.
-// Returns the updated line item if successful.
+// Patch: Updates an existing line item. Returns the updated line item
+// if successful.
 func (r *AdvertisersLineItemsService) Patch(advertiserId int64, lineItemId int64, lineitem *LineItem) *AdvertisersLineItemsPatchCall {
 	c := &AdvertisersLineItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19964,7 +19291,7 @@ func (c *AdvertisersLineItemsPatchCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20029,7 +19356,7 @@ func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineI
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing line item.\nReturns the updated line item if successful.",
+	//   "description": "Updates an existing line item. Returns the updated line item if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.lineItems.patch",
@@ -20088,8 +19415,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 	header_                 http.Header
 }
 
-// Create: Assigns a targeting option to a line item.
-// Returns the assigned targeting option if successful.
+// Create: Assigns a targeting option to a line item. Returns the
+// assigned targeting option if successful.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, lineItemId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20126,7 +19453,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) H
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20192,7 +19519,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Assigns a targeting option to a line item.\nReturns the assigned targeting option if successful.",
+	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create",
@@ -20259,6 +19586,46 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -20330,7 +19697,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) H
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20468,6 +19835,46 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -20546,7 +19953,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Head
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20631,7 +20038,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//       "type": "string"
 	//     },
 	//     "assignedTargetingOptionId": {
-	//       "description": "Required. An identifier unique to the targeting type in this line item that\nidentifies the assigned targeting option being requested.",
+	//       "description": "Required. An identifier unique to the targeting type in this line item that identifies the assigned targeting option being requested.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -20687,6 +20094,46 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -20727,68 +20174,46 @@ func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by the logical operator `OR`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `assignedTargetingOptionId`
-//     - `inheritance`
-//
-// Examples:
-//
-// * AssignedTargetingOptions with ID 1 or
-// 2
-// `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2"
-// * AssignedTargetingOptions with inheritance status of NOT_INHERITED
-// or
-//   INHERITED_FROM_PARTNER
-// `inheritance="NOT_INHERITED" OR
-// inheritance="INHERITED_FROM_PARTNER"
-//
-// The length of this field should be no more than 500 characters.
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedTargetingOptionId` -
+// `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2
+// `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2" *
+// AssignedTargetingOptions with inheritance status of NOT_INHERITED or
+// INHERITED_FROM_PARTNER `inheritance="NOT_INHERITED" OR
+// inheritance="INHERITED_FROM_PARTNER" The length of this field should
+// be no more than 500 characters.
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `assignedTargetingOptionId` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `assignedTargetingOptionId desc`.
+// the list. Acceptable values are: * `assignedTargetingOptionId`
+// (default) The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `assignedTargetingOptionId desc`.
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to
-// `ListLineItemAssignedTargetingOptions`
-// method. If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListLineItemAssignedTargetingOptions` method. If not specified,
+// the first page of results will be returned.
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) PageToken(pageToken string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -20831,7 +20256,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Hea
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20916,7 +20341,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `assignedTargetingOptionId`\n    - `inheritance`\n\nExamples:\n\n* AssignedTargetingOptions with ID 1 or 2\n`assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"`\n* AssignedTargetingOptions with inheritance status of NOT_INHERITED or\n  INHERITED_FROM_PARTNER\n`inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` - `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20929,18 +20354,18 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `assignedTargetingOptionId` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`assignedTargetingOptionId desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedTargetingOptionId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `assignedTargetingOptionId desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListLineItemAssignedTargetingOptions`\nmethod. If not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListLineItemAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20985,6 +20410,46 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -21036,8 +20501,7 @@ type AdvertisersLocationListsCreateCall struct {
 }
 
 // Create: Creates a new location list. Returns the newly created
-// location list if
-// successful.
+// location list if successful.
 func (r *AdvertisersLocationListsService) Create(advertiserId int64, locationlist *LocationList) *AdvertisersLocationListsCreateCall {
 	c := &AdvertisersLocationListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21072,7 +20536,7 @@ func (c *AdvertisersLocationListsCreateCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21136,7 +20600,7 @@ func (c *AdvertisersLocationListsCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new location list. Returns the newly created location list if\nsuccessful.",
+	//   "description": "Creates a new location list. Returns the newly created location list if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/locationLists",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.locationLists.create",
@@ -21224,7 +20688,7 @@ func (c *AdvertisersLocationListsGetCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21343,66 +20807,42 @@ func (r *AdvertisersLocationListsService) List(advertiserId int64) *AdvertisersL
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// location list fields.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by `AND` or `OR` logical operators.
-// A
-// sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `locationType`
-//
-// Examples:
-//
-// * All regional location
-// list:
-// `locationType="TARGETING_LOCATION_TYPE_REGIONAL"
-// * All proximity location
-// list:
-// `locationType="TARGETING_LOCATION_TYPE_PROXIMITY"
+// location list fields. Supported syntax: * Filter expressions are made
+// up of one or more restrictions. * Restrictions can be combined by
+// `AND` or `OR` logical operators. A sequence of restrictions
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
+// fields: - `locationType` Examples: * All regional location list:
+// `locationType="TARGETING_LOCATION_TYPE_REGIONAL" * All proximity
+// location list: `locationType="TARGETING_LOCATION_TYPE_PROXIMITY"
 func (c *AdvertisersLocationListsListCall) Filter(filter string) *AdvertisersLocationListsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `locationListId` (default)
-// * `displayName`
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * `locationListId` (default) *
+// `displayName` The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `displayName desc`.
 func (c *AdvertisersLocationListsListCall) OrderBy(orderBy string) *AdvertisersLocationListsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`.
-// Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT`
-// if an
-// invalid value is specified.
+// Must be between `1` and `100`. Defaults to `100` if not set. Returns
+// error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *AdvertisersLocationListsListCall) PageSize(pageSize int64) *AdvertisersLocationListsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-//
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListLocationLists` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListLocationLists` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersLocationListsListCall) PageToken(pageToken string) *AdvertisersLocationListsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -21445,7 +20885,7 @@ func (c *AdvertisersLocationListsListCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21524,23 +20964,23 @@ func (c *AdvertisersLocationListsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by location list fields.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `locationType`\n\nExamples:\n\n* All regional location list:\n`locationType=\"TARGETING_LOCATION_TYPE_REGIONAL\"`\n* All proximity location list:\n`locationType=\"TARGETING_LOCATION_TYPE_PROXIMITY\"`",
+	//       "description": "Allows filtering by location list fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `locationType` Examples: * All regional location list: `locationType=\"TARGETING_LOCATION_TYPE_REGIONAL\"` * All proximity location list: `locationType=\"TARGETING_LOCATION_TYPE_PROXIMITY\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `locationListId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `locationListId` (default) * `displayName` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`.\nDefaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an\ninvalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListLocationLists` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListLocationLists` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -21633,7 +21073,7 @@ func (c *AdvertisersLocationListsPatchCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21756,15 +21196,10 @@ type AdvertisersLocationListsAssignedLocationsBulkEditCall struct {
 }
 
 // BulkEdit: Bulk edits multiple assignments between locations and a
-// single location
-// list.
-//
-// The operation will delete the assigned locations provided
-// in
-// BulkEditAssignedLocationsRequest.deleted_assigned_locations and
-// then
-// create the assigned locations provided
-// in
+// single location list. The operation will delete the assigned
+// locations provided in
+// BulkEditAssignedLocationsRequest.deleted_assigned_locations and then
+// create the assigned locations provided in
 // BulkEditAssignedLocationsRequest.created_assigned_locations.
 func (r *AdvertisersLocationListsAssignedLocationsService) BulkEdit(advertiserId int64, locationListId int64, bulkeditassignedlocationsrequest *BulkEditAssignedLocationsRequest) *AdvertisersLocationListsAssignedLocationsBulkEditCall {
 	c := &AdvertisersLocationListsAssignedLocationsBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -21801,7 +21236,7 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) Header() http.He
 
 func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21867,7 +21302,7 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits multiple assignments between locations and a single location\nlist.\n\nThe operation will delete the assigned locations provided in\nBulkEditAssignedLocationsRequest.deleted_assigned_locations and then\ncreate the assigned locations provided in\nBulkEditAssignedLocationsRequest.created_assigned_locations.",
+	//   "description": "Bulk edits multiple assignments between locations and a single location list. The operation will delete the assigned locations provided in BulkEditAssignedLocationsRequest.deleted_assigned_locations and then create the assigned locations provided in BulkEditAssignedLocationsRequest.created_assigned_locations.",
 	//   "flatPath": "v1/advertisers/{advertiserId}/locationLists/{locationListsId}/assignedLocations:bulkEdit",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.locationLists.assignedLocations.bulkEdit",
@@ -21954,7 +21389,7 @@ func (c *AdvertisersLocationListsAssignedLocationsCreateCall) Header() http.Head
 
 func (c *AdvertisersLocationListsAssignedLocationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22106,7 +21541,7 @@ func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) Header() http.Head
 
 func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22232,33 +21667,21 @@ func (r *AdvertisersLocationListsAssignedLocationsService) List(advertiserId int
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// location list assignment fields.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by the logical operator `OR`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `assignedLocationId`
-//
-// The length of this field should be no more than 500 characters.
+// location list assignment fields. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedLocationId` The length of this
+// field should be no more than 500 characters.
 func (c *AdvertisersLocationListsAssignedLocationsListCall) Filter(filter string) *AdvertisersLocationListsAssignedLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `assignedLocationId` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for a
-// field, a suffix " desc" should be added to the field name.
-// Example:
+// the list. Acceptable values are: * `assignedLocationId` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix " desc" should be added to the field name. Example:
 // `assignedLocationId desc`.
 func (c *AdvertisersLocationListsAssignedLocationsListCall) OrderBy(orderBy string) *AdvertisersLocationListsAssignedLocationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -22266,22 +21689,19 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) OrderBy(orderBy stri
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersLocationListsAssignedLocationsListCall) PageSize(pageSize int64) *AdvertisersLocationListsAssignedLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-//
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListAssignedLocations`
-// method. If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListAssignedLocations` method. If not specified, the first page
+// of results will be returned.
 func (c *AdvertisersLocationListsAssignedLocationsListCall) PageToken(pageToken string) *AdvertisersLocationListsAssignedLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -22324,7 +21744,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Header() http.Header
 
 func (c *AdvertisersLocationListsAssignedLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22404,7 +21824,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by location list assignment fields.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `assignedLocationId`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by location list assignment fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedLocationId` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22416,18 +21836,18 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `assignedLocationId` (default)\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`assignedLocationId desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedLocationId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be added to the field name. Example: `assignedLocationId desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListAssignedLocations`\nmethod. If not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListAssignedLocations` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -22476,8 +21896,7 @@ type AdvertisersNegativeKeywordListsCreateCall struct {
 }
 
 // Create: Creates a new negative keyword list. Returns the newly
-// created negative
-// keyword list if successful.
+// created negative keyword list if successful.
 func (r *AdvertisersNegativeKeywordListsService) Create(advertiserId int64, negativekeywordlist *NegativeKeywordList) *AdvertisersNegativeKeywordListsCreateCall {
 	c := &AdvertisersNegativeKeywordListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22512,7 +21931,7 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22576,7 +21995,7 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new negative keyword list. Returns the newly created negative\nkeyword list if successful.",
+	//   "description": "Creates a new negative keyword list. Returns the newly created negative keyword list if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/negativeKeywordLists",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.negativeKeywordLists.create",
@@ -22585,7 +22004,7 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Required. The ID of the DV360 advertiser to which the negative keyword list will\nbelong.",
+	//       "description": "Required. The ID of the DV360 advertiser to which the negative keyword list will belong.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -22619,8 +22038,7 @@ type AdvertisersNegativeKeywordListsDeleteCall struct {
 }
 
 // Delete: Deletes a negative keyword list given an advertiser ID and a
-// negative
-// keyword list ID.
+// negative keyword list ID.
 func (r *AdvertisersNegativeKeywordListsService) Delete(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsDeleteCall {
 	c := &AdvertisersNegativeKeywordListsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22655,7 +22073,7 @@ func (c *AdvertisersNegativeKeywordListsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22715,7 +22133,7 @@ func (c *AdvertisersNegativeKeywordListsDeleteCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a negative keyword list given an advertiser ID and a negative\nkeyword list ID.",
+	//   "description": "Deletes a negative keyword list given an advertiser ID and a negative keyword list ID.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/negativeKeywordLists/{negativeKeywordListsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.negativeKeywordLists.delete",
@@ -22765,8 +22183,7 @@ type AdvertisersNegativeKeywordListsGetCall struct {
 }
 
 // Get: Gets a negative keyword list given an advertiser ID and a
-// negative keyword
-// list ID.
+// negative keyword list ID.
 func (r *AdvertisersNegativeKeywordListsService) Get(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsGetCall {
 	c := &AdvertisersNegativeKeywordListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22811,7 +22228,7 @@ func (c *AdvertisersNegativeKeywordListsGetCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22874,7 +22291,7 @@ func (c *AdvertisersNegativeKeywordListsGetCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a negative keyword list given an advertiser ID and a negative keyword\nlist ID.",
+	//   "description": "Gets a negative keyword list given an advertiser ID and a negative keyword list ID.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/negativeKeywordLists/{negativeKeywordListsId}",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.advertisers.negativeKeywordLists.get",
@@ -22884,7 +22301,7 @@ func (c *AdvertisersNegativeKeywordListsGetCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Required. The ID of the DV360 advertiser to which the fetched negative keyword list\nbelongs.",
+	//       "description": "Required. The ID of the DV360 advertiser to which the fetched negative keyword list belongs.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -22930,23 +22347,18 @@ func (r *AdvertisersNegativeKeywordListsService) List(advertiserId int64) *Adver
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`.
-// Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT`
-// if an
-// invalid value is specified.
+// Must be between `1` and `100`. Defaults to `100` if not set. Returns
+// error code `INVALID_ARGUMENT` if an invalid value is specified.
 func (c *AdvertisersNegativeKeywordListsListCall) PageSize(pageSize int64) *AdvertisersNegativeKeywordListsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-//
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListNegativeKeywordLists`
-// method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListNegativeKeywordLists` method. If not specified, the first
+// page of results will be returned.
 func (c *AdvertisersNegativeKeywordListsListCall) PageToken(pageToken string) *AdvertisersNegativeKeywordListsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -22989,7 +22401,7 @@ func (c *AdvertisersNegativeKeywordListsListCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23060,7 +22472,7 @@ func (c *AdvertisersNegativeKeywordListsListCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Required. The ID of the DV360 advertiser to which the fetched negative keyword lists\nbelong.",
+	//       "description": "Required. The ID of the DV360 advertiser to which the fetched negative keyword lists belong.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23068,13 +22480,13 @@ func (c *AdvertisersNegativeKeywordListsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`.\nDefaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an\ninvalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. Defaults to `100` if not set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListNegativeKeywordLists` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListNegativeKeywordLists` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -23124,8 +22536,7 @@ type AdvertisersNegativeKeywordListsPatchCall struct {
 }
 
 // Patch: Updates a negative keyword list. Returns the updated negative
-// keyword list
-// if successful.
+// keyword list if successful.
 func (r *AdvertisersNegativeKeywordListsService) Patch(advertiserId int64, negativeKeywordListId int64, negativekeywordlist *NegativeKeywordList) *AdvertisersNegativeKeywordListsPatchCall {
 	c := &AdvertisersNegativeKeywordListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23168,7 +22579,7 @@ func (c *AdvertisersNegativeKeywordListsPatchCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23233,7 +22644,7 @@ func (c *AdvertisersNegativeKeywordListsPatchCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a negative keyword list. Returns the updated negative keyword list\nif successful.",
+	//   "description": "Updates a negative keyword list. Returns the updated negative keyword list if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/negativeKeywordLists/{negativeKeywordListId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.negativeKeywordLists.patch",
@@ -23291,18 +22702,11 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall struct {
 }
 
 // BulkEdit: Bulk edits negative keywords in a single negative keyword
-// list.
-//
-// The operation will delete the negative keywords provided
-// in
-// BulkEditNegativeKeywordsRequest.deleted_negative_keywords and
-// then
-// create the negative keywords provided
-// in
-// BulkEditNegativeKeywordsRequest.created_negative_keywords.
-//
-// This operation is guaranteed to be atomic and will never result in
-// a
+// list. The operation will delete the negative keywords provided in
+// BulkEditNegativeKeywordsRequest.deleted_negative_keywords and then
+// create the negative keywords provided in
+// BulkEditNegativeKeywordsRequest.created_negative_keywords. This
+// operation is guaranteed to be atomic and will never result in a
 // partial success or partial failure.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) BulkEdit(advertiserId int64, negativeKeywordListId int64, bulkeditnegativekeywordsrequest *BulkEditNegativeKeywordsRequest) *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23339,7 +22743,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) Header() h
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23404,7 +22808,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits negative keywords in a single negative keyword list.\n\nThe operation will delete the negative keywords provided in\nBulkEditNegativeKeywordsRequest.deleted_negative_keywords and then\ncreate the negative keywords provided in\nBulkEditNegativeKeywordsRequest.created_negative_keywords.\n\nThis operation is guaranteed to be atomic and will never result in a\npartial success or partial failure.",
+	//   "description": "Bulk edits negative keywords in a single negative keyword list. The operation will delete the negative keywords provided in BulkEditNegativeKeywordsRequest.deleted_negative_keywords and then create the negative keywords provided in BulkEditNegativeKeywordsRequest.created_negative_keywords. This operation is guaranteed to be atomic and will never result in a partial success or partial failure.",
 	//   "flatPath": "v1/advertisers/{advertiserId}/negativeKeywordLists/{negativeKeywordListsId}/negativeKeywords:bulkEdit",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.bulkEdit",
@@ -23414,14 +22818,14 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list\nbelongs.",
+	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list belongs.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "negativeKeywordListId": {
-	//       "description": "Required. The ID of the parent negative keyword list to which the negative keywords\nbelong.",
+	//       "description": "Required. The ID of the parent negative keyword list to which the negative keywords belong.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23491,7 +22895,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) Header() htt
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23566,14 +22970,14 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list\nbelongs.",
+	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list belongs.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "negativeKeywordListId": {
-	//       "description": "Required. The ID of the parent negative keyword list in which the negative keyword\nwill be created.",
+	//       "description": "Required. The ID of the parent negative keyword list in which the negative keyword will be created.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23643,7 +23047,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) Header() htt
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23715,7 +23119,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list\nbelongs.",
+	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list belongs.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -23729,7 +23133,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "negativeKeywordListId": {
-	//       "description": "Required. The ID of the parent negative keyword list to which the negative keyword\nbelongs.",
+	//       "description": "Required. The ID of the parent negative keyword list to which the negative keyword belongs.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23769,39 +23173,21 @@ func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) List(advertiser
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// negative keyword fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for negative keyword currently can only contain
-// at
-// most one
-// * restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `keywordValue`
-//
-// Examples:
-//
-// * All negative keywords for which the keyword value contains
-// "google":
-// `keywordValue : "google"
+// negative keyword fields. Supported syntax: * Filter expressions for
+// negative keyword currently can only contain at most one *
+// restriction. * A restriction has the form of `{field} {operator}
+// {value}`. * The operator must be `CONTAINS (:)`. * Supported fields:
+// - `keywordValue` Examples: * All negative keywords for which the
+// keyword value contains "google": `keywordValue : "google"
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Filter(filter string) *AdvertisersNegativeKeywordListsNegativeKeywordsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `keywordValue` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for a
-// field, a suffix " desc" should be added to the field name.
-// Example:
+// the list. Acceptable values are: * `keywordValue` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix " desc" should be added to the field name. Example:
 // `keywordValue desc`.
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) OrderBy(orderBy string) *AdvertisersNegativeKeywordListsNegativeKeywordsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -23809,23 +23195,19 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) OrderBy(orderB
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) PageSize(pageSize int64) *AdvertisersNegativeKeywordListsNegativeKeywordsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-//
-// Typically, this is the value of
-// next_page_token returned
-// from the previous call to `ListNegativeKeywords` method. If not
-// specified,
-// the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListNegativeKeywords` method. If not specified, the first page of
+// results will be returned.
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) PageToken(pageToken string) *AdvertisersNegativeKeywordListsNegativeKeywordsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -23868,7 +23250,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Header() http.
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23941,7 +23323,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list\nbelongs.",
+	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list belongs.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23949,12 +23331,12 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by negative keyword fields.\n\nSupported syntax:\n\n* Filter expressions for negative keyword currently can only contain at\nmost one\n* restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `keywordValue`\n\nExamples:\n\n* All negative keywords for which the keyword value contains \"google\":\n`keywordValue : \"google\"`",
+	//       "description": "Allows filtering by negative keyword fields. Supported syntax: * Filter expressions for negative keyword currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `keywordValue` Examples: * All negative keywords for which the keyword value contains \"google\": `keywordValue : \"google\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "negativeKeywordListId": {
-	//       "description": "Required. The ID of the parent negative keyword list to which the requested negative\nkeywords belong.",
+	//       "description": "Required. The ID of the parent negative keyword list to which the requested negative keywords belong.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -23962,18 +23344,18 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `keywordValue` (default)\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`keywordValue desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `keywordValue` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be added to the field name. Example: `keywordValue desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token returned\nfrom the previous call to `ListNegativeKeywords` method. If not specified,\nthe first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListNegativeKeywords` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -24022,8 +23404,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 	header_                 http.Header
 }
 
-// Create: Assigns a targeting option to an advertiser.
-// Returns the assigned targeting option if successful.
+// Create: Assigns a targeting option to an advertiser. Returns the
+// assigned targeting option if successful.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24059,7 +23441,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Header() h
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24124,7 +23506,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Assigns a targeting option to an advertiser.\nReturns the assigned targeting option if successful.",
+	//   "description": "Assigns a targeting option to an advertiser. Returns the assigned targeting option if successful.",
 	//   "flatPath": "v1/advertisers/{advertisersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.create",
@@ -24182,6 +23564,46 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -24251,7 +23673,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() h
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24379,6 +23801,46 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -24455,7 +23917,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Header() http
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24538,7 +24000,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "assignedTargetingOptionId": {
-	//       "description": "Required. An identifier unique to the targeting type in this advertiser that\nidentifies the assigned targeting option being requested.",
+	//       "description": "Required. An identifier unique to the targeting type in this advertiser that identifies the assigned targeting option being requested.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -24586,6 +24048,46 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -24624,62 +24126,43 @@ func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertis
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned targeting option properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by the logical operator `OR`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `assignedTargetingOptionId`
-//
-// Examples:
-//
-// * AssignedTargetingOption with ID
-// 123456
-// `assignedTargetingOptionId="123456"
-//
-// The length of this field should be no more than 500 characters.
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: *
+// AssignedTargetingOption with ID 123456
+// `assignedTargetingOptionId="123456" The length of this field should
+// be no more than 500 characters.
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `assignedTargetingOptionId` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `assignedTargetingOptionId desc`.
+// the list. Acceptable values are: * `assignedTargetingOptionId`
+// (default) The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `assignedTargetingOptionId desc`.
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to
-// `ListAdvertiserAssignedTargetingOptions`
-// method. If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListAdvertiserAssignedTargetingOptions` method. If not specified,
+// the first page of results will be returned.
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) PageToken(pageToken string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -24722,7 +24205,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Header() htt
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24805,23 +24288,23 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned targeting option properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `assignedTargetingOptionId`\n\nExamples:\n\n* AssignedTargetingOption with ID 123456\n`assignedTargetingOptionId=\"123456\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: * AssignedTargetingOption with ID 123456 `assignedTargetingOptionId=\"123456\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `assignedTargetingOptionId` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`assignedTargetingOptionId desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedTargetingOptionId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `assignedTargetingOptionId desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListAdvertiserAssignedTargetingOptions`\nmethod. If not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListAdvertiserAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -24866,6 +24349,46 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -24924,8 +24447,7 @@ func (r *CombinedAudiencesService) Get(combinedAudienceId int64) *CombinedAudien
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that has access to the fetched combined
-// audience.
+// the advertiser that has access to the fetched combined audience.
 func (c *CombinedAudiencesGetCall) AdvertiserId(advertiserId int64) *CombinedAudiencesGetCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
@@ -24975,7 +24497,7 @@ func (c *CombinedAudiencesGetCall) Header() http.Header {
 
 func (c *CombinedAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25046,7 +24568,7 @@ func (c *CombinedAudiencesGetCall) Do(opts ...googleapi.CallOption) (*CombinedAu
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that has access to the fetched combined\naudience.",
+	//       "description": "The ID of the advertiser that has access to the fetched combined audience.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -25087,81 +24609,57 @@ type CombinedAudiencesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists combined audiences.
-//
-// The order is defined by the
-// order_by parameter.
+// List: Lists combined audiences. The order is defined by the order_by
+// parameter.
 func (r *CombinedAudiencesService) List() *CombinedAudiencesListCall {
 	c := &CombinedAudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that has access to the fetched combined
-// audiences.
+// the advertiser that has access to the fetched combined audiences.
 func (c *CombinedAudiencesListCall) AdvertiserId(advertiserId int64) *CombinedAudiencesListCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// combined audience fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for combined audiences currently can only
-// contain at
-// most one restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `displayName`
-//
-// Examples:
-//
-// * All combined audiences for which the display name contains
-// "Google":
-// `displayName : "Google".
-//
-// The length of this field should be no more than 500 characters.
+// combined audience fields. Supported syntax: * Filter expressions for
+// combined audiences currently can only contain at most one
+// restriction. * A restriction has the form of `{field} {operator}
+// {value}`. * The operator must be `CONTAINS (:)`. * Supported fields:
+// - `displayName` Examples: * All combined audiences for which the
+// display name contains "Google": `displayName : "Google". The length
+// of this field should be no more than 500 characters.
 func (c *CombinedAudiencesListCall) Filter(filter string) *CombinedAudiencesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `combinedAudienceId` (default)
-// * `displayName`
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * `combinedAudienceId` (default) *
+// `displayName` The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `displayName desc`.
 func (c *CombinedAudiencesListCall) OrderBy(orderBy string) *CombinedAudiencesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *CombinedAudiencesListCall) PageSize(pageSize int64) *CombinedAudiencesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListCombinedAudiences` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListCombinedAudiences` method. If not specified, the first page
+// of results will be returned.
 func (c *CombinedAudiencesListCall) PageToken(pageToken string) *CombinedAudiencesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -25211,7 +24709,7 @@ func (c *CombinedAudiencesListCall) Header() http.Header {
 
 func (c *CombinedAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25270,36 +24768,36 @@ func (c *CombinedAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListCombi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists combined audiences.\n\nThe order is defined by the\norder_by parameter.",
+	//   "description": "Lists combined audiences. The order is defined by the order_by parameter.",
 	//   "flatPath": "v1/combinedAudiences",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.combinedAudiences.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that has access to the fetched combined\naudiences.",
+	//       "description": "The ID of the advertiser that has access to the fetched combined audiences.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by combined audience fields.\n\nSupported syntax:\n\n* Filter expressions for combined audiences currently can only contain at\nmost one restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All combined audiences for which the display name contains \"Google\":\n`displayName : \"Google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by combined audience fields. Supported syntax: * Filter expressions for combined audiences currently can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All combined audiences for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `combinedAudienceId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `combinedAudienceId` (default) * `displayName` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListCombinedAudiences` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListCombinedAudiences` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -25342,6 +24840,430 @@ func (c *CombinedAudiencesListCall) Pages(ctx context.Context, f func(*ListCombi
 	}
 }
 
+// method id "displayvideo.customBiddingAlgorithms.get":
+
+type CustomBiddingAlgorithmsGetCall struct {
+	s                        *Service
+	customBiddingAlgorithmId int64
+	urlParams_               gensupport.URLParams
+	ifNoneMatch_             string
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Get: Gets a custom bidding algorithm.
+func (r *CustomBiddingAlgorithmsService) Get(customBiddingAlgorithmId int64) *CustomBiddingAlgorithmsGetCall {
+	c := &CustomBiddingAlgorithmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customBiddingAlgorithmId = customBiddingAlgorithmId
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the DV360 partner that has access to the custom bidding algorithm.
+func (c *CustomBiddingAlgorithmsGetCall) AdvertiserId(advertiserId int64) *CustomBiddingAlgorithmsGetCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// DV360 partner that has access to the custom bidding algorithm.
+func (c *CustomBiddingAlgorithmsGetCall) PartnerId(partnerId int64) *CustomBiddingAlgorithmsGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomBiddingAlgorithmsGetCall) Fields(s ...googleapi.Field) *CustomBiddingAlgorithmsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomBiddingAlgorithmsGetCall) IfNoneMatch(entityTag string) *CustomBiddingAlgorithmsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomBiddingAlgorithmsGetCall) Context(ctx context.Context) *CustomBiddingAlgorithmsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomBiddingAlgorithmsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomBiddingAlgorithmsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/customBiddingAlgorithms/{+customBiddingAlgorithmId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customBiddingAlgorithmId": strconv.FormatInt(c.customBiddingAlgorithmId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.customBiddingAlgorithms.get" call.
+// Exactly one of *CustomBiddingAlgorithm or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CustomBiddingAlgorithm.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomBiddingAlgorithmsGetCall) Do(opts ...googleapi.CallOption) (*CustomBiddingAlgorithm, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CustomBiddingAlgorithm{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a custom bidding algorithm.",
+	//   "flatPath": "v1/customBiddingAlgorithms/{customBiddingAlgorithmsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.customBiddingAlgorithms.get",
+	//   "parameterOrder": [
+	//     "customBiddingAlgorithmId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the DV360 partner that has access to the custom bidding algorithm.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "customBiddingAlgorithmId": {
+	//       "description": "Required. The ID of the custom bidding algorithm to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the DV360 partner that has access to the custom bidding algorithm.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/customBiddingAlgorithms/{+customBiddingAlgorithmId}",
+	//   "response": {
+	//     "$ref": "CustomBiddingAlgorithm"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.customBiddingAlgorithms.list":
+
+type CustomBiddingAlgorithmsListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists custom bidding algorithms that are accessible to the
+// current user and can be used in bidding stratgies. The order is
+// defined by the order_by parameter.
+func (r *CustomBiddingAlgorithmsService) List() *CustomBiddingAlgorithmsListCall {
+	c := &CustomBiddingAlgorithmsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// AdvertiserId sets the optional parameter "advertiserId": The ID of
+// the DV360 advertiser that has access to the custom bidding algorithm.
+func (c *CustomBiddingAlgorithmsListCall) AdvertiserId(advertiserId int64) *CustomBiddingAlgorithmsListCall {
+	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// custom bidding algorithm fields. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by `AND`. A sequence of restrictions * implicitly
+// uses `AND`. * A restriction has the form of `{field} {operator}
+// {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. *
+// The operator must be `CONTAINS (:)` for the following field: -
+// `displayName` * The operator must be `EQUALS (=)` for the following
+// field: - `customBiddingAlgorithmType` * For `displayName`, the value
+// is a string. We return all custom bidding algorithms whose
+// display_name contains such string. * For
+// `customBiddingAlgorithmType`, the value is a string. We return all
+// algorithms whose custom_bidding_algorithm_type is equal to the given
+// type. Examples: * All custom bidding algorithms for which the display
+// name contains "politics": `displayName:politics`. * All custom
+// bidding algorithms for which the type is "SCRIPT_BASED":
+// `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field
+// should be no more than 500 characters.
+func (c *CustomBiddingAlgorithmsListCall) Filter(filter string) *CustomBiddingAlgorithmsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. Example:
+// `displayName desc`.
+func (c *CustomBiddingAlgorithmsListCall) OrderBy(orderBy string) *CustomBiddingAlgorithmsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *CustomBiddingAlgorithmsListCall) PageSize(pageSize int64) *CustomBiddingAlgorithmsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListCustomBiddingAlgorithms` method. If not specified, the first
+// page of results will be returned.
+func (c *CustomBiddingAlgorithmsListCall) PageToken(pageToken string) *CustomBiddingAlgorithmsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": The ID of the
+// DV360 partner that has access to the custom bidding algorithm.
+func (c *CustomBiddingAlgorithmsListCall) PartnerId(partnerId int64) *CustomBiddingAlgorithmsListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomBiddingAlgorithmsListCall) Fields(s ...googleapi.Field) *CustomBiddingAlgorithmsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomBiddingAlgorithmsListCall) IfNoneMatch(entityTag string) *CustomBiddingAlgorithmsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomBiddingAlgorithmsListCall) Context(ctx context.Context) *CustomBiddingAlgorithmsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomBiddingAlgorithmsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomBiddingAlgorithmsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/customBiddingAlgorithms")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.customBiddingAlgorithms.list" call.
+// Exactly one of *ListCustomBiddingAlgorithmsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListCustomBiddingAlgorithmsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomBiddingAlgorithmsListCall) Do(opts ...googleapi.CallOption) (*ListCustomBiddingAlgorithmsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListCustomBiddingAlgorithmsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists custom bidding algorithms that are accessible to the current user and can be used in bidding stratgies. The order is defined by the order_by parameter.",
+	//   "flatPath": "v1/customBiddingAlgorithms",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.customBiddingAlgorithms.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the DV360 advertiser that has access to the custom bidding algorithm.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by custom bidding algorithm fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following field: - `displayName` * The operator must be `EQUALS (=)` for the following field: - `customBiddingAlgorithmType` * For `displayName`, the value is a string. We return all custom bidding algorithms whose display_name contains such string. * For `customBiddingAlgorithmType`, the value is a string. We return all algorithms whose custom_bidding_algorithm_type is equal to the given type. Examples: * All custom bidding algorithms for which the display name contains \"politics\": `displayName:politics`. * All custom bidding algorithms for which the type is \"SCRIPT_BASED\": `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListCustomBiddingAlgorithms` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the DV360 partner that has access to the custom bidding algorithm.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/customBiddingAlgorithms",
+	//   "response": {
+	//     "$ref": "ListCustomBiddingAlgorithmsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomBiddingAlgorithmsListCall) Pages(ctx context.Context, f func(*ListCustomBiddingAlgorithmsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.customLists.get":
 
 type CustomListsGetCall struct {
@@ -25361,8 +25283,7 @@ func (r *CustomListsService) Get(customListId int64) *CustomListsGetCall {
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the DV360 advertiser that has access to the fetched custom
-// lists.
+// the DV360 advertiser that has access to the fetched custom lists.
 func (c *CustomListsGetCall) AdvertiserId(advertiserId int64) *CustomListsGetCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
@@ -25405,7 +25326,7 @@ func (c *CustomListsGetCall) Header() http.Header {
 
 func (c *CustomListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25476,7 +25397,7 @@ func (c *CustomListsGetCall) Do(opts ...googleapi.CallOption) (*CustomList, erro
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the DV360 advertiser that has access to the fetched custom\nlists.",
+	//       "description": "The ID of the DV360 advertiser that has access to the fetched custom lists.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -25511,9 +25432,7 @@ type CustomListsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists custom lists.
-//
-// The order is defined by the order_by
+// List: Lists custom lists. The order is defined by the order_by
 // parameter.
 func (r *CustomListsService) List() *CustomListsListCall {
 	c := &CustomListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -25521,71 +25440,49 @@ func (r *CustomListsService) List() *CustomListsListCall {
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the DV360 advertiser that has access to the fetched custom
-// lists.
+// the DV360 advertiser that has access to the fetched custom lists.
 func (c *CustomListsListCall) AdvertiserId(advertiserId int64) *CustomListsListCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// custom list fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for custom lists currently can only contain
-// at
-// most one restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `displayName`
-//
-// Examples:
-//
-// * All custom lists for which the display name contains
-// "Google":
-// `displayName : "Google".
-//
-// The length of this field should be no more than 500 characters.
+// custom list fields. Supported syntax: * Filter expressions for custom
+// lists currently can only contain at most one restriction. * A
+// restriction has the form of `{field} {operator} {value}`. * The
+// operator must be `CONTAINS (:)`. * Supported fields: - `displayName`
+// Examples: * All custom lists for which the display name contains
+// "Google": `displayName : "Google". The length of this field should
+// be no more than 500 characters.
 func (c *CustomListsListCall) Filter(filter string) *CustomListsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `customListId` (default)
-// * `displayName`
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * `customListId` (default) *
+// `displayName` The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `displayName desc`.
 func (c *CustomListsListCall) OrderBy(orderBy string) *CustomListsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *CustomListsListCall) PageSize(pageSize int64) *CustomListsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListCustomLists` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListCustomLists` method. If not specified, the first page of
+// results will be returned.
 func (c *CustomListsListCall) PageToken(pageToken string) *CustomListsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -25628,7 +25525,7 @@ func (c *CustomListsListCall) Header() http.Header {
 
 func (c *CustomListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25687,36 +25584,36 @@ func (c *CustomListsListCall) Do(opts ...googleapi.CallOption) (*ListCustomLists
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists custom lists.\n\nThe order is defined by the order_by\nparameter.",
+	//   "description": "Lists custom lists. The order is defined by the order_by parameter.",
 	//   "flatPath": "v1/customLists",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.customLists.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the DV360 advertiser that has access to the fetched custom\nlists.",
+	//       "description": "The ID of the DV360 advertiser that has access to the fetched custom lists.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by custom list fields.\n\nSupported syntax:\n\n* Filter expressions for custom lists currently can only contain at\nmost one restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All custom lists for which the display name contains \"Google\":\n`displayName : \"Google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by custom list fields. Supported syntax: * Filter expressions for custom lists currently can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All custom lists for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `customListId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `customListId` (default) * `displayName` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListCustomLists` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListCustomLists` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -25772,16 +25669,16 @@ func (r *FirstAndThirdPartyAudiencesService) Get(firstAndThirdPartyAudienceId in
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that has access to the fetched first and
-// third party audience.
+// the advertiser that has access to the fetched first and third party
+// audience.
 func (c *FirstAndThirdPartyAudiencesGetCall) AdvertiserId(advertiserId int64) *FirstAndThirdPartyAudiencesGetCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that has access to the fetched first and
-// third party audience.
+// partner that has access to the fetched first and third party
+// audience.
 func (c *FirstAndThirdPartyAudiencesGetCall) PartnerId(partnerId int64) *FirstAndThirdPartyAudiencesGetCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -25824,7 +25721,7 @@ func (c *FirstAndThirdPartyAudiencesGetCall) Header() http.Header {
 
 func (c *FirstAndThirdPartyAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25895,7 +25792,7 @@ func (c *FirstAndThirdPartyAudiencesGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that has access to the fetched first and\nthird party audience.",
+	//       "description": "The ID of the advertiser that has access to the fetched first and third party audience.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -25909,7 +25806,7 @@ func (c *FirstAndThirdPartyAudiencesGetCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that has access to the fetched first and\nthird party audience.",
+	//       "description": "The ID of the partner that has access to the fetched first and third party audience.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -25936,90 +25833,67 @@ type FirstAndThirdPartyAudiencesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists first and third party audiences.
-//
-// The order is defined by the
-// order_by parameter.
+// List: Lists first and third party audiences. The order is defined by
+// the order_by parameter.
 func (r *FirstAndThirdPartyAudiencesService) List() *FirstAndThirdPartyAudiencesListCall {
 	c := &FirstAndThirdPartyAudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that has access to the fetched first and
-// third party audiences.
+// the advertiser that has access to the fetched first and third party
+// audiences.
 func (c *FirstAndThirdPartyAudiencesListCall) AdvertiserId(advertiserId int64) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// first and third party audience fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for first and third party audiences currently
-// can
-// only contain at most one restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `displayName`
-//
-// Examples:
-//
-// * All first and third party audiences for which the display name
-// contains
-// "Google": `displayName : "Google".
-//
-// The length of this field should be no more than 500 characters.
+// first and third party audience fields. Supported syntax: * Filter
+// expressions for first and third party audiences currently can only
+// contain at most one restriction. * A restriction has the form of
+// `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`.
+// * Supported fields: - `displayName` Examples: * All first and third
+// party audiences for which the display name contains "Google":
+// `displayName : "Google". The length of this field should be no more
+// than 500 characters.
 func (c *FirstAndThirdPartyAudiencesListCall) Filter(filter string) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `firstAndThirdPartyAudienceId` (default)
-// * `displayName`
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * `firstAndThirdPartyAudienceId`
+// (default) * `displayName` The default sorting order is ascending. To
+// specify descending order for a field, a suffix "desc" should be added
+// to the field name. Example: `displayName desc`.
 func (c *FirstAndThirdPartyAudiencesListCall) OrderBy(orderBy string) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *FirstAndThirdPartyAudiencesListCall) PageSize(pageSize int64) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to
-// `ListFirstAndThirdPartyAudiences`
-// method. If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListFirstAndThirdPartyAudiences` method. If not specified, the
+// first page of results will be returned.
 func (c *FirstAndThirdPartyAudiencesListCall) PageToken(pageToken string) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that has access to the fetched first and
-// third party audiences.
+// partner that has access to the fetched first and third party
+// audiences.
 func (c *FirstAndThirdPartyAudiencesListCall) PartnerId(partnerId int64) *FirstAndThirdPartyAudiencesListCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -26062,7 +25936,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) Header() http.Header {
 
 func (c *FirstAndThirdPartyAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26122,41 +25996,41 @@ func (c *FirstAndThirdPartyAudiencesListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists first and third party audiences.\n\nThe order is defined by the\norder_by parameter.",
+	//   "description": "Lists first and third party audiences. The order is defined by the order_by parameter.",
 	//   "flatPath": "v1/firstAndThirdPartyAudiences",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.firstAndThirdPartyAudiences.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that has access to the fetched first and\nthird party audiences.",
+	//       "description": "The ID of the advertiser that has access to the fetched first and third party audiences.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by first and third party audience fields.\n\nSupported syntax:\n\n* Filter expressions for first and third party audiences currently can\nonly contain at most one restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All first and third party audiences for which the display name contains\n\"Google\": `displayName : \"Google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by first and third party audience fields. Supported syntax: * Filter expressions for first and third party audiences currently can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All first and third party audiences for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `firstAndThirdPartyAudienceId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `firstAndThirdPartyAudienceId` (default) * `displayName` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListFirstAndThirdPartyAudiences`\nmethod. If not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListFirstAndThirdPartyAudiences` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that has access to the fetched first and\nthird party audiences.",
+	//       "description": "The ID of the partner that has access to the fetched first and third party audiences.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -26256,7 +26130,7 @@ func (c *FloodlightGroupsGetCall) Header() http.Header {
 
 func (c *FloodlightGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26363,8 +26237,8 @@ type FloodlightGroupsPatchCall struct {
 	header_           http.Header
 }
 
-// Patch: Updates an existing Floodlight group.
-// Returns the updated Floodlight group if successful.
+// Patch: Updates an existing Floodlight group. Returns the updated
+// Floodlight group if successful.
 func (r *FloodlightGroupsService) Patch(floodlightGroupId int64, floodlightgroup *FloodlightGroup) *FloodlightGroupsPatchCall {
 	c := &FloodlightGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.floodlightGroupId = floodlightGroupId
@@ -26413,7 +26287,7 @@ func (c *FloodlightGroupsPatchCall) Header() http.Header {
 
 func (c *FloodlightGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26477,7 +26351,7 @@ func (c *FloodlightGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Floodligh
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing Floodlight group.\nReturns the updated Floodlight group if successful.",
+	//   "description": "Updates an existing Floodlight group. Returns the updated Floodlight group if successful.",
 	//   "flatPath": "v1/floodlightGroups/{floodlightGroupId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.floodlightGroups.patch",
@@ -26588,7 +26462,7 @@ func (c *GoogleAudiencesGetCall) Header() http.Header {
 
 func (c *GoogleAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26700,9 +26574,7 @@ type GoogleAudiencesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Google audiences.
-//
-// The order is defined by the order_by
+// List: Lists Google audiences. The order is defined by the order_by
 // parameter.
 func (r *GoogleAudiencesService) List() *GoogleAudiencesListCall {
 	c := &GoogleAudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -26717,63 +26589,42 @@ func (c *GoogleAudiencesListCall) AdvertiserId(advertiserId int64) *GoogleAudien
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// Google audience fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for Google audiences currently can only contain
-// at
-// most one restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `displayName`
-//
-// Examples:
-//
-// * All Google audiences for which the display name contains
-// "Google":
-// `displayName : "Google".
-//
-// The length of this field should be no more than 500 characters.
+// Google audience fields. Supported syntax: * Filter expressions for
+// Google audiences currently can only contain at most one restriction.
+// * A restriction has the form of `{field} {operator} {value}`. * The
+// operator must be `CONTAINS (:)`. * Supported fields: - `displayName`
+// Examples: * All Google audiences for which the display name contains
+// "Google": `displayName : "Google". The length of this field should
+// be no more than 500 characters.
 func (c *GoogleAudiencesListCall) Filter(filter string) *GoogleAudiencesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `googleAudienceId` (default)
-// * `displayName`
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * `googleAudienceId` (default) *
+// `displayName` The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `displayName desc`.
 func (c *GoogleAudiencesListCall) OrderBy(orderBy string) *GoogleAudiencesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *GoogleAudiencesListCall) PageSize(pageSize int64) *GoogleAudiencesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListGoogleAudiences` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListGoogleAudiences` method. If not specified, the first page of
+// results will be returned.
 func (c *GoogleAudiencesListCall) PageToken(pageToken string) *GoogleAudiencesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -26823,7 +26674,7 @@ func (c *GoogleAudiencesListCall) Header() http.Header {
 
 func (c *GoogleAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26882,7 +26733,7 @@ func (c *GoogleAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListGoogleA
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Google audiences.\n\nThe order is defined by the order_by\nparameter.",
+	//   "description": "Lists Google audiences. The order is defined by the order_by parameter.",
 	//   "flatPath": "v1/googleAudiences",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.googleAudiences.list",
@@ -26895,23 +26746,23 @@ func (c *GoogleAudiencesListCall) Do(opts ...googleapi.CallOption) (*ListGoogleA
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by Google audience fields.\n\nSupported syntax:\n\n* Filter expressions for Google audiences currently can only contain at\nmost one restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All Google audiences for which the display name contains \"Google\":\n`displayName : \"Google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by Google audience fields. Supported syntax: * Filter expressions for Google audiences currently can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All Google audiences for which the display name contains \"Google\": `displayName : \"Google\"`. The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `googleAudienceId` (default)\n* `displayName`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `googleAudienceId` (default) * `displayName` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListGoogleAudiences` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListGoogleAudiences` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26965,8 +26816,7 @@ type InventorySourceGroupsCreateCall struct {
 }
 
 // Create: Creates a new inventory source group. Returns the newly
-// created inventory
-// source group if successful.
+// created inventory source group if successful.
 func (r *InventorySourceGroupsService) Create(inventorysourcegroup *InventorySourceGroup) *InventorySourceGroupsCreateCall {
 	c := &InventorySourceGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorysourcegroup = inventorysourcegroup
@@ -26974,22 +26824,17 @@ func (r *InventorySourceGroupsService) Create(inventorysourcegroup *InventorySou
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that owns the inventory source group.
-//
-// The parent partner will not have access to this group.
+// the advertiser that owns the inventory source group. The parent
+// partner will not have access to this group.
 func (c *InventorySourceGroupsCreateCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsCreateCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that owns the inventory source group.
-//
-// Only this partner will have write access to this group. Only
-// advertisers
-// to which this group is explicitly shared will have read access to
-// this
-// group.
+// partner that owns the inventory source group. Only this partner will
+// have write access to this group. Only advertisers to which this group
+// is explicitly shared will have read access to this group.
 func (c *InventorySourceGroupsCreateCall) PartnerId(partnerId int64) *InventorySourceGroupsCreateCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -27022,7 +26867,7 @@ func (c *InventorySourceGroupsCreateCall) Header() http.Header {
 
 func (c *InventorySourceGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27083,20 +26928,20 @@ func (c *InventorySourceGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Inv
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new inventory source group. Returns the newly created inventory\nsource group if successful.",
+	//   "description": "Creates a new inventory source group. Returns the newly created inventory source group if successful.",
 	//   "flatPath": "v1/inventorySourceGroups",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.inventorySourceGroups.create",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that owns the inventory source group.\n\nThe parent partner will not have access to this group.",
+	//       "description": "The ID of the advertiser that owns the inventory source group. The parent partner will not have access to this group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that owns the inventory source group.\n\nOnly this partner will have write access to this group. Only advertisers\nto which this group is explicitly shared will have read access to this\ngroup.",
+	//       "description": "The ID of the partner that owns the inventory source group. Only this partner will have write access to this group. Only advertisers to which this group is explicitly shared will have read access to this group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -27134,18 +26979,16 @@ func (r *InventorySourceGroupsService) Delete(inventorySourceGroupId int64) *Inv
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that owns the inventory source group.
-//
-// The parent partner does not have access to this group.
+// the advertiser that owns the inventory source group. The parent
+// partner does not have access to this group.
 func (c *InventorySourceGroupsDeleteCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsDeleteCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that owns the inventory source group.
-//
-// Only this partner has write access to this group.
+// partner that owns the inventory source group. Only this partner has
+// write access to this group.
 func (c *InventorySourceGroupsDeleteCall) PartnerId(partnerId int64) *InventorySourceGroupsDeleteCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -27178,7 +27021,7 @@ func (c *InventorySourceGroupsDeleteCall) Header() http.Header {
 
 func (c *InventorySourceGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27246,7 +27089,7 @@ func (c *InventorySourceGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that owns the inventory source group.\n\nThe parent partner does not have access to this group.",
+	//       "description": "The ID of the advertiser that owns the inventory source group. The parent partner does not have access to this group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -27260,7 +27103,7 @@ func (c *InventorySourceGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that owns the inventory source group.\n\nOnly this partner has write access to this group.",
+	//       "description": "The ID of the partner that owns the inventory source group. Only this partner has write access to this group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -27296,10 +27139,8 @@ func (r *InventorySourceGroupsService) Get(inventorySourceGroupId int64) *Invent
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that has access to the inventory source group.
-//
-// If an inventory source group is partner-owned, only advertisers to
-// which
+// the advertiser that has access to the inventory source group. If an
+// inventory source group is partner-owned, only advertisers to which
 // the group is explicitly shared can access the group.
 func (c *InventorySourceGroupsGetCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsGetCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
@@ -27307,9 +27148,8 @@ func (c *InventorySourceGroupsGetCall) AdvertiserId(advertiserId int64) *Invento
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that has access to the inventory source group.
-//
-// A partner cannot access an advertiser-owned inventory source group.
+// partner that has access to the inventory source group. A partner
+// cannot access an advertiser-owned inventory source group.
 func (c *InventorySourceGroupsGetCall) PartnerId(partnerId int64) *InventorySourceGroupsGetCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -27352,7 +27192,7 @@ func (c *InventorySourceGroupsGetCall) Header() http.Header {
 
 func (c *InventorySourceGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27423,7 +27263,7 @@ func (c *InventorySourceGroupsGetCall) Do(opts ...googleapi.CallOption) (*Invent
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that has access to the inventory source group.\n\nIf an inventory source group is partner-owned, only advertisers to which\nthe group is explicitly shared can access the group.",
+	//       "description": "The ID of the advertiser that has access to the inventory source group. If an inventory source group is partner-owned, only advertisers to which the group is explicitly shared can access the group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -27437,7 +27277,7 @@ func (c *InventorySourceGroupsGetCall) Do(opts ...googleapi.CallOption) (*Invent
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that has access to the inventory source group.\n\nA partner cannot access an advertiser-owned inventory source group.",
+	//       "description": "The ID of the partner that has access to the inventory source group. A partner cannot access an advertiser-owned inventory source group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -27465,20 +27305,15 @@ type InventorySourceGroupsListCall struct {
 }
 
 // List: Lists inventory source groups that are accessible to the
-// current user.
-//
-// The order is defined by the
-// order_by parameter.
+// current user. The order is defined by the order_by parameter.
 func (r *InventorySourceGroupsService) List() *InventorySourceGroupsListCall {
 	c := &InventorySourceGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that has access to the inventory source group.
-//
-// If an inventory source group is partner-owned, only advertisers to
-// which
+// the advertiser that has access to the inventory source group. If an
+// inventory source group is partner-owned, only advertisers to which
 // the group is explicitly shared can access the group.
 func (c *InventorySourceGroupsListCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
@@ -27486,63 +27321,47 @@ func (c *InventorySourceGroupsListCall) AdvertiserId(advertiserId int64) *Invent
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// inventory source group properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by the logical operator `OR`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `inventorySourceGroupId`
-//
-// The length of this field should be no more than 500 characters.
+// inventory source group properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `inventorySourceGroupId` The length of
+// this field should be no more than 500 characters.
 func (c *InventorySourceGroupsListCall) Filter(filter string) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `displayName` (default)
-// * `inventorySourceGroupId`
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name. For
-// example,
-// `displayName desc`.
+// the list. Acceptable values are: * `displayName` (default) *
+// `inventorySourceGroupId` The default sorting order is ascending. To
+// specify descending order for a field, a suffix "desc" should be added
+// to the field name. For example, `displayName desc`.
 func (c *InventorySourceGroupsListCall) OrderBy(orderBy string) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`.
+// Must be between `1` and `100`. If unspecified will default to `100`.
 func (c *InventorySourceGroupsListCall) PageSize(pageSize int64) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListInventorySources` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListInventorySources` method. If not specified, the first page of
+// results will be returned.
 func (c *InventorySourceGroupsListCall) PageToken(pageToken string) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that has access to the inventory source group.
-//
-// A partner cannot access advertiser-owned inventory source groups.
+// partner that has access to the inventory source group. A partner
+// cannot access advertiser-owned inventory source groups.
 func (c *InventorySourceGroupsListCall) PartnerId(partnerId int64) *InventorySourceGroupsListCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -27585,7 +27404,7 @@ func (c *InventorySourceGroupsListCall) Header() http.Header {
 
 func (c *InventorySourceGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27645,41 +27464,41 @@ func (c *InventorySourceGroupsListCall) Do(opts ...googleapi.CallOption) (*ListI
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists inventory source groups that are accessible to the current user.\n\nThe order is defined by the\norder_by parameter.",
+	//   "description": "Lists inventory source groups that are accessible to the current user. The order is defined by the order_by parameter.",
 	//   "flatPath": "v1/inventorySourceGroups",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.inventorySourceGroups.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that has access to the inventory source group.\n\nIf an inventory source group is partner-owned, only advertisers to which\nthe group is explicitly shared can access the group.",
+	//       "description": "The ID of the advertiser that has access to the inventory source group. If an inventory source group is partner-owned, only advertisers to which the group is explicitly shared can access the group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by inventory source group properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `inventorySourceGroupId`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by inventory source group properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `inventorySourceGroupId` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `inventorySourceGroupId`\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. For example,\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `inventorySourceGroupId` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. For example, `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListInventorySources` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListInventorySources` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that has access to the inventory source group.\n\nA partner cannot access advertiser-owned inventory source groups.",
+	//       "description": "The ID of the partner that has access to the inventory source group. A partner cannot access advertiser-owned inventory source groups.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -27729,8 +27548,7 @@ type InventorySourceGroupsPatchCall struct {
 }
 
 // Patch: Updates an inventory source group. Returns the updated
-// inventory source
-// group if successful.
+// inventory source group if successful.
 func (r *InventorySourceGroupsService) Patch(inventorySourceGroupId int64, inventorysourcegroup *InventorySourceGroup) *InventorySourceGroupsPatchCall {
 	c := &InventorySourceGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -27739,18 +27557,16 @@ func (r *InventorySourceGroupsService) Patch(inventorySourceGroupId int64, inven
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that owns the inventory source group.
-//
-// The parent partner does not have access to this group.
+// the advertiser that owns the inventory source group. The parent
+// partner does not have access to this group.
 func (c *InventorySourceGroupsPatchCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsPatchCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
 	return c
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that owns the inventory source group.
-//
-// Only this partner has write access to this group.
+// partner that owns the inventory source group. Only this partner has
+// write access to this group.
 func (c *InventorySourceGroupsPatchCall) PartnerId(partnerId int64) *InventorySourceGroupsPatchCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -27790,7 +27606,7 @@ func (c *InventorySourceGroupsPatchCall) Header() http.Header {
 
 func (c *InventorySourceGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27854,7 +27670,7 @@ func (c *InventorySourceGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Inve
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an inventory source group. Returns the updated inventory source\ngroup if successful.",
+	//   "description": "Updates an inventory source group. Returns the updated inventory source group if successful.",
 	//   "flatPath": "v1/inventorySourceGroups/{inventorySourceGroupId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.inventorySourceGroups.patch",
@@ -27863,7 +27679,7 @@ func (c *InventorySourceGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Inve
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that owns the inventory source group.\n\nThe parent partner does not have access to this group.",
+	//       "description": "The ID of the advertiser that owns the inventory source group. The parent partner does not have access to this group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -27876,7 +27692,7 @@ func (c *InventorySourceGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Inve
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that owns the inventory source group.\n\nOnly this partner has write access to this group.",
+	//       "description": "The ID of the partner that owns the inventory source group. Only this partner has write access to this group.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -27914,17 +27730,12 @@ type InventorySourceGroupsAssignedInventorySourcesBulkEditCall struct {
 }
 
 // BulkEdit: Bulk edits multiple assignments between inventory sources
-// and a single
-// inventory source group.
-//
-// The operation will delete the assigned inventory sources provided
-// in
-// BulkEditAssignedInventorySourcesRequest.deleted_assigned_inventory_
-// sources
-// and then create the assigned inventory sources provided
-// in
-// BulkEditAssignedInventorySourcesRequest.created_assigned_inventory_
-// sources.
+// and a single inventory source group. The operation will delete the
+// assigned inventory sources provided in
+// BulkEditAssignedInventorySourcesRequest.deleted_assigned_inventory_sou
+// rces and then create the assigned inventory sources provided in
+// BulkEditAssignedInventorySourcesRequest.created_assigned_inventory_sou
+// rces.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) BulkEdit(inventorySourceGroupId int64, bulkeditassignedinventorysourcesrequest *BulkEditAssignedInventorySourcesRequest) *InventorySourceGroupsAssignedInventorySourcesBulkEditCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -27959,7 +27770,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) Header() htt
 
 func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28025,7 +27836,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits multiple assignments between inventory sources and a single\ninventory source group.\n\nThe operation will delete the assigned inventory sources provided in\nBulkEditAssignedInventorySourcesRequest.deleted_assigned_inventory_sources\nand then create the assigned inventory sources provided in\nBulkEditAssignedInventorySourcesRequest.created_assigned_inventory_sources.",
+	//   "description": "Bulk edits multiple assignments between inventory sources and a single inventory source group. The operation will delete the assigned inventory sources provided in BulkEditAssignedInventorySourcesRequest.deleted_assigned_inventory_sources and then create the assigned inventory sources provided in BulkEditAssignedInventorySourcesRequest.created_assigned_inventory_sources.",
 	//   "flatPath": "v1/inventorySourceGroups/{inventorySourceGroupsId}/assignedInventorySources:bulkEdit",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.inventorySourceGroups.assignedInventorySources.bulkEdit",
@@ -28034,7 +27845,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "inventorySourceGroupId": {
-	//       "description": "Required. The ID of the inventory source group to which the assignments are\nassigned.",
+	//       "description": "Required. The ID of the inventory source group to which the assignments are assigned.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -28068,8 +27879,7 @@ type InventorySourceGroupsAssignedInventorySourcesCreateCall struct {
 }
 
 // Create: Creates an assignment between an inventory source and an
-// inventory source
-// group.
+// inventory source group.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) Create(inventorySourceGroupId int64, assignedinventorysource *AssignedInventorySource) *InventorySourceGroupsAssignedInventorySourcesCreateCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -28078,10 +27888,8 @@ func (r *InventorySourceGroupsAssignedInventorySourcesService) Create(inventoryS
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that owns the parent inventory source group.
-//
-// The parent partner will not have access to this assigned
-// inventory
+// the advertiser that owns the parent inventory source group. The
+// parent partner will not have access to this assigned inventory
 // source.
 func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsAssignedInventorySourcesCreateCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
@@ -28089,11 +27897,8 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) AdvertiserId(a
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that owns the parent inventory source group.
-//
-// Only this partner will have write access to this assigned
-// inventory
-// source.
+// partner that owns the parent inventory source group. Only this
+// partner will have write access to this assigned inventory source.
 func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) PartnerId(partnerId int64) *InventorySourceGroupsAssignedInventorySourcesCreateCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -28126,7 +27931,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Header() http.
 
 func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28190,7 +27995,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an assignment between an inventory source and an inventory source\ngroup.",
+	//   "description": "Creates an assignment between an inventory source and an inventory source group.",
 	//   "flatPath": "v1/inventorySourceGroups/{inventorySourceGroupsId}/assignedInventorySources",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.inventorySourceGroups.assignedInventorySources.create",
@@ -28199,13 +28004,13 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that owns the parent inventory source group.\n\nThe parent partner will not have access to this assigned inventory\nsource.",
+	//       "description": "The ID of the advertiser that owns the parent inventory source group. The parent partner will not have access to this assigned inventory source.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "inventorySourceGroupId": {
-	//       "description": "Required. The ID of the inventory source group to which the assignment will be\nassigned.",
+	//       "description": "Required. The ID of the inventory source group to which the assignment will be assigned.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -28213,7 +28018,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that owns the parent inventory source group.\n\nOnly this partner will have write access to this assigned inventory\nsource.",
+	//       "description": "The ID of the partner that owns the parent inventory source group. Only this partner will have write access to this assigned inventory source.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -28245,8 +28050,7 @@ type InventorySourceGroupsAssignedInventorySourcesDeleteCall struct {
 }
 
 // Delete: Deletes the assignment between an inventory source and an
-// inventory source
-// group.
+// inventory source group.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) Delete(inventorySourceGroupId int64, assignedInventorySourceId int64) *InventorySourceGroupsAssignedInventorySourcesDeleteCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -28255,10 +28059,8 @@ func (r *InventorySourceGroupsAssignedInventorySourcesService) Delete(inventoryS
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that owns the parent inventory source group.
-//
-// The parent partner does not have access to this assigned
-// inventory
+// the advertiser that owns the parent inventory source group. The
+// parent partner does not have access to this assigned inventory
 // source.
 func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsAssignedInventorySourcesDeleteCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
@@ -28266,9 +28068,8 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) AdvertiserId(a
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that owns the parent inventory source group.
-//
-// Only this partner has write access to this assigned inventory source.
+// partner that owns the parent inventory source group. Only this
+// partner has write access to this assigned inventory source.
 func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) PartnerId(partnerId int64) *InventorySourceGroupsAssignedInventorySourcesDeleteCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -28301,7 +28102,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Header() http.
 
 func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28361,7 +28162,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the assignment between an inventory source and an inventory source\ngroup.",
+	//   "description": "Deletes the assignment between an inventory source and an inventory source group.",
 	//   "flatPath": "v1/inventorySourceGroups/{inventorySourceGroupsId}/assignedInventorySources/{assignedInventorySourcesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.inventorySourceGroups.assignedInventorySources.delete",
@@ -28371,7 +28172,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that owns the parent inventory source group.\n\nThe parent partner does not have access to this assigned inventory\nsource.",
+	//       "description": "The ID of the advertiser that owns the parent inventory source group. The parent partner does not have access to this assigned inventory source.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -28393,7 +28194,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that owns the parent inventory source group.\n\nOnly this partner has write access to this assigned inventory source.",
+	//       "description": "The ID of the partner that owns the parent inventory source group. Only this partner has write access to this assigned inventory source.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -28429,12 +28230,9 @@ func (r *InventorySourceGroupsAssignedInventorySourcesService) List(inventorySou
 }
 
 // AdvertiserId sets the optional parameter "advertiserId": The ID of
-// the advertiser that has access to the assignment.
-//
-// If the parent inventory source group is partner-owned, only
-// advertisers
-// to which the parent group is explicitly shared can access the
-// assigned
+// the advertiser that has access to the assignment. If the parent
+// inventory source group is partner-owned, only advertisers to which
+// the parent group is explicitly shared can access the assigned
 // inventory source.
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) AdvertiserId(advertiserId int64) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c.urlParams_.Set("advertiserId", fmt.Sprint(advertiserId))
@@ -28442,68 +28240,50 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) AdvertiserId(adv
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// assigned inventory source fields.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by the logical operator `OR`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `assignedInventorySourceId`
-//
-// The length of this field should be no more than 500 characters.
+// assigned inventory source fields. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedInventorySourceId` The length of
+// this field should be no more than 500 characters.
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Filter(filter string) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `assignedInventorySourceId` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for a
-// field, a suffix " desc" should be added to the field name.
-// Example:
-// `assignedInventorySourceId desc`.
+// the list. Acceptable values are: * `assignedInventorySourceId`
+// (default) The default sorting order is ascending. To specify
+// descending order for a field, a suffix " desc" should be added to the
+// field name. Example: `assignedInventorySourceId desc`.
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) OrderBy(orderBy string) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) PageSize(pageSize int64) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-//
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to
-// `ListAssignedInventorySources`
-// method. If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListAssignedInventorySources` method. If not specified, the first
+// page of results will be returned.
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) PageToken(pageToken string) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // PartnerId sets the optional parameter "partnerId": The ID of the
-// partner that has access to the assignment.
-//
-// If the parent inventory source group is advertiser-owned, the
-// assignment
-// cannot be accessed via a partner.
+// partner that has access to the assignment. If the parent inventory
+// source group is advertiser-owned, the assignment cannot be accessed
+// via a partner.
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) PartnerId(partnerId int64) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -28546,7 +28326,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Header() http.He
 
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28618,18 +28398,18 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "advertiserId": {
-	//       "description": "The ID of the advertiser that has access to the assignment.\n\nIf the parent inventory source group is partner-owned, only advertisers\nto which the parent group is explicitly shared can access the assigned\ninventory source.",
+	//       "description": "The ID of the advertiser that has access to the assignment. If the parent inventory source group is partner-owned, only advertisers to which the parent group is explicitly shared can access the assigned inventory source.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by assigned inventory source fields.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by the logical operator `OR`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `assignedInventorySourceId`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by assigned inventory source fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedInventorySourceId` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "inventorySourceGroupId": {
-	//       "description": "Required. The ID of the inventory source group to which these assignments are\nassigned.",
+	//       "description": "Required. The ID of the inventory source group to which these assignments are assigned.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -28637,23 +28417,23 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `assignedInventorySourceId` (default)\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`assignedInventorySourceId desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedInventorySourceId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be added to the field name. Example: `assignedInventorySourceId desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListAssignedInventorySources`\nmethod. If not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListAssignedInventorySources` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "The ID of the partner that has access to the assignment.\n\nIf the parent inventory source group is advertiser-owned, the assignment\ncannot be accessed via a partner.",
+	//       "description": "The ID of the partner that has access to the assignment. If the parent inventory source group is advertiser-owned, the assignment cannot be accessed via a partner.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -28710,8 +28490,8 @@ func (r *InventorySourcesService) Get(inventorySourceId int64) *InventorySources
 }
 
 // PartnerId sets the optional parameter "partnerId": Required. The ID
-// of the DV360 partner to which the fetched inventory source
-// is permissioned.
+// of the DV360 partner to which the fetched inventory source is
+// permissioned.
 func (c *InventorySourcesGetCall) PartnerId(partnerId int64) *InventorySourcesGetCall {
 	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
 	return c
@@ -28754,7 +28534,7 @@ func (c *InventorySourcesGetCall) Header() http.Header {
 
 func (c *InventorySourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28833,7 +28613,7 @@ func (c *InventorySourcesGetCall) Do(opts ...googleapi.CallOption) (*InventorySo
 	//       "type": "string"
 	//     },
 	//     "partnerId": {
-	//       "description": "Required. The ID of the DV360 partner to which the fetched inventory source\nis permissioned.",
+	//       "description": "Required. The ID of the DV360 partner to which the fetched inventory source is permissioned.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -28861,15 +28641,9 @@ type InventorySourcesListCall struct {
 }
 
 // List: Lists inventory sources that are accessible to the current
-// user.
-//
-// The order is defined by the
-// order_by parameter.
-// If a filter by
-// entity_status is not
-// specified, inventory sources with entity status
-// `ENTITY_STATUS_ARCHIVED`
-// will not be included in the results.
+// user. The order is defined by the order_by parameter. If a filter by
+// entity_status is not specified, inventory sources with entity status
+// `ENTITY_STATUS_ARCHIVED` will not be included in the results.
 func (r *InventorySourcesService) List() *InventorySourcesListCall {
 	c := &InventorySourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -28883,69 +28657,46 @@ func (c *InventorySourcesListCall) AdvertiserId(advertiserId int64) *InventorySo
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// inventory source properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by `AND` or `OR` logical operators.
-// A
-// sequence of restrictions implicitly uses `AND`.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `EQUALS (=)`.
-// * Supported fields:
-//     - `status.entityStatus`
-//     - `commitment`
-//     - `deliveryMethod`
-//     - `rateDetails.rateType`
-//     - `exchange`
-//
-// Examples:
-//
-// * All active inventory
-// sources:
-// `status.entityStatus="ENTITY_STATUS_ACTIVE"
-// * Inventory sources belonging to Google Ad Manager or Rubicon
-// exchanges:
+// inventory source properties. Supported syntax: * Filter expressions
+// are made up of one or more restrictions. * Restrictions can be
+// combined by `AND` or `OR` logical operators. A sequence of
+// restrictions implicitly uses `AND`. * A restriction has the form of
+// `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. *
+// Supported fields: - `status.entityStatus` - `commitment` -
+// `deliveryMethod` - `rateDetails.rateType` - `exchange` Examples: *
+// All active inventory sources:
+// `status.entityStatus="ENTITY_STATUS_ACTIVE" * Inventory sources
+// belonging to Google Ad Manager or Rubicon exchanges:
 // `exchange="EXCHANGE_GOOGLE_AD_MANAGER" OR
-// exchange="EXCHANGE_RUBICON"
-//
-// The length of this field should be no more than 500 characters.
+// exchange="EXCHANGE_RUBICON" The length of this field should be no
+// more than 500 characters.
 func (c *InventorySourcesListCall) Filter(filter string) *InventorySourcesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `displayName` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name. For
-// example,
-// `displayName desc`.
+// the list. Acceptable values are: * `displayName` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. For
+// example, `displayName desc`.
 func (c *InventorySourcesListCall) OrderBy(orderBy string) *InventorySourcesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`.
+// Must be between `1` and `100`. If unspecified will default to `100`.
 func (c *InventorySourcesListCall) PageSize(pageSize int64) *InventorySourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListInventorySources` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListInventorySources` method. If not specified, the first page of
+// results will be returned.
 func (c *InventorySourcesListCall) PageToken(pageToken string) *InventorySourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -28995,7 +28746,7 @@ func (c *InventorySourcesListCall) Header() http.Header {
 
 func (c *InventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29054,7 +28805,7 @@ func (c *InventorySourcesListCall) Do(opts ...googleapi.CallOption) (*ListInvent
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists inventory sources that are accessible to the current user.\n\nThe order is defined by the\norder_by parameter.\nIf a filter by\nentity_status is not\nspecified, inventory sources with entity status `ENTITY_STATUS_ARCHIVED`\nwill not be included in the results.",
+	//   "description": "Lists inventory sources that are accessible to the current user. The order is defined by the order_by parameter. If a filter by entity_status is not specified, inventory sources with entity status `ENTITY_STATUS_ARCHIVED` will not be included in the results.",
 	//   "flatPath": "v1/inventorySources",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.inventorySources.list",
@@ -29067,23 +28818,23 @@ func (c *InventorySourcesListCall) Do(opts ...googleapi.CallOption) (*ListInvent
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by inventory source properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `EQUALS (=)`.\n* Supported fields:\n    - `status.entityStatus`\n    - `commitment`\n    - `deliveryMethod`\n    - `rateDetails.rateType`\n    - `exchange`\n\nExamples:\n\n* All active inventory sources:\n`status.entityStatus=\"ENTITY_STATUS_ACTIVE\"`\n* Inventory sources belonging to Google Ad Manager or Rubicon exchanges:\n`exchange=\"EXCHANGE_GOOGLE_AD_MANAGER\" OR exchange=\"EXCHANGE_RUBICON\"`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by inventory source properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `status.entityStatus` - `commitment` - `deliveryMethod` - `rateDetails.rateType` - `exchange` Examples: * All active inventory sources: `status.entityStatus=\"ENTITY_STATUS_ACTIVE\"` * Inventory sources belonging to Google Ad Manager or Rubicon exchanges: `exchange=\"EXCHANGE_GOOGLE_AD_MANAGER\" OR exchange=\"EXCHANGE_RUBICON\"` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name. For example,\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. For example, `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListInventorySources` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListInventorySources` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -29138,10 +28889,8 @@ type MediaDownloadCall struct {
 }
 
 // Download: Downloads media. Download is supported on the URI
-// `/download/{resource_name=**}?alt=media.`
-//
-// **Note**: Download requests will not be successful without including
-// `alt=media` query string.
+// `/download/{resource_name=**}?alt=media.` **Note**: Download requests
+// will not be successful without including `alt=media` query string.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -29185,7 +28934,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29263,7 +29012,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 	}
 	return ret, nil
 	// {
-	//   "description": "Downloads media. Download is supported on the URI `/download/{resource_name=**}?alt=media.`\n\n**Note**: Download requests will not be successful without including `alt=media` query string.",
+	//   "description": "Downloads media. Download is supported on the URI `/download/{resource_name=**}?alt=media.` **Note**: Download requests will not be successful without including `alt=media` query string.",
 	//   "flatPath": "download/{downloadId}",
 	//   "httpMethod": "GET",
 	//   "id": "displayvideo.media.download",
@@ -29272,7 +29021,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 	//   ],
 	//   "parameters": {
 	//     "resourceName": {
-	//       "description": "Name of the media that is being downloaded.  See\nReadRequest.resource_name.",
+	//       "description": "Name of the media that is being downloaded. See ReadRequest.resource_name.",
 	//       "location": "path",
 	//       "pattern": "^.*$",
 	//       "required": true,
@@ -29290,6 +29039,513 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 	//   "supportsMediaDownload": true
 	// }
 
+}
+
+// method id "displayvideo.partners.bulkEditPartnerAssignedTargetingOptions":
+
+type PartnersBulkEditPartnerAssignedTargetingOptionsCall struct {
+	s                                              *Service
+	partnerId                                      int64
+	bulkeditpartnerassignedtargetingoptionsrequest *BulkEditPartnerAssignedTargetingOptionsRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// BulkEditPartnerAssignedTargetingOptions: Bulk edits targeting options
+// under a single partner. The operation will delete the assigned
+// targeting options provided in
+// BulkEditPartnerAssignedTargetingOptionsRequest.deleteRequests and
+// then create the assigned targeting options provided in
+// BulkEditPartnerAssignedTargetingOptionsRequest.createRequests .
+func (r *PartnersService) BulkEditPartnerAssignedTargetingOptions(partnerId int64, bulkeditpartnerassignedtargetingoptionsrequest *BulkEditPartnerAssignedTargetingOptionsRequest) *PartnersBulkEditPartnerAssignedTargetingOptionsCall {
+	c := &PartnersBulkEditPartnerAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.bulkeditpartnerassignedtargetingoptionsrequest = bulkeditpartnerassignedtargetingoptionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Fields(s ...googleapi.Field) *PartnersBulkEditPartnerAssignedTargetingOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Context(ctx context.Context) *PartnersBulkEditPartnerAssignedTargetingOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bulkeditpartnerassignedtargetingoptionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}:bulkEditPartnerAssignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId": strconv.FormatInt(c.partnerId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.bulkEditPartnerAssignedTargetingOptions" call.
+// Exactly one of *BulkEditPartnerAssignedTargetingOptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *BulkEditPartnerAssignedTargetingOptionsResponse.ServerResponse.Header
+//  or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOption) (*BulkEditPartnerAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BulkEditPartnerAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Bulk edits targeting options under a single partner. The operation will delete the assigned targeting options provided in BulkEditPartnerAssignedTargetingOptionsRequest.deleteRequests and then create the assigned targeting options provided in BulkEditPartnerAssignedTargetingOptionsRequest.createRequests .",
+	//   "flatPath": "v1/partners/{partnersId}:bulkEditPartnerAssignedTargetingOptions",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.partners.bulkEditPartnerAssignedTargetingOptions",
+	//   "parameterOrder": [
+	//     "partnerId"
+	//   ],
+	//   "parameters": {
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}:bulkEditPartnerAssignedTargetingOptions",
+	//   "request": {
+	//     "$ref": "BulkEditPartnerAssignedTargetingOptionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BulkEditPartnerAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.get":
+
+type PartnersGetCall struct {
+	s            *Service
+	partnerId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a partner.
+func (r *PartnersService) Get(partnerId int64) *PartnersGetCall {
+	c := &PartnersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersGetCall) Fields(s ...googleapi.Field) *PartnersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersGetCall) IfNoneMatch(entityTag string) *PartnersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersGetCall) Context(ctx context.Context) *PartnersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId": strconv.FormatInt(c.partnerId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.get" call.
+// Exactly one of *Partner or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Partner.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PartnersGetCall) Do(opts ...googleapi.CallOption) (*Partner, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Partner{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a partner.",
+	//   "flatPath": "v1/partners/{partnersId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.get",
+	//   "parameterOrder": [
+	//     "partnerId"
+	//   ],
+	//   "parameters": {
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}",
+	//   "response": {
+	//     "$ref": "Partner"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.list":
+
+type PartnersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists partners that are accessible to the current user. The
+// order is defined by the order_by parameter.
+func (r *PartnersService) List() *PartnersListCall {
+	c := &PartnersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// partner properties. Supported syntax: * Filter expressions are made
+// up of one or more restrictions. * Restrictions can be combined by
+// `AND` or `OR` logical operators. A sequence of restrictions
+// implicitly uses `AND`. * A restriction has the form of `{field}
+// {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported
+// fields: - `entityStatus` Examples: * All active partners:
+// `entityStatus="ENTITY_STATUS_ACTIVE" The length of this field should
+// be no more than 500 characters.
+func (c *PartnersListCall) Filter(filter string) *PartnersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` The default sorting
+// order is ascending. To specify descending order for a field, a suffix
+// "desc" should be added to the field name. For example, `displayName
+// desc`.
+func (c *PartnersListCall) OrderBy(orderBy string) *PartnersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+func (c *PartnersListCall) PageSize(pageSize int64) *PartnersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListPartners` method. If not specified, the first page of results
+// will be returned.
+func (c *PartnersListCall) PageToken(pageToken string) *PartnersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersListCall) Fields(s ...googleapi.Field) *PartnersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersListCall) IfNoneMatch(entityTag string) *PartnersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersListCall) Context(ctx context.Context) *PartnersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.list" call.
+// Exactly one of *ListPartnersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListPartnersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PartnersListCall) Do(opts ...googleapi.CallOption) (*ListPartnersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPartnersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists partners that are accessible to the current user. The order is defined by the order_by parameter.",
+	//   "flatPath": "v1/partners",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering by partner properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `entityStatus` Examples: * All active partners: `entityStatus=\"ENTITY_STATUS_ACTIVE\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. For example, `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListPartners` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners",
+	//   "response": {
+	//     "$ref": "ListPartnersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PartnersListCall) Pages(ctx context.Context, f func(*ListPartnersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "displayvideo.partners.channels.create":
@@ -29346,7 +29602,7 @@ func (c *PartnersChannelsCreateCall) Header() http.Header {
 
 func (c *PartnersChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29511,7 +29767,7 @@ func (c *PartnersChannelsGetCall) Header() http.Header {
 
 func (c *PartnersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29643,64 +29899,42 @@ func (c *PartnersChannelsListCall) AdvertiserId(advertiserId int64) *PartnersCha
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// channel fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for channel currently can only contain at most
-// one
-// * restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `displayName`
-//
-// Examples:
-//
-// * All channels for which the display name contains
-// "google":
-// `displayName : "google".
-//
-// The length of this field should be no more than 500 characters.
+// channel fields. Supported syntax: * Filter expressions for channel
+// currently can only contain at most one * restriction. * A restriction
+// has the form of `{field} {operator} {value}`. * The operator must be
+// `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All
+// channels for which the display name contains "google": `displayName :
+// "google". The length of this field should be no more than 500
+// characters.
 func (c *PartnersChannelsListCall) Filter(filter string) *PartnersChannelsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `displayName` (default)
-// * `channelId`
-//
-// The default sorting order is ascending. To specify descending order
-// for a
-// field, a suffix " desc" should be added to the field name.
-// Example:
-// `displayName desc`.
+// the list. Acceptable values are: * `displayName` (default) *
+// `channelId` The default sorting order is ascending. To specify
+// descending order for a field, a suffix " desc" should be added to the
+// field name. Example: `displayName desc`.
 func (c *PartnersChannelsListCall) OrderBy(orderBy string) *PartnersChannelsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *PartnersChannelsListCall) PageSize(pageSize int64) *PartnersChannelsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token returned from the
-// previous call to `ListChannels` method. If not specified, the first
-// page
-// of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListChannels` method. If not specified, the first page of results
+// will be returned.
 func (c *PartnersChannelsListCall) PageToken(pageToken string) *PartnersChannelsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -29743,7 +29977,7 @@ func (c *PartnersChannelsListCall) Header() http.Header {
 
 func (c *PartnersChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29820,23 +30054,23 @@ func (c *PartnersChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChanne
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by channel fields.\n\nSupported syntax:\n\n* Filter expressions for channel currently can only contain at most one\n* restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `displayName`\n\nExamples:\n\n* All channels for which the display name contains \"google\":\n`displayName : \"google\"`.\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by channel fields. Supported syntax: * Filter expressions for channel currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `displayName` Examples: * All channels for which the display name contains \"google\": `displayName : \"google\"`. The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `displayName` (default)\n* `channelId`\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`displayName desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) * `channelId` The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be added to the field name. Example: `displayName desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token returned from the\nprevious call to `ListChannels` method. If not specified, the first page\nof results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListChannels` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -29943,7 +30177,7 @@ func (c *PartnersChannelsPatchCall) Header() http.Header {
 
 func (c *PartnersChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30071,12 +30305,9 @@ type PartnersChannelsSitesBulkEditCall struct {
 	header_              http.Header
 }
 
-// BulkEdit: Bulk edits sites under a single channel.
-//
-// The operation will delete the sites provided
-// in
-// BulkEditSitesRequest.deleted_sites and then create the sites
-// provided in BulkEditSitesRequest.created_sites.
+// BulkEdit: Bulk edits sites under a single channel. The operation will
+// delete the sites provided in BulkEditSitesRequest.deleted_sites and
+// then create the sites provided in BulkEditSitesRequest.created_sites.
 func (r *PartnersChannelsSitesService) BulkEdit(partnerId int64, channelId int64, bulkeditsitesrequest *BulkEditSitesRequest) *PartnersChannelsSitesBulkEditCall {
 	c := &PartnersChannelsSitesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -30112,7 +30343,7 @@ func (c *PartnersChannelsSitesBulkEditCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30177,7 +30408,7 @@ func (c *PartnersChannelsSitesBulkEditCall) Do(opts ...googleapi.CallOption) (*B
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits sites under a single channel.\n\nThe operation will delete the sites provided in\nBulkEditSitesRequest.deleted_sites and then create the sites\nprovided in BulkEditSitesRequest.created_sites.",
+	//   "description": "Bulk edits sites under a single channel. The operation will delete the sites provided in BulkEditSitesRequest.deleted_sites and then create the sites provided in BulkEditSitesRequest.created_sites.",
 	//   "flatPath": "v1/partners/{partnerId}/channels/{channelsId}/sites:bulkEdit",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.partners.channels.sites.bulkEdit",
@@ -30271,7 +30502,7 @@ func (c *PartnersChannelsSitesCreateCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30436,7 +30667,7 @@ func (c *PartnersChannelsSitesDeleteCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30575,38 +30806,20 @@ func (c *PartnersChannelsSitesListCall) AdvertiserId(advertiserId int64) *Partne
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by site
-// fields.
-//
-// Supported syntax:
-//
-// * Filter expressions for site currently can only contain at most
-// one
-// * restriction.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be `CONTAINS (:)`.
-// * Supported fields:
-//     - `urlOrAppId`
-//
-// Examples:
-//
-// * All sites for which the URL or app ID contains
-// "google":
-// `urlOrAppId : "google"
+// fields. Supported syntax: * Filter expressions for site currently can
+// only contain at most one * restriction. * A restriction has the form
+// of `{field} {operator} {value}`. * The operator must be `CONTAINS
+// (:)`. * Supported fields: - `urlOrAppId` Examples: * All sites for
+// which the URL or app ID contains "google": `urlOrAppId : "google"
 func (c *PartnersChannelsSitesListCall) Filter(filter string) *PartnersChannelsSitesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `urlOrAppId` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for a
-// field, a suffix " desc" should be added to the field name.
-// Example:
+// the list. Acceptable values are: * `urlOrAppId` (default) The default
+// sorting order is ascending. To specify descending order for a field,
+// a suffix " desc" should be added to the field name. Example:
 // `urlOrAppId desc`.
 func (c *PartnersChannelsSitesListCall) OrderBy(orderBy string) *PartnersChannelsSitesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
@@ -30614,23 +30827,19 @@ func (c *PartnersChannelsSitesListCall) OrderBy(orderBy string) *PartnersChannel
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *PartnersChannelsSitesListCall) PageSize(pageSize int64) *PartnersChannelsSitesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-//
-// Typically, this is the value of
-// next_page_token returned from the
-// previous call to `ListSites` method. If not specified, the first
-// page
-// of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListSites` method. If not specified, the first page of results
+// will be returned.
 func (c *PartnersChannelsSitesListCall) PageToken(pageToken string) *PartnersChannelsSitesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -30673,7 +30882,7 @@ func (c *PartnersChannelsSitesListCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30760,23 +30969,23 @@ func (c *PartnersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*ListS
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by site fields.\n\nSupported syntax:\n\n* Filter expressions for site currently can only contain at most one\n* restriction.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be `CONTAINS (:)`.\n* Supported fields:\n    - `urlOrAppId`\n\nExamples:\n\n* All sites for which the URL or app ID contains \"google\":\n`urlOrAppId : \"google\"`",
+	//       "description": "Allows filtering by site fields. Supported syntax: * Filter expressions for site currently can only contain at most one * restriction. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)`. * Supported fields: - `urlOrAppId` Examples: * All sites for which the URL or app ID contains \"google\": `urlOrAppId : \"google\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `urlOrAppId` (default)\n\nThe default sorting order is ascending. To specify descending order for a\nfield, a suffix \" desc\" should be added to the field name. Example:\n`urlOrAppId desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `urlOrAppId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be added to the field name. Example: `urlOrAppId desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\n\nTypically, this is the value of\nnext_page_token returned from the\nprevious call to `ListSites` method. If not specified, the first page\nof results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListSites` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -30821,6 +31030,1042 @@ func (c *PartnersChannelsSitesListCall) Pages(ctx context.Context, f func(*ListS
 	}
 }
 
+// method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.create":
+
+type PartnersTargetingTypesAssignedTargetingOptionsCreateCall struct {
+	s                       *Service
+	partnerId               int64
+	targetingType           string
+	assignedtargetingoption *AssignedTargetingOption
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Create: Assigns a targeting option to a partner. Returns the assigned
+// targeting option if successful.
+func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Create(partnerId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *PartnersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c := &PartnersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.targetingType = targetingType
+	c.assignedtargetingoption = assignedtargetingoption
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Fields(s ...googleapi.Field) *PartnersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Context(ctx context.Context) *PartnersTargetingTypesAssignedTargetingOptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.assignedtargetingoption)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId":     strconv.FormatInt(c.partnerId, 10),
+		"targetingType": c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.targetingTypes.assignedTargetingOptions.create" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Assigns a targeting option to a partner. Returns the assigned targeting option if successful.",
+	//   "flatPath": "v1/partners/{partnersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.partners.targetingTypes.assignedTargetingOptions.create",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "request": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.delete":
+
+type PartnersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
+	s                         *Service
+	partnerId                 int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Delete: Deletes an assigned targeting option from a partner.
+func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Delete(partnerId int64, targetingType string, assignedTargetingOptionId string) *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c := &PartnersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Fields(s ...googleapi.Field) *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Context(ctx context.Context) *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId":                 strconv.FormatInt(c.partnerId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.targetingTypes.assignedTargetingOptions.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an assigned targeting option from a partner.",
+	//   "flatPath": "v1/partners/{partnersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.partners.targetingTypes.assignedTargetingOptions.delete",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. The ID of the assigned targeting option to delete.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.get":
+
+type PartnersTargetingTypesAssignedTargetingOptionsGetCall struct {
+	s                         *Service
+	partnerId                 int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ifNoneMatch_              string
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Get: Gets a single targeting option assigned to a partner.
+func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Get(partnerId int64, targetingType string, assignedTargetingOptionId string) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
+	c := &PartnersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Fields(s ...googleapi.Field) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) IfNoneMatch(entityTag string) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Context(ctx context.Context) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId":                 strconv.FormatInt(c.partnerId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.targetingTypes.assignedTargetingOptions.get" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a single targeting option assigned to a partner.",
+	//   "flatPath": "v1/partners/{partnersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.targetingTypes.assignedTargetingOptions.get",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. An identifier unique to the targeting type in this partner that identifies the assigned targeting option being requested.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.list":
+
+type PartnersTargetingTypesAssignedTargetingOptionsListCall struct {
+	s             *Service
+	partnerId     int64
+	targetingType string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: Lists the targeting options assigned to a partner.
+func (r *PartnersTargetingTypesAssignedTargetingOptionsService) List(partnerId int64, targetingType string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c := &PartnersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.targetingType = targetingType
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: *
+// AssignedTargetingOption with ID 123456
+// `assignedTargetingOptionId="123456" The length of this field should
+// be no more than 500 characters.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `assignedTargetingOptionId`
+// (default) The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `assignedTargetingOptionId desc`.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListPartnerAssignedTargetingOptions` method. If not specified,
+// the first page of results will be returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) PageToken(pageToken string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Fields(s ...googleapi.Field) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) IfNoneMatch(entityTag string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Context(ctx context.Context) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId":     strconv.FormatInt(c.partnerId, 10),
+		"targetingType": c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.targetingTypes.assignedTargetingOptions.list" call.
+// Exactly one of *ListPartnerAssignedTargetingOptionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListPartnerAssignedTargetingOptionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...googleapi.CallOption) (*ListPartnerAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPartnerAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the targeting options assigned to a partner.",
+	//   "flatPath": "v1/partners/{partnersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.partners.targetingTypes.assignedTargetingOptions.list",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` Examples: * AssignedTargetingOption with ID 123456 `assignedTargetingOptionId=\"123456\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedTargetingOptionId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `assignedTargetingOptionId desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListPartnerAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{+partnerId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "ListPartnerAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListPartnerAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.sdfdownloadtasks.create":
 
 type SdfdownloadtasksCreateCall struct {
@@ -30831,24 +32076,14 @@ type SdfdownloadtasksCreateCall struct {
 	header_                      http.Header
 }
 
-// Create: Creates an SDF Download Task. Returns an
-// Operation.
-//
-// An SDF Download Task is a long-running, asynchronous operation.
-// The
-// metadata type of this operation is
-// SdfDownloadTaskMetadata. If the request is successful, the
-// response type of the operation is
-// SdfDownloadTask. The response will not include the download
-// files,
-// which must be retrieved with
-// media.download. The state of
-// operation can be retrieved with
-// sdfdownloadtask.operations.get.
-//
-// Any errors can be found in the
-// error.message. Note
-// that error.details is expected to be
+// Create: Creates an SDF Download Task. Returns an Operation. An SDF
+// Download Task is a long-running, asynchronous operation. The metadata
+// type of this operation is SdfDownloadTaskMetadata. If the request is
+// successful, the response type of the operation is SdfDownloadTask.
+// The response will not include the download files, which must be
+// retrieved with media.download. The state of operation can be
+// retrieved with sdfdownloadtask.operations.get. Any errors can be
+// found in the error.message. Note that error.details is expected to be
 // empty.
 func (r *SdfdownloadtasksService) Create(createsdfdownloadtaskrequest *CreateSdfDownloadTaskRequest) *SdfdownloadtasksCreateCall {
 	c := &SdfdownloadtasksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -30883,7 +32118,7 @@ func (c *SdfdownloadtasksCreateCall) Header() http.Header {
 
 func (c *SdfdownloadtasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30944,7 +32179,7 @@ func (c *SdfdownloadtasksCreateCall) Do(opts ...googleapi.CallOption) (*Operatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an SDF Download Task. Returns an\nOperation.\n\nAn SDF Download Task is a long-running, asynchronous operation. The\nmetadata type of this operation is\nSdfDownloadTaskMetadata. If the request is successful, the\nresponse type of the operation is\nSdfDownloadTask. The response will not include the download files,\nwhich must be retrieved with\nmedia.download. The state of\noperation can be retrieved with\nsdfdownloadtask.operations.get.\n\nAny errors can be found in the\nerror.message. Note\nthat error.details is expected to be\nempty.",
+	//   "description": "Creates an SDF Download Task. Returns an Operation. An SDF Download Task is a long-running, asynchronous operation. The metadata type of this operation is SdfDownloadTaskMetadata. If the request is successful, the response type of the operation is SdfDownloadTask. The response will not include the download files, which must be retrieved with media.download. The state of operation can be retrieved with sdfdownloadtask.operations.get. Any errors can be found in the error.message. Note that error.details is expected to be empty.",
 	//   "flatPath": "v1/sdfdownloadtasks",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.sdfdownloadtasks.create",
@@ -31021,7 +32256,7 @@ func (c *SdfdownloadtasksOperationsGetCall) Header() http.Header {
 
 func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31175,7 +32410,7 @@ func (c *TargetingTypesTargetingOptionsGetCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31302,6 +32537,46 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -31345,54 +32620,49 @@ func (c *TargetingTypesTargetingOptionsListCall) AdvertiserId(advertiserId int64
 }
 
 // Filter sets the optional parameter "filter": Allows filtering by
-// targeting option properties.
-//
-// Supported syntax:
-//
-// * Filter expressions are made up of one or more restrictions.
-// * Restrictions can be combined by `OR` logical operators.
-// * A restriction has the form of `{field} {operator} {value}`.
-// * The operator must be "=" (equal sign).
-// * Supported fields:
-//     - `targetingOptionId`
-//
-// The length of this field should be no more than 500 characters.
+// targeting option properties. Supported syntax: * Filter expressions
+// are made up of one or more restrictions. * Restrictions can be
+// combined by `OR` logical operators. * A restriction has the form of
+// `{field} {operator} {value}`. * The operator must be "=" (equal
+// sign). * Supported fields: - `carrier_and_isp_details.type` -
+// `geo_region_details.geo_region_type` - `targetingOptionId` Examples:
+// * All `GEO REGION` targeting options that belong to sub type
+// `GEO_REGION_TYPE_COUNTRY` or `GEO_REGION_TYPE_STATE`:
+// `geo_region_details.geo_region_type="GEO_REGION_TYPE_COUNTRY" OR
+// geo_region_details.geo_region_type="GEO_REGION_TYPE_STATE" * All
+// `CARRIER AND ISP` targeting options that belong to sub type
+// `CARRIER_AND_ISP_TYPE_CARRIER`:
+// `carrier_and_isp_details.type="CARRIER_AND_ISP_TYPE_CARRIER". The
+// length of this field should be no more than 500 characters.
 func (c *TargetingTypesTargetingOptionsListCall) Filter(filter string) *TargetingTypesTargetingOptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Field by which to sort
-// the list.
-// Acceptable values are:
-//
-// * `targetingOptionId` (default)
-//
-// The default sorting order is ascending. To specify descending order
-// for
-// a field, a suffix "desc" should be added to the field name.
-// Example: `targetingOptionId desc`.
+// the list. Acceptable values are: * `targetingOptionId` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. Example:
+// `targetingOptionId desc`.
 func (c *TargetingTypesTargetingOptionsListCall) OrderBy(orderBy string) *TargetingTypesTargetingOptionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will
-// default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid
-// value
-// is specified.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
 func (c *TargetingTypesTargetingOptionsListCall) PageSize(pageSize int64) *TargetingTypesTargetingOptionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-// Typically, this is the value of
-// next_page_token
-// returned from the previous call to `ListTargetingOptions` method.
-// If not specified, the first page of results will be returned.
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListTargetingOptions` method. If not specified, the first page of
+// results will be returned.
 func (c *TargetingTypesTargetingOptionsListCall) PageToken(pageToken string) *TargetingTypesTargetingOptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -31435,7 +32705,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31512,23 +32782,23 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by targeting option properties.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `OR` logical operators.\n* A restriction has the form of `{field} {operator} {value}`.\n* The operator must be \"=\" (equal sign).\n* Supported fields:\n    - `targetingOptionId`\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `OR` logical operators. * A restriction has the form of `{field} {operator} {value}`. * The operator must be \"=\" (equal sign). * Supported fields: - `carrier_and_isp_details.type` - `geo_region_details.geo_region_type` - `targetingOptionId` Examples: * All `GEO REGION` targeting options that belong to sub type `GEO_REGION_TYPE_COUNTRY` or `GEO_REGION_TYPE_STATE`: `geo_region_details.geo_region_type=\"GEO_REGION_TYPE_COUNTRY\" OR geo_region_details.geo_region_type=\"GEO_REGION_TYPE_STATE\"` * All `CARRIER AND ISP` targeting options that belong to sub type `CARRIER_AND_ISP_TYPE_CARRIER`: `carrier_and_isp_details.type=\"CARRIER_AND_ISP_TYPE_CARRIER\"`. The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field by which to sort the list.\nAcceptable values are:\n\n* `targetingOptionId` (default)\n\nThe default sorting order is ascending. To specify descending order for\na field, a suffix \"desc\" should be added to the field name.\nExample: `targetingOptionId desc`.",
+	//       "description": "Field by which to sort the list. Acceptable values are: * `targetingOptionId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `targetingOptionId desc`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will\ndefault to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value\nis specified.",
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nnext_page_token\nreturned from the previous call to `ListTargetingOptions` method.\nIf not specified, the first page of results will be returned.",
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListTargetingOptions` method. If not specified, the first page of results will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -31574,6 +32844,46 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "TARGETING_TYPE_EXCHANGE",
 	//         "TARGETING_TYPE_SUB_EXCHANGE"
 	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges."
+	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -31610,4 +32920,938 @@ func (c *TargetingTypesTargetingOptionsListCall) Pages(ctx context.Context, f fu
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "displayvideo.users.bulkEditAssignedUserRoles":
+
+type UsersBulkEditAssignedUserRolesCall struct {
+	s                                *Service
+	userId                           int64
+	bulkeditassigneduserrolesrequest *BulkEditAssignedUserRolesRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// BulkEditAssignedUserRoles: Bulk edits user roles for a user. The
+// operation will delete the assigned user roles provided in
+// BulkEditAssignedUserRolesRequest.deletedAssignedUserRoles and then
+// assign the user roles provided in
+// BulkEditAssignedUserRolesRequest.createdAssignedUserRoles.
+func (r *UsersService) BulkEditAssignedUserRoles(userId int64, bulkeditassigneduserrolesrequest *BulkEditAssignedUserRolesRequest) *UsersBulkEditAssignedUserRolesCall {
+	c := &UsersBulkEditAssignedUserRolesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.bulkeditassigneduserrolesrequest = bulkeditassigneduserrolesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersBulkEditAssignedUserRolesCall) Fields(s ...googleapi.Field) *UsersBulkEditAssignedUserRolesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersBulkEditAssignedUserRolesCall) Context(ctx context.Context) *UsersBulkEditAssignedUserRolesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersBulkEditAssignedUserRolesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersBulkEditAssignedUserRolesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.bulkeditassigneduserrolesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users/{+userId}:bulkEditAssignedUserRoles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": strconv.FormatInt(c.userId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.bulkEditAssignedUserRoles" call.
+// Exactly one of *BulkEditAssignedUserRolesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BulkEditAssignedUserRolesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersBulkEditAssignedUserRolesCall) Do(opts ...googleapi.CallOption) (*BulkEditAssignedUserRolesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BulkEditAssignedUserRolesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Bulk edits user roles for a user. The operation will delete the assigned user roles provided in BulkEditAssignedUserRolesRequest.deletedAssignedUserRoles and then assign the user roles provided in BulkEditAssignedUserRolesRequest.createdAssignedUserRoles.",
+	//   "flatPath": "v1/users/{usersId}:bulkEditAssignedUserRoles",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.users.bulkEditAssignedUserRoles",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "description": "Required. The ID of the user to which the assigned user roles belong.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users/{+userId}:bulkEditAssignedUserRoles",
+	//   "request": {
+	//     "$ref": "BulkEditAssignedUserRolesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BulkEditAssignedUserRolesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.users.create":
+
+type UsersCreateCall struct {
+	s          *Service
+	user       *User
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new user. Returns the newly created user if
+// successful.
+func (r *UsersService) Create(user *User) *UsersCreateCall {
+	c := &UsersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.user = user
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersCreateCall) Fields(s ...googleapi.Field) *UsersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersCreateCall) Context(ctx context.Context) *UsersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.create" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersCreateCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new user. Returns the newly created user if successful.",
+	//   "flatPath": "v1/users",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.users.create",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/users",
+	//   "request": {
+	//     "$ref": "User"
+	//   },
+	//   "response": {
+	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.users.delete":
+
+type UsersDeleteCall struct {
+	s          *Service
+	userId     int64
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a user.
+func (r *UsersService) Delete(userId int64) *UsersDeleteCall {
+	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersDeleteCall) Fields(s ...googleapi.Field) *UsersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersDeleteCall) Context(ctx context.Context) *UsersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users/{+userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": strconv.FormatInt(c.userId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *UsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a user.",
+	//   "flatPath": "v1/users/{usersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "displayvideo.users.delete",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "description": "Required. The ID of the user to delete.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users/{+userId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.users.get":
+
+type UsersGetCall struct {
+	s            *Service
+	userId       int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a user.
+func (r *UsersService) Get(userId int64) *UsersGetCall {
+	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersGetCall) IfNoneMatch(entityTag string) *UsersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersGetCall) Context(ctx context.Context) *UsersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users/{+userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": strconv.FormatInt(c.userId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.get" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a user.",
+	//   "flatPath": "v1/users/{usersId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.users.get",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "userId": {
+	//       "description": "Required. The ID of the user to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users/{+userId}",
+	//   "response": {
+	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.users.list":
+
+type UsersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists users that are accessible to the current user. If two
+// users have user roles on the same partner or advertiser, they can
+// access each other.
+func (r *UsersService) List() *UsersListCall {
+	c := &UsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by user
+// properties. Supported syntax: * Filter expressions are made up of one
+// or more restrictions. * Restrictions can be combined by the logical
+// operator `AND`. * A restriction has the form of `{field} {operator}
+// {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. *
+// The operator must be `CONTAINS (:)` for the following fields: -
+// `displayName` - `email` * The operator must be `EQUALS (=)` for the
+// following fields: - `assignedUserRole.userRole` -
+// `assignedUserRole.partnerId` - `assignedUserRole.advertiserId` -
+// `assignedUserRole.entityType`: A synthetic field of AssignedUserRole
+// used for filtering. Identifies the type of entity to which the user
+// role is assigned. Valid values are `Partner` and `Advertiser`. -
+// `assignedUserRole.parentPartnerId`: A synthetic field of
+// AssignedUserRole used for filtering. Identifies the parent partner of
+// the entity to which the user role is assigned." Examples: * The user
+// with displayName containing `foo`: `displayName:"foo" * The user
+// with email containing `bar`: `email:"bar" * All users with standard
+// user roles: `assignedUserRole.userRole="STANDARD" * All users with
+// user roles for partner 123: `assignedUserRole.partnerId="123" * All
+// users with user roles for advertiser 123:
+// `assignedUserRole.advertiserId="123" * All users with partner level
+// user roles: `entityType="PARTNER" * All users with user roles for
+// partner 123 and advertisers under partner 123:
+// `parentPartnerId="123" The length of this field should be no more
+// than 500 characters.
+func (c *UsersListCall) Filter(filter string) *UsersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. For
+// example, `displayName desc`.
+func (c *UsersListCall) OrderBy(orderBy string) *UsersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+func (c *UsersListCall) PageSize(pageSize int64) *UsersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListUsers` method. If not specified, the first page of results
+// will be returned.
+func (c *UsersListCall) PageToken(pageToken string) *UsersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersListCall) Fields(s ...googleapi.Field) *UsersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *UsersListCall) IfNoneMatch(entityTag string) *UsersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersListCall) Context(ctx context.Context) *UsersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.list" call.
+// Exactly one of *ListUsersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListUsersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListUsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists users that are accessible to the current user. If two users have user roles on the same partner or advertiser, they can access each other.",
+	//   "flatPath": "v1/users",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.users.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering by user properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following fields: - `displayName` - `email` * The operator must be `EQUALS (=)` for the following fields: - `assignedUserRole.userRole` - `assignedUserRole.partnerId` - `assignedUserRole.advertiserId` - `assignedUserRole.entityType`: A synthetic field of AssignedUserRole used for filtering. Identifies the type of entity to which the user role is assigned. Valid values are `Partner` and `Advertiser`. - `assignedUserRole.parentPartnerId`: A synthetic field of AssignedUserRole used for filtering. Identifies the parent partner of the entity to which the user role is assigned.\" Examples: * The user with displayName containing `foo`: `displayName:\"foo\"` * The user with email containing `bar`: `email:\"bar\"` * All users with standard user roles: `assignedUserRole.userRole=\"STANDARD\"` * All users with user roles for partner 123: `assignedUserRole.partnerId=\"123\"` * All users with user roles for advertiser 123: `assignedUserRole.advertiserId=\"123\"` * All users with partner level user roles: `entityType=\"PARTNER\"` * All users with user roles for partner 123 and advertisers under partner 123: `parentPartnerId=\"123\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `displayName` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. For example, `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListUsers` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users",
+	//   "response": {
+	//     "$ref": "ListUsersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UsersListCall) Pages(ctx context.Context, f func(*ListUsersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.users.patch":
+
+type UsersPatchCall struct {
+	s          *Service
+	userId     int64
+	user       *User
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing user. Returns the updated user if
+// successful.
+func (r *UsersService) Patch(userId int64, user *User) *UsersPatchCall {
+	c := &UsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	c.user = user
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields to update.
+func (c *UsersPatchCall) UpdateMask(updateMask string) *UsersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *UsersPatchCall) Fields(s ...googleapi.Field) *UsersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *UsersPatchCall) Context(ctx context.Context) *UsersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *UsersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.user)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users/{+userId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"userId": strconv.FormatInt(c.userId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.users.patch" call.
+// Exactly one of *User or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *User.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersPatchCall) Do(opts ...googleapi.CallOption) (*User, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &User{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing user. Returns the updated user if successful.",
+	//   "flatPath": "v1/users/{usersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "displayvideo.users.patch",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "Output only. The unique ID of the user. Assigned by the system.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/users/{+userId}",
+	//   "request": {
+	//     "$ref": "User"
+	//   },
+	//   "response": {
+	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video-user-management"
+	//   ]
+	// }
+
 }

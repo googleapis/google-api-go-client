@@ -35,7 +35,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/9EfNrGrWjA9UfyKATju_Xd_tlwU\"",
+  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/l7m-JIhSvmu0HFIAKZgPpq4u-fg\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -183,6 +183,11 @@
               "location": "query",
               "type": "boolean"
             },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
+              "type": "string"
+            },
             "includeRemoved": {
               "default": "true",
               "description": "Whether to include changes indicating that items have been removed from the list of changes, for example by deletion or loss of access.",
@@ -279,6 +284,11 @@
               "description": "Whether both My Drive and shared drive items should be included in results.",
               "location": "query",
               "type": "boolean"
+            },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
+              "type": "string"
             },
             "includeRemoved": {
               "default": "true",
@@ -788,6 +798,11 @@
               "location": "query",
               "type": "boolean"
             },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
+              "type": "string"
+            },
             "keepRevisionForever": {
               "default": "false",
               "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive. Only 200 revisions for the file can be kept forever. If the limit is reached, try deleting pinned revisions.",
@@ -859,6 +874,11 @@
               "location": "query",
               "type": "boolean"
             },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
+              "type": "string"
+            },
             "keepRevisionForever": {
               "default": "false",
               "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive. Only 200 revisions for the file can be kept forever. If the limit is reached, try deleting pinned revisions.",
@@ -912,6 +932,12 @@
             "fileId"
           ],
           "parameters": {
+            "enforceSingleParent": {
+              "default": "false",
+              "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If an item's last parent is deleted but the item itself is not, the item will be placed under its owner's root.",
+              "location": "query",
+              "type": "boolean"
+            },
             "fileId": {
               "description": "The ID of the file.",
               "location": "path",
@@ -942,6 +968,14 @@
           "description": "Permanently deletes all of the user's trashed files.",
           "httpMethod": "DELETE",
           "id": "drive.files.emptyTrash",
+          "parameters": {
+            "enforceSingleParent": {
+              "default": "false",
+              "description": "Set to true to opt in to API behavior that aims for all items to have exactly one parent. This parameter will only take effect if the item is not in a shared drive. If an item's last parent is deleted but the item itself is not, the item will be placed under its owner's root.",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
           "path": "files/trash",
           "scopes": [
             "https://www.googleapis.com/auth/drive"
@@ -1028,6 +1062,11 @@
               "required": true,
               "type": "string"
             },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
+              "type": "string"
+            },
             "supportsAllDrives": {
               "default": "false",
               "description": "Whether the requesting application supports both My Drives and shared drives.",
@@ -1091,6 +1130,11 @@
               "description": "Whether both My Drive and shared drive items should be included in results.",
               "location": "query",
               "type": "boolean"
+            },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
+              "type": "string"
             },
             "includeTeamDriveItems": {
               "default": "false",
@@ -1201,6 +1245,11 @@
               "required": true,
               "type": "string"
             },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
+              "type": "string"
+            },
             "keepRevisionForever": {
               "default": "false",
               "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive. Only 200 revisions for the file can be kept forever. If the limit is reached, try deleting pinned revisions.",
@@ -1270,6 +1319,11 @@
               "description": "The ID of the file.",
               "location": "path",
               "required": true,
+              "type": "string"
+            },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
               "type": "string"
             },
             "supportsAllDrives": {
@@ -1494,6 +1548,11 @@
               "description": "The ID of the file or shared drive.",
               "location": "path",
               "required": true,
+              "type": "string"
+            },
+            "includePermissionsForView": {
+              "description": "Specifies which additional view's permissions to include in the response. Only 'published' is supported.",
+              "location": "query",
               "type": "string"
             },
             "pageSize": {
@@ -2126,7 +2185,7 @@
       }
     }
   },
-  "revision": "20200706",
+  "revision": "20200813",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -2503,7 +2562,7 @@
       "id": "ContentRestriction",
       "properties": {
         "readOnly": {
-          "description": "Whether the content of the file is read-only.",
+          "description": "Whether the content of the file is read-only. If a file is read-only, a new revision of the file may not be added, comments may not be added or modified, and the title of the file may not be modified.",
           "type": "boolean"
         },
         "reason": {
@@ -2794,7 +2853,7 @@
               "type": "boolean"
             },
             "canMoveChildrenWithinDrive": {
-              "description": "Whether the current user can move children of this folder within the shared drive. This is false when the item is not a folder. Only populated for items in shared drives.",
+              "description": "Whether the current user can move children of this folder within this drive. This is false when the item is not a folder. Note that a request to move the child may still fail depending on the current user's access to the child and to the destination folder.",
               "type": "boolean"
             },
             "canMoveChildrenWithinTeamDrive": {
@@ -2814,7 +2873,7 @@
               "type": "boolean"
             },
             "canMoveItemWithinDrive": {
-              "description": "Whether the current user can move this item within this shared drive. Note that a request to change the parent of the item may still fail depending on the new parent that is being added. Only populated for items in shared drives.",
+              "description": "Whether the current user can move this item within this drive. Note that a request to change the parent of the item may still fail depending on the new parent that is being added and the parent that is being removed.",
               "type": "boolean"
             },
             "canMoveItemWithinTeamDrive": {
@@ -3447,6 +3506,10 @@
           },
           "description": "The type of the grantee. Valid values are:  \n- user \n- group \n- domain \n- anyone  When creating a permission, if type is user or group, you must provide an emailAddress for the user or group. When type is domain, you must provide a domain. There isn't extra information required for a anyone type.",
           "type": "string"
+        },
+        "view": {
+          "description": "Indicates the view for this permission. Only populated for permissions that belong to a view. published is the only supported value.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3601,6 +3664,10 @@
         "published": {
           "description": "Whether this revision is published. This is only applicable to Google Docs.",
           "type": "boolean"
+        },
+        "publishedLink": {
+          "description": "A link to the published revision.",
+          "type": "string"
         },
         "publishedOutsideDomain": {
           "description": "Whether this revision is published outside the domain. This is only applicable to Google Docs.",

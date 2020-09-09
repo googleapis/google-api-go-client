@@ -78,7 +78,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "dfareporting:v3.4"
 const apiName = "dfareporting"
 const apiVersion = "v3.4"
-const basePath = "https://www.googleapis.com/dfareporting/v3.4/"
+const basePath = "https://dfareporting.googleapis.com/dfareporting/v3.4/"
+const mtlsBasePath = "https://dfareporting.mtls.googleapis.com/dfareporting/v3.4/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -103,6 +104,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -919,14 +921,14 @@ type Account struct {
 	// account.
 	//
 	// Possible values:
+	//   "ACTIVE_ADS_TIER_40K"
+	//   "ACTIVE_ADS_TIER_75K"
 	//   "ACTIVE_ADS_TIER_100K"
-	//   "ACTIVE_ADS_TIER_1M"
 	//   "ACTIVE_ADS_TIER_200K"
 	//   "ACTIVE_ADS_TIER_300K"
-	//   "ACTIVE_ADS_TIER_40K"
 	//   "ACTIVE_ADS_TIER_500K"
 	//   "ACTIVE_ADS_TIER_750K"
-	//   "ACTIVE_ADS_TIER_75K"
+	//   "ACTIVE_ADS_TIER_1M"
 	ActiveAdsLimitTier string `json:"activeAdsLimitTier,omitempty"`
 
 	// ActiveViewOptOut: Whether to serve creatives with Active View tags.
@@ -942,58 +944,18 @@ type Account struct {
 	CountryId int64 `json:"countryId,omitempty,string"`
 
 	// CurrencyId: ID of currency associated with this account. This is a
-	// required field.
-	// Acceptable values are:
-	// - "1" for USD
-	// - "2" for GBP
-	// - "3" for ESP
-	// - "4" for SEK
-	// - "5" for CAD
-	// - "6" for JPY
-	// - "7" for DEM
-	// - "8" for AUD
-	// - "9" for FRF
-	// - "10" for ITL
-	// - "11" for DKK
-	// - "12" for NOK
-	// - "13" for FIM
-	// - "14" for ZAR
-	// - "15" for IEP
-	// - "16" for NLG
-	// - "17" for EUR
-	// - "18" for KRW
-	// - "19" for TWD
-	// - "20" for SGD
-	// - "21" for CNY
-	// - "22" for HKD
-	// - "23" for NZD
-	// - "24" for MYR
-	// - "25" for BRL
-	// - "26" for PTE
-	// - "27" for MXP
-	// - "28" for CLP
-	// - "29" for TRY
-	// - "30" for ARS
-	// - "31" for PEN
-	// - "32" for ILS
-	// - "33" for CHF
-	// - "34" for VEF
-	// - "35" for COP
-	// - "36" for GTQ
-	// - "37" for PLN
-	// - "39" for INR
-	// - "40" for THB
-	// - "41" for IDR
-	// - "42" for CZK
-	// - "43" for RON
-	// - "44" for HUF
-	// - "45" for RUB
-	// - "46" for AED
-	// - "47" for BGN
-	// - "48" for HRK
-	// - "49" for MXN
-	// - "50" for NGN
-	// - "51" for EGP
+	// required field. Acceptable values are: - "1" for USD - "2" for GBP -
+	// "3" for ESP - "4" for SEK - "5" for CAD - "6" for JPY - "7" for DEM -
+	// "8" for AUD - "9" for FRF - "10" for ITL - "11" for DKK - "12" for
+	// NOK - "13" for FIM - "14" for ZAR - "15" for IEP - "16" for NLG -
+	// "17" for EUR - "18" for KRW - "19" for TWD - "20" for SGD - "21" for
+	// CNY - "22" for HKD - "23" for NZD - "24" for MYR - "25" for BRL -
+	// "26" for PTE - "28" for CLP - "29" for TRY - "30" for ARS - "31" for
+	// PEN - "32" for ILS - "33" for CHF - "34" for VEF - "35" for COP -
+	// "36" for GTQ - "37" for PLN - "39" for INR - "40" for THB - "41" for
+	// IDR - "42" for CZK - "43" for RON - "44" for HUF - "45" for RUB -
+	// "46" for AED - "47" for BGN - "48" for HRK - "49" for MXN - "50" for
+	// NGN - "51" for EGP
 	CurrencyId int64 `json:"currencyId,omitempty,string"`
 
 	// DefaultCreativeSizeId: Default placement dimensions for this account.
@@ -1009,24 +971,12 @@ type Account struct {
 	// string "dfareporting#account".
 	Kind string `json:"kind,omitempty"`
 
-	// Locale: Locale of this account.
-	// Acceptable values are:
-	// - "cs" (Czech)
-	// - "de" (German)
-	// - "en" (English)
-	// - "en-GB" (English United Kingdom)
-	// - "es" (Spanish)
-	// - "fr" (French)
-	// - "it" (Italian)
-	// - "ja" (Japanese)
-	// - "ko" (Korean)
-	// - "pl" (Polish)
-	// - "pt-BR" (Portuguese Brazil)
-	// - "ru" (Russian)
-	// - "sv" (Swedish)
-	// - "tr" (Turkish)
-	// - "zh-CN" (Chinese Simplified)
-	// - "zh-TW" (Chinese Traditional)
+	// Locale: Locale of this account. Acceptable values are: - "cs" (Czech)
+	// - "de" (German) - "en" (English) - "en-GB" (English United Kingdom) -
+	// "es" (Spanish) - "fr" (French) - "it" (Italian) - "ja" (Japanese) -
+	// "ko" (Korean) - "pl" (Polish) - "pt-BR" (Portuguese Brazil) - "ru"
+	// (Russian) - "sv" (Swedish) - "tr" (Turkish) - "zh-CN" (Chinese
+	// Simplified) - "zh-TW" (Chinese Traditional)
 	Locale string `json:"locale,omitempty"`
 
 	// MaximumImageSize: Maximum image size allowed for this account, in
@@ -1093,14 +1043,14 @@ type AccountActiveAdSummary struct {
 	// account.
 	//
 	// Possible values:
+	//   "ACTIVE_ADS_TIER_40K"
+	//   "ACTIVE_ADS_TIER_75K"
 	//   "ACTIVE_ADS_TIER_100K"
-	//   "ACTIVE_ADS_TIER_1M"
 	//   "ACTIVE_ADS_TIER_200K"
 	//   "ACTIVE_ADS_TIER_300K"
-	//   "ACTIVE_ADS_TIER_40K"
 	//   "ACTIVE_ADS_TIER_500K"
 	//   "ACTIVE_ADS_TIER_750K"
-	//   "ACTIVE_ADS_TIER_75K"
+	//   "ACTIVE_ADS_TIER_1M"
 	ActiveAdsLimitTier string `json:"activeAdsLimitTier,omitempty"`
 
 	// AvailableAds: Ads that can be activated for the account.
@@ -1142,11 +1092,8 @@ func (s *AccountActiveAdSummary) MarshalJSON() ([]byte, error) {
 // require an account permission to be present in the account.
 type AccountPermission struct {
 	// AccountProfiles: Account profiles associated with this account
-	// permission.
-	//
-	// Possible values are:
-	// - "ACCOUNT_PROFILE_BASIC"
-	// - "ACCOUNT_PROFILE_STANDARD"
+	// permission. Possible values are: - "ACCOUNT_PROFILE_BASIC" -
+	// "ACCOUNT_PROFILE_STANDARD"
 	//
 	// Possible values:
 	//   "ACCOUNT_PROFILE_BASIC"
@@ -1164,8 +1111,8 @@ type AccountPermission struct {
 	// permission.
 	//
 	// Possible values:
-	//   "ADMINISTRATOR"
 	//   "USER"
+	//   "ADMINISTRATOR"
 	Level string `json:"level,omitempty"`
 
 	// Name: Name of this account permission.
@@ -1356,30 +1303,18 @@ type AccountUserProfile struct {
 	// string "dfareporting#accountUserProfile".
 	Kind string `json:"kind,omitempty"`
 
-	// Locale: Locale of the user profile. This is a required
-	// field.
-	// Acceptable values are:
-	// - "cs" (Czech)
-	// - "de" (German)
-	// - "en" (English)
-	// - "en-GB" (English United Kingdom)
-	// - "es" (Spanish)
-	// - "fr" (French)
-	// - "it" (Italian)
-	// - "ja" (Japanese)
-	// - "ko" (Korean)
-	// - "pl" (Polish)
-	// - "pt-BR" (Portuguese Brazil)
-	// - "ru" (Russian)
-	// - "sv" (Swedish)
-	// - "tr" (Turkish)
-	// - "zh-CN" (Chinese Simplified)
-	// - "zh-TW" (Chinese Traditional)
+	// Locale: Locale of the user profile. This is a required field.
+	// Acceptable values are: - "cs" (Czech) - "de" (German) - "en"
+	// (English) - "en-GB" (English United Kingdom) - "es" (Spanish) - "fr"
+	// (French) - "it" (Italian) - "ja" (Japanese) - "ko" (Korean) - "pl"
+	// (Polish) - "pt-BR" (Portuguese Brazil) - "ru" (Russian) - "sv"
+	// (Swedish) - "tr" (Turkish) - "zh-CN" (Chinese Simplified) - "zh-TW"
+	// (Chinese Traditional)
 	Locale string `json:"locale,omitempty"`
 
 	// Name: Name of the user profile. This is a required field. Must be
 	// less than 64 characters long, must be globally unique, and cannot
-	// contain whitespace or any of the following characters: "&;"#%,".
+	// contain whitespace or any of the following characters: "&;<>"#%,".
 	Name string `json:"name,omitempty"`
 
 	// SiteFilter: Filter that describes which sites are visible to the user
@@ -1394,19 +1329,19 @@ type AccountUserProfile struct {
 	// read-only field.
 	//
 	// Possible values:
-	//   "EXTERNAL_TRAFFICKER"
 	//   "INTERNAL_NON_TRAFFICKER"
 	//   "INTERNAL_TRAFFICKER"
+	//   "EXTERNAL_TRAFFICKER"
 	TraffickerType string `json:"traffickerType,omitempty"`
 
 	// UserAccessType: User type of the user profile. This is a read-only
 	// field that can be left blank.
 	//
 	// Possible values:
-	//   "INTERNAL_ADMINISTRATOR"
 	//   "NORMAL_USER"
-	//   "READ_ONLY_SUPER_USER"
 	//   "SUPER_USER"
+	//   "INTERNAL_ADMINISTRATOR"
+	//   "READ_ONLY_SUPER_USER"
 	UserAccessType string `json:"userAccessType,omitempty"`
 
 	// UserRoleFilter: Filter that describes which user roles are visible to
@@ -1617,12 +1552,12 @@ type Ad struct {
 	// video ads developed with the VAST standard.
 	//
 	// Possible values:
-	//   "APP"
-	//   "APP_INTERSTITIAL"
 	//   "DISPLAY"
 	//   "DISPLAY_INTERSTITIAL"
-	//   "IN_STREAM_AUDIO"
+	//   "APP"
+	//   "APP_INTERSTITIAL"
 	//   "IN_STREAM_VIDEO"
+	//   "IN_STREAM_AUDIO"
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// CreateInfo: Information about the creation of this ad. This is a
@@ -1638,7 +1573,7 @@ type Ad struct {
 	// CreativeRotation: Creative rotation for this ad. Applicable when type
 	// is AD_SERVING_DEFAULT_AD, AD_SERVING_STANDARD_AD, or
 	// AD_SERVING_TRACKING. When type is AD_SERVING_DEFAULT_AD, this field
-	// should have exactly one creativeAssignment.
+	// should have exactly one creativeAssignment .
 	CreativeRotation *CreativeRotation `json:"creativeRotation,omitempty"`
 
 	// DayPartTargeting: Time and day targeting information for this ad.
@@ -1662,8 +1597,6 @@ type Ad struct {
 	// field on insert, and is read-only after insert.
 	DynamicClickTracker bool `json:"dynamicClickTracker,omitempty"`
 
-	// EndTime: Date and time that this ad should stop serving. Must be
-	// later than the start time. This is a required field on insertion.
 	EndTime string `json:"endTime,omitempty"`
 
 	// EventTagOverrides: Event tag overrides for this ad.
@@ -1722,9 +1655,6 @@ type Ad struct {
 	// that is auto-generated when the ad is inserted or updated.
 	SslRequired bool `json:"sslRequired,omitempty"`
 
-	// StartTime: Date and time that this ad should start serving. If
-	// creating an ad, this field must be a time in the future. This is a
-	// required field on insertion.
 	StartTime string `json:"startTime,omitempty"`
 
 	// SubaccountId: Subaccount ID of this ad. This is a read-only field
@@ -1745,13 +1675,13 @@ type Ad struct {
 	TechnologyTargeting *TechnologyTargeting `json:"technologyTargeting,omitempty"`
 
 	// Type: Type of ad. This is a required field on insertion. Note that
-	// default ads (AD_SERVING_DEFAULT_AD) cannot be created directly (see
+	// default ads ( AD_SERVING_DEFAULT_AD) cannot be created directly (see
 	// Creative resource).
 	//
 	// Possible values:
-	//   "AD_SERVING_CLICK_TRACKER"
-	//   "AD_SERVING_DEFAULT_AD"
 	//   "AD_SERVING_STANDARD_AD"
+	//   "AD_SERVING_DEFAULT_AD"
+	//   "AD_SERVING_CLICK_TRACKER"
 	//   "AD_SERVING_TRACKING"
 	Type string `json:"type,omitempty"`
 
@@ -1843,12 +1773,12 @@ type AdSlot struct {
 	// developed with the VAST standard.
 	//
 	// Possible values:
-	//   "APP"
-	//   "APP_INTERSTITIAL"
 	//   "DISPLAY"
 	//   "DISPLAY_INTERSTITIAL"
-	//   "IN_STREAM_AUDIO"
+	//   "APP"
+	//   "APP_INTERSTITIAL"
 	//   "IN_STREAM_VIDEO"
+	//   "IN_STREAM_AUDIO"
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// Height: Height of this ad slot.
@@ -1966,12 +1896,10 @@ type Advertiser struct {
 	// automatically, so on insert this field should be left blank. This
 	// field can be set to another advertiser's floodlight configuration ID
 	// in order to share that advertiser's floodlight configuration with
-	// this advertiser, so long as:
-	// - This advertiser's original floodlight configuration is not already
-	// associated with floodlight activities or floodlight activity groups.
-	//
-	// - This advertiser's original floodlight configuration is not already
-	// shared with another advertiser.
+	// this advertiser, so long as: - This advertiser's original floodlight
+	// configuration is not already associated with floodlight activities or
+	// floodlight activity groups. - This advertiser's original floodlight
+	// configuration is not already shared with another advertiser.
 	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
 
 	// FloodlightConfigurationIdDimensionValue: Dimension value for the ID
@@ -2451,13 +2379,6 @@ type Campaign struct {
 	// DefaultLandingPageId: The default landing page ID for this campaign.
 	DefaultLandingPageId int64 `json:"defaultLandingPageId,omitempty,string"`
 
-	// EndDate: Date on which the campaign will stop running. On insert, the
-	// end date must be today or a future date. The end date must be later
-	// than or be the same as the start date. If, for example, you set
-	// 6/25/2015 as both the start and end dates, the effective campaign run
-	// date is just that day only, 6/25/2015. The hours, minutes, and
-	// seconds of the end date should not be set, as doing so will result in
-	// an error. This is a required field.
 	EndDate string `json:"endDate,omitempty"`
 
 	// EventTagOverrides: Overrides that can be used to activate or
@@ -2491,10 +2412,6 @@ type Campaign struct {
 	// campaign.
 	NielsenOcrEnabled bool `json:"nielsenOcrEnabled,omitempty"`
 
-	// StartDate: Date on which the campaign starts running. The start date
-	// can be any date. The hours, minutes, and seconds of the start date
-	// should not be set, as doing so will result in an error. This is a
-	// required field.
 	StartDate string `json:"startDate,omitempty"`
 
 	// SubaccountId: Subaccount ID of this campaign. This is a read-only
@@ -2705,7 +2622,6 @@ type ChangeLog struct {
 	// Action: Action which caused the change.
 	Action string `json:"action,omitempty"`
 
-	// ChangeTime: Time when the object was modified.
 	ChangeTime string `json:"changeTime,omitempty"`
 
 	// FieldName: Field name of the object which changed.
@@ -2809,6 +2725,82 @@ type ChangeLogsListResponse struct {
 
 func (s *ChangeLogsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ChangeLogsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChannelGrouping: Represents a DfaReporting channel grouping.
+type ChannelGrouping struct {
+	// FallbackName: ChannelGrouping fallback name.
+	FallbackName string `json:"fallbackName,omitempty"`
+
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#channelGrouping.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: ChannelGrouping name.
+	Name string `json:"name,omitempty"`
+
+	// Rules: The rules contained within this channel grouping.
+	Rules []*ChannelGroupingRule `json:"rules,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FallbackName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FallbackName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChannelGrouping) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelGrouping
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChannelGroupingRule: Represents a DfaReporting channel grouping rule.
+type ChannelGroupingRule struct {
+	// DisjunctiveMatchStatements: The disjunctive match statements
+	// contained within this rule.
+	DisjunctiveMatchStatements []*DisjunctiveMatchStatement `json:"disjunctiveMatchStatements,omitempty"`
+
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#channelGroupingRule.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Rule name.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DisjunctiveMatchStatements") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "DisjunctiveMatchStatements") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChannelGroupingRule) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelGroupingRule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2948,13 +2940,12 @@ func (s *ClickTag) MarshalJSON() ([]byte, error) {
 type ClickThroughUrl struct {
 	// ComputedClickThroughUrl: Read-only convenience field representing the
 	// actual URL that will be used for this click-through. The URL is
-	// computed as follows:
-	// - If defaultLandingPage is enabled then the campaign's default
-	// landing page URL is assigned to this field.
-	// - If defaultLandingPage is not enabled and a landingPageId is
-	// specified then that landing page's URL is assigned to this field.
-	// - If neither of the above cases apply, then the customClickThroughUrl
-	// is assigned to this field.
+	// computed as follows: - If defaultLandingPage is enabled then the
+	// campaign's default landing page URL is assigned to this field. - If
+	// defaultLandingPage is not enabled and a landingPageId is specified
+	// then that landing page's URL is assigned to this field. - If neither
+	// of the above cases apply, then the customClickThroughUrl is assigned
+	// to this field.
 	ComputedClickThroughUrl string `json:"computedClickThroughUrl,omitempty"`
 
 	// CustomClickThroughUrl: Custom click-through URL. Applicable if the
@@ -3121,6 +3112,14 @@ type CompatibleFields struct {
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#compatibleFields.
 	Kind string `json:"kind,omitempty"`
+
+	// PathAttributionReportCompatibleFields: Contains items that are
+	// compatible to be selected for a report of type "PATH_ATTRIBUTION".
+	PathAttributionReportCompatibleFields *PathReportCompatibleFields `json:"pathAttributionReportCompatibleFields,omitempty"`
+
+	// PathReportCompatibleFields: Contains items that are compatible to be
+	// selected for a report of type "PATH".
+	PathReportCompatibleFields *PathReportCompatibleFields `json:"pathReportCompatibleFields,omitempty"`
 
 	// PathToConversionReportCompatibleFields: Contains items that are
 	// compatible to be selected for a report of type "PATH_TO_CONVERSION".
@@ -3340,11 +3339,17 @@ type Conversion struct {
 	// CustomVariables: Custom floodlight variables.
 	CustomVariables []*CustomFloodlightVariable `json:"customVariables,omitempty"`
 
+	// Dclid: The display click ID. This field is mutually exclusive with
+	// encryptedUserId, encryptedUserIdCandidates[], matchId, mobileDeviceId
+	// and gclid. This or encryptedUserId or encryptedUserIdCandidates[] or
+	// matchId or mobileDeviceId or gclid is a required field.
+	Dclid string `json:"dclid,omitempty"`
+
 	// EncryptedUserId: The alphanumeric encrypted user ID. When set,
 	// encryptionInfo should also be specified. This field is mutually
-	// exclusive with encryptedUserIdCandidates[], matchId, mobileDeviceId
-	// and gclid. This or encryptedUserIdCandidates[] or matchId or
-	// mobileDeviceId or gclid is a required field.
+	// exclusive with encryptedUserIdCandidates[], matchId, mobileDeviceId,
+	// gclid and dclid. This or encryptedUserIdCandidates[] or matchId or
+	// mobileDeviceId or gclid or dclid is a required field.
 	EncryptedUserId string `json:"encryptedUserId,omitempty"`
 
 	// EncryptedUserIdCandidates: A list of the alphanumeric encrypted user
@@ -3354,8 +3359,8 @@ type Conversion struct {
 	// set, encryptionInfo should also be specified. This field may only be
 	// used when calling batchinsert; it is not supported by batchupdate.
 	// This field is mutually exclusive with encryptedUserId, matchId,
-	// mobileDeviceId and gclid. This or encryptedUserId or matchId or
-	// mobileDeviceId or gclid is a required field.
+	// mobileDeviceId, gclid and dclid. This or encryptedUserId or matchId
+	// or mobileDeviceId or gclid or dclid is a required field.
 	EncryptedUserIdCandidates []string `json:"encryptedUserIdCandidates,omitempty"`
 
 	// FloodlightActivityId: Floodlight Activity ID of this conversion. This
@@ -3367,10 +3372,9 @@ type Conversion struct {
 	FloodlightConfigurationId int64 `json:"floodlightConfigurationId,omitempty,string"`
 
 	// Gclid: The Google click ID. This field is mutually exclusive with
-	// encryptedUserId, encryptedUserIdCandidates[], matchId and
-	// mobileDeviceId. This or encryptedUserId or
-	// encryptedUserIdCandidates[] or matchId or mobileDeviceId is a
-	// required field.
+	// encryptedUserId, encryptedUserIdCandidates[], matchId, mobileDeviceId
+	// and dclid. This or encryptedUserId or encryptedUserIdCandidates[] or
+	// matchId or mobileDeviceId or dclid is a required field.
 	Gclid string `json:"gclid,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3385,15 +3389,16 @@ type Conversion struct {
 	// MatchId: The match ID field. A match ID is your own first-party
 	// identifier that has been synced with Google using the match ID
 	// feature in Floodlight. This field is mutually exclusive with
-	// encryptedUserId, encryptedUserIdCandidates[],mobileDeviceId and
-	// gclid. This or encryptedUserId or encryptedUserIdCandidates[] or
-	// mobileDeviceId or gclid is a required field.
+	// encryptedUserId, encryptedUserIdCandidates[],mobileDeviceId, gclid
+	// and dclid. This or encryptedUserId or encryptedUserIdCandidates[] or
+	// mobileDeviceId or gclid or dclid is a required field.
 	MatchId string `json:"matchId,omitempty"`
 
 	// MobileDeviceId: The mobile device ID. This field is mutually
-	// exclusive with encryptedUserId, encryptedUserIdCandidates[], matchId
-	// and gclid. This or encryptedUserId or encryptedUserIdCandidates[] or
-	// matchId or gclid is a required field.
+	// exclusive with encryptedUserId, encryptedUserIdCandidates[], matchId,
+	// gclid and dclid. This or encryptedUserId or
+	// encryptedUserIdCandidates[] or matchId or gclid or dclid is a
+	// required field.
 	MobileDeviceId string `json:"mobileDeviceId,omitempty"`
 
 	// NonPersonalizedAd: Whether the conversion was for a non personalized
@@ -3465,10 +3470,10 @@ type ConversionError struct {
 	// Code: The error code.
 	//
 	// Possible values:
-	//   "INTERNAL"
 	//   "INVALID_ARGUMENT"
-	//   "NOT_FOUND"
+	//   "INTERNAL"
 	//   "PERMISSION_DENIED"
+	//   "NOT_FOUND"
 	Code string `json:"code,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -3825,8 +3830,8 @@ type Creative struct {
 	// Possible values:
 	//   "ARTWORK_TYPE_FLASH"
 	//   "ARTWORK_TYPE_HTML5"
-	//   "ARTWORK_TYPE_IMAGE"
 	//   "ARTWORK_TYPE_MIXED"
+	//   "ARTWORK_TYPE_IMAGE"
 	ArtworkType string `json:"artworkType,omitempty"`
 
 	// AuthoringSource: Source application where creative was authored.
@@ -3834,8 +3839,8 @@ type Creative struct {
 	// Applicable to all creative types.
 	//
 	// Possible values:
-	//   "CREATIVE_AUTHORING_SOURCE_DBM"
 	//   "CREATIVE_AUTHORING_SOURCE_DCM"
+	//   "CREATIVE_AUTHORING_SOURCE_DBM"
 	//   "CREATIVE_AUTHORING_SOURCE_STUDIO"
 	AuthoringSource string `json:"authoringSource,omitempty"`
 
@@ -3876,72 +3881,72 @@ type Creative struct {
 	// when the primary asset type is not HTML_IMAGE.
 	//
 	// Possible values:
-	//   "APPLICATION_CACHE"
-	//   "AUDIO"
-	//   "CANVAS"
-	//   "CANVAS_TEXT"
-	//   "CSS_ANIMATIONS"
+	//   "CSS_FONT_FACE"
 	//   "CSS_BACKGROUND_SIZE"
 	//   "CSS_BORDER_IMAGE"
 	//   "CSS_BORDER_RADIUS"
 	//   "CSS_BOX_SHADOW"
-	//   "CSS_COLUMNS"
 	//   "CSS_FLEX_BOX"
-	//   "CSS_FONT_FACE"
-	//   "CSS_GENERATED_CONTENT"
-	//   "CSS_GRADIENTS"
 	//   "CSS_HSLA"
 	//   "CSS_MULTIPLE_BGS"
 	//   "CSS_OPACITY"
-	//   "CSS_REFLECTIONS"
 	//   "CSS_RGBA"
 	//   "CSS_TEXT_SHADOW"
+	//   "CSS_ANIMATIONS"
+	//   "CSS_COLUMNS"
+	//   "CSS_GENERATED_CONTENT"
+	//   "CSS_GRADIENTS"
+	//   "CSS_REFLECTIONS"
 	//   "CSS_TRANSFORMS"
 	//   "CSS_TRANSFORMS3D"
 	//   "CSS_TRANSITIONS"
+	//   "APPLICATION_CACHE"
+	//   "CANVAS"
+	//   "CANVAS_TEXT"
 	//   "DRAG_AND_DROP"
-	//   "GEO_LOCATION"
 	//   "HASH_CHANGE"
 	//   "HISTORY"
+	//   "AUDIO"
+	//   "VIDEO"
 	//   "INDEXED_DB"
-	//   "INLINE_SVG"
 	//   "INPUT_ATTR_AUTOCOMPLETE"
 	//   "INPUT_ATTR_AUTOFOCUS"
 	//   "INPUT_ATTR_LIST"
+	//   "INPUT_ATTR_PLACEHOLDER"
 	//   "INPUT_ATTR_MAX"
 	//   "INPUT_ATTR_MIN"
 	//   "INPUT_ATTR_MULTIPLE"
 	//   "INPUT_ATTR_PATTERN"
-	//   "INPUT_ATTR_PLACEHOLDER"
 	//   "INPUT_ATTR_REQUIRED"
 	//   "INPUT_ATTR_STEP"
-	//   "INPUT_TYPE_COLOR"
-	//   "INPUT_TYPE_DATE"
-	//   "INPUT_TYPE_DATETIME"
-	//   "INPUT_TYPE_DATETIME_LOCAL"
-	//   "INPUT_TYPE_EMAIL"
-	//   "INPUT_TYPE_MONTH"
-	//   "INPUT_TYPE_NUMBER"
-	//   "INPUT_TYPE_RANGE"
 	//   "INPUT_TYPE_SEARCH"
 	//   "INPUT_TYPE_TEL"
-	//   "INPUT_TYPE_TIME"
 	//   "INPUT_TYPE_URL"
+	//   "INPUT_TYPE_EMAIL"
+	//   "INPUT_TYPE_DATETIME"
+	//   "INPUT_TYPE_DATE"
+	//   "INPUT_TYPE_MONTH"
 	//   "INPUT_TYPE_WEEK"
+	//   "INPUT_TYPE_TIME"
+	//   "INPUT_TYPE_DATETIME_LOCAL"
+	//   "INPUT_TYPE_NUMBER"
+	//   "INPUT_TYPE_RANGE"
+	//   "INPUT_TYPE_COLOR"
 	//   "LOCAL_STORAGE"
 	//   "POST_MESSAGE"
 	//   "SESSION_STORAGE"
-	//   "SMIL"
-	//   "SVG_CLIP_PATHS"
-	//   "SVG_FE_IMAGE"
-	//   "SVG_FILTERS"
-	//   "SVG_HREF"
-	//   "TOUCH"
-	//   "VIDEO"
-	//   "WEBGL"
 	//   "WEB_SOCKETS"
 	//   "WEB_SQL_DATABASE"
 	//   "WEB_WORKERS"
+	//   "GEO_LOCATION"
+	//   "INLINE_SVG"
+	//   "SMIL"
+	//   "SVG_HREF"
+	//   "SVG_CLIP_PATHS"
+	//   "TOUCH"
+	//   "WEBGL"
+	//   "SVG_FILTERS"
+	//   "SVG_FE_IMAGE"
 	BackupImageFeatures []string `json:"backupImageFeatures,omitempty"`
 
 	// BackupImageReportingLabel: Reporting label used for HTML5 banner
@@ -3990,23 +3995,17 @@ type Creative struct {
 	// IN_STREAM_VIDEO refers to rendering in in-stream video ads developed
 	// with the VAST standard. IN_STREAM_AUDIO refers to rendering in
 	// in-stream audio ads developed with the VAST standard. Applicable to
-	// all creative types.
-	//
-	// Acceptable values are:
-	// - "APP"
-	// - "APP_INTERSTITIAL"
-	// - "IN_STREAM_VIDEO"
-	// - "IN_STREAM_AUDIO"
-	// - "DISPLAY"
-	// - "DISPLAY_INTERSTITIAL"
+	// all creative types. Acceptable values are: - "APP" -
+	// "APP_INTERSTITIAL" - "IN_STREAM_VIDEO" - "IN_STREAM_AUDIO" -
+	// "DISPLAY" - "DISPLAY_INTERSTITIAL"
 	//
 	// Possible values:
-	//   "APP"
-	//   "APP_INTERSTITIAL"
 	//   "DISPLAY"
 	//   "DISPLAY_INTERSTITIAL"
-	//   "IN_STREAM_AUDIO"
+	//   "APP"
+	//   "APP_INTERSTITIAL"
 	//   "IN_STREAM_VIDEO"
+	//   "IN_STREAM_AUDIO"
 	Compatibility []string `json:"compatibility,omitempty"`
 
 	// ConvertFlashToHtml5: Whether Flash assets associated with the
@@ -4236,38 +4235,36 @@ type Creative struct {
 	TotalFileSize int64 `json:"totalFileSize,omitempty,string"`
 
 	// Type: Type of this creative. This is a required field. Applicable to
-	// all creative types.
-	//
-	// Note: FLASH_INPAGE, HTML5_BANNER, and IMAGE are only used for
-	// existing creatives. New creatives should use DISPLAY as a replacement
-	// for these types.
+	// all creative types. *Note:* FLASH_INPAGE, HTML5_BANNER, and IMAGE are
+	// only used for existing creatives. New creatives should use DISPLAY as
+	// a replacement for these types.
 	//
 	// Possible values:
-	//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
-	//   "CUSTOM_DISPLAY"
-	//   "CUSTOM_DISPLAY_INTERSTITIAL"
-	//   "DISPLAY"
-	//   "DISPLAY_IMAGE_GALLERY"
-	//   "DISPLAY_REDIRECT"
-	//   "FLASH_INPAGE"
-	//   "HTML5_BANNER"
 	//   "IMAGE"
-	//   "INSTREAM_AUDIO"
-	//   "INSTREAM_VIDEO"
-	//   "INSTREAM_VIDEO_REDIRECT"
+	//   "DISPLAY_REDIRECT"
+	//   "CUSTOM_DISPLAY"
 	//   "INTERNAL_REDIRECT"
+	//   "CUSTOM_DISPLAY_INTERSTITIAL"
 	//   "INTERSTITIAL_INTERNAL_REDIRECT"
+	//   "TRACKING_TEXT"
 	//   "RICH_MEDIA_DISPLAY_BANNER"
+	//   "RICH_MEDIA_INPAGE_FLOATING"
+	//   "RICH_MEDIA_IM_EXPAND"
 	//   "RICH_MEDIA_DISPLAY_EXPANDING"
 	//   "RICH_MEDIA_DISPLAY_INTERSTITIAL"
 	//   "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL"
-	//   "RICH_MEDIA_IM_EXPAND"
-	//   "RICH_MEDIA_INPAGE_FLOATING"
 	//   "RICH_MEDIA_MOBILE_IN_APP"
-	//   "RICH_MEDIA_PEEL_DOWN"
-	//   "TRACKING_TEXT"
+	//   "FLASH_INPAGE"
+	//   "INSTREAM_VIDEO"
 	//   "VPAID_LINEAR_VIDEO"
 	//   "VPAID_NON_LINEAR_VIDEO"
+	//   "INSTREAM_VIDEO_REDIRECT"
+	//   "RICH_MEDIA_PEEL_DOWN"
+	//   "HTML5_BANNER"
+	//   "DISPLAY"
+	//   "DISPLAY_IMAGE_GALLERY"
+	//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
+	//   "INSTREAM_AUDIO"
 	Type string `json:"type,omitempty"`
 
 	// UniversalAdId: A Universal Ad ID as per the VAST 4.0 spec. Applicable
@@ -4347,13 +4344,13 @@ type CreativeAsset struct {
 
 	// Alignment: Possible alignments for an asset. This is a read-only
 	// field. Applicable to the following creative types:
-	// RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL.
+	// RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL .
 	//
 	// Possible values:
+	//   "ALIGNMENT_TOP"
+	//   "ALIGNMENT_RIGHT"
 	//   "ALIGNMENT_BOTTOM"
 	//   "ALIGNMENT_LEFT"
-	//   "ALIGNMENT_RIGHT"
-	//   "ALIGNMENT_TOP"
 	Alignment string `json:"alignment,omitempty"`
 
 	// ArtworkType: Artwork type of rich media creative. This is a read-only
@@ -4362,8 +4359,8 @@ type CreativeAsset struct {
 	// Possible values:
 	//   "ARTWORK_TYPE_FLASH"
 	//   "ARTWORK_TYPE_HTML5"
-	//   "ARTWORK_TYPE_IMAGE"
 	//   "ARTWORK_TYPE_MIXED"
+	//   "ARTWORK_TYPE_IMAGE"
 	ArtworkType string `json:"artworkType,omitempty"`
 
 	// AssetIdentifier: Identifier of this asset. This is the same
@@ -4395,10 +4392,10 @@ type CreativeAsset struct {
 	// field. Applicable to the following creative types: all VPAID.
 	//
 	// Possible values:
-	//   "CHILD_ASSET_TYPE_DATA"
 	//   "CHILD_ASSET_TYPE_FLASH"
-	//   "CHILD_ASSET_TYPE_IMAGE"
 	//   "CHILD_ASSET_TYPE_VIDEO"
+	//   "CHILD_ASSET_TYPE_IMAGE"
+	//   "CHILD_ASSET_TYPE_DATA"
 	ChildAssetType string `json:"childAssetType,omitempty"`
 
 	// CollapsedSize: Size of an asset when collapsed. This is a read-only
@@ -4426,88 +4423,88 @@ type CreativeAsset struct {
 	// Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.
 	//
 	// Possible values:
-	//   "APPLICATION_CACHE"
-	//   "AUDIO"
-	//   "CANVAS"
-	//   "CANVAS_TEXT"
-	//   "CSS_ANIMATIONS"
+	//   "CSS_FONT_FACE"
 	//   "CSS_BACKGROUND_SIZE"
 	//   "CSS_BORDER_IMAGE"
 	//   "CSS_BORDER_RADIUS"
 	//   "CSS_BOX_SHADOW"
-	//   "CSS_COLUMNS"
 	//   "CSS_FLEX_BOX"
-	//   "CSS_FONT_FACE"
-	//   "CSS_GENERATED_CONTENT"
-	//   "CSS_GRADIENTS"
 	//   "CSS_HSLA"
 	//   "CSS_MULTIPLE_BGS"
 	//   "CSS_OPACITY"
-	//   "CSS_REFLECTIONS"
 	//   "CSS_RGBA"
 	//   "CSS_TEXT_SHADOW"
+	//   "CSS_ANIMATIONS"
+	//   "CSS_COLUMNS"
+	//   "CSS_GENERATED_CONTENT"
+	//   "CSS_GRADIENTS"
+	//   "CSS_REFLECTIONS"
 	//   "CSS_TRANSFORMS"
 	//   "CSS_TRANSFORMS3D"
 	//   "CSS_TRANSITIONS"
+	//   "APPLICATION_CACHE"
+	//   "CANVAS"
+	//   "CANVAS_TEXT"
 	//   "DRAG_AND_DROP"
-	//   "GEO_LOCATION"
 	//   "HASH_CHANGE"
 	//   "HISTORY"
+	//   "AUDIO"
+	//   "VIDEO"
 	//   "INDEXED_DB"
-	//   "INLINE_SVG"
 	//   "INPUT_ATTR_AUTOCOMPLETE"
 	//   "INPUT_ATTR_AUTOFOCUS"
 	//   "INPUT_ATTR_LIST"
+	//   "INPUT_ATTR_PLACEHOLDER"
 	//   "INPUT_ATTR_MAX"
 	//   "INPUT_ATTR_MIN"
 	//   "INPUT_ATTR_MULTIPLE"
 	//   "INPUT_ATTR_PATTERN"
-	//   "INPUT_ATTR_PLACEHOLDER"
 	//   "INPUT_ATTR_REQUIRED"
 	//   "INPUT_ATTR_STEP"
-	//   "INPUT_TYPE_COLOR"
-	//   "INPUT_TYPE_DATE"
-	//   "INPUT_TYPE_DATETIME"
-	//   "INPUT_TYPE_DATETIME_LOCAL"
-	//   "INPUT_TYPE_EMAIL"
-	//   "INPUT_TYPE_MONTH"
-	//   "INPUT_TYPE_NUMBER"
-	//   "INPUT_TYPE_RANGE"
 	//   "INPUT_TYPE_SEARCH"
 	//   "INPUT_TYPE_TEL"
-	//   "INPUT_TYPE_TIME"
 	//   "INPUT_TYPE_URL"
+	//   "INPUT_TYPE_EMAIL"
+	//   "INPUT_TYPE_DATETIME"
+	//   "INPUT_TYPE_DATE"
+	//   "INPUT_TYPE_MONTH"
 	//   "INPUT_TYPE_WEEK"
+	//   "INPUT_TYPE_TIME"
+	//   "INPUT_TYPE_DATETIME_LOCAL"
+	//   "INPUT_TYPE_NUMBER"
+	//   "INPUT_TYPE_RANGE"
+	//   "INPUT_TYPE_COLOR"
 	//   "LOCAL_STORAGE"
 	//   "POST_MESSAGE"
 	//   "SESSION_STORAGE"
-	//   "SMIL"
-	//   "SVG_CLIP_PATHS"
-	//   "SVG_FE_IMAGE"
-	//   "SVG_FILTERS"
-	//   "SVG_HREF"
-	//   "TOUCH"
-	//   "VIDEO"
-	//   "WEBGL"
 	//   "WEB_SOCKETS"
 	//   "WEB_SQL_DATABASE"
 	//   "WEB_WORKERS"
+	//   "GEO_LOCATION"
+	//   "INLINE_SVG"
+	//   "SMIL"
+	//   "SVG_HREF"
+	//   "SVG_CLIP_PATHS"
+	//   "TOUCH"
+	//   "WEBGL"
+	//   "SVG_FILTERS"
+	//   "SVG_FE_IMAGE"
 	DetectedFeatures []string `json:"detectedFeatures,omitempty"`
 
 	// DisplayType: Type of rich media asset. This is a read-only field.
 	// Applicable to the following creative types: all RICH_MEDIA.
 	//
 	// Possible values:
-	//   "ASSET_DISPLAY_TYPE_BACKDROP"
+	//   "ASSET_DISPLAY_TYPE_INPAGE"
+	//   "ASSET_DISPLAY_TYPE_FLOATING"
+	//   "ASSET_DISPLAY_TYPE_OVERLAY"
 	//   "ASSET_DISPLAY_TYPE_EXPANDING"
 	//   "ASSET_DISPLAY_TYPE_FLASH_IN_FLASH"
 	//   "ASSET_DISPLAY_TYPE_FLASH_IN_FLASH_EXPANDING"
-	//   "ASSET_DISPLAY_TYPE_FLOATING"
-	//   "ASSET_DISPLAY_TYPE_INPAGE"
-	//   "ASSET_DISPLAY_TYPE_OVERLAY"
 	//   "ASSET_DISPLAY_TYPE_PEEL_DOWN"
 	//   "ASSET_DISPLAY_TYPE_VPAID_LINEAR"
 	//   "ASSET_DISPLAY_TYPE_VPAID_NON_LINEAR"
+	//   "ASSET_DISPLAY_TYPE_BACKDROP"
 	DisplayType string `json:"displayType,omitempty"`
 
 	// Duration: Duration in seconds for which an asset will be displayed.
@@ -4521,8 +4518,8 @@ type CreativeAsset struct {
 	//
 	// Possible values:
 	//   "ASSET_DURATION_TYPE_AUTO"
-	//   "ASSET_DURATION_TYPE_CUSTOM"
 	//   "ASSET_DURATION_TYPE_NONE"
+	//   "ASSET_DURATION_TYPE_CUSTOM"
 	DurationType string `json:"durationType,omitempty"`
 
 	// ExpandedDimension: Detected expanded dimension for video asset. This
@@ -4610,8 +4607,8 @@ type CreativeAsset struct {
 	// field. Applicable to the following creative types: all RICH_MEDIA.
 	//
 	// Possible values:
-	//   "OFFSET_UNIT_PERCENT"
 	//   "OFFSET_UNIT_PIXEL"
+	//   "OFFSET_UNIT_PERCENT"
 	//   "OFFSET_UNIT_PIXEL_FROM_CENTER"
 	PositionLeftUnit string `json:"positionLeftUnit,omitempty"`
 
@@ -4620,8 +4617,8 @@ type CreativeAsset struct {
 	// Applicable to the following creative types: all RICH_MEDIA.
 	//
 	// Possible values:
-	//   "OFFSET_UNIT_PERCENT"
 	//   "OFFSET_UNIT_PIXEL"
+	//   "OFFSET_UNIT_PERCENT"
 	//   "OFFSET_UNIT_PIXEL_FROM_CENTER"
 	PositionTopUnit string `json:"positionTopUnit,omitempty"`
 
@@ -4647,50 +4644,43 @@ type CreativeAsset struct {
 
 	// Role: Role of the asset in relation to creative. Applicable to all
 	// but the following creative types: all REDIRECT and TRACKING_TEXT.
-	// This is a required field.
-	// PRIMARY applies to DISPLAY, FLASH_INPAGE, HTML5_BANNER, IMAGE,
-	// DISPLAY_IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple
-	// primary assets), and all VPAID creatives.
+	// This is a required field. PRIMARY applies to DISPLAY, FLASH_INPAGE,
+	// HTML5_BANNER, IMAGE, DISPLAY_IMAGE_GALLERY, all RICH_MEDIA (which may
+	// contain multiple primary assets), and all VPAID creatives.
 	// BACKUP_IMAGE applies to FLASH_INPAGE, HTML5_BANNER, all RICH_MEDIA,
 	// and all VPAID creatives. Applicable to DISPLAY when the primary asset
-	// type is not HTML_IMAGE.
-	// ADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE
-	// creatives.
-	// OTHER refers to assets from sources other than Campaign Manager, such
-	// as Studio uploaded assets, applicable to all RICH_MEDIA and all VPAID
-	// creatives.
-	// PARENT_VIDEO refers to videos uploaded by the user in Campaign
-	// Manager and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO
-	// creatives.
-	// TRANSCODED_VIDEO refers to videos transcoded by Campaign Manager from
-	// PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO and
-	// VPAID_LINEAR_VIDEO creatives.
-	// ALTERNATE_VIDEO refers to the Campaign Manager representation of
-	// child asset videos from Studio, and is applicable to
-	// VPAID_LINEAR_VIDEO creatives. These cannot be added or removed within
-	// Campaign Manager.
-	// For VPAID_LINEAR_VIDEO creatives, PARENT_VIDEO, TRANSCODED_VIDEO and
-	// ALTERNATE_VIDEO assets that are marked active serve as backup in case
-	// the VPAID creative cannot be served. Only PARENT_VIDEO assets can be
-	// added or removed for an INSTREAM_VIDEO or VPAID_LINEAR_VIDEO
-	// creative.
-	// PARENT_AUDIO refers to audios uploaded by the user in Campaign
-	// Manager and is applicable to INSTREAM_AUDIO
-	// creatives.
-	// TRANSCODED_AUDIO refers to audios transcoded by Campaign Manager from
-	// PARENT_AUDIO assets and is applicable to INSTREAM_AUDIO creatives.
+	// type is not HTML_IMAGE. ADDITIONAL_IMAGE and ADDITIONAL_FLASH apply
+	// to FLASH_INPAGE creatives. OTHER refers to assets from sources other
+	// than Campaign Manager, such as Studio uploaded assets, applicable to
+	// all RICH_MEDIA and all VPAID creatives. PARENT_VIDEO refers to videos
+	// uploaded by the user in Campaign Manager and is applicable to
+	// INSTREAM_VIDEO and VPAID_LINEAR_VIDEO creatives. TRANSCODED_VIDEO
+	// refers to videos transcoded by Campaign Manager from PARENT_VIDEO
+	// assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO
+	// creatives. ALTERNATE_VIDEO refers to the Campaign Manager
+	// representation of child asset videos from Studio, and is applicable
+	// to VPAID_LINEAR_VIDEO creatives. These cannot be added or removed
+	// within Campaign Manager. For VPAID_LINEAR_VIDEO creatives,
+	// PARENT_VIDEO, TRANSCODED_VIDEO and ALTERNATE_VIDEO assets that are
+	// marked active serve as backup in case the VPAID creative cannot be
+	// served. Only PARENT_VIDEO assets can be added or removed for an
+	// INSTREAM_VIDEO or VPAID_LINEAR_VIDEO creative. PARENT_AUDIO refers to
+	// audios uploaded by the user in Campaign Manager and is applicable to
+	// INSTREAM_AUDIO creatives. TRANSCODED_AUDIO refers to audios
+	// transcoded by Campaign Manager from PARENT_AUDIO assets and is
+	// applicable to INSTREAM_AUDIO creatives.
 	//
 	// Possible values:
-	//   "ADDITIONAL_FLASH"
-	//   "ADDITIONAL_IMAGE"
-	//   "ALTERNATE_VIDEO"
-	//   "BACKUP_IMAGE"
-	//   "OTHER"
-	//   "PARENT_AUDIO"
-	//   "PARENT_VIDEO"
 	//   "PRIMARY"
-	//   "TRANSCODED_AUDIO"
+	//   "BACKUP_IMAGE"
+	//   "ADDITIONAL_IMAGE"
+	//   "ADDITIONAL_FLASH"
+	//   "PARENT_VIDEO"
 	//   "TRANSCODED_VIDEO"
+	//   "OTHER"
+	//   "ALTERNATE_VIDEO"
+	//   "PARENT_AUDIO"
+	//   "TRANSCODED_AUDIO"
 	Role string `json:"role,omitempty"`
 
 	// Size: Size associated with this creative asset. This is a required
@@ -4711,8 +4701,8 @@ type CreativeAsset struct {
 	// visible. Applicable to the following creative types: all RICH_MEDIA.
 	//
 	// Possible values:
-	//   "ASSET_START_TIME_TYPE_CUSTOM"
 	//   "ASSET_START_TIME_TYPE_NONE"
+	//   "ASSET_START_TIME_TYPE_CUSTOM"
 	StartTimeType string `json:"startTimeType,omitempty"`
 
 	// StreamingServingUrl: Streaming URL for video asset. This is a
@@ -4737,8 +4727,8 @@ type CreativeAsset struct {
 	//
 	// Possible values:
 	//   "OPAQUE"
-	//   "TRANSPARENT"
 	//   "WINDOW"
+	//   "TRANSPARENT"
 	WindowMode string `json:"windowMode,omitempty"`
 
 	// ZIndex: zIndex value of an asset. Applicable to the following
@@ -4810,12 +4800,12 @@ type CreativeAssetId struct {
 	// should use HTML_IMAGE.
 	//
 	// Possible values:
-	//   "AUDIO"
+	//   "IMAGE"
 	//   "FLASH"
+	//   "VIDEO"
 	//   "HTML"
 	//   "HTML_IMAGE"
-	//   "IMAGE"
-	//   "VIDEO"
+	//   "AUDIO"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -4866,72 +4856,72 @@ type CreativeAssetMetadata struct {
 	// field.
 	//
 	// Possible values:
-	//   "APPLICATION_CACHE"
-	//   "AUDIO"
-	//   "CANVAS"
-	//   "CANVAS_TEXT"
-	//   "CSS_ANIMATIONS"
+	//   "CSS_FONT_FACE"
 	//   "CSS_BACKGROUND_SIZE"
 	//   "CSS_BORDER_IMAGE"
 	//   "CSS_BORDER_RADIUS"
 	//   "CSS_BOX_SHADOW"
-	//   "CSS_COLUMNS"
 	//   "CSS_FLEX_BOX"
-	//   "CSS_FONT_FACE"
-	//   "CSS_GENERATED_CONTENT"
-	//   "CSS_GRADIENTS"
 	//   "CSS_HSLA"
 	//   "CSS_MULTIPLE_BGS"
 	//   "CSS_OPACITY"
-	//   "CSS_REFLECTIONS"
 	//   "CSS_RGBA"
 	//   "CSS_TEXT_SHADOW"
+	//   "CSS_ANIMATIONS"
+	//   "CSS_COLUMNS"
+	//   "CSS_GENERATED_CONTENT"
+	//   "CSS_GRADIENTS"
+	//   "CSS_REFLECTIONS"
 	//   "CSS_TRANSFORMS"
 	//   "CSS_TRANSFORMS3D"
 	//   "CSS_TRANSITIONS"
+	//   "APPLICATION_CACHE"
+	//   "CANVAS"
+	//   "CANVAS_TEXT"
 	//   "DRAG_AND_DROP"
-	//   "GEO_LOCATION"
 	//   "HASH_CHANGE"
 	//   "HISTORY"
+	//   "AUDIO"
+	//   "VIDEO"
 	//   "INDEXED_DB"
-	//   "INLINE_SVG"
 	//   "INPUT_ATTR_AUTOCOMPLETE"
 	//   "INPUT_ATTR_AUTOFOCUS"
 	//   "INPUT_ATTR_LIST"
+	//   "INPUT_ATTR_PLACEHOLDER"
 	//   "INPUT_ATTR_MAX"
 	//   "INPUT_ATTR_MIN"
 	//   "INPUT_ATTR_MULTIPLE"
 	//   "INPUT_ATTR_PATTERN"
-	//   "INPUT_ATTR_PLACEHOLDER"
 	//   "INPUT_ATTR_REQUIRED"
 	//   "INPUT_ATTR_STEP"
-	//   "INPUT_TYPE_COLOR"
-	//   "INPUT_TYPE_DATE"
-	//   "INPUT_TYPE_DATETIME"
-	//   "INPUT_TYPE_DATETIME_LOCAL"
-	//   "INPUT_TYPE_EMAIL"
-	//   "INPUT_TYPE_MONTH"
-	//   "INPUT_TYPE_NUMBER"
-	//   "INPUT_TYPE_RANGE"
 	//   "INPUT_TYPE_SEARCH"
 	//   "INPUT_TYPE_TEL"
-	//   "INPUT_TYPE_TIME"
 	//   "INPUT_TYPE_URL"
+	//   "INPUT_TYPE_EMAIL"
+	//   "INPUT_TYPE_DATETIME"
+	//   "INPUT_TYPE_DATE"
+	//   "INPUT_TYPE_MONTH"
 	//   "INPUT_TYPE_WEEK"
+	//   "INPUT_TYPE_TIME"
+	//   "INPUT_TYPE_DATETIME_LOCAL"
+	//   "INPUT_TYPE_NUMBER"
+	//   "INPUT_TYPE_RANGE"
+	//   "INPUT_TYPE_COLOR"
 	//   "LOCAL_STORAGE"
 	//   "POST_MESSAGE"
 	//   "SESSION_STORAGE"
-	//   "SMIL"
-	//   "SVG_CLIP_PATHS"
-	//   "SVG_FE_IMAGE"
-	//   "SVG_FILTERS"
-	//   "SVG_HREF"
-	//   "TOUCH"
-	//   "VIDEO"
-	//   "WEBGL"
 	//   "WEB_SOCKETS"
 	//   "WEB_SQL_DATABASE"
 	//   "WEB_WORKERS"
+	//   "GEO_LOCATION"
+	//   "INLINE_SVG"
+	//   "SMIL"
+	//   "SVG_HREF"
+	//   "SVG_CLIP_PATHS"
+	//   "TOUCH"
+	//   "WEBGL"
+	//   "SVG_FILTERS"
+	//   "SVG_FE_IMAGE"
 	DetectedFeatures []string `json:"detectedFeatures,omitempty"`
 
 	// ExitCustomEvents: List of exit events configured for the asset. This
@@ -4961,60 +4951,44 @@ type CreativeAssetMetadata struct {
 	TimerCustomEvents []*CreativeCustomEvent `json:"timerCustomEvents,omitempty"`
 
 	// WarnedValidationRules: Rules validated during code generation that
-	// generated a warning. This is a read-only, auto-generated
-	// field.
-	//
-	// Possible values are:
-	// - "ADMOB_REFERENCED"
-	// - "ASSET_FORMAT_UNSUPPORTED_DCM"
-	// - "ASSET_INVALID"
-	// - "CLICK_TAG_HARD_CODED"
-	// - "CLICK_TAG_INVALID"
-	// - "CLICK_TAG_IN_GWD"
-	// - "CLICK_TAG_MISSING"
-	// - "CLICK_TAG_MORE_THAN_ONE"
-	// - "CLICK_TAG_NON_TOP_LEVEL"
-	// - "COMPONENT_UNSUPPORTED_DCM"
-	// - "ENABLER_UNSUPPORTED_METHOD_DCM"
-	// - "EXTERNAL_FILE_REFERENCED"
-	// - "FILE_DETAIL_EMPTY"
-	// - "FILE_TYPE_INVALID"
-	// - "GWD_PROPERTIES_INVALID"
-	// - "HTML5_FEATURE_UNSUPPORTED"
-	// - "LINKED_FILE_NOT_FOUND"
-	// - "MAX_FLASH_VERSION_11"
-	// - "MRAID_REFERENCED"
-	// - "NOT_SSL_COMPLIANT"
-	// - "ORPHANED_ASSET"
-	// - "PRIMARY_HTML_MISSING"
-	// - "SVG_INVALID"
-	// - "ZIP_INVALID"
+	// generated a warning. This is a read-only, auto-generated field.
+	// Possible values are: - "ADMOB_REFERENCED" -
+	// "ASSET_FORMAT_UNSUPPORTED_DCM" - "ASSET_INVALID" -
+	// "CLICK_TAG_HARD_CODED" - "CLICK_TAG_INVALID" - "CLICK_TAG_IN_GWD" -
+	// "CLICK_TAG_MISSING" - "CLICK_TAG_MORE_THAN_ONE" -
+	// "CLICK_TAG_NON_TOP_LEVEL" - "COMPONENT_UNSUPPORTED_DCM" -
+	// "ENABLER_UNSUPPORTED_METHOD_DCM" - "EXTERNAL_FILE_REFERENCED" -
+	// "FILE_DETAIL_EMPTY" - "FILE_TYPE_INVALID" - "GWD_PROPERTIES_INVALID"
+	// - "HTML5_FEATURE_UNSUPPORTED" - "LINKED_FILE_NOT_FOUND" -
+	// "MAX_FLASH_VERSION_11" - "MRAID_REFERENCED" - "NOT_SSL_COMPLIANT" -
+	// "ORPHANED_ASSET" - "PRIMARY_HTML_MISSING" - "SVG_INVALID" -
+	// "ZIP_INVALID"
 	//
 	// Possible values:
-	//   "ADMOB_REFERENCED"
-	//   "ASSET_FORMAT_UNSUPPORTED_DCM"
-	//   "ASSET_INVALID"
-	//   "CLICK_TAG_HARD_CODED"
-	//   "CLICK_TAG_INVALID"
-	//   "CLICK_TAG_IN_GWD"
+	//   "CLICK_TAG_NON_TOP_LEVEL"
 	//   "CLICK_TAG_MISSING"
 	//   "CLICK_TAG_MORE_THAN_ONE"
-	//   "CLICK_TAG_NON_TOP_LEVEL"
-	//   "COMPONENT_UNSUPPORTED_DCM"
-	//   "ENABLER_UNSUPPORTED_METHOD_DCM"
-	//   "EXTERNAL_FILE_REFERENCED"
-	//   "FILE_DETAIL_EMPTY"
-	//   "FILE_TYPE_INVALID"
-	//   "GWD_PROPERTIES_INVALID"
-	//   "HTML5_FEATURE_UNSUPPORTED"
-	//   "LINKED_FILE_NOT_FOUND"
-	//   "MAX_FLASH_VERSION_11"
-	//   "MRAID_REFERENCED"
-	//   "NOT_SSL_COMPLIANT"
+	//   "CLICK_TAG_INVALID"
 	//   "ORPHANED_ASSET"
 	//   "PRIMARY_HTML_MISSING"
-	//   "SVG_INVALID"
+	//   "EXTERNAL_FILE_REFERENCED"
+	//   "MRAID_REFERENCED"
+	//   "ADMOB_REFERENCED"
+	//   "FILE_TYPE_INVALID"
 	//   "ZIP_INVALID"
+	//   "LINKED_FILE_NOT_FOUND"
+	//   "MAX_FLASH_VERSION_11"
+	//   "NOT_SSL_COMPLIANT"
+	//   "FILE_DETAIL_EMPTY"
+	//   "ASSET_INVALID"
+	//   "GWD_PROPERTIES_INVALID"
+	//   "ENABLER_UNSUPPORTED_METHOD_DCM"
+	//   "ASSET_FORMAT_UNSUPPORTED_DCM"
+	//   "COMPONENT_UNSUPPORTED_DCM"
+	//   "HTML5_FEATURE_UNSUPPORTED"
+	//   "CLICK_TAG_IN_GWD"
+	//   "CLICK_TAG_HARD_CODED"
+	//   "SVG_INVALID"
 	WarnedValidationRules []string `json:"warnedValidationRules,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5117,24 +5091,15 @@ type CreativeAssignment struct {
 	// This is a read-only, auto-generated field.
 	CreativeIdDimensionValue *DimensionValue `json:"creativeIdDimensionValue,omitempty"`
 
-	// EndTime: Date and time that the assigned creative should stop
-	// serving. Must be later than the start time.
 	EndTime string `json:"endTime,omitempty"`
 
 	// RichMediaExitOverrides: Rich media exit overrides for this creative
-	// assignment.
-	// Applicable when the creative type is any of the following:
-	// - DISPLAY
-	// - RICH_MEDIA_INPAGE
-	// - RICH_MEDIA_INPAGE_FLOATING
-	// - RICH_MEDIA_IM_EXPAND
-	// - RICH_MEDIA_EXPANDING
-	// - RICH_MEDIA_INTERSTITIAL_FLOAT
-	// - RICH_MEDIA_MOBILE_IN_APP
-	// - RICH_MEDIA_MULTI_FLOATING
-	// - RICH_MEDIA_PEEL_DOWN
-	// - VPAID_LINEAR
-	// - VPAID_NON_LINEAR
+	// assignment. Applicable when the creative type is any of the
+	// following: - DISPLAY - RICH_MEDIA_INPAGE - RICH_MEDIA_INPAGE_FLOATING
+	// - RICH_MEDIA_IM_EXPAND - RICH_MEDIA_EXPANDING -
+	// RICH_MEDIA_INTERSTITIAL_FLOAT - RICH_MEDIA_MOBILE_IN_APP -
+	// RICH_MEDIA_MULTI_FLOATING - RICH_MEDIA_PEEL_DOWN - VPAID_LINEAR -
+	// VPAID_NON_LINEAR
 	RichMediaExitOverrides []*RichMediaExitOverride `json:"richMediaExitOverrides,omitempty"`
 
 	// Sequence: Sequence number of the creative assignment, applicable when
@@ -5147,8 +5112,6 @@ type CreativeAssignment struct {
 	// inserted or updated.
 	SslCompliant bool `json:"sslCompliant,omitempty"`
 
-	// StartTime: Date and time that the assigned creative should start
-	// serving.
 	StartTime string `json:"startTime,omitempty"`
 
 	// Weight: Weight of the creative assignment, applicable when the
@@ -5183,10 +5146,9 @@ func (s *CreativeAssignment) MarshalJSON() ([]byte, error) {
 type CreativeClickThroughUrl struct {
 	// ComputedClickThroughUrl: Read-only convenience field representing the
 	// actual URL that will be used for this click-through. The URL is
-	// computed as follows:
-	// - If landingPageId is specified then that landing page's URL is
-	// assigned to this field.
-	// - Otherwise, the customClickThroughUrl is assigned to this field.
+	// computed as follows: - If landingPageId is specified then that
+	// landing page's URL is assigned to this field. - Otherwise, the
+	// customClickThroughUrl is assigned to this field.
 	ComputedClickThroughUrl string `json:"computedClickThroughUrl,omitempty"`
 
 	// CustomClickThroughUrl: Custom click-through URL. Applicable if the
@@ -5234,9 +5196,9 @@ type CreativeCustomEvent struct {
 	// field.
 	//
 	// Possible values:
-	//   "ADVERTISER_EVENT_COUNTER"
-	//   "ADVERTISER_EVENT_EXIT"
 	//   "ADVERTISER_EVENT_TIMER"
+	//   "ADVERTISER_EVENT_EXIT"
+	//   "ADVERTISER_EVENT_COUNTER"
 	AdvertiserCustomEventType string `json:"advertiserCustomEventType,omitempty"`
 
 	// ArtworkLabel: Artwork label column, used to link events in Campaign
@@ -5250,8 +5212,8 @@ type CreativeCustomEvent struct {
 	// Possible values:
 	//   "ARTWORK_TYPE_FLASH"
 	//   "ARTWORK_TYPE_HTML5"
-	//   "ARTWORK_TYPE_IMAGE"
 	//   "ARTWORK_TYPE_MIXED"
+	//   "ARTWORK_TYPE_IMAGE"
 	ArtworkType string `json:"artworkType,omitempty"`
 
 	// ExitClickThroughUrl: Exit click-through URL for the event. This field
@@ -5270,10 +5232,10 @@ type CreativeCustomEvent struct {
 	//
 	// Possible values:
 	//   "TARGET_BLANK"
+	//   "TARGET_TOP"
+	//   "TARGET_SELF"
 	//   "TARGET_PARENT"
 	//   "TARGET_POPUP"
-	//   "TARGET_SELF"
-	//   "TARGET_TOP"
 	TargetType string `json:"targetType,omitempty"`
 
 	// VideoReportingId: Video reporting ID, used to differentiate multiple
@@ -5680,8 +5642,8 @@ type CreativeOptimizationConfiguration struct {
 	// Possible values:
 	//   "CLICK"
 	//   "POST_CLICK"
-	//   "POST_CLICK_AND_IMPRESSION"
 	//   "POST_IMPRESSION"
+	//   "POST_CLICK_AND_IMPRESSION"
 	//   "VIDEO_COMPLETION"
 	OptimizationModel string `json:"optimizationModel,omitempty"`
 
@@ -5724,16 +5686,16 @@ type CreativeRotation struct {
 	// use sequential or random rotation.
 	//
 	// Possible values:
-	//   "CREATIVE_ROTATION_TYPE_RANDOM"
 	//   "CREATIVE_ROTATION_TYPE_SEQUENTIAL"
+	//   "CREATIVE_ROTATION_TYPE_RANDOM"
 	Type string `json:"type,omitempty"`
 
 	// WeightCalculationStrategy: Strategy for calculating weights. Used
 	// with CREATIVE_ROTATION_TYPE_RANDOM.
 	//
 	// Possible values:
-	//   "WEIGHT_STRATEGY_CUSTOM"
 	//   "WEIGHT_STRATEGY_EQUAL"
+	//   "WEIGHT_STRATEGY_CUSTOM"
 	//   "WEIGHT_STRATEGY_HIGHEST_CTR"
 	//   "WEIGHT_STRATEGY_OPTIMIZED"
 	WeightCalculationStrategy string `json:"weightCalculationStrategy,omitempty"`
@@ -5872,9 +5834,9 @@ type CustomEvent struct {
 	// annotateClickEvent or annotateImpressionEvent need to be populated.
 	//
 	// Possible values:
-	//   "ANNOTATE"
-	//   "INSERT"
 	//   "UNKNOWN"
+	//   "INSERT"
+	//   "ANNOTATE"
 	EventType string `json:"eventType,omitempty"`
 
 	// FloodlightConfigurationId: Floodlight configuration ID of the
@@ -5960,11 +5922,11 @@ type CustomEventError struct {
 	// Code: The error code.
 	//
 	// Possible values:
-	//   "INTERNAL"
-	//   "INVALID_ARGUMENT"
-	//   "NOT_FOUND"
-	//   "PERMISSION_DENIED"
 	//   "UNKNOWN"
+	//   "INVALID_ARGUMENT"
+	//   "INTERNAL"
+	//   "PERMISSION_DENIED"
+	//   "NOT_FOUND"
 	Code string `json:"code,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6041,9 +6003,9 @@ type CustomEventInsert struct {
 	// InsertEventType: The type of event to insert.
 	//
 	// Possible values:
-	//   "CLICK"
-	//   "IMPRESSION"
 	//   "UNKNOWN"
+	//   "IMPRESSION"
+	//   "CLICK"
 	InsertEventType string `json:"insertEventType,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6204,8 +6166,15 @@ type CustomFloodlightVariable struct {
 	//
 	// Possible values:
 	//   "U1"
+	//   "U2"
+	//   "U3"
+	//   "U4"
+	//   "U5"
+	//   "U6"
+	//   "U7"
+	//   "U8"
+	//   "U9"
 	//   "U10"
-	//   "U100"
 	//   "U11"
 	//   "U12"
 	//   "U13"
@@ -6215,7 +6184,6 @@ type CustomFloodlightVariable struct {
 	//   "U17"
 	//   "U18"
 	//   "U19"
-	//   "U2"
 	//   "U20"
 	//   "U21"
 	//   "U22"
@@ -6226,7 +6194,6 @@ type CustomFloodlightVariable struct {
 	//   "U27"
 	//   "U28"
 	//   "U29"
-	//   "U3"
 	//   "U30"
 	//   "U31"
 	//   "U32"
@@ -6237,7 +6204,6 @@ type CustomFloodlightVariable struct {
 	//   "U37"
 	//   "U38"
 	//   "U39"
-	//   "U4"
 	//   "U40"
 	//   "U41"
 	//   "U42"
@@ -6248,7 +6214,6 @@ type CustomFloodlightVariable struct {
 	//   "U47"
 	//   "U48"
 	//   "U49"
-	//   "U5"
 	//   "U50"
 	//   "U51"
 	//   "U52"
@@ -6259,7 +6224,6 @@ type CustomFloodlightVariable struct {
 	//   "U57"
 	//   "U58"
 	//   "U59"
-	//   "U6"
 	//   "U60"
 	//   "U61"
 	//   "U62"
@@ -6270,7 +6234,6 @@ type CustomFloodlightVariable struct {
 	//   "U67"
 	//   "U68"
 	//   "U69"
-	//   "U7"
 	//   "U70"
 	//   "U71"
 	//   "U72"
@@ -6281,7 +6244,6 @@ type CustomFloodlightVariable struct {
 	//   "U77"
 	//   "U78"
 	//   "U79"
-	//   "U8"
 	//   "U80"
 	//   "U81"
 	//   "U82"
@@ -6292,7 +6254,6 @@ type CustomFloodlightVariable struct {
 	//   "U87"
 	//   "U88"
 	//   "U89"
-	//   "U9"
 	//   "U90"
 	//   "U91"
 	//   "U92"
@@ -6303,6 +6264,7 @@ type CustomFloodlightVariable struct {
 	//   "U97"
 	//   "U98"
 	//   "U99"
+	//   "U100"
 	Type string `json:"type,omitempty"`
 
 	// Value: The value of the custom floodlight variable. The length of
@@ -6525,8 +6487,6 @@ func (s *DV3Ids) MarshalJSON() ([]byte, error) {
 
 // DateRange: Represents a date range.
 type DateRange struct {
-	// EndDate: The end date of the date range, inclusive. A string of the
-	// format: "yyyy-MM-dd".
 	EndDate string `json:"endDate,omitempty"`
 
 	// Kind: The kind of resource this is, in this case
@@ -6537,27 +6497,25 @@ type DateRange struct {
 	// report is run.
 	//
 	// Possible values:
-	//   "LAST_14_DAYS"
-	//   "LAST_24_MONTHS"
-	//   "LAST_30_DAYS"
-	//   "LAST_365_DAYS"
-	//   "LAST_60_DAYS"
-	//   "LAST_7_DAYS"
-	//   "LAST_90_DAYS"
+	//   "TODAY"
+	//   "YESTERDAY"
+	//   "WEEK_TO_DATE"
 	//   "MONTH_TO_DATE"
+	//   "QUARTER_TO_DATE"
+	//   "YEAR_TO_DATE"
+	//   "PREVIOUS_WEEK"
 	//   "PREVIOUS_MONTH"
 	//   "PREVIOUS_QUARTER"
-	//   "PREVIOUS_WEEK"
 	//   "PREVIOUS_YEAR"
-	//   "QUARTER_TO_DATE"
-	//   "TODAY"
-	//   "WEEK_TO_DATE"
-	//   "YEAR_TO_DATE"
-	//   "YESTERDAY"
+	//   "LAST_7_DAYS"
+	//   "LAST_30_DAYS"
+	//   "LAST_90_DAYS"
+	//   "LAST_365_DAYS"
+	//   "LAST_24_MONTHS"
+	//   "LAST_14_DAYS"
+	//   "LAST_60_DAYS"
 	RelativeDateRange string `json:"relativeDateRange,omitempty"`
 
-	// StartDate: The start date of the date range, inclusive. A string of
-	// the format: "yyyy-MM-dd".
 	StartDate string `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
@@ -6585,25 +6543,18 @@ func (s *DateRange) MarshalJSON() ([]byte, error) {
 
 // DayPartTargeting: Day Part Targeting.
 type DayPartTargeting struct {
-	// DaysOfWeek: Days of the week when the ad will serve.
-	//
-	// Acceptable values are:
-	// - "SUNDAY"
-	// - "MONDAY"
-	// - "TUESDAY"
-	// - "WEDNESDAY"
-	// - "THURSDAY"
-	// - "FRIDAY"
-	// - "SATURDAY"
+	// DaysOfWeek: Days of the week when the ad will serve. Acceptable
+	// values are: - "SUNDAY" - "MONDAY" - "TUESDAY" - "WEDNESDAY" -
+	// "THURSDAY" - "FRIDAY" - "SATURDAY"
 	//
 	// Possible values:
-	//   "FRIDAY"
 	//   "MONDAY"
-	//   "SATURDAY"
-	//   "SUNDAY"
-	//   "THURSDAY"
 	//   "TUESDAY"
 	//   "WEDNESDAY"
+	//   "THURSDAY"
+	//   "FRIDAY"
+	//   "SATURDAY"
+	//   "SUNDAY"
 	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
 
 	// HoursOfDay: Hours of the day when the ad will serve, where 0 is
@@ -6922,9 +6873,9 @@ type DimensionValue struct {
 	// matchType other than EXACT.
 	//
 	// Possible values:
+	//   "EXACT"
 	//   "BEGINS_WITH"
 	//   "CONTAINS"
-	//   "EXACT"
 	//   "WILDCARD_EXPRESSION"
 	MatchType string `json:"matchType,omitempty"`
 
@@ -7005,8 +6956,6 @@ type DimensionValueRequest struct {
 	// requested.
 	DimensionName string `json:"dimensionName,omitempty"`
 
-	// EndDate: The end date of the date range for which to retrieve
-	// dimension values. A string of the format "yyyy-MM-dd".
 	EndDate string `json:"endDate,omitempty"`
 
 	// Filters: The list of filters by which to filter values. The filters
@@ -7014,11 +6963,9 @@ type DimensionValueRequest struct {
 	Filters []*DimensionFilter `json:"filters,omitempty"`
 
 	// Kind: The kind of request this is, in this case
-	// dfareporting#dimensionValueRequest.
+	// dfareporting#dimensionValueRequest .
 	Kind string `json:"kind,omitempty"`
 
-	// StartDate: The start date of the date range for which to retrieve
-	// dimension values. A string of the format "yyyy-MM-dd".
 	StartDate string `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
@@ -7056,28 +7003,20 @@ type DirectorySite struct {
 	// This is a read-only, auto-generated field.
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
-	// InpageTagFormats: Tag types for regular placements.
-	//
-	// Acceptable values are:
-	// - "STANDARD"
-	// - "IFRAME_JAVASCRIPT_INPAGE"
-	// - "INTERNAL_REDIRECT_INPAGE"
-	// - "JAVASCRIPT_INPAGE"
+	// InpageTagFormats: Tag types for regular placements. Acceptable values
+	// are: - "STANDARD" - "IFRAME_JAVASCRIPT_INPAGE" -
+	// "INTERNAL_REDIRECT_INPAGE" - "JAVASCRIPT_INPAGE"
 	//
 	// Possible values:
+	//   "STANDARD"
 	//   "IFRAME_JAVASCRIPT_INPAGE"
 	//   "INTERNAL_REDIRECT_INPAGE"
 	//   "JAVASCRIPT_INPAGE"
-	//   "STANDARD"
 	InpageTagFormats []string `json:"inpageTagFormats,omitempty"`
 
-	// InterstitialTagFormats: Tag types for interstitial
-	// placements.
-	//
-	// Acceptable values are:
-	// - "IFRAME_JAVASCRIPT_INTERSTITIAL"
-	// - "INTERNAL_REDIRECT_INTERSTITIAL"
-	// - "JAVASCRIPT_INTERSTITIAL"
+	// InterstitialTagFormats: Tag types for interstitial placements.
+	// Acceptable values are: - "IFRAME_JAVASCRIPT_INTERSTITIAL" -
+	// "INTERNAL_REDIRECT_INTERSTITIAL" - "JAVASCRIPT_INTERSTITIAL"
 	//
 	// Possible values:
 	//   "IFRAME_JAVASCRIPT_INTERSTITIAL"
@@ -7207,6 +7146,41 @@ func (s *DirectorySitesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DisjunctiveMatchStatement: Represents a Disjunctive Match Statement
+// resource, which is a conjunction (and) of disjunctive (or) boolean
+// statements.
+type DisjunctiveMatchStatement struct {
+	// EventFilters: The event filters contained within this disjunctive
+	// match statement.
+	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
+
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#disjunctiveMatchStatement.
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventFilters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventFilters") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DisjunctiveMatchStatement) MarshalJSON() ([]byte, error) {
+	type NoMethod DisjunctiveMatchStatement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DynamicTargetingKey: Contains properties of a dynamic targeting key.
 // Dynamic targeting keys are unique, user-friendly labels, created at
 // the advertiser level in DCM, that can be assigned to ads, creatives,
@@ -7231,8 +7205,8 @@ type DynamicTargetingKey struct {
 	// a required field.
 	//
 	// Possible values:
-	//   "OBJECT_AD"
 	//   "OBJECT_ADVERTISER"
+	//   "OBJECT_AD"
 	//   "OBJECT_CREATIVE"
 	//   "OBJECT_PLACEMENT"
 	ObjectType string `json:"objectType,omitempty"`
@@ -7312,22 +7286,22 @@ type EncryptionInfo struct {
 	// the encryption configuration for ad serving or Data Transfer.
 	//
 	// Possible values:
-	//   "ADWORDS_CUSTOMER"
-	//   "DBM_ADVERTISER"
-	//   "DBM_PARTNER"
+	//   "ENCRYPTION_ENTITY_TYPE_UNKNOWN"
 	//   "DCM_ACCOUNT"
 	//   "DCM_ADVERTISER"
+	//   "DBM_PARTNER"
+	//   "DBM_ADVERTISER"
+	//   "ADWORDS_CUSTOMER"
 	//   "DFP_NETWORK_CODE"
-	//   "ENCRYPTION_ENTITY_TYPE_UNKNOWN"
 	EncryptionEntityType string `json:"encryptionEntityType,omitempty"`
 
 	// EncryptionSource: Describes whether the encrypted cookie was received
 	// from ad serving (the %m macro) or from Data Transfer.
 	//
 	// Possible values:
+	//   "ENCRYPTION_SCOPE_UNKNOWN"
 	//   "AD_SERVING"
 	//   "DATA_TRANSFER"
-	//   "ENCRYPTION_SCOPE_UNKNOWN"
 	EncryptionSource string `json:"encryptionSource,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -7354,6 +7328,40 @@ type EncryptionInfo struct {
 
 func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EventFilter: Represents a DfaReporting event filter.
+type EventFilter struct {
+	// DimensionFilter: The dimension filter contained within this
+	// EventFilter.
+	DimensionFilter *PathReportDimensionValue `json:"dimensionFilter,omitempty"`
+
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#eventFilter.
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EventFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod EventFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7406,12 +7414,12 @@ type EventTag struct {
 	// specified then the event tag will be applied to all sites.
 	//
 	// Possible values:
-	//   "BLACKLIST"
 	//   "WHITELIST"
+	//   "BLACKLIST"
 	SiteFilterType string `json:"siteFilterType,omitempty"`
 
 	// SiteIds: Filter list of site IDs associated with this event tag. The
-	// siteFilterType determines whether this is a whitelist or blacklist
+	// siteFilterType determines whether this is a allowlist or blocklist
 	// filter.
 	SiteIds googleapi.Int64s `json:"siteIds,omitempty"`
 
@@ -7423,8 +7431,8 @@ type EventTag struct {
 	// to fire. This is a required field.
 	//
 	// Possible values:
-	//   "DISABLED"
 	//   "ENABLED"
+	//   "DISABLED"
 	Status string `json:"status,omitempty"`
 
 	// SubaccountId: Subaccount ID of this event tag. This is a read-only
@@ -7437,9 +7445,9 @@ type EventTag struct {
 	// required field.
 	//
 	// Possible values:
-	//   "CLICK_THROUGH_EVENT_TAG"
 	//   "IMPRESSION_IMAGE_EVENT_TAG"
 	//   "IMPRESSION_JAVASCRIPT_EVENT_TAG"
+	//   "CLICK_THROUGH_EVENT_TAG"
 	Type string `json:"type,omitempty"`
 
 	// Url: Payload URL for this event tag. The URL on a click-through event
@@ -7583,16 +7591,20 @@ type File struct {
 	// file was last modified.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
+	MediaRequestInfo *MediaRequestInfo `json:"mediaRequestInfo,omitempty"`
+
+	MediaResponseInfo *MediaResponseInfo `json:"mediaResponseInfo,omitempty"`
+
 	// ReportId: The ID of the report this file was generated from.
 	ReportId int64 `json:"reportId,omitempty,string"`
 
 	// Status: The status of the report file.
 	//
 	// Possible values:
-	//   "CANCELLED"
-	//   "FAILED"
 	//   "PROCESSING"
 	//   "REPORT_AVAILABLE"
+	//   "FAILED"
+	//   "CANCELLED"
 	Status string `json:"status,omitempty"`
 
 	// Urls: The URLs where the completed report file can be downloaded.
@@ -7704,13 +7716,11 @@ func (s *FileList) MarshalJSON() ([]byte, error) {
 
 // Flight: Flight
 type Flight struct {
-	// EndDate: Inventory item flight end date.
 	EndDate string `json:"endDate,omitempty"`
 
 	// RateOrCost: Rate or cost of this flight.
 	RateOrCost int64 `json:"rateOrCost,omitempty,string"`
 
-	// StartDate: Inventory item flight start date.
 	StartDate string `json:"startDate,omitempty"`
 
 	// Units: Units of this flight.
@@ -7842,27 +7852,30 @@ type FloodlightActivity struct {
 	// advertiser. This is a read-only, auto-generated field.
 	AdvertiserIdDimensionValue *DimensionValue `json:"advertiserIdDimensionValue,omitempty"`
 
+	// AttributionEnabled: Whether the activity is enabled for attribution.
+	AttributionEnabled bool `json:"attributionEnabled,omitempty"`
+
 	// CacheBustingType: Code type used for cache busting in the generated
 	// tag. Applicable only when floodlightActivityGroupType is COUNTER and
 	// countingMethod is STANDARD_COUNTING or UNIQUE_COUNTING.
 	//
 	// Possible values:
-	//   "ACTIVE_SERVER_PAGE"
-	//   "COLD_FUSION"
 	//   "JAVASCRIPT"
+	//   "ACTIVE_SERVER_PAGE"
 	//   "JSP"
 	//   "PHP"
+	//   "COLD_FUSION"
 	CacheBustingType string `json:"cacheBustingType,omitempty"`
 
 	// CountingMethod: Counting method for conversions for this floodlight
 	// activity. This is a required field.
 	//
 	// Possible values:
-	//   "ITEMS_SOLD_COUNTING"
-	//   "SESSION_COUNTING"
 	//   "STANDARD_COUNTING"
-	//   "TRANSACTIONS_COUNTING"
 	//   "UNIQUE_COUNTING"
+	//   "SESSION_COUNTING"
+	//   "TRANSACTIONS_COUNTING"
+	//   "ITEMS_SOLD_COUNTING"
 	CountingMethod string `json:"countingMethod,omitempty"`
 
 	// DefaultTags: Dynamic floodlight tags.
@@ -7907,9 +7920,9 @@ type FloodlightActivity struct {
 	// generate. This is a required field.
 	//
 	// Possible values:
-	//   "GLOBAL_SITE_TAG"
 	//   "IFRAME"
 	//   "IMAGE"
+	//   "GLOBAL_SITE_TAG"
 	FloodlightTagType string `json:"floodlightTagType,omitempty"`
 
 	// Id: ID of this floodlight activity. This is a read-only,
@@ -7953,8 +7966,8 @@ type FloodlightActivity struct {
 	//
 	// Possible values:
 	//   "ACTIVE"
-	//   "ARCHIVED"
 	//   "ARCHIVED_AND_DISABLED"
+	//   "ARCHIVED"
 	//   "DISABLED_POLICY"
 	Status string `json:"status,omitempty"`
 
@@ -7973,21 +7986,27 @@ type FloodlightActivity struct {
 	// TagString: Value of the cat= parameter in the floodlight tag, which
 	// the ad servers use to identify the activity. This is optional: if
 	// empty, a new tag string will be generated for you. This string must
-	// be 1 to 8 characters long, with valid characters being
-	// [a-z][A-Z][0-9][-][ _ ]. This tag string must also be unique among
-	// activities of the same activity group. This field is read-only after
-	// insertion.
+	// be 1 to 8 characters long, with valid characters being a-z0-9[ _ ].
+	// This tag string must also be unique among activities of the same
+	// activity group. This field is read-only after insertion.
 	TagString string `json:"tagString,omitempty"`
 
 	// UserDefinedVariableTypes: List of the user-defined variables used by
 	// this conversion tag. These map to the "u[1-100]=" in the tags. Each
-	// of these can have a user defined type.
-	// Acceptable values are U1 to U100, inclusive.
+	// of these can have a user defined type. Acceptable values are U1 to
+	// U100, inclusive.
 	//
 	// Possible values:
 	//   "U1"
+	//   "U2"
+	//   "U3"
+	//   "U4"
+	//   "U5"
+	//   "U6"
+	//   "U7"
+	//   "U8"
+	//   "U9"
 	//   "U10"
-	//   "U100"
 	//   "U11"
 	//   "U12"
 	//   "U13"
@@ -7997,7 +8016,6 @@ type FloodlightActivity struct {
 	//   "U17"
 	//   "U18"
 	//   "U19"
-	//   "U2"
 	//   "U20"
 	//   "U21"
 	//   "U22"
@@ -8008,7 +8026,6 @@ type FloodlightActivity struct {
 	//   "U27"
 	//   "U28"
 	//   "U29"
-	//   "U3"
 	//   "U30"
 	//   "U31"
 	//   "U32"
@@ -8019,7 +8036,6 @@ type FloodlightActivity struct {
 	//   "U37"
 	//   "U38"
 	//   "U39"
-	//   "U4"
 	//   "U40"
 	//   "U41"
 	//   "U42"
@@ -8030,7 +8046,6 @@ type FloodlightActivity struct {
 	//   "U47"
 	//   "U48"
 	//   "U49"
-	//   "U5"
 	//   "U50"
 	//   "U51"
 	//   "U52"
@@ -8041,7 +8056,6 @@ type FloodlightActivity struct {
 	//   "U57"
 	//   "U58"
 	//   "U59"
-	//   "U6"
 	//   "U60"
 	//   "U61"
 	//   "U62"
@@ -8052,7 +8066,6 @@ type FloodlightActivity struct {
 	//   "U67"
 	//   "U68"
 	//   "U69"
-	//   "U7"
 	//   "U70"
 	//   "U71"
 	//   "U72"
@@ -8063,7 +8076,6 @@ type FloodlightActivity struct {
 	//   "U77"
 	//   "U78"
 	//   "U79"
-	//   "U8"
 	//   "U80"
 	//   "U81"
 	//   "U82"
@@ -8074,7 +8086,6 @@ type FloodlightActivity struct {
 	//   "U87"
 	//   "U88"
 	//   "U89"
-	//   "U9"
 	//   "U90"
 	//   "U91"
 	//   "U92"
@@ -8085,6 +8096,7 @@ type FloodlightActivity struct {
 	//   "U97"
 	//   "U98"
 	//   "U99"
+	//   "U100"
 	UserDefinedVariableTypes []string `json:"userDefinedVariableTypes,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8200,9 +8212,9 @@ type FloodlightActivityGroup struct {
 	// the ad servers use to identify the activity group that the activity
 	// belongs to. This is optional: if empty, a new tag string will be
 	// generated for you. This string must be 1 to 8 characters long, with
-	// valid characters being [a-z][A-Z][0-9][-][ _ ]. This tag string must
-	// also be unique among activity groups of the same floodlight
-	// configuration. This field is read-only after insertion.
+	// valid characters being a-z0-9[ _ ]. This tag string must also be
+	// unique among activity groups of the same floodlight configuration.
+	// This field is read-only after insertion.
 	TagString string `json:"tagString,omitempty"`
 
 	// Type: Type of the floodlight activity group. This is a required field
@@ -8740,8 +8752,8 @@ type InventoryItem struct {
 	// Type: Type of inventory item.
 	//
 	// Possible values:
-	//   "PLANNING_PLACEMENT_TYPE_CREDIT"
 	//   "PLANNING_PLACEMENT_TYPE_REGULAR"
+	//   "PLANNING_PLACEMENT_TYPE_CREDIT"
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9123,12 +9135,12 @@ type ListPopulationTerm struct {
 	//
 	// Possible values:
 	//   "NUM_EQUALS"
-	//   "NUM_GREATER_THAN"
-	//   "NUM_GREATER_THAN_EQUAL"
 	//   "NUM_LESS_THAN"
 	//   "NUM_LESS_THAN_EQUAL"
-	//   "STRING_CONTAINS"
+	//   "NUM_GREATER_THAN"
+	//   "NUM_GREATER_THAN_EQUAL"
 	//   "STRING_EQUALS"
+	//   "STRING_CONTAINS"
 	Operator string `json:"operator,omitempty"`
 
 	// RemarketingListId: ID of the list in question. This field is only
@@ -9251,6 +9263,187 @@ type LookbackConfiguration struct {
 
 func (s *LookbackConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod LookbackConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MediaRequestInfo: Extra information added to operations that support
+// Scotty media requests.
+type MediaRequestInfo struct {
+	// CurrentBytes: The number of current bytes uploaded or downloaded.
+	CurrentBytes int64 `json:"currentBytes,omitempty,string"`
+
+	// CustomData: Data to be copied to backend requests. Custom data is
+	// returned to Scotty in the agent_state field, which Scotty will then
+	// provide in subsequent upload notifications.
+	CustomData string `json:"customData,omitempty"`
+
+	// DiffObjectVersion: Set if the http request info is diff encoded. The
+	// value of this field is the version number of the base revision. This
+	// is corresponding to Apiary's mediaDiffObjectVersion
+	// (//depot/google3/java/com/google/api/server/media/variable/DiffObjectV
+	// ersionVariable.java). See go/esf-scotty-diff-upload for more
+	// information.
+	DiffObjectVersion string `json:"diffObjectVersion,omitempty"`
+
+	// NotificationType: The type of notification received from Scotty.
+	//
+	// Possible values:
+	//   "START" - Such requests signals the start of a request containing
+	// media upload. Only the media field(s) in the inserted/updated
+	// resource are set. The response should either return an error or
+	// succeed. On success, responses don't need to contain anything.
+	//   "PROGRESS" - Such requests signals that the upload has progressed
+	// and that the backend might want to access the media file specified in
+	// relevant fields in the resource. Only the media field(s) in the
+	// inserted/updated resource are set. The response should either return
+	// an error or succeed. On success, responses don't need to contain
+	// anything.
+	//   "END" - Such requests signals the end of a request containing media
+	// upload. END should be handled just like normal Insert/Upload
+	// requests, that is, they should process the request and return a
+	// complete resource in the response. Pointers to media data (a GFS path
+	// usually) appear in the relevant fields in the inserted/updated
+	// resource. See gdata.Media in data.proto.
+	//   "RESPONSE_SENT" - Such requests occur after an END and signal that
+	// the response has been sent back to the client. RESPONSE_SENT is only
+	// sent to the backend if it is configured to receive them. The response
+	// does not need to contain anything.
+	//   "ERROR" - Such requests indicate that an error occurred while
+	// processing the request. ERROR is only sent to the backend if it is
+	// configured to receive them. It is not guaranteed that all errors will
+	// result in this notification to the backend, even if the backend
+	// requests them. Since these requests are just for informational
+	// purposes, the response does not need to contain anything.
+	NotificationType string `json:"notificationType,omitempty"`
+
+	// RequestId: The Scotty request ID.
+	RequestId string `json:"requestId,omitempty"`
+
+	// TotalBytes: The total size of the file.
+	TotalBytes int64 `json:"totalBytes,omitempty,string"`
+
+	// TotalBytesIsEstimated: Whether the total bytes field contains an
+	// estimated data.
+	TotalBytesIsEstimated bool `json:"totalBytesIsEstimated,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentBytes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MediaRequestInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod MediaRequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MediaResponseInfo: This message is for backends to pass their scotty
+// media specific fields to ESF. Backend will include this in their
+// response message to ESF. Example: ExportFile is an rpc defined for
+// upload using scotty from ESF. rpc ExportFile(ExportFileRequest)
+// returns (ExportFileResponse) Message ExportFileResponse will include
+// apiserving.MediaResponseInfo to tell ESF about data like
+// dynamic_dropzone it needs to pass to Scotty. message
+// ExportFileResponse { optional gdata.Media blob = 1; optional
+// apiserving.MediaResponseInfo media_response_info = 2 }
+type MediaResponseInfo struct {
+	// CustomData: Data to copy from backend response to the next backend
+	// requests. Custom data is returned to Scotty in the agent_state field,
+	// which Scotty will then provide in subsequent upload notifications.
+	CustomData string `json:"customData,omitempty"`
+
+	// DataStorageTransform: Specifies any transformation to be applied to
+	// data before persisting it or retrieving from storage. E.g.,
+	// encryption options for blobstore2. This should be of the form
+	// uploader_service.DataStorageTransform.
+	DataStorageTransform string `json:"dataStorageTransform,omitempty"`
+
+	// DynamicDropTarget: Specifies the Scotty Drop Target to use for
+	// uploads. If present in a media response, Scotty does not upload to a
+	// standard drop zone. Instead, Scotty saves the upload directly to the
+	// location specified in this drop target. Unlike drop zones, the drop
+	// target is the final storage location for an upload. So, the agent
+	// does not need to clone the blob at the end of the upload. The agent
+	// is responsible for garbage collecting any orphaned blobs that may
+	// occur due to aborted uploads. For more information, see the drop
+	// target design doc here: http://goto/ScottyDropTarget This field will
+	// be preferred to dynamicDropzone. If provided, the identified field in
+	// the response must be of the type uploader.agent.DropTarget.
+	DynamicDropTarget string `json:"dynamicDropTarget,omitempty"`
+
+	// DynamicDropzone: Specifies the Scotty dropzone to use for uploads.
+	DynamicDropzone string `json:"dynamicDropzone,omitempty"`
+
+	// RequestClass: Request class to use for all Blobstore operations for
+	// this request.
+	//
+	// Possible values:
+	//   "UNKNOWN_REQUEST_CLASS" - Unpopulated request_class in log files
+	// will be taken as 0 in dremel query. GoogleSQL will try to cast it to
+	// enum by default. An unused 0 value is added to avoid GoogleSQL
+	// casting error. Please refer to b/69677280.
+	//   "LATENCY_SENSITIVE" - A latency-sensitive request.
+	//   "PRODUCTION_BATCH" - A request generated by a batch process.
+	//   "BEST_EFFORT" - A best-effort request.
+	RequestClass string `json:"requestClass,omitempty"`
+
+	// TrafficClassField: Specifies the TrafficClass that Scotty should use
+	// for any RPCs to fetch the response bytes. Will override the traffic
+	// class GTOS of the incoming http request. This is a temporary field to
+	// facilitate whitelisting and experimentation by the bigstore agent
+	// only. For instance, this does not apply to RTMP reads. WARNING: DO
+	// NOT USE WITHOUT PERMISSION FROM THE SCOTTY TEAM.
+	//
+	// Possible values:
+	//   "BE1" - Application-selectable traffic classes Best effort
+	//   "AF1" - Assured forwarding priority 1
+	//   "AF2" - Assured forwarding priority 2
+	//   "AF3" - Assured forwarding priority 3
+	//   "AF4" - Assured forwarding priority 4
+	//   "NC1" - Network control
+	//   "NC0" - Network control
+	//   "BE0" - Best effort at high packet loss
+	//   "LLQ" - Low-latency queue (LLQ) best effort (go/llq)
+	//   "LLQ1" - LLQ best effort (go/llq2)
+	//   "LLQ2" - LLQ assured forwarding priority 2 (go/llq2)
+	TrafficClassField string `json:"trafficClassField,omitempty"`
+
+	// VerifyHashFromHeader: Tells Scotty to verify hashes on the agent's
+	// behalf by parsing out the X-Goog-Hash header.
+	VerifyHashFromHeader bool `json:"verifyHashFromHeader,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomData") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MediaResponseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod MediaResponseInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9380,9 +9573,9 @@ type MobileApp struct {
 	// Directory: Mobile app directory.
 	//
 	// Possible values:
+	//   "UNKNOWN"
 	//   "APPLE_APP_STORE"
 	//   "GOOGLE_PLAY_STORE"
-	//   "UNKNOWN"
 	Directory string `json:"directory,omitempty"`
 
 	// Id: ID of this mobile app.
@@ -9619,9 +9812,9 @@ type ObjectFilter struct {
 	// objectIds list.
 	//
 	// Possible values:
-	//   "ALL"
-	//   "ASSIGNED"
 	//   "NONE"
+	//   "ASSIGNED"
+	//   "ALL"
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -10035,8 +10228,8 @@ type OrderContact struct {
 	// ContactType: Type of this contact.
 	//
 	// Possible values:
-	//   "PLANNING_ORDER_CONTACT_BUYER_BILLING_CONTACT"
 	//   "PLANNING_ORDER_CONTACT_BUYER_CONTACT"
+	//   "PLANNING_ORDER_CONTACT_BUYER_BILLING_CONTACT"
 	//   "PLANNING_ORDER_CONTACT_SELLER_CONTACT"
 	ContactType string `json:"contactType,omitempty"`
 
@@ -10090,7 +10283,6 @@ type OrderDocument struct {
 	// CreatedInfo: Information about the creation of this order document.
 	CreatedInfo *LastModifiedInfo `json:"createdInfo,omitempty"`
 
-	// EffectiveDate: Effective date of this order document.
 	EffectiveDate string `json:"effectiveDate,omitempty"`
 
 	// Id: ID of this order document.
@@ -10104,8 +10296,6 @@ type OrderDocument struct {
 	// sent document.
 	LastSentRecipients []string `json:"lastSentRecipients,omitempty"`
 
-	// LastSentTime: Timestamp of the last email sent with this order
-	// document.
 	LastSentTime string `json:"lastSentTime,omitempty"`
 
 	// OrderId: ID of the order from which this order document is created.
@@ -10126,8 +10316,8 @@ type OrderDocument struct {
 	// Type: Type of this order document
 	//
 	// Possible values:
-	//   "PLANNING_ORDER_TYPE_CHANGE_ORDER"
 	//   "PLANNING_ORDER_TYPE_INSERTION_ORDER"
+	//   "PLANNING_ORDER_TYPE_CHANGE_ORDER"
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -10237,6 +10427,152 @@ func (s *OrdersListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PathFilter: Represents a DfaReporting path filter.
+type PathFilter struct {
+	// EventFilters: Event filters in path report.
+	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
+
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#pathFilter.
+	Kind string `json:"kind,omitempty"`
+
+	// PathMatchPosition: Determines how the 'value' field is matched when
+	// filtering. If not specified, defaults to EXACT. If set to
+	// WILDCARD_EXPRESSION, '*' is allowed as a placeholder for variable
+	// length character sequences, and it can be escaped with a backslash.
+	// Note, only paid search dimensions ('dfa:paidSearch*') allow a
+	// matchType other than EXACT.
+	//
+	// Possible values:
+	//   "PATH_MATCH_POSITION_UNSPECIFIED"
+	//   "ANY"
+	//   "FIRST"
+	//   "LAST"
+	PathMatchPosition string `json:"pathMatchPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EventFilters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventFilters") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PathFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathReportCompatibleFields: Represents fields that are compatible to
+// be selected for a report of type "PATH".
+type PathReportCompatibleFields struct {
+	// ChannelGroupings: Dimensions which are compatible to be selected in
+	// the "channelGroupings" section of the report.
+	ChannelGroupings []*Dimension `json:"channelGroupings,omitempty"`
+
+	// Dimensions: Dimensions which are compatible to be selected in the
+	// "dimensions" section of the report.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
+
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#pathReportCompatibleFields.
+	Kind string `json:"kind,omitempty"`
+
+	// Metrics: Metrics which are compatible to be selected in the
+	// "metricNames" section of the report.
+	Metrics []*Metric `json:"metrics,omitempty"`
+
+	// PathFilters: Dimensions which are compatible to be selected in the
+	// "pathFilters" section of the report.
+	PathFilters []*Dimension `json:"pathFilters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChannelGroupings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChannelGroupings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathReportCompatibleFields) MarshalJSON() ([]byte, error) {
+	type NoMethod PathReportCompatibleFields
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PathReportDimensionValue: Represents a PathReportDimensionValue
+// resource.
+type PathReportDimensionValue struct {
+	// DimensionName: The name of the dimension.
+	DimensionName string `json:"dimensionName,omitempty"`
+
+	// Ids: The possible ID's associated with the value if available.
+	Ids []string `json:"ids,omitempty"`
+
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#pathReportDimensionValue.
+	Kind string `json:"kind,omitempty"`
+
+	// MatchType: Determines how the 'value' field is matched when
+	// filtering. If not specified, defaults to EXACT. If set to
+	// WILDCARD_EXPRESSION, '*' is allowed as a placeholder for variable
+	// length character sequences, and it can be escaped with a backslash.
+	// Note, only paid search dimensions ('dfa:paidSearch*') allow a
+	// matchType other than EXACT.
+	//
+	// Possible values:
+	//   "EXACT"
+	//   "BEGINS_WITH"
+	//   "CONTAINS"
+	//   "WILDCARD_EXPRESSION"
+	MatchType string `json:"matchType,omitempty"`
+
+	// Values: The possible values of the dimension.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PathReportDimensionValue) MarshalJSON() ([]byte, error) {
+	type NoMethod PathReportDimensionValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PathToConversionReportCompatibleFields: Represents fields that are
 // compatible to be selected for a report of type "PATH_TO_CONVERSION".
 type PathToConversionReportCompatibleFields struct {
@@ -10334,12 +10670,12 @@ type Placement struct {
 	// with the VAST standard. This field is required on insertion.
 	//
 	// Possible values:
-	//   "APP"
-	//   "APP_INTERSTITIAL"
 	//   "DISPLAY"
 	//   "DISPLAY_INTERSTITIAL"
-	//   "IN_STREAM_AUDIO"
+	//   "APP"
+	//   "APP_INTERSTITIAL"
 	//   "IN_STREAM_VIDEO"
+	//   "IN_STREAM_AUDIO"
 	Compatibility string `json:"compatibility,omitempty"`
 
 	// ContentCategoryId: ID of the content category assigned to this
@@ -10451,12 +10787,12 @@ type Placement struct {
 	// Status: Third-party placement status.
 	//
 	// Possible values:
-	//   "ACKNOWLEDGE_ACCEPTANCE"
-	//   "ACKNOWLEDGE_REJECTION"
-	//   "DRAFT"
+	//   "PENDING_REVIEW"
 	//   "PAYMENT_ACCEPTED"
 	//   "PAYMENT_REJECTED"
-	//   "PENDING_REVIEW"
+	//   "ACKNOWLEDGE_REJECTION"
+	//   "ACKNOWLEDGE_ACCEPTANCE"
+	//   "DRAFT"
 	Status string `json:"status,omitempty"`
 
 	// SubaccountId: Subaccount ID of this placement. This field can be left
@@ -10464,44 +10800,40 @@ type Placement struct {
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
 
 	// TagFormats: Tag formats to generate for this placement. This field is
-	// required on insertion.
-	// Acceptable values are:
-	// - "PLACEMENT_TAG_STANDARD"
-	// - "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
-	// - "PLACEMENT_TAG_IFRAME_ILAYER"
-	// - "PLACEMENT_TAG_INTERNAL_REDIRECT"
-	// - "PLACEMENT_TAG_JAVASCRIPT"
-	// - "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
-	// - "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
-	// - "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
-	// - "PLACEMENT_TAG_CLICK_COMMANDS"
-	// - "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
-	// - "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
-	// - "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
-	// - "PLACEMENT_TAG_TRACKING"
-	// - "PLACEMENT_TAG_TRACKING_IFRAME"
-	// - "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
+	// required on insertion. Acceptable values are: -
+	// "PLACEMENT_TAG_STANDARD" - "PLACEMENT_TAG_IFRAME_JAVASCRIPT" -
+	// "PLACEMENT_TAG_IFRAME_ILAYER" - "PLACEMENT_TAG_INTERNAL_REDIRECT" -
+	// "PLACEMENT_TAG_JAVASCRIPT" -
+	// "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT" -
+	// "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT" -
+	// "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT" -
+	// "PLACEMENT_TAG_CLICK_COMMANDS" -
+	// "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH" -
+	// "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3" -
+	// "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4" -
+	// "PLACEMENT_TAG_TRACKING" - "PLACEMENT_TAG_TRACKING_IFRAME" -
+	// "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
 	//
 	// Possible values:
-	//   "PLACEMENT_TAG_CLICK_COMMANDS"
-	//   "PLACEMENT_TAG_IFRAME_ILAYER"
+	//   "PLACEMENT_TAG_STANDARD"
 	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
-	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
-	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
-	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
-	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
+	//   "PLACEMENT_TAG_IFRAME_ILAYER"
 	//   "PLACEMENT_TAG_INTERNAL_REDIRECT"
+	//   "PLACEMENT_TAG_JAVASCRIPT"
 	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
-	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
 	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
-	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
-	//   "PLACEMENT_TAG_JAVASCRIPT"
-	//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
-	//   "PLACEMENT_TAG_STANDARD"
+	//   "PLACEMENT_TAG_CLICK_COMMANDS"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
 	//   "PLACEMENT_TAG_TRACKING"
 	//   "PLACEMENT_TAG_TRACKING_IFRAME"
 	//   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
+	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
+	//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
+	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
+	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
 	TagFormats []string `json:"tagFormats,omitempty"`
 
 	// TagSetting: Tag settings for this placement.
@@ -10524,16 +10856,15 @@ type Placement struct {
 
 	// VpaidAdapterChoice: VPAID adapter setting for this placement.
 	// Controls which VPAID format the measurement adapter will use for
-	// in-stream video creatives assigned to this placement.
-	//
-	// Note: Flash is no longer supported. This field now defaults to HTML5
-	// when the following values are provided: FLASH, BOTH.
+	// in-stream video creatives assigned to this placement. *Note:* Flash
+	// is no longer supported. This field now defaults to HTML5 when the
+	// following values are provided: FLASH, BOTH.
 	//
 	// Possible values:
-	//   "BOTH"
 	//   "DEFAULT"
 	//   "FLASH"
 	//   "HTML5"
+	//   "BOTH"
 	VpaidAdapterChoice string `json:"vpaidAdapterChoice,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -11208,12 +11539,11 @@ type Pricing struct {
 	// CapCostType: Cap cost type of this inventory item.
 	//
 	// Possible values:
-	//   "PLANNING_PLACEMENT_CAP_COST_TYPE_CUMULATIVE"
-	//   "PLANNING_PLACEMENT_CAP_COST_TYPE_MONTHLY"
 	//   "PLANNING_PLACEMENT_CAP_COST_TYPE_NONE"
+	//   "PLANNING_PLACEMENT_CAP_COST_TYPE_MONTHLY"
+	//   "PLANNING_PLACEMENT_CAP_COST_TYPE_CUMULATIVE"
 	CapCostType string `json:"capCostType,omitempty"`
 
-	// EndDate: End date of this inventory item.
 	EndDate string `json:"endDate,omitempty"`
 
 	// Flights: Flights of this inventory item. A flight (a.k.a. pricing
@@ -11238,17 +11568,16 @@ type Pricing struct {
 	// PricingType: Pricing type of this inventory item.
 	//
 	// Possible values:
-	//   "PLANNING_PLACEMENT_PRICING_TYPE_CLICKS"
-	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPA"
-	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPC"
-	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPM"
-	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPM_ACTIVEVIEW"
-	//   "PLANNING_PLACEMENT_PRICING_TYPE_FLAT_RATE_CLICKS"
-	//   "PLANNING_PLACEMENT_PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
 	//   "PLANNING_PLACEMENT_PRICING_TYPE_IMPRESSIONS"
+	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPM"
+	//   "PLANNING_PLACEMENT_PRICING_TYPE_CLICKS"
+	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPC"
+	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPA"
+	//   "PLANNING_PLACEMENT_PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
+	//   "PLANNING_PLACEMENT_PRICING_TYPE_FLAT_RATE_CLICKS"
+	//   "PLANNING_PLACEMENT_PRICING_TYPE_CPM_ACTIVEVIEW"
 	PricingType string `json:"pricingType,omitempty"`
 
-	// StartDate: Start date of this inventory item.
 	StartDate string `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CapCostType") to
@@ -11279,18 +11608,11 @@ type PricingSchedule struct {
 	// CapCostOption: Placement cap cost option.
 	//
 	// Possible values:
-	//   "CAP_COST_CUMULATIVE"
-	//   "CAP_COST_MONTHLY"
 	//   "CAP_COST_NONE"
+	//   "CAP_COST_MONTHLY"
+	//   "CAP_COST_CUMULATIVE"
 	CapCostOption string `json:"capCostOption,omitempty"`
 
-	// EndDate: Placement end date. This date must be later than, or the
-	// same day as, the placement start date, but not later than the
-	// campaign end date. If, for example, you set 6/25/2015 as both the
-	// start and end dates, the effective placement date is just that day
-	// only, 6/25/2015. The hours, minutes, and seconds of the end date
-	// should not be set, as doing so will result in an error. This field is
-	// required on insertion.
 	EndDate string `json:"endDate,omitempty"`
 
 	// Flighted: Whether this placement is flighted. If true, pricing
@@ -11309,23 +11631,16 @@ type PricingSchedule struct {
 	// insertion.
 	//
 	// Possible values:
-	//   "PRICING_TYPE_CPA"
-	//   "PRICING_TYPE_CPC"
 	//   "PRICING_TYPE_CPM"
-	//   "PRICING_TYPE_CPM_ACTIVEVIEW"
-	//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+	//   "PRICING_TYPE_CPC"
+	//   "PRICING_TYPE_CPA"
 	//   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
+	//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+	//   "PRICING_TYPE_CPM_ACTIVEVIEW"
 	PricingType string `json:"pricingType,omitempty"`
 
-	// StartDate: Placement start date. This date must be later than, or the
-	// same day as, the campaign start date. The hours, minutes, and seconds
-	// of the start date should not be set, as doing so will result in an
-	// error. This field is required on insertion.
 	StartDate string `json:"startDate,omitempty"`
 
-	// TestingStartDate: Testing start date of this placement. The hours,
-	// minutes, and seconds of the start date should not be set, as doing so
-	// will result in an error.
 	TestingStartDate string `json:"testingStartDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CapCostOption") to
@@ -11353,13 +11668,6 @@ func (s *PricingSchedule) MarshalJSON() ([]byte, error) {
 
 // PricingSchedulePricingPeriod: Pricing Period
 type PricingSchedulePricingPeriod struct {
-	// EndDate: Pricing period end date. This date must be later than, or
-	// the same day as, the pricing period start date, but not later than
-	// the placement end date. The period end date can be the same date as
-	// the period start date. If, for example, you set 6/25/2015 as both the
-	// start and end dates, the effective pricing period date is just that
-	// day only, 6/25/2015. The hours, minutes, and seconds of the end date
-	// should not be set, as doing so will result in an error.
 	EndDate string `json:"endDate,omitempty"`
 
 	// PricingComment: Comments for this pricing period.
@@ -11370,10 +11678,6 @@ type PricingSchedulePricingPeriod struct {
 	// 1000000000000000000, inclusive.
 	RateOrCostNanos int64 `json:"rateOrCostNanos,omitempty,string"`
 
-	// StartDate: Pricing period start date. This date must be later than,
-	// or the same day as, the placement start date. The hours, minutes, and
-	// seconds of the start date should not be set, as doing so will result
-	// in an error.
 	StartDate string `json:"startDate,omitempty"`
 
 	// Units: Units of this pricing period. Acceptable values are 0 to
@@ -11426,8 +11730,8 @@ type Project struct {
 	// AudienceGender: Audience gender of this project.
 	//
 	// Possible values:
-	//   "PLANNING_AUDIENCE_GENDER_FEMALE"
 	//   "PLANNING_AUDIENCE_GENDER_MALE"
+	//   "PLANNING_AUDIENCE_GENDER_FEMALE"
 	AudienceGender string `json:"audienceGender,omitempty"`
 
 	// Budget: Budget of this project in the currency specified by the
@@ -11442,7 +11746,6 @@ type Project struct {
 	// ClientName: Name of the project client.
 	ClientName string `json:"clientName,omitempty"`
 
-	// EndDate: End date of the project.
 	EndDate string `json:"endDate,omitempty"`
 
 	// Id: ID of this project. This is a read-only, auto-generated field.
@@ -11462,7 +11765,6 @@ type Project struct {
 	// Overview: Overview of this project.
 	Overview string `json:"overview,omitempty"`
 
-	// StartDate: Start date of the project.
 	StartDate string `json:"startDate,omitempty"`
 
 	// SubaccountId: Subaccount ID of this project.
@@ -11616,8 +11918,8 @@ type Recipient struct {
 	// DeliveryType: The delivery type for the recipient.
 	//
 	// Possible values:
-	//   "ATTACHMENT"
 	//   "LINK"
+	//   "ATTACHMENT"
 	DeliveryType string `json:"deliveryType,omitempty"`
 
 	// Email: The email address of the recipient.
@@ -11781,17 +12083,17 @@ type RemarketingList struct {
 	// ListSource: Product from which this remarketing list was originated.
 	//
 	// Possible values:
-	//   "REMARKETING_LIST_SOURCE_ADX"
-	//   "REMARKETING_LIST_SOURCE_DBM"
-	//   "REMARKETING_LIST_SOURCE_DFA"
-	//   "REMARKETING_LIST_SOURCE_DFP"
-	//   "REMARKETING_LIST_SOURCE_DMP"
-	//   "REMARKETING_LIST_SOURCE_GA"
-	//   "REMARKETING_LIST_SOURCE_GPLUS"
 	//   "REMARKETING_LIST_SOURCE_OTHER"
-	//   "REMARKETING_LIST_SOURCE_PLAY_STORE"
+	//   "REMARKETING_LIST_SOURCE_ADX"
+	//   "REMARKETING_LIST_SOURCE_DFP"
 	//   "REMARKETING_LIST_SOURCE_XFP"
+	//   "REMARKETING_LIST_SOURCE_DFA"
+	//   "REMARKETING_LIST_SOURCE_GA"
 	//   "REMARKETING_LIST_SOURCE_YOUTUBE"
+	//   "REMARKETING_LIST_SOURCE_DBM"
+	//   "REMARKETING_LIST_SOURCE_GPLUS"
+	//   "REMARKETING_LIST_SOURCE_DMP"
+	//   "REMARKETING_LIST_SOURCE_PLAY_STORE"
 	ListSource string `json:"listSource,omitempty"`
 
 	// Name: Name of the remarketing list. This is a required field. Must be
@@ -11969,6 +12271,13 @@ type Report struct {
 	// OwnerProfileId: The user profile id of the owner of this report.
 	OwnerProfileId int64 `json:"ownerProfileId,omitempty,string"`
 
+	// PathAttributionCriteria: The report criteria for a report of type
+	// "PATH_ATTRIBUTION".
+	PathAttributionCriteria *ReportPathAttributionCriteria `json:"pathAttributionCriteria,omitempty"`
+
+	// PathCriteria: The report criteria for a report of type "PATH".
+	PathCriteria *ReportPathCriteria `json:"pathCriteria,omitempty"`
+
 	// PathToConversionCriteria: The report criteria for a report of type
 	// "PATH_TO_CONVERSION".
 	PathToConversionCriteria *ReportPathToConversionCriteria `json:"pathToConversionCriteria,omitempty"`
@@ -11988,11 +12297,13 @@ type Report struct {
 	// Type: The type of the report.
 	//
 	// Possible values:
+	//   "STANDARD"
+	//   "REACH"
+	//   "PATH_TO_CONVERSION"
 	//   "CROSS_DIMENSION_REACH"
 	//   "FLOODLIGHT"
-	//   "PATH_TO_CONVERSION"
-	//   "REACH"
-	//   "STANDARD"
+	//   "PATH"
+	//   "PATH_ATTRIBUTION"
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12034,9 +12345,8 @@ type ReportCriteria struct {
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// DimensionFilters: The list of filters on which dimensions are
-	// filtered.
-	// Filters for different dimensions are ANDed, filters for the same
-	// dimension are grouped together and ORed.
+	// filtered. Filters for different dimensions are ANDed, filters for the
+	// same dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of standard dimensions the report should
@@ -12133,8 +12443,8 @@ type ReportDelivery struct {
 	// receive, if enabled.
 	//
 	// Possible values:
-	//   "ATTACHMENT"
 	//   "LINK"
+	//   "ATTACHMENT"
 	EmailOwnerDeliveryType string `json:"emailOwnerDeliveryType,omitempty"`
 
 	// Message: The message to be sent with each email.
@@ -12177,9 +12487,8 @@ type ReportFloodlightCriteria struct {
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// DimensionFilters: The list of filters on which dimensions are
-	// filtered.
-	// Filters for different dimensions are ANDed, filters for the same
-	// dimension are grouped together and ORed.
+	// filtered. Filters for different dimensions are ANDed, filters for the
+	// same dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of dimensions the report should include.
@@ -12263,6 +12572,107 @@ type ReportFloodlightCriteriaReportProperties struct {
 
 func (s *ReportFloodlightCriteriaReportProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportFloodlightCriteriaReportProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReportPathAttributionCriteria: The report criteria for a report of
+// type "PATH_ATTRIBUTION".
+type ReportPathAttributionCriteria struct {
+	// ActivityFilters: The list of 'dfa:activity' values to filter on.
+	ActivityFilters []*DimensionValue `json:"activityFilters,omitempty"`
+
+	// CustomChannelGrouping: Channel Grouping.
+	CustomChannelGrouping *ChannelGrouping `json:"customChannelGrouping,omitempty"`
+
+	// DateRange: The date range this report should be run for.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+
+	// Dimensions: The list of dimensions the report should include.
+	Dimensions []*SortedDimension `json:"dimensions,omitempty"`
+
+	// FloodlightConfigId: The floodlight ID for which to show data in this
+	// report. All advertisers associated with that ID will automatically be
+	// added. The dimension of the value needs to be
+	// 'dfa:floodlightConfigId'.
+	FloodlightConfigId *DimensionValue `json:"floodlightConfigId,omitempty"`
+
+	// MetricNames: The list of names of metrics the report should include.
+	MetricNames []string `json:"metricNames,omitempty"`
+
+	// PathFilters: Path Filters.
+	PathFilters []*PathFilter `json:"pathFilters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActivityFilters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActivityFilters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportPathAttributionCriteria) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportPathAttributionCriteria
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReportPathCriteria: The report criteria for a report of type "PATH".
+type ReportPathCriteria struct {
+	// ActivityFilters: The list of 'dfa:activity' values to filter on.
+	ActivityFilters []*DimensionValue `json:"activityFilters,omitempty"`
+
+	// CustomChannelGrouping: Channel Grouping.
+	CustomChannelGrouping *ChannelGrouping `json:"customChannelGrouping,omitempty"`
+
+	// DateRange: The date range this report should be run for.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+
+	// Dimensions: The list of dimensions the report should include.
+	Dimensions []*SortedDimension `json:"dimensions,omitempty"`
+
+	// FloodlightConfigId: The floodlight ID for which to show data in this
+	// report. All advertisers associated with that ID will automatically be
+	// added. The dimension of the value needs to be
+	// 'dfa:floodlightConfigId'.
+	FloodlightConfigId *DimensionValue `json:"floodlightConfigId,omitempty"`
+
+	// MetricNames: The list of names of metrics the report should include.
+	MetricNames []string `json:"metricNames,omitempty"`
+
+	// PathFilters: Path Filters.
+	PathFilters []*PathFilter `json:"pathFilters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActivityFilters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActivityFilters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportPathCriteria) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportPathCriteria
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12419,9 +12829,8 @@ type ReportReachCriteria struct {
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// DimensionFilters: The list of filters on which dimensions are
-	// filtered.
-	// Filters for different dimensions are ANDed, filters for the same
-	// dimension are grouped together and ORed.
+	// filtered. Filters for different dimensions are ANDed, filters for the
+	// same dimension are grouped together and ORed.
 	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
 
 	// Dimensions: The list of dimensions the report should include.
@@ -12435,7 +12844,7 @@ type ReportReachCriteria struct {
 	// MetricNames: The list of names of metrics the report should include.
 	MetricNames []string `json:"metricNames,omitempty"`
 
-	// ReachByFrequencyMetricNames: The list of names of  Reach By Frequency
+	// ReachByFrequencyMetricNames: The list of names of Reach By Frequency
 	// metrics the report should include.
 	ReachByFrequencyMetricNames []string `json:"reachByFrequencyMetricNames,omitempty"`
 
@@ -12475,15 +12884,12 @@ type ReportSchedule struct {
 	// "MONTHLY".
 	Every int64 `json:"every,omitempty"`
 
-	// ExpirationDate: The expiration date when the scheduled report stops
-	// running.
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
-	// Repeats: The interval for which the report is repeated. Note:
-	// - "DAILY" also requires field "every" to be set.
-	// - "WEEKLY" also requires fields "every" and "repeatsOnWeekDays" to be
-	// set.
-	// - "MONTHLY" also requires fields "every" and "runsOnDayOfMonth" to be
+	// Repeats: The interval for which the report is repeated. Note: -
+	// "DAILY" also requires field "every" to be set. - "WEEKLY" also
+	// requires fields "every" and "repeatsOnWeekDays" to be set. -
+	// "MONTHLY" also requires fields "every" and "runsOnDayOfMonth" to be
 	// set.
 	Repeats string `json:"repeats,omitempty"`
 
@@ -12491,30 +12897,28 @@ type ReportSchedule struct {
 	// reports should run.
 	//
 	// Possible values:
-	//   "FRIDAY"
-	//   "MONDAY"
-	//   "SATURDAY"
 	//   "SUNDAY"
-	//   "THURSDAY"
+	//   "MONDAY"
 	//   "TUESDAY"
 	//   "WEDNESDAY"
+	//   "THURSDAY"
+	//   "FRIDAY"
+	//   "SATURDAY"
 	RepeatsOnWeekDays []string `json:"repeatsOnWeekDays,omitempty"`
 
 	// RunsOnDayOfMonth: Enum to define for "MONTHLY" scheduled reports
 	// whether reports should be repeated on the same day of the month as
-	// "startDate" or the same day of the week of the month.
-	// Example: If 'startDate' is Monday, April 2nd 2012 (2012-04-02),
-	// "DAY_OF_MONTH" would run subsequent reports on the 2nd of every
-	// Month, and "WEEK_OF_MONTH" would run subsequent reports on the first
-	// Monday of the month.
+	// "startDate" or the same day of the week of the month. Example: If
+	// 'startDate' is Monday, April 2nd 2012 (2012-04-02), "DAY_OF_MONTH"
+	// would run subsequent reports on the 2nd of every Month, and
+	// "WEEK_OF_MONTH" would run subsequent reports on the first Monday of
+	// the month.
 	//
 	// Possible values:
 	//   "DAY_OF_MONTH"
 	//   "WEEK_OF_MONTH"
 	RunsOnDayOfMonth string `json:"runsOnDayOfMonth,omitempty"`
 
-	// StartDate: Start date of date range for which scheduled reports
-	// should be run.
 	StartDate string `json:"startDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Active") to
@@ -12646,41 +13050,21 @@ type ReportsConfiguration struct {
 
 	// ReportGenerationTimeZoneId: Report generation time zone ID of this
 	// account. This is a required field that can only be changed by a
-	// superuser.
-	// Acceptable values are:
-	//
-	// - "1" for "America/New_York"
-	// - "2" for "Europe/London"
-	// - "3" for "Europe/Paris"
-	// - "4" for "Africa/Johannesburg"
-	// - "5" for "Asia/Jerusalem"
-	// - "6" for "Asia/Shanghai"
-	// - "7" for "Asia/Hong_Kong"
-	// - "8" for "Asia/Tokyo"
-	// - "9" for "Australia/Sydney"
-	// - "10" for "Asia/Dubai"
-	// - "11" for "America/Los_Angeles"
-	// - "12" for "Pacific/Auckland"
-	// - "13" for "America/Sao_Paulo"
-	// - "16" for "America/Asuncion"
-	// - "17" for "America/Chicago"
-	// - "18" for "America/Denver"
-	// - "19" for "America/St_Johns"
-	// - "20" for "Asia/Dhaka"
-	// - "21" for "Asia/Jakarta"
-	// - "22" for "Asia/Kabul"
-	// - "23" for "Asia/Karachi"
-	// - "24" for "Asia/Calcutta"
-	// - "25" for "Asia/Pyongyang"
-	// - "26" for "Asia/Rangoon"
-	// - "27" for "Atlantic/Cape_Verde"
-	// - "28" for "Atlantic/South_Georgia"
-	// - "29" for "Australia/Adelaide"
-	// - "30" for "Australia/Lord_Howe"
-	// - "31" for "Europe/Moscow"
-	// - "32" for "Pacific/Kiritimati"
-	// - "35" for "Pacific/Norfolk"
-	// - "36" for "Pacific/Tongatapu"
+	// superuser. Acceptable values are: - "1" for "America/New_York" - "2"
+	// for "Europe/London" - "3" for "Europe/Paris" - "4" for
+	// "Africa/Johannesburg" - "5" for "Asia/Jerusalem" - "6" for
+	// "Asia/Shanghai" - "7" for "Asia/Hong_Kong" - "8" for "Asia/Tokyo" -
+	// "9" for "Australia/Sydney" - "10" for "Asia/Dubai" - "11" for
+	// "America/Los_Angeles" - "12" for "Pacific/Auckland" - "13" for
+	// "America/Sao_Paulo" - "16" for "America/Asuncion" - "17" for
+	// "America/Chicago" - "18" for "America/Denver" - "19" for
+	// "America/St_Johns" - "20" for "Asia/Dhaka" - "21" for "Asia/Jakarta"
+	// - "22" for "Asia/Kabul" - "23" for "Asia/Karachi" - "24" for
+	// "Asia/Calcutta" - "25" for "Asia/Pyongyang" - "26" for "Asia/Rangoon"
+	// - "27" for "Atlantic/Cape_Verde" - "28" for "Atlantic/South_Georgia"
+	// - "29" for "Australia/Adelaide" - "30" for "Australia/Lord_Howe" -
+	// "31" for "Europe/Moscow" - "32" for "Pacific/Kiritimati" - "35" for
+	// "Pacific/Norfolk" - "36" for "Pacific/Tongatapu"
 	ReportGenerationTimeZoneId int64 `json:"reportGenerationTimeZoneId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -12995,17 +13379,15 @@ type SiteSettings struct {
 	// measurement adapter will use for in-stream video creatives assigned
 	// to the placement. The publisher's specifications will typically
 	// determine this setting. For VPAID creatives, the adapter format will
-	// match the VPAID format (HTML5 VPAID creatives use the HTML5
-	// adapter).
-	//
-	// Note: Flash is no longer supported. This field now defaults to HTML5
-	// when the following values are provided: FLASH, BOTH.
+	// match the VPAID format (HTML5 VPAID creatives use the HTML5 adapter).
+	// *Note:* Flash is no longer supported. This field now defaults to
+	// HTML5 when the following values are provided: FLASH, BOTH.
 	//
 	// Possible values:
-	//   "BOTH"
 	//   "DEFAULT"
 	//   "FLASH"
 	//   "HTML5"
+	//   "BOTH"
 	VpaidAdapterChoiceTemplate string `json:"vpaidAdapterChoiceTemplate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActiveViewOptOut") to
@@ -13117,6 +13499,14 @@ type SiteVideoSettings struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#siteVideoSettings".
 	Kind string `json:"kind,omitempty"`
+
+	// ObaEnabled: Whether OBA icons are enabled for this placement.
+	ObaEnabled bool `json:"obaEnabled,omitempty"`
+
+	// ObaSettings: Settings for the OBA icon of video creatives served to
+	// this site. This will act as default for new placements created under
+	// this site.
+	ObaSettings *ObaIcon `json:"obaSettings,omitempty"`
 
 	// Orientation: Orientation of a site template used for video. This will
 	// act as default for new placements created under this site.
@@ -13471,25 +13861,25 @@ type TagData struct {
 	// Format: TagData tag format of this tag.
 	//
 	// Possible values:
-	//   "PLACEMENT_TAG_CLICK_COMMANDS"
-	//   "PLACEMENT_TAG_IFRAME_ILAYER"
+	//   "PLACEMENT_TAG_STANDARD"
 	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
-	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
-	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
-	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
-	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
+	//   "PLACEMENT_TAG_IFRAME_ILAYER"
 	//   "PLACEMENT_TAG_INTERNAL_REDIRECT"
+	//   "PLACEMENT_TAG_JAVASCRIPT"
 	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
-	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
 	//   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
 	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
-	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
-	//   "PLACEMENT_TAG_JAVASCRIPT"
-	//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
-	//   "PLACEMENT_TAG_STANDARD"
+	//   "PLACEMENT_TAG_CLICK_COMMANDS"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
 	//   "PLACEMENT_TAG_TRACKING"
 	//   "PLACEMENT_TAG_TRACKING_IFRAME"
 	//   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
+	//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
+	//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
+	//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
+	//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
+	//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
 	Format string `json:"format,omitempty"`
 
 	// ImpressionTag: Tag string for serving an ad.
@@ -13540,9 +13930,9 @@ type TagSetting struct {
 	// can then add keywords to those placeholders.
 	//
 	// Possible values:
-	//   "GENERATE_SEPARATE_TAG_FOR_EACH_KEYWORD"
-	//   "IGNORE"
 	//   "PLACEHOLDER_WITH_LIST_OF_KEYWORDS"
+	//   "IGNORE"
+	//   "GENERATE_SEPARATE_TAG_FOR_EACH_KEYWORD"
 	KeywordOption string `json:"keywordOption,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalKeyValues")
@@ -13610,9 +14000,9 @@ type TargetWindow struct {
 	// of the flash creative can be displayed.
 	//
 	// Possible values:
+	//   "NEW_WINDOW"
 	//   "CURRENT_WINDOW"
 	//   "CUSTOM"
-	//   "NEW_WINDOW"
 	TargetWindowOption string `json:"targetWindowOption,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CustomHtml") to
@@ -13685,17 +14075,17 @@ type TargetableRemarketingList struct {
 	// originated.
 	//
 	// Possible values:
-	//   "REMARKETING_LIST_SOURCE_ADX"
-	//   "REMARKETING_LIST_SOURCE_DBM"
-	//   "REMARKETING_LIST_SOURCE_DFA"
-	//   "REMARKETING_LIST_SOURCE_DFP"
-	//   "REMARKETING_LIST_SOURCE_DMP"
-	//   "REMARKETING_LIST_SOURCE_GA"
-	//   "REMARKETING_LIST_SOURCE_GPLUS"
 	//   "REMARKETING_LIST_SOURCE_OTHER"
-	//   "REMARKETING_LIST_SOURCE_PLAY_STORE"
+	//   "REMARKETING_LIST_SOURCE_ADX"
+	//   "REMARKETING_LIST_SOURCE_DFP"
 	//   "REMARKETING_LIST_SOURCE_XFP"
+	//   "REMARKETING_LIST_SOURCE_DFA"
+	//   "REMARKETING_LIST_SOURCE_GA"
 	//   "REMARKETING_LIST_SOURCE_YOUTUBE"
+	//   "REMARKETING_LIST_SOURCE_DBM"
+	//   "REMARKETING_LIST_SOURCE_GPLUS"
+	//   "REMARKETING_LIST_SOURCE_DMP"
+	//   "REMARKETING_LIST_SOURCE_PLAY_STORE"
 	ListSource string `json:"listSource,omitempty"`
 
 	// Name: Name of the targetable remarketing list. Is no greater than 128
@@ -13997,25 +14387,25 @@ type ThirdPartyTrackingUrl struct {
 	// in-stream audio creatives.
 	//
 	// Possible values:
-	//   "CLICK_TRACKING"
 	//   "IMPRESSION"
-	//   "RICH_MEDIA_BACKUP_IMPRESSION"
-	//   "RICH_MEDIA_IMPRESSION"
-	//   "RICH_MEDIA_RM_IMPRESSION"
-	//   "SURVEY"
-	//   "VIDEO_COMPLETE"
-	//   "VIDEO_CUSTOM"
+	//   "CLICK_TRACKING"
+	//   "VIDEO_START"
 	//   "VIDEO_FIRST_QUARTILE"
-	//   "VIDEO_FULLSCREEN"
 	//   "VIDEO_MIDPOINT"
+	//   "VIDEO_THIRD_QUARTILE"
+	//   "VIDEO_COMPLETE"
 	//   "VIDEO_MUTE"
 	//   "VIDEO_PAUSE"
-	//   "VIDEO_PROGRESS"
 	//   "VIDEO_REWIND"
-	//   "VIDEO_SKIP"
-	//   "VIDEO_START"
+	//   "VIDEO_FULLSCREEN"
 	//   "VIDEO_STOP"
-	//   "VIDEO_THIRD_QUARTILE"
+	//   "VIDEO_CUSTOM"
+	//   "SURVEY"
+	//   "RICH_MEDIA_IMPRESSION"
+	//   "RICH_MEDIA_RM_IMPRESSION"
+	//   "RICH_MEDIA_BACKUP_IMPRESSION"
+	//   "VIDEO_SKIP"
+	//   "VIDEO_PROGRESS"
 	ThirdPartyUrlType string `json:"thirdPartyUrlType,omitempty"`
 
 	// Url: URL for the specified third-party URL type.
@@ -14086,10 +14476,10 @@ type UniversalAdId struct {
 	// Registry: Registry used for the Ad ID value.
 	//
 	// Possible values:
-	//   "AD_ID.ORG"
+	//   "OTHER"
+	//   "AD_ID_OFFICIAL"
 	//   "CLEARCAST"
 	//   "DCM"
-	//   "OTHER"
 	Registry string `json:"registry,omitempty"`
 
 	// Value: ID value for this creative. Only alphanumeric characters and
@@ -14126,8 +14516,8 @@ type UserDefinedVariableConfiguration struct {
 	// DataType: Data type for the variable. This is a required field.
 	//
 	// Possible values:
-	//   "NUMBER"
 	//   "STRING"
+	//   "NUMBER"
 	DataType string `json:"dataType,omitempty"`
 
 	// ReportName: User-friendly name for the variable which will appear in
@@ -14139,8 +14529,15 @@ type UserDefinedVariableConfiguration struct {
 	//
 	// Possible values:
 	//   "U1"
+	//   "U2"
+	//   "U3"
+	//   "U4"
+	//   "U5"
+	//   "U6"
+	//   "U7"
+	//   "U8"
+	//   "U9"
 	//   "U10"
-	//   "U100"
 	//   "U11"
 	//   "U12"
 	//   "U13"
@@ -14150,7 +14547,6 @@ type UserDefinedVariableConfiguration struct {
 	//   "U17"
 	//   "U18"
 	//   "U19"
-	//   "U2"
 	//   "U20"
 	//   "U21"
 	//   "U22"
@@ -14161,7 +14557,6 @@ type UserDefinedVariableConfiguration struct {
 	//   "U27"
 	//   "U28"
 	//   "U29"
-	//   "U3"
 	//   "U30"
 	//   "U31"
 	//   "U32"
@@ -14172,7 +14567,6 @@ type UserDefinedVariableConfiguration struct {
 	//   "U37"
 	//   "U38"
 	//   "U39"
-	//   "U4"
 	//   "U40"
 	//   "U41"
 	//   "U42"
@@ -14183,7 +14577,6 @@ type UserDefinedVariableConfiguration struct {
 	//   "U47"
 	//   "U48"
 	//   "U49"
-	//   "U5"
 	//   "U50"
 	//   "U51"
 	//   "U52"
@@ -14194,7 +14587,6 @@ type UserDefinedVariableConfiguration struct {
 	//   "U57"
 	//   "U58"
 	//   "U59"
-	//   "U6"
 	//   "U60"
 	//   "U61"
 	//   "U62"
@@ -14205,7 +14597,6 @@ type UserDefinedVariableConfiguration struct {
 	//   "U67"
 	//   "U68"
 	//   "U69"
-	//   "U7"
 	//   "U70"
 	//   "U71"
 	//   "U72"
@@ -14216,7 +14607,6 @@ type UserDefinedVariableConfiguration struct {
 	//   "U77"
 	//   "U78"
 	//   "U79"
-	//   "U8"
 	//   "U80"
 	//   "U81"
 	//   "U82"
@@ -14227,7 +14617,6 @@ type UserDefinedVariableConfiguration struct {
 	//   "U87"
 	//   "U88"
 	//   "U89"
-	//   "U9"
 	//   "U90"
 	//   "U91"
 	//   "U92"
@@ -14238,6 +14627,7 @@ type UserDefinedVariableConfiguration struct {
 	//   "U97"
 	//   "U98"
 	//   "U99"
+	//   "U100"
 	VariableType string `json:"variableType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataType") to
@@ -14430,11 +14820,11 @@ type UserRolePermission struct {
 	// Availability: Levels of availability for a user role permission.
 	//
 	// Possible values:
-	//   "ACCOUNT_ALWAYS"
-	//   "ACCOUNT_BY_DEFAULT"
 	//   "NOT_AVAILABLE_BY_DEFAULT"
-	//   "SUBACCOUNT_AND_ACCOUNT_ALWAYS"
+	//   "ACCOUNT_BY_DEFAULT"
 	//   "SUBACCOUNT_AND_ACCOUNT_BY_DEFAULT"
+	//   "ACCOUNT_ALWAYS"
+	//   "SUBACCOUNT_AND_ACCOUNT_ALWAYS"
 	Availability string `json:"availability,omitempty"`
 
 	// Id: ID of this user role permission.
@@ -14637,10 +15027,10 @@ type VideoFormat struct {
 	//
 	// Possible values:
 	//   "FLV"
-	//   "M3U8"
-	//   "MP4"
 	//   "THREEGPP"
+	//   "MP4"
 	//   "WEBM"
+	//   "M3U8"
 	FileType string `json:"fileType,omitempty"`
 
 	// Id: ID of the video format.
@@ -14764,6 +15154,14 @@ type VideoSettings struct {
 	// string "dfareporting#videoSettings".
 	Kind string `json:"kind,omitempty"`
 
+	// ObaEnabled: Whether OBA icons are enabled for this placement.
+	ObaEnabled bool `json:"obaEnabled,omitempty"`
+
+	// ObaSettings: Settings for the OBA icon of video creatives served to
+	// this placement. If this object is provided, the creative-level OBA
+	// settings will be overridden.
+	ObaSettings *ObaIcon `json:"obaSettings,omitempty"`
+
 	// Orientation: Orientation of a video placement. If this value is set,
 	// placement will return assets matching the specified orientation.
 	//
@@ -14864,7 +15262,7 @@ func (c *AccountActiveAdSummariesGetCall) Header() http.Header {
 
 func (c *AccountActiveAdSummariesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14928,6 +15326,7 @@ func (c *AccountActiveAdSummariesGetCall) Do(opts ...googleapi.CallOption) (*Acc
 	return ret, nil
 	// {
 	//   "description": "Gets the account's active ad summary by account ID.",
+	//   "flatPath": "userprofiles/{profileId}/accountActiveAdSummaries/{summaryAccountId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountActiveAdSummaries.get",
 	//   "parameterOrder": [
@@ -15018,7 +15417,7 @@ func (c *AccountPermissionGroupsGetCall) Header() http.Header {
 
 func (c *AccountPermissionGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15082,6 +15481,7 @@ func (c *AccountPermissionGroupsGetCall) Do(opts ...googleapi.CallOption) (*Acco
 	return ret, nil
 	// {
 	//   "description": "Gets one account permission group by ID.",
+	//   "flatPath": "userprofiles/{profileId}/accountPermissionGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountPermissionGroups.get",
 	//   "parameterOrder": [
@@ -15170,7 +15570,7 @@ func (c *AccountPermissionGroupsListCall) Header() http.Header {
 
 func (c *AccountPermissionGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15234,6 +15634,7 @@ func (c *AccountPermissionGroupsListCall) Do(opts ...googleapi.CallOption) (*Acc
 	return ret, nil
 	// {
 	//   "description": "Retrieves the list of account permission groups.",
+	//   "flatPath": "userprofiles/{profileId}/accountPermissionGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountPermissionGroups.list",
 	//   "parameterOrder": [
@@ -15316,7 +15717,7 @@ func (c *AccountPermissionsGetCall) Header() http.Header {
 
 func (c *AccountPermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15380,6 +15781,7 @@ func (c *AccountPermissionsGetCall) Do(opts ...googleapi.CallOption) (*AccountPe
 	return ret, nil
 	// {
 	//   "description": "Gets one account permission by ID.",
+	//   "flatPath": "userprofiles/{profileId}/accountPermissions/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountPermissions.get",
 	//   "parameterOrder": [
@@ -15468,7 +15870,7 @@ func (c *AccountPermissionsListCall) Header() http.Header {
 
 func (c *AccountPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15531,6 +15933,7 @@ func (c *AccountPermissionsListCall) Do(opts ...googleapi.CallOption) (*AccountP
 	return ret, nil
 	// {
 	//   "description": "Retrieves the list of account permissions.",
+	//   "flatPath": "userprofiles/{profileId}/accountPermissions",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountPermissions.list",
 	//   "parameterOrder": [
@@ -15613,7 +16016,7 @@ func (c *AccountUserProfilesGetCall) Header() http.Header {
 
 func (c *AccountUserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15677,6 +16080,7 @@ func (c *AccountUserProfilesGetCall) Do(opts ...googleapi.CallOption) (*AccountU
 	return ret, nil
 	// {
 	//   "description": "Gets one account user profile by ID.",
+	//   "flatPath": "userprofiles/{profileId}/accountUserProfiles/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountUserProfiles.get",
 	//   "parameterOrder": [
@@ -15756,7 +16160,7 @@ func (c *AccountUserProfilesInsertCall) Header() http.Header {
 
 func (c *AccountUserProfilesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15821,6 +16225,7 @@ func (c *AccountUserProfilesInsertCall) Do(opts ...googleapi.CallOption) (*Accou
 	return ret, nil
 	// {
 	//   "description": "Inserts a new account user profile.",
+	//   "flatPath": "userprofiles/{profileId}/accountUserProfiles",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.accountUserProfiles.insert",
 	//   "parameterOrder": [
@@ -15987,7 +16392,7 @@ func (c *AccountUserProfilesListCall) Header() http.Header {
 
 func (c *AccountUserProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16050,6 +16455,7 @@ func (c *AccountUserProfilesListCall) Do(opts ...googleapi.CallOption) (*Account
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of account user profiles, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/accountUserProfiles",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accountUserProfiles.list",
 	//   "parameterOrder": [
@@ -16180,11 +16586,16 @@ type AccountUserProfilesPatchCall struct {
 
 // Patch: Updates an existing account user profile. This method supports
 // patch semantics.
-func (r *AccountUserProfilesService) Patch(profileId int64, id int64, accountuserprofile *AccountUserProfile) *AccountUserProfilesPatchCall {
+func (r *AccountUserProfilesService) Patch(profileId int64, accountuserprofile *AccountUserProfile) *AccountUserProfilesPatchCall {
 	c := &AccountUserProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.accountuserprofile = accountuserprofile
+	return c
+}
+
+// Id sets the optional parameter "id": AccountUserProfile ID.
+func (c *AccountUserProfilesPatchCall) Id(id int64) *AccountUserProfilesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -16215,7 +16626,7 @@ func (c *AccountUserProfilesPatchCall) Header() http.Header {
 
 func (c *AccountUserProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16280,18 +16691,17 @@ func (c *AccountUserProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Accoun
 	return ret, nil
 	// {
 	//   "description": "Updates an existing account user profile. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/accountUserProfiles",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.accountUserProfiles.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "User profile ID.",
+	//       "description": "AccountUserProfile ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -16362,7 +16772,7 @@ func (c *AccountUserProfilesUpdateCall) Header() http.Header {
 
 func (c *AccountUserProfilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16427,6 +16837,7 @@ func (c *AccountUserProfilesUpdateCall) Do(opts ...googleapi.CallOption) (*Accou
 	return ret, nil
 	// {
 	//   "description": "Updates an existing account user profile.",
+	//   "flatPath": "userprofiles/{profileId}/accountUserProfiles",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.accountUserProfiles.update",
 	//   "parameterOrder": [
@@ -16512,7 +16923,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16576,6 +16987,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one account by ID.",
+	//   "flatPath": "userprofiles/{profileId}/accounts/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accounts.get",
 	//   "parameterOrder": [
@@ -16733,7 +17145,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16796,6 +17208,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*AccountsListRespon
 	return ret, nil
 	// {
 	//   "description": "Retrieves the list of accounts, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.accounts.list",
 	//   "parameterOrder": [
@@ -16914,11 +17327,16 @@ type AccountsPatchCall struct {
 
 // Patch: Updates an existing account. This method supports patch
 // semantics.
-func (r *AccountsService) Patch(profileId int64, id int64, account *Account) *AccountsPatchCall {
+func (r *AccountsService) Patch(profileId int64, account *Account) *AccountsPatchCall {
 	c := &AccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.account = account
+	return c
+}
+
+// Id sets the optional parameter "id": Account ID.
+func (c *AccountsPatchCall) Id(id int64) *AccountsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -16949,7 +17367,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17014,18 +17432,17 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing account. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/accounts",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.accounts.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "Account ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -17096,7 +17513,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17161,6 +17578,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	return ret, nil
 	// {
 	//   "description": "Updates an existing account.",
+	//   "flatPath": "userprofiles/{profileId}/accounts",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.accounts.update",
 	//   "parameterOrder": [
@@ -17246,7 +17664,7 @@ func (c *AdsGetCall) Header() http.Header {
 
 func (c *AdsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17310,6 +17728,7 @@ func (c *AdsGetCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one ad by ID.",
+	//   "flatPath": "userprofiles/{profileId}/ads/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.ads.get",
 	//   "parameterOrder": [
@@ -17389,7 +17808,7 @@ func (c *AdsInsertCall) Header() http.Header {
 
 func (c *AdsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17454,6 +17873,7 @@ func (c *AdsInsertCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a new ad.",
+	//   "flatPath": "userprofiles/{profileId}/ads",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.ads.insert",
 	//   "parameterOrder": [
@@ -17552,12 +17972,12 @@ func (c *AdsListCall) CampaignIds(campaignIds ...int64) *AdsListCall {
 // in-stream video ads developed with the VAST standard.
 //
 // Possible values:
-//   "APP"
-//   "APP_INTERSTITIAL"
 //   "DISPLAY"
 //   "DISPLAY_INTERSTITIAL"
-//   "IN_STREAM_AUDIO"
+//   "APP"
+//   "APP_INTERSTITIAL"
 //   "IN_STREAM_VIDEO"
+//   "IN_STREAM_AUDIO"
 func (c *AdsListCall) Compatibility(compatibility string) *AdsListCall {
 	c.urlParams_.Set("compatibility", compatibility)
 	return c
@@ -17726,9 +18146,9 @@ func (c *AdsListCall) SslRequired(sslRequired bool) *AdsListCall {
 // types.
 //
 // Possible values:
-//   "AD_SERVING_CLICK_TRACKER"
-//   "AD_SERVING_DEFAULT_AD"
 //   "AD_SERVING_STANDARD_AD"
+//   "AD_SERVING_DEFAULT_AD"
+//   "AD_SERVING_CLICK_TRACKER"
 //   "AD_SERVING_TRACKING"
 func (c *AdsListCall) Type(type_ ...string) *AdsListCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
@@ -17772,7 +18192,7 @@ func (c *AdsListCall) Header() http.Header {
 
 func (c *AdsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17835,6 +18255,7 @@ func (c *AdsListCall) Do(opts ...googleapi.CallOption) (*AdsListResponse, error)
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of ads, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/ads",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.ads.list",
 	//   "parameterOrder": [
@@ -17874,12 +18295,12 @@ func (c *AdsListCall) Do(opts ...googleapi.CallOption) (*AdsListResponse, error)
 	//     "compatibility": {
 	//       "description": "Select default ads with the specified compatibility. Applicable when type is AD_SERVING_DEFAULT_AD. DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads, respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering an in-stream video ads developed with the VAST standard.",
 	//       "enum": [
-	//         "APP",
-	//         "APP_INTERSTITIAL",
 	//         "DISPLAY",
 	//         "DISPLAY_INTERSTITIAL",
-	//         "IN_STREAM_AUDIO",
-	//         "IN_STREAM_VIDEO"
+	//         "APP",
+	//         "APP_INTERSTITIAL",
+	//         "IN_STREAM_VIDEO",
+	//         "IN_STREAM_AUDIO"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -18019,9 +18440,9 @@ func (c *AdsListCall) Do(opts ...googleapi.CallOption) (*AdsListResponse, error)
 	//     "type": {
 	//       "description": "Select only ads with these types.",
 	//       "enum": [
-	//         "AD_SERVING_CLICK_TRACKER",
-	//         "AD_SERVING_DEFAULT_AD",
 	//         "AD_SERVING_STANDARD_AD",
+	//         "AD_SERVING_DEFAULT_AD",
+	//         "AD_SERVING_CLICK_TRACKER",
 	//         "AD_SERVING_TRACKING"
 	//       ],
 	//       "enumDescriptions": [
@@ -18079,11 +18500,16 @@ type AdsPatchCall struct {
 }
 
 // Patch: Updates an existing ad. This method supports patch semantics.
-func (r *AdsService) Patch(profileId int64, id int64, ad *Ad) *AdsPatchCall {
+func (r *AdsService) Patch(profileId int64, ad *Ad) *AdsPatchCall {
 	c := &AdsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.ad = ad
+	return c
+}
+
+// Id sets the optional parameter "id": Ad ID.
+func (c *AdsPatchCall) Id(id int64) *AdsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -18114,7 +18540,7 @@ func (c *AdsPatchCall) Header() http.Header {
 
 func (c *AdsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18179,18 +18605,17 @@ func (c *AdsPatchCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing ad. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/ads",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.ads.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "Ad ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -18261,7 +18686,7 @@ func (c *AdsUpdateCall) Header() http.Header {
 
 func (c *AdsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18326,6 +18751,7 @@ func (c *AdsUpdateCall) Do(opts ...googleapi.CallOption) (*Ad, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing ad.",
+	//   "flatPath": "userprofiles/{profileId}/ads",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.ads.update",
 	//   "parameterOrder": [
@@ -18400,7 +18826,7 @@ func (c *AdvertiserGroupsDeleteCall) Header() http.Header {
 
 func (c *AdvertiserGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18436,6 +18862,7 @@ func (c *AdvertiserGroupsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing advertiser group.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserGroups/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.advertiserGroups.delete",
 	//   "parameterOrder": [
@@ -18523,7 +18950,7 @@ func (c *AdvertiserGroupsGetCall) Header() http.Header {
 
 func (c *AdvertiserGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18587,6 +19014,7 @@ func (c *AdvertiserGroupsGetCall) Do(opts ...googleapi.CallOption) (*AdvertiserG
 	return ret, nil
 	// {
 	//   "description": "Gets one advertiser group by ID.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertiserGroups.get",
 	//   "parameterOrder": [
@@ -18666,7 +19094,7 @@ func (c *AdvertiserGroupsInsertCall) Header() http.Header {
 
 func (c *AdvertiserGroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18731,6 +19159,7 @@ func (c *AdvertiserGroupsInsertCall) Do(opts ...googleapi.CallOption) (*Advertis
 	return ret, nil
 	// {
 	//   "description": "Inserts a new advertiser group.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserGroups",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.advertiserGroups.insert",
 	//   "parameterOrder": [
@@ -18876,7 +19305,7 @@ func (c *AdvertiserGroupsListCall) Header() http.Header {
 
 func (c *AdvertiserGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18939,6 +19368,7 @@ func (c *AdvertiserGroupsListCall) Do(opts ...googleapi.CallOption) (*Advertiser
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of advertiser groups, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertiserGroups.list",
 	//   "parameterOrder": [
@@ -19052,11 +19482,16 @@ type AdvertiserGroupsPatchCall struct {
 
 // Patch: Updates an existing advertiser group. This method supports
 // patch semantics.
-func (r *AdvertiserGroupsService) Patch(profileId int64, id int64, advertisergroup *AdvertiserGroup) *AdvertiserGroupsPatchCall {
+func (r *AdvertiserGroupsService) Patch(profileId int64, advertisergroup *AdvertiserGroup) *AdvertiserGroupsPatchCall {
 	c := &AdvertiserGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.advertisergroup = advertisergroup
+	return c
+}
+
+// Id sets the optional parameter "id": AdvertiserGroup ID.
+func (c *AdvertiserGroupsPatchCall) Id(id int64) *AdvertiserGroupsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -19087,7 +19522,7 @@ func (c *AdvertiserGroupsPatchCall) Header() http.Header {
 
 func (c *AdvertiserGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19152,18 +19587,17 @@ func (c *AdvertiserGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Advertise
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser group. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserGroups",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.advertiserGroups.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Advertiser group ID.",
+	//       "description": "AdvertiserGroup ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -19234,7 +19668,7 @@ func (c *AdvertiserGroupsUpdateCall) Header() http.Header {
 
 func (c *AdvertiserGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19299,6 +19733,7 @@ func (c *AdvertiserGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Advertis
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser group.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserGroups",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.advertiserGroups.update",
 	//   "parameterOrder": [
@@ -19384,7 +19819,7 @@ func (c *AdvertiserLandingPagesGetCall) Header() http.Header {
 
 func (c *AdvertiserLandingPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19448,6 +19883,7 @@ func (c *AdvertiserLandingPagesGetCall) Do(opts ...googleapi.CallOption) (*Landi
 	return ret, nil
 	// {
 	//   "description": "Gets one landing page by ID.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserLandingPages/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertiserLandingPages.get",
 	//   "parameterOrder": [
@@ -19527,7 +19963,7 @@ func (c *AdvertiserLandingPagesInsertCall) Header() http.Header {
 
 func (c *AdvertiserLandingPagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19592,6 +20028,7 @@ func (c *AdvertiserLandingPagesInsertCall) Do(opts ...googleapi.CallOption) (*La
 	return ret, nil
 	// {
 	//   "description": "Inserts a new landing page.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserLandingPages",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.advertiserLandingPages.insert",
 	//   "parameterOrder": [
@@ -19772,7 +20209,7 @@ func (c *AdvertiserLandingPagesListCall) Header() http.Header {
 
 func (c *AdvertiserLandingPagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19836,6 +20273,7 @@ func (c *AdvertiserLandingPagesListCall) Do(opts ...googleapi.CallOption) (*Adve
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of landing pages.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserLandingPages",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertiserLandingPages.list",
 	//   "parameterOrder": [
@@ -19972,13 +20410,18 @@ type AdvertiserLandingPagesPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Updates an existing landing page. This method supports patch
-// semantics.
-func (r *AdvertiserLandingPagesService) Patch(profileId int64, id int64, landingpage *LandingPage) *AdvertiserLandingPagesPatchCall {
+// Patch: Updates an existing advertiser landing page. This method
+// supports patch semantics.
+func (r *AdvertiserLandingPagesService) Patch(profileId int64, landingpage *LandingPage) *AdvertiserLandingPagesPatchCall {
 	c := &AdvertiserLandingPagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.landingpage = landingpage
+	return c
+}
+
+// Id sets the optional parameter "id": LandingPage ID.
+func (c *AdvertiserLandingPagesPatchCall) Id(id int64) *AdvertiserLandingPagesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -20009,7 +20452,7 @@ func (c *AdvertiserLandingPagesPatchCall) Header() http.Header {
 
 func (c *AdvertiserLandingPagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20073,19 +20516,18 @@ func (c *AdvertiserLandingPagesPatchCall) Do(opts ...googleapi.CallOption) (*Lan
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing landing page. This method supports patch semantics.",
+	//   "description": "Updates an existing advertiser landing page. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserLandingPages",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.advertiserLandingPages.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Landing page ID.",
+	//       "description": "LandingPage ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -20156,7 +20598,7 @@ func (c *AdvertiserLandingPagesUpdateCall) Header() http.Header {
 
 func (c *AdvertiserLandingPagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20221,6 +20663,7 @@ func (c *AdvertiserLandingPagesUpdateCall) Do(opts ...googleapi.CallOption) (*La
 	return ret, nil
 	// {
 	//   "description": "Updates an existing landing page.",
+	//   "flatPath": "userprofiles/{profileId}/advertiserLandingPages",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.advertiserLandingPages.update",
 	//   "parameterOrder": [
@@ -20306,7 +20749,7 @@ func (c *AdvertisersGetCall) Header() http.Header {
 
 func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20370,6 +20813,7 @@ func (c *AdvertisersGetCall) Do(opts ...googleapi.CallOption) (*Advertiser, erro
 	return ret, nil
 	// {
 	//   "description": "Gets one advertiser by ID.",
+	//   "flatPath": "userprofiles/{profileId}/advertisers/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertisers.get",
 	//   "parameterOrder": [
@@ -20449,7 +20893,7 @@ func (c *AdvertisersInsertCall) Header() http.Header {
 
 func (c *AdvertisersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20514,6 +20958,7 @@ func (c *AdvertisersInsertCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	return ret, nil
 	// {
 	//   "description": "Inserts a new advertiser.",
+	//   "flatPath": "userprofiles/{profileId}/advertisers",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.advertisers.insert",
 	//   "parameterOrder": [
@@ -20631,7 +21076,7 @@ func (c *AdvertisersListCall) PageToken(pageToken string) *AdvertisersListCall {
 // "advertiser 2015". Most of the searches also add wildcards implicitly
 // at the start and the end of the search string. For example, a search
 // string of "advertiser" will match objects with name "my advertiser",
-// "advertiser 2015", or simply "advertiser".
+// "advertiser 2015", or simply "advertiser" .
 func (c *AdvertisersListCall) SearchString(searchString string) *AdvertisersListCall {
 	c.urlParams_.Set("searchString", searchString)
 	return c
@@ -20714,7 +21159,7 @@ func (c *AdvertisersListCall) Header() http.Header {
 
 func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20777,6 +21222,7 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*AdvertisersList
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of advertisers, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/advertisers",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.advertisers.list",
 	//   "parameterOrder": [
@@ -20836,7 +21282,7 @@ func (c *AdvertisersListCall) Do(opts ...googleapi.CallOption) (*AdvertisersList
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser June 2015\", \"advertiser April 2015\", or simply \"advertiser 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertiser\" will match objects with name \"my advertiser\", \"advertiser 2015\", or simply \"advertiser\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"advertiser*2015\" will return objects with names like \"advertiser June 2015\", \"advertiser April 2015\", or simply \"advertiser 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"advertiser\" will match objects with name \"my advertiser\", \"advertiser 2015\", or simply \"advertiser\" .",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -20933,11 +21379,16 @@ type AdvertisersPatchCall struct {
 
 // Patch: Updates an existing advertiser. This method supports patch
 // semantics.
-func (r *AdvertisersService) Patch(profileId int64, id int64, advertiser *Advertiser) *AdvertisersPatchCall {
+func (r *AdvertisersService) Patch(profileId int64, advertiser *Advertiser) *AdvertisersPatchCall {
 	c := &AdvertisersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.advertiser = advertiser
+	return c
+}
+
+// Id sets the optional parameter "id": Advertiser ID.
+func (c *AdvertisersPatchCall) Id(id int64) *AdvertisersPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -20968,7 +21419,7 @@ func (c *AdvertisersPatchCall) Header() http.Header {
 
 func (c *AdvertisersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21033,18 +21484,17 @@ func (c *AdvertisersPatchCall) Do(opts ...googleapi.CallOption) (*Advertiser, er
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/advertisers",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.advertisers.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "Advertiser ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -21115,7 +21565,7 @@ func (c *AdvertisersUpdateCall) Header() http.Header {
 
 func (c *AdvertisersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21180,6 +21630,7 @@ func (c *AdvertisersUpdateCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	return ret, nil
 	// {
 	//   "description": "Updates an existing advertiser.",
+	//   "flatPath": "userprofiles/{profileId}/advertisers",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.advertisers.update",
 	//   "parameterOrder": [
@@ -21263,7 +21714,7 @@ func (c *BrowsersListCall) Header() http.Header {
 
 func (c *BrowsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21326,6 +21777,7 @@ func (c *BrowsersListCall) Do(opts ...googleapi.CallOption) (*BrowsersListRespon
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of browsers.",
+	//   "flatPath": "userprofiles/{profileId}/browsers",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.browsers.list",
 	//   "parameterOrder": [
@@ -21401,7 +21853,7 @@ func (c *CampaignCreativeAssociationsInsertCall) Header() http.Header {
 
 func (c *CampaignCreativeAssociationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21467,6 +21919,7 @@ func (c *CampaignCreativeAssociationsInsertCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "Associates a creative with the specified campaign. This method creates a default ad with dimensions matching the creative in the campaign if such a default ad does not exist already.",
+	//   "flatPath": "userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.campaignCreativeAssociations.insert",
 	//   "parameterOrder": [
@@ -21586,7 +22039,7 @@ func (c *CampaignCreativeAssociationsListCall) Header() http.Header {
 
 func (c *CampaignCreativeAssociationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21652,6 +22105,7 @@ func (c *CampaignCreativeAssociationsListCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 	// {
 	//   "description": "Retrieves the list of creative IDs associated with the specified campaign. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/campaigns/{campaignId}/campaignCreativeAssociations",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.campaignCreativeAssociations.list",
 	//   "parameterOrder": [
@@ -21791,7 +22245,7 @@ func (c *CampaignsGetCall) Header() http.Header {
 
 func (c *CampaignsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21855,6 +22309,7 @@ func (c *CampaignsGetCall) Do(opts ...googleapi.CallOption) (*Campaign, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one campaign by ID.",
+	//   "flatPath": "userprofiles/{profileId}/campaigns/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.campaigns.get",
 	//   "parameterOrder": [
@@ -21934,7 +22389,7 @@ func (c *CampaignsInsertCall) Header() http.Header {
 
 func (c *CampaignsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21999,6 +22454,7 @@ func (c *CampaignsInsertCall) Do(opts ...googleapi.CallOption) (*Campaign, error
 	return ret, nil
 	// {
 	//   "description": "Inserts a new campaign.",
+	//   "flatPath": "userprofiles/{profileId}/campaigns",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.campaigns.insert",
 	//   "parameterOrder": [
@@ -22208,7 +22664,7 @@ func (c *CampaignsListCall) Header() http.Header {
 
 func (c *CampaignsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22271,6 +22727,7 @@ func (c *CampaignsListCall) Do(opts ...googleapi.CallOption) (*CampaignsListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of campaigns, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/campaigns",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.campaigns.list",
 	//   "parameterOrder": [
@@ -22427,11 +22884,16 @@ type CampaignsPatchCall struct {
 
 // Patch: Updates an existing campaign. This method supports patch
 // semantics.
-func (r *CampaignsService) Patch(profileId int64, id int64, campaign *Campaign) *CampaignsPatchCall {
+func (r *CampaignsService) Patch(profileId int64, campaign *Campaign) *CampaignsPatchCall {
 	c := &CampaignsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.campaign = campaign
+	return c
+}
+
+// Id sets the optional parameter "id": Campaign ID.
+func (c *CampaignsPatchCall) Id(id int64) *CampaignsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -22462,7 +22924,7 @@ func (c *CampaignsPatchCall) Header() http.Header {
 
 func (c *CampaignsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22527,18 +22989,17 @@ func (c *CampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campaign, error)
 	return ret, nil
 	// {
 	//   "description": "Updates an existing campaign. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/campaigns",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.campaigns.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "Campaign ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -22609,7 +23070,7 @@ func (c *CampaignsUpdateCall) Header() http.Header {
 
 func (c *CampaignsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22674,6 +23135,7 @@ func (c *CampaignsUpdateCall) Do(opts ...googleapi.CallOption) (*Campaign, error
 	return ret, nil
 	// {
 	//   "description": "Updates an existing campaign.",
+	//   "flatPath": "userprofiles/{profileId}/campaigns",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.campaigns.update",
 	//   "parameterOrder": [
@@ -22759,7 +23221,7 @@ func (c *ChangeLogsGetCall) Header() http.Header {
 
 func (c *ChangeLogsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22823,6 +23285,7 @@ func (c *ChangeLogsGetCall) Do(opts ...googleapi.CallOption) (*ChangeLog, error)
 	return ret, nil
 	// {
 	//   "description": "Gets one change log by ID.",
+	//   "flatPath": "userprofiles/{profileId}/changeLogs/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.changeLogs.get",
 	//   "parameterOrder": [
@@ -22878,23 +23341,23 @@ func (r *ChangeLogsService) List(profileId int64) *ChangeLogsListCall {
 // with the specified action.
 //
 // Possible values:
-//   "ACTION_ADD"
-//   "ACTION_ASSIGN"
-//   "ACTION_ASSOCIATE"
 //   "ACTION_CREATE"
-//   "ACTION_DELETE"
-//   "ACTION_DISABLE"
-//   "ACTION_EMAIL_TAGS"
-//   "ACTION_ENABLE"
-//   "ACTION_LINK"
-//   "ACTION_MARK_AS_DEFAULT"
-//   "ACTION_PUSH"
-//   "ACTION_REMOVE"
-//   "ACTION_SEND"
-//   "ACTION_SHARE"
-//   "ACTION_UNASSIGN"
-//   "ACTION_UNLINK"
 //   "ACTION_UPDATE"
+//   "ACTION_DELETE"
+//   "ACTION_ENABLE"
+//   "ACTION_DISABLE"
+//   "ACTION_ADD"
+//   "ACTION_REMOVE"
+//   "ACTION_MARK_AS_DEFAULT"
+//   "ACTION_ASSOCIATE"
+//   "ACTION_ASSIGN"
+//   "ACTION_UNASSIGN"
+//   "ACTION_SEND"
+//   "ACTION_LINK"
+//   "ACTION_UNLINK"
+//   "ACTION_PUSH"
+//   "ACTION_EMAIL_TAGS"
+//   "ACTION_SHARE"
 func (c *ChangeLogsListCall) Action(action string) *ChangeLogsListCall {
 	c.urlParams_.Set("action", action)
 	return c
@@ -22959,46 +23422,46 @@ func (c *ChangeLogsListCall) ObjectIds(objectIds ...int64) *ChangeLogsListCall {
 // change logs with the specified object type.
 //
 // Possible values:
-//   "OBJECT_ACCOUNT"
-//   "OBJECT_ACCOUNT_BILLING_FEATURE"
-//   "OBJECT_AD"
 //   "OBJECT_ADVERTISER"
+//   "OBJECT_FLOODLIGHT_CONFIGURATION"
+//   "OBJECT_AD"
+//   "OBJECT_FLOODLIGHT_ACTVITY"
+//   "OBJECT_CAMPAIGN"
+//   "OBJECT_FLOODLIGHT_ACTIVITY_GROUP"
+//   "OBJECT_CREATIVE"
+//   "OBJECT_PLACEMENT"
+//   "OBJECT_DFA_SITE"
+//   "OBJECT_USER_ROLE"
+//   "OBJECT_USER_PROFILE"
 //   "OBJECT_ADVERTISER_GROUP"
+//   "OBJECT_ACCOUNT"
+//   "OBJECT_SUBACCOUNT"
+//   "OBJECT_RICHMEDIA_CREATIVE"
+//   "OBJECT_INSTREAM_CREATIVE"
+//   "OBJECT_MEDIA_ORDER"
+//   "OBJECT_CONTENT_CATEGORY"
+//   "OBJECT_PLACEMENT_STRATEGY"
+//   "OBJECT_SD_SITE"
+//   "OBJECT_SIZE"
+//   "OBJECT_CREATIVE_GROUP"
+//   "OBJECT_CREATIVE_ASSET"
+//   "OBJECT_USER_PROFILE_FILTER"
+//   "OBJECT_LANDING_PAGE"
+//   "OBJECT_CREATIVE_FIELD"
+//   "OBJECT_REMARKETING_LIST"
+//   "OBJECT_PROVIDED_LIST_CLIENT"
+//   "OBJECT_EVENT_TAG"
+//   "OBJECT_CREATIVE_BUNDLE"
 //   "OBJECT_BILLING_ACCOUNT_GROUP"
 //   "OBJECT_BILLING_FEATURE"
+//   "OBJECT_RATE_CARD"
+//   "OBJECT_ACCOUNT_BILLING_FEATURE"
 //   "OBJECT_BILLING_MINIMUM_FEE"
 //   "OBJECT_BILLING_PROFILE"
-//   "OBJECT_CAMPAIGN"
-//   "OBJECT_CONTENT_CATEGORY"
-//   "OBJECT_CREATIVE"
-//   "OBJECT_CREATIVE_ASSET"
-//   "OBJECT_CREATIVE_BUNDLE"
-//   "OBJECT_CREATIVE_FIELD"
-//   "OBJECT_CREATIVE_GROUP"
-//   "OBJECT_DFA_SITE"
-//   "OBJECT_EVENT_TAG"
-//   "OBJECT_FLOODLIGHT_ACTIVITY_GROUP"
-//   "OBJECT_FLOODLIGHT_ACTVITY"
-//   "OBJECT_FLOODLIGHT_CONFIGURATION"
-//   "OBJECT_FLOODLIGHT_DV360_LINK"
-//   "OBJECT_INSTREAM_CREATIVE"
-//   "OBJECT_LANDING_PAGE"
-//   "OBJECT_MEDIA_ORDER"
-//   "OBJECT_PLACEMENT"
-//   "OBJECT_PLACEMENT_STRATEGY"
 //   "OBJECT_PLAYSTORE_LINK"
-//   "OBJECT_PROVIDED_LIST_CLIENT"
-//   "OBJECT_RATE_CARD"
-//   "OBJECT_REMARKETING_LIST"
-//   "OBJECT_RICHMEDIA_CREATIVE"
-//   "OBJECT_SD_SITE"
-//   "OBJECT_SEARCH_LIFT_STUDY"
-//   "OBJECT_SIZE"
-//   "OBJECT_SUBACCOUNT"
 //   "OBJECT_TARGETING_TEMPLATE"
-//   "OBJECT_USER_PROFILE"
-//   "OBJECT_USER_PROFILE_FILTER"
-//   "OBJECT_USER_ROLE"
+//   "OBJECT_SEARCH_LIFT_STUDY"
+//   "OBJECT_FLOODLIGHT_DV360_LINK"
 func (c *ChangeLogsListCall) ObjectType(objectType string) *ChangeLogsListCall {
 	c.urlParams_.Set("objectType", objectType)
 	return c
@@ -23067,7 +23530,7 @@ func (c *ChangeLogsListCall) Header() http.Header {
 
 func (c *ChangeLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23130,6 +23593,7 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of change logs. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/changeLogs",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.changeLogs.list",
 	//   "parameterOrder": [
@@ -23139,23 +23603,23 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//     "action": {
 	//       "description": "Select only change logs with the specified action.",
 	//       "enum": [
-	//         "ACTION_ADD",
-	//         "ACTION_ASSIGN",
-	//         "ACTION_ASSOCIATE",
 	//         "ACTION_CREATE",
+	//         "ACTION_UPDATE",
 	//         "ACTION_DELETE",
-	//         "ACTION_DISABLE",
-	//         "ACTION_EMAIL_TAGS",
 	//         "ACTION_ENABLE",
-	//         "ACTION_LINK",
-	//         "ACTION_MARK_AS_DEFAULT",
-	//         "ACTION_PUSH",
+	//         "ACTION_DISABLE",
+	//         "ACTION_ADD",
 	//         "ACTION_REMOVE",
-	//         "ACTION_SEND",
-	//         "ACTION_SHARE",
+	//         "ACTION_MARK_AS_DEFAULT",
+	//         "ACTION_ASSOCIATE",
+	//         "ACTION_ASSIGN",
 	//         "ACTION_UNASSIGN",
+	//         "ACTION_SEND",
+	//         "ACTION_LINK",
 	//         "ACTION_UNLINK",
-	//         "ACTION_UPDATE"
+	//         "ACTION_PUSH",
+	//         "ACTION_EMAIL_TAGS",
+	//         "ACTION_SHARE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -23215,46 +23679,46 @@ func (c *ChangeLogsListCall) Do(opts ...googleapi.CallOption) (*ChangeLogsListRe
 	//     "objectType": {
 	//       "description": "Select only change logs with the specified object type.",
 	//       "enum": [
-	//         "OBJECT_ACCOUNT",
-	//         "OBJECT_ACCOUNT_BILLING_FEATURE",
-	//         "OBJECT_AD",
 	//         "OBJECT_ADVERTISER",
+	//         "OBJECT_FLOODLIGHT_CONFIGURATION",
+	//         "OBJECT_AD",
+	//         "OBJECT_FLOODLIGHT_ACTVITY",
+	//         "OBJECT_CAMPAIGN",
+	//         "OBJECT_FLOODLIGHT_ACTIVITY_GROUP",
+	//         "OBJECT_CREATIVE",
+	//         "OBJECT_PLACEMENT",
+	//         "OBJECT_DFA_SITE",
+	//         "OBJECT_USER_ROLE",
+	//         "OBJECT_USER_PROFILE",
 	//         "OBJECT_ADVERTISER_GROUP",
+	//         "OBJECT_ACCOUNT",
+	//         "OBJECT_SUBACCOUNT",
+	//         "OBJECT_RICHMEDIA_CREATIVE",
+	//         "OBJECT_INSTREAM_CREATIVE",
+	//         "OBJECT_MEDIA_ORDER",
+	//         "OBJECT_CONTENT_CATEGORY",
+	//         "OBJECT_PLACEMENT_STRATEGY",
+	//         "OBJECT_SD_SITE",
+	//         "OBJECT_SIZE",
+	//         "OBJECT_CREATIVE_GROUP",
+	//         "OBJECT_CREATIVE_ASSET",
+	//         "OBJECT_USER_PROFILE_FILTER",
+	//         "OBJECT_LANDING_PAGE",
+	//         "OBJECT_CREATIVE_FIELD",
+	//         "OBJECT_REMARKETING_LIST",
+	//         "OBJECT_PROVIDED_LIST_CLIENT",
+	//         "OBJECT_EVENT_TAG",
+	//         "OBJECT_CREATIVE_BUNDLE",
 	//         "OBJECT_BILLING_ACCOUNT_GROUP",
 	//         "OBJECT_BILLING_FEATURE",
+	//         "OBJECT_RATE_CARD",
+	//         "OBJECT_ACCOUNT_BILLING_FEATURE",
 	//         "OBJECT_BILLING_MINIMUM_FEE",
 	//         "OBJECT_BILLING_PROFILE",
-	//         "OBJECT_CAMPAIGN",
-	//         "OBJECT_CONTENT_CATEGORY",
-	//         "OBJECT_CREATIVE",
-	//         "OBJECT_CREATIVE_ASSET",
-	//         "OBJECT_CREATIVE_BUNDLE",
-	//         "OBJECT_CREATIVE_FIELD",
-	//         "OBJECT_CREATIVE_GROUP",
-	//         "OBJECT_DFA_SITE",
-	//         "OBJECT_EVENT_TAG",
-	//         "OBJECT_FLOODLIGHT_ACTIVITY_GROUP",
-	//         "OBJECT_FLOODLIGHT_ACTVITY",
-	//         "OBJECT_FLOODLIGHT_CONFIGURATION",
-	//         "OBJECT_FLOODLIGHT_DV360_LINK",
-	//         "OBJECT_INSTREAM_CREATIVE",
-	//         "OBJECT_LANDING_PAGE",
-	//         "OBJECT_MEDIA_ORDER",
-	//         "OBJECT_PLACEMENT",
-	//         "OBJECT_PLACEMENT_STRATEGY",
 	//         "OBJECT_PLAYSTORE_LINK",
-	//         "OBJECT_PROVIDED_LIST_CLIENT",
-	//         "OBJECT_RATE_CARD",
-	//         "OBJECT_REMARKETING_LIST",
-	//         "OBJECT_RICHMEDIA_CREATIVE",
-	//         "OBJECT_SD_SITE",
-	//         "OBJECT_SEARCH_LIFT_STUDY",
-	//         "OBJECT_SIZE",
-	//         "OBJECT_SUBACCOUNT",
 	//         "OBJECT_TARGETING_TEMPLATE",
-	//         "OBJECT_USER_PROFILE",
-	//         "OBJECT_USER_PROFILE_FILTER",
-	//         "OBJECT_USER_ROLE"
+	//         "OBJECT_SEARCH_LIFT_STUDY",
+	//         "OBJECT_FLOODLIGHT_DV360_LINK"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -23453,7 +23917,7 @@ func (c *CitiesListCall) Header() http.Header {
 
 func (c *CitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23516,6 +23980,7 @@ func (c *CitiesListCall) Do(opts ...googleapi.CallOption) (*CitiesListResponse, 
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of cities, possibly filtered.",
+	//   "flatPath": "userprofiles/{profileId}/cities",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.cities.list",
 	//   "parameterOrder": [
@@ -23624,7 +24089,7 @@ func (c *ConnectionTypesGetCall) Header() http.Header {
 
 func (c *ConnectionTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23688,6 +24153,7 @@ func (c *ConnectionTypesGetCall) Do(opts ...googleapi.CallOption) (*ConnectionTy
 	return ret, nil
 	// {
 	//   "description": "Gets one connection type by ID.",
+	//   "flatPath": "userprofiles/{profileId}/connectionTypes/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.connectionTypes.get",
 	//   "parameterOrder": [
@@ -23776,7 +24242,7 @@ func (c *ConnectionTypesListCall) Header() http.Header {
 
 func (c *ConnectionTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23839,6 +24305,7 @@ func (c *ConnectionTypesListCall) Do(opts ...googleapi.CallOption) (*ConnectionT
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of connection types.",
+	//   "flatPath": "userprofiles/{profileId}/connectionTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.connectionTypes.list",
 	//   "parameterOrder": [
@@ -23910,7 +24377,7 @@ func (c *ContentCategoriesDeleteCall) Header() http.Header {
 
 func (c *ContentCategoriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23946,6 +24413,7 @@ func (c *ContentCategoriesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing content category.",
+	//   "flatPath": "userprofiles/{profileId}/contentCategories/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.contentCategories.delete",
 	//   "parameterOrder": [
@@ -24033,7 +24501,7 @@ func (c *ContentCategoriesGetCall) Header() http.Header {
 
 func (c *ContentCategoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24097,6 +24565,7 @@ func (c *ContentCategoriesGetCall) Do(opts ...googleapi.CallOption) (*ContentCat
 	return ret, nil
 	// {
 	//   "description": "Gets one content category by ID.",
+	//   "flatPath": "userprofiles/{profileId}/contentCategories/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.contentCategories.get",
 	//   "parameterOrder": [
@@ -24176,7 +24645,7 @@ func (c *ContentCategoriesInsertCall) Header() http.Header {
 
 func (c *ContentCategoriesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24241,6 +24710,7 @@ func (c *ContentCategoriesInsertCall) Do(opts ...googleapi.CallOption) (*Content
 	return ret, nil
 	// {
 	//   "description": "Inserts a new content category.",
+	//   "flatPath": "userprofiles/{profileId}/contentCategories",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.contentCategories.insert",
 	//   "parameterOrder": [
@@ -24386,7 +24856,7 @@ func (c *ContentCategoriesListCall) Header() http.Header {
 
 func (c *ContentCategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24449,6 +24919,7 @@ func (c *ContentCategoriesListCall) Do(opts ...googleapi.CallOption) (*ContentCa
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of content categories, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/contentCategories",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.contentCategories.list",
 	//   "parameterOrder": [
@@ -24562,11 +25033,16 @@ type ContentCategoriesPatchCall struct {
 
 // Patch: Updates an existing content category. This method supports
 // patch semantics.
-func (r *ContentCategoriesService) Patch(profileId int64, id int64, contentcategory *ContentCategory) *ContentCategoriesPatchCall {
+func (r *ContentCategoriesService) Patch(profileId int64, contentcategory *ContentCategory) *ContentCategoriesPatchCall {
 	c := &ContentCategoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.contentcategory = contentcategory
+	return c
+}
+
+// Id sets the optional parameter "id": ContentCategory ID.
+func (c *ContentCategoriesPatchCall) Id(id int64) *ContentCategoriesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -24597,7 +25073,7 @@ func (c *ContentCategoriesPatchCall) Header() http.Header {
 
 func (c *ContentCategoriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24662,18 +25138,17 @@ func (c *ContentCategoriesPatchCall) Do(opts ...googleapi.CallOption) (*ContentC
 	return ret, nil
 	// {
 	//   "description": "Updates an existing content category. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/contentCategories",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.contentCategories.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Content category ID.",
+	//       "description": "ContentCategory ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -24744,7 +25219,7 @@ func (c *ContentCategoriesUpdateCall) Header() http.Header {
 
 func (c *ContentCategoriesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24809,6 +25284,7 @@ func (c *ContentCategoriesUpdateCall) Do(opts ...googleapi.CallOption) (*Content
 	return ret, nil
 	// {
 	//   "description": "Updates an existing content category.",
+	//   "flatPath": "userprofiles/{profileId}/contentCategories",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.contentCategories.update",
 	//   "parameterOrder": [
@@ -24883,7 +25359,7 @@ func (c *ConversionsBatchinsertCall) Header() http.Header {
 
 func (c *ConversionsBatchinsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24948,6 +25424,7 @@ func (c *ConversionsBatchinsertCall) Do(opts ...googleapi.CallOption) (*Conversi
 	return ret, nil
 	// {
 	//   "description": "Inserts conversions.",
+	//   "flatPath": "userprofiles/{profileId}/conversions/batchinsert",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.conversions.batchinsert",
 	//   "parameterOrder": [
@@ -25022,7 +25499,7 @@ func (c *ConversionsBatchupdateCall) Header() http.Header {
 
 func (c *ConversionsBatchupdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25087,6 +25564,7 @@ func (c *ConversionsBatchupdateCall) Do(opts ...googleapi.CallOption) (*Conversi
 	return ret, nil
 	// {
 	//   "description": "Updates existing conversions.",
+	//   "flatPath": "userprofiles/{profileId}/conversions/batchupdate",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.conversions.batchupdate",
 	//   "parameterOrder": [
@@ -25172,7 +25650,7 @@ func (c *CountriesGetCall) Header() http.Header {
 
 func (c *CountriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25236,6 +25714,7 @@ func (c *CountriesGetCall) Do(opts ...googleapi.CallOption) (*Country, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one country by ID.",
+	//   "flatPath": "userprofiles/{profileId}/countries/{dartId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.countries.get",
 	//   "parameterOrder": [
@@ -25324,7 +25803,7 @@ func (c *CountriesListCall) Header() http.Header {
 
 func (c *CountriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25387,6 +25866,7 @@ func (c *CountriesListCall) Do(opts ...googleapi.CallOption) (*CountriesListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of countries.",
+	//   "flatPath": "userprofiles/{profileId}/countries",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.countries.list",
 	//   "parameterOrder": [
@@ -25500,7 +25980,7 @@ func (c *CreativeAssetsInsertCall) Header() http.Header {
 
 func (c *CreativeAssetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25594,18 +26074,15 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative asset.",
+	//   "flatPath": "userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creativeAssets.insert",
 	//   "mediaUpload": {
 	//     "accept": [
 	//       "*/*"
 	//     ],
-	//     "maxSize": "1024MB",
+	//     "maxSize": "1073741824",
 	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/dfareporting/v3.4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
-	//       },
 	//       "simple": {
 	//         "multipart": true,
 	//         "path": "/upload/dfareporting/v3.4/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
@@ -25695,7 +26172,7 @@ func (c *CreativeFieldValuesDeleteCall) Header() http.Header {
 
 func (c *CreativeFieldValuesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25732,6 +26209,7 @@ func (c *CreativeFieldValuesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing creative field value.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.creativeFieldValues.delete",
 	//   "parameterOrder": [
@@ -25829,7 +26307,7 @@ func (c *CreativeFieldValuesGetCall) Header() http.Header {
 
 func (c *CreativeFieldValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25894,6 +26372,7 @@ func (c *CreativeFieldValuesGetCall) Do(opts ...googleapi.CallOption) (*Creative
 	return ret, nil
 	// {
 	//   "description": "Gets one creative field value by ID.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeFieldValues.get",
 	//   "parameterOrder": [
@@ -25983,7 +26462,7 @@ func (c *CreativeFieldValuesInsertCall) Header() http.Header {
 
 func (c *CreativeFieldValuesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26049,6 +26528,7 @@ func (c *CreativeFieldValuesInsertCall) Do(opts ...googleapi.CallOption) (*Creat
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative field value.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creativeFieldValues.insert",
 	//   "parameterOrder": [
@@ -26198,7 +26678,7 @@ func (c *CreativeFieldValuesListCall) Header() http.Header {
 
 func (c *CreativeFieldValuesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26262,6 +26742,7 @@ func (c *CreativeFieldValuesListCall) Do(opts ...googleapi.CallOption) (*Creativ
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of creative field values, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeFieldValues.list",
 	//   "parameterOrder": [
@@ -26384,12 +26865,17 @@ type CreativeFieldValuesPatchCall struct {
 
 // Patch: Updates an existing creative field value. This method supports
 // patch semantics.
-func (r *CreativeFieldValuesService) Patch(profileId int64, creativeFieldId int64, id int64, creativefieldvalue *CreativeFieldValue) *CreativeFieldValuesPatchCall {
+func (r *CreativeFieldValuesService) Patch(profileId int64, creativeFieldId int64, creativefieldvalue *CreativeFieldValue) *CreativeFieldValuesPatchCall {
 	c := &CreativeFieldValuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
 	c.creativeFieldId = creativeFieldId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.creativefieldvalue = creativefieldvalue
+	return c
+}
+
+// Id sets the optional parameter "id": CreativeFieldValue ID.
+func (c *CreativeFieldValuesPatchCall) Id(id int64) *CreativeFieldValuesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -26420,7 +26906,7 @@ func (c *CreativeFieldValuesPatchCall) Header() http.Header {
 
 func (c *CreativeFieldValuesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26486,26 +26972,25 @@ func (c *CreativeFieldValuesPatchCall) Do(opts ...googleapi.CallOption) (*Creati
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative field value. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.creativeFieldValues.patch",
 	//   "parameterOrder": [
 	//     "profileId",
-	//     "creativeFieldId",
-	//     "id"
+	//     "creativeFieldId"
 	//   ],
 	//   "parameters": {
 	//     "creativeFieldId": {
-	//       "description": "Creative field ID for this creative field value.",
+	//       "description": "CreativeField ID.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "id": {
-	//       "description": "Creative Field Value ID",
+	//       "description": "CreativeFieldValue ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -26578,7 +27063,7 @@ func (c *CreativeFieldValuesUpdateCall) Header() http.Header {
 
 func (c *CreativeFieldValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26644,6 +27129,7 @@ func (c *CreativeFieldValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Creat
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative field value.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields/{creativeFieldId}/creativeFieldValues",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.creativeFieldValues.update",
 	//   "parameterOrder": [
@@ -26726,7 +27212,7 @@ func (c *CreativeFieldsDeleteCall) Header() http.Header {
 
 func (c *CreativeFieldsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26762,6 +27248,7 @@ func (c *CreativeFieldsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing creative field.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.creativeFields.delete",
 	//   "parameterOrder": [
@@ -26849,7 +27336,7 @@ func (c *CreativeFieldsGetCall) Header() http.Header {
 
 func (c *CreativeFieldsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26913,6 +27400,7 @@ func (c *CreativeFieldsGetCall) Do(opts ...googleapi.CallOption) (*CreativeField
 	return ret, nil
 	// {
 	//   "description": "Gets one creative field by ID.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeFields.get",
 	//   "parameterOrder": [
@@ -26992,7 +27480,7 @@ func (c *CreativeFieldsInsertCall) Header() http.Header {
 
 func (c *CreativeFieldsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27057,6 +27545,7 @@ func (c *CreativeFieldsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeFi
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative field.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creativeFields.insert",
 	//   "parameterOrder": [
@@ -27213,7 +27702,7 @@ func (c *CreativeFieldsListCall) Header() http.Header {
 
 func (c *CreativeFieldsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27276,6 +27765,7 @@ func (c *CreativeFieldsListCall) Do(opts ...googleapi.CallOption) (*CreativeFiel
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of creative fields, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeFields.list",
 	//   "parameterOrder": [
@@ -27396,11 +27886,16 @@ type CreativeFieldsPatchCall struct {
 
 // Patch: Updates an existing creative field. This method supports patch
 // semantics.
-func (r *CreativeFieldsService) Patch(profileId int64, id int64, creativefield *CreativeField) *CreativeFieldsPatchCall {
+func (r *CreativeFieldsService) Patch(profileId int64, creativefield *CreativeField) *CreativeFieldsPatchCall {
 	c := &CreativeFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.creativefield = creativefield
+	return c
+}
+
+// Id sets the optional parameter "id": CreativeField ID.
+func (c *CreativeFieldsPatchCall) Id(id int64) *CreativeFieldsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -27431,7 +27926,7 @@ func (c *CreativeFieldsPatchCall) Header() http.Header {
 
 func (c *CreativeFieldsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27496,18 +27991,17 @@ func (c *CreativeFieldsPatchCall) Do(opts ...googleapi.CallOption) (*CreativeFie
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative field. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.creativeFields.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Creative Field ID",
+	//       "description": "CreativeField ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -27578,7 +28072,7 @@ func (c *CreativeFieldsUpdateCall) Header() http.Header {
 
 func (c *CreativeFieldsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27643,6 +28137,7 @@ func (c *CreativeFieldsUpdateCall) Do(opts ...googleapi.CallOption) (*CreativeFi
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative field.",
+	//   "flatPath": "userprofiles/{profileId}/creativeFields",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.creativeFields.update",
 	//   "parameterOrder": [
@@ -27728,7 +28223,7 @@ func (c *CreativeGroupsGetCall) Header() http.Header {
 
 func (c *CreativeGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27792,6 +28287,7 @@ func (c *CreativeGroupsGetCall) Do(opts ...googleapi.CallOption) (*CreativeGroup
 	return ret, nil
 	// {
 	//   "description": "Gets one creative group by ID.",
+	//   "flatPath": "userprofiles/{profileId}/creativeGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeGroups.get",
 	//   "parameterOrder": [
@@ -27871,7 +28367,7 @@ func (c *CreativeGroupsInsertCall) Header() http.Header {
 
 func (c *CreativeGroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27936,6 +28432,7 @@ func (c *CreativeGroupsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeGr
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative group.",
+	//   "flatPath": "userprofiles/{profileId}/creativeGroups",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creativeGroups.insert",
 	//   "parameterOrder": [
@@ -28099,7 +28596,7 @@ func (c *CreativeGroupsListCall) Header() http.Header {
 
 func (c *CreativeGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28162,6 +28659,7 @@ func (c *CreativeGroupsListCall) Do(opts ...googleapi.CallOption) (*CreativeGrou
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of creative groups, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/creativeGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creativeGroups.list",
 	//   "parameterOrder": [
@@ -28290,11 +28788,16 @@ type CreativeGroupsPatchCall struct {
 
 // Patch: Updates an existing creative group. This method supports patch
 // semantics.
-func (r *CreativeGroupsService) Patch(profileId int64, id int64, creativegroup *CreativeGroup) *CreativeGroupsPatchCall {
+func (r *CreativeGroupsService) Patch(profileId int64, creativegroup *CreativeGroup) *CreativeGroupsPatchCall {
 	c := &CreativeGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.creativegroup = creativegroup
+	return c
+}
+
+// Id sets the optional parameter "id": CreativeGroup ID.
+func (c *CreativeGroupsPatchCall) Id(id int64) *CreativeGroupsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -28325,7 +28828,7 @@ func (c *CreativeGroupsPatchCall) Header() http.Header {
 
 func (c *CreativeGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28390,18 +28893,17 @@ func (c *CreativeGroupsPatchCall) Do(opts ...googleapi.CallOption) (*CreativeGro
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative group. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/creativeGroups",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.creativeGroups.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Creative group ID.",
+	//       "description": "CreativeGroup ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -28472,7 +28974,7 @@ func (c *CreativeGroupsUpdateCall) Header() http.Header {
 
 func (c *CreativeGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28537,6 +29039,7 @@ func (c *CreativeGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*CreativeGr
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative group.",
+	//   "flatPath": "userprofiles/{profileId}/creativeGroups",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.creativeGroups.update",
 	//   "parameterOrder": [
@@ -28622,7 +29125,7 @@ func (c *CreativesGetCall) Header() http.Header {
 
 func (c *CreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28686,6 +29189,7 @@ func (c *CreativesGetCall) Do(opts ...googleapi.CallOption) (*Creative, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one creative by ID.",
+	//   "flatPath": "userprofiles/{profileId}/creatives/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creatives.get",
 	//   "parameterOrder": [
@@ -28765,7 +29269,7 @@ func (c *CreativesInsertCall) Header() http.Header {
 
 func (c *CreativesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28830,6 +29334,7 @@ func (c *CreativesInsertCall) Do(opts ...googleapi.CallOption) (*Creative, error
 	return ret, nil
 	// {
 	//   "description": "Inserts a new creative.",
+	//   "flatPath": "userprofiles/{profileId}/creatives",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.creatives.insert",
 	//   "parameterOrder": [
@@ -29021,31 +29526,31 @@ func (c *CreativesListCall) StudioCreativeId(studioCreativeId int64) *CreativesL
 // these creative types.
 //
 // Possible values:
-//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
-//   "CUSTOM_DISPLAY"
-//   "CUSTOM_DISPLAY_INTERSTITIAL"
-//   "DISPLAY"
-//   "DISPLAY_IMAGE_GALLERY"
-//   "DISPLAY_REDIRECT"
-//   "FLASH_INPAGE"
-//   "HTML5_BANNER"
 //   "IMAGE"
-//   "INSTREAM_AUDIO"
-//   "INSTREAM_VIDEO"
-//   "INSTREAM_VIDEO_REDIRECT"
+//   "DISPLAY_REDIRECT"
+//   "CUSTOM_DISPLAY"
 //   "INTERNAL_REDIRECT"
+//   "CUSTOM_DISPLAY_INTERSTITIAL"
 //   "INTERSTITIAL_INTERNAL_REDIRECT"
+//   "TRACKING_TEXT"
 //   "RICH_MEDIA_DISPLAY_BANNER"
+//   "RICH_MEDIA_INPAGE_FLOATING"
+//   "RICH_MEDIA_IM_EXPAND"
 //   "RICH_MEDIA_DISPLAY_EXPANDING"
 //   "RICH_MEDIA_DISPLAY_INTERSTITIAL"
 //   "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL"
-//   "RICH_MEDIA_IM_EXPAND"
-//   "RICH_MEDIA_INPAGE_FLOATING"
 //   "RICH_MEDIA_MOBILE_IN_APP"
-//   "RICH_MEDIA_PEEL_DOWN"
-//   "TRACKING_TEXT"
+//   "FLASH_INPAGE"
+//   "INSTREAM_VIDEO"
 //   "VPAID_LINEAR_VIDEO"
 //   "VPAID_NON_LINEAR_VIDEO"
+//   "INSTREAM_VIDEO_REDIRECT"
+//   "RICH_MEDIA_PEEL_DOWN"
+//   "HTML5_BANNER"
+//   "DISPLAY"
+//   "DISPLAY_IMAGE_GALLERY"
+//   "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO"
+//   "INSTREAM_AUDIO"
 func (c *CreativesListCall) Types(types ...string) *CreativesListCall {
 	c.urlParams_.SetMulti("types", append([]string{}, types...))
 	return c
@@ -29088,7 +29593,7 @@ func (c *CreativesListCall) Header() http.Header {
 
 func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29151,6 +29656,7 @@ func (c *CreativesListCall) Do(opts ...googleapi.CallOption) (*CreativesListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of creatives, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/creatives",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.creatives.list",
 	//   "parameterOrder": [
@@ -29277,31 +29783,31 @@ func (c *CreativesListCall) Do(opts ...googleapi.CallOption) (*CreativesListResp
 	//     "types": {
 	//       "description": "Select only creatives with these creative types.",
 	//       "enum": [
-	//         "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
-	//         "CUSTOM_DISPLAY",
-	//         "CUSTOM_DISPLAY_INTERSTITIAL",
-	//         "DISPLAY",
-	//         "DISPLAY_IMAGE_GALLERY",
-	//         "DISPLAY_REDIRECT",
-	//         "FLASH_INPAGE",
-	//         "HTML5_BANNER",
 	//         "IMAGE",
-	//         "INSTREAM_AUDIO",
-	//         "INSTREAM_VIDEO",
-	//         "INSTREAM_VIDEO_REDIRECT",
+	//         "DISPLAY_REDIRECT",
+	//         "CUSTOM_DISPLAY",
 	//         "INTERNAL_REDIRECT",
+	//         "CUSTOM_DISPLAY_INTERSTITIAL",
 	//         "INTERSTITIAL_INTERNAL_REDIRECT",
+	//         "TRACKING_TEXT",
 	//         "RICH_MEDIA_DISPLAY_BANNER",
+	//         "RICH_MEDIA_INPAGE_FLOATING",
+	//         "RICH_MEDIA_IM_EXPAND",
 	//         "RICH_MEDIA_DISPLAY_EXPANDING",
 	//         "RICH_MEDIA_DISPLAY_INTERSTITIAL",
 	//         "RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL",
-	//         "RICH_MEDIA_IM_EXPAND",
-	//         "RICH_MEDIA_INPAGE_FLOATING",
 	//         "RICH_MEDIA_MOBILE_IN_APP",
-	//         "RICH_MEDIA_PEEL_DOWN",
-	//         "TRACKING_TEXT",
+	//         "FLASH_INPAGE",
+	//         "INSTREAM_VIDEO",
 	//         "VPAID_LINEAR_VIDEO",
-	//         "VPAID_NON_LINEAR_VIDEO"
+	//         "VPAID_NON_LINEAR_VIDEO",
+	//         "INSTREAM_VIDEO_REDIRECT",
+	//         "RICH_MEDIA_PEEL_DOWN",
+	//         "HTML5_BANNER",
+	//         "DISPLAY",
+	//         "DISPLAY_IMAGE_GALLERY",
+	//         "BRAND_SAFE_DEFAULT_INSTREAM_VIDEO",
+	//         "INSTREAM_AUDIO"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -29380,11 +29886,16 @@ type CreativesPatchCall struct {
 
 // Patch: Updates an existing creative. This method supports patch
 // semantics.
-func (r *CreativesService) Patch(profileId int64, id int64, creative *Creative) *CreativesPatchCall {
+func (r *CreativesService) Patch(profileId int64, creative *Creative) *CreativesPatchCall {
 	c := &CreativesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.creative = creative
+	return c
+}
+
+// Id sets the optional parameter "id": Creative ID.
+func (c *CreativesPatchCall) Id(id int64) *CreativesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -29415,7 +29926,7 @@ func (c *CreativesPatchCall) Header() http.Header {
 
 func (c *CreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29480,18 +29991,17 @@ func (c *CreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creative, error)
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/creatives",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.creatives.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "Creative ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -29562,7 +30072,7 @@ func (c *CreativesUpdateCall) Header() http.Header {
 
 func (c *CreativesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29627,6 +30137,7 @@ func (c *CreativesUpdateCall) Do(opts ...googleapi.CallOption) (*Creative, error
 	return ret, nil
 	// {
 	//   "description": "Updates an existing creative.",
+	//   "flatPath": "userprofiles/{profileId}/creatives",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.creatives.update",
 	//   "parameterOrder": [
@@ -29701,7 +30212,7 @@ func (c *CustomEventsBatchinsertCall) Header() http.Header {
 
 func (c *CustomEventsBatchinsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29766,6 +30277,7 @@ func (c *CustomEventsBatchinsertCall) Do(opts ...googleapi.CallOption) (*CustomE
 	return ret, nil
 	// {
 	//   "description": "Inserts custom events.",
+	//   "flatPath": "userprofiles/{profileId}/customEvents/batchinsert",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.customEvents.batchinsert",
 	//   "parameterOrder": [
@@ -29855,7 +30367,7 @@ func (c *DimensionValuesQueryCall) Header() http.Header {
 
 func (c *DimensionValuesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29920,6 +30432,7 @@ func (c *DimensionValuesQueryCall) Do(opts ...googleapi.CallOption) (*DimensionV
 	return ret, nil
 	// {
 	//   "description": "Retrieves list of report dimension values for a list of filters.",
+	//   "flatPath": "userprofiles/{profileId}/dimensionvalues/query",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.dimensionValues.query",
 	//   "parameterOrder": [
@@ -30040,7 +30553,7 @@ func (c *DirectorySitesGetCall) Header() http.Header {
 
 func (c *DirectorySitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30104,6 +30617,7 @@ func (c *DirectorySitesGetCall) Do(opts ...googleapi.CallOption) (*DirectorySite
 	return ret, nil
 	// {
 	//   "description": "Gets one directory site by ID.",
+	//   "flatPath": "userprofiles/{profileId}/directorySites/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.directorySites.get",
 	//   "parameterOrder": [
@@ -30183,7 +30697,7 @@ func (c *DirectorySitesInsertCall) Header() http.Header {
 
 func (c *DirectorySitesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30248,6 +30762,7 @@ func (c *DirectorySitesInsertCall) Do(opts ...googleapi.CallOption) (*DirectoryS
 	return ret, nil
 	// {
 	//   "description": "Inserts a new directory site.",
+	//   "flatPath": "userprofiles/{profileId}/directorySites",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.directorySites.insert",
 	//   "parameterOrder": [
@@ -30432,7 +30947,7 @@ func (c *DirectorySitesListCall) Header() http.Header {
 
 func (c *DirectorySitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30495,6 +31010,7 @@ func (c *DirectorySitesListCall) Do(opts ...googleapi.CallOption) (*DirectorySit
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of directory sites, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/directorySites",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.directorySites.list",
 	//   "parameterOrder": [
@@ -30668,7 +31184,7 @@ func (c *DynamicTargetingKeysDeleteCall) Header() http.Header {
 
 func (c *DynamicTargetingKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30704,6 +31220,7 @@ func (c *DynamicTargetingKeysDeleteCall) Do(opts ...googleapi.CallOption) error 
 	return nil
 	// {
 	//   "description": "Deletes an existing dynamic targeting key.",
+	//   "flatPath": "userprofiles/{profileId}/dynamicTargetingKeys/{objectId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.dynamicTargetingKeys.delete",
 	//   "parameterOrder": [
@@ -30729,8 +31246,8 @@ func (c *DynamicTargetingKeysDeleteCall) Do(opts ...googleapi.CallOption) error 
 	//     "objectType": {
 	//       "description": "Type of the object of this dynamic targeting key. This is a required field.",
 	//       "enum": [
-	//         "OBJECT_AD",
 	//         "OBJECT_ADVERTISER",
+	//         "OBJECT_AD",
 	//         "OBJECT_CREATIVE",
 	//         "OBJECT_PLACEMENT"
 	//       ],
@@ -30810,7 +31327,7 @@ func (c *DynamicTargetingKeysInsertCall) Header() http.Header {
 
 func (c *DynamicTargetingKeysInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30875,6 +31392,7 @@ func (c *DynamicTargetingKeysInsertCall) Do(opts ...googleapi.CallOption) (*Dyna
 	return ret, nil
 	// {
 	//   "description": "Inserts a new dynamic targeting key. Keys must be created at the advertiser level before being assigned to the advertiser's ads, creatives, or placements. There is a maximum of 1000 keys per advertiser, out of which a maximum of 20 keys can be assigned per ad, creative, or placement.",
+	//   "flatPath": "userprofiles/{profileId}/dynamicTargetingKeys",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.dynamicTargetingKeys.insert",
 	//   "parameterOrder": [
@@ -30946,8 +31464,8 @@ func (c *DynamicTargetingKeysListCall) ObjectId(objectId int64) *DynamicTargetin
 // dynamic targeting keys with this object type.
 //
 // Possible values:
-//   "OBJECT_AD"
 //   "OBJECT_ADVERTISER"
+//   "OBJECT_AD"
 //   "OBJECT_CREATIVE"
 //   "OBJECT_PLACEMENT"
 func (c *DynamicTargetingKeysListCall) ObjectType(objectType string) *DynamicTargetingKeysListCall {
@@ -30992,7 +31510,7 @@ func (c *DynamicTargetingKeysListCall) Header() http.Header {
 
 func (c *DynamicTargetingKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31055,6 +31573,7 @@ func (c *DynamicTargetingKeysListCall) Do(opts ...googleapi.CallOption) (*Dynami
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of dynamic targeting keys.",
+	//   "flatPath": "userprofiles/{profileId}/dynamicTargetingKeys",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.dynamicTargetingKeys.list",
 	//   "parameterOrder": [
@@ -31082,8 +31601,8 @@ func (c *DynamicTargetingKeysListCall) Do(opts ...googleapi.CallOption) (*Dynami
 	//     "objectType": {
 	//       "description": "Select only dynamic targeting keys with this object type.",
 	//       "enum": [
-	//         "OBJECT_AD",
 	//         "OBJECT_ADVERTISER",
+	//         "OBJECT_AD",
 	//         "OBJECT_CREATIVE",
 	//         "OBJECT_PLACEMENT"
 	//       ],
@@ -31161,7 +31680,7 @@ func (c *EventTagsDeleteCall) Header() http.Header {
 
 func (c *EventTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31197,6 +31716,7 @@ func (c *EventTagsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing event tag.",
+	//   "flatPath": "userprofiles/{profileId}/eventTags/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.eventTags.delete",
 	//   "parameterOrder": [
@@ -31284,7 +31804,7 @@ func (c *EventTagsGetCall) Header() http.Header {
 
 func (c *EventTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31348,6 +31868,7 @@ func (c *EventTagsGetCall) Do(opts ...googleapi.CallOption) (*EventTag, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one event tag by ID.",
+	//   "flatPath": "userprofiles/{profileId}/eventTags/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.eventTags.get",
 	//   "parameterOrder": [
@@ -31427,7 +31948,7 @@ func (c *EventTagsInsertCall) Header() http.Header {
 
 func (c *EventTagsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31492,6 +32013,7 @@ func (c *EventTagsInsertCall) Do(opts ...googleapi.CallOption) (*EventTag, error
 	return ret, nil
 	// {
 	//   "description": "Inserts a new event tag.",
+	//   "flatPath": "userprofiles/{profileId}/eventTags",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.eventTags.insert",
 	//   "parameterOrder": [
@@ -31592,9 +32114,9 @@ func (c *EventTagsListCall) Enabled(enabled bool) *EventTagsListCall {
 // either impression or click tracking.
 //
 // Possible values:
-//   "CLICK_THROUGH_EVENT_TAG"
 //   "IMPRESSION_IMAGE_EVENT_TAG"
 //   "IMPRESSION_JAVASCRIPT_EVENT_TAG"
+//   "CLICK_THROUGH_EVENT_TAG"
 func (c *EventTagsListCall) EventTagTypes(eventTagTypes ...string) *EventTagsListCall {
 	c.urlParams_.SetMulti("eventTagTypes", append([]string{}, eventTagTypes...))
 	return c
@@ -31683,7 +32205,7 @@ func (c *EventTagsListCall) Header() http.Header {
 
 func (c *EventTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31746,6 +32268,7 @@ func (c *EventTagsListCall) Do(opts ...googleapi.CallOption) (*EventTagsListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of event tags, possibly filtered.",
+	//   "flatPath": "userprofiles/{profileId}/eventTags",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.eventTags.list",
 	//   "parameterOrder": [
@@ -31783,9 +32306,9 @@ func (c *EventTagsListCall) Do(opts ...googleapi.CallOption) (*EventTagsListResp
 	//     "eventTagTypes": {
 	//       "description": "Select only event tags with the specified event tag types. Event tag types can be used to specify whether to use a third-party pixel, a third-party JavaScript URL, or a third-party click-through URL for either impression or click tracking.",
 	//       "enum": [
-	//         "CLICK_THROUGH_EVENT_TAG",
 	//         "IMPRESSION_IMAGE_EVENT_TAG",
-	//         "IMPRESSION_JAVASCRIPT_EVENT_TAG"
+	//         "IMPRESSION_JAVASCRIPT_EVENT_TAG",
+	//         "CLICK_THROUGH_EVENT_TAG"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -31868,11 +32391,16 @@ type EventTagsPatchCall struct {
 
 // Patch: Updates an existing event tag. This method supports patch
 // semantics.
-func (r *EventTagsService) Patch(profileId int64, id int64, eventtag *EventTag) *EventTagsPatchCall {
+func (r *EventTagsService) Patch(profileId int64, eventtag *EventTag) *EventTagsPatchCall {
 	c := &EventTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.eventtag = eventtag
+	return c
+}
+
+// Id sets the optional parameter "id": EventTag ID.
+func (c *EventTagsPatchCall) Id(id int64) *EventTagsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -31903,7 +32431,7 @@ func (c *EventTagsPatchCall) Header() http.Header {
 
 func (c *EventTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31968,18 +32496,17 @@ func (c *EventTagsPatchCall) Do(opts ...googleapi.CallOption) (*EventTag, error)
 	return ret, nil
 	// {
 	//   "description": "Updates an existing event tag. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/eventTags",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.eventTags.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Event tag ID.",
+	//       "description": "EventTag ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -32050,7 +32577,7 @@ func (c *EventTagsUpdateCall) Header() http.Header {
 
 func (c *EventTagsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32115,6 +32642,7 @@ func (c *EventTagsUpdateCall) Do(opts ...googleapi.CallOption) (*EventTag, error
 	return ret, nil
 	// {
 	//   "description": "Updates an existing event tag.",
+	//   "flatPath": "userprofiles/{profileId}/eventTags",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.eventTags.update",
 	//   "parameterOrder": [
@@ -32201,7 +32729,7 @@ func (c *FilesGetCall) Header() http.Header {
 
 func (c *FilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32281,6 +32809,7 @@ func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a report file by its report ID and file ID. This method supports media download.",
+	//   "flatPath": "reports/{reportId}/files/{fileId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.files.get",
 	//   "parameterOrder": [
@@ -32418,7 +32947,7 @@ func (c *FilesListCall) Header() http.Header {
 
 func (c *FilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32481,6 +33010,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	return ret, nil
 	// {
 	//   "description": "Lists files for a user profile.",
+	//   "flatPath": "userprofiles/{profileId}/files",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.files.list",
 	//   "parameterOrder": [
@@ -32631,7 +33161,7 @@ func (c *FloodlightActivitiesDeleteCall) Header() http.Header {
 
 func (c *FloodlightActivitiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32667,6 +33197,7 @@ func (c *FloodlightActivitiesDeleteCall) Do(opts ...googleapi.CallOption) error 
 	return nil
 	// {
 	//   "description": "Deletes an existing floodlight activity.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivities/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.floodlightActivities.delete",
 	//   "parameterOrder": [
@@ -32749,7 +33280,7 @@ func (c *FloodlightActivitiesGeneratetagCall) Header() http.Header {
 
 func (c *FloodlightActivitiesGeneratetagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32810,6 +33341,7 @@ func (c *FloodlightActivitiesGeneratetagCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 	// {
 	//   "description": "Generates a tag for a floodlight activity.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivities/generatetag",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.floodlightActivities.generatetag",
 	//   "parameterOrder": [
@@ -32898,7 +33430,7 @@ func (c *FloodlightActivitiesGetCall) Header() http.Header {
 
 func (c *FloodlightActivitiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32962,6 +33494,7 @@ func (c *FloodlightActivitiesGetCall) Do(opts ...googleapi.CallOption) (*Floodli
 	return ret, nil
 	// {
 	//   "description": "Gets one floodlight activity by ID.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivities/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightActivities.get",
 	//   "parameterOrder": [
@@ -33041,7 +33574,7 @@ func (c *FloodlightActivitiesInsertCall) Header() http.Header {
 
 func (c *FloodlightActivitiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33106,6 +33639,7 @@ func (c *FloodlightActivitiesInsertCall) Do(opts ...googleapi.CallOption) (*Floo
 	return ret, nil
 	// {
 	//   "description": "Inserts a new floodlight activity.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivities",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.floodlightActivities.insert",
 	//   "parameterOrder": [
@@ -33317,7 +33851,7 @@ func (c *FloodlightActivitiesListCall) Header() http.Header {
 
 func (c *FloodlightActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33380,6 +33914,7 @@ func (c *FloodlightActivitiesListCall) Do(opts ...googleapi.CallOption) (*Floodl
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of floodlight activities, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivities",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightActivities.list",
 	//   "parameterOrder": [
@@ -33540,11 +34075,16 @@ type FloodlightActivitiesPatchCall struct {
 
 // Patch: Updates an existing floodlight activity. This method supports
 // patch semantics.
-func (r *FloodlightActivitiesService) Patch(profileId int64, id int64, floodlightactivity *FloodlightActivity) *FloodlightActivitiesPatchCall {
+func (r *FloodlightActivitiesService) Patch(profileId int64, floodlightactivity *FloodlightActivity) *FloodlightActivitiesPatchCall {
 	c := &FloodlightActivitiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.floodlightactivity = floodlightactivity
+	return c
+}
+
+// Id sets the optional parameter "id": FloodlightActivity ID.
+func (c *FloodlightActivitiesPatchCall) Id(id int64) *FloodlightActivitiesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -33575,7 +34115,7 @@ func (c *FloodlightActivitiesPatchCall) Header() http.Header {
 
 func (c *FloodlightActivitiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33640,18 +34180,17 @@ func (c *FloodlightActivitiesPatchCall) Do(opts ...googleapi.CallOption) (*Flood
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight activity. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivities",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.floodlightActivities.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Floodlight activity ID.",
+	//       "description": "FloodlightActivity ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -33722,7 +34261,7 @@ func (c *FloodlightActivitiesUpdateCall) Header() http.Header {
 
 func (c *FloodlightActivitiesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33787,6 +34326,7 @@ func (c *FloodlightActivitiesUpdateCall) Do(opts ...googleapi.CallOption) (*Floo
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight activity.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivities",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.floodlightActivities.update",
 	//   "parameterOrder": [
@@ -33872,7 +34412,7 @@ func (c *FloodlightActivityGroupsGetCall) Header() http.Header {
 
 func (c *FloodlightActivityGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33936,6 +34476,7 @@ func (c *FloodlightActivityGroupsGetCall) Do(opts ...googleapi.CallOption) (*Flo
 	return ret, nil
 	// {
 	//   "description": "Gets one floodlight activity group by ID.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivityGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightActivityGroups.get",
 	//   "parameterOrder": [
@@ -34015,7 +34556,7 @@ func (c *FloodlightActivityGroupsInsertCall) Header() http.Header {
 
 func (c *FloodlightActivityGroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34080,6 +34621,7 @@ func (c *FloodlightActivityGroupsInsertCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Inserts a new floodlight activity group.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivityGroups",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.floodlightActivityGroups.insert",
 	//   "parameterOrder": [
@@ -34256,7 +34798,7 @@ func (c *FloodlightActivityGroupsListCall) Header() http.Header {
 
 func (c *FloodlightActivityGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34320,6 +34862,7 @@ func (c *FloodlightActivityGroupsListCall) Do(opts ...googleapi.CallOption) (*Fl
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of floodlight activity groups, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivityGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightActivityGroups.list",
 	//   "parameterOrder": [
@@ -34458,11 +35001,16 @@ type FloodlightActivityGroupsPatchCall struct {
 
 // Patch: Updates an existing floodlight activity group. This method
 // supports patch semantics.
-func (r *FloodlightActivityGroupsService) Patch(profileId int64, id int64, floodlightactivitygroup *FloodlightActivityGroup) *FloodlightActivityGroupsPatchCall {
+func (r *FloodlightActivityGroupsService) Patch(profileId int64, floodlightactivitygroup *FloodlightActivityGroup) *FloodlightActivityGroupsPatchCall {
 	c := &FloodlightActivityGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.floodlightactivitygroup = floodlightactivitygroup
+	return c
+}
+
+// Id sets the optional parameter "id": FloodlightActivityGroup ID.
+func (c *FloodlightActivityGroupsPatchCall) Id(id int64) *FloodlightActivityGroupsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -34493,7 +35041,7 @@ func (c *FloodlightActivityGroupsPatchCall) Header() http.Header {
 
 func (c *FloodlightActivityGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34558,18 +35106,17 @@ func (c *FloodlightActivityGroupsPatchCall) Do(opts ...googleapi.CallOption) (*F
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight activity group. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivityGroups",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.floodlightActivityGroups.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Floodlight activity Group ID.",
+	//       "description": "FloodlightActivityGroup ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -34640,7 +35187,7 @@ func (c *FloodlightActivityGroupsUpdateCall) Header() http.Header {
 
 func (c *FloodlightActivityGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34705,6 +35252,7 @@ func (c *FloodlightActivityGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight activity group.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightActivityGroups",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.floodlightActivityGroups.update",
 	//   "parameterOrder": [
@@ -34790,7 +35338,7 @@ func (c *FloodlightConfigurationsGetCall) Header() http.Header {
 
 func (c *FloodlightConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34854,6 +35402,7 @@ func (c *FloodlightConfigurationsGetCall) Do(opts ...googleapi.CallOption) (*Flo
 	return ret, nil
 	// {
 	//   "description": "Gets one floodlight configuration by ID.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightConfigurations/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightConfigurations.get",
 	//   "parameterOrder": [
@@ -34955,7 +35504,7 @@ func (c *FloodlightConfigurationsListCall) Header() http.Header {
 
 func (c *FloodlightConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35019,6 +35568,7 @@ func (c *FloodlightConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Fl
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of floodlight configurations, possibly filtered.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightConfigurations",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.floodlightConfigurations.list",
 	//   "parameterOrder": [
@@ -35064,11 +35614,16 @@ type FloodlightConfigurationsPatchCall struct {
 
 // Patch: Updates an existing floodlight configuration. This method
 // supports patch semantics.
-func (r *FloodlightConfigurationsService) Patch(profileId int64, id int64, floodlightconfiguration *FloodlightConfiguration) *FloodlightConfigurationsPatchCall {
+func (r *FloodlightConfigurationsService) Patch(profileId int64, floodlightconfiguration *FloodlightConfiguration) *FloodlightConfigurationsPatchCall {
 	c := &FloodlightConfigurationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.floodlightconfiguration = floodlightconfiguration
+	return c
+}
+
+// Id sets the optional parameter "id": FloodlightConfiguration ID.
+func (c *FloodlightConfigurationsPatchCall) Id(id int64) *FloodlightConfigurationsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -35099,7 +35654,7 @@ func (c *FloodlightConfigurationsPatchCall) Header() http.Header {
 
 func (c *FloodlightConfigurationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35164,18 +35719,17 @@ func (c *FloodlightConfigurationsPatchCall) Do(opts ...googleapi.CallOption) (*F
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight configuration. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightConfigurations",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.floodlightConfigurations.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Floodlight configuration ID.",
+	//       "description": "FloodlightConfiguration ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -35246,7 +35800,7 @@ func (c *FloodlightConfigurationsUpdateCall) Header() http.Header {
 
 func (c *FloodlightConfigurationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35311,6 +35865,7 @@ func (c *FloodlightConfigurationsUpdateCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Updates an existing floodlight configuration.",
+	//   "flatPath": "userprofiles/{profileId}/floodlightConfigurations",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.floodlightConfigurations.update",
 	//   "parameterOrder": [
@@ -35398,7 +35953,7 @@ func (c *InventoryItemsGetCall) Header() http.Header {
 
 func (c *InventoryItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35463,6 +36018,7 @@ func (c *InventoryItemsGetCall) Do(opts ...googleapi.CallOption) (*InventoryItem
 	return ret, nil
 	// {
 	//   "description": "Gets one inventory item by ID.",
+	//   "flatPath": "userprofiles/{profileId}/projects/{projectId}/inventoryItems/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.inventoryItems.get",
 	//   "parameterOrder": [
@@ -35605,8 +36161,8 @@ func (c *InventoryItemsListCall) SortOrder(sortOrder string) *InventoryItemsList
 // with this type.
 //
 // Possible values:
-//   "PLANNING_PLACEMENT_TYPE_CREDIT"
 //   "PLANNING_PLACEMENT_TYPE_REGULAR"
+//   "PLANNING_PLACEMENT_TYPE_CREDIT"
 func (c *InventoryItemsListCall) Type(type_ string) *InventoryItemsListCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -35649,7 +36205,7 @@ func (c *InventoryItemsListCall) Header() http.Header {
 
 func (c *InventoryItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35713,6 +36269,7 @@ func (c *InventoryItemsListCall) Do(opts ...googleapi.CallOption) (*InventoryIte
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of inventory items, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/projects/{projectId}/inventoryItems",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.inventoryItems.list",
 	//   "parameterOrder": [
@@ -35805,8 +36362,8 @@ func (c *InventoryItemsListCall) Do(opts ...googleapi.CallOption) (*InventoryIte
 	//     "type": {
 	//       "description": "Select only inventory items with this type.",
 	//       "enum": [
-	//         "PLANNING_PLACEMENT_TYPE_CREDIT",
-	//         "PLANNING_PLACEMENT_TYPE_REGULAR"
+	//         "PLANNING_PLACEMENT_TYPE_REGULAR",
+	//         "PLANNING_PLACEMENT_TYPE_CREDIT"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -35903,7 +36460,7 @@ func (c *LanguagesListCall) Header() http.Header {
 
 func (c *LanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35966,6 +36523,7 @@ func (c *LanguagesListCall) Do(opts ...googleapi.CallOption) (*LanguagesListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of languages.",
+	//   "flatPath": "userprofiles/{profileId}/languages",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.languages.list",
 	//   "parameterOrder": [
@@ -36046,7 +36604,7 @@ func (c *MetrosListCall) Header() http.Header {
 
 func (c *MetrosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36109,6 +36667,7 @@ func (c *MetrosListCall) Do(opts ...googleapi.CallOption) (*MetrosListResponse, 
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of metros.",
+	//   "flatPath": "userprofiles/{profileId}/metros",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.metros.list",
 	//   "parameterOrder": [
@@ -36191,7 +36750,7 @@ func (c *MobileAppsGetCall) Header() http.Header {
 
 func (c *MobileAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36255,6 +36814,7 @@ func (c *MobileAppsGetCall) Do(opts ...googleapi.CallOption) (*MobileApp, error)
 	return ret, nil
 	// {
 	//   "description": "Gets one mobile app by ID.",
+	//   "flatPath": "userprofiles/{profileId}/mobileApps/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.mobileApps.get",
 	//   "parameterOrder": [
@@ -36309,9 +36869,9 @@ func (r *MobileAppsService) List(profileId int64) *MobileAppsListCall {
 // apps from these directories.
 //
 // Possible values:
+//   "UNKNOWN"
 //   "APPLE_APP_STORE"
 //   "GOOGLE_PLAY_STORE"
-//   "UNKNOWN"
 func (c *MobileAppsListCall) Directories(directories ...string) *MobileAppsListCall {
 	c.urlParams_.SetMulti("directories", append([]string{}, directories...))
 	return c
@@ -36387,7 +36947,7 @@ func (c *MobileAppsListCall) Header() http.Header {
 
 func (c *MobileAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36450,6 +37010,7 @@ func (c *MobileAppsListCall) Do(opts ...googleapi.CallOption) (*MobileAppsListRe
 	return ret, nil
 	// {
 	//   "description": "Retrieves list of available mobile apps.",
+	//   "flatPath": "userprofiles/{profileId}/mobileApps",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.mobileApps.list",
 	//   "parameterOrder": [
@@ -36459,9 +37020,9 @@ func (c *MobileAppsListCall) Do(opts ...googleapi.CallOption) (*MobileAppsListRe
 	//     "directories": {
 	//       "description": "Select only apps from these directories.",
 	//       "enum": [
+	//         "UNKNOWN",
 	//         "APPLE_APP_STORE",
-	//         "GOOGLE_PLAY_STORE",
-	//         "UNKNOWN"
+	//         "GOOGLE_PLAY_STORE"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -36594,7 +37155,7 @@ func (c *MobileCarriersGetCall) Header() http.Header {
 
 func (c *MobileCarriersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36658,6 +37219,7 @@ func (c *MobileCarriersGetCall) Do(opts ...googleapi.CallOption) (*MobileCarrier
 	return ret, nil
 	// {
 	//   "description": "Gets one mobile carrier by ID.",
+	//   "flatPath": "userprofiles/{profileId}/mobileCarriers/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.mobileCarriers.get",
 	//   "parameterOrder": [
@@ -36746,7 +37308,7 @@ func (c *MobileCarriersListCall) Header() http.Header {
 
 func (c *MobileCarriersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36809,6 +37371,7 @@ func (c *MobileCarriersListCall) Do(opts ...googleapi.CallOption) (*MobileCarrie
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of mobile carriers.",
+	//   "flatPath": "userprofiles/{profileId}/mobileCarriers",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.mobileCarriers.list",
 	//   "parameterOrder": [
@@ -36891,7 +37454,7 @@ func (c *OperatingSystemVersionsGetCall) Header() http.Header {
 
 func (c *OperatingSystemVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36955,6 +37518,7 @@ func (c *OperatingSystemVersionsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 	return ret, nil
 	// {
 	//   "description": "Gets one operating system version by ID.",
+	//   "flatPath": "userprofiles/{profileId}/operatingSystemVersions/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.operatingSystemVersions.get",
 	//   "parameterOrder": [
@@ -37043,7 +37607,7 @@ func (c *OperatingSystemVersionsListCall) Header() http.Header {
 
 func (c *OperatingSystemVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37107,6 +37671,7 @@ func (c *OperatingSystemVersionsListCall) Do(opts ...googleapi.CallOption) (*Ope
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of operating system versions.",
+	//   "flatPath": "userprofiles/{profileId}/operatingSystemVersions",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.operatingSystemVersions.list",
 	//   "parameterOrder": [
@@ -37189,7 +37754,7 @@ func (c *OperatingSystemsGetCall) Header() http.Header {
 
 func (c *OperatingSystemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37253,6 +37818,7 @@ func (c *OperatingSystemsGetCall) Do(opts ...googleapi.CallOption) (*OperatingSy
 	return ret, nil
 	// {
 	//   "description": "Gets one operating system by DART ID.",
+	//   "flatPath": "userprofiles/{profileId}/operatingSystems/{dartId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.operatingSystems.get",
 	//   "parameterOrder": [
@@ -37341,7 +37907,7 @@ func (c *OperatingSystemsListCall) Header() http.Header {
 
 func (c *OperatingSystemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37404,6 +37970,7 @@ func (c *OperatingSystemsListCall) Do(opts ...googleapi.CallOption) (*OperatingS
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of operating systems.",
+	//   "flatPath": "userprofiles/{profileId}/operatingSystems",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.operatingSystems.list",
 	//   "parameterOrder": [
@@ -37488,7 +38055,7 @@ func (c *OrderDocumentsGetCall) Header() http.Header {
 
 func (c *OrderDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37553,6 +38120,7 @@ func (c *OrderDocumentsGetCall) Do(opts ...googleapi.CallOption) (*OrderDocument
 	return ret, nil
 	// {
 	//   "description": "Gets one order document by ID.",
+	//   "flatPath": "userprofiles/{profileId}/projects/{projectId}/orderDocuments/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.orderDocuments.get",
 	//   "parameterOrder": [
@@ -37742,7 +38310,7 @@ func (c *OrderDocumentsListCall) Header() http.Header {
 
 func (c *OrderDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37806,6 +38374,7 @@ func (c *OrderDocumentsListCall) Do(opts ...googleapi.CallOption) (*OrderDocumen
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of order documents, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/projects/{projectId}/orderDocuments",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.orderDocuments.list",
 	//   "parameterOrder": [
@@ -37992,7 +38561,7 @@ func (c *OrdersGetCall) Header() http.Header {
 
 func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38057,6 +38626,7 @@ func (c *OrdersGetCall) Do(opts ...googleapi.CallOption) (*Order, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one order by ID.",
+	//   "flatPath": "userprofiles/{profileId}/projects/{projectId}/orders/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.orders.get",
 	//   "parameterOrder": [
@@ -38226,7 +38796,7 @@ func (c *OrdersListCall) Header() http.Header {
 
 func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38290,6 +38860,7 @@ func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, 
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of orders, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/projects/{projectId}/orders",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.orders.list",
 	//   "parameterOrder": [
@@ -38462,7 +39033,7 @@ func (c *PlacementGroupsGetCall) Header() http.Header {
 
 func (c *PlacementGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38526,6 +39097,7 @@ func (c *PlacementGroupsGetCall) Do(opts ...googleapi.CallOption) (*PlacementGro
 	return ret, nil
 	// {
 	//   "description": "Gets one placement group by ID.",
+	//   "flatPath": "userprofiles/{profileId}/placementGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placementGroups.get",
 	//   "parameterOrder": [
@@ -38605,7 +39177,7 @@ func (c *PlacementGroupsInsertCall) Header() http.Header {
 
 func (c *PlacementGroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -38670,6 +39242,7 @@ func (c *PlacementGroupsInsertCall) Do(opts ...googleapi.CallOption) (*Placement
 	return ret, nil
 	// {
 	//   "description": "Inserts a new placement group.",
+	//   "flatPath": "userprofiles/{profileId}/placementGroups",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.placementGroups.insert",
 	//   "parameterOrder": [
@@ -38860,12 +39433,12 @@ func (c *PlacementGroupsListCall) PlacementStrategyIds(placementStrategyIds ...i
 // placement groups with these pricing types.
 //
 // Possible values:
-//   "PRICING_TYPE_CPA"
-//   "PRICING_TYPE_CPC"
 //   "PRICING_TYPE_CPM"
-//   "PRICING_TYPE_CPM_ACTIVEVIEW"
-//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+//   "PRICING_TYPE_CPC"
+//   "PRICING_TYPE_CPA"
 //   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
+//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+//   "PRICING_TYPE_CPM_ACTIVEVIEW"
 func (c *PlacementGroupsListCall) PricingTypes(pricingTypes ...string) *PlacementGroupsListCall {
 	c.urlParams_.SetMulti("pricingTypes", append([]string{}, pricingTypes...))
 	return c
@@ -38955,7 +39528,7 @@ func (c *PlacementGroupsListCall) Header() http.Header {
 
 func (c *PlacementGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39018,6 +39591,7 @@ func (c *PlacementGroupsListCall) Do(opts ...googleapi.CallOption) (*PlacementGr
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of placement groups, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/placementGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placementGroups.list",
 	//   "parameterOrder": [
@@ -39121,12 +39695,12 @@ func (c *PlacementGroupsListCall) Do(opts ...googleapi.CallOption) (*PlacementGr
 	//     "pricingTypes": {
 	//       "description": "Select only placement groups with these pricing types.",
 	//       "enum": [
-	//         "PRICING_TYPE_CPA",
-	//         "PRICING_TYPE_CPC",
 	//         "PRICING_TYPE_CPM",
-	//         "PRICING_TYPE_CPM_ACTIVEVIEW",
+	//         "PRICING_TYPE_CPC",
+	//         "PRICING_TYPE_CPA",
+	//         "PRICING_TYPE_FLAT_RATE_IMPRESSIONS",
 	//         "PRICING_TYPE_FLAT_RATE_CLICKS",
-	//         "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
+	//         "PRICING_TYPE_CPM_ACTIVEVIEW"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -39233,11 +39807,16 @@ type PlacementGroupsPatchCall struct {
 
 // Patch: Updates an existing placement group. This method supports
 // patch semantics.
-func (r *PlacementGroupsService) Patch(profileId int64, id int64, placementgroup *PlacementGroup) *PlacementGroupsPatchCall {
+func (r *PlacementGroupsService) Patch(profileId int64, placementgroup *PlacementGroup) *PlacementGroupsPatchCall {
 	c := &PlacementGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.placementgroup = placementgroup
+	return c
+}
+
+// Id sets the optional parameter "id": PlacementGroup ID.
+func (c *PlacementGroupsPatchCall) Id(id int64) *PlacementGroupsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -39268,7 +39847,7 @@ func (c *PlacementGroupsPatchCall) Header() http.Header {
 
 func (c *PlacementGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39333,18 +39912,17 @@ func (c *PlacementGroupsPatchCall) Do(opts ...googleapi.CallOption) (*PlacementG
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement group. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/placementGroups",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.placementGroups.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Placement group ID.",
+	//       "description": "PlacementGroup ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -39415,7 +39993,7 @@ func (c *PlacementGroupsUpdateCall) Header() http.Header {
 
 func (c *PlacementGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39480,6 +40058,7 @@ func (c *PlacementGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Placement
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement group.",
+	//   "flatPath": "userprofiles/{profileId}/placementGroups",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.placementGroups.update",
 	//   "parameterOrder": [
@@ -39554,7 +40133,7 @@ func (c *PlacementStrategiesDeleteCall) Header() http.Header {
 
 func (c *PlacementStrategiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39590,6 +40169,7 @@ func (c *PlacementStrategiesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing placement strategy.",
+	//   "flatPath": "userprofiles/{profileId}/placementStrategies/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.placementStrategies.delete",
 	//   "parameterOrder": [
@@ -39677,7 +40257,7 @@ func (c *PlacementStrategiesGetCall) Header() http.Header {
 
 func (c *PlacementStrategiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39741,6 +40321,7 @@ func (c *PlacementStrategiesGetCall) Do(opts ...googleapi.CallOption) (*Placemen
 	return ret, nil
 	// {
 	//   "description": "Gets one placement strategy by ID.",
+	//   "flatPath": "userprofiles/{profileId}/placementStrategies/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placementStrategies.get",
 	//   "parameterOrder": [
@@ -39820,7 +40401,7 @@ func (c *PlacementStrategiesInsertCall) Header() http.Header {
 
 func (c *PlacementStrategiesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -39885,6 +40466,7 @@ func (c *PlacementStrategiesInsertCall) Do(opts ...googleapi.CallOption) (*Place
 	return ret, nil
 	// {
 	//   "description": "Inserts a new placement strategy.",
+	//   "flatPath": "userprofiles/{profileId}/placementStrategies",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.placementStrategies.insert",
 	//   "parameterOrder": [
@@ -40030,7 +40612,7 @@ func (c *PlacementStrategiesListCall) Header() http.Header {
 
 func (c *PlacementStrategiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40093,6 +40675,7 @@ func (c *PlacementStrategiesListCall) Do(opts ...googleapi.CallOption) (*Placeme
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of placement strategies, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/placementStrategies",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placementStrategies.list",
 	//   "parameterOrder": [
@@ -40206,11 +40789,16 @@ type PlacementStrategiesPatchCall struct {
 
 // Patch: Updates an existing placement strategy. This method supports
 // patch semantics.
-func (r *PlacementStrategiesService) Patch(profileId int64, id int64, placementstrategy *PlacementStrategy) *PlacementStrategiesPatchCall {
+func (r *PlacementStrategiesService) Patch(profileId int64, placementstrategy *PlacementStrategy) *PlacementStrategiesPatchCall {
 	c := &PlacementStrategiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.placementstrategy = placementstrategy
+	return c
+}
+
+// Id sets the optional parameter "id": PlacementStrategy ID.
+func (c *PlacementStrategiesPatchCall) Id(id int64) *PlacementStrategiesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -40241,7 +40829,7 @@ func (c *PlacementStrategiesPatchCall) Header() http.Header {
 
 func (c *PlacementStrategiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40306,18 +40894,17 @@ func (c *PlacementStrategiesPatchCall) Do(opts ...googleapi.CallOption) (*Placem
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement strategy. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/placementStrategies",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.placementStrategies.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Placement strategy ID.",
+	//       "description": "PlacementStrategy ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -40388,7 +40975,7 @@ func (c *PlacementStrategiesUpdateCall) Header() http.Header {
 
 func (c *PlacementStrategiesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40453,6 +41040,7 @@ func (c *PlacementStrategiesUpdateCall) Do(opts ...googleapi.CallOption) (*Place
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement strategy.",
+	//   "flatPath": "userprofiles/{profileId}/placementStrategies",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.placementStrategies.update",
 	//   "parameterOrder": [
@@ -40517,31 +41105,29 @@ func (c *PlacementsGeneratetagsCall) PlacementIds(placementIds ...int64) *Placem
 }
 
 // TagFormats sets the optional parameter "tagFormats": Tag formats to
-// generate for these placements.
-//
-// Note: PLACEMENT_TAG_STANDARD can only be generated for 1x1
-// placements.
+// generate for these placements. *Note:* PLACEMENT_TAG_STANDARD can
+// only be generated for 1x1 placements.
 //
 // Possible values:
-//   "PLACEMENT_TAG_CLICK_COMMANDS"
-//   "PLACEMENT_TAG_IFRAME_ILAYER"
+//   "PLACEMENT_TAG_STANDARD"
 //   "PLACEMENT_TAG_IFRAME_JAVASCRIPT"
-//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
-//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
-//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
-//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
+//   "PLACEMENT_TAG_IFRAME_ILAYER"
 //   "PLACEMENT_TAG_INTERNAL_REDIRECT"
+//   "PLACEMENT_TAG_JAVASCRIPT"
 //   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT"
-//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
 //   "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT"
 //   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT"
-//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
-//   "PLACEMENT_TAG_JAVASCRIPT"
-//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
-//   "PLACEMENT_TAG_STANDARD"
+//   "PLACEMENT_TAG_CLICK_COMMANDS"
+//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH"
 //   "PLACEMENT_TAG_TRACKING"
 //   "PLACEMENT_TAG_TRACKING_IFRAME"
 //   "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
+//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3"
+//   "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY"
+//   "PLACEMENT_TAG_JAVASCRIPT_LEGACY"
+//   "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY"
+//   "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY"
+//   "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
 func (c *PlacementsGeneratetagsCall) TagFormats(tagFormats ...string) *PlacementsGeneratetagsCall {
 	c.urlParams_.SetMulti("tagFormats", append([]string{}, tagFormats...))
 	return c
@@ -40574,7 +41160,7 @@ func (c *PlacementsGeneratetagsCall) Header() http.Header {
 
 func (c *PlacementsGeneratetagsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40634,6 +41220,7 @@ func (c *PlacementsGeneratetagsCall) Do(opts ...googleapi.CallOption) (*Placemen
 	return ret, nil
 	// {
 	//   "description": "Generates tags for a placement.",
+	//   "flatPath": "userprofiles/{profileId}/placements/generatetags",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.placements.generatetags",
 	//   "parameterOrder": [
@@ -40661,27 +41248,27 @@ func (c *PlacementsGeneratetagsCall) Do(opts ...googleapi.CallOption) (*Placemen
 	//       "type": "string"
 	//     },
 	//     "tagFormats": {
-	//       "description": "Tag formats to generate for these placements.\n\nNote: PLACEMENT_TAG_STANDARD can only be generated for 1x1 placements.",
+	//       "description": "Tag formats to generate for these placements. *Note:* PLACEMENT_TAG_STANDARD can only be generated for 1x1 placements.",
 	//       "enum": [
-	//         "PLACEMENT_TAG_CLICK_COMMANDS",
-	//         "PLACEMENT_TAG_IFRAME_ILAYER",
+	//         "PLACEMENT_TAG_STANDARD",
 	//         "PLACEMENT_TAG_IFRAME_JAVASCRIPT",
-	//         "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY",
-	//         "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH",
-	//         "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3",
-	//         "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4",
+	//         "PLACEMENT_TAG_IFRAME_ILAYER",
 	//         "PLACEMENT_TAG_INTERNAL_REDIRECT",
+	//         "PLACEMENT_TAG_JAVASCRIPT",
 	//         "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT",
-	//         "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY",
 	//         "PLACEMENT_TAG_INTERSTITIAL_INTERNAL_REDIRECT",
 	//         "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT",
-	//         "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY",
-	//         "PLACEMENT_TAG_JAVASCRIPT",
-	//         "PLACEMENT_TAG_JAVASCRIPT_LEGACY",
-	//         "PLACEMENT_TAG_STANDARD",
+	//         "PLACEMENT_TAG_CLICK_COMMANDS",
+	//         "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH",
 	//         "PLACEMENT_TAG_TRACKING",
 	//         "PLACEMENT_TAG_TRACKING_IFRAME",
-	//         "PLACEMENT_TAG_TRACKING_JAVASCRIPT"
+	//         "PLACEMENT_TAG_TRACKING_JAVASCRIPT",
+	//         "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_3",
+	//         "PLACEMENT_TAG_IFRAME_JAVASCRIPT_LEGACY",
+	//         "PLACEMENT_TAG_JAVASCRIPT_LEGACY",
+	//         "PLACEMENT_TAG_INTERSTITIAL_IFRAME_JAVASCRIPT_LEGACY",
+	//         "PLACEMENT_TAG_INTERSTITIAL_JAVASCRIPT_LEGACY",
+	//         "PLACEMENT_TAG_INSTREAM_VIDEO_PREFETCH_VAST_4"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -40777,7 +41364,7 @@ func (c *PlacementsGetCall) Header() http.Header {
 
 func (c *PlacementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40841,6 +41428,7 @@ func (c *PlacementsGetCall) Do(opts ...googleapi.CallOption) (*Placement, error)
 	return ret, nil
 	// {
 	//   "description": "Gets one placement by ID.",
+	//   "flatPath": "userprofiles/{profileId}/placements/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placements.get",
 	//   "parameterOrder": [
@@ -40920,7 +41508,7 @@ func (c *PlacementsInsertCall) Header() http.Header {
 
 func (c *PlacementsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -40985,6 +41573,7 @@ func (c *PlacementsInsertCall) Do(opts ...googleapi.CallOption) (*Placement, err
 	return ret, nil
 	// {
 	//   "description": "Inserts a new placement.",
+	//   "flatPath": "userprofiles/{profileId}/placements",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.placements.insert",
 	//   "parameterOrder": [
@@ -41071,12 +41660,12 @@ func (c *PlacementsListCall) CampaignIds(campaignIds ...int64) *PlacementsListCa
 // with the VAST standard.
 //
 // Possible values:
-//   "APP"
-//   "APP_INTERSTITIAL"
 //   "DISPLAY"
 //   "DISPLAY_INTERSTITIAL"
-//   "IN_STREAM_AUDIO"
+//   "APP"
+//   "APP_INTERSTITIAL"
 //   "IN_STREAM_VIDEO"
+//   "IN_STREAM_AUDIO"
 func (c *PlacementsListCall) Compatibilities(compatibilities ...string) *PlacementsListCall {
 	c.urlParams_.SetMulti("compatibilities", append([]string{}, compatibilities...))
 	return c
@@ -41201,12 +41790,12 @@ func (c *PlacementsListCall) PlacementStrategyIds(placementStrategyIds ...int64)
 // placements with these pricing types.
 //
 // Possible values:
-//   "PRICING_TYPE_CPA"
-//   "PRICING_TYPE_CPC"
 //   "PRICING_TYPE_CPM"
-//   "PRICING_TYPE_CPM_ACTIVEVIEW"
-//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+//   "PRICING_TYPE_CPC"
+//   "PRICING_TYPE_CPA"
 //   "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
+//   "PRICING_TYPE_FLAT_RATE_CLICKS"
+//   "PRICING_TYPE_CPM_ACTIVEVIEW"
 func (c *PlacementsListCall) PricingTypes(pricingTypes ...string) *PlacementsListCall {
 	c.urlParams_.SetMulti("pricingTypes", append([]string{}, pricingTypes...))
 	return c
@@ -41219,7 +41808,7 @@ func (c *PlacementsListCall) PricingTypes(pricingTypes ...string) *PlacementsLis
 // 2015". Most of the searches also add wildcards implicitly at the
 // start and the end of the search string. For example, a search string
 // of "placement" will match placements with name "my placement",
-// "placement 2015", or simply "placement".
+// "placement 2015", or simply "placement" .
 func (c *PlacementsListCall) SearchString(searchString string) *PlacementsListCall {
 	c.urlParams_.Set("searchString", searchString)
 	return c
@@ -41306,7 +41895,7 @@ func (c *PlacementsListCall) Header() http.Header {
 
 func (c *PlacementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41369,6 +41958,7 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of placements, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/placements",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.placements.list",
 	//   "parameterOrder": [
@@ -41397,12 +41987,12 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	//     "compatibilities": {
 	//       "description": "Select only placements that are associated with these compatibilities. DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop or on mobile devices for regular or interstitial ads respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. IN_STREAM_VIDEO refers to rendering in in-stream video ads developed with the VAST standard.",
 	//       "enum": [
-	//         "APP",
-	//         "APP_INTERSTITIAL",
 	//         "DISPLAY",
 	//         "DISPLAY_INTERSTITIAL",
-	//         "IN_STREAM_AUDIO",
-	//         "IN_STREAM_VIDEO"
+	//         "APP",
+	//         "APP_INTERSTITIAL",
+	//         "IN_STREAM_VIDEO",
+	//         "IN_STREAM_AUDIO"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -41501,12 +42091,12 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	//     "pricingTypes": {
 	//       "description": "Select only placements with these pricing types.",
 	//       "enum": [
-	//         "PRICING_TYPE_CPA",
-	//         "PRICING_TYPE_CPC",
 	//         "PRICING_TYPE_CPM",
-	//         "PRICING_TYPE_CPM_ACTIVEVIEW",
+	//         "PRICING_TYPE_CPC",
+	//         "PRICING_TYPE_CPA",
+	//         "PRICING_TYPE_FLAT_RATE_IMPRESSIONS",
 	//         "PRICING_TYPE_FLAT_RATE_CLICKS",
-	//         "PRICING_TYPE_FLAT_RATE_IMPRESSIONS"
+	//         "PRICING_TYPE_CPM_ACTIVEVIEW"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -41528,7 +42118,7 @@ func (c *PlacementsListCall) Do(opts ...googleapi.CallOption) (*PlacementsListRe
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for placements by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placements with names like \"placement June 2015\", \"placement May 2015\", or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placement\" will match placements with name \"my placement\", \"placement 2015\", or simply \"placement\".",
+	//       "description": "Allows searching for placements by name or ID. Wildcards (*) are allowed. For example, \"placement*2015\" will return placements with names like \"placement June 2015\", \"placement May 2015\", or simply \"placements 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"placement\" will match placements with name \"my placement\", \"placement 2015\", or simply \"placement\" .",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -41620,11 +42210,16 @@ type PlacementsPatchCall struct {
 
 // Patch: Updates an existing placement. This method supports patch
 // semantics.
-func (r *PlacementsService) Patch(profileId int64, id int64, placement *Placement) *PlacementsPatchCall {
+func (r *PlacementsService) Patch(profileId int64, placement *Placement) *PlacementsPatchCall {
 	c := &PlacementsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.placement = placement
+	return c
+}
+
+// Id sets the optional parameter "id": Placement ID.
+func (c *PlacementsPatchCall) Id(id int64) *PlacementsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -41655,7 +42250,7 @@ func (c *PlacementsPatchCall) Header() http.Header {
 
 func (c *PlacementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41720,18 +42315,17 @@ func (c *PlacementsPatchCall) Do(opts ...googleapi.CallOption) (*Placement, erro
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/placements",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.placements.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "Placement ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -41802,7 +42396,7 @@ func (c *PlacementsUpdateCall) Header() http.Header {
 
 func (c *PlacementsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -41867,6 +42461,7 @@ func (c *PlacementsUpdateCall) Do(opts ...googleapi.CallOption) (*Placement, err
 	return ret, nil
 	// {
 	//   "description": "Updates an existing placement.",
+	//   "flatPath": "userprofiles/{profileId}/placements",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.placements.update",
 	//   "parameterOrder": [
@@ -41952,7 +42547,7 @@ func (c *PlatformTypesGetCall) Header() http.Header {
 
 func (c *PlatformTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42016,6 +42611,7 @@ func (c *PlatformTypesGetCall) Do(opts ...googleapi.CallOption) (*PlatformType, 
 	return ret, nil
 	// {
 	//   "description": "Gets one platform type by ID.",
+	//   "flatPath": "userprofiles/{profileId}/platformTypes/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.platformTypes.get",
 	//   "parameterOrder": [
@@ -42104,7 +42700,7 @@ func (c *PlatformTypesListCall) Header() http.Header {
 
 func (c *PlatformTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42167,6 +42763,7 @@ func (c *PlatformTypesListCall) Do(opts ...googleapi.CallOption) (*PlatformTypes
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of platform types.",
+	//   "flatPath": "userprofiles/{profileId}/platformTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.platformTypes.list",
 	//   "parameterOrder": [
@@ -42249,7 +42846,7 @@ func (c *PostalCodesGetCall) Header() http.Header {
 
 func (c *PostalCodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42313,6 +42910,7 @@ func (c *PostalCodesGetCall) Do(opts ...googleapi.CallOption) (*PostalCode, erro
 	return ret, nil
 	// {
 	//   "description": "Gets one postal code by ID.",
+	//   "flatPath": "userprofiles/{profileId}/postalCodes/{code}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.postalCodes.get",
 	//   "parameterOrder": [
@@ -42400,7 +42998,7 @@ func (c *PostalCodesListCall) Header() http.Header {
 
 func (c *PostalCodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42463,6 +43061,7 @@ func (c *PostalCodesListCall) Do(opts ...googleapi.CallOption) (*PostalCodesList
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of postal codes.",
+	//   "flatPath": "userprofiles/{profileId}/postalCodes",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.postalCodes.list",
 	//   "parameterOrder": [
@@ -42545,7 +43144,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42609,6 +43208,7 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one project by ID.",
+	//   "flatPath": "userprofiles/{profileId}/projects/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.projects.get",
 	//   "parameterOrder": [
@@ -42654,7 +43254,7 @@ type ProjectsListCall struct {
 }
 
 // List: Retrieves a list of projects, possibly filtered. This method
-// supports paging.
+// supports paging .
 func (r *ProjectsService) List(profileId int64) *ProjectsListCall {
 	c := &ProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -42769,7 +43369,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -42831,7 +43431,8 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ProjectsListRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a list of projects, possibly filtered. This method supports paging.",
+	//   "description": "Retrieves a list of projects, possibly filtered. This method supports paging .",
+	//   "flatPath": "userprofiles/{profileId}/projects",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.projects.list",
 	//   "parameterOrder": [
@@ -42994,7 +43595,7 @@ func (c *RegionsListCall) Header() http.Header {
 
 func (c *RegionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43057,6 +43658,7 @@ func (c *RegionsListCall) Do(opts ...googleapi.CallOption) (*RegionsListResponse
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of regions.",
+	//   "flatPath": "userprofiles/{profileId}/regions",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.regions.list",
 	//   "parameterOrder": [
@@ -43139,7 +43741,7 @@ func (c *RemarketingListSharesGetCall) Header() http.Header {
 
 func (c *RemarketingListSharesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43203,6 +43805,7 @@ func (c *RemarketingListSharesGetCall) Do(opts ...googleapi.CallOption) (*Remark
 	return ret, nil
 	// {
 	//   "description": "Gets one remarketing list share by remarketing list ID.",
+	//   "flatPath": "userprofiles/{profileId}/remarketingListShares/{remarketingListId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.remarketingListShares.get",
 	//   "parameterOrder": [
@@ -43241,6 +43844,7 @@ func (c *RemarketingListSharesGetCall) Do(opts ...googleapi.CallOption) (*Remark
 type RemarketingListSharesPatchCall struct {
 	s                    *Service
 	profileId            int64
+	remarketingListId    int64
 	remarketinglistshare *RemarketingListShare
 	urlParams_           gensupport.URLParams
 	ctx_                 context.Context
@@ -43252,8 +43856,14 @@ type RemarketingListSharesPatchCall struct {
 func (r *RemarketingListSharesService) Patch(profileId int64, remarketingListId int64, remarketinglistshare *RemarketingListShare) *RemarketingListSharesPatchCall {
 	c := &RemarketingListSharesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("remarketingListId", fmt.Sprint(remarketingListId))
+	c.remarketingListId = remarketingListId
 	c.remarketinglistshare = remarketinglistshare
+	return c
+}
+
+// Id sets the optional parameter "id": RemarketingListShare ID.
+func (c *RemarketingListSharesPatchCall) Id(id int64) *RemarketingListSharesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -43284,7 +43894,7 @@ func (c *RemarketingListSharesPatchCall) Header() http.Header {
 
 func (c *RemarketingListSharesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43297,7 +43907,7 @@ func (c *RemarketingListSharesPatchCall) doRequest(alt string) (*http.Response, 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/remarketingListShares")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/remarketingLists/{remarketingListId}/remarketingListShares")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -43305,7 +43915,8 @@ func (c *RemarketingListSharesPatchCall) doRequest(alt string) (*http.Response, 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"profileId": strconv.FormatInt(c.profileId, 10),
+		"profileId":         strconv.FormatInt(c.profileId, 10),
+		"remarketingListId": strconv.FormatInt(c.remarketingListId, 10),
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -43349,6 +43960,7 @@ func (c *RemarketingListSharesPatchCall) Do(opts ...googleapi.CallOption) (*Rema
 	return ret, nil
 	// {
 	//   "description": "Updates an existing remarketing list share. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/remarketingLists/{remarketingListId}/remarketingListShares",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.remarketingListShares.patch",
 	//   "parameterOrder": [
@@ -43356,6 +43968,12 @@ func (c *RemarketingListSharesPatchCall) Do(opts ...googleapi.CallOption) (*Rema
 	//     "remarketingListId"
 	//   ],
 	//   "parameters": {
+	//     "id": {
+	//       "description": "RemarketingListShare ID.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "profileId": {
 	//       "description": "User profile ID associated with this request.",
 	//       "format": "int64",
@@ -43364,14 +43982,14 @@ func (c *RemarketingListSharesPatchCall) Do(opts ...googleapi.CallOption) (*Rema
 	//       "type": "string"
 	//     },
 	//     "remarketingListId": {
-	//       "description": "Remarketing list ID.",
+	//       "description": "RemarketingList ID.",
 	//       "format": "int64",
-	//       "location": "query",
+	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "userprofiles/{profileId}/remarketingListShares",
+	//   "path": "userprofiles/{profileId}/remarketingLists/{remarketingListId}/remarketingListShares",
 	//   "request": {
 	//     "$ref": "RemarketingListShare"
 	//   },
@@ -43431,7 +44049,7 @@ func (c *RemarketingListSharesUpdateCall) Header() http.Header {
 
 func (c *RemarketingListSharesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43496,6 +44114,7 @@ func (c *RemarketingListSharesUpdateCall) Do(opts ...googleapi.CallOption) (*Rem
 	return ret, nil
 	// {
 	//   "description": "Updates an existing remarketing list share.",
+	//   "flatPath": "userprofiles/{profileId}/remarketingListShares",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.remarketingListShares.update",
 	//   "parameterOrder": [
@@ -43581,7 +44200,7 @@ func (c *RemarketingListsGetCall) Header() http.Header {
 
 func (c *RemarketingListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43645,6 +44264,7 @@ func (c *RemarketingListsGetCall) Do(opts ...googleapi.CallOption) (*Remarketing
 	return ret, nil
 	// {
 	//   "description": "Gets one remarketing list by ID.",
+	//   "flatPath": "userprofiles/{profileId}/remarketingLists/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.remarketingLists.get",
 	//   "parameterOrder": [
@@ -43724,7 +44344,7 @@ func (c *RemarketingListsInsertCall) Header() http.Header {
 
 func (c *RemarketingListsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -43789,6 +44409,7 @@ func (c *RemarketingListsInsertCall) Do(opts ...googleapi.CallOption) (*Remarket
 	return ret, nil
 	// {
 	//   "description": "Inserts a new remarketing list.",
+	//   "flatPath": "userprofiles/{profileId}/remarketingLists",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.remarketingLists.insert",
 	//   "parameterOrder": [
@@ -43938,7 +44559,7 @@ func (c *RemarketingListsListCall) Header() http.Header {
 
 func (c *RemarketingListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44001,6 +44622,7 @@ func (c *RemarketingListsListCall) Do(opts ...googleapi.CallOption) (*Remarketin
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of remarketing lists, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/remarketingLists",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.remarketingLists.list",
 	//   "parameterOrder": [
@@ -44126,11 +44748,16 @@ type RemarketingListsPatchCall struct {
 
 // Patch: Updates an existing remarketing list. This method supports
 // patch semantics.
-func (r *RemarketingListsService) Patch(profileId int64, id int64, remarketinglist *RemarketingList) *RemarketingListsPatchCall {
+func (r *RemarketingListsService) Patch(profileId int64, remarketinglist *RemarketingList) *RemarketingListsPatchCall {
 	c := &RemarketingListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.remarketinglist = remarketinglist
+	return c
+}
+
+// Id sets the optional parameter "id": RemarketingList ID.
+func (c *RemarketingListsPatchCall) Id(id int64) *RemarketingListsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -44161,7 +44788,7 @@ func (c *RemarketingListsPatchCall) Header() http.Header {
 
 func (c *RemarketingListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44226,18 +44853,17 @@ func (c *RemarketingListsPatchCall) Do(opts ...googleapi.CallOption) (*Remarketi
 	return ret, nil
 	// {
 	//   "description": "Updates an existing remarketing list. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/remarketingLists",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.remarketingLists.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Remarketing list ID.",
+	//       "description": "RemarketingList ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -44308,7 +44934,7 @@ func (c *RemarketingListsUpdateCall) Header() http.Header {
 
 func (c *RemarketingListsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44373,6 +44999,7 @@ func (c *RemarketingListsUpdateCall) Do(opts ...googleapi.CallOption) (*Remarket
 	return ret, nil
 	// {
 	//   "description": "Updates an existing remarketing list.",
+	//   "flatPath": "userprofiles/{profileId}/remarketingLists",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.remarketingLists.update",
 	//   "parameterOrder": [
@@ -44447,7 +45074,7 @@ func (c *ReportsDeleteCall) Header() http.Header {
 
 func (c *ReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44483,6 +45110,7 @@ func (c *ReportsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes a report by its ID.",
+	//   "flatPath": "userprofiles/{profileId}/reports/{reportId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.reports.delete",
 	//   "parameterOrder": [
@@ -44570,7 +45198,7 @@ func (c *ReportsGetCall) Header() http.Header {
 
 func (c *ReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44634,6 +45262,7 @@ func (c *ReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a report by its ID.",
+	//   "flatPath": "userprofiles/{profileId}/reports/{reportId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.reports.get",
 	//   "parameterOrder": [
@@ -44713,7 +45342,7 @@ func (c *ReportsInsertCall) Header() http.Header {
 
 func (c *ReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44778,6 +45407,7 @@ func (c *ReportsInsertCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Creates a report.",
+	//   "flatPath": "userprofiles/{profileId}/reports",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.reports.insert",
 	//   "parameterOrder": [
@@ -44909,7 +45539,7 @@ func (c *ReportsListCall) Header() http.Header {
 
 func (c *ReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -44972,6 +45602,7 @@ func (c *ReportsListCall) Do(opts ...googleapi.CallOption) (*ReportList, error) 
 	return ret, nil
 	// {
 	//   "description": "Retrieves list of reports.",
+	//   "flatPath": "userprofiles/{profileId}/reports",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.reports.list",
 	//   "parameterOrder": [
@@ -45076,6 +45707,158 @@ func (c *ReportsListCall) Pages(ctx context.Context, f func(*ReportList) error) 
 	}
 }
 
+// method id "dfareporting.reports.patch":
+
+type ReportsPatchCall struct {
+	s          *Service
+	profileId  int64
+	reportId   int64
+	report     *Report
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing report. This method supports patch
+// semantics.
+func (r *ReportsService) Patch(profileId int64, reportId int64, report *Report) *ReportsPatchCall {
+	c := &ReportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.reportId = reportId
+	c.report = report
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReportsPatchCall) Fields(s ...googleapi.Field) *ReportsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReportsPatchCall) Context(ctx context.Context) *ReportsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReportsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReportsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.report)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/reports/{reportId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"reportId":  strconv.FormatInt(c.reportId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.reports.patch" call.
+// Exactly one of *Report or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Report.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ReportsPatchCall) Do(opts ...googleapi.CallOption) (*Report, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Report{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing report. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/reports/{reportId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dfareporting.reports.patch",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "reportId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "The DFA user profile ID.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "reportId": {
+	//       "description": "The ID of the report.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/reports/{reportId}",
+	//   "request": {
+	//     "$ref": "Report"
+	//   },
+	//   "response": {
+	//     "$ref": "Report"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfareporting"
+	//   ]
+	// }
+
+}
+
 // method id "dfareporting.reports.run":
 
 type ReportsRunCall struct {
@@ -45129,7 +45912,7 @@ func (c *ReportsRunCall) Header() http.Header {
 
 func (c *ReportsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45190,6 +45973,7 @@ func (c *ReportsRunCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	return ret, nil
 	// {
 	//   "description": "Runs a report.",
+	//   "flatPath": "userprofiles/{profileId}/reports/{reportId}/run",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.reports.run",
 	//   "parameterOrder": [
@@ -45277,7 +46061,7 @@ func (c *ReportsUpdateCall) Header() http.Header {
 
 func (c *ReportsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45343,6 +46127,7 @@ func (c *ReportsUpdateCall) Do(opts ...googleapi.CallOption) (*Report, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates a report.",
+	//   "flatPath": "userprofiles/{profileId}/reports/{reportId}",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.reports.update",
 	//   "parameterOrder": [
@@ -45427,7 +46212,7 @@ func (c *ReportsCompatibleFieldsQueryCall) Header() http.Header {
 
 func (c *ReportsCompatibleFieldsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45492,6 +46277,7 @@ func (c *ReportsCompatibleFieldsQueryCall) Do(opts ...googleapi.CallOption) (*Co
 	return ret, nil
 	// {
 	//   "description": "Returns the fields that are compatible to be selected in the respective sections of a report criteria, given the fields already selected in the input report and user permissions.",
+	//   "flatPath": "userprofiles/{profileId}/reports/compatiblefields/query",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.reports.compatibleFields.query",
 	//   "parameterOrder": [
@@ -45580,7 +46366,7 @@ func (c *ReportsFilesGetCall) Header() http.Header {
 
 func (c *ReportsFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45661,6 +46447,7 @@ func (c *ReportsFilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	return ret, nil
 	// {
 	//   "description": "Retrieves a report file by its report ID and file ID. This method supports media download.",
+	//   "flatPath": "userprofiles/{profileId}/reports/{reportId}/files/{fileId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.reports.files.get",
 	//   "parameterOrder": [
@@ -45796,7 +46583,7 @@ func (c *ReportsFilesListCall) Header() http.Header {
 
 func (c *ReportsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -45860,6 +46647,7 @@ func (c *ReportsFilesListCall) Do(opts ...googleapi.CallOption) (*FileList, erro
 	return ret, nil
 	// {
 	//   "description": "Lists files for a report.",
+	//   "flatPath": "userprofiles/{profileId}/reports/{reportId}/files",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.reports.files.list",
 	//   "parameterOrder": [
@@ -46013,7 +46801,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46077,6 +46865,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one site by ID.",
+	//   "flatPath": "userprofiles/{profileId}/sites/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.sites.get",
 	//   "parameterOrder": [
@@ -46156,7 +46945,7 @@ func (c *SitesInsertCall) Header() http.Header {
 
 func (c *SitesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46221,6 +47010,7 @@ func (c *SitesInsertCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a new site.",
+	//   "flatPath": "userprofiles/{profileId}/sites",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.sites.insert",
 	//   "parameterOrder": [
@@ -46438,7 +47228,7 @@ func (c *SitesListCall) Header() http.Header {
 
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46501,6 +47291,7 @@ func (c *SitesListCall) Do(opts ...googleapi.CallOption) (*SitesListResponse, er
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of sites, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/sites",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.sites.list",
 	//   "parameterOrder": [
@@ -46664,11 +47455,16 @@ type SitesPatchCall struct {
 
 // Patch: Updates an existing site. This method supports patch
 // semantics.
-func (r *SitesService) Patch(profileId int64, id int64, site *Site) *SitesPatchCall {
+func (r *SitesService) Patch(profileId int64, site *Site) *SitesPatchCall {
 	c := &SitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.site = site
+	return c
+}
+
+// Id sets the optional parameter "id": Site ID.
+func (c *SitesPatchCall) Id(id int64) *SitesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -46699,7 +47495,7 @@ func (c *SitesPatchCall) Header() http.Header {
 
 func (c *SitesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46764,18 +47560,17 @@ func (c *SitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing site. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/sites",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.sites.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "Site ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -46846,7 +47641,7 @@ func (c *SitesUpdateCall) Header() http.Header {
 
 func (c *SitesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -46911,6 +47706,7 @@ func (c *SitesUpdateCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	return ret, nil
 	// {
 	//   "description": "Updates an existing site.",
+	//   "flatPath": "userprofiles/{profileId}/sites",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.sites.update",
 	//   "parameterOrder": [
@@ -46996,7 +47792,7 @@ func (c *SizesGetCall) Header() http.Header {
 
 func (c *SizesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47060,6 +47856,7 @@ func (c *SizesGetCall) Do(opts ...googleapi.CallOption) (*Size, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one size by ID.",
+	//   "flatPath": "userprofiles/{profileId}/sizes/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.sizes.get",
 	//   "parameterOrder": [
@@ -47139,7 +47936,7 @@ func (c *SizesInsertCall) Header() http.Header {
 
 func (c *SizesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47204,6 +48001,7 @@ func (c *SizesInsertCall) Do(opts ...googleapi.CallOption) (*Size, error) {
 	return ret, nil
 	// {
 	//   "description": "Inserts a new size.",
+	//   "flatPath": "userprofiles/{profileId}/sizes",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.sizes.insert",
 	//   "parameterOrder": [
@@ -47322,7 +48120,7 @@ func (c *SizesListCall) Header() http.Header {
 
 func (c *SizesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47385,6 +48183,7 @@ func (c *SizesListCall) Do(opts ...googleapi.CallOption) (*SizesListResponse, er
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of sizes, possibly filtered. Retrieved sizes are globally unique and may include values not currently in use by your account. Due to this, the list of sizes returned by this method may differ from the list seen in the Trafficking UI.",
+	//   "flatPath": "userprofiles/{profileId}/sizes",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.sizes.list",
 	//   "parameterOrder": [
@@ -47495,7 +48294,7 @@ func (c *SubaccountsGetCall) Header() http.Header {
 
 func (c *SubaccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47559,6 +48358,7 @@ func (c *SubaccountsGetCall) Do(opts ...googleapi.CallOption) (*Subaccount, erro
 	return ret, nil
 	// {
 	//   "description": "Gets one subaccount by ID.",
+	//   "flatPath": "userprofiles/{profileId}/subaccounts/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.subaccounts.get",
 	//   "parameterOrder": [
@@ -47638,7 +48438,7 @@ func (c *SubaccountsInsertCall) Header() http.Header {
 
 func (c *SubaccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47703,6 +48503,7 @@ func (c *SubaccountsInsertCall) Do(opts ...googleapi.CallOption) (*Subaccount, e
 	return ret, nil
 	// {
 	//   "description": "Inserts a new subaccount.",
+	//   "flatPath": "userprofiles/{profileId}/subaccounts",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.subaccounts.insert",
 	//   "parameterOrder": [
@@ -47782,7 +48583,7 @@ func (c *SubaccountsListCall) PageToken(pageToken string) *SubaccountsListCall {
 // "subaccount 2015". Most of the searches also add wildcards implicitly
 // at the start and the end of the search string. For example, a search
 // string of "subaccount" will match objects with name "my subaccount",
-// "subaccount 2015", or simply "subaccount".
+// "subaccount 2015", or simply "subaccount" .
 func (c *SubaccountsListCall) SearchString(searchString string) *SubaccountsListCall {
 	c.urlParams_.Set("searchString", searchString)
 	return c
@@ -47847,7 +48648,7 @@ func (c *SubaccountsListCall) Header() http.Header {
 
 func (c *SubaccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -47910,6 +48711,7 @@ func (c *SubaccountsListCall) Do(opts ...googleapi.CallOption) (*SubaccountsList
 	return ret, nil
 	// {
 	//   "description": "Gets a list of subaccounts, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/subaccounts",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.subaccounts.list",
 	//   "parameterOrder": [
@@ -47945,7 +48747,7 @@ func (c *SubaccountsListCall) Do(opts ...googleapi.CallOption) (*SubaccountsList
 	//       "type": "string"
 	//     },
 	//     "searchString": {
-	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"subaccount*2015\" will return objects with names like \"subaccount June 2015\", \"subaccount April 2015\", or simply \"subaccount 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"subaccount\" will match objects with name \"my subaccount\", \"subaccount 2015\", or simply \"subaccount\".",
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"subaccount*2015\" will return objects with names like \"subaccount June 2015\", \"subaccount April 2015\", or simply \"subaccount 2015\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"subaccount\" will match objects with name \"my subaccount\", \"subaccount 2015\", or simply \"subaccount\" .",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -48023,11 +48825,16 @@ type SubaccountsPatchCall struct {
 
 // Patch: Updates an existing subaccount. This method supports patch
 // semantics.
-func (r *SubaccountsService) Patch(profileId int64, id int64, subaccount *Subaccount) *SubaccountsPatchCall {
+func (r *SubaccountsService) Patch(profileId int64, subaccount *Subaccount) *SubaccountsPatchCall {
 	c := &SubaccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.subaccount = subaccount
+	return c
+}
+
+// Id sets the optional parameter "id": Subaccount ID.
+func (c *SubaccountsPatchCall) Id(id int64) *SubaccountsPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -48058,7 +48865,7 @@ func (c *SubaccountsPatchCall) Header() http.Header {
 
 func (c *SubaccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48123,18 +48930,17 @@ func (c *SubaccountsPatchCall) Do(opts ...googleapi.CallOption) (*Subaccount, er
 	return ret, nil
 	// {
 	//   "description": "Updates an existing subaccount. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/subaccounts",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.subaccounts.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
 	//       "description": "Subaccount ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -48205,7 +49011,7 @@ func (c *SubaccountsUpdateCall) Header() http.Header {
 
 func (c *SubaccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48270,6 +49076,7 @@ func (c *SubaccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Subaccount, e
 	return ret, nil
 	// {
 	//   "description": "Updates an existing subaccount.",
+	//   "flatPath": "userprofiles/{profileId}/subaccounts",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.subaccounts.update",
 	//   "parameterOrder": [
@@ -48355,7 +49162,7 @@ func (c *TargetableRemarketingListsGetCall) Header() http.Header {
 
 func (c *TargetableRemarketingListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48419,6 +49226,7 @@ func (c *TargetableRemarketingListsGetCall) Do(opts ...googleapi.CallOption) (*T
 	return ret, nil
 	// {
 	//   "description": "Gets one remarketing list by ID.",
+	//   "flatPath": "userprofiles/{profileId}/targetableRemarketingLists/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.targetableRemarketingLists.get",
 	//   "parameterOrder": [
@@ -48565,7 +49373,7 @@ func (c *TargetableRemarketingListsListCall) Header() http.Header {
 
 func (c *TargetableRemarketingListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48629,6 +49437,7 @@ func (c *TargetableRemarketingListsListCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of targetable remarketing lists, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/targetableRemarketingLists",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.targetableRemarketingLists.list",
 	//   "parameterOrder": [
@@ -48792,7 +49601,7 @@ func (c *TargetingTemplatesGetCall) Header() http.Header {
 
 func (c *TargetingTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -48856,6 +49665,7 @@ func (c *TargetingTemplatesGetCall) Do(opts ...googleapi.CallOption) (*Targeting
 	return ret, nil
 	// {
 	//   "description": "Gets one targeting template by ID.",
+	//   "flatPath": "userprofiles/{profileId}/targetingTemplates/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.targetingTemplates.get",
 	//   "parameterOrder": [
@@ -48935,7 +49745,7 @@ func (c *TargetingTemplatesInsertCall) Header() http.Header {
 
 func (c *TargetingTemplatesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49000,6 +49810,7 @@ func (c *TargetingTemplatesInsertCall) Do(opts ...googleapi.CallOption) (*Target
 	return ret, nil
 	// {
 	//   "description": "Inserts a new targeting template.",
+	//   "flatPath": "userprofiles/{profileId}/targetingTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.targetingTemplates.insert",
 	//   "parameterOrder": [
@@ -49151,7 +49962,7 @@ func (c *TargetingTemplatesListCall) Header() http.Header {
 
 func (c *TargetingTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49214,6 +50025,7 @@ func (c *TargetingTemplatesListCall) Do(opts ...googleapi.CallOption) (*Targetin
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of targeting templates, optionally filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/targetingTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.targetingTemplates.list",
 	//   "parameterOrder": [
@@ -49333,11 +50145,16 @@ type TargetingTemplatesPatchCall struct {
 
 // Patch: Updates an existing targeting template. This method supports
 // patch semantics.
-func (r *TargetingTemplatesService) Patch(profileId int64, id int64, targetingtemplate *TargetingTemplate) *TargetingTemplatesPatchCall {
+func (r *TargetingTemplatesService) Patch(profileId int64, targetingtemplate *TargetingTemplate) *TargetingTemplatesPatchCall {
 	c := &TargetingTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.targetingtemplate = targetingtemplate
+	return c
+}
+
+// Id sets the optional parameter "id": TargetingTemplate ID.
+func (c *TargetingTemplatesPatchCall) Id(id int64) *TargetingTemplatesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -49368,7 +50185,7 @@ func (c *TargetingTemplatesPatchCall) Header() http.Header {
 
 func (c *TargetingTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49433,18 +50250,17 @@ func (c *TargetingTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*Targeti
 	return ret, nil
 	// {
 	//   "description": "Updates an existing targeting template. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/targetingTemplates",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.targetingTemplates.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "Targeting template ID.",
+	//       "description": "TargetingTemplate ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -49515,7 +50331,7 @@ func (c *TargetingTemplatesUpdateCall) Header() http.Header {
 
 func (c *TargetingTemplatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49580,6 +50396,7 @@ func (c *TargetingTemplatesUpdateCall) Do(opts ...googleapi.CallOption) (*Target
 	return ret, nil
 	// {
 	//   "description": "Updates an existing targeting template.",
+	//   "flatPath": "userprofiles/{profileId}/targetingTemplates",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.targetingTemplates.update",
 	//   "parameterOrder": [
@@ -49663,7 +50480,7 @@ func (c *UserProfilesGetCall) Header() http.Header {
 
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49726,6 +50543,7 @@ func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, er
 	return ret, nil
 	// {
 	//   "description": "Gets one user profile by ID.",
+	//   "flatPath": "userprofiles/{profileId}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userProfiles.get",
 	//   "parameterOrder": [
@@ -49745,6 +50563,7 @@ func (c *UserProfilesGetCall) Do(opts ...googleapi.CallOption) (*UserProfile, er
 	//     "$ref": "UserProfile"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/ddmconversions",
 	//     "https://www.googleapis.com/auth/dfareporting",
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -49805,7 +50624,7 @@ func (c *UserProfilesListCall) Header() http.Header {
 
 func (c *UserProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -49865,13 +50684,17 @@ func (c *UserProfilesListCall) Do(opts ...googleapi.CallOption) (*UserProfileLis
 	return ret, nil
 	// {
 	//   "description": "Retrieves list of user profiles for a user.",
+	//   "flatPath": "userprofiles",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userProfiles.list",
+	//   "parameterOrder": [],
+	//   "parameters": {},
 	//   "path": "userprofiles",
 	//   "response": {
 	//     "$ref": "UserProfileList"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/ddmconversions",
 	//     "https://www.googleapis.com/auth/dfareporting",
 	//     "https://www.googleapis.com/auth/dfatrafficking"
 	//   ]
@@ -49936,7 +50759,7 @@ func (c *UserRolePermissionGroupsGetCall) Header() http.Header {
 
 func (c *UserRolePermissionGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -50000,6 +50823,7 @@ func (c *UserRolePermissionGroupsGetCall) Do(opts ...googleapi.CallOption) (*Use
 	return ret, nil
 	// {
 	//   "description": "Gets one user role permission group by ID.",
+	//   "flatPath": "userprofiles/{profileId}/userRolePermissionGroups/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRolePermissionGroups.get",
 	//   "parameterOrder": [
@@ -50088,7 +50912,7 @@ func (c *UserRolePermissionGroupsListCall) Header() http.Header {
 
 func (c *UserRolePermissionGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -50152,6 +50976,7 @@ func (c *UserRolePermissionGroupsListCall) Do(opts ...googleapi.CallOption) (*Us
 	return ret, nil
 	// {
 	//   "description": "Gets a list of all supported user role permission groups.",
+	//   "flatPath": "userprofiles/{profileId}/userRolePermissionGroups",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRolePermissionGroups.list",
 	//   "parameterOrder": [
@@ -50234,7 +51059,7 @@ func (c *UserRolePermissionsGetCall) Header() http.Header {
 
 func (c *UserRolePermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -50298,6 +51123,7 @@ func (c *UserRolePermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserRole
 	return ret, nil
 	// {
 	//   "description": "Gets one user role permission by ID.",
+	//   "flatPath": "userprofiles/{profileId}/userRolePermissions/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRolePermissions.get",
 	//   "parameterOrder": [
@@ -50397,7 +51223,7 @@ func (c *UserRolePermissionsListCall) Header() http.Header {
 
 func (c *UserRolePermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -50460,6 +51286,7 @@ func (c *UserRolePermissionsListCall) Do(opts ...googleapi.CallOption) (*UserRol
 	return ret, nil
 	// {
 	//   "description": "Gets a list of user role permissions, possibly filtered.",
+	//   "flatPath": "userprofiles/{profileId}/userRolePermissions",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRolePermissions.list",
 	//   "parameterOrder": [
@@ -50538,7 +51365,7 @@ func (c *UserRolesDeleteCall) Header() http.Header {
 
 func (c *UserRolesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -50574,6 +51401,7 @@ func (c *UserRolesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes an existing user role.",
+	//   "flatPath": "userprofiles/{profileId}/userRoles/{id}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dfareporting.userRoles.delete",
 	//   "parameterOrder": [
@@ -50661,7 +51489,7 @@ func (c *UserRolesGetCall) Header() http.Header {
 
 func (c *UserRolesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -50725,6 +51553,7 @@ func (c *UserRolesGetCall) Do(opts ...googleapi.CallOption) (*UserRole, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets one user role by ID.",
+	//   "flatPath": "userprofiles/{profileId}/userRoles/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRoles.get",
 	//   "parameterOrder": [
@@ -50804,7 +51633,7 @@ func (c *UserRolesInsertCall) Header() http.Header {
 
 func (c *UserRolesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -50869,6 +51698,7 @@ func (c *UserRolesInsertCall) Do(opts ...googleapi.CallOption) (*UserRole, error
 	return ret, nil
 	// {
 	//   "description": "Inserts a new user role.",
+	//   "flatPath": "userprofiles/{profileId}/userRoles",
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.userRoles.insert",
 	//   "parameterOrder": [
@@ -51028,7 +51858,7 @@ func (c *UserRolesListCall) Header() http.Header {
 
 func (c *UserRolesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -51091,6 +51921,7 @@ func (c *UserRolesListCall) Do(opts ...googleapi.CallOption) (*UserRolesListResp
 	return ret, nil
 	// {
 	//   "description": "Retrieves a list of user roles, possibly filtered. This method supports paging.",
+	//   "flatPath": "userprofiles/{profileId}/userRoles",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.userRoles.list",
 	//   "parameterOrder": [
@@ -51215,11 +52046,16 @@ type UserRolesPatchCall struct {
 
 // Patch: Updates an existing user role. This method supports patch
 // semantics.
-func (r *UserRolesService) Patch(profileId int64, id int64, userrole *UserRole) *UserRolesPatchCall {
+func (r *UserRolesService) Patch(profileId int64, userrole *UserRole) *UserRolesPatchCall {
 	c := &UserRolesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("id", fmt.Sprint(id))
 	c.userrole = userrole
+	return c
+}
+
+// Id sets the optional parameter "id": UserRole ID.
+func (c *UserRolesPatchCall) Id(id int64) *UserRolesPatchCall {
+	c.urlParams_.Set("id", fmt.Sprint(id))
 	return c
 }
 
@@ -51250,7 +52086,7 @@ func (c *UserRolesPatchCall) Header() http.Header {
 
 func (c *UserRolesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -51315,18 +52151,17 @@ func (c *UserRolesPatchCall) Do(opts ...googleapi.CallOption) (*UserRole, error)
 	return ret, nil
 	// {
 	//   "description": "Updates an existing user role. This method supports patch semantics.",
+	//   "flatPath": "userprofiles/{profileId}/userRoles",
 	//   "httpMethod": "PATCH",
 	//   "id": "dfareporting.userRoles.patch",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "id"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "User role ID.",
+	//       "description": "UserRole ID.",
 	//       "format": "int64",
 	//       "location": "query",
-	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "profileId": {
@@ -51397,7 +52232,7 @@ func (c *UserRolesUpdateCall) Header() http.Header {
 
 func (c *UserRolesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -51462,6 +52297,7 @@ func (c *UserRolesUpdateCall) Do(opts ...googleapi.CallOption) (*UserRole, error
 	return ret, nil
 	// {
 	//   "description": "Updates an existing user role.",
+	//   "flatPath": "userprofiles/{profileId}/userRoles",
 	//   "httpMethod": "PUT",
 	//   "id": "dfareporting.userRoles.update",
 	//   "parameterOrder": [
@@ -51547,7 +52383,7 @@ func (c *VideoFormatsGetCall) Header() http.Header {
 
 func (c *VideoFormatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -51611,6 +52447,7 @@ func (c *VideoFormatsGetCall) Do(opts ...googleapi.CallOption) (*VideoFormat, er
 	return ret, nil
 	// {
 	//   "description": "Gets one video format by ID.",
+	//   "flatPath": "userprofiles/{profileId}/videoFormats/{id}",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.videoFormats.get",
 	//   "parameterOrder": [
@@ -51699,7 +52536,7 @@ func (c *VideoFormatsListCall) Header() http.Header {
 
 func (c *VideoFormatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -51762,6 +52599,7 @@ func (c *VideoFormatsListCall) Do(opts ...googleapi.CallOption) (*VideoFormatsLi
 	return ret, nil
 	// {
 	//   "description": "Lists available video formats.",
+	//   "flatPath": "userprofiles/{profileId}/videoFormats",
 	//   "httpMethod": "GET",
 	//   "id": "dfareporting.videoFormats.list",
 	//   "parameterOrder": [

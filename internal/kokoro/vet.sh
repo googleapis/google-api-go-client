@@ -15,8 +15,7 @@ fi
 
 go install \
   golang.org/x/lint/golint \
-  golang.org/x/tools/cmd/goimports \
-  honnef.co/go/tools/cmd/staticcheck
+  golang.org/x/tools/cmd/goimports
 
 # Fail if a dependency was added without the necessary go.mod/go.sum change
 # being part of the commit.

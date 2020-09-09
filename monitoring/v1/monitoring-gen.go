@@ -206,7 +206,8 @@ type Aggregation struct {
 	// seconds. If a per-series aligner other than ALIGN_NONE is specified,
 	// this field is required or an error is returned. If no per-series
 	// aligner is specified, or the aligner ALIGN_NONE is specified, then
-	// this field is ignored.
+	// this field is ignored.The maximum value of the alignment_period is 2
+	// years, or 104 weeks.
 	AlignmentPeriod string `json:"alignmentPeriod,omitempty"`
 
 	// CrossSeriesReducer: The reduction operation to be used to combine
@@ -607,6 +608,10 @@ type Dashboard struct {
 	// simple list of informational elements like widgets or tiles.
 	GridLayout *GridLayout `json:"gridLayout,omitempty"`
 
+	// MosaicLayout: The content is arranged as a grid of tiles, with each
+	// content widget occupying one or more tiles.
+	MosaicLayout *MosaicLayout `json:"mosaicLayout,omitempty"`
+
 	// Name: Immutable. The resource name of the dashboard.
 	Name string `json:"name,omitempty"`
 
@@ -707,15 +712,16 @@ func (s *DataSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DroppedLabels: A set of (label, value) pairs which were dropped
-// during aggregation, attached to google.api.Distribution.Exemplars in
-// google.api.Distribution values during aggregation.These values are
-// used in combination with the label values that remain on the
-// aggregated Distribution timeseries to construct the full label set
-// for the exemplar values. The resulting full label set may be used to
-// identify the specific task/job/instance (for example) which may be
-// contributing to a long-tail, while allowing the storage savings of
-// only storing aggregated distribution values for a large group.Note
+// DroppedLabels: A set of (label, value) pairs that were removed from a
+// Distribution time series during aggregation and then added as an
+// attachment to a Distribution.Exemplar.The full label set for the
+// exemplars is constructed by using the dropped pairs in combination
+// with the label values that remain on the aggregated Distribution time
+// series. The constructed full label set can be used to identify the
+// specific entity, such as the instance or job, which might be
+// contributing to a long-tail. However, with dropped labels, the
+// storage requirements are reduced because only the aggregated
+// distribution values for a large group of time series are stored.Note
 // that there are no guarantees on ordering of the labels from
 // exemplar-to-exemplar and from distribution-to-distribution in the
 // same stream, and there may be duplicates. It is up to clients to
@@ -751,12 +757,9 @@ func (s *DroppedLabels) MarshalJSON() ([]byte, error) {
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
-// instance:
-// service Foo {
-//   rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-// }
-// The JSON representation for Empty is empty JSON object {}.
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for Empty is empty
+// JSON object {}.
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -976,6 +979,40 @@ func (s *ListDashboardsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MosaicLayout: A mosaic layout divides the available space into a grid
+// of squares, and overlays the grid with tiles. Unlike GridLayout,
+// tiles may span multiple grid squares and can be placed at arbitrary
+// locations in the grid.
+type MosaicLayout struct {
+	// Columns: The number of columns in the mosaic grid.
+	Columns int64 `json:"columns,omitempty"`
+
+	// Tiles: The tiles to display.
+	Tiles []*Tile `json:"tiles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MosaicLayout) MarshalJSON() ([]byte, error) {
+	type NoMethod MosaicLayout
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Option: A protocol buffer option, which can be attached to a message,
 // field, enumeration, etc.
 type Option struct {
@@ -1190,15 +1227,15 @@ type Scorecard struct {
 	// a warning threshold that triggers above/below, then the scorecard is
 	// in a warning state - unless x also puts it in a danger state. (Danger
 	// trumps warning.)As an example, consider a scorecard with the
-	// following four thresholds: {  value: 90,  category: 'DANGER',
-	// trigger: 'ABOVE', }, {  value: 70,  category: 'WARNING',  trigger:
-	// 'ABOVE', }, {  value: 10,  category: 'DANGER',  trigger: 'BELOW', },
-	// {  value: 20,  category: 'WARNING',  trigger: 'BELOW', }Then: values
-	// less than or equal to 10 would put the scorecard in a DANGER state,
-	// values greater than 10 but less than or equal to 20 a WARNING state,
-	// values strictly between 20 and 70 an OK state, values greater than or
-	// equal to 70 but less than 90 a WARNING state, and values greater than
-	// or equal to 90 a DANGER state.
+	// following four thresholds: { value: 90, category: 'DANGER', trigger:
+	// 'ABOVE', }, { value: 70, category: 'WARNING', trigger: 'ABOVE', }, {
+	// value: 10, category: 'DANGER', trigger: 'BELOW', }, { value: 20,
+	// category: 'WARNING', trigger: 'BELOW', }Then: values less than or
+	// equal to 10 would put the scorecard in a DANGER state, values greater
+	// than 10 but less than or equal to 20 a WARNING state, values strictly
+	// between 20 and 70 an OK state, values greater than or equal to 70 but
+	// less than 90 a WARNING state, and values greater than or equal to 90
+	// a DANGER state.
 	Thresholds []*Threshold `json:"thresholds,omitempty"`
 
 	// TimeSeriesQuery: Required. Fields for querying time series data from
@@ -1261,16 +1298,11 @@ func (s *SourceContext) MarshalJSON() ([]byte, error) {
 
 // SpanContext: The context of a span, attached to Exemplars in
 // Distribution values during aggregation.It contains the name of a span
-// with
-// format:
-// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_
-// ID]
-//
+// with format:
+// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
 type SpanContext struct {
-	// SpanName: The resource name of the span. The format
-	// is:
+	// SpanName: The resource name of the span. The format is:
 	// projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
-	//
 	// [TRACE_ID] is a unique identifier for a trace within a project; it is
 	// a 32-character hexadecimal encoding of a 16-byte array.[SPAN_ID] is a
 	// unique identifier for a span within a trace; it is a 16-character
@@ -1491,6 +1523,49 @@ func (s *Threshold) UnmarshalJSON(data []byte) error {
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// Tile: A single tile in the mosaic. The placement and size of the tile
+// are configurable.
+type Tile struct {
+	// Height: The height of the tile, measured in grid squares.
+	Height int64 `json:"height,omitempty"`
+
+	// Widget: The informational widget contained in the tile.
+	Widget *Widget `json:"widget,omitempty"`
+
+	// Width: The width of the tile, measured in grid squares.
+	Width int64 `json:"width,omitempty"`
+
+	// XPos: The zero-indexed position of the tile in grid squares relative
+	// to the left edge of the grid.
+	XPos int64 `json:"xPos,omitempty"`
+
+	// YPos: The zero-indexed position of the tile in grid squares relative
+	// to the top edge of the grid.
+	YPos int64 `json:"yPos,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Height") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Height") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Tile) MarshalJSON() ([]byte, error) {
+	type NoMethod Tile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // TimeSeriesFilter: A filter that defines a subset of time series data
@@ -1818,7 +1893,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1891,7 +1966,7 @@ func (c *ProjectsDashboardsCreateCall) Do(opts ...googleapi.CallOption) (*Dashbo
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project on which to execute the request. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\nThe [PROJECT_ID_OR_NUMBER] must match the dashboard resource name.",
+	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] The [PROJECT_ID_OR_NUMBER] must match the dashboard resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1961,7 +2036,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2029,7 +2104,7 @@ func (c *ProjectsDashboardsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Dashboard. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]\n",
+	//       "description": "Required. The resource name of the Dashboard. The format is: projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
@@ -2107,7 +2182,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2178,7 +2253,7 @@ func (c *ProjectsDashboardsGetCall) Do(opts ...googleapi.CallOption) (*Dashboard
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Dashboard. The format is one of:\ndashboards/[DASHBOARD_ID] (for system dashboards)\nprojects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID]  (for custom dashboards).",
+	//       "description": "Required. The resource name of the Dashboard. The format is one of: dashboards/[DASHBOARD_ID] (for system dashboards) projects/[PROJECT_ID_OR_NUMBER]/dashboards/[DASHBOARD_ID] (for custom dashboards).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,
@@ -2273,7 +2348,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2355,7 +2430,7 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The scope of the dashboards to list. The format is:\nprojects/[PROJECT_ID_OR_NUMBER]\n",
+	//       "description": "Required. The scope of the dashboards to list. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2445,7 +2520,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200716")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200828")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

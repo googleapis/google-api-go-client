@@ -1870,7 +1870,7 @@
       }
     }
   },
-  "revision": "20200819",
+  "revision": "20200901",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -3613,13 +3613,6 @@
         },
         "statusCodes": {
           "description": "Limit the items polled to the ones with these statuses.",
-          "enumDescriptions": [
-            "Input-only value. Used with Items.list to list all items in the queue, regardless of status.",
-            "Error encountered by Cloud Search while processing this item. Details of the error are in repositoryError.",
-            "Item has been modified in the repository, and is out of date with the version previously accepted into Cloud Search.",
-            "Item is known to exist in the repository, but is not yet accepted by Cloud Search. An item can be in this state when Items.push has been called for an item of this name that did not exist previously.",
-            "API has accepted the up-to-date data of this item."
-          ],
           "items": {
             "enum": [
               "CODE_UNSPECIFIED",

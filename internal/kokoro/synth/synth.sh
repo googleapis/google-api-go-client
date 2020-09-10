@@ -9,11 +9,11 @@ set -e -x
 cd $(dirname $0)/../../..
 
 # Install Go 1.15
-rm -rf /usr/local/go
+tempdir=$(mktemp)
 curl -o /tmp/go.tgz https://dl.google.com/go/go1.15.1.linux-amd64.tar.gz &&
-    tar -C /usr/local -xzf /tmp/go.tgz &&
+    tar -C tempdir -xzf /tmp/go.tgz &&
     rm /tmp/go.tgz &&
-    export PATH=$PATH:/usr/local/go/bin
+    export PATH=$tempdir/go/bin:$PATH
 
 go version
 go env

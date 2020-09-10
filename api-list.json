@@ -1735,6 +1735,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "displayvideo:v1beta",
+      "name": "displayvideo",
+      "version": "v1beta",
+      "title": "Display & Video 360 API",
+      "description": "Display & Video 360 API allows users to manage and create campaigns and reports.",
+      "discoveryRestUrl": "https://displayvideo.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/display-video/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "displayvideo:v1dev",
+      "name": "displayvideo",
+      "version": "v1dev",
+      "title": "Display & Video 360 API",
+      "description": "Display & Video 360 API allows users to manage and create campaigns and reports.",
+      "discoveryRestUrl": "https://displayvideo.googleapis.com/$discovery/rest?version=v1dev",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/display-video/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "displayvideo:v1",
       "name": "displayvideo",
       "version": "v1",
@@ -1747,6 +1777,21 @@
       },
       "documentationLink": "https://developers.google.com/display-video/",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "displayvideo:v1beta2",
+      "name": "displayvideo",
+      "version": "v1beta2",
+      "title": "Display & Video 360 API",
+      "description": "Display & Video 360 API allows users to manage and create campaigns and reports.",
+      "discoveryRestUrl": "https://displayvideo.googleapis.com/$discovery/rest?version=v1beta2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/display-video/",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -2356,14 +2401,13 @@
       "name": "groupssettings",
       "version": "v1",
       "title": "Groups Settings API",
-      "description": "Manages permission levels and related settings of a group.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/groupssettings/v1/rest",
-      "discoveryLink": "./apis/groupssettings/v1/rest",
+      "description": "The Groups Settings API allows domain administrators to view and manage access levels and advanced settings for a group.",
+      "discoveryRestUrl": "https://groupssettings.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/google-apps/groups-settings/get_started",
+      "documentationLink": "https://developers.google.com/admin-sdk/groups-settings",
       "preferred": true
     },
     {

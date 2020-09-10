@@ -609,7 +609,7 @@ type Dashboard struct {
 	GridLayout *GridLayout `json:"gridLayout,omitempty"`
 
 	// MosaicLayout: The content is arranged as a grid of tiles, with each
-	// content widget occupying one or more tiles.
+	// content widget occupying one or more grid squares.
 	MosaicLayout *MosaicLayout `json:"mosaicLayout,omitempty"`
 
 	// Name: Immutable. The resource name of the dashboard.
@@ -984,7 +984,8 @@ func (s *ListDashboardsResponse) MarshalJSON() ([]byte, error) {
 // tiles may span multiple grid squares and can be placed at arbitrary
 // locations in the grid.
 type MosaicLayout struct {
-	// Columns: The number of columns in the mosaic grid.
+	// Columns: The number of columns in the mosaic grid. The number of
+	// columns must be between 1 and 12, inclusive.
 	Columns int64 `json:"columns,omitempty"`
 
 	// Tiles: The tiles to display.
@@ -1528,21 +1529,25 @@ func (s *Threshold) UnmarshalJSON(data []byte) error {
 // Tile: A single tile in the mosaic. The placement and size of the tile
 // are configurable.
 type Tile struct {
-	// Height: The height of the tile, measured in grid squares.
+	// Height: The height of the tile, measured in grid squares. Tiles must
+	// have a minimum height of 1.
 	Height int64 `json:"height,omitempty"`
 
-	// Widget: The informational widget contained in the tile.
+	// Widget: The informational widget contained in the tile. For example
+	// an XyChart.
 	Widget *Widget `json:"widget,omitempty"`
 
-	// Width: The width of the tile, measured in grid squares.
+	// Width: The width of the tile, measured in grid squares. Tiles must
+	// have a minimum width of 1.
 	Width int64 `json:"width,omitempty"`
 
 	// XPos: The zero-indexed position of the tile in grid squares relative
-	// to the left edge of the grid.
+	// to the left edge of the grid. Tiles must be contained within the
+	// specified number of columns. x_pos cannot be negative.
 	XPos int64 `json:"xPos,omitempty"`
 
 	// YPos: The zero-indexed position of the tile in grid squares relative
-	// to the top edge of the grid.
+	// to the top edge of the grid. y_pos cannot be negative.
 	YPos int64 `json:"yPos,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
@@ -1893,7 +1898,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2036,7 +2041,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2182,7 +2187,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2348,7 +2353,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2520,7 +2525,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

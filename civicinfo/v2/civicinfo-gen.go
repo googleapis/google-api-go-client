@@ -225,6 +225,15 @@ type AdministrativeBody struct {
 	// looking up general election information.
 	ElectionInfoUrl string `json:"electionInfoUrl,omitempty"`
 
+	// ElectionNoticeText: A last minute or emergency notification text
+	// provided by this administrative body.
+	ElectionNoticeText string `json:"electionNoticeText,omitempty"`
+
+	// ElectionNoticeUrl: A URL provided by this administrative body for
+	// additional information related to the last minute or emergency
+	// notification.
+	ElectionNoticeUrl string `json:"electionNoticeUrl,omitempty"`
+
 	// ElectionOfficials: The election officials for this election
 	// administrative body.
 	ElectionOfficials []*ElectionOfficial `json:"electionOfficials,omitempty"`
@@ -976,17 +985,11 @@ type PollingLocation struct {
 	Id string `json:"id,omitempty"`
 
 	// Latitude: Latitude of the location, in degrees north of the equator.
-	// Only some locations -- generally, ballot drop boxes for vote-by-mail
-	// elections -- will have this set; for others, use a geocoding service
-	// like the Google Maps API to resolve the address to a geographic
-	// point.
+	// Note this field may not be available for some locations.
 	Latitude float64 `json:"latitude,omitempty"`
 
 	// Longitude: Longitude of the location, in degrees east of the Prime
-	// Meridian. Only some locations -- generally, ballot drop boxes for
-	// vote-by-mail elections -- will have this set; for others, use a
-	// geocoding service like the Google Maps API to resolve the address to
-	// a geographic point.
+	// Meridian. Note this field may not be available for some locations.
 	Longitude float64 `json:"longitude,omitempty"`
 
 	// Name: The name of the early vote site or drop off location. This
@@ -1367,7 +1370,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1499,7 +1502,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1655,7 +1658,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1867,7 +1870,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2120,7 +2123,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

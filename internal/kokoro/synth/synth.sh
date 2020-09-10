@@ -13,7 +13,8 @@ tempdir=$(mktemp -d)
 curl -o /tmp/go.tgz https://dl.google.com/go/go1.15.1.linux-amd64.tar.gz &&
     tar -C $tempdir -xzf /tmp/go.tgz &&
     rm /tmp/go.tgz &&
-    export PATH=$tempdir/go/bin:$PATH
+    export PATH=$tempdir/go/bin:$PATH &&
+    export GOROOT=$tempdir/go
 
 go version
 go env

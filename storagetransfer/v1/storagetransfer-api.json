@@ -396,7 +396,7 @@
       }
     }
   },
-  "revision": "20200807",
+  "revision": "20200903",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -641,12 +641,6 @@
       "properties": {
         "eventTypes": {
           "description": "Event types for which a notification is desired. If empty, send notifications for all event types.",
-          "enumDescriptions": [
-            "Illegal value, to avoid allowing a default.",
-            "`TransferOperation` completed with status SUCCESS.",
-            "`TransferOperation` completed with status FAILED.",
-            "`TransferOperation` completed with status ABORTED."
-          ],
           "items": {
             "enum": [
               "EVENT_TYPE_UNSPECIFIED",

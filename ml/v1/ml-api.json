@@ -893,7 +893,7 @@
                       ]
                     },
                     "suggest": {
-                      "description": "Adds one or more trials to a study, with parameter values suggested by AI Platform Optimizer. Returns a long-running operation associated with the generation of trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.",
+                      "description": "Adds one or more trials to a study, with parameter values suggested by AI Platform Vizier. Returns a long-running operation associated with the generation of trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials:suggest",
                       "httpMethod": "POST",
                       "id": "ml.projects.locations.studies.trials.suggest",
@@ -1458,7 +1458,7 @@
       }
     }
   },
-  "revision": "20200821",
+  "revision": "20200905",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1878,16 +1878,6 @@
       "properties": {
         "availableAccelerators": {
           "description": "Available accelerators for the capability.",
-          "enumDescriptions": [
-            "Unspecified accelerator type. Default to no GPU.",
-            "Nvidia Tesla K80 GPU.",
-            "Nvidia Tesla P100 GPU.",
-            "Nvidia Tesla V100 GPU.",
-            "Nvidia Tesla P4 GPU.",
-            "Nvidia Tesla T4 GPU.",
-            "TPU v2.",
-            "TPU v3."
-          ],
           "items": {
             "enum": [
               "ACCELERATOR_TYPE_UNSPECIFIED",
@@ -3549,6 +3539,10 @@
       "description": "Associates `members` with a `role`.",
       "id": "GoogleIamV1__Binding",
       "properties": {
+        "bindingId": {
+          "description": "A client-specified ID for this binding. Expected to be globally unique to support the internal bindings-by-ID API.",
+          "type": "string"
+        },
         "condition": {
           "$ref": "GoogleType__Expr",
           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the members in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."

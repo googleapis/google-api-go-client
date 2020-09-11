@@ -83,6 +83,9 @@ const mtlsBasePath = "https://cloudidentity.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See your device details
+	CloudIdentityDevicesLookupScope = "https://www.googleapis.com/auth/cloud-identity.devices.lookup"
+
 	// See, change, create, and delete any of the Cloud Identity Groups that
 	// you can access, including the members of each group
 	CloudIdentityGroupsScope = "https://www.googleapis.com/auth/cloud-identity.groups"
@@ -98,6 +101,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/cloud-identity.devices.lookup",
 		"https://www.googleapis.com/auth/cloud-identity.groups",
 		"https://www.googleapis.com/auth/cloud-identity.groups.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
@@ -130,6 +134,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Devices = NewDevicesService(s)
 	s.Groups = NewGroupsService(s)
 	return s, nil
 }
@@ -139,6 +144,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Devices *DevicesService
+
 	Groups *GroupsService
 }
 
@@ -147,6 +154,39 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewDevicesService(s *Service) *DevicesService {
+	rs := &DevicesService{s: s}
+	rs.DeviceUsers = NewDevicesDeviceUsersService(s)
+	return rs
+}
+
+type DevicesService struct {
+	s *Service
+
+	DeviceUsers *DevicesDeviceUsersService
+}
+
+func NewDevicesDeviceUsersService(s *Service) *DevicesDeviceUsersService {
+	rs := &DevicesDeviceUsersService{s: s}
+	rs.ClientStates = NewDevicesDeviceUsersClientStatesService(s)
+	return rs
+}
+
+type DevicesDeviceUsersService struct {
+	s *Service
+
+	ClientStates *DevicesDeviceUsersClientStatesService
+}
+
+func NewDevicesDeviceUsersClientStatesService(s *Service) *DevicesDeviceUsersClientStatesService {
+	rs := &DevicesDeviceUsersClientStatesService{s: s}
+	return rs
+}
+
+type DevicesDeviceUsersClientStatesService struct {
+	s *Service
 }
 
 func NewGroupsService(s *Service) *GroupsService {
@@ -262,6 +302,40 @@ func (s *GoogleAppsCloudidentityDevicesV1AndroidAttributes) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest: Request
+// message for approving the device to access user data.
+type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest struct {
+	// Customer: Required. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse: Response
 // message for approving the device to access user data.
 type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse struct {
@@ -287,6 +361,40 @@ type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse struct {
 
 func (s *GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest: Request
+// message for blocking account on device.
+type GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest struct {
+	// Customer: Required. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -320,6 +428,40 @@ func (s *GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest: Request
+// message for cancelling an unfinished device wipe.
+type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest struct {
+	// Customer: Required. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse: Response
 // message for cancelling an unfinished device wipe.
 type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse struct {
@@ -346,6 +488,40 @@ type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse struct {
 
 func (s *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest: Request
+// message for cancelling an unfinished user account wipe.
+type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest struct {
+	// Customer: Required. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -407,7 +583,11 @@ type GoogleAppsCloudidentityDevicesV1ClientState struct {
 	// in updates. Token needs to be passed back in UpdateRequest
 	Etag string `json:"etag,omitempty"`
 
-	// HealthScore: The Health score of the resource
+	// HealthScore: The Health score of the resource. The Health score is
+	// the callers specification of the condition of the device from a
+	// usability point of view. For example, a third-party device management
+	// provider may specify a health score based on its compliance with
+	// organizational policies.
 	//
 	// Possible values:
 	//   "HEALTH_SCORE_UNSPECIFIED" - Default value
@@ -445,6 +625,18 @@ type GoogleAppsCloudidentityDevicesV1ClientState struct {
 	// ClientState in format:
 	// `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner
 	// _id}`, where partner_id corresponds to the partner storing the data.
+	// For partners belonging to the "BeyondCorp Alliance", this is the
+	// partner ID specified to you by Google. For all other callers, this is
+	// a string of the form: `{customer_id}-suffix`, where `customer_id` is
+	// your customer ID. The *suffix* is any string the caller specifies.
+	// This string will be displayed verbatim in the administration console.
+	// This suffix is used in setting up Custom Access Levels in
+	// Context-Aware Access. Your organization's customer ID can be obtained
+	// from the URL: `GET
+	// https://www.googleapis.com/admin/directory/v1/customers/my_customer`
+	// The `id` field in the response contains the customer ID starting with
+	// the letter 'C'. The customer ID to be used in this API is the string
+	// after the letter 'C' (not including 'C')
 	Name string `json:"name,omitempty"`
 
 	// OwnerType: Output only. The owner of the ClientState
@@ -457,6 +649,10 @@ type GoogleAppsCloudidentityDevicesV1ClientState struct {
 
 	// ScoreReason: A descriptive cause of the health score.
 	ScoreReason string `json:"scoreReason,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "AssetTags") to
 	// unconditionally include in API requests. By default, fields with
@@ -530,7 +726,7 @@ func (s *GoogleAppsCloudidentityDevicesV1CustomAttributeValue) UnmarshalJSON(dat
 	return nil
 }
 
-// GoogleAppsCloudidentityDevicesV1Device: A Device within the Cloud
+// GoogleAppsCloudidentityDevicesV1Device:  A Device within the Cloud
 // Identity Devices API. Represents a Device known to Google Cloud,
 // independent of the device ownership, type, and whether it is assigned
 // or in use by a user.
@@ -680,6 +876,10 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	// WifiMacAddresses: WiFi MAC addresses of device.
 	WifiMacAddresses []string `json:"wifiMacAddresses,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AndroidSpecificAttributes") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -769,6 +969,10 @@ type GoogleAppsCloudidentityDevicesV1DeviceUser struct {
 	// UserEmail: Email address of the user registered on the device.
 	UserEmail string `json:"userEmail,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "CompromisedState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -789,6 +993,198 @@ type GoogleAppsCloudidentityDevicesV1DeviceUser struct {
 
 func (s *GoogleAppsCloudidentityDevicesV1DeviceUser) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1DeviceUser
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1ListClientStatesResponse: Response
+// message that is returned in ListClientStates.
+type GoogleAppsCloudidentityDevicesV1ListClientStatesResponse struct {
+	// ClientStates: Client states meeting the list restrictions.
+	ClientStates []*GoogleAppsCloudidentityDevicesV1ClientState `json:"clientStates,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results. Empty if
+	// there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientStates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientStates") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1ListClientStatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1ListClientStatesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse: Response
+// message that is returned from the ListDeviceUsers method.
+type GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse struct {
+	// DeviceUsers: Devices meeting the list restrictions.
+	DeviceUsers []*GoogleAppsCloudidentityDevicesV1DeviceUser `json:"deviceUsers,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results. Empty if
+	// there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceUsers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceUsers") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1ListDevicesResponse: Response message
+// that is returned from the ListDevices method.
+type GoogleAppsCloudidentityDevicesV1ListDevicesResponse struct {
+	// Devices: Devices meeting the list restrictions.
+	Devices []*GoogleAppsCloudidentityDevicesV1Device `json:"devices,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results. Empty if
+	// there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Devices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Devices") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1ListDevicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1ListDevicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse:
+// Response containing resource names of the DeviceUsers associated with
+// the caller's credentials.
+type GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse struct {
+	// Customer: The obfuscated customer Id that may be passed back to other
+	// Devices API methods such as List, Get, etc.
+	Customer string `json:"customer,omitempty"`
+
+	// Names: [Resource
+	// names](https://cloud.google.com/apis/design/resource_names) of the
+	// DeviceUsers in the format:
+	// `devices/{device_id}/deviceUsers/{user_resource_id}`, where device_id
+	// is the unique ID assigned to a Device and user_resource_id is the
+	// unique user ID
+	Names []string `json:"names,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results. Empty if
+	// there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1WipeDeviceRequest: Request message
+// for wiping all data on the device.
+type GoogleAppsCloudidentityDevicesV1WipeDeviceRequest struct {
+	// Customer: Required. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1WipeDeviceRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -819,6 +1215,40 @@ type GoogleAppsCloudidentityDevicesV1WipeDeviceResponse struct {
 
 func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCloudidentityDevicesV1WipeDeviceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest: Request
+// message for starting an account wipe on device.
+type GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest struct {
+	// Customer: Required. [Resource
+	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// customer. If you're using this API for your own organization, use
+	// `customers/my_customer` If you're using this API to manage another
+	// organization, use `customers/{customer_id}`, where customer_id is the
+	// customer to whom the device belongs.
+	Customer string `json:"customer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1299,6 +1729,2882 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "cloudidentity.devices.cancelWipe":
+
+type DevicesCancelWipeCall struct {
+	s                                                       *Service
+	name                                                    string
+	googleappscloudidentitydevicesv1cancelwipedevicerequest *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// CancelWipe: Cancels an unfinished device wipe. This operation can be
+// used to cancel device wipe in the gap between the wipe operation
+// returning success and the device being wiped. This operation is
+// possible when the device is in a "pending wipe" state. The device
+// enters the "pending wipe" state when a wipe device command is issued,
+// but has not yet been sent to the device. The cancel wipe will fail if
+// the wipe command has already been issued to the device.
+func (r *DevicesService) CancelWipe(name string, googleappscloudidentitydevicesv1cancelwipedevicerequest *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest) *DevicesCancelWipeCall {
+	c := &DevicesCancelWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappscloudidentitydevicesv1cancelwipedevicerequest = googleappscloudidentitydevicesv1cancelwipedevicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesCancelWipeCall) Fields(s ...googleapi.Field) *DevicesCancelWipeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesCancelWipeCall) Context(ctx context.Context) *DevicesCancelWipeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesCancelWipeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesCancelWipeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappscloudidentitydevicesv1cancelwipedevicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancelWipe")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.cancelWipe" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesCancelWipeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancels an unfinished device wipe. This operation can be used to cancel device wipe in the gap between the wipe operation returning success and the device being wiped. This operation is possible when the device is in a \"pending wipe\" state. The device enters the \"pending wipe\" state when a wipe device command is issued, but has not yet been sent to the device. The cancel wipe will fail if the wipe command has already been issued to the device.",
+	//   "flatPath": "v1/devices/{devicesId}:cancelWipe",
+	//   "httpMethod": "POST",
+	//   "id": "cloudidentity.devices.cancelWipe",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancelWipe",
+	//   "request": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.create":
+
+type DevicesCreateCall struct {
+	s                                      *Service
+	googleappscloudidentitydevicesv1device *GoogleAppsCloudidentityDevicesV1Device
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Create: Creates a device. Only company-owned device may be created.
+func (r *DevicesService) Create(googleappscloudidentitydevicesv1device *GoogleAppsCloudidentityDevicesV1Device) *DevicesCreateCall {
+	c := &DevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googleappscloudidentitydevicesv1device = googleappscloudidentitydevicesv1device
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesCreateCall) Customer(customer string) *DevicesCreateCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesCreateCall) Fields(s ...googleapi.Field) *DevicesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesCreateCall) Context(ctx context.Context) *DevicesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappscloudidentitydevicesv1device)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/devices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a device. Only company-owned device may be created.",
+	//   "flatPath": "v1/devices",
+	//   "httpMethod": "POST",
+	//   "id": "cloudidentity.devices.create",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/devices",
+	//   "request": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1Device"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.delete":
+
+type DevicesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified device.
+func (r *DevicesService) Delete(name string) *DevicesDeleteCall {
+	c := &DevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeleteCall) Customer(customer string) *DevicesDeleteCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeleteCall) Fields(s ...googleapi.Field) *DevicesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeleteCall) Context(ctx context.Context) *DevicesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified device.",
+	//   "flatPath": "v1/devices/{devicesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudidentity.devices.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}`, where device_id is the unique ID assigned to the Device.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.get":
+
+type DevicesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified device.
+func (r *DevicesService) Get(name string) *DevicesGetCall {
+	c := &DevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer in the format: `customers/{customer_id}`, where customer_id
+// is the customer to whom the device belongs. If you're using this API
+// for your own organization, use `customers/my_customer`. If you're
+// using this API to manage another organization, use
+// `customers/{customer_id}`, where customer_id is the customer to whom
+// the device belongs.
+func (c *DevicesGetCall) Customer(customer string) *DevicesGetCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesGetCall) Fields(s ...googleapi.Field) *DevicesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DevicesGetCall) IfNoneMatch(entityTag string) *DevicesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesGetCall) Context(ctx context.Context) *DevicesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.get" call.
+// Exactly one of *GoogleAppsCloudidentityDevicesV1Device or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleAppsCloudidentityDevicesV1Device.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *DevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudidentityDevicesV1Device, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAppsCloudidentityDevicesV1Device{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified device.",
+	//   "flatPath": "v1/devices/{devicesId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudidentity.devices.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Customer in the format: `customers/{customer_id}`, where customer_id is the customer to whom the device belongs. If you're using this API for your own organization, use `customers/my_customer`. If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in the format: `devices/{device_id}`, where device_id is the unique ID assigned to the Device.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1Device"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.list":
+
+type DevicesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists/Searches devices.
+func (r *DevicesService) List() *DevicesListCall {
+	c := &DevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer in the format: `customers/{customer_id}`, where customer_id
+// is the customer to whom the device belongs. If you're using this API
+// for your own organization, use `customers/my_customer`. If you're
+// using this API to manage another organization, use
+// `customers/{customer_id}`, where customer_id is the customer to whom
+// the device belongs.
+func (c *DevicesListCall) Customer(customer string) *DevicesListCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Additional restrictions
+// when fetching list of devices. [Help Center article
+// link](https://support.google.com/a/answer/7549103)
+func (c *DevicesListCall) Filter(filter string) *DevicesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order specification
+// for devices in the response. Only one of the following field names
+// may be used to specify the order: `create_time`, `last_sync_time`,
+// `model`, `os_version`, `device_type` and `serial_number`. `desc` may
+// be specified optionally at the end to specify results to be sorted in
+// descending order. Default order is ascending.
+func (c *DevicesListCall) OrderBy(orderBy string) *DevicesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of Devices to return. If unspecified, at most 20 Devices will be
+// returned. The maximum value is 100; values above 100 will be coerced
+// to 100.
+func (c *DevicesListCall) PageSize(pageSize int64) *DevicesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDevices` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to `ListDevices` must match the call that provided the page token.
+func (c *DevicesListCall) PageToken(pageToken string) *DevicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": The view to use for the List
+// request.
+//
+// Possible values:
+//   "VIEW_UNSPECIFIED" - Default value. The value is unused.
+//   "COMPANY_INVENTORY" - This view contains all devices imported by
+// the company admin. Each device in the response contains all
+// information specified by the company admin when importing the device
+// (i.e. asset tags). This includes devices that may be unaassigned or
+// assigned to users.
+//   "USER_ASSIGNED_DEVICES" - This view contains all devices with at
+// least one user registered on the device. Each device in the response
+// contains all device information, except for asset tags.
+func (c *DevicesListCall) View(view string) *DevicesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesListCall) Fields(s ...googleapi.Field) *DevicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DevicesListCall) IfNoneMatch(entityTag string) *DevicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesListCall) Context(ctx context.Context) *DevicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/devices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.list" call.
+// Exactly one of *GoogleAppsCloudidentityDevicesV1ListDevicesResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleAppsCloudidentityDevicesV1ListDevicesResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *DevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudidentityDevicesV1ListDevicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAppsCloudidentityDevicesV1ListDevicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists/Searches devices.",
+	//   "flatPath": "v1/devices",
+	//   "httpMethod": "GET",
+	//   "id": "cloudidentity.devices.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer in the format: `customers/{customer_id}`, where customer_id is the customer to whom the device belongs. If you're using this API for your own organization, use `customers/my_customer`. If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Optional. Additional restrictions when fetching list of devices. [Help Center article link](https://support.google.com/a/answer/7549103)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Order specification for devices in the response. Only one of the following field names may be used to specify the order: `create_time`, `last_sync_time`, `model`, `os_version`, `device_type` and `serial_number`. `desc` may be specified optionally at the end to specify results to be sorted in descending order. Default order is ascending.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of Devices to return. If unspecified, at most 20 Devices will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListDevices` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDevices` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. The view to use for the List request.",
+	//       "enum": [
+	//         "VIEW_UNSPECIFIED",
+	//         "COMPANY_INVENTORY",
+	//         "USER_ASSIGNED_DEVICES"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value. The value is unused.",
+	//         "This view contains all devices imported by the company admin. Each device in the response contains all information specified by the company admin when importing the device (i.e. asset tags). This includes devices that may be unaassigned or assigned to users.",
+	//         "This view contains all devices with at least one user registered on the device. Each device in the response contains all device information, except for asset tags."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/devices",
+	//   "response": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1ListDevicesResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *DevicesListCall) Pages(ctx context.Context, f func(*GoogleAppsCloudidentityDevicesV1ListDevicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudidentity.devices.wipe":
+
+type DevicesWipeCall struct {
+	s                                                 *Service
+	name                                              string
+	googleappscloudidentitydevicesv1wipedevicerequest *GoogleAppsCloudidentityDevicesV1WipeDeviceRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// Wipe: Wipes all data on the specified device.
+func (r *DevicesService) Wipe(name string, googleappscloudidentitydevicesv1wipedevicerequest *GoogleAppsCloudidentityDevicesV1WipeDeviceRequest) *DevicesWipeCall {
+	c := &DevicesWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappscloudidentitydevicesv1wipedevicerequest = googleappscloudidentitydevicesv1wipedevicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesWipeCall) Fields(s ...googleapi.Field) *DevicesWipeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesWipeCall) Context(ctx context.Context) *DevicesWipeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesWipeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesWipeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappscloudidentitydevicesv1wipedevicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:wipe")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.wipe" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesWipeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Wipes all data on the specified device.",
+	//   "flatPath": "v1/devices/{devicesId}:wipe",
+	//   "httpMethod": "POST",
+	//   "id": "cloudidentity.devices.wipe",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:wipe",
+	//   "request": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1WipeDeviceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.deviceUsers.approve":
+
+type DevicesDeviceUsersApproveCall struct {
+	s                                                        *Service
+	name                                                     string
+	googleappscloudidentitydevicesv1approvedeviceuserrequest *GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// Approve: Approves device to access user data.
+func (r *DevicesDeviceUsersService) Approve(name string, googleappscloudidentitydevicesv1approvedeviceuserrequest *GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest) *DevicesDeviceUsersApproveCall {
+	c := &DevicesDeviceUsersApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappscloudidentitydevicesv1approvedeviceuserrequest = googleappscloudidentitydevicesv1approvedeviceuserrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersApproveCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersApproveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersApproveCall) Context(ctx context.Context) *DevicesDeviceUsersApproveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersApproveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersApproveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappscloudidentitydevicesv1approvedeviceuserrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:approve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.approve" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesDeviceUsersApproveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Approves device to access user data.",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}:approve",
+	//   "httpMethod": "POST",
+	//   "id": "cloudidentity.devices.deviceUsers.approve",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:approve",
+	//   "request": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.deviceUsers.block":
+
+type DevicesDeviceUsersBlockCall struct {
+	s                                                      *Service
+	name                                                   string
+	googleappscloudidentitydevicesv1blockdeviceuserrequest *GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Block: Blocks device from accessing user data
+func (r *DevicesDeviceUsersService) Block(name string, googleappscloudidentitydevicesv1blockdeviceuserrequest *GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest) *DevicesDeviceUsersBlockCall {
+	c := &DevicesDeviceUsersBlockCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappscloudidentitydevicesv1blockdeviceuserrequest = googleappscloudidentitydevicesv1blockdeviceuserrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersBlockCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersBlockCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersBlockCall) Context(ctx context.Context) *DevicesDeviceUsersBlockCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersBlockCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersBlockCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappscloudidentitydevicesv1blockdeviceuserrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:block")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.block" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesDeviceUsersBlockCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Blocks device from accessing user data",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}:block",
+	//   "httpMethod": "POST",
+	//   "id": "cloudidentity.devices.deviceUsers.block",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:block",
+	//   "request": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.deviceUsers.cancelWipe":
+
+type DevicesDeviceUsersCancelWipeCall struct {
+	s                                                           *Service
+	name                                                        string
+	googleappscloudidentitydevicesv1cancelwipedeviceuserrequest *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// CancelWipe: Cancels an unfinished user account wipe. This operation
+// can be used to cancel device wipe in the gap between the wipe
+// operation returning success and the device being wiped.
+func (r *DevicesDeviceUsersService) CancelWipe(name string, googleappscloudidentitydevicesv1cancelwipedeviceuserrequest *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest) *DevicesDeviceUsersCancelWipeCall {
+	c := &DevicesDeviceUsersCancelWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappscloudidentitydevicesv1cancelwipedeviceuserrequest = googleappscloudidentitydevicesv1cancelwipedeviceuserrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersCancelWipeCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersCancelWipeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersCancelWipeCall) Context(ctx context.Context) *DevicesDeviceUsersCancelWipeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersCancelWipeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersCancelWipeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappscloudidentitydevicesv1cancelwipedeviceuserrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancelWipe")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.cancelWipe" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesDeviceUsersCancelWipeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancels an unfinished user account wipe. This operation can be used to cancel device wipe in the gap between the wipe operation returning success and the device being wiped.",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}:cancelWipe",
+	//   "httpMethod": "POST",
+	//   "id": "cloudidentity.devices.deviceUsers.cancelWipe",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancelWipe",
+	//   "request": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.deviceUsers.delete":
+
+type DevicesDeviceUsersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified DeviceUser. This also revokes the
+// user's access to device data.
+func (r *DevicesDeviceUsersService) Delete(name string) *DevicesDeviceUsersDeleteCall {
+	c := &DevicesDeviceUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersDeleteCall) Customer(customer string) *DevicesDeviceUsersDeleteCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersDeleteCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersDeleteCall) Context(ctx context.Context) *DevicesDeviceUsersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesDeviceUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified DeviceUser. This also revokes the user's access to device data.",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudidentity.devices.deviceUsers.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.deviceUsers.get":
+
+type DevicesDeviceUsersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified DeviceUser
+func (r *DevicesDeviceUsersService) Get(name string) *DevicesDeviceUsersGetCall {
+	c := &DevicesDeviceUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersGetCall) Customer(customer string) *DevicesDeviceUsersGetCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersGetCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DevicesDeviceUsersGetCall) IfNoneMatch(entityTag string) *DevicesDeviceUsersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersGetCall) Context(ctx context.Context) *DevicesDeviceUsersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.get" call.
+// Exactly one of *GoogleAppsCloudidentityDevicesV1DeviceUser or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsCloudidentityDevicesV1DeviceUser.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *DevicesDeviceUsersGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudidentityDevicesV1DeviceUser, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAppsCloudidentityDevicesV1DeviceUser{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified DeviceUser",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudidentity.devices.deviceUsers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1DeviceUser"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.deviceUsers.list":
+
+type DevicesDeviceUsersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists/Searches DeviceUsers.
+func (r *DevicesDeviceUsersService) List(parent string) *DevicesDeviceUsersListCall {
+	c := &DevicesDeviceUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersListCall) Customer(customer string) *DevicesDeviceUsersListCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Additional restrictions
+// when fetching list of devices. [HC
+// article](https://support.google.com/a/answer/7549103)
+func (c *DevicesDeviceUsersListCall) Filter(filter string) *DevicesDeviceUsersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order specification
+// for devices in the response.
+func (c *DevicesDeviceUsersListCall) OrderBy(orderBy string) *DevicesDeviceUsersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of DeviceUsers to return. If unspecified, at most 5 DeviceUsers will
+// be returned. The maximum value is 20; values above 20 will be coerced
+// to 20.
+func (c *DevicesDeviceUsersListCall) PageSize(pageSize int64) *DevicesDeviceUsersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDeviceUsers` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListBooks` must match the call that provided the page
+// token.
+func (c *DevicesDeviceUsersListCall) PageToken(pageToken string) *DevicesDeviceUsersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersListCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DevicesDeviceUsersListCall) IfNoneMatch(entityTag string) *DevicesDeviceUsersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersListCall) Context(ctx context.Context) *DevicesDeviceUsersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deviceUsers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.list" call.
+// Exactly one of
+// *GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *DevicesDeviceUsersListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists/Searches DeviceUsers.",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers",
+	//   "httpMethod": "GET",
+	//   "id": "cloudidentity.devices.deviceUsers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Optional. Additional restrictions when fetching list of devices. [HC article](https://support.google.com/a/answer/7549103)",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Order specification for devices in the response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of DeviceUsers to return. If unspecified, at most 5 DeviceUsers will be returned. The maximum value is 20; values above 20 will be coerced to 20.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListDeviceUsers` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBooks` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. To list all DeviceUsers, set this to \"devices/-\". To list all DeviceUsers owned by a device, set this to the resource name of the device. Format: devices/{device}",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/deviceUsers",
+	//   "response": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *DevicesDeviceUsersListCall) Pages(ctx context.Context, f func(*GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudidentity.devices.deviceUsers.lookup":
+
+type DevicesDeviceUsersLookupCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Lookup: Looks up resource names of the DeviceUsers associated with
+// the caller's credentials, as well as the properties provided in the
+// request. This method must be called with end-user credentials with
+// the scope:
+// https://www.googleapis.com/auth/cloud-identity.devices.lookup If
+// multiple properties are provided, only DeviceUsers having all of
+// these properties are considered as matches - i.e. the query behaves
+// like an AND. Different platforms require different amounts of
+// information from the caller to ensure that the DeviceUser is uniquely
+// identified. - iOS: No properties need to be passed, the caller's
+// credentials are sufficient to identify the corresponding DeviceUser.
+// - Android: Specifying the 'android_id' field is required. - Desktop:
+// Specifying the 'raw_resource_id' field is required.
+func (r *DevicesDeviceUsersService) Lookup(parent string) *DevicesDeviceUsersLookupCall {
+	c := &DevicesDeviceUsersLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// AndroidId sets the optional parameter "androidId": Android Id
+// returned by
+// [Settings.Secure#ANDROID_ID](https://developer.android.com/reference/a
+// ndroid/provider/Settings.Secure.html#ANDROID_ID).
+func (c *DevicesDeviceUsersLookupCall) AndroidId(androidId string) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("androidId", androidId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of DeviceUsers to return. If unspecified, at most 20 DeviceUsers will
+// be returned. The maximum value is 20; values above 20 will be coerced
+// to 20.
+func (c *DevicesDeviceUsersLookupCall) PageSize(pageSize int64) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `LookupDeviceUsers` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `LookupDeviceUsers` must match the call that provided the
+// page token.
+func (c *DevicesDeviceUsersLookupCall) PageToken(pageToken string) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// RawResourceId sets the optional parameter "rawResourceId": Raw
+// Resource Id used by Google Endpoint Verification. If the user is
+// enrolled into Google Endpoint Verification, this id will be saved as
+// the 'device_resource_id' field in the following platform dependent
+// files. Mac: ~/.secureConnect/context_aware_config.json Windows:
+// C:\Users\%USERPROFILE%\.secureConnect\context_aware_config.json
+// Linux: ~/.secureConnect/context_aware_config.json
+func (c *DevicesDeviceUsersLookupCall) RawResourceId(rawResourceId string) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("rawResourceId", rawResourceId)
+	return c
+}
+
+// UserId sets the optional parameter "userId": The user whose
+// DeviceUser's resource name will be fetched. Must be set to 'me' to
+// fetch the DeviceUser's resource name for the calling user.
+func (c *DevicesDeviceUsersLookupCall) UserId(userId string) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("userId", userId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersLookupCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersLookupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DevicesDeviceUsersLookupCall) IfNoneMatch(entityTag string) *DevicesDeviceUsersLookupCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersLookupCall) Context(ctx context.Context) *DevicesDeviceUsersLookupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersLookupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersLookupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:lookup")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.lookup" call.
+// Exactly one of
+// *GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *DevicesDeviceUsersLookupCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Looks up resource names of the DeviceUsers associated with the caller's credentials, as well as the properties provided in the request. This method must be called with end-user credentials with the scope: https://www.googleapis.com/auth/cloud-identity.devices.lookup If multiple properties are provided, only DeviceUsers having all of these properties are considered as matches - i.e. the query behaves like an AND. Different platforms require different amounts of information from the caller to ensure that the DeviceUser is uniquely identified. - iOS: No properties need to be passed, the caller's credentials are sufficient to identify the corresponding DeviceUser. - Android: Specifying the 'android_id' field is required. - Desktop: Specifying the 'raw_resource_id' field is required.",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers:lookup",
+	//   "httpMethod": "GET",
+	//   "id": "cloudidentity.devices.deviceUsers.lookup",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "androidId": {
+	//       "description": "Android Id returned by [Settings.Secure#ANDROID_ID](https://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of DeviceUsers to return. If unspecified, at most 20 DeviceUsers will be returned. The maximum value is 20; values above 20 will be coerced to 20.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `LookupDeviceUsers` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `LookupDeviceUsers` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Must be set to \"devices/-/deviceUsers\" to search across all DeviceUser belonging to the user.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "rawResourceId": {
+	//       "description": "Raw Resource Id used by Google Endpoint Verification. If the user is enrolled into Google Endpoint Verification, this id will be saved as the 'device_resource_id' field in the following platform dependent files. Mac: ~/.secureConnect/context_aware_config.json Windows: C:\\Users\\%USERPROFILE%\\.secureConnect\\context_aware_config.json Linux: ~/.secureConnect/context_aware_config.json",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The user whose DeviceUser's resource name will be fetched. Must be set to 'me' to fetch the DeviceUser's resource name for the calling user.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:lookup",
+	//   "response": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-identity.devices.lookup"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *DevicesDeviceUsersLookupCall) Pages(ctx context.Context, f func(*GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudidentity.devices.deviceUsers.wipe":
+
+type DevicesDeviceUsersWipeCall struct {
+	s                                                     *Service
+	name                                                  string
+	googleappscloudidentitydevicesv1wipedeviceuserrequest *GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest
+	urlParams_                                            gensupport.URLParams
+	ctx_                                                  context.Context
+	header_                                               http.Header
+}
+
+// Wipe: Wipes the user's account on a device. Other data on the device
+// that is not associated with the user's work account is not affected.
+// For example, if a Gmail app is installed on a device that is used for
+// personal and work purposes, and the user is logged in to the Gmail
+// app with their personal account as well as their work account, wiping
+// the "deviceUser" by their work administrator will not affect their
+// personal account within Gmail or other apps such as Photos.
+func (r *DevicesDeviceUsersService) Wipe(name string, googleappscloudidentitydevicesv1wipedeviceuserrequest *GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest) *DevicesDeviceUsersWipeCall {
+	c := &DevicesDeviceUsersWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappscloudidentitydevicesv1wipedeviceuserrequest = googleappscloudidentitydevicesv1wipedeviceuserrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersWipeCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersWipeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersWipeCall) Context(ctx context.Context) *DevicesDeviceUsersWipeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersWipeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersWipeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappscloudidentitydevicesv1wipedeviceuserrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:wipe")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.wipe" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesDeviceUsersWipeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Wipes the user's account on a device. Other data on the device that is not associated with the user's work account is not affected. For example, if a Gmail app is installed on a device that is used for personal and work purposes, and the user is logged in to the Gmail app with their personal account as well as their work account, wiping the \"deviceUser\" by their work administrator will not affect their personal account within Gmail or other apps such as Photos.",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}:wipe",
+	//   "httpMethod": "POST",
+	//   "id": "cloudidentity.devices.deviceUsers.wipe",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:wipe",
+	//   "request": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.deviceUsers.clientStates.get":
+
+type DevicesDeviceUsersClientStatesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the client state for the device user
+func (r *DevicesDeviceUsersClientStatesService) Get(name string) *DevicesDeviceUsersClientStatesGetCall {
+	c := &DevicesDeviceUsersClientStatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersClientStatesGetCall) Customer(customer string) *DevicesDeviceUsersClientStatesGetCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersClientStatesGetCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersClientStatesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DevicesDeviceUsersClientStatesGetCall) IfNoneMatch(entityTag string) *DevicesDeviceUsersClientStatesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersClientStatesGetCall) Context(ctx context.Context) *DevicesDeviceUsersClientStatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersClientStatesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersClientStatesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.clientStates.get" call.
+// Exactly one of *GoogleAppsCloudidentityDevicesV1ClientState or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsCloudidentityDevicesV1ClientState.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *DevicesDeviceUsersClientStatesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudidentityDevicesV1ClientState, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAppsCloudidentityDevicesV1ClientState{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the client state for the device user",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}/clientStates/{clientStatesId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudidentity.devices.deviceUsers.clientStates.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the ClientState in format: `devices/{device_id}/deviceUsers/{device_user_id}/clientStates/{partner_id}`, where device_id is the unique ID assigned to the Device, device_user_id is the unique ID assigned to the User and partner_id identifies the partner storing the data.",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+/clientStates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1ClientState"
+	//   }
+	// }
+
+}
+
+// method id "cloudidentity.devices.deviceUsers.clientStates.list":
+
+type DevicesDeviceUsersClientStatesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the client states for the given search query.
+func (r *DevicesDeviceUsersClientStatesService) List(parent string) *DevicesDeviceUsersClientStatesListCall {
+	c := &DevicesDeviceUsersClientStatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersClientStatesListCall) Customer(customer string) *DevicesDeviceUsersClientStatesListCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Additional restrictions
+// when fetching list of client states.
+func (c *DevicesDeviceUsersClientStatesListCall) Filter(filter string) *DevicesDeviceUsersClientStatesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order specification
+// for client states in the response.
+func (c *DevicesDeviceUsersClientStatesListCall) OrderBy(orderBy string) *DevicesDeviceUsersClientStatesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListClientStates` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListClientStates` must match the call that provided the
+// page token.
+func (c *DevicesDeviceUsersClientStatesListCall) PageToken(pageToken string) *DevicesDeviceUsersClientStatesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersClientStatesListCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersClientStatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DevicesDeviceUsersClientStatesListCall) IfNoneMatch(entityTag string) *DevicesDeviceUsersClientStatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersClientStatesListCall) Context(ctx context.Context) *DevicesDeviceUsersClientStatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersClientStatesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersClientStatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/clientStates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.clientStates.list" call.
+// Exactly one of
+// *GoogleAppsCloudidentityDevicesV1ListClientStatesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAppsCloudidentityDevicesV1ListClientStatesResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *DevicesDeviceUsersClientStatesListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudidentityDevicesV1ListClientStatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleAppsCloudidentityDevicesV1ListClientStatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the client states for the given search query.",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}/clientStates",
+	//   "httpMethod": "GET",
+	//   "id": "cloudidentity.devices.deviceUsers.clientStates.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Optional. Additional restrictions when fetching list of client states.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Order specification for client states in the response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListClientStates` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListClientStates` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. To list all ClientStates, set this to \"devices/-/deviceUsers/-\". To list all ClientStates owned by a DeviceUser, set this to the resource name of the DeviceUser. Format: devices/{device}/deviceUsers/{deviceUser}",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/clientStates",
+	//   "response": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1ListClientStatesResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *DevicesDeviceUsersClientStatesListCall) Pages(ctx context.Context, f func(*GoogleAppsCloudidentityDevicesV1ListClientStatesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudidentity.devices.deviceUsers.clientStates.patch":
+
+type DevicesDeviceUsersClientStatesPatchCall struct {
+	s                                           *Service
+	name                                        string
+	googleappscloudidentitydevicesv1clientstate *GoogleAppsCloudidentityDevicesV1ClientState
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Patch: Updates the client state for the device user
+func (r *DevicesDeviceUsersClientStatesService) Patch(name string, googleappscloudidentitydevicesv1clientstate *GoogleAppsCloudidentityDevicesV1ClientState) *DevicesDeviceUsersClientStatesPatchCall {
+	c := &DevicesDeviceUsersClientStatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleappscloudidentitydevicesv1clientstate = googleappscloudidentitydevicesv1clientstate
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. [Resource
+// name](https://cloud.google.com/apis/design/resource_names) of the
+// customer. If you're using this API for your own organization, use
+// `customers/my_customer` If you're using this API to manage another
+// organization, use `customers/{customer_id}`, where customer_id is the
+// customer to whom the device belongs.
+func (c *DevicesDeviceUsersClientStatesPatchCall) Customer(customer string) *DevicesDeviceUsersClientStatesPatchCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Comma-separated
+// list of fully qualified names of fields to be updated. If not
+// specified, all updatable fields in ClientState are updated.
+func (c *DevicesDeviceUsersClientStatesPatchCall) UpdateMask(updateMask string) *DevicesDeviceUsersClientStatesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DevicesDeviceUsersClientStatesPatchCall) Fields(s ...googleapi.Field) *DevicesDeviceUsersClientStatesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DevicesDeviceUsersClientStatesPatchCall) Context(ctx context.Context) *DevicesDeviceUsersClientStatesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DevicesDeviceUsersClientStatesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DevicesDeviceUsersClientStatesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleappscloudidentitydevicesv1clientstate)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.devices.deviceUsers.clientStates.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DevicesDeviceUsersClientStatesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the client state for the device user",
+	//   "flatPath": "v1/devices/{devicesId}/deviceUsers/{deviceUsersId}/clientStates/{clientStatesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudidentity.devices.deviceUsers.clientStates.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the ClientState in format: `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner_id}`, where partner_id corresponds to the partner storing the data. For partners belonging to the \"BeyondCorp Alliance\", this is the partner ID specified to you by Google. For all other callers, this is a string of the form: `{customer_id}-suffix`, where `customer_id` is your customer ID. The *suffix* is any string the caller specifies. This string will be displayed verbatim in the administration console. This suffix is used in setting up Custom Access Levels in Context-Aware Access. Your organization's customer ID can be obtained from the URL: `GET https://www.googleapis.com/admin/directory/v1/customers/my_customer` The `id` field in the response contains the customer ID starting with the letter 'C'. The customer ID to be used in this API is the string after the letter 'C' (not including 'C')",
+	//       "location": "path",
+	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+/clientStates/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Comma-separated list of fully qualified names of fields to be updated. If not specified, all updatable fields in ClientState are updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAppsCloudidentityDevicesV1ClientState"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
+}
+
 // method id "cloudidentity.groups.create":
 
 type GroupsCreateCall struct {
@@ -1343,7 +4649,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1469,7 +4775,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1611,7 +4917,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1789,7 +5095,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1994,7 +5300,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2136,7 +5442,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2328,7 +5634,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2505,7 +5811,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2644,7 +5950,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2786,7 +6092,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2959,7 +6265,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3173,7 +6479,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -987,6 +987,11 @@ func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudioSegment) Marshal
 // synthesis, as described in the comment on the ResponseMessage
 // message.
 type GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// message can be interrupted by the end user's speech and the client
+	// can then starts the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
 	// Ssml: The SSML text to be synthesized. For more information, see
 	// [SSML](/speech/text-to-speech/docs/ssml).
 	Ssml string `json:"ssml,omitempty"`
@@ -994,20 +999,22 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText struct {
 	// Text: The raw text to be synthesized.
 	Text string `json:"text,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Ssml") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Ssml") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3317,9 +3324,9 @@ type GoogleCloudDialogflowV2OriginalDetectIntentRequest struct {
 	// information in the payload. In particular, for the Dialogflow Phone
 	// Gateway integration, this field has the form: { "telephony": {
 	// "caller_id": "+18558363987" } } Note: The caller ID field
-	// (`caller_id`) will be redacted for Standard Edition agents and
-	// populated with the caller ID in [E.164
-	// format](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition
+	// (`caller_id`) will be redacted for Trial Edition agents and populated
+	// with the caller ID in [E.164
+	// format](https://en.wikipedia.org/wiki/E.164) for Essentials Edition
 	// agents.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
@@ -3847,7 +3854,8 @@ type GoogleCloudDialogflowV2beta1Agent struct {
 	// large custom entities.
 	MatchMode string `json:"matchMode,omitempty"`
 
-	// Parent: Required. The project of this agent. Format: `projects/`.
+	// Parent: Required. The project of this agent. Format: `projects/` or
+	// `projects//locations/`
 	Parent string `json:"parent,omitempty"`
 
 	// SupportedLanguageCodes: Optional. The list of all languages supported
@@ -4367,10 +4375,12 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// 20 minutes if there are no matching queries.
 	LifespanCount int64 `json:"lifespanCount,omitempty"`
 
-	// Name: Required. The unique identifier of the context. Format:
-	// `projects//agent/sessions//contexts/`, or
-	// `projects//agent/environments//users//sessions//contexts/`. The
-	// `Context ID` is always converted to lowercase, may only contain
+	// Name: Required. The unique identifier of the context. Supported
+	// formats: - `projects//agent/sessions//contexts/`, -
+	// `projects//locations//agent/sessions//contexts/`, -
+	// `projects//agent/environments//users//sessions//contexts/`, -
+	// `projects//locations//agent/environments//users//sessions//contexts/`,
+	//  The `Context ID` is always converted to lowercase, may only contain
 	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
 	// `Environment ID` is not specified, we assume default 'draft'
 	// environment. If `User ID` is not specified, we assume default '-'
@@ -4720,7 +4730,8 @@ type GoogleCloudDialogflowV2beta1EntityType struct {
 
 	// Name: The unique identifier of the entity type. Required for
 	// EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes
-	// methods. Format: `projects//agent/entityTypes/`.
+	// methods. Supported formats: - `projects//agent/entityTypes/` -
+	// `projects//locations//agent/entityTypes/`
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4833,7 +4844,8 @@ func (s *GoogleCloudDialogflowV2beta1EntityTypeEntity) MarshalJSON() ([]byte, er
 // guide](https://cloud.google.com/dialogflow/docs/agents-versions).
 type GoogleCloudDialogflowV2beta1Environment struct {
 	// AgentVersion: Optional. The agent version loaded into this
-	// environment. Format: `projects//agent/versions/`.
+	// environment. Supported formats: - `projects//agent/versions/` -
+	// `projects//locations//agent/versions/`
 	AgentVersion string `json:"agentVersion,omitempty"`
 
 	// Description: Optional. The developer-provided description for this
@@ -4842,7 +4854,7 @@ type GoogleCloudDialogflowV2beta1Environment struct {
 	Description string `json:"description,omitempty"`
 
 	// Name: Output only. The unique identifier of this agent environment.
-	// Format: - `projects//agent/environments/` -
+	// Supported formats: - `projects//agent/environments/` -
 	// `projects//locations//agent/environments/`
 	Name string `json:"name,omitempty"`
 
@@ -5025,8 +5037,9 @@ type GoogleCloudDialogflowV2beta1Fulfillment struct {
 	// GenericWebService: Configuration for a generic web service.
 	GenericWebService *GoogleCloudDialogflowV2beta1FulfillmentGenericWebService `json:"genericWebService,omitempty"`
 
-	// Name: Required. The unique identifier of the fulfillment. Format:
-	// `projects//agent/fulfillment`.
+	// Name: Required. The unique identifier of the fulfillment. Supported
+	// formats: - `projects//agent/fulfillment` -
+	// `projects//locations//agent/fulfillment`
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5405,8 +5418,9 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	FollowupIntentInfo []*GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo `json:"followupIntentInfo,omitempty"`
 
 	// InputContextNames: Optional. The list of context names required for
-	// this intent to be triggered. Format:
-	// `projects//agent/sessions/-/contexts/`.
+	// this intent to be triggered. Formats: -
+	// `projects//agent/sessions/-/contexts/` -
+	// `projects//locations//agent/sessions/-/contexts/`
 	InputContextNames []string `json:"inputContextNames,omitempty"`
 
 	// IsFallback: Optional. Indicates whether this is a fallback intent.
@@ -5434,8 +5448,9 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	MlEnabled bool `json:"mlEnabled,omitempty"`
 
 	// Name: Optional. The unique identifier of this intent. Required for
-	// Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format:
-	// `projects//agent/intents/`.
+	// Intents.UpdateIntent and Intents.BatchUpdateIntents methods.
+	// Supported formats: - `projects//agent/intents/` -
+	// `projects//locations//agent/intents/`
 	Name string `json:"name,omitempty"`
 
 	// OutputContexts: Optional. The collection of contexts that are
@@ -7842,9 +7857,9 @@ type GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest struct {
 	// information in the payload. In particular, for the Dialogflow Phone
 	// Gateway integration, this field has the form: { "telephony": {
 	// "caller_id": "+18558363987" } } Note: The caller ID field
-	// (`caller_id`) will be redacted for Standard Edition agents and
-	// populated with the caller ID in [E.164
-	// format](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition
+	// (`caller_id`) will be redacted for Trial Edition agents and populated
+	// with the caller ID in [E.164
+	// format](https://en.wikipedia.org/wiki/E.164) for Essentials Edition
 	// agents.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
@@ -8003,7 +8018,7 @@ type GoogleCloudDialogflowV2beta1QueryParameters struct {
 	// SentimentAnalysisRequestConfig: Configures the type of sentiment
 	// analysis to perform. If not provided, sentiment analysis is not
 	// performed. Note: Sentiment Analysis is only currently available for
-	// Enterprise Edition agents.
+	// Essentials Edition agents.
 	SentimentAnalysisRequestConfig *GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig `json:"sentimentAnalysisRequestConfig,omitempty"`
 
 	// SessionEntityTypes: Additional session entity types to replace or
@@ -8458,12 +8473,16 @@ type GoogleCloudDialogflowV2beta1SessionEntityType struct {
 	EntityOverrideMode string `json:"entityOverrideMode,omitempty"`
 
 	// Name: Required. The unique identifier of this session entity type.
-	// Format: `projects//agent/sessions//entityTypes/`, or
-	// `projects//agent/environments//users//sessions//entityTypes/`. If
-	// `Environment ID` is not specified, we assume default 'draft'
-	// environment. If `User ID` is not specified, we assume default '-'
-	// user. `` must be the display name of an existing entity type in the
-	// same agent that will be overridden or supplemented.
+	// Supported formats: - `projects//agent/sessions//entityTypes/` -
+	// `projects//locations//agent/sessions//entityTypes/` -
+	// `projects//agent/environments//users//sessions//entityTypes/` -
+	// `projects//locations//agent/environments/
+	// /users//sessions//entityTypes/` If `Location ID` is not specified we
+	// assume default 'us' location. If `Environment ID` is not specified,
+	// we assume default 'draft' environment. If `User ID` is not specified,
+	// we assume default '-' user. `` must be the display name of an
+	// existing entity type in the same agent that will be overridden or
+	// supplemented.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8560,7 +8579,8 @@ type GoogleCloudDialogflowV2beta1SubAgent struct {
 	// environment if `environment` is not set.
 	Environment string `json:"environment,omitempty"`
 
-	// Project: Required. The project of this agent. Format: `projects/`.
+	// Project: Required. The project of this agent. Format: `projects/` or
+	// `projects//locations/`.
 	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
@@ -8859,9 +8879,11 @@ type GoogleCloudDialogflowV2beta1WebhookRequest struct {
 	ResponseId string `json:"responseId,omitempty"`
 
 	// Session: The unique identifier of detectIntent request session. Can
-	// be used to identify end-user inside webhook implementation. Format:
-	// `projects//agent/sessions/`, or
-	// `projects//agent/environments//users//sessions/`.
+	// be used to identify end-user inside webhook implementation. Supported
+	// formats: - `projects//agent/sessions/, -
+	// `projects//locations//agent/sessions/`, -
+	// `projects//agent/environments//users//sessions/`, -
+	// `projects//locations//agent/environments//users//sessions/`,
 	Session string `json:"session,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -9325,7 +9347,7 @@ func (c *ProjectsDeleteAgentCall) Header() http.Header {
 
 func (c *ProjectsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9393,7 +9415,7 @@ func (c *ProjectsDeleteAgentCall) Do(opts ...googleapi.CallOption) (*GoogleProto
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to delete is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to delete is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9467,7 +9489,7 @@ func (c *ProjectsGetAgentCall) Header() http.Header {
 
 func (c *ProjectsGetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9539,7 +9561,7 @@ func (c *ProjectsGetAgentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDia
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to fetch is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to fetch is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9611,7 +9633,7 @@ func (c *ProjectsSetAgentCall) Header() http.Header {
 
 func (c *ProjectsSetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9685,7 +9707,7 @@ func (c *ProjectsSetAgentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDia
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project of this agent. Format: `projects/`.",
+	//       "description": "Required. The project of this agent. Format: `projects/` or `projects//locations/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9759,7 +9781,7 @@ func (c *ProjectsAgentExportCall) Header() http.Header {
 
 func (c *ProjectsAgentExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9832,7 +9854,7 @@ func (c *ProjectsAgentExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to export is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to export is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9909,7 +9931,7 @@ func (c *ProjectsAgentGetFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsAgentGetFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9981,7 +10003,7 @@ func (c *ProjectsAgentGetFulfillmentCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the fulfillment. Format: `projects//agent/fulfillment`.",
+	//       "description": "Required. The name of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/fulfillment$",
 	//       "required": true,
@@ -10068,7 +10090,7 @@ func (c *ProjectsAgentGetValidationResultCall) Header() http.Header {
 
 func (c *ProjectsAgentGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10146,7 +10168,7 @@ func (c *ProjectsAgentGetValidationResultCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project that the agent is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10220,7 +10242,7 @@ func (c *ProjectsAgentImportCall) Header() http.Header {
 
 func (c *ProjectsAgentImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10293,7 +10315,7 @@ func (c *ProjectsAgentImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to import is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to import is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10369,7 +10391,7 @@ func (c *ProjectsAgentRestoreCall) Header() http.Header {
 
 func (c *ProjectsAgentRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10442,7 +10464,7 @@ func (c *ProjectsAgentRestoreCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to restore is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to restore is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10539,7 +10561,7 @@ func (c *ProjectsAgentSearchCall) Header() http.Header {
 
 func (c *ProjectsAgentSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10623,7 +10645,7 @@ func (c *ProjectsAgentSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project to list agents from. Format: `projects/`.",
+	//       "description": "Required. The project to list agents from. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10709,7 +10731,7 @@ func (c *ProjectsAgentTrainCall) Header() http.Header {
 
 func (c *ProjectsAgentTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10782,7 +10804,7 @@ func (c *ProjectsAgentTrainCall) Do(opts ...googleapi.CallOption) (*GoogleLongru
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to train is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to train is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10858,7 +10880,7 @@ func (c *ProjectsAgentUpdateFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsAgentUpdateFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10932,7 +10954,7 @@ func (c *ProjectsAgentUpdateFulfillmentCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the fulfillment. Format: `projects//agent/fulfillment`.",
+	//       "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/fulfillment$",
 	//       "required": true,
@@ -11006,7 +11028,7 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11079,7 +11101,7 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent`, - `projects//locations//agent`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -11148,7 +11170,7 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11221,7 +11243,7 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to update or create entity types in. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to update or create entity types in. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -11300,7 +11322,7 @@ func (c *ProjectsAgentEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11379,7 +11401,7 @@ func (c *ProjectsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to create a entity type for. Format: `projects//agent`.",
+	//       "description": "Required. The agent to create a entity type for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -11445,7 +11467,7 @@ func (c *ProjectsAgentEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11513,7 +11535,7 @@ func (c *ProjectsAgentEntityTypesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -11598,7 +11620,7 @@ func (c *ProjectsAgentEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11675,7 +11697,7 @@ func (c *ProjectsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the entity type. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -11774,7 +11796,7 @@ func (c *ProjectsAgentEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11863,7 +11885,7 @@ func (c *ProjectsAgentEntityTypesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to list all entity types from. Format: `projects//agent`.",
+	//       "description": "Required. The agent to list all entity types from. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -11967,7 +11989,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12046,7 +12068,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Format: `projects//agent/entityTypes/`.",
+	//       "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -12121,7 +12143,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12194,7 +12216,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to create entities in. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -12262,7 +12284,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12335,7 +12357,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to delete entries for. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to delete entries for. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -12405,7 +12427,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12478,7 +12500,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to update or create entities in. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to update or create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -12570,7 +12592,7 @@ func (c *ProjectsAgentEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12654,7 +12676,7 @@ func (c *ProjectsAgentEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent",
+	//       "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -12738,7 +12760,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12806,7 +12828,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -12874,7 +12896,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) Header() http.H
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12949,7 +12971,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+	//       "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -13018,7 +13040,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13092,7 +13114,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -13158,7 +13180,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13226,7 +13248,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -13300,7 +13322,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) Header() http.He
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13372,7 +13394,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -13460,7 +13482,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) Header() http.H
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13544,7 +13566,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -13637,7 +13659,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Header() http.
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13711,7 +13733,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -13789,7 +13811,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) Header() h
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13864,7 +13886,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -13933,7 +13955,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) Header() h
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14001,7 +14023,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -14077,7 +14099,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14150,7 +14172,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -14241,7 +14263,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) Header() htt
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14326,7 +14348,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -14421,7 +14443,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Header() ht
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14496,7 +14518,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+	//       "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -14570,7 +14592,7 @@ func (c *ProjectsAgentIntentsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14643,7 +14665,7 @@ func (c *ProjectsAgentIntentsBatchDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -14712,7 +14734,7 @@ func (c *ProjectsAgentIntentsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14785,7 +14807,7 @@ func (c *ProjectsAgentIntentsBatchUpdateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to update or create intents in. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to update or create intents in. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -14876,7 +14898,7 @@ func (c *ProjectsAgentIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14968,7 +14990,7 @@ func (c *ProjectsAgentIntentsCreateCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to create a intent for. Format: `projects//agent`.",
+	//       "description": "Required. The agent to create a intent for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -15035,7 +15057,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15103,7 +15125,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Format: `projects//agent/intents/`.",
+	//       "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -15200,7 +15222,7 @@ func (c *ProjectsAgentIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15290,7 +15312,7 @@ func (c *ProjectsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the intent. Format: `projects//agent/intents/`.",
+	//       "description": "Required. The name of the intent. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -15401,7 +15423,7 @@ func (c *ProjectsAgentIntentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15619,7 +15641,7 @@ func (c *ProjectsAgentIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15711,7 +15733,7 @@ func (c *ProjectsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format: `projects//agent/intents/`.",
+	//       "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -15787,7 +15809,7 @@ func (c *ProjectsAgentKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15938,7 +15960,7 @@ func (c *ProjectsAgentKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16087,7 +16109,7 @@ func (c *ProjectsAgentKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16250,7 +16272,7 @@ func (c *ProjectsAgentKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16432,7 +16454,7 @@ func (c *ProjectsAgentKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16583,7 +16605,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16724,7 +16746,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16868,7 +16890,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17030,7 +17052,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17211,7 +17233,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17364,7 +17386,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17503,7 +17525,7 @@ func (c *ProjectsAgentSessionsDeleteContextsCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17571,7 +17593,7 @@ func (c *ProjectsAgentSessionsDeleteContextsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -17639,7 +17661,7 @@ func (c *ProjectsAgentSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17714,7 +17736,7 @@ func (c *ProjectsAgentSessionsDetectIntentCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+	//       "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -17783,7 +17805,7 @@ func (c *ProjectsAgentSessionsContextsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17857,7 +17879,7 @@ func (c *ProjectsAgentSessionsContextsCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -17923,7 +17945,7 @@ func (c *ProjectsAgentSessionsContextsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17991,7 +18013,7 @@ func (c *ProjectsAgentSessionsContextsDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -18065,7 +18087,7 @@ func (c *ProjectsAgentSessionsContextsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18137,7 +18159,7 @@ func (c *ProjectsAgentSessionsContextsGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -18225,7 +18247,7 @@ func (c *ProjectsAgentSessionsContextsListCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18309,7 +18331,7 @@ func (c *ProjectsAgentSessionsContextsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -18402,7 +18424,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18476,7 +18498,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -18554,7 +18576,7 @@ func (c *ProjectsAgentSessionsEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18629,7 +18651,7 @@ func (c *ProjectsAgentSessionsEntityTypesCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -18698,7 +18720,7 @@ func (c *ProjectsAgentSessionsEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18766,7 +18788,7 @@ func (c *ProjectsAgentSessionsEntityTypesDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -18842,7 +18864,7 @@ func (c *ProjectsAgentSessionsEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18915,7 +18937,7 @@ func (c *ProjectsAgentSessionsEntityTypesGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -19006,7 +19028,7 @@ func (c *ProjectsAgentSessionsEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19091,7 +19113,7 @@ func (c *ProjectsAgentSessionsEntityTypesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -19186,7 +19208,7 @@ func (c *ProjectsAgentSessionsEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19261,7 +19283,7 @@ func (c *ProjectsAgentSessionsEntityTypesPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+	//       "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -19337,7 +19359,7 @@ func (c *ProjectsKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19488,7 +19510,7 @@ func (c *ProjectsKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19637,7 +19659,7 @@ func (c *ProjectsKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19800,7 +19822,7 @@ func (c *ProjectsKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19982,7 +20004,7 @@ func (c *ProjectsKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20133,7 +20155,7 @@ func (c *ProjectsKnowledgeBasesDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20274,7 +20296,7 @@ func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20418,7 +20440,7 @@ func (c *ProjectsKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20580,7 +20602,7 @@ func (c *ProjectsKnowledgeBasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20761,7 +20783,7 @@ func (c *ProjectsKnowledgeBasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20914,7 +20936,7 @@ func (c *ProjectsKnowledgeBasesDocumentsReloadCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21053,7 +21075,7 @@ func (c *ProjectsLocationsDeleteAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21121,7 +21143,7 @@ func (c *ProjectsLocationsDeleteAgentCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to delete is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to delete is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21195,7 +21217,7 @@ func (c *ProjectsLocationsGetAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21267,7 +21289,7 @@ func (c *ProjectsLocationsGetAgentCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to fetch is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to fetch is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21339,7 +21361,7 @@ func (c *ProjectsLocationsSetAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsSetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21413,7 +21435,7 @@ func (c *ProjectsLocationsSetAgentCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project of this agent. Format: `projects/`.",
+	//       "description": "Required. The project of this agent. Format: `projects/` or `projects//locations/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21487,7 +21509,7 @@ func (c *ProjectsLocationsAgentExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21560,7 +21582,7 @@ func (c *ProjectsLocationsAgentExportCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to export is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to export is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21637,7 +21659,7 @@ func (c *ProjectsLocationsAgentGetFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentGetFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21709,7 +21731,7 @@ func (c *ProjectsLocationsAgentGetFulfillmentCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the fulfillment. Format: `projects//agent/fulfillment`.",
+	//       "description": "Required. The name of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
 	//       "required": true,
@@ -21796,7 +21818,7 @@ func (c *ProjectsLocationsAgentGetValidationResultCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21874,7 +21896,7 @@ func (c *ProjectsLocationsAgentGetValidationResultCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project that the agent is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21948,7 +21970,7 @@ func (c *ProjectsLocationsAgentImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22021,7 +22043,7 @@ func (c *ProjectsLocationsAgentImportCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to import is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to import is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22097,7 +22119,7 @@ func (c *ProjectsLocationsAgentRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22170,7 +22192,7 @@ func (c *ProjectsLocationsAgentRestoreCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to restore is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to restore is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22267,7 +22289,7 @@ func (c *ProjectsLocationsAgentSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22351,7 +22373,7 @@ func (c *ProjectsLocationsAgentSearchCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project to list agents from. Format: `projects/`.",
+	//       "description": "Required. The project to list agents from. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22437,7 +22459,7 @@ func (c *ProjectsLocationsAgentTrainCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22510,7 +22532,7 @@ func (c *ProjectsLocationsAgentTrainCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to train is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to train is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22586,7 +22608,7 @@ func (c *ProjectsLocationsAgentUpdateFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentUpdateFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22660,7 +22682,7 @@ func (c *ProjectsLocationsAgentUpdateFulfillmentCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the fulfillment. Format: `projects//agent/fulfillment`.",
+	//       "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
 	//       "required": true,
@@ -22734,7 +22756,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22807,7 +22829,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent`, - `projects//locations//agent`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -22876,7 +22898,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22949,7 +22971,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to update or create entity types in. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to update or create entity types in. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -23028,7 +23050,7 @@ func (c *ProjectsLocationsAgentEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23107,7 +23129,7 @@ func (c *ProjectsLocationsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to create a entity type for. Format: `projects//agent`.",
+	//       "description": "Required. The agent to create a entity type for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -23173,7 +23195,7 @@ func (c *ProjectsLocationsAgentEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23241,7 +23263,7 @@ func (c *ProjectsLocationsAgentEntityTypesDeleteCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -23326,7 +23348,7 @@ func (c *ProjectsLocationsAgentEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23403,7 +23425,7 @@ func (c *ProjectsLocationsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the entity type. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -23502,7 +23524,7 @@ func (c *ProjectsLocationsAgentEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23591,7 +23613,7 @@ func (c *ProjectsLocationsAgentEntityTypesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to list all entity types from. Format: `projects//agent`.",
+	//       "description": "Required. The agent to list all entity types from. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -23695,7 +23717,7 @@ func (c *ProjectsLocationsAgentEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23774,7 +23796,7 @@ func (c *ProjectsLocationsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Format: `projects//agent/entityTypes/`.",
+	//       "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -23849,7 +23871,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23922,7 +23944,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to create entities in. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -23990,7 +24012,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24063,7 +24085,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to delete entries for. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to delete entries for. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -24133,7 +24155,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24206,7 +24228,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to update or create entities in. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to update or create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -24298,7 +24320,7 @@ func (c *ProjectsLocationsAgentEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24382,7 +24404,7 @@ func (c *ProjectsLocationsAgentEnvironmentsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent",
+	//       "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -24466,7 +24488,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24534,7 +24556,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -24602,7 +24624,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) Header
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24677,7 +24699,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+	//       "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -24746,7 +24768,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24820,7 +24842,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -24886,7 +24908,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24954,7 +24976,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -25028,7 +25050,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) Header(
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25100,7 +25122,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -25188,7 +25210,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) Header
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25272,7 +25294,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) Do(opt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -25365,7 +25387,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Heade
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25439,7 +25461,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -25517,7 +25539,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) H
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25592,7 +25614,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) D
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -25661,7 +25683,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) H
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25729,7 +25751,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) D
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -25805,7 +25827,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25878,7 +25900,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -25969,7 +25991,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) Hea
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26054,7 +26076,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) Do(
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -26149,7 +26171,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) He
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26224,7 +26246,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Do
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+	//       "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -26298,7 +26320,7 @@ func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26371,7 +26393,7 @@ func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -26440,7 +26462,7 @@ func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26513,7 +26535,7 @@ func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to update or create intents in. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to update or create intents in. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -26604,7 +26626,7 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26696,7 +26718,7 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to create a intent for. Format: `projects//agent`.",
+	//       "description": "Required. The agent to create a intent for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -26763,7 +26785,7 @@ func (c *ProjectsLocationsAgentIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26831,7 +26853,7 @@ func (c *ProjectsLocationsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Format: `projects//agent/intents/`.",
+	//       "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -26928,7 +26950,7 @@ func (c *ProjectsLocationsAgentIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27018,7 +27040,7 @@ func (c *ProjectsLocationsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the intent. Format: `projects//agent/intents/`.",
+	//       "description": "Required. The name of the intent. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -27129,7 +27151,7 @@ func (c *ProjectsLocationsAgentIntentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27347,7 +27369,7 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27439,7 +27461,7 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format: `projects//agent/intents/`.",
+	//       "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -27511,7 +27533,7 @@ func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27579,7 +27601,7 @@ func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -27647,7 +27669,7 @@ func (c *ProjectsLocationsAgentSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27722,7 +27744,7 @@ func (c *ProjectsLocationsAgentSessionsDetectIntentCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+	//       "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -27791,7 +27813,7 @@ func (c *ProjectsLocationsAgentSessionsContextsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27865,7 +27887,7 @@ func (c *ProjectsLocationsAgentSessionsContextsCreateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -27931,7 +27953,7 @@ func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27999,7 +28021,7 @@ func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -28073,7 +28095,7 @@ func (c *ProjectsLocationsAgentSessionsContextsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28145,7 +28167,7 @@ func (c *ProjectsLocationsAgentSessionsContextsGetCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -28233,7 +28255,7 @@ func (c *ProjectsLocationsAgentSessionsContextsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28317,7 +28339,7 @@ func (c *ProjectsLocationsAgentSessionsContextsListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -28410,7 +28432,7 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28484,7 +28506,7 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -28562,7 +28584,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28637,7 +28659,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -28706,7 +28728,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28774,7 +28796,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -28850,7 +28872,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28923,7 +28945,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -29014,7 +29036,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) Header() http.Header
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29099,7 +29121,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -29194,7 +29216,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29269,7 +29291,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+	//       "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -29350,7 +29372,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29494,7 +29516,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29669,7 +29691,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29850,7 +29872,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29994,7 +30016,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30169,7 +30191,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

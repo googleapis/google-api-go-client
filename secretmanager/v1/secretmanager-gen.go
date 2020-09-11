@@ -346,10 +346,78 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 // Automatic: A replication policy that replicates the Secret payload
 // without any restrictions.
 type Automatic struct {
+	// CustomerManagedEncryption: Optional. The customer-managed encryption
+	// configuration of the Secret. If no configuration is provided,
+	// Google-managed default encryption is used. Updates to the Secret
+	// encryption configuration do not apply retroactively to existing
+	// SecretVersions.
+	CustomerManagedEncryption *CustomerManagedEncryption `json:"customerManagedEncryption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Automatic) MarshalJSON() ([]byte, error) {
+	type NoMethod Automatic
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutomaticStatus: The replication status of a SecretVersion using
+// automatic replication. Only populated if the parent Secret has an
+// automatic replication policy.
+type AutomaticStatus struct {
+	// CustomerManagedEncryption: Output only. The customer-managed
+	// encryption status of the SecretVersion. Only populated if
+	// customer-managed encryption is used.
+	CustomerManagedEncryption *CustomerManagedEncryptionStatus `json:"customerManagedEncryption,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomaticStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomaticStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
+	// BindingId: A client-specified ID for this binding. Expected to be
+	// globally unique to support the internal bindings-by-ID API.
+	BindingId string `json:"bindingId,omitempty"`
+
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
@@ -399,7 +467,7 @@ type Binding struct {
 	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// ForceSendFields is a list of field names (e.g. "BindingId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -407,7 +475,7 @@ type Binding struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Condition") to include in
+	// NullFields is a list of field names (e.g. "BindingId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -418,6 +486,73 @@ type Binding struct {
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomerManagedEncryption: Configuration for encrypting secret
+// payloads using customer-managed encryption keys (CMEK).
+type CustomerManagedEncryption struct {
+	// KmsKeyName: Required. The resource name of the Cloud KMS CryptoKey
+	// used to encrypt secret payloads. For secrets using the UserManaged
+	// replication policy type, Cloud KMS CryptoKeys must reside in the same
+	// location as the replica location. For secrets using the Automatic
+	// replication policy type, Cloud KMS CryptoKeys must reside in
+	// `global`. The expected format is
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerManagedEncryption) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerManagedEncryption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomerManagedEncryptionStatus: Describes the status of
+// customer-managed encryption.
+type CustomerManagedEncryptionStatus struct {
+	// KmsKeyVersionName: Required. The resource name of the Cloud KMS
+	// CryptoKeyVersion used to encrypt the secret payload, in the following
+	// format: `projects/*/locations/*/keyRings/*/cryptoKeys/*/versions/*`.
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyVersionName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyVersionName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomerManagedEncryptionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerManagedEncryptionStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -785,24 +920,33 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // Replica: Represents a Replica for this Secret.
 type Replica struct {
+	// CustomerManagedEncryption: Optional. The customer-managed encryption
+	// configuration of the User-Managed Replica. If no configuration is
+	// provided, Google-managed default encryption is used. Updates to the
+	// Secret encryption configuration do not apply retroactively to
+	// existing SecretVersions.
+	CustomerManagedEncryption *CustomerManagedEncryption `json:"customerManagedEncryption,omitempty"`
+
 	// Location: The canonical IDs of the location to replicate data. For
 	// example: "us-east1".
 	Location string `json:"location,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Location") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Location") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -812,8 +956,45 @@ func (s *Replica) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Replication: A policy that defines the replication configuration of
-// data.
+// ReplicaStatus: Describes the status of a user-managed replica for the
+// SecretVersion.
+type ReplicaStatus struct {
+	// CustomerManagedEncryption: Output only. The customer-managed
+	// encryption status of the SecretVersion. Only populated if
+	// customer-managed encryption is used.
+	CustomerManagedEncryption *CustomerManagedEncryptionStatus `json:"customerManagedEncryption,omitempty"`
+
+	// Location: Output only. The canonical ID of the replica location. For
+	// example: "us-east1".
+	Location string `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CustomerManagedEncryption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicaStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicaStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Replication: A policy that defines the replication and encryption
+// configuration of data.
 type Replication struct {
 	// Automatic: The Secret will automatically be replicated without any
 	// restrictions.
@@ -842,6 +1023,41 @@ type Replication struct {
 
 func (s *Replication) MarshalJSON() ([]byte, error) {
 	type NoMethod Replication
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReplicationStatus: The replication status of a SecretVersion.
+type ReplicationStatus struct {
+	// Automatic: Describes the replication status of a SecretVersion with
+	// automatic replication. Only populated if the parent Secret has an
+	// automatic replication policy.
+	Automatic *AutomaticStatus `json:"automatic,omitempty"`
+
+	// UserManaged: Describes the replication status of a SecretVersion with
+	// user-managed replication. Only populated if the parent Secret has a
+	// user-managed replication policy.
+	UserManaged *UserManagedStatus `json:"userManaged,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Automatic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Automatic") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicationStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -943,6 +1159,9 @@ type SecretVersion struct {
 	// Secret start at 1 and are incremented for each subsequent version of
 	// the secret.
 	Name string `json:"name,omitempty"`
+
+	// ReplicationStatus: The replication status of the SecretVersion.
+	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty"`
 
 	// State: Output only. The current state of the SecretVersion.
 	//
@@ -1118,6 +1337,37 @@ func (s *UserManaged) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UserManagedStatus: The replication status of a SecretVersion using
+// user-managed replication. Only populated if the parent Secret has a
+// user-managed replication policy.
+type UserManagedStatus struct {
+	// Replicas: Output only. The list of replica statuses for the
+	// SecretVersion.
+	Replicas []*ReplicaStatus `json:"replicas,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Replicas") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Replicas") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserManagedStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod UserManagedStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "secretmanager.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -1173,7 +1423,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1339,7 +1589,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1512,7 +1762,7 @@ func (c *ProjectsSecretsAddVersionCall) Header() http.Header {
 
 func (c *ProjectsSecretsAddVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1662,7 +1912,7 @@ func (c *ProjectsSecretsCreateCall) Header() http.Header {
 
 func (c *ProjectsSecretsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1805,7 +2055,7 @@ func (c *ProjectsSecretsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSecretsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1946,7 +2196,7 @@ func (c *ProjectsSecretsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2106,7 +2356,7 @@ func (c *ProjectsSecretsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2272,7 +2522,7 @@ func (c *ProjectsSecretsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2446,7 +2696,7 @@ func (c *ProjectsSecretsPatchCall) Header() http.Header {
 
 func (c *ProjectsSecretsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2594,7 +2844,7 @@ func (c *ProjectsSecretsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsSecretsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2739,7 +2989,7 @@ func (c *ProjectsSecretsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsSecretsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2890,7 +3140,7 @@ func (c *ProjectsSecretsVersionsAccessCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3026,7 +3276,7 @@ func (c *ProjectsSecretsVersionsDestroyCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDestroyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3167,7 +3417,7 @@ func (c *ProjectsSecretsVersionsDisableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3308,7 +3558,7 @@ func (c *ProjectsSecretsVersionsEnableCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3459,7 +3709,7 @@ func (c *ProjectsSecretsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3619,7 +3869,7 @@ func (c *ProjectsSecretsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsSecretsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

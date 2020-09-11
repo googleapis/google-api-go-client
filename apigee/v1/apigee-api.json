@@ -5510,7 +5510,7 @@
       }
     }
   },
-  "revision": "20200821",
+  "revision": "20200902",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -7929,6 +7929,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudApigeeV1Operation": {
+      "description": "Operation represents the pairing of REST resource path and the actions (verbs) allowed on the resource path.",
+      "id": "GoogleCloudApigeeV1Operation",
+      "properties": {
+        "methods": {
+          "description": "methods refers to the REST verbs as in https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html. When none specified, all verb types are allowed.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "resource": {
+          "description": "Required. resource represents REST resource path associated with the proxy/remote service.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudApigeeV1OperationConfig": {
       "description": "OperationConfig binds the resources in a proxy or remote service with the allowed REST methods and its associated quota enforcement.",
       "id": "GoogleCloudApigeeV1OperationConfig",
@@ -7944,23 +7962,16 @@
           },
           "type": "array"
         },
-        "methods": {
-          "description": "methods refers to the REST verbs as in https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html. When none specified, all verb types are allowed.",
+        "operations": {
+          "description": "operations is the list of resource/methods pair, belonging to proxy/remote service, upon which quota will applied on. Note that currently we allow only a single operation. The call will fail if more than one is provided.",
           "items": {
-            "type": "string"
+            "$ref": "GoogleCloudApigeeV1Operation"
           },
           "type": "array"
         },
         "quota": {
           "$ref": "GoogleCloudApigeeV1Quota",
           "description": "Quota parameters to be enforced for the resources, methods, api_source combination. If none specified, quota enforcement will not be done."
-        },
-        "resources": {
-          "description": "Required. resources represents a list of REST resource path associated with the proxy/remote service.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -8143,7 +8154,7 @@
           "description": "Properties defined in the Apigee organization profile."
         },
         "runtimeType": {
-          "description": "Output only. Runtime type of the Apigee organization based on the Apigee subscription purchased.",
+          "description": "Required. Runtime type of the Apigee organization based on the Apigee subscription purchased.",
           "enum": [
             "RUNTIME_TYPE_UNSPECIFIED",
             "CLOUD",
@@ -8154,7 +8165,6 @@
             "Google-managed Apigee runtime.",
             "User-managed Apigee hybrid runtime."
           ],
-          "readOnly": true,
           "type": "string"
         },
         "subscriptionType": {

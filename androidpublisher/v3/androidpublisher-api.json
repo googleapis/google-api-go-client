@@ -335,6 +335,10 @@
                 ],
                 "maxSize": "10737418240",
                 "protocols": {
+                  "resumable": {
+                    "multipart": true,
+                    "path": "/resumable/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/apks"
+                  },
                   "simple": {
                     "multipart": true,
                     "path": "/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/apks"
@@ -414,6 +418,10 @@
                 ],
                 "maxSize": "10737418240",
                 "protocols": {
+                  "resumable": {
+                    "multipart": true,
+                    "path": "/resumable/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/bundles"
+                  },
                   "simple": {
                     "multipart": true,
                     "path": "/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/bundles"
@@ -467,6 +475,10 @@
                 ],
                 "maxSize": "314572800",
                 "protocols": {
+                  "resumable": {
+                    "multipart": true,
+                    "path": "/resumable/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/deobfuscationFiles/{deobfuscationFileType}"
+                  },
                   "simple": {
                     "multipart": true,
                     "path": "/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/deobfuscationFiles/{deobfuscationFileType}"
@@ -817,6 +829,10 @@
                 ],
                 "maxSize": "2147483648",
                 "protocols": {
+                  "resumable": {
+                    "multipart": true,
+                    "path": "/resumable/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}"
+                  },
                   "simple": {
                     "multipart": true,
                     "path": "/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/apks/{apkVersionCode}/expansionFiles/{expansionFileType}"
@@ -1101,6 +1117,10 @@
                 ],
                 "maxSize": "15728640",
                 "protocols": {
+                  "resumable": {
+                    "multipart": true,
+                    "path": "/resumable/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}/{imageType}"
+                  },
                   "simple": {
                     "multipart": true,
                     "path": "/upload/androidpublisher/v3/applications/{packageName}/edits/{editId}/listings/{language}/{imageType}"
@@ -1901,6 +1921,10 @@
             ],
             "maxSize": "1073741824",
             "protocols": {
+              "resumable": {
+                "multipart": true,
+                "path": "/resumable/upload/androidpublisher/v3/applications/internalappsharing/{packageName}/artifacts/apk"
+              },
               "simple": {
                 "multipart": true,
                 "path": "/upload/androidpublisher/v3/applications/internalappsharing/{packageName}/artifacts/apk"
@@ -1938,6 +1962,10 @@
             ],
             "maxSize": "10737418240",
             "protocols": {
+              "resumable": {
+                "multipart": true,
+                "path": "/resumable/upload/androidpublisher/v3/applications/internalappsharing/{packageName}/artifacts/bundle"
+              },
               "simple": {
                 "multipart": true,
                 "path": "/upload/androidpublisher/v3/applications/internalappsharing/{packageName}/artifacts/bundle"
@@ -2651,7 +2679,7 @@
       }
     }
   },
-  "revision": "20200817",
+  "revision": "20200910",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Apk": {

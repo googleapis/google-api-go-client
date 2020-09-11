@@ -1399,6 +1399,87 @@
         }
       }
     },
+    "infocards": {
+      "methods": {
+        "list": {
+          "description": "Retrieves all infocards for a given video.",
+          "flatPath": "youtube/v3/infocards",
+          "httpMethod": "GET",
+          "id": "youtube.infocards.list",
+          "parameterOrder": [
+            "part"
+          ],
+          "parameters": {
+            "onBehalfOfContentOwner": {
+              "description": "Content owner of the video.",
+              "location": "query",
+              "type": "string"
+            },
+            "part": {
+              "description": "The properties to return.",
+              "location": "query",
+              "repeated": true,
+              "required": true,
+              "type": "string"
+            },
+            "videoId": {
+              "description": "Encrypted id of the video.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "youtube/v3/infocards",
+          "response": {
+            "$ref": "InfocardListResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/youtube",
+            "https://www.googleapis.com/auth/youtube.force-ssl",
+            "https://www.googleapis.com/auth/youtubepartner"
+          ]
+        },
+        "update": {
+          "description": "Updates infocards for a given video. Note: * If the card id is not provided, a new card will be created. * If the card id is provided, that card will be updated. * Existing cards will be discarded if they're not included in the request.",
+          "flatPath": "youtube/v3/infocards",
+          "httpMethod": "POST",
+          "id": "youtube.infocards.update",
+          "parameterOrder": [
+            "part"
+          ],
+          "parameters": {
+            "onBehalfOfContentOwner": {
+              "description": "Content owner of the video.",
+              "location": "query",
+              "type": "string"
+            },
+            "part": {
+              "description": "The properties to update.",
+              "location": "query",
+              "repeated": true,
+              "required": true,
+              "type": "string"
+            },
+            "videoId": {
+              "description": "Encrypted id of the video.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "youtube/v3/infocards",
+          "request": {
+            "$ref": "InfoCards"
+          },
+          "response": {
+            "$ref": "InfoCards"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/youtube",
+            "https://www.googleapis.com/auth/youtube.force-ssl",
+            "https://www.googleapis.com/auth/youtubepartner"
+          ]
+        }
+      }
+    },
     "liveBroadcasts": {
       "methods": {
         "bind": {
@@ -3962,100 +4043,9 @@
           ]
         }
       }
-    },
-    "youtube": {
-      "resources": {
-        "v3": {
-          "methods": {
-            "infocards": {
-              "description": "Updates infocards for a given video. Note: * If the card id is not provided, a new card will be created. * If the card id is provided, that card will be updated. * Existing cards will be discarded if they're not included in the request.",
-              "flatPath": "youtube/v3/infocards",
-              "httpMethod": "POST",
-              "id": "youtube.youtube.v3.infocards",
-              "parameterOrder": [
-                "part"
-              ],
-              "parameters": {
-                "onBehalfOfContentOwner": {
-                  "description": "Content owner of the video.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "part": {
-                  "description": "The properties to update.",
-                  "location": "query",
-                  "repeated": true,
-                  "required": true,
-                  "type": "string"
-                },
-                "videoId": {
-                  "description": "Encrypted id of the video.",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "youtube/v3/infocards",
-              "request": {
-                "$ref": "InfoCards"
-              },
-              "response": {
-                "$ref": "InfoCards"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/youtube",
-                "https://www.googleapis.com/auth/youtube.force-ssl",
-                "https://www.googleapis.com/auth/youtubepartner"
-              ]
-            }
-          },
-          "resources": {
-            "infocards": {
-              "methods": {
-                "list": {
-                  "description": "Retrieves all infocards for a given video.",
-                  "flatPath": "youtube/v3/infocards",
-                  "httpMethod": "GET",
-                  "id": "youtube.youtube.v3.infocards.list",
-                  "parameterOrder": [
-                    "part"
-                  ],
-                  "parameters": {
-                    "onBehalfOfContentOwner": {
-                      "description": "Content owner of the video.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "part": {
-                      "description": "The properties to return.",
-                      "location": "query",
-                      "repeated": true,
-                      "required": true,
-                      "type": "string"
-                    },
-                    "videoId": {
-                      "description": "Encrypted id of the video.",
-                      "location": "query",
-                      "type": "string"
-                    }
-                  },
-                  "path": "youtube/v3/infocards",
-                  "response": {
-                    "$ref": "InfocardListResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/youtube",
-                    "https://www.googleapis.com/auth/youtube.force-ssl",
-                    "https://www.googleapis.com/auth/youtubepartner"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
-  "revision": "20200823",
+  "revision": "20200909",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AbuseReport": {

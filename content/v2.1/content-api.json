@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/3BrMzyfGS9HuSl7YrgvUzK5f9DE\"",
+  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/lRzowdHdXDwwdlgwsMr3eieLqCo\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3745,7 +3745,7 @@
       }
     }
   },
-  "revision": "20200821",
+  "revision": "20200902",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3838,7 +3838,7 @@
       "id": "AccountAddress",
       "properties": {
         "country": {
-          "description": "CLDR country code (e.g. \"US\").",
+          "description": "CLDR country code (e.g. \"US\"). This value cannot be set for a sub-account of an MCA. All MCA sub-accounts inherit the country of their parent MCA.",
           "type": "string"
         },
         "locality": {
@@ -7512,12 +7512,16 @@
       "id": "OrderreturnsRefundOperation",
       "properties": {
         "fullRefund": {
-          "description": "If true, the item will be fully refunded.",
+          "description": "If true, the item will be fully refunded. // Allowed only when payment_type is FOP. Merchant can choose this refund option to indicate the full remaining amount of corresponding object to be refunded to the customer via FOP.",
           "type": "boolean"
         },
         "partialRefund": {
           "$ref": "OrderreturnsPartialRefund",
-          "description": "If this is set, the item will be partially refunded."
+          "description": "If this is set, the item will be partially refunded. Merchant can choose this refund option to specify the customized amount that to be refunded to the customer."
+        },
+        "paymentType": {
+          "description": "The payment way of issuing refund. Default value is ORIGINAL_FOP if not set.",
+          "type": "string"
         },
         "reasonText": {
           "description": "The explanation of the reason.",

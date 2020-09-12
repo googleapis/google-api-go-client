@@ -3136,7 +3136,7 @@
       }
     }
   },
-  "revision": "20200821",
+  "revision": "20200905",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3304,8 +3304,8 @@
           ],
           "enumDescriptions": [
             "",
-            "Scan from the top (default).",
-            "Randomly pick the row to start scanning. The scanned rows are contiguous."
+            "Scan groups of rows in the order BigQuery provides (default). Multiple groups of rows may be scanned in parallel, so results may not appear in the same order the rows are read.",
+            "Randomly pick groups of rows to scan."
           ],
           "type": "string"
         },
@@ -3856,7 +3856,7 @@
           "type": "string"
         },
         "templateId": {
-          "description": "The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
+          "description": "The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
           "type": "string"
         }
       },
@@ -3871,7 +3871,7 @@
           "description": "Set to control what and how to inspect."
         },
         "jobId": {
-          "description": "The job id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
+          "description": "The job id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
           "type": "string"
         },
         "locationId": {
@@ -3898,7 +3898,7 @@
           "type": "string"
         },
         "templateId": {
-          "description": "The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
+          "description": "The template id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
           "type": "string"
         }
       },
@@ -3917,7 +3917,7 @@
           "type": "string"
         },
         "triggerId": {
-          "description": "The trigger id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
+          "description": "The trigger id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
           "type": "string"
         }
       },
@@ -3936,7 +3936,7 @@
           "type": "string"
         },
         "storedInfoTypeId": {
-          "description": "The storedInfoType ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
+          "description": "The storedInfoType ID can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.",
           "type": "string"
         }
       },

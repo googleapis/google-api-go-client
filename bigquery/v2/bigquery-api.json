@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20200818",
+  "revision": "20200908",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1693,15 +1693,6 @@
         },
         "seasonalPeriods": {
           "description": "Seasonal periods. Repeated because multiple periods are supported for one time series.",
-          "enumDescriptions": [
-            "",
-            "No seasonality",
-            "Daily period, 24 hours.",
-            "Weekly period, 7 days.",
-            "Monthly period, 30 days or irregular.",
-            "Quarterly period, 90 days or irregular.",
-            "Yearly period, 365 days or irregular."
-          ],
           "items": {
             "enum": [
               "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
@@ -1757,15 +1748,6 @@
         },
         "seasonalPeriods": {
           "description": "Seasonal periods. Repeated because multiple periods are supported for one time series.",
-          "enumDescriptions": [
-            "",
-            "No seasonality",
-            "Daily period, 24 hours.",
-            "Weekly period, 7 days.",
-            "Monthly period, 30 days or irregular.",
-            "Quarterly period, 90 days or irregular.",
-            "Yearly period, 365 days or irregular."
-          ],
           "items": {
             "enum": [
               "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
@@ -1831,15 +1813,6 @@
         },
         "seasonalPeriods": {
           "description": "Seasonal periods. Repeated because multiple periods are supported for one time series.",
-          "enumDescriptions": [
-            "",
-            "No seasonality",
-            "Daily period, 24 hours.",
-            "Weekly period, 7 days.",
-            "Monthly period, 30 days or irregular.",
-            "Quarterly period, 90 days or irregular.",
-            "Yearly period, 365 days or irregular."
-          ],
           "items": {
             "enum": [
               "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
@@ -1884,15 +1857,6 @@
         },
         "seasonalPeriods": {
           "description": "Seasonal periods. Repeated because multiple periods are supported for one time series.",
-          "enumDescriptions": [
-            "",
-            "No seasonality",
-            "Daily period, 24 hours.",
-            "Weekly period, 7 days.",
-            "Monthly period, 30 days or irregular.",
-            "Quarterly period, 90 days or irregular.",
-            "Yearly period, 365 days or irregular."
-          ],
           "items": {
             "enum": [
               "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
@@ -3806,6 +3770,10 @@
           "description": "[Output-only] Slot-milliseconds for the job.",
           "format": "int64",
           "type": "string"
+        },
+        "transactionInfoTemplate": {
+          "$ref": "TransactionInfo",
+          "description": "[Output-only] [Alpha] Information of the multi-statement transaction if this job is part of one."
         }
       },
       "type": "object"
@@ -6055,6 +6023,16 @@
         "trainingOptions": {
           "$ref": "TrainingOptions",
           "description": "Options that were used for this training run, includes user specified and default options that were used."
+        }
+      },
+      "type": "object"
+    },
+    "TransactionInfo": {
+      "id": "TransactionInfo",
+      "properties": {
+        "transactionId": {
+          "description": "[Output-only] // [Alpha] Id of the transaction.",
+          "type": "string"
         }
       },
       "type": "object"

@@ -74,8 +74,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "playcustomapp:v1"
 const apiName = "playcustomapp"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/"
-const mtlsBasePath = "https://www.mtls.googleapis.com/"
+const basePath = "https://playcustomapp.googleapis.com/"
+const mtlsBasePath = "https://playcustomapp.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -281,7 +281,7 @@ func (c *AccountsCustomAppsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -180,7 +180,7 @@
             "datasets": {
               "methods": {
                 "create": {
-                  "description": "Creates a new health dataset. Results are returned through the Operation interface which returns either an `Operation.response` which contains a Dataset or `Operation.error`. The metadata field type is OperationMetadata. A Google Cloud Platform project can contain up to 500 datasets across all regions.",
+                  "description": "Creates a new health dataset. Results are returned through the Operation interface which returns either an `Operation.response` which contains a Dataset or `Operation.error`. The metadata field type is OperationMetadata.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets",
                   "httpMethod": "POST",
                   "id": "healthcare.projects.locations.datasets.create",
@@ -2769,7 +2769,7 @@
       }
     }
   },
-  "revision": "20200901",
+  "revision": "20200909",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {

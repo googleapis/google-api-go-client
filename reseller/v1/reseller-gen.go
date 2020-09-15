@@ -78,7 +78,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "reseller:v1"
 const apiName = "reseller"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/apps/reseller/v1/"
+const basePath = "https://www.googleapis.com/"
+const mtlsBasePath = "https://www.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -98,6 +99,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -256,16 +258,12 @@ type ChangePlanRequest struct {
 
 	// PlanName: The planName property is required. This is the name of the
 	// subscription's payment plan. For more information about the Google
-	// payment plans, see API concepts.
-	//
-	// Possible values are:
-	// - ANNUAL_MONTHLY_PAY - The annual commitment plan with monthly
-	// payments  Caution: ANNUAL_MONTHLY_PAY is returned as ANNUAL in all
-	// API responses.
-	// - ANNUAL_YEARLY_PAY - The annual commitment plan with yearly payments
-	//
-	// - FLEXIBLE - The flexible plan
-	// - TRIAL - The 30-day free trial plan
+	// payment plans, see API concepts. Possible values are: -
+	// ANNUAL_MONTHLY_PAY - The annual commitment plan with monthly payments
+	// *Caution: *ANNUAL_MONTHLY_PAY is returned as ANNUAL in all API
+	// responses. - ANNUAL_YEARLY_PAY - The annual commitment plan with
+	// yearly payments - FLEXIBLE - The flexible plan - TRIAL - The 30-day
+	// free trial plan
 	PlanName string `json:"planName,omitempty"`
 
 	// PurchaseOrderId: This is an optional property. This purchase order
@@ -308,7 +306,7 @@ type Customer struct {
 	// email is the secondary contact used if something happens to the
 	// customer's service such as service outage or a security issue. This
 	// property is required when creating a new customer and should not use
-	// the same domain as customerDomain.
+	// the same domain as customerDomain .
 	AlternateEmail string `json:"alternateEmail,omitempty"`
 
 	// CustomerDomain: The customer's primary domain name string.
@@ -497,7 +495,7 @@ type Seats struct {
 	// maximum number of licensed users allowed on a subscription. This
 	// quantity can be increased up to the maximum limit defined in the
 	// reseller's contract. The minimum quantity is the current number of
-	// users in the customer account. Note: G Suite subscriptions
+	// users in the customer account. *Note: *G Suite subscriptions
 	// automatically assign a license to every user.
 	MaximumNumberOfSeats int64 `json:"maximumNumberOfSeats,omitempty"`
 
@@ -507,7 +505,7 @@ type Seats struct {
 	// on a subscription. The reseller can add more licenses, but once set,
 	// the numberOfSeats cannot be reduced until renewal. The reseller is
 	// invoiced based on the numberOfSeats value regardless of how many of
-	// these user licenses are assigned. Note: G Suite subscriptions
+	// these user licenses are assigned. *Note: *G Suite subscriptions
 	// automatically assign a license to every user.
 	NumberOfSeats int64 `json:"numberOfSeats,omitempty"`
 
@@ -594,14 +592,14 @@ type Subscription struct {
 
 	// SkuId: A required property. The skuId is a unique system identifier
 	// for a product's SKU assigned to a customer in the subscription. For
-	// products and SKUs available in this version of the API, see  Product
+	// products and SKUs available in this version of the API, see Product
 	// and SKU IDs.
 	SkuId string `json:"skuId,omitempty"`
 
 	// SkuName: Read-only external display name for a product's SKU assigned
 	// to a customer in the subscription. SKU names are subject to change at
 	// Google's discretion. For products and SKUs available in this version
-	// of the API, see  Product and SKU IDs.
+	// of the API, see Product and SKU IDs.
 	SkuName string `json:"skuName,omitempty"`
 
 	// Status: This is an optional property.
@@ -618,18 +616,14 @@ type Subscription struct {
 	// the current suspension reasons for a subscription. It is possible for
 	// a subscription to have many concurrent, overlapping suspension
 	// reasons. A subscription's STATUS is SUSPENDED until all pending
-	// suspensions are removed.
-	//
-	// Possible options include:
-	// - PENDING_TOS_ACCEPTANCE - The customer has not logged in and
-	// accepted the G Suite Resold Terms of Services.
-	// - RENEWAL_WITH_TYPE_CANCEL - The customer's commitment ended and
-	// their service was cancelled at the end of their term.
-	// - RESELLER_INITIATED - A manual suspension invoked by a Reseller.
-	// - TRIAL_ENDED - The customer's trial expired without a plan selected.
-	//
-	// - OTHER - The customer is suspended for an internal Google reason
-	// (e.g. abuse or otherwise).
+	// suspensions are removed. Possible options include: -
+	// PENDING_TOS_ACCEPTANCE - The customer has not logged in and accepted
+	// the G Suite Resold Terms of Services. - RENEWAL_WITH_TYPE_CANCEL -
+	// The customer's commitment ended and their service was cancelled at
+	// the end of their term. - RESELLER_INITIATED - A manual suspension
+	// invoked by a Reseller. - TRIAL_ENDED - The customer's trial expired
+	// without a plan selected. - OTHER - The customer is suspended for an
+	// internal Google reason (e.g. abuse or otherwise).
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
 
 	// TransferInfo: Read-only transfer related information for the
@@ -675,36 +669,31 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 // API"s payment plans, see the API concepts.
 type SubscriptionPlan struct {
 	// CommitmentInterval: In this version of the API, annual commitment
-	// plan's interval is one year.  Note: When billingMethod value is
+	// plan's interval is one year. *Note: *When billingMethod value is
 	// OFFLINE, the subscription property object plan.commitmentInterval is
 	// omitted in all API responses.
 	CommitmentInterval *SubscriptionPlanCommitmentInterval `json:"commitmentInterval,omitempty"`
 
 	// IsCommitmentPlan: The isCommitmentPlan property's boolean value
-	// identifies the plan as an annual commitment plan:
-	// - true — The subscription's plan is an annual commitment plan.
-	// - false — The plan is not an annual commitment plan.
+	// identifies the plan as an annual commitment plan: - true — The
+	// subscription's plan is an annual commitment plan. - false — The
+	// plan is not an annual commitment plan.
 	IsCommitmentPlan bool `json:"isCommitmentPlan,omitempty"`
 
 	// PlanName: The planName property is required. This is the name of the
 	// subscription's plan. For more information about the Google payment
-	// plans, see the API concepts.
-	//
-	// Possible values are:
-	// - ANNUAL_MONTHLY_PAY — The annual commitment plan with monthly
-	// payments.  Caution: ANNUAL_MONTHLY_PAY is returned as ANNUAL in all
-	// API responses.
-	// - ANNUAL_YEARLY_PAY — The annual commitment plan with yearly
-	// payments
-	// - FLEXIBLE — The flexible plan
-	// - TRIAL — The 30-day free trial plan. A subscription in trial will
-	// be suspended after the 30th free day if no payment plan is assigned.
-	// Calling changePlan will assign a payment plan to a trial but will not
+	// plans, see the API concepts. Possible values are: -
+	// ANNUAL_MONTHLY_PAY — The annual commitment plan with monthly
+	// payments. *Caution: *ANNUAL_MONTHLY_PAY is returned as ANNUAL in all
+	// API responses. - ANNUAL_YEARLY_PAY — The annual commitment plan
+	// with yearly payments - FLEXIBLE — The flexible plan - TRIAL — The
+	// 30-day free trial plan. A subscription in trial will be suspended
+	// after the 30th free day if no payment plan is assigned. Calling
+	// changePlan will assign a payment plan to a trial but will not
 	// activate the plan. A trial will automatically begin its assigned
 	// payment plan after its 30th free day or immediately after calling
-	// startPaidService.
-	// - FREE — The free plan is exclusive to the Cloud Identity SKU and
-	// does not incur any billing.
+	// startPaidService. - FREE — The free plan is exclusive to the Cloud
+	// Identity SKU and does not incur any billing.
 	PlanName string `json:"planName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommitmentInterval")
@@ -732,7 +721,7 @@ func (s *SubscriptionPlan) MarshalJSON() ([]byte, error) {
 }
 
 // SubscriptionPlanCommitmentInterval: In this version of the API,
-// annual commitment plan's interval is one year.  Note: When
+// annual commitment plan's interval is one year. *Note: *When
 // billingMethod value is OFFLINE, the subscription property object
 // plan.commitmentInterval is omitted in all API responses.
 type SubscriptionPlanCommitmentInterval struct {
@@ -813,9 +802,8 @@ func (s *SubscriptionTransferInfo) MarshalJSON() ([]byte, error) {
 // see the API concepts.
 type SubscriptionTrialSettings struct {
 	// IsInTrial: Determines if a subscription's plan is in a 30-day free
-	// trial or not:
-	// - true — The plan is in trial.
-	// - false — The plan is not in trial.
+	// trial or not: - true — The plan is in trial. - false — The plan
+	// is not in trial.
 	IsInTrial bool `json:"isInTrial,omitempty"`
 
 	// TrialEndTime: Date when the trial ends. The value is in milliseconds
@@ -941,7 +929,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -952,7 +940,7 @@ func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1004,6 +992,7 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	return ret, nil
 	// {
 	//   "description": "Get a customer account.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
 	//   "httpMethod": "GET",
 	//   "id": "reseller.customers.get",
 	//   "parameterOrder": [
@@ -1017,7 +1006,7 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}",
+	//   "path": "apps/reseller/v1/customers/{customerId}",
 	//   "response": {
 	//     "$ref": "Customer"
 	//   },
@@ -1085,7 +1074,7 @@ func (c *CustomersInsertCall) Header() http.Header {
 
 func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1098,7 +1087,7 @@ func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1147,8 +1136,10 @@ func (c *CustomersInsertCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	return ret, nil
 	// {
 	//   "description": "Order a new customer's account.",
+	//   "flatPath": "apps/reseller/v1/customers",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.customers.insert",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerAuthToken": {
 	//       "description": "The customerAuthToken query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
@@ -1156,7 +1147,7 @@ func (c *CustomersInsertCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers",
+	//   "path": "apps/reseller/v1/customers",
 	//   "request": {
 	//     "$ref": "Customer"
 	//   },
@@ -1181,8 +1172,8 @@ type CustomersPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Update a customer account's settings. This method supports
-// patch semantics.
+// Patch: Patch a customer account's settings via Apiary Patch
+// Orchestration
 func (r *CustomersService) Patch(customerId string, customer *Customer) *CustomersPatchCall {
 	c := &CustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1217,7 +1208,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1230,7 +1221,7 @@ func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -1281,7 +1272,8 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*Customer, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a customer account's settings. This method supports patch semantics.",
+	//   "description": "Patch a customer account's settings via Apiary Patch Orchestration",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "reseller.customers.patch",
 	//   "parameterOrder": [
@@ -1295,7 +1287,7 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*Customer, error)
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}",
+	//   "path": "apps/reseller/v1/customers/{customerId}",
 	//   "request": {
 	//     "$ref": "Customer"
 	//   },
@@ -1355,7 +1347,7 @@ func (c *CustomersUpdateCall) Header() http.Header {
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1368,7 +1360,7 @@ func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -1420,6 +1412,7 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	return ret, nil
 	// {
 	//   "description": "Update a customer account's settings.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
 	//   "httpMethod": "PUT",
 	//   "id": "reseller.customers.update",
 	//   "parameterOrder": [
@@ -1433,7 +1426,7 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}",
+	//   "path": "apps/reseller/v1/customers/{customerId}",
 	//   "request": {
 	//     "$ref": "Customer"
 	//   },
@@ -1501,7 +1494,7 @@ func (c *ResellernotifyGetwatchdetailsCall) Header() http.Header {
 
 func (c *ResellernotifyGetwatchdetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1512,7 +1505,7 @@ func (c *ResellernotifyGetwatchdetailsCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "resellernotify/getwatchdetails")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/resellernotify/getwatchdetails")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1562,9 +1555,12 @@ func (c *ResellernotifyGetwatchdetailsCall) Do(opts ...googleapi.CallOption) (*R
 	return ret, nil
 	// {
 	//   "description": "Returns all the details of the watch corresponding to the reseller.",
+	//   "flatPath": "apps/reseller/v1/resellernotify/getwatchdetails",
 	//   "httpMethod": "GET",
 	//   "id": "reseller.resellernotify.getwatchdetails",
-	//   "path": "resellernotify/getwatchdetails",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "apps/reseller/v1/resellernotify/getwatchdetails",
 	//   "response": {
 	//     "$ref": "ResellernotifyGetwatchdetailsResponse"
 	//   },
@@ -1626,7 +1622,7 @@ func (c *ResellernotifyRegisterCall) Header() http.Header {
 
 func (c *ResellernotifyRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1634,7 +1630,7 @@ func (c *ResellernotifyRegisterCall) doRequest(alt string) (*http.Response, erro
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "resellernotify/register")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/resellernotify/register")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1683,8 +1679,10 @@ func (c *ResellernotifyRegisterCall) Do(opts ...googleapi.CallOption) (*Reseller
 	return ret, nil
 	// {
 	//   "description": "Registers a Reseller for receiving notifications.",
+	//   "flatPath": "apps/reseller/v1/resellernotify/register",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.resellernotify.register",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "serviceAccountEmailAddress": {
 	//       "description": "The service account which will own the created Cloud-PubSub topic.",
@@ -1692,7 +1690,7 @@ func (c *ResellernotifyRegisterCall) Do(opts ...googleapi.CallOption) (*Reseller
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "resellernotify/register",
+	//   "path": "apps/reseller/v1/resellernotify/register",
 	//   "response": {
 	//     "$ref": "ResellernotifyResource"
 	//   },
@@ -1753,7 +1751,7 @@ func (c *ResellernotifyUnregisterCall) Header() http.Header {
 
 func (c *ResellernotifyUnregisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1761,7 +1759,7 @@ func (c *ResellernotifyUnregisterCall) doRequest(alt string) (*http.Response, er
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "resellernotify/unregister")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/resellernotify/unregister")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1810,8 +1808,10 @@ func (c *ResellernotifyUnregisterCall) Do(opts ...googleapi.CallOption) (*Resell
 	return ret, nil
 	// {
 	//   "description": "Unregisters a Reseller for receiving notifications.",
+	//   "flatPath": "apps/reseller/v1/resellernotify/unregister",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.resellernotify.unregister",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "serviceAccountEmailAddress": {
 	//       "description": "The service account which owns the Cloud-PubSub topic.",
@@ -1819,7 +1819,7 @@ func (c *ResellernotifyUnregisterCall) Do(opts ...googleapi.CallOption) (*Resell
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "resellernotify/unregister",
+	//   "path": "apps/reseller/v1/resellernotify/unregister",
 	//   "response": {
 	//     "$ref": "ResellernotifyResource"
 	//   },
@@ -1877,7 +1877,7 @@ func (c *SubscriptionsActivateCall) Header() http.Header {
 
 func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1885,7 +1885,7 @@ func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/activate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/activate")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -1938,6 +1938,7 @@ func (c *SubscriptionsActivateCall) Do(opts ...googleapi.CallOption) (*Subscript
 	return ret, nil
 	// {
 	//   "description": "Activates a subscription previously suspended by the reseller",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/activate",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.activate",
 	//   "parameterOrder": [
@@ -1958,7 +1959,7 @@ func (c *SubscriptionsActivateCall) Do(opts ...googleapi.CallOption) (*Subscript
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/activate",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/activate",
 	//   "response": {
 	//     "$ref": "Subscription"
 	//   },
@@ -2019,7 +2020,7 @@ func (c *SubscriptionsChangePlanCall) Header() http.Header {
 
 func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2032,7 +2033,7 @@ func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, err
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changePlan")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changePlan")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2085,6 +2086,7 @@ func (c *SubscriptionsChangePlanCall) Do(opts ...googleapi.CallOption) (*Subscri
 	return ret, nil
 	// {
 	//   "description": "Update a subscription plan. Use this method to update a plan for a 30-day trial or a flexible plan subscription to an annual commitment plan with monthly or yearly payments.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changePlan",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.changePlan",
 	//   "parameterOrder": [
@@ -2105,7 +2107,7 @@ func (c *SubscriptionsChangePlanCall) Do(opts ...googleapi.CallOption) (*Subscri
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/changePlan",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changePlan",
 	//   "request": {
 	//     "$ref": "ChangePlanRequest"
 	//   },
@@ -2168,7 +2170,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Header() http.Header {
 
 func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2181,7 +2183,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Re
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2234,6 +2236,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 	// {
 	//   "description": "Update a user license's renewal settings. This is applicable for accounts with annual commitment plans only.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.changeRenewalSettings",
 	//   "parameterOrder": [
@@ -2254,7 +2257,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings",
 	//   "request": {
 	//     "$ref": "RenewalSettings"
 	//   },
@@ -2316,7 +2319,7 @@ func (c *SubscriptionsChangeSeatsCall) Header() http.Header {
 
 func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2329,7 +2332,7 @@ func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, er
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/changeSeats")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeSeats")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2382,6 +2385,7 @@ func (c *SubscriptionsChangeSeatsCall) Do(opts ...googleapi.CallOption) (*Subscr
 	return ret, nil
 	// {
 	//   "description": "Update a subscription's user license settings.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeSeats",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.changeSeats",
 	//   "parameterOrder": [
@@ -2402,7 +2406,7 @@ func (c *SubscriptionsChangeSeatsCall) Do(opts ...googleapi.CallOption) (*Subscr
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/changeSeats",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeSeats",
 	//   "request": {
 	//     "$ref": "Seats"
 	//   },
@@ -2463,7 +2467,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2471,7 +2475,7 @@ func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -2499,6 +2503,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Cancel, suspend, or transfer a subscription to direct.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "reseller.subscriptions.delete",
 	//   "parameterOrder": [
@@ -2516,12 +2521,14 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     "deletionType": {
 	//       "description": "The deletionType query string enables the cancellation, downgrade, or suspension of a subscription.",
 	//       "enum": [
+	//         "deletionTypeUndefined",
 	//         "cancel",
-	//         "transfer_to_direct"
+	//         "transferToDirect"
 	//       ],
 	//       "enumDescriptions": [
+	//         "",
 	//         "Cancels the subscription immediately. This does not apply to a G Suite subscription.",
-	//         "Transfers a subscription directly to Google.  The customer is immediately transferred to a direct billing relationship with Google and is given a short amount of time with no service interruption. The customer can then choose to set up billing directly with Google by using a credit card, or they can transfer to another reseller."
+	//         "Transfers a subscription directly to Google. The customer is immediately transferred to a direct billing relationship with Google and is given a short amount of time with no service interruption. The customer can then choose to set up billing directly with Google by using a credit card, or they can transfer to another reseller."
 	//       ],
 	//       "location": "query",
 	//       "required": true,
@@ -2534,7 +2541,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/apps.order"
 	//   ]
@@ -2599,7 +2606,7 @@ func (c *SubscriptionsGetCall) Header() http.Header {
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2610,7 +2617,7 @@ func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2663,6 +2670,7 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 	return ret, nil
 	// {
 	//   "description": "Get a specific subscription.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
 	//   "httpMethod": "GET",
 	//   "id": "reseller.subscriptions.get",
 	//   "parameterOrder": [
@@ -2683,7 +2691,7 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
 	//   "response": {
 	//     "$ref": "Subscription"
 	//   },
@@ -2753,7 +2761,7 @@ func (c *SubscriptionsInsertCall) Header() http.Header {
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2766,7 +2774,7 @@ func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) 
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2818,6 +2826,7 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 	return ret, nil
 	// {
 	//   "description": "Create or transfer a subscription.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.insert",
 	//   "parameterOrder": [
@@ -2836,7 +2845,7 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions",
 	//   "request": {
 	//     "$ref": "Subscription"
 	//   },
@@ -2894,11 +2903,10 @@ func (c *SubscriptionsListCall) CustomerId(customerId string) *SubscriptionsList
 // When retrieving all of your subscriptions and filtering for specific
 // customers, you can enter a prefix for a customer name. Using an
 // example customer group that includes exam.com, example20.com and
-// example.com:
-// - exa -- Returns all customer names that start with 'exa' which could
-// include exam.com, example20.com, and example.com. A name prefix is
-// similar to using a regular expression's asterisk, exa*.
-// - example -- Returns example20.com and example.com.
+// example.com: - exa -- Returns all customer names that start with
+// 'exa' which could include exam.com, example20.com, and example.com. A
+// name prefix is similar to using a regular expression's asterisk,
+// exa*. - example -- Returns example20.com and example.com.
 func (c *SubscriptionsListCall) CustomerNamePrefix(customerNamePrefix string) *SubscriptionsListCall {
 	c.urlParams_.Set("customerNamePrefix", customerNamePrefix)
 	return c
@@ -2957,7 +2965,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2968,7 +2976,7 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "subscriptions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/subscriptions")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -3017,8 +3025,10 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*Subscriptions
 	return ret, nil
 	// {
 	//   "description": "List of subscriptions managed by the reseller. The list can be all subscriptions, all of a customer's subscriptions, or all of a customer's transferable subscriptions.",
+	//   "flatPath": "apps/reseller/v1/subscriptions",
 	//   "httpMethod": "GET",
 	//   "id": "reseller.subscriptions.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerAuthToken": {
 	//       "description": "The customerAuthToken query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
@@ -3031,7 +3041,7 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*Subscriptions
 	//       "type": "string"
 	//     },
 	//     "customerNamePrefix": {
-	//       "description": "When retrieving all of your subscriptions and filtering for specific customers, you can enter a prefix for a customer name. Using an example customer group that includes exam.com, example20.com and example.com:  \n- exa -- Returns all customer names that start with 'exa' which could include exam.com, example20.com, and example.com. A name prefix is similar to using a regular expression's asterisk, exa*. \n- example -- Returns example20.com and example.com.",
+	//       "description": "When retrieving all of your subscriptions and filtering for specific customers, you can enter a prefix for a customer name. Using an example customer group that includes exam.com, example20.com and example.com: - exa -- Returns all customer names that start with 'exa' which could include exam.com, example20.com, and example.com. A name prefix is similar to using a regular expression's asterisk, exa*. - example -- Returns example20.com and example.com. ",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3049,7 +3059,7 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*Subscriptions
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "subscriptions",
+	//   "path": "apps/reseller/v1/subscriptions",
 	//   "response": {
 	//     "$ref": "Subscriptions"
 	//   },
@@ -3129,7 +3139,7 @@ func (c *SubscriptionsStartPaidServiceCall) Header() http.Header {
 
 func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3137,7 +3147,7 @@ func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Respons
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/startPaidService")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -3190,6 +3200,7 @@ func (c *SubscriptionsStartPaidServiceCall) Do(opts ...googleapi.CallOption) (*S
 	return ret, nil
 	// {
 	//   "description": "Immediately move a 30-day free trial subscription to a paid service subscription.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.startPaidService",
 	//   "parameterOrder": [
@@ -3210,7 +3221,7 @@ func (c *SubscriptionsStartPaidServiceCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
 	//   "response": {
 	//     "$ref": "Subscription"
 	//   },
@@ -3267,7 +3278,7 @@ func (c *SubscriptionsSuspendCall) Header() http.Header {
 
 func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3275,7 +3286,7 @@ func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "customers/{customerId}/subscriptions/{subscriptionId}/suspend")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/suspend")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -3328,6 +3339,7 @@ func (c *SubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Subscripti
 	return ret, nil
 	// {
 	//   "description": "Suspends an active subscription.",
+	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/suspend",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.suspend",
 	//   "parameterOrder": [
@@ -3348,7 +3360,7 @@ func (c *SubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Subscripti
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "customers/{customerId}/subscriptions/{subscriptionId}/suspend",
+	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/suspend",
 	//   "response": {
 	//     "$ref": "Subscription"
 	//   },

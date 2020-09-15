@@ -1,4 +1,13 @@
 {
+  "auth": {
+    "oauth2": {
+      "scopes": {
+        "https://www.googleapis.com/auth/admob.report": {
+          "description": "See your AdMob data"
+        }
+      }
+    }
+  },
   "basePath": "",
   "baseUrl": "https://admob.googleapis.com/",
   "batchPath": "batch",
@@ -118,7 +127,10 @@
           "path": "v1/{+name}",
           "response": {
             "$ref": "PublisherAccount"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/admob.report"
+          ]
         },
         "list": {
           "description": "Lists the AdMob publisher account accessible with the client credential. Currently, all credentials have access to at most one AdMob account.",
@@ -142,7 +154,10 @@
           "path": "v1/accounts",
           "response": {
             "$ref": "ListPublisherAccountsResponse"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/admob.report"
+          ]
         }
       },
       "resources": {
@@ -171,7 +186,10 @@
               },
               "response": {
                 "$ref": "GenerateMediationReportResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/admob.report"
+              ]
             }
           }
         },
@@ -200,14 +218,17 @@
               },
               "response": {
                 "$ref": "GenerateNetworkReportResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/admob.report"
+              ]
             }
           }
         }
       }
     }
   },
-  "revision": "20200822",
+  "revision": "20200914",
   "rootUrl": "https://admob.googleapis.com/",
   "schemas": {
     "Date": {
@@ -395,7 +416,7 @@
           "description": "Localization settings of the report."
         },
         "maxReportRows": {
-          "description": "Maximum number of report data rows to return. If the value is not set, the API returns as many rows as possible, up to 100000. Acceptable values are 1-100000, inclusive. Any other values are treated as 100000.",
+          "description": "Maximum number of report data rows to return. If the value is not set, the API returns as many rows as possible, up to 100000. Acceptable values are 1-100000, inclusive. Values larger than 100000 return an error.",
           "format": "int32",
           "type": "integer"
         },
@@ -615,7 +636,7 @@
           "description": "Localization settings of the report."
         },
         "maxReportRows": {
-          "description": "Maximum number of report data rows to return. If the value is not set, the API returns as many rows as possible, up to 100000. Acceptable values are 1-100000, inclusive. Any other values are treated as 100000.",
+          "description": "Maximum number of report data rows to return. If the value is not set, the API returns as many rows as possible, up to 100000. Acceptable values are 1-100000, inclusive. Values larger than 100000 return an error.",
           "format": "int32",
           "type": "integer"
         },

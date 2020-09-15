@@ -76,8 +76,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "tasks:v1"
 const apiName = "tasks"
 const apiVersion = "v1"
-const basePath = "https://www.googleapis.com/"
-const mtlsBasePath = "https://www.mtls.googleapis.com/"
+const basePath = "https://tasks.googleapis.com/"
+const mtlsBasePath = "https://tasks.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -162,6 +162,7 @@ type TasksService struct {
 	s *Service
 }
 
+// Task: LINT.IfChange
 type Task struct {
 	// Completed: Completion date of the task (as a RFC 3339 timestamp).
 	// This field is omitted if the task has not been completed.
@@ -460,7 +461,7 @@ func (c *TasklistsDeleteCall) Header() http.Header {
 
 func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -572,7 +573,7 @@ func (c *TasklistsGetCall) Header() http.Header {
 
 func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -706,7 +707,7 @@ func (c *TasklistsInsertCall) Header() http.Header {
 
 func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -855,7 +856,7 @@ func (c *TasklistsListCall) Header() http.Header {
 
 func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1012,7 +1013,7 @@ func (c *TasklistsPatchCall) Header() http.Header {
 
 func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1151,7 +1152,7 @@ func (c *TasklistsUpdateCall) Header() http.Header {
 
 func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1290,7 +1291,7 @@ func (c *TasksClearCall) Header() http.Header {
 
 func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1393,7 +1394,7 @@ func (c *TasksDeleteCall) Header() http.Header {
 
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1515,7 +1516,7 @@ func (c *TasksGetCall) Header() http.Header {
 
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1673,7 +1674,7 @@ func (c *TasksInsertCall) Header() http.Header {
 
 func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1843,7 +1844,9 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 
 // ShowCompleted sets the optional parameter "showCompleted": Flag
 // indicating whether completed tasks are returned in the result.  The
-// default is True.
+// default is True. Note that showHidden must also be True to show tasks
+// completed in first party clients, such as the web UI and Google's
+// mobile apps.
 func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
 	c.urlParams_.Set("showCompleted", fmt.Sprint(showCompleted))
 	return c
@@ -1910,7 +1913,7 @@ func (c *TasksListCall) Header() http.Header {
 
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2012,7 +2015,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//       "type": "string"
 	//     },
 	//     "showCompleted": {
-	//       "description": "Flag indicating whether completed tasks are returned in the result. Optional. The default is True.",
+	//       "description": "Flag indicating whether completed tasks are returned in the result. Optional. The default is True. Note that showHidden must also be True to show tasks completed in first party clients, such as the web UI and Google's mobile apps.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2135,7 +2138,7 @@ func (c *TasksMoveCall) Header() http.Header {
 
 func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2287,7 +2290,7 @@ func (c *TasksPatchCall) Header() http.Header {
 
 func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2436,7 +2439,7 @@ func (c *TasksUpdateCall) Header() http.Header {
 
 func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

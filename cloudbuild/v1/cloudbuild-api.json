@@ -778,7 +778,7 @@
       }
     }
   },
-  "revision": "20200905",
+  "revision": "20200910",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1661,11 +1661,13 @@
           "description": "Configure builds to run whether a repository owner or collaborator need to comment `/gcbrun`.",
           "enum": [
             "COMMENTS_DISABLED",
-            "COMMENTS_ENABLED"
+            "COMMENTS_ENABLED",
+            "COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY"
           ],
           "enumDescriptions": [
             "Do not require comments on Pull Requests before builds are triggered.",
-            "Enforce that repository owners or collaborators must comment on Pull Requests before builds are triggered."
+            "Enforce that repository owners or collaborators must comment on Pull Requests before builds are triggered.",
+            "Enforce that repository owners or collaborators must comment on external contributors' Pull Requests before builds are triggered."
           ],
           "type": "string"
         },

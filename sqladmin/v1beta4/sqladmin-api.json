@@ -22,10 +22,10 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
-  "id": "sql:v1beta4",
+  "id": "sqladmin:v1beta4",
   "kind": "discovery#restDescription",
   "mtlsRootUrl": "https://sqladmin.mtls.googleapis.com/",
-  "name": "sql",
+  "name": "sqladmin",
   "ownerDomain": "google.com",
   "ownerName": "Google",
   "parameters": {
@@ -1354,7 +1354,7 @@
               ]
             },
             "startExternalSync": {
-              "description": "Start External master migration.",
+              "description": "Start External primary instance migration.",
               "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
               "httpMethod": "POST",
               "id": "sql.projects.instances.startExternalSync",
@@ -1385,7 +1385,7 @@
                   "enumDescriptions": [
                     "Unknown external sync mode, will be defaulted to ONLINE mode",
                     "Online external sync will set up replication after initial data external sync",
-                    "Offline external sync only dumps and loads a one-time snapshot of master's data"
+                    "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data"
                   ],
                   "location": "query",
                   "type": "string"
@@ -1401,7 +1401,7 @@
               ]
             },
             "verifyExternalSyncSettings": {
-              "description": "Verify External master external sync settings.",
+              "description": "Verify External primary instance external sync settings.",
               "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
               "httpMethod": "POST",
               "id": "sql.projects.instances.verifyExternalSyncSettings",
@@ -1432,7 +1432,7 @@
                   "enumDescriptions": [
                     "Unknown external sync mode, will be defaulted to ONLINE mode",
                     "Online external sync will set up replication after initial data external sync",
-                    "Offline external sync only dumps and loads a one-time snapshot of master's data"
+                    "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data"
                   ],
                   "location": "query",
                   "type": "string"
@@ -1828,7 +1828,7 @@
       }
     }
   },
-  "revision": "20200828",
+  "revision": "20200903",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -2162,7 +2162,7 @@
       "type": "object"
     },
     "DatabaseInstance": {
-      "description": "A Cloud SQL instance resource. Next field: 35",
+      "description": "A Cloud SQL instance resource. Next field: 36",
       "id": "DatabaseInstance",
       "properties": {
         "backendType": {
@@ -2242,7 +2242,7 @@
           "description": "The name and status of the failover replica. This property is applicable only to Second Generation instances.",
           "properties": {
             "available": {
-              "description": "The availability status of the failover replica. A false status indicates that the failover replica is out of sync. The master can only failover to the failover replica when the status is true.",
+              "description": "The availability status of the failover replica. A false status indicates that the failover replica is out of sync. The primary instance can only failover to the failover replica when the status is true.",
               "type": "boolean"
             },
             "name": {
@@ -2257,7 +2257,7 @@
           "type": "string"
         },
         "instanceType": {
-          "description": "The instance type. This can be one of the following. *CLOUD_SQL_INSTANCE*: A Cloud SQL instance that is not replicating from a master. *ON_PREMISES_INSTANCE*: An instance running on the customer's premises. *READ_REPLICA_INSTANCE*: A Cloud SQL instance configured as a read-replica.",
+          "description": "The instance type. This can be one of the following. *CLOUD_SQL_INSTANCE*: A Cloud SQL instance that is not replicating from a primary instance. *ON_PREMISES_INSTANCE*: An instance running on the customer's premises. *READ_REPLICA_INSTANCE*: A Cloud SQL instance configured as a read-replica.",
           "enum": [
             "SQL_INSTANCE_TYPE_UNSPECIFIED",
             "CLOUD_SQL_INSTANCE",
@@ -2288,7 +2288,7 @@
           "type": "string"
         },
         "masterInstanceName": {
-          "description": "The name of the instance which will act as master in the replication setup.",
+          "description": "The name of the instance which will act as primary in the replication setup.",
           "type": "string"
         },
         "maxDiskSize": {
@@ -2412,7 +2412,7 @@
       "type": "object"
     },
     "DemoteMasterConfiguration": {
-      "description": "Read-replica configuration for connecting to the on-premises master.",
+      "description": "Read-replica configuration for connecting to the on-premises primary instance.",
       "id": "DemoteMasterConfiguration",
       "properties": {
         "kind": {
@@ -2421,13 +2421,13 @@
         },
         "mysqlReplicaConfiguration": {
           "$ref": "DemoteMasterMySqlReplicaConfiguration",
-          "description": "MySQL specific configuration when replicating from a MySQL on-premises master. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named *master.info* in the data directory."
+          "description": "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named *master.info* in the data directory."
         }
       },
       "type": "object"
     },
     "DemoteMasterContext": {
-      "description": "Database instance demote master context.",
+      "description": "Database instance demote primary instance context.",
       "id": "DemoteMasterContext",
       "properties": {
         "kind": {
@@ -2435,15 +2435,15 @@
           "type": "string"
         },
         "masterInstanceName": {
-          "description": "The name of the instance which will act as on-premises master in the replication setup.",
+          "description": "The name of the instance which will act as on-premises primary instance in the replication setup.",
           "type": "string"
         },
         "replicaConfiguration": {
           "$ref": "DemoteMasterConfiguration",
-          "description": "Configuration specific to read-replicas replicating from the on-premises master."
+          "description": "Configuration specific to read-replicas replicating from the on-premises primary instance."
         },
         "verifyGtidConsistency": {
-          "description": "Verify GTID consistency for demote operation. Default value: *True*. Second Generation instances only. Setting this flag to false enables you to bypass GTID consistency check between on-premises master and Cloud SQL instance during the demotion operation but also exposes you to the risk of future replication failures. Change the value only if you know the reason for the GTID divergence and are confident that doing so will not cause any replication issues.",
+          "description": "Verify GTID consistency for demote operation. Default value: *True*. Second Generation instances only. Setting this flag to false enables you to bypass GTID consistency check between on-premises primary instance and Cloud SQL instance during the demotion operation but also exposes you to the risk of future replication failures. Change the value only if you know the reason for the GTID divergence and are confident that doing so will not cause any replication issues.",
           "type": "boolean"
         }
       },
@@ -2826,7 +2826,7 @@
       "type": "object"
     },
     "InstancesDemoteMasterRequest": {
-      "description": "Database demote master request.",
+      "description": "Database demote primary instance request.",
       "id": "InstancesDemoteMasterRequest",
       "properties": {
         "demoteMasterContext": {
@@ -3003,7 +3003,7 @@
           "enumDescriptions": [
             "This is an unknown IP address type.",
             "IP address the customer is supposed to connect to. Usually this is the load balancer's IP address",
-            "Source IP address of the connection a read replica establishes to its external master. This IP address can be allowlisted by the customer in case it has a firewall that filters incoming connection to its on premises master.",
+            "Source IP address of the connection a read replica establishes to its external primary instance. This IP address can be allowlisted by the customer in case it has a firewall that filters incoming connection to its on premises primary instance.",
             "Private IP used when using private IPs and network peering.",
             "V1 IP of a migrated instance. We want the user to decommission this IP as soon as the migration is complete. Note: V1 instances with V1 ip addresses will be counted as PRIMARY."
           ],
@@ -3026,6 +3026,25 @@
         },
         "zone": {
           "description": "The preferred Compute Engine zone (for example: us-central1-a, us-central1-b, etc.).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MaintenanceDenyPeriod": {
+      "description": "Maintenance Deny Periods. This specifies a date range during when all CSA rollout will be denied.",
+      "id": "MaintenanceDenyPeriod",
+      "properties": {
+        "endDate": {
+          "description": "\"maintenance deny period\" end date. If the year of the end date is empty, the year of the start date also must be empty. In this case, it means the no maintenance interval recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01",
+          "type": "string"
+        },
+        "startDate": {
+          "description": "\"maintenance deny period\" start date. If the year of the start date is empty, the year of the end date also must be empty. In this case, it means the no maintenance interval recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01",
+          "type": "string"
+        },
+        "time": {
+          "description": "Time in UTC when the \"no maintenance interval\" starts on start_date and ends on end_date. The time is in format: HH:mm:SS, i.e., 00:00:00",
           "type": "string"
         }
       },
@@ -3113,7 +3132,7 @@
           "type": "string"
         },
         "verifyServerCertificate": {
-          "description": "Whether or not to check the master's Common Name value in the certificate that it sends during the SSL handshake.",
+          "description": "Whether or not to check the primary instance's Common Name value in the certificate that it sends during the SSL handshake.",
           "type": "boolean"
         }
       },
@@ -3266,7 +3285,7 @@
             "",
             "Creates clone instance.",
             "Reschedule maintenance to another time.",
-            "Starts external sync of a Cloud SQL EM replica to an external master."
+            "Starts external sync of a Cloud SQL EM replica to an external primary instance."
           ],
           "type": "string"
         },
@@ -3373,11 +3392,11 @@
       "type": "object"
     },
     "ReplicaConfiguration": {
-      "description": "Read-replica configuration for connecting to the master.",
+      "description": "Read-replica configuration for connecting to the primary instance.",
       "id": "ReplicaConfiguration",
       "properties": {
         "failoverTarget": {
-          "description": "Specifies if the replica is the failover target. If the field is set to *true* the replica will be designated as a failover replica. In case the master instance fails, the replica instance will be promoted as the new master instance. Only one replica can be specified as failover target, and the replica has to be in different zone with the master instance.",
+          "description": "Specifies if the replica is the failover target. If the field is set to *true* the replica will be designated as a failover replica. In case the primary instance fails, the replica instance will be promoted as the new primary instance. Only one replica can be specified as failover target, and the replica has to be in different zone with the primary instance.",
           "type": "boolean"
         },
         "kind": {
@@ -3386,7 +3405,7 @@
         },
         "mysqlReplicaConfiguration": {
           "$ref": "MySqlReplicaConfiguration",
-          "description": "MySQL specific configuration when replicating from a MySQL on-premises master. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named *master.info* in the data directory."
+          "description": "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named *master.info* in the data directory."
         }
       },
       "type": "object"
@@ -3554,6 +3573,13 @@
           "$ref": "LocationPreference",
           "description": "The location preference settings. This allows the instance to be located as near as possible to either an App Engine app or Compute Engine zone for better performance. App Engine co-location was only applicable to First Generation instances."
         },
+        "maintenanceDenyPeriods": {
+          "description": "Maintenance deny periods",
+          "items": {
+            "$ref": "MaintenanceDenyPeriod"
+          },
+          "type": "array"
+        },
         "maintenanceWindow": {
           "$ref": "MaintenanceWindow",
           "description": "The maintenance window for this instance. This specifies when the instance can be restarted for maintenance purposes."
@@ -3615,7 +3641,7 @@
       "type": "object"
     },
     "SqlExternalSyncSettingError": {
-      "description": "External master migration setting error.",
+      "description": "External primary instance migration setting error.",
       "id": "SqlExternalSyncSettingError",
       "properties": {
         "detail": {
@@ -3666,8 +3692,8 @@
             "The value of parameter max_worker_processes is not sufficient.",
             "Extensions installed are either not supported or having unsupported versions",
             "The value of parameter rds.logical_replication is not set to 1.",
-            "The master logging setup doesn't allow EM sync.",
-            "The master database parameter setup doesn't allow EM sync.",
+            "The primary instance logging setup doesn't allow EM sync.",
+            "The primary instance database parameter setup doesn't allow EM sync.",
             "The gtid_mode is not supported, applicable for MySQL."
           ],
           "type": "string"

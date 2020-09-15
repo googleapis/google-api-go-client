@@ -77,8 +77,19 @@ const apiVersion = "v1"
 const basePath = "https://admob.googleapis.com/"
 const mtlsBasePath = "https://admob.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See your AdMob data
+	AdmobReportScope = "https://www.googleapis.com/auth/admob.report"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/admob.report",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -536,8 +547,8 @@ type MediationReportSpec struct {
 
 	// MaxReportRows: Maximum number of report data rows to return. If the
 	// value is not set, the API returns as many rows as possible, up to
-	// 100000. Acceptable values are 1-100000, inclusive. Any other values
-	// are treated as 100000.
+	// 100000. Acceptable values are 1-100000, inclusive. Values larger than
+	// 100000 return an error.
 	MaxReportRows int64 `json:"maxReportRows,omitempty"`
 
 	// Metrics: List of metrics of the report. A report must specify at
@@ -845,8 +856,8 @@ type NetworkReportSpec struct {
 
 	// MaxReportRows: Maximum number of report data rows to return. If the
 	// value is not set, the API returns as many rows as possible, up to
-	// 100000. Acceptable values are 1-100000, inclusive. Any other values
-	// are treated as 100000.
+	// 100000. Acceptable values are 1-100000, inclusive. Values larger than
+	// 100000 return an error.
 	MaxReportRows int64 `json:"maxReportRows,omitempty"`
 
 	// Metrics: List of metrics of the report. A report must specify at
@@ -1457,7 +1468,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1538,7 +1549,10 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*PublisherAccount, e
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "PublisherAccount"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.report"
+	//   ]
 	// }
 
 }
@@ -1614,7 +1628,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1694,7 +1708,10 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	//   "path": "v1/accounts",
 	//   "response": {
 	//     "$ref": "ListPublisherAccountsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.report"
+	//   ]
 	// }
 
 }
@@ -1767,7 +1784,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1853,7 +1870,10 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "response": {
 	//     "$ref": "GenerateMediationReportResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.report"
+	//   ]
 	// }
 
 }
@@ -1905,7 +1925,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1991,7 +2011,10 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "response": {
 	//     "$ref": "GenerateNetworkReportResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.report"
+	//   ]
 	// }
 
 }

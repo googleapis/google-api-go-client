@@ -1768,14 +1768,13 @@
       "name": "discovery",
       "version": "v1",
       "title": "API Discovery Service",
-      "description": "Provides information about other Google APIs, such as what APIs are available, the resource, and method details for each API.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/discovery/v1/rest",
-      "discoveryLink": "./apis/discovery/v1/rest",
+      "description": "Google API Discovery Service allows service consumers to list the discovery metadata of all public APIs managed by the API Platform.",
+      "discoveryRestUrl": "https://discovery.googleapis.com/$discovery/rest?version=v1",
       "icons": {
-        "x16": "http://www.google.com/images/icons/feature/filing_cabinet_search-g16.png",
-        "x32": "http://www.google.com/images/icons/feature/filing_cabinet_search-g32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/discovery/",
+      "documentationLink": "https://developers.google.com/discovery",
       "preferred": true
     },
     {
@@ -3077,14 +3076,13 @@
       "name": "playcustomapp",
       "version": "v1",
       "title": "Google Play Custom App Publishing API",
-      "description": "An API to publish custom Android apps.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/playcustomapp/v1/rest",
-      "discoveryLink": "./apis/playcustomapp/v1/rest",
+      "description": "API to create and publish custom Android apps",
+      "discoveryRestUrl": "https://playcustomapp.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/android/work/play/custom-app-api",
+      "documentationLink": "https://developers.google.com/android/work/play/custom-app-api/",
       "preferred": true
     },
     {

@@ -746,7 +746,7 @@
                       "type": "string"
                     },
                     "versionId": {
-                      "description": "A unique id for the new version. This is only specified for legacy version creations.",
+                      "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
                       "location": "query",
                       "type": "string"
                     }
@@ -1561,7 +1561,7 @@
                   "type": "string"
                 },
                 "versionId": {
-                  "description": "A unique id for the new version. This is only specified for legacy version creations.",
+                  "description": "A unique id for the new version. This is was only specified for legacy version creations, and should be blank.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1777,7 +1777,7 @@
       }
     }
   },
-  "revision": "20200901",
+  "revision": "20200914",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {

@@ -675,7 +675,23 @@
           "httpMethod": "POST",
           "id": "cloudidentity.groups.create",
           "parameterOrder": [],
-          "parameters": {},
+          "parameters": {
+            "initialGroupConfig": {
+              "description": "Optional. The initial configuration option for the `Group`.",
+              "enum": [
+                "INITIAL_GROUP_CONFIG_UNSPECIFIED",
+                "WITH_INITIAL_OWNER",
+                "EMPTY"
+              ],
+              "enumDescriptions": [
+                "Default. Should not be used.",
+                "The end user making the request will be added as the initial owner of the `Group`.",
+                "An empty group is created without any initial owners. This can only be used by admins of the domain."
+              ],
+              "location": "query",
+              "type": "string"
+            }
+          },
           "path": "v1/groups",
           "request": {
             "$ref": "Group"
@@ -1083,7 +1099,7 @@
       }
     }
   },
-  "revision": "20200908",
+  "revision": "20200912",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {

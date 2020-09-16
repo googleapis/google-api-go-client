@@ -330,14 +330,12 @@
       "name": "androidenterprise",
       "version": "v1",
       "title": "Google Play EMM API",
-      "description": "Manages the deployment of apps to Android for Work users.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidenterprise/v1/rest",
-      "discoveryLink": "./apis/androidenterprise/v1/rest",
+      "description": "Manages the deployment of apps to Android Enterprise devices.",
+      "discoveryRestUrl": "https://androidenterprise.googleapis.com/$discovery/rest?version=v1",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/android-16.png",
-        "x32": "https://www.google.com/images/icons/product/android-32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/android/work/play/emm-api",
       "preferred": true
     },
     {
@@ -519,6 +517,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/artifacts/docs/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "assuredworkloads:v1beta1",
+      "name": "assuredworkloads",
+      "version": "v1beta1",
+      "title": "Assured Workloads API",
+      "description": "",
+      "discoveryRestUrl": "https://assuredworkloads.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com",
       "preferred": true
     },
     {

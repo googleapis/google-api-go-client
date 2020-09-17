@@ -168,11 +168,17 @@ type BillingAccountsBudgetsService struct {
 // defines notifications that are sent based on budget spend and
 // thresholds.
 type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
+	// DisableDefaultIamRecipients: Optional. When set to true, disables
+	// default notifications sent when a threshold is exceeded. Default
+	// notifications are sent to those with Billing Account Administrator
+	// and Billing Account User IAM roles for the target account.
+	DisableDefaultIamRecipients bool `json:"disableDefaultIamRecipients,omitempty"`
+
 	// MonitoringNotificationChannels: Optional. Targets to send
 	// notifications to when a threshold is exceeded. This is in addition to
-	// default recipients who have billing account roles. The value is the
-	// full REST resource name of a monitoring notification channel with the
-	// form `projects/{project_id}/notificationChannels/{channel_id}`. A
+	// default recipients who have billing account IAM roles. The value is
+	// the full REST resource name of a monitoring notification channel with
+	// the form `projects/{project_id}/notificationChannels/{channel_id}`. A
 	// maximum of 5 channels are allowed. See
 	// https://cloud.google.com/billing/docs/how-to/budgets-notification-recipients for more
 	// details.
@@ -194,7 +200,7 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	SchemaVersion string `json:"schemaVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "MonitoringNotificationChannels") to unconditionally include in API
+	// "DisableDefaultIamRecipients") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -203,7 +209,7 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "MonitoringNotificationChannels") to include in API requests with the
+	// "DisableDefaultIamRecipients") to include in API requests with the
 	// JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
@@ -664,7 +670,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -804,7 +810,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -949,7 +955,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1115,7 +1121,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1288,7 +1294,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -175,8 +175,8 @@ type AddTenantProjectRequest struct {
 	// tenancy unit resources.
 	ProjectConfig *TenantProjectConfig `json:"projectConfig,omitempty"`
 
-	// Tag: Tag of the added project. Must be less than 128 characters.
-	// Required.
+	// Tag: Required. Tag of the added project. Must be less than 128
+	// characters. Required.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProjectConfig") to
@@ -283,7 +283,8 @@ type ApplyTenantProjectConfigRequest struct {
 	// tenant project.
 	ProjectConfig *TenantProjectConfig `json:"projectConfig,omitempty"`
 
-	// Tag: Tag of the project. Must be less than 128 characters. Required.
+	// Tag: Required. Tag of the project. Must be less than 128 characters.
+	// Required.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProjectConfig") to
@@ -322,8 +323,8 @@ type AttachTenantProjectRequest struct {
 	// tenant resource must be in an active state.
 	ReservedResource string `json:"reservedResource,omitempty"`
 
-	// Tag: Tag of the tenant resource after attachment. Must be less than
-	// 128 characters. Required.
+	// Tag: Required. Tag of the tenant resource after attachment. Must be
+	// less than 128 characters. Required.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExternalResource") to
@@ -1095,7 +1096,7 @@ func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 // DeleteTenantProjectRequest: Request message to delete tenant project
 // resource from the tenancy unit.
 type DeleteTenantProjectRequest struct {
-	// Tag: Tag of the resource within the tenancy unit.
+	// Tag: Required. Tag of the resource within the tenancy unit.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -3043,7 +3044,7 @@ func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
 // RemoveTenantProjectRequest: Request message to remove a tenant
 // project resource from the tenancy unit.
 type RemoveTenantProjectRequest struct {
-	// Tag: Tag of the resource within the tenancy unit.
+	// Tag: Required. Tag of the resource within the tenancy unit.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -3558,11 +3559,12 @@ func (s *SystemParameters) MarshalJSON() ([]byte, error) {
 
 // TenancyUnit: Representation of a tenancy unit.
 type TenancyUnit struct {
-	// Consumer: @OutputOnly Cloud resource name of the consumer of this
-	// service. For example 'projects/123456'.
+	// Consumer: Output only. @OutputOnly Cloud resource name of the
+	// consumer of this service. For example 'projects/123456'.
 	Consumer string `json:"consumer,omitempty"`
 
-	// CreateTime: @OutputOnly The time this tenancy unit was created.
+	// CreateTime: Output only. @OutputOnly The time this tenancy unit was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Name: Globally unique identifier of this tenancy unit
@@ -3699,9 +3701,9 @@ func (s *TenantProjectPolicy) MarshalJSON() ([]byte, error) {
 
 // TenantResource: Resource constituting the TenancyUnit.
 type TenantResource struct {
-	// Resource: @OutputOnly Identifier of the tenant resource. For cloud
-	// projects, it is in the form 'projects/{number}'. For example
-	// 'projects/123456'.
+	// Resource: Output only. @OutputOnly Identifier of the tenant resource.
+	// For cloud projects, it is in the form 'projects/{number}'. For
+	// example 'projects/123456'.
 	Resource string `json:"resource,omitempty"`
 
 	// Status: Status of tenant resource.
@@ -3793,7 +3795,7 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 // UndeleteTenantProjectRequest: Request message to undelete tenant
 // project resource previously deleted from the tenancy unit.
 type UndeleteTenantProjectRequest struct {
-	// Tag: Tag of the resource within the tenancy unit.
+	// Tag: Required. Tag of the resource within the tenancy unit.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -4549,7 +4551,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4690,7 +4692,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4833,7 +4835,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5007,7 +5009,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5224,7 +5226,7 @@ func (c *ServicesSearchCall) Header() http.Header {
 
 func (c *ServicesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5306,7 +5308,7 @@ func (c *ServicesSearchCall) Do(opts ...googleapi.CallOption) (*SearchTenancyUni
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Service for which search is performed. services/{service} {service} the name of a service, for example 'service.googleapis.com'.",
+	//       "description": "Required. Service for which search is performed. services/{service} {service} the name of a service, for example 'service.googleapis.com'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -5400,7 +5402,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAddProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5473,7 +5475,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -5555,7 +5557,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsApplyProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5628,7 +5630,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -5704,7 +5706,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAttachProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5777,7 +5779,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit that the project will be attached to. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit that the project will be attached to. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -5848,7 +5850,7 @@ func (c *ServicesTenancyUnitsCreateCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5921,7 +5923,7 @@ func (c *ServicesTenancyUnitsCreateCall) Do(opts ...googleapi.CallOption) (*Tena
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a managed service, such as 'service.googleapis.com'. Enables service binding using the new tenancy unit.",
+	//       "description": "Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a managed service, such as 'service.googleapis.com'. Enables service binding using the new tenancy unit.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -5988,7 +5990,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6056,7 +6058,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit to be deleted.",
+	//       "description": "Required. Name of the tenancy unit to be deleted.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -6128,7 +6130,7 @@ func (c *ServicesTenancyUnitsDeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6201,7 +6203,7 @@ func (c *ServicesTenancyUnitsDeleteProjectCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -6245,7 +6247,7 @@ func (r *ServicesTenancyUnitsService) List(parent string) *ServicesTenancyUnitsL
 }
 
 // Filter sets the optional parameter "filter": Filter expression over
-// tenancy resources field.
+// tenancy resources field. Optional.
 func (c *ServicesTenancyUnitsListCall) Filter(filter string) *ServicesTenancyUnitsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6304,7 +6306,7 @@ func (c *ServicesTenancyUnitsListCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6375,23 +6377,23 @@ func (c *ServicesTenancyUnitsListCall) Do(opts ...googleapi.CallOption) (*ListTe
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression over tenancy resources field. Optional.",
+	//       "description": "Optional. Filter expression over tenancy resources field. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results returned by this request.",
+	//       "description": "Optional. The maximum number of results returned by this request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of `nextPageToken` from the previous response.",
+	//       "description": "Optional. The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of `nextPageToken` from the previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Managed service and service consumer. Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a service, such as 'service.googleapis.com'.",
+	//       "description": "Required. Managed service and service consumer. Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a service, such as 'service.googleapis.com'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -6483,7 +6485,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsRemoveProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6556,7 +6558,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -6628,7 +6630,7 @@ func (c *ServicesTenancyUnitsUndeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsUndeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6701,7 +6703,7 @@ func (c *ServicesTenancyUnitsUndeleteProjectCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,

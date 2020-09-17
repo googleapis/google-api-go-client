@@ -479,6 +479,10 @@ func (s *Attempt) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
+	// BindingId: A client-specified ID for this binding. Expected to be
+	// globally unique to support the internal bindings-by-ID API.
+	BindingId string `json:"bindingId,omitempty"`
+
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
@@ -528,7 +532,7 @@ type Binding struct {
 	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// ForceSendFields is a list of field names (e.g. "BindingId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -536,7 +540,7 @@ type Binding struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Condition") to include in
+	// NullFields is a list of field names (e.g. "BindingId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1354,28 +1358,27 @@ func (s *Queue) MarshalJSON() ([]byte, error) {
 // command, RunTask, will run a task even if the queue has reached its
 // RateLimits.
 type RateLimits struct {
-	// MaxBurstSize: Output only. The max burst size. Max burst size limits
-	// how fast tasks in queue are processed when many tasks are in the
-	// queue and the rate is high. This field allows the queue to have a
-	// high rate so processing starts shortly after a task is enqueued, but
-	// still limits resource usage when many tasks are enqueued in a short
-	// period of time. The [token
-	// bucket](https://wikipedia.org/wiki/Token_Bucket) algorithm is used to
-	// control the rate of task dispatches. Each queue has a token bucket
-	// that holds tokens, up to the maximum specified by `max_burst_size`.
-	// Each time a task is dispatched, a token is removed from the bucket.
-	// Tasks will be dispatched until the queue's bucket runs out of tokens.
-	// The bucket will be continuously refilled with new tokens based on
-	// max_dispatches_per_second. Cloud Tasks will pick the value of
-	// `max_burst_size` based on the value of max_dispatches_per_second. For
-	// App Engine queues that were created or updated using
+	// MaxBurstSize: The max burst size. Max burst size limits how fast
+	// tasks in queue are processed when many tasks are in the queue and the
+	// rate is high. This field allows the queue to have a high rate so
+	// processing starts shortly after a task is enqueued, but still limits
+	// resource usage when many tasks are enqueued in a short period of
+	// time. The [token bucket](https://wikipedia.org/wiki/Token_Bucket)
+	// algorithm is used to control the rate of task dispatches. Each queue
+	// has a token bucket that holds tokens, up to the maximum specified by
+	// `max_burst_size`. Each time a task is dispatched, a token is removed
+	// from the bucket. Tasks will be dispatched until the queue's bucket
+	// runs out of tokens. The bucket will be continuously refilled with new
+	// tokens based on max_dispatches_per_second. The default value of
+	// `max_burst_size` is picked by Cloud Tasks based on the value of
+	// max_dispatches_per_second. The maximum value of `max_burst_size` is
+	// 500. For App Engine queues that were created or updated using
 	// `queue.yaml/xml`, `max_burst_size` is equal to
 	// [bucket_size](https://cloud.google.com/appengine/docs/standard/python/
-	// config/queueref#bucket_size). Since `max_burst_size` is output only,
-	// if UpdateQueue is called on a queue created by `queue.yaml/xml`,
-	// `max_burst_size` will be reset based on the value of
-	// max_dispatches_per_second, regardless of whether
-	// max_dispatches_per_second is updated.
+	// config/queueref#bucket_size). If UpdateQueue is called on a queue
+	// without explicitly setting a value for `max_burst_size`,
+	// `max_burst_size` value will get updated if UpdateQueue is updating
+	// max_dispatches_per_second.
 	MaxBurstSize int64 `json:"maxBurstSize,omitempty"`
 
 	// MaxConcurrentDispatches: The maximum number of concurrent tasks that
@@ -1937,7 +1940,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2103,7 +2106,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2282,7 +2285,7 @@ func (c *ProjectsLocationsQueuesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2427,7 +2430,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2568,7 +2571,7 @@ func (c *ProjectsLocationsQueuesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2707,7 +2710,7 @@ func (c *ProjectsLocationsQueuesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2890,7 +2893,7 @@ func (c *ProjectsLocationsQueuesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3079,7 +3082,7 @@ func (c *ProjectsLocationsQueuesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3228,7 +3231,7 @@ func (c *ProjectsLocationsQueuesPauseCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3371,7 +3374,7 @@ func (c *ProjectsLocationsQueuesPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3517,7 +3520,7 @@ func (c *ProjectsLocationsQueuesResumeCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3662,7 +3665,7 @@ func (c *ProjectsLocationsQueuesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3807,7 +3810,7 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3949,7 +3952,7 @@ func (c *ProjectsLocationsQueuesTasksCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4089,7 +4092,7 @@ func (c *ProjectsLocationsQueuesTasksDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4254,7 +4257,7 @@ func (c *ProjectsLocationsQueuesTasksGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4461,7 +4464,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4656,7 +4659,7 @@ func (c *ProjectsLocationsQueuesTasksRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -931,7 +931,6 @@
                     "wearScreenshots",
                     "icon",
                     "featureGraphic",
-                    "promoGraphic",
                     "tvBanner"
                   ],
                   "enumDescriptions": [
@@ -943,7 +942,6 @@
                     "Wear screenshot.",
                     "Icon.",
                     "Feature graphic.",
-                    "Promo graphic.",
                     "TV banner."
                   ],
                   "location": "path",
@@ -997,7 +995,6 @@
                     "wearScreenshots",
                     "icon",
                     "featureGraphic",
-                    "promoGraphic",
                     "tvBanner"
                   ],
                   "enumDescriptions": [
@@ -1009,7 +1006,6 @@
                     "Wear screenshot.",
                     "Icon.",
                     "Feature graphic.",
-                    "Promo graphic.",
                     "TV banner."
                   ],
                   "location": "path",
@@ -1066,7 +1062,6 @@
                     "wearScreenshots",
                     "icon",
                     "featureGraphic",
-                    "promoGraphic",
                     "tvBanner"
                   ],
                   "enumDescriptions": [
@@ -1078,7 +1073,6 @@
                     "Wear screenshot.",
                     "Icon.",
                     "Feature graphic.",
-                    "Promo graphic.",
                     "TV banner."
                   ],
                   "location": "path",
@@ -1151,7 +1145,6 @@
                     "wearScreenshots",
                     "icon",
                     "featureGraphic",
-                    "promoGraphic",
                     "tvBanner"
                   ],
                   "enumDescriptions": [
@@ -1163,7 +1156,6 @@
                     "Wear screenshot.",
                     "Icon.",
                     "Feature graphic.",
-                    "Promo graphic.",
                     "TV banner."
                   ],
                   "location": "path",
@@ -2679,7 +2671,7 @@
       }
     }
   },
-  "revision": "20200910",
+  "revision": "20200916",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Apk": {

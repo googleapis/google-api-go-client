@@ -520,8 +520,9 @@ type MediationReportSpec struct {
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
 	// format (for example, "2018-12-21"). Requests can specify at most one
 	// time dimension.
-	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and "AdMob Network" as label value).
+	//   "AD_SOURCE" - The [unique ID of the ad
+	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
+	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
 	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
@@ -638,8 +639,9 @@ type MediationReportSpecDimensionFilter struct {
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
 	// format (for example, "2018-12-21"). Requests can specify at most one
 	// time dimension.
-	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and "AdMob Network" as label value).
+	//   "AD_SOURCE" - The [unique ID of the ad
+	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
+	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
 	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
@@ -702,8 +704,9 @@ type MediationReportSpecSortCondition struct {
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
 	// format (for example, "2018-12-21"). Requests can specify at most one
 	// time dimension.
-	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and "AdMob Network" as label value).
+	//   "AD_SOURCE" - The [unique ID of the ad
+	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
+	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
 	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
@@ -1468,7 +1471,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1628,7 +1631,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1784,7 +1787,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1925,7 +1928,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

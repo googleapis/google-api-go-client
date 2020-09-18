@@ -381,6 +381,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": " https://cloud.google.com/api-gateway/docs",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "apigateway:v1alpha2",
+      "name": "apigateway",
+      "version": "v1alpha2",
+      "title": "API Gateway API",
+      "description": "",
+      "discoveryRestUrl": "https://apigateway.googleapis.com/$discovery/rest?version=v1alpha2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": " https://cloud.google.com/api-gateway/docs",
       "preferred": true
     },
     {
@@ -1642,15 +1657,14 @@
       "id": "deploymentmanager:alpha",
       "name": "deploymentmanager",
       "version": "alpha",
-      "title": "Google Cloud Deployment Manager Alpha API",
-      "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/deploymentmanager/alpha/rest",
-      "discoveryLink": "./apis/deploymentmanager/alpha/rest",
+      "title": "Cloud Deployment Manager V2 API",
+      "description": "The Google Cloud Deployment Manager v2 API provides services for configuring, deploying, and viewing Google Cloud services and APIs via templates which specify deployments of Cloud resources.",
+      "discoveryRestUrl": "https://deploymentmanager.googleapis.com/$discovery/rest?version=alpha",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/deployment-manager/",
+      "documentationLink": "http://cloud.google.com/deployment-manager",
       "preferred": false
     },
     {
@@ -1658,15 +1672,14 @@
       "id": "deploymentmanager:v2beta",
       "name": "deploymentmanager",
       "version": "v2beta",
-      "title": "Google Cloud Deployment Manager API V2Beta Methods",
-      "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/deploymentmanager/v2beta/rest",
-      "discoveryLink": "./apis/deploymentmanager/v2beta/rest",
+      "title": "Cloud Deployment Manager V2 API",
+      "description": "The Google Cloud Deployment Manager v2 API provides services for configuring, deploying, and viewing Google Cloud services and APIs via templates which specify deployments of Cloud resources.",
+      "discoveryRestUrl": "https://deploymentmanager.googleapis.com/$discovery/rest?version=v2beta",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/deployment-manager/",
+      "documentationLink": "http://cloud.google.com/deployment-manager",
       "preferred": false
     },
     {
@@ -1674,15 +1687,14 @@
       "id": "deploymentmanager:v2",
       "name": "deploymentmanager",
       "version": "v2",
-      "title": "Google Cloud Deployment Manager API",
-      "description": "Declares, configures, and deploys complex solutions on Google Cloud Platform.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/deploymentmanager/v2/rest",
-      "discoveryLink": "./apis/deploymentmanager/v2/rest",
+      "title": "Cloud Deployment Manager V2 API",
+      "description": "The Google Cloud Deployment Manager v2 API provides services for configuring, deploying, and viewing Google Cloud services and APIs via templates which specify deployments of Cloud resources.",
+      "discoveryRestUrl": "https://deploymentmanager.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/deployment-manager/",
+      "documentationLink": "http://cloud.google.com/deployment-manager",
       "preferred": true
     },
     {
@@ -3096,22 +3108,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/android/work/play/custom-app-api/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "plus:v1",
-      "name": "plus",
-      "version": "v1",
-      "title": "Google+ API",
-      "description": "Builds on top of the Google+ platform.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/plus/v1/rest",
-      "discoveryLink": "./apis/plus/v1/rest",
-      "icons": {
-        "x16": "http://www.google.com/images/icons/product/gplus-16.png",
-        "x32": "http://www.google.com/images/icons/product/gplus-32.png"
-      },
-      "documentationLink": "https://developers.google.com/+/api/",
       "preferred": true
     },
     {

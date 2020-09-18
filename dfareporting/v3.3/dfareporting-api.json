@@ -436,13 +436,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.accountUserProfiles.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "AccountUserProfile ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -619,13 +621,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.accounts.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "Account ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -930,9 +934,11 @@
                 "AD_SERVING_STANDARD_AD",
                 "AD_SERVING_DEFAULT_AD",
                 "AD_SERVING_CLICK_TRACKER",
-                "AD_SERVING_TRACKING"
+                "AD_SERVING_TRACKING",
+                "AD_SERVING_BRAND_SAFE_AD"
               ],
               "enumDescriptions": [
+                "",
                 "",
                 "",
                 "",
@@ -957,13 +963,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.ads.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "Ad ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -1193,13 +1201,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.advertiserGroups.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "AdvertiserGroup ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -1424,13 +1434,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.advertiserLandingPages.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "LandingPage ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -1673,13 +1685,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.advertisers.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "Advertiser ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -2052,13 +2066,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.campaigns.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "Campaign ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -2649,13 +2665,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.contentCategories.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "ContentCategory ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -3093,7 +3111,8 @@
           "id": "dfareporting.creativeFieldValues.patch",
           "parameterOrder": [
             "profileId",
-            "creativeFieldId"
+            "creativeFieldId",
+            "id"
           ],
           "parameters": {
             "creativeFieldId": {
@@ -3107,6 +3126,7 @@
               "description": "CreativeFieldValue ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -3351,13 +3371,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.creativeFields.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "CreativeField ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -3572,13 +3594,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.creativeGroups.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "CreativeGroup ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -3894,13 +3918,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.creatives.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "Creative ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -4523,13 +4549,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.eventTags.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "EventTag ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -4958,13 +4986,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.floodlightActivities.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "FloodlightActivity ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -5189,13 +5219,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.floodlightActivityGroups.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "FloodlightActivityGroup ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -5320,13 +5352,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.floodlightConfigurations.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "FloodlightConfiguration ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -6423,13 +6457,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.placementGroups.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "PlacementGroup ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -6659,13 +6695,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.placementStrategies.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "PlacementStrategy ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -7089,13 +7127,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.placements.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "Placement ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -7459,18 +7499,19 @@
         },
         "patch": {
           "description": "Updates an existing remarketing list share. This method supports patch semantics.",
-          "flatPath": "userprofiles/{profileId}/remarketingLists/{remarketingListId}/remarketingListShares",
+          "flatPath": "userprofiles/{profileId}/remarketingListShares",
           "httpMethod": "PATCH",
           "id": "dfareporting.remarketingListShares.patch",
           "parameterOrder": [
             "profileId",
-            "remarketingListId"
+            "id"
           ],
           "parameters": {
             "id": {
-              "description": "RemarketingListShare ID.",
+              "description": "RemarketingList ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -7479,16 +7520,9 @@
               "location": "path",
               "required": true,
               "type": "string"
-            },
-            "remarketingListId": {
-              "description": "RemarketingList ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
             }
           },
-          "path": "userprofiles/{profileId}/remarketingLists/{remarketingListId}/remarketingListShares",
+          "path": "userprofiles/{profileId}/remarketingListShares",
           "request": {
             "$ref": "RemarketingListShare"
           },
@@ -7689,13 +7723,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.remarketingLists.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "RemarketingList ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -8389,13 +8425,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.sites.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "Site ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -8713,13 +8751,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.subaccounts.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "Subaccount ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -9047,13 +9087,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.targetingTemplates.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "TargetingTemplate ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -9473,13 +9515,15 @@
           "httpMethod": "PATCH",
           "id": "dfareporting.userRoles.patch",
           "parameterOrder": [
-            "profileId"
+            "profileId",
+            "id"
           ],
           "parameters": {
             "id": {
               "description": "UserRole ID.",
               "format": "int64",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "profileId": {
@@ -9594,7 +9638,7 @@
       }
     }
   },
-  "revision": "20200825",
+  "revision": "20200916",
   "rootUrl": "https://dfareporting.googleapis.com/",
   "schemas": {
     "Account": {
@@ -10240,9 +10284,11 @@
             "AD_SERVING_STANDARD_AD",
             "AD_SERVING_DEFAULT_AD",
             "AD_SERVING_CLICK_TRACKER",
-            "AD_SERVING_TRACKING"
+            "AD_SERVING_TRACKING",
+            "AD_SERVING_BRAND_SAFE_AD"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

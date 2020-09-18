@@ -147,7 +147,8 @@ type V1p4beta1Service struct {
 // AccessSelector: Specifies roles and/or permissions to analyze, to
 // determine both the identities possessing them and the resources they
 // control. If multiple values are specified, results will include
-// identities and resources matching any of them.
+// identities and resources matching any of them. The total number of
+// roles and permissions should be equal or less than 10.
 type AccessSelector struct {
 	// Permissions: Optional. The permissions to appear in result.
 	Permissions []string `json:"permissions,omitempty"`
@@ -1401,7 +1402,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1601,7 +1602,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

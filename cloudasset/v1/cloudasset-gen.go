@@ -405,6 +405,50 @@ type BigQueryDestination struct {
 	// already exists, the export call returns an INVALID_ARGUMEMT error.
 	Force bool `json:"force,omitempty"`
 
+	// PartitionSpec: [partition_spec] determines whether to export to
+	// partitioned table(s) and how to partition the data. If
+	// [partition_spec] is unset or [partition_spec.partion_key] is unset or
+	// `PARTITION_KEY_UNSPECIFIED`, the snapshot results will be exported to
+	// non-partitioned table(s). [force] will decide whether to overwrite
+	// existing table(s). If [partition_spec] is specified. First, the
+	// snapshot results will be written to partitioned table(s) with two
+	// additional timestamp columns, readTime and requestTime, one of which
+	// will be the partition key. Secondly, in the case when any destination
+	// table already exists, it will first try to update existing table's
+	// schema as necessary by appending additional columns. Then, if [force]
+	// is `TRUE`, the corresponding partition will be overwritten by the
+	// snapshot results (data in different partitions will remain intact);
+	// if [force] is unset or `FALSE`, it will append the data. An error
+	// will be returned if the schema update or data appension fails.
+	PartitionSpec *PartitionSpec `json:"partitionSpec,omitempty"`
+
+	// SeparateTablesPerAssetType: If this flag is `TRUE`, the snapshot
+	// results will be written to one or multiple tables, each of which
+	// contains results of one asset type. The [force] and [partition_spec]
+	// fields will apply to each of them. Field [table] will be concatenated
+	// with "_" and the asset type names (see
+	// https://cloud.google.com/asset-inventory/docs/supported-asset-types
+	// for supported asset types) to construct per-asset-type table names,
+	// in which all non-alphanumeric characters like "." and "/" will be
+	// substituted by "_". Example: if field [table] is "mytable" and
+	// snapshot results contain "storage.googleapis.com/Bucket" assets, the
+	// corresponding table name will be
+	// "mytable_storage_googleapis_com_Bucket". If any of these tables does
+	// not exist, a new table with the concatenated name will be created.
+	// When [content_type] in the ExportAssetsRequest is `RESOURCE`, the
+	// schema of each table will include RECORD-type columns mapped to the
+	// nested fields in the Asset.resource.data field of that asset type (up
+	// to the 15 nested level BigQuery supports
+	// (https://cloud.google.com/bigquery/docs/nested-repeated#limitations)).
+	//  The fields in >15 nested levels will be stored in JSON format string
+	// as a child column of its parent RECORD column. If error occurs when
+	// exporting to any table, the whole export call will return an error
+	// but the export results that already succeed will persist. Example: if
+	// exporting to table_type_A succeeds when exporting to table_type_B
+	// fails during one export call, the results in table_type_A will
+	// persist and there will not be partial results persisting in a table.
+	SeparateTablesPerAssetType bool `json:"separateTablesPerAssetType,omitempty"`
+
 	// Table: Required. The BigQuery table to which the snapshot result
 	// should be written. If this table does not exist, a new table with the
 	// given name will be created.
@@ -1880,6 +1924,49 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PartitionSpec: Specifications of BigQuery partitioned table as export
+// destination.
+type PartitionSpec struct {
+	// PartitionKey: The partition key for BigQuery partitioned table.
+	//
+	// Possible values:
+	//   "PARTITION_KEY_UNSPECIFIED" - Unspecified partition key. If used,
+	// it means using non-partitioned table.
+	//   "READ_TIME" - The time when the snapshot is taken. If specified as
+	// partition key, the result table(s) is partitoned by the additional
+	// timestamp column, readTime. If [read_time] in ExportAssetsRequest is
+	// specified, the readTime column's value will be the same as it.
+	// Otherwise, its value will be the current time that is used to take
+	// the snapshot.
+	//   "REQUEST_TIME" - The time when the request is received and started
+	// to be processed. If specified as partition key, the result table(s)
+	// is partitoned by the requestTime column, an additional timestamp
+	// column representing when the request was received.
+	PartitionKey string `json:"partitionKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PartitionKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PartitionKey") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Permissions: IAM permissions
 type Permissions struct {
 	// Permissions: A list of permissions. A sample permission string:
@@ -2498,7 +2585,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2636,7 +2723,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2777,7 +2864,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2921,7 +3008,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3056,7 +3143,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3207,7 +3294,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3400,7 +3487,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3582,7 +3669,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3783,7 +3870,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4045,7 +4132,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

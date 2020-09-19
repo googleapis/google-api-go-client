@@ -118,6 +118,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Admin = NewAdminService(s)
 	s.Cursor = NewCursorService(s)
+	s.TopicStats = NewTopicStatsService(s)
 	return s, nil
 }
 
@@ -129,6 +130,8 @@ type Service struct {
 	Admin *AdminService
 
 	Cursor *CursorService
+
+	TopicStats *TopicStatsService
 }
 
 func (s *Service) userAgent() string {
@@ -264,6 +267,51 @@ type CursorProjectsLocationsSubscriptionsCursorsService struct {
 	s *Service
 }
 
+func NewTopicStatsService(s *Service) *TopicStatsService {
+	rs := &TopicStatsService{s: s}
+	rs.Projects = NewTopicStatsProjectsService(s)
+	return rs
+}
+
+type TopicStatsService struct {
+	s *Service
+
+	Projects *TopicStatsProjectsService
+}
+
+func NewTopicStatsProjectsService(s *Service) *TopicStatsProjectsService {
+	rs := &TopicStatsProjectsService{s: s}
+	rs.Locations = NewTopicStatsProjectsLocationsService(s)
+	return rs
+}
+
+type TopicStatsProjectsService struct {
+	s *Service
+
+	Locations *TopicStatsProjectsLocationsService
+}
+
+func NewTopicStatsProjectsLocationsService(s *Service) *TopicStatsProjectsLocationsService {
+	rs := &TopicStatsProjectsLocationsService{s: s}
+	rs.Topics = NewTopicStatsProjectsLocationsTopicsService(s)
+	return rs
+}
+
+type TopicStatsProjectsLocationsService struct {
+	s *Service
+
+	Topics *TopicStatsProjectsLocationsTopicsService
+}
+
+func NewTopicStatsProjectsLocationsTopicsService(s *Service) *TopicStatsProjectsLocationsTopicsService {
+	rs := &TopicStatsProjectsLocationsTopicsService{s: s}
+	return rs
+}
+
+type TopicStatsProjectsLocationsTopicsService struct {
+	s *Service
+}
+
 // Capacity: The throughput capacity configuration for each partition.
 type Capacity struct {
 	// PublishMibPerSec: Publish throughput capacity per partition in MiB/s.
@@ -294,6 +342,92 @@ type Capacity struct {
 
 func (s *Capacity) MarshalJSON() ([]byte, error) {
 	type NoMethod Capacity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComputeMessageStatsRequest: Compute statistics about a range of
+// messages in a given topic and partition.
+type ComputeMessageStatsRequest struct {
+	// EndCursor: The exclusive end of the range. The range is empty if
+	// end_cursor <= start_cursor. Specifying a start_cursor before the
+	// first message and an end_cursor after the last message will retrieve
+	// all messages.
+	EndCursor *Cursor `json:"endCursor,omitempty"`
+
+	// Partition: Required. The partition for which we should compute
+	// message stats.
+	Partition int64 `json:"partition,omitempty,string"`
+
+	// StartCursor: The inclusive start of the range.
+	StartCursor *Cursor `json:"startCursor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndCursor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndCursor") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComputeMessageStatsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeMessageStatsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComputeMessageStatsResponse: Response containing stats for messages
+// in the requested topic and partition.
+type ComputeMessageStatsResponse struct {
+	// MessageBytes: The number of quota bytes accounted to these messages.
+	MessageBytes int64 `json:"messageBytes,omitempty,string"`
+
+	// MessageCount: The count of messages.
+	MessageCount int64 `json:"messageCount,omitempty,string"`
+
+	// MinimumEventTime: The minimum event timestamp across these messages.
+	// For the purposes of this computation, if a message does not have an
+	// event time, we use the publish time. The timestamp will be unset if
+	// there are no messages.
+	MinimumEventTime string `json:"minimumEventTime,omitempty"`
+
+	// MinimumPublishTime: The minimum publish timestamp across these
+	// messages. Note that publish timestamps within a partition are
+	// non-decreasing. The timestamp will be unset if there are no messages.
+	MinimumPublishTime string `json:"minimumPublishTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "MessageBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MessageBytes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComputeMessageStatsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeMessageStatsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -809,7 +943,7 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -952,7 +1086,7 @@ func (c *AdminProjectsLocationsSubscriptionsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1093,7 +1227,7 @@ func (c *AdminProjectsLocationsSubscriptionsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1256,7 +1390,7 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1430,7 +1564,7 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1584,7 +1718,7 @@ func (c *AdminProjectsLocationsTopicsCreateCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1727,7 +1861,7 @@ func (c *AdminProjectsLocationsTopicsDeleteCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1868,7 +2002,7 @@ func (c *AdminProjectsLocationsTopicsGetCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2013,7 +2147,7 @@ func (c *AdminProjectsLocationsTopicsGetPartitionsCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsGetPartitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2174,7 +2308,7 @@ func (c *AdminProjectsLocationsTopicsListCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2348,7 +2482,7 @@ func (c *AdminProjectsLocationsTopicsPatchCall) Header() http.Header {
 
 func (c *AdminProjectsLocationsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2522,7 +2656,7 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) Header() http.Header
 
 func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2716,7 +2850,7 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) Header() http.Head
 
 func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2835,4 +2969,145 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) Pages(ctx context.
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "pubsublite.topicStats.projects.locations.topics.computeMessageStats":
+
+type TopicStatsProjectsLocationsTopicsComputeMessageStatsCall struct {
+	s                          *Service
+	topic                      string
+	computemessagestatsrequest *ComputeMessageStatsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// ComputeMessageStats: Compute statistics about a range of messages in
+// a given topic and partition.
+func (r *TopicStatsProjectsLocationsTopicsService) ComputeMessageStats(topic string, computemessagestatsrequest *ComputeMessageStatsRequest) *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall {
+	c := &TopicStatsProjectsLocationsTopicsComputeMessageStatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.topic = topic
+	c.computemessagestatsrequest = computemessagestatsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Fields(s ...googleapi.Field) *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Context(ctx context.Context) *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.computemessagestatsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/topicStats/{+topic}:computeMessageStats")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"topic": c.topic,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "pubsublite.topicStats.projects.locations.topics.computeMessageStats" call.
+// Exactly one of *ComputeMessageStatsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ComputeMessageStatsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) Do(opts ...googleapi.CallOption) (*ComputeMessageStatsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ComputeMessageStatsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Compute statistics about a range of messages in a given topic and partition.",
+	//   "flatPath": "v1/topicStats/projects/{projectsId}/locations/{locationsId}/topics/{topicsId}:computeMessageStats",
+	//   "httpMethod": "POST",
+	//   "id": "pubsublite.topicStats.projects.locations.topics.computeMessageStats",
+	//   "parameterOrder": [
+	//     "topic"
+	//   ],
+	//   "parameters": {
+	//     "topic": {
+	//       "description": "Required. The topic for which we should compute message stats.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/topics/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/topicStats/{+topic}:computeMessageStats",
+	//   "request": {
+	//     "$ref": "ComputeMessageStatsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ComputeMessageStatsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }

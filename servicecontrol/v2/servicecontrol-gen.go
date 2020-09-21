@@ -453,13 +453,16 @@ type AuthenticationInfo struct {
 
 	// PrincipalEmail: The email address of the authenticated user (or
 	// service account on behalf of third party principal) making the
-	// request. For privacy reasons, the principal email address is redacted
-	// for all read-only operations that fail with a "permission denied"
-	// error.
+	// request. For third party identity callers, the `principal_subject`
+	// field is populated instead of this field. For privacy reasons, the
+	// principal email address is sometimes redacted. For more information,
+	// see [Caller identities in audit
+	// logs](https://cloud.google.com/logging/docs/audit#user-id).
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
 	// PrincipalSubject: String representation of identity of requesting
-	// party. Populated for both first and third party identities.
+	// party. Populated for both first and third party identities. Only
+	// present for APIs that support third-party identities.
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 
 	// ServiceAccountDelegationInfo: Identity delegation history of an
@@ -1274,7 +1277,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1428,7 +1431,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

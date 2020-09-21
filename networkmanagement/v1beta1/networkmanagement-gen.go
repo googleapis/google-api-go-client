@@ -509,6 +509,12 @@ type ConnectivityTest struct {
 	// `projects/{project_id}/locations/global/connectivityTests/{test}`
 	Name string `json:"name,omitempty"`
 
+	// ProbingDetails: Output only. The probing details of this test from
+	// the latest run, present for applicable tests only. The details are
+	// updated when creating a new test, updating an existing test, or
+	// triggering a one-time rerun of an existing test.
+	ProbingDetails *ProbingDetails `json:"probingDetails,omitempty"`
+
 	// Protocol: IP Protocol of the test. When not provided, "TCP" is
 	// assumed.
 	Protocol string `json:"protocol,omitempty"`
@@ -1659,6 +1665,75 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProbingDetails: The details of probing from the latest run.
+type ProbingDetails struct {
+	// AbortCause: Causes that the probing was aborted.
+	//
+	// Possible values:
+	//   "PROBING_ABORT_CAUSE_UNSPECIFIED" - Abort reason unspecified.
+	//   "PERMISSION_DENIED" - Aborted because the user lacks the permission
+	// to access all or part of the network configurations required to run
+	// the test.
+	//   "NO_SOURCE_LOCATION" - Aborted because no valid source endpoint is
+	// derived from the input test request.
+	AbortCause string `json:"abortCause,omitempty"`
+
+	// EndpointInfo: Derived from the test input. The actual source and
+	// destination endpoint where the probing was run.
+	EndpointInfo *EndpointInfo `json:"endpointInfo,omitempty"`
+
+	// Error: The details of an internal failure or a cancellation of
+	// reachability analysis.
+	Error *Status `json:"error,omitempty"`
+
+	// Result: The overall reachability result of the test.
+	//
+	// Possible values:
+	//   "PROBING_RESULT_UNSPECIFIED" - Result is not specified.
+	//   "REACHABLE" - 95% or more packets originating from source reached
+	// destination.
+	//   "UNREACHABLE" - No packet originating from source reached
+	// destination.
+	//   "REACHABILITY_INCONSISTENT" - Less than 95% packets originating
+	// from source reached destination.
+	//   "UNDETERMINED" - The reachability could not be determined. Possible
+	// reasons are: * Analysis is aborted due to permission error. User does
+	// not have read permission to the projects listed in the test. *
+	// Analysis is aborted due to internal errors.
+	Result string `json:"result,omitempty"`
+
+	// SentProbeCount: Number of probes sent.
+	SentProbeCount int64 `json:"sentProbeCount,omitempty"`
+
+	// SuccessfulProbeCount: Number of probes that reached destination.
+	SuccessfulProbeCount int64 `json:"successfulProbeCount,omitempty"`
+
+	// VerifyTime: The time the reachability state was verified.
+	VerifyTime string `json:"verifyTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AbortCause") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbortCause") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProbingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ProbingDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReachabilityDetails: The details of reachability state from the
 // latest run.
 type ReachabilityDetails struct {
@@ -2297,7 +2372,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2463,7 +2538,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2655,7 +2730,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2798,7 +2873,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2939,7 +3014,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3100,7 +3175,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3288,7 +3363,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsGlobalConnectivityTestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3484,7 +3559,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3638,7 +3713,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3780,7 +3855,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3925,7 +4000,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) Header(
 
 func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4074,7 +4149,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4215,7 +4290,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4358,7 +4433,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4532,7 +4607,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200917")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

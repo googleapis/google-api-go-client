@@ -275,7 +275,7 @@
       }
     }
   },
-  "revision": "20200829",
+  "revision": "20200915",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -482,7 +482,7 @@
         },
         "mosaicLayout": {
           "$ref": "MosaicLayout",
-          "description": "The content is arranged as a grid of tiles, with each content widget occupying one or more grid squares."
+          "description": "The content is arranged as a grid of tiles, with each content widget occupying one or more grid blocks."
         },
         "name": {
           "description": "Immutable. The resource name of the dashboard.",
@@ -714,7 +714,7 @@
       "type": "object"
     },
     "MosaicLayout": {
-      "description": "A mosaic layout divides the available space into a grid of squares, and overlays the grid with tiles. Unlike GridLayout, tiles may span multiple grid squares and can be placed at arbitrary locations in the grid.",
+      "description": "A mosaic layout divides the available space into a grid of blocks, and overlays the grid with tiles. Unlike GridLayout, tiles may span multiple grid blocks and can be placed at arbitrary locations in the grid.",
       "id": "MosaicLayout",
       "properties": {
         "columns": {
@@ -1017,7 +1017,7 @@
       "id": "Tile",
       "properties": {
         "height": {
-          "description": "The height of the tile, measured in grid squares. Tiles must have a minimum height of 1.",
+          "description": "The height of the tile, measured in grid blocks. Tiles must have a minimum height of 1.",
           "format": "int32",
           "type": "integer"
         },
@@ -1026,17 +1026,17 @@
           "description": "The informational widget contained in the tile. For example an XyChart."
         },
         "width": {
-          "description": "The width of the tile, measured in grid squares. Tiles must have a minimum width of 1.",
+          "description": "The width of the tile, measured in grid blocks. Tiles must have a minimum width of 1.",
           "format": "int32",
           "type": "integer"
         },
         "xPos": {
-          "description": "The zero-indexed position of the tile in grid squares relative to the left edge of the grid. Tiles must be contained within the specified number of columns. x_pos cannot be negative.",
+          "description": "The zero-indexed position of the tile in grid blocks relative to the left edge of the grid. Tiles must be contained within the specified number of columns. x_pos cannot be negative.",
           "format": "int32",
           "type": "integer"
         },
         "yPos": {
-          "description": "The zero-indexed position of the tile in grid squares relative to the top edge of the grid. y_pos cannot be negative.",
+          "description": "The zero-indexed position of the tile in grid blocks relative to the top edge of the grid. y_pos cannot be negative.",
           "format": "int32",
           "type": "integer"
         }

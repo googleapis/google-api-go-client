@@ -556,13 +556,12 @@
       "version": "v2",
       "title": "BigQuery API",
       "description": "A data platform for customers to create, manage, share and query data.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/bigquery/v2/rest",
-      "discoveryLink": "./apis/bigquery/v2/rest",
+      "discoveryRestUrl": "https://bigquery.googleapis.com/$discovery/rest?version=v2",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/search-16.gif",
-        "x32": "https://www.google.com/images/icons/product/search-32.gif"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/bigquery/",
+      "documentationLink": "https://developers.google.com/bigquery/",
       "preferred": true
     },
     {
@@ -751,14 +750,13 @@
       "name": "books",
       "version": "v1",
       "title": "Books API",
-      "description": "Searches for books and manages your Google Books library.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/books/v1/rest",
-      "discoveryLink": "./apis/books/v1/rest",
+      "description": "The Google Books API allows clients to access the Google Books repository.",
+      "discoveryRestUrl": "https://books.googleapis.com/$discovery/rest?version=v1",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/ebooks-16.png",
-        "x32": "https://www.google.com/images/icons/product/ebooks-32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/books/docs/v1/getting_started",
+      "documentationLink": "https://code.google.com/apis/books/docs/v1/getting_started.html",
       "preferred": true
     },
     {

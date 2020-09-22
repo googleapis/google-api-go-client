@@ -139,8 +139,8 @@ type AmpUrl struct {
 	AmpUrl string `json:"ampUrl,omitempty"`
 
 	// CdnAmpUrl: The [AMP Cache
-	// URL](/amp/cache/overview#amp-cache-url-format) pointing to
-	// the cached document in the Google AMP Cache.
+	// URL](/amp/cache/overview#amp-cache-url-format) pointing to the cached
+	// document in the Google AMP Cache.
 	CdnAmpUrl string `json:"cdnAmpUrl,omitempty"`
 
 	// OriginalUrl: The original non-AMP URL.
@@ -177,24 +177,18 @@ type AmpUrlError struct {
 	// Possible values:
 	//   "ERROR_CODE_UNSPECIFIED" - Not specified error.
 	//   "INPUT_URL_NOT_FOUND" - Indicates the requested URL is not found in
-	// the index, possibly because
-	// it's unable to be found, not able to be accessed by Googlebot, or
-	// some
-	// other error.
+	// the index, possibly because it's unable to be found, not able to be
+	// accessed by Googlebot, or some other error.
 	//   "NO_AMP_URL" - Indicates no AMP URL has been found that corresponds
-	// to the requested
-	// URL.
+	// to the requested URL.
 	//   "APPLICATION_ERROR" - Indicates some kind of application error
-	// occurred at the server.
-	// Client advised to retry.
+	// occurred at the server. Client advised to retry.
 	//   "URL_IS_VALID_AMP" - DEPRECATED: Indicates the requested URL is a
-	// valid AMP URL.  This is a
-	// non-error state, should not be relied upon as a sign of success
-	// or
-	// failure.  It will be removed in future versions of the API.
+	// valid AMP URL. This is a non-error state, should not be relied upon
+	// as a sign of success or failure. It will be removed in future
+	// versions of the API.
 	//   "URL_IS_INVALID_AMP" - Indicates that an AMP URL has been found
-	// that corresponds to the request
-	// URL, but it is not valid AMP HTML.
+	// that corresponds to the request URL, but it is not valid AMP HTML.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorMessage: An optional descriptive error message.
@@ -232,26 +226,20 @@ type BatchGetAmpUrlsRequest struct {
 	//
 	// Possible values:
 	//   "FETCH_LIVE_DOC" - FETCH_LIVE_DOC strategy involves live document
-	// fetch of URLs not found in
-	// the index. Any request URL not found in the index is crawled in
-	// realtime
-	// to validate if there is a corresponding AMP URL. This strategy has
-	// higher
-	// coverage but with extra latency introduced by realtime crawling. This
-	// is
-	// the default strategy. Applications using this strategy should set
-	// higher
-	// HTTP timeouts of the API calls.
+	// fetch of URLs not found in the index. Any request URL not found in
+	// the index is crawled in realtime to validate if there is a
+	// corresponding AMP URL. This strategy has higher coverage but with
+	// extra latency introduced by realtime crawling. This is the default
+	// strategy. Applications using this strategy should set higher HTTP
+	// timeouts of the API calls.
 	//   "IN_INDEX_DOC" - IN_INDEX_DOC strategy skips fetching live
-	// documents of URL(s) not found
-	// in index. For applications which need low latency use of
-	// IN_INDEX_DOC
-	// strategy is recommended.
+	// documents of URL(s) not found in index. For applications which need
+	// low latency use of IN_INDEX_DOC strategy is recommended.
 	LookupStrategy string `json:"lookupStrategy,omitempty"`
 
-	// Urls: List of URLs to look up for the paired AMP URLs.
-	// The URLs are case-sensitive. Up to 50 URLs per lookup
-	// (see [Usage Limits](/amp/cache/reference/limits)).
+	// Urls: List of URLs to look up for the paired AMP URLs. The URLs are
+	// case-sensitive. Up to 50 URLs per lookup (see [Usage
+	// Limits](/amp/cache/reference/limits)).
 	Urls []string `json:"urls,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LookupStrategy") to
@@ -281,10 +269,8 @@ func (s *BatchGetAmpUrlsRequest) MarshalJSON() ([]byte, error) {
 // BatchGetAmpUrlsResponse: Batch AMP URL response.
 type BatchGetAmpUrlsResponse struct {
 	// AmpUrls: For each URL in BatchAmpUrlsRequest, the URL response. The
-	// response might
-	// not be in the same order as URLs in the batch request.
-	// If BatchAmpUrlsRequest contains duplicate URLs, AmpUrl is
-	// generated
+	// response might not be in the same order as URLs in the batch request.
+	// If BatchAmpUrlsRequest contains duplicate URLs, AmpUrl is generated
 	// only once.
 	AmpUrls []*AmpUrl `json:"ampUrls,omitempty"`
 
@@ -328,8 +314,8 @@ type AmpUrlsBatchGetCall struct {
 	header_                http.Header
 }
 
-// BatchGet: Returns AMP URL(s) and equivalent
-// [AMP Cache URL(s)](/amp/cache/overview#amp-cache-url-format).
+// BatchGet: Returns AMP URL(s) and equivalent [AMP Cache
+// URL(s)](/amp/cache/overview#amp-cache-url-format).
 func (r *AmpUrlsService) BatchGet(batchgetampurlsrequest *BatchGetAmpUrlsRequest) *AmpUrlsBatchGetCall {
 	c := &AmpUrlsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchgetampurlsrequest = batchgetampurlsrequest
@@ -363,7 +349,7 @@ func (c *AmpUrlsBatchGetCall) Header() http.Header {
 
 func (c *AmpUrlsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -424,7 +410,7 @@ func (c *AmpUrlsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetAmpUrls
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns AMP URL(s) and equivalent\n[AMP Cache URL(s)](/amp/cache/overview#amp-cache-url-format).",
+	//   "description": "Returns AMP URL(s) and equivalent [AMP Cache URL(s)](/amp/cache/overview#amp-cache-url-format).",
 	//   "flatPath": "v1/ampUrls:batchGet",
 	//   "httpMethod": "POST",
 	//   "id": "acceleratedmobilepageurl.ampUrls.batchGet",

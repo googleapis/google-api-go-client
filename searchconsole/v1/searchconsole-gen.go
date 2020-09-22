@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   searchconsoleService, err := searchconsole.NewService(ctx, option.WithScopes(searchconsole.WebmastersReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   searchconsoleService, err := searchconsole.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -77,8 +81,23 @@ const apiVersion = "v1"
 const basePath = "https://searchconsole.googleapis.com/"
 const mtlsBasePath = "https://searchconsole.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// View and manage Search Console data for your verified sites
+	WebmastersScope = "https://www.googleapis.com/auth/webmasters"
+
+	// View Search Console data for your verified sites
+	WebmastersReadonlyScope = "https://www.googleapis.com/auth/webmasters.readonly"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/webmasters",
+		"https://www.googleapis.com/auth/webmasters.readonly",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -105,6 +124,9 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Searchanalytics = NewSearchanalyticsService(s)
+	s.Sitemaps = NewSitemapsService(s)
+	s.Sites = NewSitesService(s)
 	s.UrlTestingTools = NewUrlTestingToolsService(s)
 	return s, nil
 }
@@ -114,6 +136,12 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Searchanalytics *SearchanalyticsService
+
+	Sitemaps *SitemapsService
+
+	Sites *SitesService
+
 	UrlTestingTools *UrlTestingToolsService
 }
 
@@ -122,6 +150,33 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewSearchanalyticsService(s *Service) *SearchanalyticsService {
+	rs := &SearchanalyticsService{s: s}
+	return rs
+}
+
+type SearchanalyticsService struct {
+	s *Service
+}
+
+func NewSitemapsService(s *Service) *SitemapsService {
+	rs := &SitemapsService{s: s}
+	return rs
+}
+
+type SitemapsService struct {
+	s *Service
+}
+
+func NewSitesService(s *Service) *SitesService {
+	rs := &SitesService{s: s}
+	return rs
+}
+
+type SitesService struct {
+	s *Service
 }
 
 func NewUrlTestingToolsService(s *Service) *UrlTestingToolsService {
@@ -143,6 +198,142 @@ func NewUrlTestingToolsMobileFriendlyTestService(s *Service) *UrlTestingToolsMob
 
 type UrlTestingToolsMobileFriendlyTestService struct {
 	s *Service
+}
+
+type ApiDataRow struct {
+	Clicks float64 `json:"clicks,omitempty"`
+
+	Ctr float64 `json:"ctr,omitempty"`
+
+	Impressions float64 `json:"impressions,omitempty"`
+
+	Keys []string `json:"keys,omitempty"`
+
+	Position float64 `json:"position,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Clicks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Clicks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApiDataRow) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiDataRow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *ApiDataRow) UnmarshalJSON(data []byte) error {
+	type NoMethod ApiDataRow
+	var s1 struct {
+		Clicks      gensupport.JSONFloat64 `json:"clicks"`
+		Ctr         gensupport.JSONFloat64 `json:"ctr"`
+		Impressions gensupport.JSONFloat64 `json:"impressions"`
+		Position    gensupport.JSONFloat64 `json:"position"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Clicks = float64(s1.Clicks)
+	s.Ctr = float64(s1.Ctr)
+	s.Impressions = float64(s1.Impressions)
+	s.Position = float64(s1.Position)
+	return nil
+}
+
+// ApiDimensionFilter: A filter test to be applied to each row in the
+// data set, where a match can return the row. Filters are string
+// comparisons, and values and dimension names are not case-sensitive.
+// Individual filters are either AND'ed or OR'ed within their parent
+// filter group, according to the group's group type. You do not need to
+// group by a specified dimension to filter against it.
+type ApiDimensionFilter struct {
+	// Possible values:
+	//   "QUERY"
+	//   "PAGE"
+	//   "COUNTRY"
+	//   "DEVICE"
+	//   "SEARCH_APPEARANCE"
+	Dimension string `json:"dimension,omitempty"`
+
+	Expression string `json:"expression,omitempty"`
+
+	// Possible values:
+	//   "EQUALS"
+	//   "NOT_EQUALS"
+	//   "CONTAINS"
+	//   "NOT_CONTAINS"
+	Operator string `json:"operator,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimension") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimension") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApiDimensionFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiDimensionFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApiDimensionFilterGroup: A set of dimension value filters to test
+// against each row. Only rows that pass all filter groups will be
+// returned. All results within a filter group are either AND'ed or
+// OR'ed together, depending on the group type selected. All filter
+// groups are AND'ed together.
+type ApiDimensionFilterGroup struct {
+	Filters []*ApiDimensionFilter `json:"filters,omitempty"`
+
+	// Possible values:
+	//   "AND"
+	GroupType string `json:"groupType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filters") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApiDimensionFilterGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiDimensionFilterGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // BlockedResource: Blocked resource.
@@ -377,6 +568,211 @@ func (s *RunMobileFriendlyTestResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type SearchAnalyticsQueryRequest struct {
+	// AggregationType: [Optional; Default is \"auto\"] How data is
+	// aggregated. If aggregated by property, all data for the same property
+	// is aggregated; if aggregated by page, all data is aggregated by
+	// canonical URI. If you filter or group by page, choose AUTO; otherwise
+	// you can aggregate either by property or by page, depending on how you
+	// want your data calculated; see the help documentation to learn how
+	// data is calculated differently by site versus by page. **Note:** If
+	// you group or filter by page, you cannot aggregate by property. If you
+	// specify any value other than AUTO, the aggregation type in the result
+	// will match the requested type, or if you request an invalid type, you
+	// will get an error. The API will never change your aggregation type if
+	// the requested type is invalid.
+	//
+	// Possible values:
+	//   "AUTO"
+	//   "BY_PROPERTY"
+	//   "BY_PAGE"
+	AggregationType string `json:"aggregationType,omitempty"`
+
+	// DimensionFilterGroups: [Optional] Zero or more filters to apply to
+	// the dimension grouping values; for example, 'query contains \"buy\"'
+	// to see only data where the query string contains the substring
+	// \"buy\" (not case-sensitive). You can filter by a dimension without
+	// grouping by it.
+	DimensionFilterGroups []*ApiDimensionFilterGroup `json:"dimensionFilterGroups,omitempty"`
+
+	// Dimensions: [Optional] Zero or more dimensions to group results by.
+	// Dimensions are the group-by values in the Search Analytics page.
+	// Dimensions are combined to create a unique row key for each row.
+	// Results are grouped in the order that you supply these dimensions.
+	//
+	// Possible values:
+	//   "DATE"
+	//   "QUERY"
+	//   "PAGE"
+	//   "COUNTRY"
+	//   "DEVICE"
+	//   "SEARCH_APPEARANCE"
+	Dimensions []string `json:"dimensions,omitempty"`
+
+	// EndDate: [Required] End date of the requested date range, in
+	// YYYY-MM-DD format, in PST (UTC - 8:00). Must be greater than or equal
+	// to the start date. This value is included in the range.
+	EndDate string `json:"endDate,omitempty"`
+
+	// RowLimit: [Optional; Default is 1000] The maximum number of rows to
+	// return. Must be a number from 1 to 25,000 (inclusive).
+	RowLimit int64 `json:"rowLimit,omitempty"`
+
+	// SearchType: [Optional; Default is \"web\"] The search type to filter
+	// for.
+	//
+	// Possible values:
+	//   "WEB"
+	//   "IMAGE"
+	//   "VIDEO"
+	SearchType string `json:"searchType,omitempty"`
+
+	// StartDate:  [Required] Start date of the requested date range, in
+	// YYYY-MM-DD format, in PST time (UTC - 8:00). Must be less than or
+	// equal to the end date. This value is included in the range.
+	StartDate string `json:"startDate,omitempty"`
+
+	// StartRow: [Optional; Default is 0] Zero-based index of the first row
+	// in the response. Must be a non-negative number.
+	StartRow int64 `json:"startRow,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchAnalyticsQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchAnalyticsQueryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SearchAnalyticsQueryResponse: A list of rows, one per result, grouped
+// by key. Metrics in each row are aggregated for all data grouped by
+// that key either by page or property, as specified by the aggregation
+// type parameter.
+type SearchAnalyticsQueryResponse struct {
+	// ResponseAggregationType: How the results were aggregated.
+	//
+	// Possible values:
+	//   "AUTO"
+	//   "BY_PROPERTY"
+	//   "BY_PAGE"
+	ResponseAggregationType string `json:"responseAggregationType,omitempty"`
+
+	// Rows: A list of rows grouped by the key values in the order given in
+	// the query.
+	Rows []*ApiDataRow `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ResponseAggregationType") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResponseAggregationType")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchAnalyticsQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchAnalyticsQueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SitemapsListResponse: List of sitemaps.
+type SitemapsListResponse struct {
+	// Sitemap: Contains detailed information about a specific URL submitted
+	// as a [sitemap](https://support.google.com/webmasters/answer/156184).
+	Sitemap []*WmxSitemap `json:"sitemap,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Sitemap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sitemap") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SitemapsListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SitemapsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SitesListResponse: List of sites with access level information.
+type SitesListResponse struct {
+	// SiteEntry: Contains permission level information about a Search
+	// Console site. For more information, see [Permissions in Search
+	// Console](https://support.google.com/webmasters/answer/2451999).
+	SiteEntry []*WmxSite `json:"siteEntry,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SiteEntry") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SiteEntry") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SitesListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SitesListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TestStatus: Final state of the test, including error details if
 // necessary.
 type TestStatus struct {
@@ -419,6 +815,1332 @@ func (s *TestStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod TestStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WmxSite: Contains permission level information about a Search Console
+// site. For more information, see [Permissions in Search
+// Console](https://support.google.com/webmasters/answer/2451999).
+type WmxSite struct {
+	// PermissionLevel: The user's permission level for the site.
+	//
+	// Possible values:
+	//   "SITE_PERMISSION_LEVEL_UNSPECIFIED"
+	//   "SITE_OWNER" - Owner has complete access to the site.
+	//   "SITE_FULL_USER" - Full users can access all data, and perform most
+	// of the operations.
+	//   "SITE_RESTRICTED_USER" - Restricted users can access most of the
+	// data, and perform some operations.
+	//   "SITE_UNVERIFIED_USER" - Unverified user has no access to site's
+	// data.
+	PermissionLevel string `json:"permissionLevel,omitempty"`
+
+	// SiteUrl: The URL of the site.
+	SiteUrl string `json:"siteUrl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "PermissionLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PermissionLevel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WmxSite) MarshalJSON() ([]byte, error) {
+	type NoMethod WmxSite
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WmxSitemap: Contains detailed information about a specific URL
+// submitted as a
+// [sitemap](https://support.google.com/webmasters/answer/156184).
+type WmxSitemap struct {
+	// Contents: The various content types in the sitemap.
+	Contents []*WmxSitemapContent `json:"contents,omitempty"`
+
+	// Errors: Number of errors in the sitemap. These are issues with the
+	// sitemap itself that need to be fixed before it can be processed
+	// correctly.
+	Errors int64 `json:"errors,omitempty,string"`
+
+	// IsPending: If true, the sitemap has not been processed.
+	IsPending bool `json:"isPending,omitempty"`
+
+	// IsSitemapsIndex: If true, the sitemap is a collection of sitemaps.
+	IsSitemapsIndex bool `json:"isSitemapsIndex,omitempty"`
+
+	// LastDownloaded: Date & time in which this sitemap was last
+	// downloaded. Date format is in RFC 3339 format (yyyy-mm-dd).
+	LastDownloaded string `json:"lastDownloaded,omitempty"`
+
+	// LastSubmitted: Date & time in which this sitemap was submitted. Date
+	// format is in RFC 3339 format (yyyy-mm-dd).
+	LastSubmitted string `json:"lastSubmitted,omitempty"`
+
+	// Path: The url of the sitemap.
+	Path string `json:"path,omitempty"`
+
+	// Type: The type of the sitemap. For example: `rssFeed`.
+	//
+	// Possible values:
+	//   "NOT_SITEMAP"
+	//   "URL_LIST"
+	//   "SITEMAP"
+	//   "RSS_FEED"
+	//   "ATOM_FEED"
+	//   "PATTERN_SITEMAP" - Unsupported sitemap types.
+	//   "OCEANFRONT"
+	Type string `json:"type,omitempty"`
+
+	// Warnings: Number of warnings for the sitemap. These are generally
+	// non-critical issues with URLs in the sitemaps.
+	Warnings int64 `json:"warnings,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WmxSitemap) MarshalJSON() ([]byte, error) {
+	type NoMethod WmxSitemap
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WmxSitemapContent: Information about the various content types in the
+// sitemap.
+type WmxSitemapContent struct {
+	// Indexed: The number of URLs from the sitemap that were indexed (of
+	// the content type).
+	Indexed int64 `json:"indexed,omitempty,string"`
+
+	// Submitted: The number of URLs in the sitemap (of the content type).
+	Submitted int64 `json:"submitted,omitempty,string"`
+
+	// Type: The specific type of content in this sitemap. For example:
+	// `web`.
+	//
+	// Possible values:
+	//   "WEB"
+	//   "IMAGE"
+	//   "VIDEO"
+	//   "NEWS"
+	//   "MOBILE"
+	//   "ANDROID_APP"
+	//   "PATTERN" - Unsupported content type.
+	//   "IOS_APP"
+	//   "DATA_FEED_ELEMENT" - Unsupported content type.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Indexed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Indexed") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WmxSitemapContent) MarshalJSON() ([]byte, error) {
+	type NoMethod WmxSitemapContent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "webmasters.searchanalytics.query":
+
+type SearchanalyticsQueryCall struct {
+	s                           *Service
+	siteUrl                     string
+	searchanalyticsqueryrequest *SearchAnalyticsQueryRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Query: Query your data with filters and parameters that you define.
+// Returns zero or more rows grouped by the row keys that you define.
+// You must define a date range of one or more days. When date is one of
+// the group by values, any days without data are omitted from the
+// result list. If you need to know which days have data, issue a broad
+// date range query grouped by date for any metric, and see which day
+// rows are returned.
+func (r *SearchanalyticsService) Query(siteUrl string, searchanalyticsqueryrequest *SearchAnalyticsQueryRequest) *SearchanalyticsQueryCall {
+	c := &SearchanalyticsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteUrl = siteUrl
+	c.searchanalyticsqueryrequest = searchanalyticsqueryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SearchanalyticsQueryCall) Fields(s ...googleapi.Field) *SearchanalyticsQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SearchanalyticsQueryCall) Context(ctx context.Context) *SearchanalyticsQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SearchanalyticsQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchanalyticsqueryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}/searchAnalytics/query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl": c.siteUrl,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.searchanalytics.query" call.
+// Exactly one of *SearchAnalyticsQueryResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SearchAnalyticsQueryResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SearchanalyticsQueryCall) Do(opts ...googleapi.CallOption) (*SearchAnalyticsQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchAnalyticsQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Query your data with filters and parameters that you define. Returns zero or more rows grouped by the row keys that you define. You must define a date range of one or more days. When date is one of the group by values, any days without data are omitted from the result list. If you need to know which days have data, issue a broad date range query grouped by date for any metric, and see which day rows are returned.",
+	//   "flatPath": "webmasters/v3/sites/{siteUrl}/searchAnalytics/query",
+	//   "httpMethod": "POST",
+	//   "id": "webmasters.searchanalytics.query",
+	//   "parameterOrder": [
+	//     "siteUrl"
+	//   ],
+	//   "parameters": {
+	//     "siteUrl": {
+	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webmasters/v3/sites/{siteUrl}/searchAnalytics/query",
+	//   "request": {
+	//     "$ref": "SearchAnalyticsQueryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchAnalyticsQueryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters",
+	//     "https://www.googleapis.com/auth/webmasters.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "webmasters.sitemaps.delete":
+
+type SitemapsDeleteCall struct {
+	s          *Service
+	siteUrl    string
+	feedpath   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a sitemap from this site.
+func (r *SitemapsService) Delete(siteUrl string, feedpath string) *SitemapsDeleteCall {
+	c := &SitemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteUrl = siteUrl
+	c.feedpath = feedpath
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitemapsDeleteCall) Fields(s ...googleapi.Field) *SitemapsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitemapsDeleteCall) Context(ctx context.Context) *SitemapsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitemapsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl":  c.siteUrl,
+		"feedpath": c.feedpath,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.sitemaps.delete" call.
+func (c *SitemapsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a sitemap from this site.",
+	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
+	//   "httpMethod": "DELETE",
+	//   "id": "webmasters.sitemaps.delete",
+	//   "parameterOrder": [
+	//     "siteUrl",
+	//     "feedpath"
+	//   ],
+	//   "parameters": {
+	//     "feedpath": {
+	//       "description": "The URL of the actual sitemap. For example: `http://www.example.com/sitemap.xml`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "siteUrl": {
+	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters"
+	//   ]
+	// }
+
+}
+
+// method id "webmasters.sitemaps.get":
+
+type SitemapsGetCall struct {
+	s            *Service
+	siteUrl      string
+	feedpath     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves information about a specific sitemap.
+func (r *SitemapsService) Get(siteUrl string, feedpath string) *SitemapsGetCall {
+	c := &SitemapsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteUrl = siteUrl
+	c.feedpath = feedpath
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitemapsGetCall) IfNoneMatch(entityTag string) *SitemapsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitemapsGetCall) Context(ctx context.Context) *SitemapsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitemapsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl":  c.siteUrl,
+		"feedpath": c.feedpath,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.sitemaps.get" call.
+// Exactly one of *WmxSitemap or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *WmxSitemap.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SitemapsGetCall) Do(opts ...googleapi.CallOption) (*WmxSitemap, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &WmxSitemap{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves information about a specific sitemap.",
+	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
+	//   "httpMethod": "GET",
+	//   "id": "webmasters.sitemaps.get",
+	//   "parameterOrder": [
+	//     "siteUrl",
+	//     "feedpath"
+	//   ],
+	//   "parameters": {
+	//     "feedpath": {
+	//       "description": "The URL of the actual sitemap. For example: `http://www.example.com/sitemap.xml`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "siteUrl": {
+	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
+	//   "response": {
+	//     "$ref": "WmxSitemap"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters",
+	//     "https://www.googleapis.com/auth/webmasters.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "webmasters.sitemaps.list":
+
+type SitemapsListCall struct {
+	s            *Service
+	siteUrl      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List:  Lists the [sitemaps-entries](/webmaster-tools/v3/sitemaps)
+// submitted for this site, or included in the sitemap index file (if
+// `sitemapIndex` is specified in the request).
+func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
+	c := &SitemapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteUrl = siteUrl
+	return c
+}
+
+// SitemapIndex sets the optional parameter "sitemapIndex": A URL of a
+// site's sitemap index. For example:
+// `http://www.example.com/sitemapindex.xml`.
+func (c *SitemapsListCall) SitemapIndex(sitemapIndex string) *SitemapsListCall {
+	c.urlParams_.Set("sitemapIndex", sitemapIndex)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitemapsListCall) IfNoneMatch(entityTag string) *SitemapsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitemapsListCall) Context(ctx context.Context) *SitemapsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitemapsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}/sitemaps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl": c.siteUrl,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.sitemaps.list" call.
+// Exactly one of *SitemapsListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SitemapsListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SitemapsListCall) Do(opts ...googleapi.CallOption) (*SitemapsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SitemapsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": " Lists the [sitemaps-entries](/webmaster-tools/v3/sitemaps) submitted for this site, or included in the sitemap index file (if `sitemapIndex` is specified in the request).",
+	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps",
+	//   "httpMethod": "GET",
+	//   "id": "webmasters.sitemaps.list",
+	//   "parameterOrder": [
+	//     "siteUrl"
+	//   ],
+	//   "parameters": {
+	//     "siteUrl": {
+	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sitemapIndex": {
+	//       "description": " A URL of a site's sitemap index. For example: `http://www.example.com/sitemapindex.xml`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webmasters/v3/sites/{siteUrl}/sitemaps",
+	//   "response": {
+	//     "$ref": "SitemapsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters",
+	//     "https://www.googleapis.com/auth/webmasters.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "webmasters.sitemaps.submit":
+
+type SitemapsSubmitCall struct {
+	s          *Service
+	siteUrl    string
+	feedpath   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Submit: Submits a sitemap for a site.
+func (r *SitemapsService) Submit(siteUrl string, feedpath string) *SitemapsSubmitCall {
+	c := &SitemapsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteUrl = siteUrl
+	c.feedpath = feedpath
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitemapsSubmitCall) Fields(s ...googleapi.Field) *SitemapsSubmitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitemapsSubmitCall) Context(ctx context.Context) *SitemapsSubmitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitemapsSubmitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl":  c.siteUrl,
+		"feedpath": c.feedpath,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.sitemaps.submit" call.
+func (c *SitemapsSubmitCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Submits a sitemap for a site.",
+	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
+	//   "httpMethod": "PUT",
+	//   "id": "webmasters.sitemaps.submit",
+	//   "parameterOrder": [
+	//     "siteUrl",
+	//     "feedpath"
+	//   ],
+	//   "parameters": {
+	//     "feedpath": {
+	//       "description": "The URL of the actual sitemap. For example: `http://www.example.com/sitemap.xml`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "siteUrl": {
+	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters"
+	//   ]
+	// }
+
+}
+
+// method id "webmasters.sites.add":
+
+type SitesAddCall struct {
+	s          *Service
+	siteUrl    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Add:  Adds a site to the set of the user's sites in Search Console.
+func (r *SitesService) Add(siteUrl string) *SitesAddCall {
+	c := &SitesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteUrl = siteUrl
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesAddCall) Fields(s ...googleapi.Field) *SitesAddCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesAddCall) Context(ctx context.Context) *SitesAddCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesAddCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl": c.siteUrl,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.sites.add" call.
+func (c *SitesAddCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": " Adds a site to the set of the user's sites in Search Console.",
+	//   "flatPath": "webmasters/v3/sites/{siteUrl}",
+	//   "httpMethod": "PUT",
+	//   "id": "webmasters.sites.add",
+	//   "parameterOrder": [
+	//     "siteUrl"
+	//   ],
+	//   "parameters": {
+	//     "siteUrl": {
+	//       "description": "The URL of the site to add.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webmasters/v3/sites/{siteUrl}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters"
+	//   ]
+	// }
+
+}
+
+// method id "webmasters.sites.delete":
+
+type SitesDeleteCall struct {
+	s          *Service
+	siteUrl    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete:  Removes a site from the set of the user's Search Console
+// sites.
+func (r *SitesService) Delete(siteUrl string) *SitesDeleteCall {
+	c := &SitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteUrl = siteUrl
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesDeleteCall) Fields(s ...googleapi.Field) *SitesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesDeleteCall) Context(ctx context.Context) *SitesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl": c.siteUrl,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.sites.delete" call.
+func (c *SitesDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": " Removes a site from the set of the user's Search Console sites.",
+	//   "flatPath": "webmasters/v3/sites/{siteUrl}",
+	//   "httpMethod": "DELETE",
+	//   "id": "webmasters.sites.delete",
+	//   "parameterOrder": [
+	//     "siteUrl"
+	//   ],
+	//   "parameters": {
+	//     "siteUrl": {
+	//       "description": "The URI of the property as defined in Search Console. **Examples:** `http://www.example.com/` or `sc-domain:example.com`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webmasters/v3/sites/{siteUrl}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters"
+	//   ]
+	// }
+
+}
+
+// method id "webmasters.sites.get":
+
+type SitesGetCall struct {
+	s            *Service
+	siteUrl      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get:  Retrieves information about specific site.
+func (r *SitesService) Get(siteUrl string) *SitesGetCall {
+	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.siteUrl = siteUrl
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitesGetCall) IfNoneMatch(entityTag string) *SitesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesGetCall) Context(ctx context.Context) *SitesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"siteUrl": c.siteUrl,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.sites.get" call.
+// Exactly one of *WmxSite or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *WmxSite.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*WmxSite, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &WmxSite{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": " Retrieves information about specific site.",
+	//   "flatPath": "webmasters/v3/sites/{siteUrl}",
+	//   "httpMethod": "GET",
+	//   "id": "webmasters.sites.get",
+	//   "parameterOrder": [
+	//     "siteUrl"
+	//   ],
+	//   "parameters": {
+	//     "siteUrl": {
+	//       "description": "The URI of the property as defined in Search Console. **Examples:** `http://www.example.com/` or `sc-domain:example.com`.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "webmasters/v3/sites/{siteUrl}",
+	//   "response": {
+	//     "$ref": "WmxSite"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters",
+	//     "https://www.googleapis.com/auth/webmasters.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "webmasters.sites.list":
+
+type SitesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List:  Lists the user's Search Console sites.
+func (r *SitesService) List() *SitesListCall {
+	c := &SitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SitesListCall) IfNoneMatch(entityTag string) *SitesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SitesListCall) Context(ctx context.Context) *SitesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SitesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webmasters.sites.list" call.
+// Exactly one of *SitesListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SitesListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SitesListCall) Do(opts ...googleapi.CallOption) (*SitesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SitesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": " Lists the user's Search Console sites.",
+	//   "flatPath": "webmasters/v3/sites",
+	//   "httpMethod": "GET",
+	//   "id": "webmasters.sites.list",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "webmasters/v3/sites",
+	//   "response": {
+	//     "$ref": "SitesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/webmasters",
+	//     "https://www.googleapis.com/auth/webmasters.readonly"
+	//   ]
+	// }
+
 }
 
 // method id "searchconsole.urlTestingTools.mobileFriendlyTest.run":
@@ -465,7 +2187,7 @@ func (c *UrlTestingToolsMobileFriendlyTestRunCall) Header() http.Header {
 
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

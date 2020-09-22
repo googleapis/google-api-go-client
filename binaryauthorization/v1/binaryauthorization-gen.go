@@ -262,6 +262,60 @@ func (s *AdmissionWhitelistPattern) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AttestationOccurrence: Occurrence that represents a single
+// "attestation". The authenticity of an attestation can be verified
+// using the attached signature. If the verifier trusts the public key
+// of the signer, then verifying the signature is sufficient to
+// establish trust. In this circumstance, the authority to which this
+// attestation is attached is primarily useful for lookup (how to find
+// this attestation if you already know the authority and artifact to be
+// verified) and intent (for which authority this attestation was
+// intended to sign.
+type AttestationOccurrence struct {
+	// Jwts: One or more JWTs encoding a self-contained attestation. Each
+	// JWT encodes the payload that it verifies within the JWT itself.
+	// Verifier implementation SHOULD ignore the `serialized_payload` field
+	// when verifying these JWTs. If only JWTs are present on this
+	// AttestationOccurrence, then the `serialized_payload` SHOULD be left
+	// empty. Each JWT SHOULD encode a claim specific to the `resource_uri`
+	// of this Occurrence, but this is not validated by Grafeas metadata API
+	// implementations. The JWT itself is opaque to Grafeas.
+	Jwts []*Jwt `json:"jwts,omitempty"`
+
+	// SerializedPayload: Required. The serialized payload that is verified
+	// by one or more `signatures`.
+	SerializedPayload string `json:"serializedPayload,omitempty"`
+
+	// Signatures: One or more signatures over `serialized_payload`.
+	// Verifier implementations should consider this attestation message
+	// verified if at least one `signature` verifies `serialized_payload`.
+	// See `Signature` in common.proto for more details on signature
+	// structure and verification.
+	Signatures []*Signature `json:"signatures,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Jwts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Jwts") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod AttestationOccurrence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Attestor: An attestor that attests to container image artifacts. An
 // existing attestor cannot be modified except where indicated.
 type Attestor struct {
@@ -612,6 +666,35 @@ func (s *IamPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type Jwt struct {
+	// CompactJwt: The compact encoding of a JWS, which is always three
+	// base64 encoded strings joined by periods. For details, see:
+	// https://tools.ietf.org/html/rfc7515.html#section-3.1
+	CompactJwt string `json:"compactJwt,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CompactJwt") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompactJwt") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Jwt) MarshalJSON() ([]byte, error) {
+	type NoMethod Jwt
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListAttestorsResponse: Response message for
 // BinauthzManagementService.ListAttestors.
 type ListAttestorsResponse struct {
@@ -825,6 +908,73 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Signature: Verifiers (e.g. Kritis implementations) MUST verify
+// signatures with respect to the trust anchors defined in policy (e.g.
+// a Kritis policy). Typically this means that the verifier has been
+// configured with a map from `public_key_id` to public key material
+// (and any required parameters, e.g. signing algorithm). In particular,
+// verification implementations MUST NOT treat the signature
+// `public_key_id` as anything more than a key lookup hint. The
+// `public_key_id` DOES NOT validate or authenticate a public key; it
+// only provides a mechanism for quickly selecting a public key ALREADY
+// CONFIGURED on the verifier through a trusted channel. Verification
+// implementations MUST reject signatures in any of the following
+// circumstances: * The `public_key_id` is not recognized by the
+// verifier. * The public key that `public_key_id` refers to does not
+// verify the signature with respect to the payload. The `signature`
+// contents SHOULD NOT be "attached" (where the payload is included with
+// the serialized `signature` bytes). Verifiers MUST ignore any
+// "attached" payload and only verify signatures with respect to
+// explicitly provided payload (e.g. a `payload` field on the proto
+// message that holds this Signature, or the canonical serialization of
+// the proto message that holds this signature).
+type Signature struct {
+	// PublicKeyId: The identifier for the public key that verifies this
+	// signature. * The `public_key_id` is required. * The `public_key_id`
+	// SHOULD be an RFC3986 conformant URI. * When possible, the
+	// `public_key_id` SHOULD be an immutable reference, such as a
+	// cryptographic digest. Examples of valid `public_key_id`s: OpenPGP V4
+	// public key fingerprint: *
+	// "openpgp4fpr:74FAF3B861BDA0870C7B6DEF607E48D2A663AEEA" See
+	// https://www.iana.org/assignments/uri-schemes/prov/openpgp4fpr for
+	// more details on this scheme. RFC6920 digest-named
+	// SubjectPublicKeyInfo (digest of the DER serialization): *
+	// "ni:///sha-256;cD9o9Cq6LG3jD0iKXqEi_vdjJGecm_iXkbqVoScViaU" *
+	// "nih:///sha-256;703f68f42aba2c6de30f488a5ea122fef76324679c9bf89791ba95
+	// a1271589a5"
+	PublicKeyId string `json:"publicKeyId,omitempty"`
+
+	// Signature: The content of the signature, an opaque bytestring. The
+	// payload that this signature verifies MUST be unambiguously provided
+	// with the Signature during verification. A wrapper message might
+	// provide the payload explicitly. Alternatively, a message might have a
+	// canonical serialization that can always be unambiguously computed to
+	// derive the payload.
+	Signature string `json:"signature,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicKeyId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicKeyId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Signature) MarshalJSON() ([]byte, error) {
+	type NoMethod Signature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TestIamPermissionsRequest: Request message for `TestIamPermissions`
 // method.
 type TestIamPermissionsRequest struct {
@@ -946,6 +1096,89 @@ func (s *UserOwnedGrafeasNote) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ValidateAttestationOccurrenceRequest: Request message for
+// ValidationHelperV1.ValidateAttestationOccurrence.
+type ValidateAttestationOccurrenceRequest struct {
+	// Attestation: Required. An AttestationOccurrence to be checked that it
+	// can be verified by the Attestor. It does not have to be an existing
+	// entity in Container Analysis. It must otherwise be a valid
+	// AttestationOccurrence.
+	Attestation *AttestationOccurrence `json:"attestation,omitempty"`
+
+	// OccurrenceNote: Required. The resource name of the Note to which the
+	// containing Occurrence is associated.
+	OccurrenceNote string `json:"occurrenceNote,omitempty"`
+
+	// OccurrenceResourceUri: Required. The URI of the artifact (e.g.
+	// container image) that is the subject of the containing Occurrence.
+	OccurrenceResourceUri string `json:"occurrenceResourceUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attestation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attestation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidateAttestationOccurrenceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidateAttestationOccurrenceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidateAttestationOccurrenceResponse: Response message for
+// ValidationHelperV1.ValidateAttestationOccurrence.
+type ValidateAttestationOccurrenceResponse struct {
+	// DenialReason: The reason for denial if the Attestation couldn't be
+	// validated.
+	DenialReason string `json:"denialReason,omitempty"`
+
+	// Result: The result of the Attestation validation.
+	//
+	// Possible values:
+	//   "RESULT_UNSPECIFIED" - Unspecified.
+	//   "VERIFIED" - The Attestation was able to verified by the Attestor.
+	//   "ATTESTATION_NOT_VERIFIABLE" - The Attestation was not able to
+	// verified by the Attestor.
+	Result string `json:"result,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DenialReason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DenialReason") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidateAttestationOccurrenceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidateAttestationOccurrenceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "binaryauthorization.projects.getPolicy":
 
 type ProjectsGetPolicyCall struct {
@@ -1005,7 +1238,7 @@ func (c *ProjectsGetPolicyCall) Header() http.Header {
 
 func (c *ProjectsGetPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1144,7 +1377,7 @@ func (c *ProjectsUpdatePolicyCall) Header() http.Header {
 
 func (c *ProjectsUpdatePolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1294,7 +1527,7 @@ func (c *ProjectsAttestorsCreateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1438,7 +1671,7 @@ func (c *ProjectsAttestorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAttestorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1580,7 +1813,7 @@ func (c *ProjectsAttestorsGetCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1741,7 +1974,7 @@ func (c *ProjectsAttestorsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1909,7 +2142,7 @@ func (c *ProjectsAttestorsListCall) Header() http.Header {
 
 func (c *ProjectsAttestorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2078,7 +2311,7 @@ func (c *ProjectsAttestorsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsAttestorsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2223,7 +2456,7 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsAttestorsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2364,7 +2597,7 @@ func (c *ProjectsAttestorsUpdateCall) Header() http.Header {
 
 func (c *ProjectsAttestorsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2458,6 +2691,148 @@ func (c *ProjectsAttestorsUpdateCall) Do(opts ...googleapi.CallOption) (*Attesto
 
 }
 
+// method id "binaryauthorization.projects.attestors.validateAttestationOccurrence":
+
+type ProjectsAttestorsValidateAttestationOccurrenceCall struct {
+	s                                    *Service
+	attestor                             string
+	validateattestationoccurrencerequest *ValidateAttestationOccurrenceRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// ValidateAttestationOccurrence: Returns whether the given Attestation
+// for the given image URI was signed by the given Attestor
+func (r *ProjectsAttestorsService) ValidateAttestationOccurrence(attestor string, validateattestationoccurrencerequest *ValidateAttestationOccurrenceRequest) *ProjectsAttestorsValidateAttestationOccurrenceCall {
+	c := &ProjectsAttestorsValidateAttestationOccurrenceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.attestor = attestor
+	c.validateattestationoccurrencerequest = validateattestationoccurrencerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Fields(s ...googleapi.Field) *ProjectsAttestorsValidateAttestationOccurrenceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Context(ctx context.Context) *ProjectsAttestorsValidateAttestationOccurrenceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.validateattestationoccurrencerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+attestor}:validateAttestationOccurrence")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"attestor": c.attestor,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "binaryauthorization.projects.attestors.validateAttestationOccurrence" call.
+// Exactly one of *ValidateAttestationOccurrenceResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ValidateAttestationOccurrenceResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleapi.CallOption) (*ValidateAttestationOccurrenceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ValidateAttestationOccurrenceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns whether the given Attestation for the given image URI was signed by the given Attestor",
+	//   "flatPath": "v1/projects/{projectsId}/attestors/{attestorsId}:validateAttestationOccurrence",
+	//   "httpMethod": "POST",
+	//   "id": "binaryauthorization.projects.attestors.validateAttestationOccurrence",
+	//   "parameterOrder": [
+	//     "attestor"
+	//   ],
+	//   "parameters": {
+	//     "attestor": {
+	//       "description": "Required. The resource name of the Attestor of the occurrence, in the format `projects/*/attestors/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/attestors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+attestor}:validateAttestationOccurrence",
+	//   "request": {
+	//     "$ref": "ValidateAttestationOccurrenceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ValidateAttestationOccurrenceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "binaryauthorization.projects.policy.getIamPolicy":
 
 type ProjectsPolicyGetIamPolicyCall struct {
@@ -2530,7 +2905,7 @@ func (c *ProjectsPolicyGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicyGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2673,7 +3048,7 @@ func (c *ProjectsPolicySetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsPolicySetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2818,7 +3193,7 @@ func (c *ProjectsPolicyTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsPolicyTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200918")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

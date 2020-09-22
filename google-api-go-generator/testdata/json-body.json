@@ -451,7 +451,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The name of the project for which available locations are to be\nlisted (since some locations might be allowlisted for specific projects).",
+                  "description": "Required. The name of the project for which available locations are to be\nlisted (since some locations might be restricted to for specific projects).",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,

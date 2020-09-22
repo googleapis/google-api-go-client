@@ -2247,7 +2247,7 @@
       }
     }
   },
-  "revision": "20200902",
+  "revision": "20200911",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2839,7 +2839,7 @@
             "Default value. Same as INHERIT_FROM_SUBNETWORK",
             "Private access to or from Google Services configuration inherited from subnetowrk configuration",
             "Enables outbound private IPv6 access to Google Services from Dataproc cluster",
-            "Enables bidirectionl private IPv6 access between Google Services and Dataproc cluster"
+            "Enables bidirectional private IPv6 access between Google Services and Dataproc cluster"
           ],
           "type": "string"
         },
@@ -3128,7 +3128,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. Map from parameter names to values that should be used for those parameters. Values may not exceed 100 characters.",
+          "description": "Optional. Map from parameter names to values that should be used for those parameters. Values may not exceed 1000 characters.",
           "type": "object"
         },
         "requestId": {
@@ -3651,11 +3651,11 @@
       "type": "object"
     },
     "MetastoreConfig": {
-      "description": "Specifies the metastore configuration.",
+      "description": "Specifies a Metastore configuration.",
       "id": "MetastoreConfig",
       "properties": {
         "dataprocMetastoreService": {
-          "description": "Optional. Relative resource name of an existing Dataproc Metastore service.",
+          "description": "Required. Resource name of an existing Dataproc Metastore service.Example: projects/[project_id]/locations/[dataproc_region]/services/[service-name]",
           "type": "string"
         }
       },

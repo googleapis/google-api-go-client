@@ -1013,7 +1013,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes a ServiceAccountKey.",
+                  "description": "Deletes a ServiceAccountKey. Deleting a service account key does not revoke short-lived credentials that have been issued based on the service account key.",
                   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}/keys/{keysId}",
                   "httpMethod": "DELETE",
                   "id": "iam.projects.serviceAccounts.keys.delete",
@@ -1250,7 +1250,7 @@
       }
     }
   },
-  "revision": "20200827",
+  "revision": "20200910",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AdminAuditData": {

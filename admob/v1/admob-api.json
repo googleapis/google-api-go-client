@@ -228,7 +228,7 @@
       }
     }
   },
-  "revision": "20200914",
+  "revision": "20200916",
   "rootUrl": "https://admob.googleapis.com/",
   "schemas": {
     "Date": {
@@ -398,7 +398,7 @@
               "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
               "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
               "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-              "The unique ID of the ad source (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
+              "The [unique ID of the ad source](/admob/api/v1/ad_sources) (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
               "The unique ID of the ad source instance (for example, \"ca-app-pub-1234#5678\" and \"AdMob (default)\" as label value).",
               "The unique ID of the ad unit (for example, \"ca-app-pub-1234/8790\"). If AD_UNIT dimension is specified, then APP is included automatically.",
               "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",
@@ -488,7 +488,7 @@
             "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
             "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
             "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-            "The unique ID of the ad source (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
+            "The [unique ID of the ad source](/admob/api/v1/ad_sources) (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
             "The unique ID of the ad source instance (for example, \"ca-app-pub-1234#5678\" and \"AdMob (default)\" as label value).",
             "The unique ID of the ad unit (for example, \"ca-app-pub-1234/8790\"). If AD_UNIT dimension is specified, then APP is included automatically.",
             "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",
@@ -531,7 +531,7 @@
             "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
             "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
             "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-            "The unique ID of the ad source (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
+            "The [unique ID of the ad source](/admob/api/v1/ad_sources) (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
             "The unique ID of the ad source instance (for example, \"ca-app-pub-1234#5678\" and \"AdMob (default)\" as label value).",
             "The unique ID of the ad unit (for example, \"ca-app-pub-1234/8790\"). If AD_UNIT dimension is specified, then APP is included automatically.",
             "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",

@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/lRzowdHdXDwwdlgwsMr3eieLqCo\"",
+  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/_eBLgpKz1LB811sd9obCMEhsM9o\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1688,10 +1688,12 @@
               "enum": [
                 "completed",
                 "new",
+                "pending",
                 "shipped",
                 "undeliverable"
               ],
               "enumDescriptions": [
+                "",
                 "",
                 "",
                 "",
@@ -3745,7 +3747,7 @@
       }
     }
   },
-  "revision": "20200902",
+  "revision": "20200908",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7512,7 +7514,7 @@
       "id": "OrderreturnsRefundOperation",
       "properties": {
         "fullRefund": {
-          "description": "If true, the item will be fully refunded. // Allowed only when payment_type is FOP. Merchant can choose this refund option to indicate the full remaining amount of corresponding object to be refunded to the customer via FOP.",
+          "description": "If true, the item will be fully refunded. Allowed only when payment_type is FOP. Merchant can choose this refund option to indicate the full remaining amount of corresponding object to be refunded to the customer via FOP.",
           "type": "boolean"
         },
         "partialRefund": {

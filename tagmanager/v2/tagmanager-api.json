@@ -3125,7 +3125,7 @@
       }
     }
   },
-  "revision": "20200826",
+  "revision": "20200916",
   "rootUrl": "https://tagmanager.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3617,9 +3617,11 @@
               "ios",
               "androidSdk5",
               "iosSdk5",
-              "amp"
+              "amp",
+              "server"
             ],
             "enumDescriptions": [
+              "",
               "",
               "",
               "",

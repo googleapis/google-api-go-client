@@ -1594,7 +1594,7 @@
       }
     }
   },
-  "revision": "20200903",
+  "revision": "20200914",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
@@ -3494,7 +3494,7 @@
         },
         "automaticScaling": {
           "$ref": "AutomaticScaling",
-          "description": "Automatic scaling is based on request rate, response latencies, and other application metrics."
+          "description": "Automatic scaling is based on request rate, response latencies, and other application metrics. Instances are dynamically created and destroyed as needed in order to handle traffic."
         },
         "basicScaling": {
           "$ref": "BasicScaling",
@@ -3624,7 +3624,7 @@
         },
         "manualScaling": {
           "$ref": "ManualScaling",
-          "description": "A service with manual scaling runs continuously, allowing you to perform complex initialization and rely on the state of its memory over time."
+          "description": "A service with manual scaling runs continuously, allowing you to perform complex initialization and rely on the state of its memory over time. Manually scaled versions are sometimes referred to as \"backends\"."
         },
         "name": {
           "description": "Full path to the Version resource in the API. Example: apps/myapp/services/default/versions/v1.@OutputOnly",

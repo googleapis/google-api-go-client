@@ -941,37 +941,6 @@ func (s *CancelBuildRequest) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// CreateBuildRequest: Request to create a new build.
-type CreateBuildRequest struct {
-	// Build: Required. Build resource to create.
-	Build *Build `json:"build,omitempty"`
-
-	// ProjectId: Required. ID of the project.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Build") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Build") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CreateBuildRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod CreateBuildRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -2111,7 +2080,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2262,7 +2231,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2399,7 +2368,7 @@ func (c *ProjectsBuildsCancelCall) Header() http.Header {
 
 func (c *ProjectsBuildsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2557,7 +2526,7 @@ func (c *ProjectsBuildsCreateCall) Header() http.Header {
 
 func (c *ProjectsBuildsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2722,7 +2691,7 @@ func (c *ProjectsBuildsGetCall) Header() http.Header {
 
 func (c *ProjectsBuildsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2909,7 +2878,7 @@ func (c *ProjectsBuildsListCall) Header() http.Header {
 
 func (c *ProjectsBuildsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3104,7 +3073,7 @@ func (c *ProjectsBuildsRetryCall) Header() http.Header {
 
 func (c *ProjectsBuildsRetryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3251,7 +3220,7 @@ func (c *ProjectsLocationsBuildsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3348,22 +3317,29 @@ func (c *ProjectsLocationsBuildsCancelCall) Do(opts ...googleapi.CallOption) (*B
 // method id "cloudbuild.projects.locations.builds.create":
 
 type ProjectsLocationsBuildsCreateCall struct {
-	s                  *Service
-	parent             string
-	createbuildrequest *CreateBuildRequest
-	urlParams_         gensupport.URLParams
-	ctx_               context.Context
-	header_            http.Header
+	s          *Service
+	parent     string
+	build      *Build
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Starts a build with the specified configuration. This method
 // returns a long-running `Operation`, which includes the build ID. Pass
 // the build ID to `GetBuild` to determine the build status (such as
 // `SUCCESS` or `FAILURE`).
-func (r *ProjectsLocationsBuildsService) Create(parent string, createbuildrequest *CreateBuildRequest) *ProjectsLocationsBuildsCreateCall {
+func (r *ProjectsLocationsBuildsService) Create(parent string, build *Build) *ProjectsLocationsBuildsCreateCall {
 	c := &ProjectsLocationsBuildsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.createbuildrequest = createbuildrequest
+	c.build = build
+	return c
+}
+
+// ProjectId sets the optional parameter "projectId": Required. ID of
+// the project.
+func (c *ProjectsLocationsBuildsCreateCall) ProjectId(projectId string) *ProjectsLocationsBuildsCreateCall {
+	c.urlParams_.Set("projectId", projectId)
 	return c
 }
 
@@ -3394,13 +3370,13 @@ func (c *ProjectsLocationsBuildsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createbuildrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.build)
 	if err != nil {
 		return nil, err
 	}
@@ -3472,11 +3448,16 @@ func (c *ProjectsLocationsBuildsCreateCall) Do(opts ...googleapi.CallOption) (*O
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. ID of the project.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1/{+parent}/builds",
 	//   "request": {
-	//     "$ref": "CreateBuildRequest"
+	//     "$ref": "Build"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -3558,7 +3539,7 @@ func (c *ProjectsLocationsBuildsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3742,7 +3723,7 @@ func (c *ProjectsLocationsBuildsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3936,7 +3917,7 @@ func (c *ProjectsLocationsBuildsRetryCall) Header() http.Header {
 
 func (c *ProjectsLocationsBuildsRetryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4085,7 +4066,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4236,7 +4217,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4371,7 +4352,7 @@ func (c *ProjectsTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4511,7 +4492,7 @@ func (c *ProjectsTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4662,7 +4643,7 @@ func (c *ProjectsTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4827,7 +4808,7 @@ func (c *ProjectsTriggersListCall) Header() http.Header {
 
 func (c *ProjectsTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4996,7 +4977,7 @@ func (c *ProjectsTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5145,7 +5126,7 @@ func (c *ProjectsTriggersRunCall) Header() http.Header {
 
 func (c *ProjectsTriggersRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

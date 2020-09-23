@@ -3789,6 +3789,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "smartdevicemanagement:v1",
+      "name": "smartdevicemanagement",
+      "version": "v1",
+      "title": "Smart Device Management API",
+      "description": "Allow select enterprise partners to access, control, and manage Google and Nest devices programmatically.",
+      "discoveryRestUrl": "https://smartdevicemanagement.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/nest/device-access",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "sourcerepo:v1",
       "name": "sourcerepo",
       "version": "v1",

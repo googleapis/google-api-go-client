@@ -735,7 +735,7 @@ func (s *GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1Resource:  Information related to the
+// GoogleCloudSecuritycenterV1Resource: Information related to the
 // Google Cloud resource.
 type GoogleCloudSecuritycenterV1Resource struct {
 	// Name: The full resource name of the resource. See:
@@ -745,14 +745,14 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// Parent: The full resource name of resource's parent.
 	Parent string `json:"parent,omitempty"`
 
-	// ParentDisplayName:  The human readable name of resource's parent.
+	// ParentDisplayName: The human readable name of resource's parent.
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
 
 	// Project: The full resource name of project that the resource belongs
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName:  The human readable name of project that the
+	// ProjectDisplayName: The human readable name of project that the
 	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
@@ -1003,70 +1003,6 @@ func (s *GoogleCloudSecuritycenterV1beta1SecurityMarks) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1Asset: Security Command Center
-// representation of a Google Cloud resource. The Asset is a Security
-// Command Center resource that captures information about a single
-// Google Cloud resource. All modifications to an Asset are only within
-// the context of Security Command Center and don't affect the
-// referenced Google Cloud resource.
-type GoogleCloudSecuritycenterV1p1beta1Asset struct {
-	// CreateTime: The time at which the asset was created in Security
-	// Command Center.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// IamPolicy: Cloud IAM Policy information associated with the Google
-	// Cloud resource described by the Security Command Center asset. This
-	// information is managed and defined by the Google Cloud resource and
-	// cannot be modified by the user.
-	IamPolicy *GoogleCloudSecuritycenterV1p1beta1IamPolicy `json:"iamPolicy,omitempty"`
-
-	// Name: The relative resource name of this asset. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
-	// "organizations/{organization_id}/assets/{asset_id}".
-	Name string `json:"name,omitempty"`
-
-	// ResourceProperties: Resource managed properties. These properties are
-	// managed and defined by the Google Cloud resource and cannot be
-	// modified by the user.
-	ResourceProperties googleapi.RawMessage `json:"resourceProperties,omitempty"`
-
-	// SecurityCenterProperties: Security Command Center managed properties.
-	// These properties are managed by Security Command Center and cannot be
-	// modified by the user.
-	SecurityCenterProperties *GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties `json:"securityCenterProperties,omitempty"`
-
-	// SecurityMarks: User specified security marks. These marks are
-	// entirely managed by the user and come from the SecurityMarks resource
-	// that belongs to the asset.
-	SecurityMarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks `json:"securityMarks,omitempty"`
-
-	// UpdateTime: The time at which the asset was last updated, added, or
-	// deleted in Cloud SCC.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudSecuritycenterV1p1beta1Asset) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudSecuritycenterV1p1beta1Asset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudSecuritycenterV1p1beta1Finding: Security Command Center
 // finding. A finding is a record of assessment data (security, risk,
 // health or privacy) ingested into Security Command Center for
@@ -1120,7 +1056,8 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	// SecurityMarks resource that belongs to the finding.
 	SecurityMarks *GoogleCloudSecuritycenterV1p1beta1SecurityMarks `json:"securityMarks,omitempty"`
 
-	// Severity: The severity of the finding.
+	// Severity: The severity of the finding. This field is managed by the
+	// source that writes the finding.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - No severity specified. The default value.
@@ -1170,40 +1107,6 @@ func (s *GoogleCloudSecuritycenterV1p1beta1Finding) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1IamPolicy: Cloud IAM Policy
-// information associated with the Google Cloud resource described by
-// the Security Command Center asset. This information is managed and
-// defined by the Google Cloud resource and cannot be modified by the
-// user.
-type GoogleCloudSecuritycenterV1p1beta1IamPolicy struct {
-	// PolicyBlob: The JSON representation of the Policy associated with the
-	// asset. See https://cloud.google.com/iam/docs/reference/rest/v1/Policy
-	// for format details.
-	PolicyBlob string `json:"policyBlob,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "PolicyBlob") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PolicyBlob") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudSecuritycenterV1p1beta1IamPolicy) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudSecuritycenterV1p1beta1IamPolicy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudSecuritycenterV1p1beta1NotificationMessage: Security
 // Command Center's Notification
 type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
@@ -1217,10 +1120,6 @@ type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
 
 	// Resource: The Cloud resource tied to the notification.
 	Resource *GoogleCloudSecuritycenterV1p1beta1Resource `json:"resource,omitempty"`
-
-	// TemporalAsset: If it's an asset based notification config, this field
-	// will be populated.
-	TemporalAsset *GoogleCloudSecuritycenterV1p1beta1TemporalAsset `json:"temporalAsset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Finding") to
 	// unconditionally include in API requests. By default, fields with
@@ -1245,7 +1144,7 @@ func (s *GoogleCloudSecuritycenterV1p1beta1NotificationMessage) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1Resource:  Information related to
+// GoogleCloudSecuritycenterV1p1beta1Resource: Information related to
 // the Google Cloud resource.
 type GoogleCloudSecuritycenterV1p1beta1Resource struct {
 	// Name: The full resource name of the resource. See:
@@ -1255,14 +1154,14 @@ type GoogleCloudSecuritycenterV1p1beta1Resource struct {
 	// Parent: The full resource name of resource's parent.
 	Parent string `json:"parent,omitempty"`
 
-	// ParentDisplayName:  The human readable name of resource's parent.
+	// ParentDisplayName: The human readable name of resource's parent.
 	ParentDisplayName string `json:"parentDisplayName,omitempty"`
 
 	// Project: The full resource name of project that the resource belongs
 	// to.
 	Project string `json:"project,omitempty"`
 
-	// ProjectDisplayName:  The human readable name of project that the
+	// ProjectDisplayName: The human readable name of project that the
 	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
@@ -1329,70 +1228,6 @@ func (s *GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse) MarshalJSO
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties: Security
-// Command Center managed properties. These properties are managed by
-// Security Command Center and cannot be modified by the user.
-type GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties struct {
-	// ResourceDisplayName: The user defined display name for this resource.
-	ResourceDisplayName string `json:"resourceDisplayName,omitempty"`
-
-	// ResourceName: The full resource name of the Google Cloud resource
-	// this asset represents. This field is immutable after create time.
-	// See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceName string `json:"resourceName,omitempty"`
-
-	// ResourceOwners: Owners of the Google Cloud resource.
-	ResourceOwners []string `json:"resourceOwners,omitempty"`
-
-	// ResourceParent: The full resource name of the immediate parent of the
-	// resource. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceParent string `json:"resourceParent,omitempty"`
-
-	// ResourceParentDisplayName: The user defined display name for the
-	// parent of this resource.
-	ResourceParentDisplayName string `json:"resourceParentDisplayName,omitempty"`
-
-	// ResourceProject: The full resource name of the project the resource
-	// belongs to. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name
-	ResourceProject string `json:"resourceProject,omitempty"`
-
-	// ResourceProjectDisplayName: The user defined display name for the
-	// project of this resource.
-	ResourceProjectDisplayName string `json:"resourceProjectDisplayName,omitempty"`
-
-	// ResourceType: The type of the Google Cloud resource. Examples
-	// include: APPLICATION, PROJECT, and ORGANIZATION. This is a case
-	// insensitive field defined by Security Command Center and/or the
-	// producer of the resource and is immutable after create time.
-	ResourceType string `json:"resourceType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ResourceDisplayName")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceDisplayName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudSecuritycenterV1p1beta1SecurityCenterProperties
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudSecuritycenterV1p1beta1SecurityMarks: User specified
 // security marks that are attached to the parent Security Command
 // Center resource. Security marks are scoped within a Security Command
@@ -1432,46 +1267,6 @@ type GoogleCloudSecuritycenterV1p1beta1SecurityMarks struct {
 
 func (s *GoogleCloudSecuritycenterV1p1beta1SecurityMarks) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV1p1beta1SecurityMarks
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudSecuritycenterV1p1beta1TemporalAsset: Wrapper over asset
-// object that also captures the state change for the asset e.g. if it
-// was a newly created asset vs updated or deleted asset.
-type GoogleCloudSecuritycenterV1p1beta1TemporalAsset struct {
-	// Asset: Asset data that includes attributes, properties and marks
-	// about the asset.
-	Asset *GoogleCloudSecuritycenterV1p1beta1Asset `json:"asset,omitempty"`
-
-	// ChangeType: Represents if the asset was created/updated/deleted.
-	//
-	// Possible values:
-	//   "CHANGE_TYPE_UNSPECIFIED" - Unspecified or default.
-	//   "CREATED" - Newly created Asset
-	//   "UPDATED" - Asset was updated.
-	//   "DELETED" - Asset was deleted.
-	ChangeType string `json:"changeType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Asset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Asset") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudSecuritycenterV1p1beta1TemporalAsset) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudSecuritycenterV1p1beta1TemporalAsset
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2543,7 +2338,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2685,7 +2480,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2832,7 +2627,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3095,7 +2890,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3293,7 +3088,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3447,7 +3242,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3610,7 +3405,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3751,7 +3546,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3894,7 +3689,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4068,7 +3863,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4240,7 +4035,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4389,7 +4184,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4524,7 +4319,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4690,7 +4485,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4864,7 +4659,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5010,7 +4805,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5151,7 +4946,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5301,7 +5096,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5450,7 +5245,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5689,7 +5484,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5887,7 +5682,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6034,7 +5829,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6189,7 +5984,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -303,6 +303,9 @@ func getEndpoint(settings *internal.DialSettings, clientCertSource cert.Source) 
 func getMTLSMode() string {
 	mode := os.Getenv("GOOGLE_API_USE_MTLS_ENDPOINT")
 	if mode == "" {
+		mode = os.Getenv("GOOGLE_API_USE_MTLS") // Deprecated.
+	}
+	if mode == "" {
 		return mTLSModeAuto
 	}
 	return strings.ToLower(mode)

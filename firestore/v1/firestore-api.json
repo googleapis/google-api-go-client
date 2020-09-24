@@ -1160,7 +1160,7 @@
       }
     }
   },
-  "revision": "20200821",
+  "revision": "20200912",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -1659,7 +1659,7 @@
           ],
           "enumDescriptions": [
             "Unspecified. This value must not be used.",
-            "The time at which the server processed the request, with millisecond precision."
+            "The time at which the server processed the request, with millisecond precision. If used on multiple fields (same or different documents) in a transaction, all the fields will get the same server timestamp."
           ],
           "type": "string"
         }

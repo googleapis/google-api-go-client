@@ -228,34 +228,6 @@
             "https://www.googleapis.com/auth/service.management"
           ]
         },
-        "disable": {
-          "description": "Disables a service for a project, so it can no longer be be used for the project. It prevents accidental usage that may cause unexpected billing charges or security leaks. Operation",
-          "flatPath": "v1/services/{serviceName}:disable",
-          "httpMethod": "POST",
-          "id": "servicemanagement.services.disable",
-          "parameterOrder": [
-            "serviceName"
-          ],
-          "parameters": {
-            "serviceName": {
-              "description": "Required. Name of the service to disable. Specifying an unknown service name will cause the request to fail.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/services/{serviceName}:disable",
-          "request": {
-            "$ref": "DisableServiceRequest"
-          },
-          "response": {
-            "$ref": "Operation"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/service.management"
-          ]
-        },
         "enable": {
           "description": "Enables a service for a project, so it can be used for the project. See [Cloud Auth Guide](https://cloud.google.com/docs/authentication) for more information. Operation",
           "flatPath": "v1/services/{serviceName}:enable",
@@ -885,7 +857,7 @@
       }
     }
   },
-  "revision": "20200824",
+  "revision": "20200921",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -1482,17 +1454,6 @@
         },
         "message": {
           "description": "Message describing the error or warning.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DisableServiceRequest": {
-      "description": "Request message for DisableService method.",
-      "id": "DisableServiceRequest",
-      "properties": {
-        "consumerId": {
-          "description": "Required. The identity of consumer resource which service disablement will be applied to. The Google Service Management implementation accepts the following forms: - \"project:\" Note: this is made compatible with google.api.servicecontrol.v1.Operation.consumer_id.",
           "type": "string"
         }
       },

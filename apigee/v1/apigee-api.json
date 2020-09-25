@@ -3237,11 +3237,6 @@
                             "name"
                           ],
                           "parameters": {
-                            "basepath": {
-                              "description": "Base path where the API proxy revision should be deployed. Defaults to '/' if not provided.",
-                              "location": "query",
-                              "type": "string"
-                            },
                             "name": {
                               "description": "Name of the API proxy revision deployment in the following format: `organizations/{org}/environments/{env}/apis/{api}/revisions/{rev}`",
                               "location": "path",
@@ -5510,7 +5505,7 @@
       }
     }
   },
-  "revision": "20200912",
+  "revision": "20200921",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -6609,10 +6604,6 @@
       "properties": {
         "apiProxy": {
           "description": "API proxy.",
-          "type": "string"
-        },
-        "basePath": {
-          "description": "Base path for the deployment.",
           "type": "string"
         },
         "deployStartTime": {

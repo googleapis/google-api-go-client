@@ -253,7 +253,11 @@ func (s *GoogleIdentityStsV1betaExchangeTokenRequest) MarshalJSON() ([]byte, err
 // ExchangeToken.
 type GoogleIdentityStsV1betaExchangeTokenResponse struct {
 	// AccessToken: An OAuth 2.0 security token, issued by Google, in
-	// response to the token exchange request.
+	// response to the token exchange request. Tokens can vary in size
+	// (mainly depending on the size of mapped claims), currently up to the
+	// 12288 bytes (12 KB) size limit. Google reserves the right to change
+	// token size, including increasing these limits. Your application must
+	// support variable token sizes accordingly.
 	AccessToken string `json:"access_token,omitempty"`
 
 	// ExpiresIn: The expiration time of `access_token`, in seconds, from
@@ -343,7 +347,7 @@ func (c *V1betaTokenCall) Header() http.Header {
 
 func (c *V1betaTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200923")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

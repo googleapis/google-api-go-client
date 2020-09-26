@@ -461,8 +461,7 @@ type AuthenticationInfo struct {
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
 	// PrincipalSubject: String representation of identity of requesting
-	// party. Populated for both first and third party identities. Only
-	// present for APIs that support third-party identities.
+	// party. Populated for both first and third party identities.
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 
 	// ServiceAccountDelegationInfo: Identity delegation history of an
@@ -1277,7 +1276,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1431,7 +1430,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

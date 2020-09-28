@@ -259,9 +259,9 @@ func getClientCertificateSource(settings *internal.DialSettings) (cert.Source, e
 }
 
 func isClientCertificateEnabled() bool {
-	use_client_cert := os.Getenv("GOOGLE_API_USE_CLIENT_CERTIFICATE")
+	useClientCert := os.Getenv("GOOGLE_API_USE_CLIENT_CERTIFICATE")
 	// TODO(andyrzhao): Update default to return "true" after DCA feature is fully released.
-	if strings.ToLower(use_client_cert) == "true" {
+	if strings.ToLower(useClientCert) == "true" {
 		return true
 	}
 	return false

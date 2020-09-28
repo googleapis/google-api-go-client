@@ -269,6 +269,9 @@ type Annotation struct {
 	// annotation corresponds to.
 	Length int64 `json:"length,omitempty"`
 
+	// SlashCommand: The metadata for a slash command.
+	SlashCommand *SlashCommandMetadata `json:"slashCommand,omitempty"`
+
 	// StartIndex: Start index (0-based, inclusive) in the plain-text
 	// message body this annotation corresponds to.
 	StartIndex int64 `json:"startIndex,omitempty"`
@@ -279,6 +282,7 @@ type Annotation struct {
 	//   "ANNOTATION_TYPE_UNSPECIFIED" - Default value for the enum. DO NOT
 	// USE.
 	//   "USER_MENTION" - A user is mentioned.
+	//   "SLASH_COMMAND" - A slash command is invoked.
 	Type string `json:"type,omitempty"`
 
 	// UserMention: The metadata of user mention.
@@ -1020,12 +1024,9 @@ type Membership struct {
 	// which the member joined the space, if applicable.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Member: Member details.
+	// Member: A User in Hangout Chat
 	Member *User `json:"member,omitempty"`
 
-	// Name: Resource name of the membership, in the form
-	// "spaces/*/members/*". Example:
-	// spaces/AAAAMpdlehY/members/105115627578887013105
 	Name string `json:"name,omitempty"`
 
 	// State: State of the membership.
@@ -1110,6 +1111,9 @@ type Message struct {
 	// Sender: The user who created the message.
 	Sender *User `json:"sender,omitempty"`
 
+	// SlashCommand: Slash command information, if applicable.
+	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
+
 	// Space: The space the message belongs to.
 	Space *Space `json:"space,omitempty"`
 
@@ -1149,7 +1153,7 @@ func (s *Message) MarshalJSON() ([]byte, error) {
 
 // OnClick: An onclick action (e.g. open a link).
 type OnClick struct {
-	// Action: A form action will be trigger by this onclick if specified.
+	// Action: A form action will be triggered by this onclick if specified.
 	Action *FormAction `json:"action,omitempty"`
 
 	// OpenLink: This onclick triggers an open link action if specified.
@@ -1236,6 +1240,79 @@ type Section struct {
 
 func (s *Section) MarshalJSON() ([]byte, error) {
 	type NoMethod Section
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SlashCommand: A Slash Command in Hangouts Chat.
+type SlashCommand struct {
+	// CommandId: The id of the slash command invoked.
+	CommandId int64 `json:"commandId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CommandId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommandId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SlashCommand) MarshalJSON() ([]byte, error) {
+	type NoMethod SlashCommand
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SlashCommandMetadata: Annotation metadata for slash commands (/).
+type SlashCommandMetadata struct {
+	// Bot: The bot whose command was invoked.
+	Bot *User `json:"bot,omitempty"`
+
+	// CommandId: The command id of the invoked slash command.
+	CommandId int64 `json:"commandId,omitempty,string"`
+
+	// CommandName: The name of the invoked slash command.
+	CommandName string `json:"commandName,omitempty"`
+
+	// TriggersDialog: Indicating whether the slash command is for a dialog.
+	TriggersDialog bool `json:"triggersDialog,omitempty"`
+
+	// Type: The type of slash command.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value for the enum. DO NOT USE.
+	//   "ADD" - Add bot to space.
+	//   "INVOKE" - Invoke slash command in space.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bot") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bot") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SlashCommandMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1555,7 +1632,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1713,7 +1790,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1867,7 +1944,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2028,7 +2105,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2184,7 +2261,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2362,7 +2439,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2502,7 +2579,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2640,7 +2717,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2780,7 +2857,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2933,7 +3010,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200919")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

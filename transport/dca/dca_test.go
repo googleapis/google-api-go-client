@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package http
+package dca
 
 import (
 	"testing"
@@ -36,12 +36,12 @@ func TestGetEndpoint(t *testing.T) {
 		{
 			UserEndpoint:    "host:port",
 			DefaultEndpoint: "",
-			WantErr:         true,
+			Want:            "host:port",
 		},
 	}
 
 	for _, tc := range testCases {
-		got, err := getEndpoint(&internal.DialSettings{
+		got, err := GetEndpoint(&internal.DialSettings{
 			Endpoint:        tc.UserEndpoint,
 			DefaultEndpoint: tc.DefaultEndpoint,
 		}, nil)
@@ -91,12 +91,12 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 		{
 			UserEndpoint:    "host:port",
 			DefaultEndpoint: "",
-			WantErr:         true,
+			Want:            "host:port",
 		},
 	}
 
 	for _, tc := range testCases {
-		got, err := getEndpoint(&internal.DialSettings{
+		got, err := GetEndpoint(&internal.DialSettings{
 			Endpoint:            tc.UserEndpoint,
 			DefaultEndpoint:     tc.DefaultEndpoint,
 			DefaultMTLSEndpoint: tc.DefaultMTLSEndpoint,

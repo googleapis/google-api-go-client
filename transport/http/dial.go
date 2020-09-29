@@ -21,8 +21,8 @@ import (
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
 	"google.golang.org/api/transport/cert"
-	"google.golang.org/api/transport/dca"
 	"google.golang.org/api/transport/http/internal/propagation"
+	"google.golang.org/api/transport/internal/dca"
 )
 
 // NewClient returns an HTTP client for use communicating with a Google cloud
@@ -33,11 +33,7 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*http.Client, 
 	if err != nil {
 		return nil, "", err
 	}
-	clientCertSource, err := dca.GetClientCertificateSource(settings)
-	if err != nil {
-		return nil, "", err
-	}
-	endpoint, err := dca.GetEndpoint(settings, clientCertSource)
+	clientCertSource, endpoint, err := dca.GetClientCertificateSourceAndEndpoint(settings)
 	if err != nil {
 		return nil, "", err
 	}

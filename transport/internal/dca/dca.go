@@ -40,7 +40,22 @@ const (
 	mTLSModeAuto   = "auto"
 )
 
-// GetClientCertificateSource returns a default client certificate source, if
+// GetClientCertificateSourceAndEndpoint is a convenience function that invokes
+// getClientCertificateSource and getEndpoint sequentially and returns the client
+// cert source and endpoint as a tuple.
+func GetClientCertificateSourceAndEndpoint(settings *internal.DialSettings) (cert.Source, string, error) {
+	clientCertSource, err := getClientCertificateSource(settings)
+	if err != nil {
+		return nil, "", err
+	}
+	endpoint, err := getEndpoint(settings, clientCertSource)
+	if err != nil {
+		return nil, "", err
+	}
+	return clientCertSource, endpoint, nil
+}
+
+// getClientCertificateSource returns a default client certificate source, if
 // not provided by the user.
 //
 // A nil default source can be returned if the source does not exist. Any exceptions
@@ -50,7 +65,7 @@ const (
 // Important Note: For now, the environment variable GOOGLE_API_USE_CLIENT_CERTIFICATE
 // must be set to "true" to allow certificate to be used (including user provided
 // certificates). For details, see AIP-4114.
-func GetClientCertificateSource(settings *internal.DialSettings) (cert.Source, error) {
+func getClientCertificateSource(settings *internal.DialSettings) (cert.Source, error) {
 	if !isClientCertificateEnabled() {
 		return nil, nil
 	} else if settings.HTTPClient != nil {
@@ -68,7 +83,7 @@ func isClientCertificateEnabled() bool {
 	return strings.ToLower(useClientCert) == "true"
 }
 
-// GetEndpoint returns the endpoint for the service, taking into account the
+// getEndpoint returns the endpoint for the service, taking into account the
 // user-provided endpoint override "settings.Endpoint".
 //
 // If no endpoint override is specified, we will either return the default endpoint or
@@ -81,7 +96,7 @@ func isClientCertificateEnabled() bool {
 // URL (ex. https://...), then the user-provided address will be merged into
 // the default endpoint. For example, WithEndpoint("myhost:8000") and
 // WithDefaultEndpoint("https://foo.com/bar/baz") will return "https://myhost:8080/bar/baz"
-func GetEndpoint(settings *internal.DialSettings, clientCertSource cert.Source) (string, error) {
+func getEndpoint(settings *internal.DialSettings, clientCertSource cert.Source) (string, error) {
 	if settings.Endpoint == "" {
 		mtlsMode := getMTLSMode()
 		if mtlsMode == mTLSModeAlways || (clientCertSource != nil && mtlsMode == mTLSModeAuto) {

@@ -41,7 +41,7 @@ func TestGetEndpoint(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got, err := GetEndpoint(&internal.DialSettings{
+		got, err := getEndpoint(&internal.DialSettings{
 			Endpoint:        tc.UserEndpoint,
 			DefaultEndpoint: tc.DefaultEndpoint,
 		}, nil)
@@ -96,7 +96,7 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got, err := GetEndpoint(&internal.DialSettings{
+		got, err := getEndpoint(&internal.DialSettings{
 			Endpoint:            tc.UserEndpoint,
 			DefaultEndpoint:     tc.DefaultEndpoint,
 			DefaultMTLSEndpoint: tc.DefaultMTLSEndpoint,

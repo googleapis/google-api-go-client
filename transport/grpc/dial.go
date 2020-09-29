@@ -19,7 +19,7 @@ import (
 	"golang.org/x/oauth2"
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
-	"google.golang.org/api/transport/dca"
+	"google.golang.org/api/transport/internal/dca"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	grpcgoogle "google.golang.org/grpc/credentials/google"
@@ -114,11 +114,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 	if o.GRPCConn != nil {
 		return o.GRPCConn, nil
 	}
-	clientCertSource, err := dca.GetClientCertificateSource(o)
-	if err != nil {
-		return nil, err
-	}
-	endpoint, err := dca.GetEndpoint(o, clientCertSource)
+	clientCertSource, endpoint, err := dca.GetClientCertificateSourceAndEndpoint(o)
 	if err != nil {
 		return nil, err
 	}

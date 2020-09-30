@@ -241,8 +241,14 @@ func addOCTransport(trans http.RoundTripper, settings *internal.DialSettings) ht
 //
 // We would like to avoid introducing client-side logic that parses whether the
 // endpoint override is an mTLS url, since the url pattern may change at anytime.
+//
+// Important Note: For now, the environment variable GOOGLE_API_USE_CLIENT_CERTIFICATE
+// must be set to "true" to allow certificate to be used (including user provided
+// certificates). For details, see AIP-4114.
 func getClientCertificateSource(settings *internal.DialSettings) (cert.Source, error) {
-	if settings.HTTPClient != nil {
+	if !isClientCertificateEnabled() {
+		return nil, nil
+	} else if settings.HTTPClient != nil {
 		return nil, nil // HTTPClient is incompatible with ClientCertificateSource
 	} else if settings.ClientCertSource != nil {
 		return settings.ClientCertSource, nil
@@ -252,6 +258,12 @@ func getClientCertificateSource(settings *internal.DialSettings) (cert.Source, e
 
 }
 
+func isClientCertificateEnabled() bool {
+	useClientCert := os.Getenv("GOOGLE_API_USE_CLIENT_CERTIFICATE")
+	// TODO(andyrzhao): Update default to return "true" after DCA feature is fully released.
+	return strings.ToLower(useClientCert) == "true"
+}
+
 // getEndpoint returns the endpoint for the service, taking into account the
 // user-provided endpoint override "settings.Endpoint"
 //
@@ -259,7 +271,7 @@ func getClientCertificateSource(settings *internal.DialSettings) (cert.Source, e
 // the default mTLS endpoint if a client certificate is available.
 //
 // You can override the default endpoint (mtls vs. regular) by setting the
-// GOOGLE_API_USE_MTLS environment variable.
+// GOOGLE_API_USE_MTLS_ENDPOINT environment variable.
 //
 // If the endpoint override is an address (host:port) rather than full base
 // URL (ex. https://...), then the user-provided address will be merged into
@@ -286,10 +298,12 @@ func getEndpoint(settings *internal.DialSettings, clientCertSource cert.Source) 
 }
 
 func getMTLSMode() string {
-	mode := os.Getenv("GOOGLE_API_USE_MTLS")
+	mode := os.Getenv("GOOGLE_API_USE_MTLS_ENDPOINT")
 	if mode == "" {
-		// TODO(shinfan): Update this to "auto" when the mTLS feature is fully released.
-		return mTLSModeNever
+		mode = os.Getenv("GOOGLE_API_USE_MTLS") // Deprecated.
+	}
+	if mode == "" {
+		return mTLSModeAuto
 	}
 	return strings.ToLower(mode)
 }

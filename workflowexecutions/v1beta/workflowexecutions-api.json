@@ -12,7 +12,7 @@
   "baseUrl": "https://workflowexecutions.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Workflow Executions",
-  "description": "Manages user-provided workflows.",
+  "description": "Execute workflows created with Workflows API.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/workflows",
   "fullyEncodeReservedExpansion": true,
@@ -269,7 +269,7 @@
       }
     }
   },
-  "revision": "20200901",
+  "revision": "20200923",
   "rootUrl": "https://workflowexecutions.googleapis.com/",
   "schemas": {
     "CancelExecutionRequest": {

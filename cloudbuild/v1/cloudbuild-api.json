@@ -396,11 +396,16 @@
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
                       "type": "string"
+                    },
+                    "projectId": {
+                      "description": "Required. ID of the project.",
+                      "location": "query",
+                      "type": "string"
                     }
                   },
                   "path": "v1/{+parent}/builds",
                   "request": {
-                    "$ref": "CreateBuildRequest"
+                    "$ref": "Build"
                   },
                   "response": {
                     "$ref": "Operation"
@@ -778,7 +783,7 @@
       }
     }
   },
-  "revision": "20200910",
+  "revision": "20200921",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1363,21 +1368,6 @@
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
       "properties": {},
-      "type": "object"
-    },
-    "CreateBuildRequest": {
-      "description": "Request to create a new build.",
-      "id": "CreateBuildRequest",
-      "properties": {
-        "build": {
-          "$ref": "Build",
-          "description": "Required. Build resource to create."
-        },
-        "projectId": {
-          "description": "Required. ID of the project.",
-          "type": "string"
-        }
-      },
       "type": "object"
     },
     "Empty": {

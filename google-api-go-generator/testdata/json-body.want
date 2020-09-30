@@ -1577,9 +1577,9 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// this field is that Cloud ML validates the path for use in training.
 	JobDir string `json:"jobDir,omitempty"`
 
-	// MasterType: Optional. Specifies the type of virtual machine to use
-	// for your training
-	// job's master worker.
+	// MainType: Optional. Specifies the type of virtual machine to use for
+	// your training
+	// job's main worker.
 	//
 	// The following types are supported:
 	//
@@ -1600,7 +1600,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   </dd>
 	//   <dt>complex_model_s</dt>
 	//   <dd>
-	//   A machine suitable for the master and workers of the cluster when
+	//   A machine suitable for the main and workers of the cluster when
 	// your
 	//   model requires more computation than the standard machine can
 	// handle
@@ -1683,7 +1683,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// </dl>
 	//
 	// You must set this value when `scaleTier` is set to `CUSTOM`.
-	MasterType string `json:"masterType,omitempty"`
+	MainType string `json:"mainType,omitempty"`
 
 	// PackageUris: Required. The Google Cloud Storage location of the
 	// packages with
@@ -1708,7 +1708,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// The supported values are the same as those described in the entry
 	// for
-	// `master_type`.
+	// `main_type`.
 	//
 	// This value must be present when `scaleTier` is set to `CUSTOM`
 	// and
@@ -1763,9 +1763,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// to
 	// configure your processing cluster according to these guidelines:
 	//
-	// *   You _must_ set `TrainingInput.masterType` to specify the type
-	//     of machine to use for your master node. This is the only
-	// required
+	// *   You _must_ set `TrainingInput.mainType` to specify the type
+	//     of machine to use for your main node. This is the only required
 	//     setting.
 	//
 	// *   You _may_ set `TrainingInput.workerCount` to specify the number
@@ -1786,11 +1785,11 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// Note that all of your workers must use the same machine type, which
 	// can
-	// be different from your parameter server type and master type.
+	// be different from your parameter server type and main type.
 	// Your
 	// parameter servers must likewise use the same machine type, which can
 	// be
-	// different from your worker type and master type.
+	// different from your worker type and main type.
 	ScaleTier string `json:"scaleTier,omitempty"`
 
 	// WorkerCount: Optional. The number of worker replicas to use for the
@@ -1809,7 +1808,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// The supported values are the same as those described in the entry
 	// for
-	// `masterType`.
+	// `mainType`.
 	//
 	// This value must be present when `scaleTier` is set to `CUSTOM`
 	// and
@@ -4727,7 +4726,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the project for which available locations are to be\nlisted (since some locations might be whitelisted for specific projects).",
+	//       "description": "Required. The name of the project for which available locations are to be\nlisted (since some locations might be restricted to specific projects).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

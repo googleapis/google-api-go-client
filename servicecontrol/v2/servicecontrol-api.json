@@ -169,7 +169,7 @@
       }
     }
   },
-  "revision": "20200911",
+  "revision": "20200917",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "Api": {
@@ -378,7 +378,7 @@
           "type": "string"
         },
         "principalSubject": {
-          "description": "String representation of identity of requesting party. Populated for both first and third party identities. Only present for APIs that support third-party identities.",
+          "description": "String representation of identity of requesting party. Populated for both first and third party identities.",
           "type": "string"
         },
         "serviceAccountDelegationInfo": {

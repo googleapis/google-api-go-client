@@ -276,8 +276,8 @@ func isDirectPathEnabled(endpoint string) bool {
 	}
 
 	// Only try direct path if the user has opted in via the environment variable.
-	whitelist := strings.Split(os.Getenv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH"), ",")
-	for _, api := range whitelist {
+	directPathAPIs := strings.Split(os.Getenv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH"), ",")
+	for _, api := range directPathAPIs {
 		// Ignore empty string since an empty env variable splits into [""]
 		if api != "" && strings.Contains(endpoint, api) {
 			return true

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package http
+package dca
 
 import (
 	"testing"
@@ -36,7 +36,7 @@ func TestGetEndpoint(t *testing.T) {
 		{
 			UserEndpoint:    "host:port",
 			DefaultEndpoint: "",
-			WantErr:         true,
+			Want:            "host:port",
 		},
 	}
 
@@ -91,7 +91,7 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 		{
 			UserEndpoint:    "host:port",
 			DefaultEndpoint: "",
-			WantErr:         true,
+			Want:            "host:port",
 		},
 	}
 

@@ -28,7 +28,7 @@
   },
   "basePath": "",
   "baseUrl": "https://www.googleapis.com/",
-  "batchPath": "batch/youtube",
+  "batchPath": "batch/youtube/v3",
   "canonicalName": "YouTube",
   "description": "The YouTube Data API v3 is an API that provides access to YouTube data, such as videos, playlists, and channels.",
   "discoveryVersion": "v1",
@@ -1538,7 +1538,7 @@
               "type": "string"
             },
             "part": {
-              "description": "The *part* parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
+              "description": "The *part* parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, status and statistics.",
               "location": "query",
               "repeated": true,
               "required": true,
@@ -3855,7 +3855,7 @@
       }
     }
   },
-  "revision": "20200921",
+  "revision": "20200929",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AbuseReport": {

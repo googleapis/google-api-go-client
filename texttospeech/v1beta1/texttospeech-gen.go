@@ -169,6 +169,7 @@ type AudioConfig struct {
 	// (Linear PCM). Audio content returned as LINEAR16 also contains a WAV
 	// header.
 	//   "MP3" - MP3 audio at 32kbps.
+	//   "MP3_64_KBPS" - MP3 at 64kbps.
 	//   "OGG_OPUS" - Opus encoded audio wrapped in an ogg container. The
 	// result will be a file which can be played natively on Android, and in
 	// browsers (at least Chrome and Firefox). The quality of the encoding
@@ -630,7 +631,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -777,7 +778,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

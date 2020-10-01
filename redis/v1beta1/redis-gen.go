@@ -233,7 +233,7 @@ type FailoverInstanceRequest struct {
 	// if a data protection mode is not specified.
 	//   "LIMITED_DATA_LOSS" - Instance failover will be protected with data
 	// loss control. More specifically, the failover will only be performed
-	// if the current replication offset diff between master and replica is
+	// if the current replication offset diff between primary and replica is
 	// under a certain threshold.
 	//   "FORCE_DATA_LOSS" - Instance failover will be performed without
 	// data loss control.
@@ -478,6 +478,11 @@ type Instance struct {
 	// one provided in location_id.
 	AlternativeLocationId string `json:"alternativeLocationId,omitempty"`
 
+	// AuthEnabled: Optional. Indicates whether OSS Redis AUTH is enabled
+	// for the instance. If set to "true" AUTH is enabled on the instance.
+	// Default value is "false" meaning AUTH is disabled.
+	AuthEnabled bool `json:"authEnabled,omitempty"`
+
 	// AuthorizedNetwork: Optional. The full name of the Google Compute
 	// Engine [network](https://cloud.google.com/vpc/docs/vpc) to which the
 	// instance is connected. If left unspecified, the `default` network
@@ -633,13 +638,45 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InstanceAuthString: Instance AUTH string details.
+type InstanceAuthString struct {
+	// AuthString: AUTH string set on the instance.
+	AuthString string `json:"authString,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthString") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthString") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceAuthString) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceAuthString
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListInstancesResponse: Response for ListInstances.
 type ListInstancesResponse struct {
 	// Instances: A list of Redis instances in the project in the specified
 	// location, or across all locations. If the `location_id` in the parent
 	// field of the request is "-", all regions available to the project are
 	// queried, and the results aggregated. If in such an aggregated query a
-	// location is unavailable, a dummy Redis entry is included in the
+	// location is unavailable, a placeholder Redis entry is included in the
 	// response with the `name` field set to a value of the form
 	// `projects/{project_id}/locations/{location_id}/instances/`- and the
 	// `status` field set to ERROR and `status_message` field set to
@@ -1028,7 +1065,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1194,7 +1231,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1385,7 +1422,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1529,7 +1566,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1664,7 +1701,7 @@ func (c *ProjectsLocationsInstancesExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1769,7 +1806,7 @@ type ProjectsLocationsInstancesFailoverCall struct {
 	header_                 http.Header
 }
 
-// Failover: Initiates a failover of the master node to current replica
+// Failover: Initiates a failover of the primary node to current replica
 // node for a specific STANDARD tier Cloud Memorystore for Redis
 // instance.
 func (r *ProjectsLocationsInstancesService) Failover(name string, failoverinstancerequest *FailoverInstanceRequest) *ProjectsLocationsInstancesFailoverCall {
@@ -1806,7 +1843,7 @@ func (c *ProjectsLocationsInstancesFailoverCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1870,7 +1907,7 @@ func (c *ProjectsLocationsInstancesFailoverCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Initiates a failover of the master node to current replica node for a specific STANDARD tier Cloud Memorystore for Redis instance.",
+	//   "description": "Initiates a failover of the primary node to current replica node for a specific STANDARD tier Cloud Memorystore for Redis instance.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:failover",
 	//   "httpMethod": "POST",
 	//   "id": "redis.projects.locations.instances.failover",
@@ -1955,7 +1992,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2044,6 +2081,152 @@ func (c *ProjectsLocationsInstancesGetCall) Do(opts ...googleapi.CallOption) (*I
 
 }
 
+// method id "redis.projects.locations.instances.getAuthString":
+
+type ProjectsLocationsInstancesGetAuthStringCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAuthString: Gets the AUTH string for a Redis instance. If AUTH is
+// not enabled for the instance the response will be empty. This
+// information is not included in the details returned to GetInstance.
+func (r *ProjectsLocationsInstancesService) GetAuthString(name string) *ProjectsLocationsInstancesGetAuthStringCall {
+	c := &ProjectsLocationsInstancesGetAuthStringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesGetAuthStringCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesGetAuthStringCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInstancesGetAuthStringCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesGetAuthStringCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesGetAuthStringCall) Context(ctx context.Context) *ProjectsLocationsInstancesGetAuthStringCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesGetAuthStringCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesGetAuthStringCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/authString")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.instances.getAuthString" call.
+// Exactly one of *InstanceAuthString or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *InstanceAuthString.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesGetAuthStringCall) Do(opts ...googleapi.CallOption) (*InstanceAuthString, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InstanceAuthString{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the AUTH string for a Redis instance. If AUTH is not enabled for the instance the response will be empty. This information is not included in the details returned to GetInstance.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/authString",
+	//   "httpMethod": "GET",
+	//   "id": "redis.projects.locations.instances.getAuthString",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Redis instance resource name using the form: `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id` refers to a GCP region.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}/authString",
+	//   "response": {
+	//     "$ref": "InstanceAuthString"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "redis.projects.locations.instances.import":
 
 type ProjectsLocationsInstancesImportCall struct {
@@ -2095,7 +2278,7 @@ func (c *ProjectsLocationsInstancesImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2268,7 +2451,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2449,7 +2632,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2596,7 +2779,7 @@ func (c *ProjectsLocationsInstancesUpgradeCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpgradeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2743,7 +2926,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2876,7 +3059,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3019,7 +3202,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3193,7 +3376,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -929,7 +929,7 @@
       }
     }
   },
-  "revision": "20200824",
+  "revision": "20200925",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {
@@ -1428,7 +1428,7 @@
             "This value is disallowed.",
             "Lock the device, as if the lock screen timeout had expired.",
             "Reset the user's password.",
-            "Reboot the device. Only supported on API level 24+."
+            "Reboot the device. Only supported on fully managed devices running Android 7.0 (API level 24) or higher."
           ],
           "type": "string"
         },

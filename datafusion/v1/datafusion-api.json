@@ -637,7 +637,7 @@
       }
     }
   },
-  "revision": "20200901",
+  "revision": "20200928",
   "rootUrl": "https://datafusion.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -872,7 +872,6 @@
             "STATE_UNSPECIFIED",
             "CREATING",
             "ACTIVE",
-            "RUNNING",
             "FAILED",
             "DELETING",
             "UPGRADING",
@@ -884,8 +883,7 @@
           "enumDescriptions": [
             "Instance does not have a state yet",
             "Instance is being created",
-            "Instance is active and ready for requests",
-            "RUNNING is an alias of ACTIVE for backward compatibility",
+            "Instance is active and ready for requests. This corresponds to 'RUNNING' in datafusion.v1beta1.",
             "Instance creation failed",
             "Instance is being deleted",
             "Instance is being upgraded",

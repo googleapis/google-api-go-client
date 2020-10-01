@@ -4517,7 +4517,7 @@
       }
     }
   },
-  "revision": "20200920",
+  "revision": "20200928",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata": {
@@ -6729,6 +6729,20 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1BatchUpdateSmartMessagingEntriesResponse": {
+      "description": "Response message for [Documents.BatchUpdateSmartMessagingEntries]",
+      "id": "GoogleCloudDialogflowV2beta1BatchUpdateSmartMessagingEntriesResponse",
+      "properties": {
+        "smartMessagingEntries": {
+          "description": "List of updated smart message entries.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1SmartMessagingEntry"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1Context": {
       "description": "Dialogflow contexts are similar to natural language context. If a person says to you \"they are orange\", you need context in order to understand what \"they\" is referring to. Similarly, for Dialogflow to handle an end-user expression like that, it needs to be provided with context in order to correctly match an intent. Using contexts, you can control the flow of a conversation. You can configure contexts for an intent by setting input and output contexts, which are identified by string names. When an intent is matched, any configured output contexts for that intent become active. While any contexts are active, Dialogflow is more likely to match intents that are configured with input contexts that correspond to the currently active contexts. For more information about context, see the [Contexts guide](https://cloud.google.com/dialogflow/docs/contexts-overview).",
       "id": "GoogleCloudDialogflowV2beta1Context",
@@ -7075,15 +7089,15 @@
       "id": "GoogleCloudDialogflowV2beta1Fulfillment",
       "properties": {
         "displayName": {
-          "description": "Optional. The human-readable name of the fulfillment, unique within the agent.",
+          "description": "The human-readable name of the fulfillment, unique within the agent.",
           "type": "string"
         },
         "enabled": {
-          "description": "Optional. Whether fulfillment is enabled.",
+          "description": "Whether fulfillment is enabled.",
           "type": "boolean"
         },
         "features": {
-          "description": "Optional. The field defines whether the fulfillment is enabled for certain features.",
+          "description": "The field defines whether the fulfillment is enabled for certain features.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1FulfillmentFeature"
           },
@@ -7124,18 +7138,18 @@
       "id": "GoogleCloudDialogflowV2beta1FulfillmentGenericWebService",
       "properties": {
         "isCloudFunction": {
-          "description": "Optional. Indicates if generic web service is created through Cloud Functions integration. Defaults to false.",
+          "description": "Indicates if generic web service is created through Cloud Functions integration. Defaults to false.",
           "type": "boolean"
         },
         "password": {
-          "description": "Optional. The password for HTTP Basic authentication.",
+          "description": "The password for HTTP Basic authentication.",
           "type": "string"
         },
         "requestHeaders": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. The HTTP request headers to send together with fulfillment requests.",
+          "description": "The HTTP request headers to send together with fulfillment requests.",
           "type": "object"
         },
         "uri": {
@@ -7143,7 +7157,7 @@
           "type": "string"
         },
         "username": {
-          "description": "Optional. The user name for HTTP Basic authentication.",
+          "description": "The user name for HTTP Basic authentication.",
           "type": "string"
         }
       },
@@ -9051,6 +9065,66 @@
         "name": {
           "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1SmartMessagingEntry": {
+      "description": "Smart Messaging Entry resource.",
+      "id": "GoogleCloudDialogflowV2beta1SmartMessagingEntry",
+      "properties": {
+        "messageInfo": {
+          "$ref": "GoogleCloudDialogflowV2beta1SmartMessagingEntryInfo",
+          "description": "Output only. Metadata of the message entry"
+        },
+        "name": {
+          "description": "The unique identifier of this message entry. Required for [Documents.GetSmartMessagingEntry], [Documents.CreateSmartMessagingEntry], [Documents.UpdateSmartMessagingEntry], and [Documents.DeleteSmartMessagingEntry]. Format: `projects//knowledgeBases//documents//smartMessagingEntries/`",
+          "type": "string"
+        },
+        "rawText": {
+          "description": "Required. The raw text of the message.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Required. Smart Messaging Entry's enabled/disabled state.",
+          "enum": [
+            "SMART_MESSAGING_ENTRY_STATE_UNSPECIFIED",
+            "ENABLED",
+            "DISABLED"
+          ],
+          "enumDescriptions": [
+            "State unspecified.",
+            "This smart reply message is enabled and used when generating suggestions.",
+            "This smart reply message is disabled and is not used when generating suggestions."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1SmartMessagingEntryInfo": {
+      "description": "Smart messaging entry info.",
+      "id": "GoogleCloudDialogflowV2beta1SmartMessagingEntryInfo",
+      "properties": {
+        "creationMethod": {
+          "description": "Output only. Method of how the smart messaging entry was created. When the smart messaging entry was generated from GenerateDocument, the value is AUTOMATIC; when the entry was manually added through CreateSmartMessagingEntry, the value is MANUAL.",
+          "enum": [
+            "CREATION_METHOD_UNSPECIFIED",
+            "AUTOMATIC",
+            "MANUAL"
+          ],
+          "enumDescriptions": [
+            "The creation method of the smart messaging entry is unspecified. The value is unused.",
+            "The smart messaging entry was generated automatically from backend pipeline.",
+            "The smart messaging entry was added manually."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "occurrenceCount": {
+          "description": "The number of times an entry's message text has been uttered",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

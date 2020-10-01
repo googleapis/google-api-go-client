@@ -210,20 +210,25 @@ type GroupsMembershipsService struct {
 	s *Service
 }
 
-// EntityKey: An EntityKey uniquely identifies an Entity. Namespaces are
-// used to provide isolation for IDs. A single ID can be reused across
-// namespaces but the combination of a namespace and an ID must be
-// unique.
+// EntityKey: A unique identifier for an entity in the Cloud Identity
+// Groups API. An entity can represent either a group with an optional
+// `namespace` or a user without a `namespace`. The combination of `id`
+// and `namespace` must be unique; however, the same `id` can be used
+// with different `namespace`s.
 type EntityKey struct {
-	// Id: The ID of the entity within the given namespace. The ID must be
-	// unique within its namespace.
+	// Id: The ID of the entity. For Google-managed entities, the `id`
+	// should be the email address of an existing group or user. For
+	// external-identity-mapped entities, the `id` must be a string
+	// conforming to the Identity Source's requirements. Must be unique
+	// within a `namespace`.
 	Id string `json:"id,omitempty"`
 
-	// Namespace: Namespaces provide isolation for IDs, so an ID only needs
-	// to be unique within its namespace. Namespaces are currently only
-	// created as part of IdentitySource creation from Admin Console. A
-	// namespace "identitysources/{identity_source_id}" is created
-	// corresponding to every Identity Source `identity_source_id`.
+	// Namespace: The namespace in which the entity exists. If not
+	// specified, the `EntityKey` represents a Google-managed entity such as
+	// a Google user or a Google Group. If specified, the `EntityKey`
+	// represents an external-identity-mapped group. The namespace must
+	// correspond to an identity source created in Admin Console and must be
+	// in the form of `identitysources/{identity_source_id}.
 	Namespace string `json:"namespace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -1282,46 +1287,51 @@ func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Group: Resource representing a Group.
+// Group: A group within the Cloud Identity Groups API. A `Group` is a
+// collection of entities, where each entity is either a user, another
+// group, or a service account.
 type Group struct {
-	// CreateTime: Output only. The time when the Group was created. Output
-	// only.
+	// CreateTime: Output only. The time when the `Group` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: An extended description to help users determine the
-	// purpose of a Group. For example, you can include information about
-	// who should join the Group, the types of messages to send to the
-	// Group, links to FAQs about the Group, or related Groups. Maximum
-	// length is 4,096 characters.
+	// purpose of a `Group`. Must not be longer than 4,096 characters.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: The Group's display name.
+	// DisplayName: The display name of the `Group`.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// GroupKey: Required. Immutable. EntityKey of the Group. Must be set
-	// when creating a Group, read-only afterwards.
+	// GroupKey: Required. Immutable. The `EntityKey` of the `Group`.
 	GroupKey *EntityKey `json:"groupKey,omitempty"`
 
-	// Labels: Required. `Required`. Labels for Group resource. For creating
-	// Groups under a namespace, set label key to
-	// 'labels/system/groups/external' and label value as empty.
+	// Labels: Required. One or more label entries that apply to the Group.
+	// Currently supported labels contain a key with an empty value. Google
+	// Groups are the default type of group and have a label with a key of
+	// `cloudidentity.googleapis.com/groups.discussion_forum` and an empty
+	// value. Existing Google Groups can have an additional label with a key
+	// of `cloudidentity.googleapis.com/groups.security` and an empty value
+	// added to them. **This is an immutable change and the security label
+	// cannot be removed once added.** Dynamic groups have a label with a
+	// key of `cloudidentity.googleapis.com/groups.dynamic`. Identity-mapped
+	// groups for Cloud Search have a label with a key of
+	// `system/groups/external` and an empty value. Examples:
+	// {"cloudidentity.googleapis.com/groups.discussion_forum": ""} or
+	// {"system/groups/external": ""}.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. [Resource
+	// Name: Output only. The [resource
 	// name](https://cloud.google.com/apis/design/resource_names) of the
-	// Group in the format: `groups/{group_id}`, where group_id is the
-	// unique ID assigned to the Group. Must be left blank while creating a
-	// Group.
+	// `Group`. Shall be of the form `groups/{group_id}`.
 	Name string `json:"name,omitempty"`
 
-	// Parent: Required. Immutable. The entity under which this Group
-	// resides in Cloud Identity resource hierarchy. Must be set when
-	// creating a Group, read-only afterwards. Currently allowed types:
-	// `identitysources`.
+	// Parent: Required. Immutable. The resource name of the entity under
+	// which this `Group` resides in the Cloud Identity resource hierarchy.
+	// Must be of the form `identitysources/{identity_source_id}` for
+	// external- identity-mapped groups or `customers/{customer_id}` for
+	// Google Groups.
 	Parent string `json:"parent,omitempty"`
 
-	// UpdateTime: Output only. The time when the Group was last updated.
-	// Output only.
+	// UpdateTime: Output only. The time when the `Group` was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1388,12 +1398,14 @@ func (s *ListGroupsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListMembershipsResponse: The response message for
+// MembershipsService.ListMemberships.
 type ListMembershipsResponse struct {
-	// Memberships: List of Memberships.
+	// Memberships: The `Membership`s under the specified `parent`.
 	Memberships []*Membership `json:"memberships,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results available for listing.
+	// NextPageToken: A continuation token to retrieve the next page of
+	// results, or empty if there are no more results available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1423,11 +1435,12 @@ func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LookupGroupNameResponse: The response message for
+// GroupsService.LookupGroupName.
 type LookupGroupNameResponse struct {
-	// Name: [Resource
+	// Name: The [resource
 	// name](https://cloud.google.com/apis/design/resource_names) of the
-	// Group in the format: `groups/{group_id}`, where `group_id` is the
-	// unique ID assigned to the Group.
+	// looked-up `Group`.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1457,13 +1470,13 @@ func (s *LookupGroupNameResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LookupMembershipNameResponse: The response message for
+// MembershipsService.LookupMembershipName.
 type LookupMembershipNameResponse struct {
-	// Name: [Resource
+	// Name: The [resource
 	// name](https://cloud.google.com/apis/design/resource_names) of the
-	// Membership being looked up. Format:
-	// `groups/{group_id}/memberships/{member_id}`, where `group_id` is the
-	// unique ID assigned to the Group to which Membership belongs to, and
-	// `member_id` is the unique ID assigned to the member.
+	// looked-up `Membership`. Must be of the form
+	// `groups/{group_id}/memberships/{membership_id}`.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1493,29 +1506,27 @@ func (s *LookupMembershipNameResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Membership: Resource representing a Membership within a Group
+// Membership: A membership within the Cloud Identity Groups API. A
+// `Membership` defines a relationship between a `Group` and an entity
+// belonging to that `Group`, referred to as a "member".
 type Membership struct {
-	// CreateTime: Output only. Creation timestamp of the Membership. Output
-	// only.
+	// CreateTime: Output only. The time when the `Membership` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Name: Output only. [Resource
+	// Name: Output only. The [resource
 	// name](https://cloud.google.com/apis/design/resource_names) of the
-	// Membership in the format:
-	// `groups/{group_id}/memberships/{member_id}`, where group_id is the
-	// unique ID assigned to the Group to which Membership belongs to, and
-	// member_id is the unique ID assigned to the member Must be left blank
-	// while creating a Membership.
+	// `Membership`. Shall be of the form
+	// `groups/{group_id}/memberships/{membership_id}`.
 	Name string `json:"name,omitempty"`
 
-	// PreferredMemberKey: Required. Immutable. EntityKey of the entity to
-	// be added as the member. Must be set while creating a Membership,
-	// read-only afterwards. Currently allowed entity types: `Users`,
-	// `Groups`.
+	// PreferredMemberKey: Required. Immutable. The `EntityKey` of the
+	// member.
 	PreferredMemberKey *EntityKey `json:"preferredMemberKey,omitempty"`
 
-	// Roles: Roles for a member within the Group. Currently supported
-	// MembershipRoles: "MEMBER".
+	// Roles: The `MembershipRole`s that apply to the `Membership`. If
+	// unspecified, defaults to a single `MembershipRole` with `name`
+	// `MEMBER`. Must not contain duplicate `MembershipRole`s with the same
+	// `name`.
 	Roles []*MembershipRole `json:"roles,omitempty"`
 
 	// Type: Output only. The type of the membership.
@@ -1528,8 +1539,8 @@ type Membership struct {
 	//   "OTHER" - Represents other type.
 	Type string `json:"type,omitempty"`
 
-	// UpdateTime: Output only. Last updated timestamp of the Membership.
-	// Output only.
+	// UpdateTime: Output only. The time when the `Membership` was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1559,10 +1570,12 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MembershipRole: Resource representing a role within a Membership.
+// MembershipRole: A membership role within the Cloud Identity Groups
+// API. A `MembershipRole` defines the privileges granted to a
+// `Membership`.
 type MembershipRole struct {
-	// Name: MembershipRole in string format. Currently supported
-	// MembershipRoles: "MEMBER".
+	// Name: The name of the `MembershipRole`. Must be one of `OWNER`,
+	// `MANAGER`, `MEMBER`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1723,12 +1736,14 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SearchGroupsResponse: The response message for
+// GroupsService.SearchGroups.
 type SearchGroupsResponse struct {
-	// Groups: List of Groups satisfying the search query.
+	// Groups: The `Group`s that match the search query.
 	Groups []*Group `json:"groups,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results available for specified query.
+	// NextPageToken: A continuation token to retrieve the next page of
+	// results, or empty if there are no more results available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1854,7 +1869,7 @@ func (c *DevicesCancelWipeCall) Header() http.Header {
 
 func (c *DevicesCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2000,7 +2015,7 @@ func (c *DevicesCreateCall) Header() http.Header {
 
 func (c *DevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2139,7 +2154,7 @@ func (c *DevicesDeleteCall) Header() http.Header {
 
 func (c *DevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2295,7 +2310,7 @@ func (c *DevicesGetCall) Header() http.Header {
 
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2508,7 +2523,7 @@ func (c *DevicesListCall) Header() http.Header {
 
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2692,7 +2707,7 @@ func (c *DevicesWipeCall) Header() http.Header {
 
 func (c *DevicesWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2829,7 +2844,7 @@ func (c *DevicesDeviceUsersApproveCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2966,7 +2981,7 @@ func (c *DevicesDeviceUsersBlockCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersBlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3105,7 +3120,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3252,7 +3267,7 @@ func (c *DevicesDeviceUsersDeleteCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3406,7 +3421,7 @@ func (c *DevicesDeviceUsersGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3599,7 +3614,7 @@ func (c *DevicesDeviceUsersListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3850,7 +3865,7 @@ func (c *DevicesDeviceUsersLookupCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4041,7 +4056,7 @@ func (c *DevicesDeviceUsersWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4198,7 +4213,7 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4381,7 +4396,7 @@ func (c *DevicesDeviceUsersClientStatesListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4576,7 +4591,7 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4736,7 +4751,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4844,7 +4859,7 @@ type GroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Group.
+// Delete: Deletes a `Group`.
 func (r *GroupsService) Delete(name string) *GroupsDeleteCall {
 	c := &GroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4878,7 +4893,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4937,7 +4952,7 @@ func (c *GroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Group.",
+	//   "description": "Deletes a `Group`.",
 	//   "flatPath": "v1/groups/{groupsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudidentity.groups.delete",
@@ -4946,7 +4961,7 @@ func (c *GroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group in the format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group` to retrieve. Must be of the form `groups/{group_id}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -4976,7 +4991,7 @@ type GroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a Group.
+// Get: Retrieves a `Group`.
 func (r *GroupsService) Get(name string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5020,7 +5035,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5082,7 +5097,7 @@ func (c *GroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a Group.",
+	//   "description": "Retrieves a `Group`.",
 	//   "flatPath": "v1/groups/{groupsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.get",
@@ -5091,7 +5106,7 @@ func (c *GroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group in the format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group` to retrieve. Must be of the form `groups/{group_id}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -5121,41 +5136,49 @@ type GroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists groups within a customer or a domain.
+// List: Lists the `Group`s under a customer or namespace.
 func (r *GroupsService) List() *GroupsListCall {
 	c := &GroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The default page
-// size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the
-// FULL view.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. Note that the number of results returned may be
+// less than this value even if there are more available results. To
+// fetch all results, clients must continue calling this method
+// repeatedly until the response no longer contains a `next_page_token`.
+// If unspecified, defaults to 200 for `View.BASIC` and to 50 for
+// `View.FULL`. Must not be greater than 1000 for `View.BASIC` or 500
+// for `View.FULL`.
 func (c *GroupsListCall) PageSize(pageSize int64) *GroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous list request, if any.
+// `next_page_token` value returned from a previous list request, if
+// any.
 func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Parent sets the optional parameter "parent": Required. Customer ID to
-// list all groups from.
+// Parent sets the optional parameter "parent": Required. The parent
+// resource under which to list all `Group`s. Must be of the form
+// `identitysources/{identity_source_id}` for external- identity-mapped
+// groups or `customers/{customer_id}` for Google Groups.
 func (c *GroupsListCall) Parent(parent string) *GroupsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
-// View sets the optional parameter "view": Group resource view to be
-// returned. Defaults to [View.BASIC]().
+// View sets the optional parameter "view": The level of detail to be
+// returned. If unspecified, defaults to `View.BASIC`.
 //
 // Possible values:
 //   "VIEW_UNSPECIFIED" - Default. Should not be used.
-//   "BASIC" - Server responses only include basic information.
-//   "FULL" - Full representation of the resource.
+//   "BASIC" - Only basic resource information is returned.
+//   "FULL" - All resource information is returned.
 func (c *GroupsListCall) View(view string) *GroupsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5198,7 +5221,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5257,30 +5280,30 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists groups within a customer or a domain.",
+	//   "description": "Lists the `Group`s under a customer or namespace.",
 	//   "flatPath": "v1/groups",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the FULL view.",
+	//       "description": "The maximum number of results to return. Note that the number of results returned may be less than this value even if there are more available results. To fetch all results, clients must continue calling this method repeatedly until the response no longer contains a `next_page_token`. If unspecified, defaults to 200 for `View.BASIC` and to 50 for `View.FULL`. Must not be greater than 1000 for `View.BASIC` or 500 for `View.FULL`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous list request, if any.",
+	//       "description": "The `next_page_token` value returned from a previous list request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Customer ID to list all groups from.",
+	//       "description": "Required. The parent resource under which to list all `Group`s. Must be of the form `identitysources/{identity_source_id}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Group resource view to be returned. Defaults to [View.BASIC]().",
+	//       "description": "The level of detail to be returned. If unspecified, defaults to `View.BASIC`.",
 	//       "enum": [
 	//         "VIEW_UNSPECIFIED",
 	//         "BASIC",
@@ -5288,8 +5311,8 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default. Should not be used.",
-	//         "Server responses only include basic information.",
-	//         "Full representation of the resource."
+	//         "Only basic resource information is returned.",
+	//         "All resource information is returned."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5339,28 +5362,31 @@ type GroupsLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up [resource
-// name](https://cloud.google.com/apis/design/resource_names) of a Group
-// by its EntityKey.
+// Lookup: Looks up the [resource
+// name](https://cloud.google.com/apis/design/resource_names) of a
+// `Group` by its `EntityKey`.
 func (r *GroupsService) Lookup() *GroupsLookupCall {
 	c := &GroupsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // GroupKeyId sets the optional parameter "groupKey.id": The ID of the
-// entity within the given namespace. The ID must be unique within its
-// namespace.
+// entity. For Google-managed entities, the `id` should be the email
+// address of an existing group or user. For external-identity-mapped
+// entities, the `id` must be a string conforming to the Identity
+// Source's requirements. Must be unique within a `namespace`.
 func (c *GroupsLookupCall) GroupKeyId(groupKeyId string) *GroupsLookupCall {
 	c.urlParams_.Set("groupKey.id", groupKeyId)
 	return c
 }
 
 // GroupKeyNamespace sets the optional parameter "groupKey.namespace":
-// Namespaces provide isolation for IDs, so an ID only needs to be
-// unique within its namespace. Namespaces are currently only created as
-// part of IdentitySource creation from Admin Console. A namespace
-// "identitysources/{identity_source_id}" is created corresponding to
-// every Identity Source `identity_source_id`.
+// The namespace in which the entity exists. If not specified, the
+// `EntityKey` represents a Google-managed entity such as a Google user
+// or a Google Group. If specified, the `EntityKey` represents an
+// external-identity-mapped group. The namespace must correspond to an
+// identity source created in Admin Console and must be in the form of
+// `identitysources/{identity_source_id}.
 func (c *GroupsLookupCall) GroupKeyNamespace(groupKeyNamespace string) *GroupsLookupCall {
 	c.urlParams_.Set("groupKey.namespace", groupKeyNamespace)
 	return c
@@ -5403,7 +5429,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5462,19 +5488,19 @@ func (c *GroupsLookupCall) Do(opts ...googleapi.CallOption) (*LookupGroupNameRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up [resource name](https://cloud.google.com/apis/design/resource_names) of a Group by its EntityKey.",
+	//   "description": "Looks up the [resource name](https://cloud.google.com/apis/design/resource_names) of a `Group` by its `EntityKey`.",
 	//   "flatPath": "v1/groups:lookup",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.lookup",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "groupKey.id": {
-	//       "description": "The ID of the entity within the given namespace. The ID must be unique within its namespace.",
+	//       "description": "The ID of the entity. For Google-managed entities, the `id` should be the email address of an existing group or user. For external-identity-mapped entities, the `id` must be a string conforming to the Identity Source's requirements. Must be unique within a `namespace`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "groupKey.namespace": {
-	//       "description": "Namespaces provide isolation for IDs, so an ID only needs to be unique within its namespace. Namespaces are currently only created as part of IdentitySource creation from Admin Console. A namespace `\"identitysources/{identity_source_id}\"` is created corresponding to every Identity Source `identity_source_id`.",
+	//       "description": "The namespace in which the entity exists. If not specified, the `EntityKey` represents a Google-managed entity such as a Google user or a Google Group. If specified, the `EntityKey` represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of `identitysources/{identity_source_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5503,7 +5529,7 @@ type GroupsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a Group.
+// Patch: Updates a `Group`.
 func (r *GroupsService) Patch(name string, group *Group) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5511,8 +5537,9 @@ func (r *GroupsService) Patch(name string, group *Group) *GroupsPatchCall {
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required.
-// Editable fields: `display_name`, `description`
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// fully-qualified names of fields to update. May only contain the
+// following fields: `display_name`, `description`.
 func (c *GroupsPatchCall) UpdateMask(updateMask string) *GroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5545,7 +5572,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5609,7 +5636,7 @@ func (c *GroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a Group.",
+	//   "description": "Updates a `Group`.",
 	//   "flatPath": "v1/groups/{groupsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudidentity.groups.patch",
@@ -5618,14 +5645,14 @@ func (c *GroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group in the format: `groups/{group_id}`, where group_id is the unique ID assigned to the Group. Must be left blank while creating a Group.",
+	//       "description": "Output only. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group`. Shall be of the form `groups/{group_id}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Editable fields: `display_name`, `description`",
+	//       "description": "Required. The fully-qualified names of fields to update. May only contain the following fields: `display_name`, `description`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5656,45 +5683,51 @@ type GroupsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Searches for Groups.
+// Search: Searches for `Group`s matching a specified query.
 func (r *GroupsService) Search() *GroupsSearchCall {
 	c := &GroupsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The default page
-// size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the
-// FULL view.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. Note that the number of results returned may be
+// less than this value even if there are more available results. To
+// fetch all results, clients must continue calling this method
+// repeatedly until the response no longer contains a `next_page_token`.
+// If unspecified, defaults to 200 for `GroupView.BASIC` and 50 for
+// `GroupView.FULL`. Must not be greater than 1000 for `GroupView.BASIC`
+// or 500 for `GroupView.FULL`.
 func (c *GroupsSearchCall) PageSize(pageSize int64) *GroupsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous search request, if
+// `next_page_token` value returned from a previous search request, if
 // any.
 func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Query sets the optional parameter "query": Required. `Required`.
-// Query string for performing search on groups. Users can search on
-// parent and label attributes of groups. EXACT match ('==') is
-// supported on parent, and CONTAINS match ('in') is supported on
-// labels.
+// Query sets the optional parameter "query": Required. The search
+// query. Must be specified in [Common Expression
+// Language](https://opensource.google/projects/cel). May only contain
+// equality operators on the parent and inclusion operators on labels
+// (e.g., `parent == 'customers/{customer_id}' &&
+// 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
 func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
-// View sets the optional parameter "view": Group resource view to be
-// returned. Defaults to [View.BASIC]().
+// View sets the optional parameter "view": The level of detail to be
+// returned. If unspecified, defaults to `View.BASIC`.
 //
 // Possible values:
 //   "VIEW_UNSPECIFIED" - Default. Should not be used.
-//   "BASIC" - Server responses only include basic information.
-//   "FULL" - Full representation of the resource.
+//   "BASIC" - Only basic resource information is returned.
+//   "FULL" - All resource information is returned.
 func (c *GroupsSearchCall) View(view string) *GroupsSearchCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -5737,7 +5770,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5796,30 +5829,30 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches for Groups.",
+	//   "description": "Searches for `Group`s matching a specified query.",
 	//   "flatPath": "v1/groups:search",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.search",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the FULL view.",
+	//       "description": "The maximum number of results to return. Note that the number of results returned may be less than this value even if there are more available results. To fetch all results, clients must continue calling this method repeatedly until the response no longer contains a `next_page_token`. If unspecified, defaults to 200 for `GroupView.BASIC` and 50 for `GroupView.FULL`. Must not be greater than 1000 for `GroupView.BASIC` or 500 for `GroupView.FULL`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous search request, if any.",
+	//       "description": "The `next_page_token` value returned from a previous search request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. `Required`. Query string for performing search on groups. Users can search on parent and label attributes of groups. EXACT match ('==') is supported on parent, and CONTAINS match ('in') is supported on labels.",
+	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer_id}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Group resource view to be returned. Defaults to [View.BASIC]().",
+	//       "description": "The level of detail to be returned. If unspecified, defaults to `View.BASIC`.",
 	//       "enum": [
 	//         "VIEW_UNSPECIFIED",
 	//         "BASIC",
@@ -5827,8 +5860,8 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default. Should not be used.",
-	//         "Server responses only include basic information.",
-	//         "Full representation of the resource."
+	//         "Only basic resource information is returned.",
+	//         "All resource information is returned."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5879,7 +5912,7 @@ type GroupsMembershipsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a Membership.
+// Create: Creates a `Membership`.
 func (r *GroupsMembershipsService) Create(parent string, membership *Membership) *GroupsMembershipsCreateCall {
 	c := &GroupsMembershipsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5914,7 +5947,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5978,7 +6011,7 @@ func (c *GroupsMembershipsCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Membership.",
+	//   "description": "Creates a `Membership`.",
 	//   "flatPath": "v1/groups/{groupsId}/memberships",
 	//   "httpMethod": "POST",
 	//   "id": "cloudidentity.groups.memberships.create",
@@ -5987,7 +6020,7 @@ func (c *GroupsMembershipsCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group to create Membership within. Format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
+	//       "description": "Required. The parent `Group` resource under which to create the `Membership`. Must be of the form `groups/{group_id}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -6019,7 +6052,7 @@ type GroupsMembershipsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Membership.
+// Delete: Deletes a `Membership`.
 func (r *GroupsMembershipsService) Delete(name string) *GroupsMembershipsDeleteCall {
 	c := &GroupsMembershipsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6053,7 +6086,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6112,7 +6145,7 @@ func (c *GroupsMembershipsDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Membership.",
+	//   "description": "Deletes a `Membership`.",
 	//   "flatPath": "v1/groups/{groupsId}/memberships/{membershipsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudidentity.groups.memberships.delete",
@@ -6121,7 +6154,7 @@ func (c *GroupsMembershipsDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Membership to be deleted. Format: `groups/{group_id}/memberships/{member_id}`, where `group_id` is the unique ID assigned to the Group to which Membership belongs to, and member_id is the unique ID assigned to the member.",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Membership` to delete. Must be of the form `groups/{group_id}/memberships/{membership_id}`",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -6151,7 +6184,7 @@ type GroupsMembershipsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a Membership.
+// Get: Retrieves a `Membership`.
 func (r *GroupsMembershipsService) Get(name string) *GroupsMembershipsGetCall {
 	c := &GroupsMembershipsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6195,7 +6228,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6257,7 +6290,7 @@ func (c *GroupsMembershipsGetCall) Do(opts ...googleapi.CallOption) (*Membership
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a Membership.",
+	//   "description": "Retrieves a `Membership`.",
 	//   "flatPath": "v1/groups/{groupsId}/memberships/{membershipsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.get",
@@ -6266,7 +6299,7 @@ func (c *GroupsMembershipsGetCall) Do(opts ...googleapi.CallOption) (*Membership
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Membership to be retrieved. Format: `groups/{group_id}/memberships/{member_id}`, where `group_id` is the unique id assigned to the Group to which Membership belongs to, and `member_id` is the unique ID assigned to the member.",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Membership` to retrieve. Must be of the form `groups/{group_id}/memberships/{membership_id}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -6297,35 +6330,41 @@ type GroupsMembershipsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Memberships within a Group.
+// List: Lists the `Membership`s within a `Group`.
 func (r *GroupsMembershipsService) List(parent string) *GroupsMembershipsListCall {
 	c := &GroupsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The default page
-// size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the
-// FULL view.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. Note that the number of results returned may be
+// less than this value even if there are more available results. To
+// fetch all results, clients must continue calling this method
+// repeatedly until the response no longer contains a `next_page_token`.
+// If unspecified, defaults to 200 for `GroupView.BASIC` and to 50 for
+// `GroupView.FULL`. Must not be greater than 1000 for `GroupView.BASIC`
+// or 500 for `GroupView.FULL`.
 func (c *GroupsMembershipsListCall) PageSize(pageSize int64) *GroupsMembershipsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous list request, if any.
+// `next_page_token` value returned from a previous search request, if
+// any.
 func (c *GroupsMembershipsListCall) PageToken(pageToken string) *GroupsMembershipsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": Membership resource view to
-// be returned. Defaults to View.BASIC.
+// View sets the optional parameter "view": The level of detail to be
+// returned. If unspecified, defaults to `View.BASIC`.
 //
 // Possible values:
 //   "VIEW_UNSPECIFIED" - Default. Should not be used.
-//   "BASIC" - Server responses only include basic information.
-//   "FULL" - Full representation of the resource.
+//   "BASIC" - Only basic resource information is returned.
+//   "FULL" - All resource information is returned.
 func (c *GroupsMembershipsListCall) View(view string) *GroupsMembershipsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -6368,7 +6407,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6430,7 +6469,7 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists Memberships within a Group.",
+	//   "description": "Lists the `Membership`s within a `Group`.",
 	//   "flatPath": "v1/groups/{groupsId}/memberships",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.list",
@@ -6439,25 +6478,25 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50 (max 500) for the FULL view.",
+	//       "description": "The maximum number of results to return. Note that the number of results returned may be less than this value even if there are more available results. To fetch all results, clients must continue calling this method repeatedly until the response no longer contains a `next_page_token`. If unspecified, defaults to 200 for `GroupView.BASIC` and to 50 for `GroupView.FULL`. Must not be greater than 1000 for `GroupView.BASIC` or 500 for `GroupView.FULL`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous list request, if any.",
+	//       "description": "The `next_page_token` value returned from a previous search request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group to list Memberships within. Format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
+	//       "description": "Required. The parent `Group` resource under which to lookup the `Membership` name. Must be of the form `groups/{group_id}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Membership resource view to be returned. Defaults to View.BASIC.",
+	//       "description": "The level of detail to be returned. If unspecified, defaults to `View.BASIC`.",
 	//       "enum": [
 	//         "VIEW_UNSPECIFIED",
 	//         "BASIC",
@@ -6465,8 +6504,8 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default. Should not be used.",
-	//         "Server responses only include basic information.",
-	//         "Full representation of the resource."
+	//         "Only basic resource information is returned.",
+	//         "All resource information is returned."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6517,9 +6556,9 @@ type GroupsMembershipsLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up [resource
+// Lookup: Looks up the [resource
 // name](https://cloud.google.com/apis/design/resource_names) of a
-// Membership within a Group by member's EntityKey.
+// `Membership` by its `EntityKey`.
 func (r *GroupsMembershipsService) Lookup(parent string) *GroupsMembershipsLookupCall {
 	c := &GroupsMembershipsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6527,19 +6566,22 @@ func (r *GroupsMembershipsService) Lookup(parent string) *GroupsMembershipsLooku
 }
 
 // MemberKeyId sets the optional parameter "memberKey.id": The ID of the
-// entity within the given namespace. The ID must be unique within its
-// namespace.
+// entity. For Google-managed entities, the `id` should be the email
+// address of an existing group or user. For external-identity-mapped
+// entities, the `id` must be a string conforming to the Identity
+// Source's requirements. Must be unique within a `namespace`.
 func (c *GroupsMembershipsLookupCall) MemberKeyId(memberKeyId string) *GroupsMembershipsLookupCall {
 	c.urlParams_.Set("memberKey.id", memberKeyId)
 	return c
 }
 
 // MemberKeyNamespace sets the optional parameter "memberKey.namespace":
-// Namespaces provide isolation for IDs, so an ID only needs to be
-// unique within its namespace. Namespaces are currently only created as
-// part of IdentitySource creation from Admin Console. A namespace
-// "identitysources/{identity_source_id}" is created corresponding to
-// every Identity Source `identity_source_id`.
+// The namespace in which the entity exists. If not specified, the
+// `EntityKey` represents a Google-managed entity such as a Google user
+// or a Google Group. If specified, the `EntityKey` represents an
+// external-identity-mapped group. The namespace must correspond to an
+// identity source created in Admin Console and must be in the form of
+// `identitysources/{identity_source_id}.
 func (c *GroupsMembershipsLookupCall) MemberKeyNamespace(memberKeyNamespace string) *GroupsMembershipsLookupCall {
 	c.urlParams_.Set("memberKey.namespace", memberKeyNamespace)
 	return c
@@ -6582,7 +6624,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6644,7 +6686,7 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up [resource name](https://cloud.google.com/apis/design/resource_names) of a Membership within a Group by member's EntityKey.",
+	//   "description": "Looks up the [resource name](https://cloud.google.com/apis/design/resource_names) of a `Membership` by its `EntityKey`.",
 	//   "flatPath": "v1/groups/{groupsId}/memberships:lookup",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.lookup",
@@ -6653,17 +6695,17 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	//   ],
 	//   "parameters": {
 	//     "memberKey.id": {
-	//       "description": "The ID of the entity within the given namespace. The ID must be unique within its namespace.",
+	//       "description": "The ID of the entity. For Google-managed entities, the `id` should be the email address of an existing group or user. For external-identity-mapped entities, the `id` must be a string conforming to the Identity Source's requirements. Must be unique within a `namespace`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "memberKey.namespace": {
-	//       "description": "Namespaces provide isolation for IDs, so an ID only needs to be unique within its namespace. Namespaces are currently only created as part of IdentitySource creation from Admin Console. A namespace `\"identitysources/{identity_source_id}\"` is created corresponding to every Identity Source `identity_source_id`.",
+	//       "description": "The namespace in which the entity exists. If not specified, the `EntityKey` represents a Google-managed entity such as a Google user or a Google Group. If specified, the `EntityKey` represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of `identitysources/{identity_source_id}.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Group to lookup Membership within. Format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
+	//       "description": "Required. The parent `Group` resource under which to lookup the `Membership` name. Must be of the form `groups/{group_id}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -6730,7 +6772,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

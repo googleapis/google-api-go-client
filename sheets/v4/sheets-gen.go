@@ -352,9 +352,9 @@ func (s *AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 }
 
 // AddDataSourceRequest: Adds a data source. After the data source is
-// added successfully, an associated DataSource sheet is created and an
+// added successfully, an associated DATA_SOURCE sheet is created and an
 // execution is triggered to refresh the sheet to read data from the
-// data source. The request requires an additional bigquery.readonly
+// data source. The request requires an additional `bigquery.readonly`
 // OAuth scope.
 type AddDataSourceRequest struct {
 	// DataSource: The data source to add.
@@ -1450,7 +1450,7 @@ func (s *BasicChartSpec) MarshalJSON() ([]byte, error) {
 type BasicFilter struct {
 	// Criteria: The criteria for showing/hiding values per column. The
 	// map's key is the column index, and the value is the criteria for that
-	// column.
+	// column. This field is deprecated in favor of filter_specs.
 	Criteria map[string]FilterCriteria `json:"criteria,omitempty"`
 
 	// FilterSpecs: The filter criteria per column. Both criteria and
@@ -2151,7 +2151,8 @@ func (s *BatchUpdateValuesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BigQueryDataSourceSpec: The specification of a BigQuery data source.
+// BigQueryDataSourceSpec: The specification of a BigQuery data source
+// that's connected to a sheet.
 type BigQueryDataSourceSpec struct {
 	// ProjectId: The ID of a BigQuery enabled GCP project with a billing
 	// account attached. For any queries executed against the data source,
@@ -2215,8 +2216,9 @@ func (s *BigQueryQuerySpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BigQueryTableSpec: Specifies a BigQuery table definition. Only native
-// tables is allowed.
+// BigQueryTableSpec: Specifies a BigQuery table definition. Only
+// [native tables](https://cloud.google.com/bigquery/docs/tables-intro)
+// is allowed.
 type BigQueryTableSpec struct {
 	// DatasetId: The BigQuery dataset id.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -2273,10 +2275,15 @@ type BooleanCondition struct {
 	// formatting and filters. Requires a single ConditionValue.
 	//   "NUMBER_EQ" - The cell's value must be equal to the condition's
 	// value. Supported by data validation, conditional formatting and
-	// filters. Requires a single ConditionValue.
+	// filters. Requires a single ConditionValue for data validation,
+	// conditional formatting, and filters on non-data source objects and at
+	// least one ConditionValue for filters on data source objects.
 	//   "NUMBER_NOT_EQ" - The cell's value must be not equal to the
 	// condition's value. Supported by data validation, conditional
-	// formatting and filters. Requires a single ConditionValue.
+	// formatting and filters. Requires a single ConditionValue for data
+	// validation, conditional formatting, and filters on non-data source
+	// objects and at least one ConditionValue for filters on data source
+	// objects.
 	//   "NUMBER_BETWEEN" - The cell's value must be between the two
 	// condition values. Supported by data validation, conditional
 	// formatting and filters. Requires exactly two ConditionValues.
@@ -2297,14 +2304,19 @@ type BooleanCondition struct {
 	// single ConditionValue.
 	//   "TEXT_EQ" - The cell's value must be exactly the condition's value.
 	// Supported by data validation, conditional formatting and filters.
-	// Requires a single ConditionValue.
+	// Requires a single ConditionValue for data validation, conditional
+	// formatting, and filters on non-data source objects and at least one
+	// ConditionValue for filters on data source objects.
 	//   "TEXT_IS_EMAIL" - The cell's value must be a valid email address.
 	// Supported by data validation. Requires no ConditionValues.
 	//   "TEXT_IS_URL" - The cell's value must be a valid URL. Supported by
 	// data validation. Requires no ConditionValues.
 	//   "DATE_EQ" - The cell's value must be the same date as the
 	// condition's value. Supported by data validation, conditional
-	// formatting and filters. Requires a single ConditionValue.
+	// formatting and filters. Requires a single ConditionValue for data
+	// validation, conditional formatting, and filters on non-data source
+	// objects and at least one ConditionValue for filters on data source
+	// objects.
 	//   "DATE_BEFORE" - The cell's value must be before the date of the
 	// condition's value. Supported by data validation, conditional
 	// formatting and filters. Requires a single ConditionValue that may be
@@ -2340,8 +2352,9 @@ type BooleanCondition struct {
 	//   "NOT_BLANK" - The cell's value must not be empty. Supported by
 	// conditional formatting and filters. Requires no ConditionValues.
 	//   "CUSTOM_FORMULA" - The condition's formula must evaluate to true.
-	// Supported by data validation, conditional formatting and filters.
-	// Requires a single ConditionValue.
+	// Supported by data validation, conditional formatting and filters. Not
+	// supported by data source sheet filters. Requires a single
+	// ConditionValue.
 	//   "BOOLEAN" - The cell's value must be TRUE/FALSE or in the list of
 	// condition values. Supported by data validation. Renders as a cell
 	// checkbox. Supports zero, one or two ConditionValues. No values
@@ -2757,7 +2770,7 @@ func (s *CandlestickSeries) MarshalJSON() ([]byte, error) {
 type CellData struct {
 	// DataSourceFormula: Output only. Information about a data source
 	// formula on the cell. The field is set if user_entered_value is a
-	// formula referencing some [SheetType.DATA_SOURCE] sheet, e.g
+	// formula referencing some DATA_SOURCE sheet, e.g
 	// `=SUM(DataSheet!Column)`.
 	DataSourceFormula *DataSourceFormula `json:"dataSourceFormula,omitempty"`
 
@@ -3945,7 +3958,16 @@ func (s *CutPasteRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataExecutionStatus: The data execution status.
+// DataExecutionStatus: The data execution status. A data execution is
+// created to sync a data source object with the latest data from a
+// DataSource. It is usually scheduled to run at background, you can
+// check its state to tell if an execution completes There are several
+// scenarios where a data execution is triggered to run: * Adding a data
+// source creates an associated data source sheet as well as a data
+// execution to sync the data from the data source to the sheet. *
+// Updating a data source creates a data execution to refresh the
+// associated data source sheet similarly. * You can send refresh
+// request to explicitly refresh one or multiple data source objects.
 type DataExecutionStatus struct {
 	// ErrorCode: The error code.
 	//
@@ -4114,17 +4136,17 @@ type DataSource struct {
 	CalculatedColumns []*DataSourceColumn `json:"calculatedColumns,omitempty"`
 
 	// DataSourceId: The spreadsheet-scoped unique ID that identifies the
-	// data source.
+	// data source. Example: 1080547365.
 	DataSourceId string `json:"dataSourceId,omitempty"`
 
 	// SheetId: The ID of the Sheet connected with the data source. The
 	// field cannot be changed once set. When creating a data source, an
-	// associated SheetType.DATA_SOURCE sheet is also created, if the field
-	// is not specified, the ID of the created sheet will be randomly
-	// generated.
+	// associated DATA_SOURCE sheet is also created, if the field is not
+	// specified, the ID of the created sheet will be randomly generated.
 	SheetId int64 `json:"sheetId,omitempty"`
 
-	// Spec: The DataSourceSpec.
+	// Spec: The DataSourceSpec for the data source connected with this
+	// spreadsheet.
 	Spec *DataSourceSpec `json:"spec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CalculatedColumns")
@@ -4184,7 +4206,7 @@ func (s *DataSourceChartProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceColumn: A data source column.
+// DataSourceColumn: A column in a data source.
 type DataSourceColumn struct {
 	// Formula: The formula of the calculated column.
 	Formula string `json:"formula,omitempty"`
@@ -4215,7 +4237,7 @@ func (s *DataSourceColumn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceColumnReference: An unique identifier that references to a
+// DataSourceColumnReference: An unique identifier that references a
 // data source column.
 type DataSourceColumnReference struct {
 	// Name: The display name of the column. It should be unique within a
@@ -4280,7 +4302,7 @@ func (s *DataSourceFormula) MarshalJSON() ([]byte, error) {
 
 // DataSourceObjectReference: Reference to a data source object.
 type DataSourceObjectReference struct {
-	// ChartId: References to a DataSourceChart.
+	// ChartId: References to a data source chart.
 	ChartId int64 `json:"chartId,omitempty"`
 
 	// DataSourceFormulaCell: References to a cell containing
@@ -4295,7 +4317,7 @@ type DataSourceObjectReference struct {
 	// at the cell.
 	DataSourceTableAnchorCell *GridCoordinate `json:"dataSourceTableAnchorCell,omitempty"`
 
-	// SheetId: References to a SheetType.DATA_SOURCE sheet.
+	// SheetId: References to a DATA_SOURCE sheet.
 	SheetId string `json:"sheetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ChartId") to
@@ -4351,11 +4373,13 @@ func (s *DataSourceObjectReferences) MarshalJSON() ([]byte, error) {
 }
 
 // DataSourceParameter: A parameter in a data source's query. The
-// parameter allows user to pass in values from the spreadsheet into a
-// query.
+// parameter allows the user to pass in values from the spreadsheet into
+// a query.
 type DataSourceParameter struct {
 	// Name: Named parameter. Must be a legitimate identifier for the
-	// DataSource that supports it. For example, BigQuery identifier
+	// DataSource that supports it. For example, [BigQuery
+	// identifier](https://cloud.google.com/bigquery/docs/reference/standard-
+	// sql/lexical#identifiers).
 	Name string `json:"name,omitempty"`
 
 	// NamedRangeId: ID of a NamedRange. Its size must be 1x1.
@@ -4388,8 +4412,8 @@ func (s *DataSourceParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceRefreshDailySchedule: Schedule refreshes in a time interval
-// everyday.
+// DataSourceRefreshDailySchedule: A schedule for data to refresh every
+// day in a given time interval.
 type DataSourceRefreshDailySchedule struct {
 	// StartTime: The start time of a time interval in which a data source
 	// refresh is scheduled. Only `hours` part is used. The time interval
@@ -4419,8 +4443,8 @@ func (s *DataSourceRefreshDailySchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceRefreshMonthlySchedule: Schedule refreshes in a time
-// interval on specified days in a month and repeats monthly.
+// DataSourceRefreshMonthlySchedule: A monthly schedule for data to
+// refresh on specific days in the month in a given time interval.
 type DataSourceRefreshMonthlySchedule struct {
 	// DaysOfMonth: Days of the month to refresh. Only 1-28 are supported,
 	// mapping to the 1st to the 28th day. At lesat one day must be
@@ -4455,12 +4479,12 @@ func (s *DataSourceRefreshMonthlySchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceRefreshSchedule: The data source refresh schedule. All data
-// sources in the spreadsheet are scheduled to refresh in a future time
-// interval. The time interval size defaults to the one defined in the
-// Sheets editor. For example, if a daily schedule at start time of 8am
-// is scheduled, and the time interval is 4 hours, the scheduled refresh
-// will happen between 8am and 12pm every day.
+// DataSourceRefreshSchedule: Schedule for refreshing the data source.
+// Data sources in the spreadsheet are refreshed within a time interval.
+// You can specify the start time by clicking the Scheduled Refresh
+// button in the Sheets editor, but the interval is fixed at 4 hours.
+// For example, if you specify a start time of 8am , the refresh will
+// take place between 8am and 12pm every day.
 type DataSourceRefreshSchedule struct {
 	// DailySchedule: Daily refresh schedule.
 	DailySchedule *DataSourceRefreshDailySchedule `json:"dailySchedule,omitempty"`
@@ -4474,10 +4498,10 @@ type DataSourceRefreshSchedule struct {
 	// NextRun: Output only. The time interval of the next run.
 	NextRun *Interval `json:"nextRun,omitempty"`
 
-	// RefreshScope: The scope of the refresh.
+	// RefreshScope: The scope of the refresh. Must be ALL_DATA_SOURCES.
 	//
 	// Possible values:
-	//   "DATA_SOURCE_REFRESH_SCOPE_UNSPECIFIED" - Default value; Do not
+	//   "DATA_SOURCE_REFRESH_SCOPE_UNSPECIFIED" - Default value, do not
 	// use.
 	//   "ALL_DATA_SOURCES" - Refreshes all data sources and their
 	// associated data source objects in the spreadsheet.
@@ -4509,8 +4533,8 @@ func (s *DataSourceRefreshSchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceRefreshWeeklySchedule: Schedule refreshes in a time
-// interval on specified days in a week and repeats weekly.
+// DataSourceRefreshWeeklySchedule: A weekly schedule for data to
+// refresh on specific days in a given time interval.
 type DataSourceRefreshWeeklySchedule struct {
 	// DaysOfWeek: Days of the week to refresh. At least one day must be
 	// specified.
@@ -4555,7 +4579,7 @@ func (s *DataSourceRefreshWeeklySchedule) MarshalJSON() ([]byte, error) {
 }
 
 // DataSourceSheetDimensionRange: A range along a single dimension on a
-// DataSource sheet.
+// DATA_SOURCE sheet.
 type DataSourceSheetDimensionRange struct {
 	// ColumnReferences: The columns on the data source sheet.
 	ColumnReferences []*DataSourceColumnReference `json:"columnReferences,omitempty"`
@@ -4587,8 +4611,8 @@ func (s *DataSourceSheetDimensionRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceSheetProperties: Additional properties of a
-// SheetType.DATA_SOURCE sheet.
+// DataSourceSheetProperties: Additional properties of a DATA_SOURCE
+// sheet.
 type DataSourceSheetProperties struct {
 	// Columns: The columns displayed on the sheet, corresponding to the
 	// values in RowData.
@@ -4597,7 +4621,7 @@ type DataSourceSheetProperties struct {
 	// DataExecutionStatus: The data execution status.
 	DataExecutionStatus *DataExecutionStatus `json:"dataExecutionStatus,omitempty"`
 
-	// DataSourceId: ID of the DataSource the sheet connected with.
+	// DataSourceId: ID of the DataSource the sheet is connected to.
 	DataSourceId string `json:"dataSourceId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
@@ -4623,12 +4647,15 @@ func (s *DataSourceSheetProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceSpec: The specification of a data source.
+// DataSourceSpec: This specifies the details of the data source. For
+// example, for BigQuery, this specifies information about the BigQuery
+// source.
 type DataSourceSpec struct {
 	// BigQuery: A BigQueryDataSourceSpec.
 	BigQuery *BigQueryDataSourceSpec `json:"bigQuery,omitempty"`
 
-	// Parameters: The parameters of the data source.
+	// Parameters: The parameters of the data source, used when querying the
+	// data source.
 	Parameters []*DataSourceParameter `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigQuery") to
@@ -4654,9 +4681,9 @@ func (s *DataSourceSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSourceTable: A data source table, allowing to import a static
-// table of data from the DataSource into Sheets. This is also known as
-// "Extract" in the Sheets editor.
+// DataSourceTable: A data source table, which allows the user to import
+// a static table of data from the DataSource into Sheets. This is also
+// known as "Extract" in the Sheets editor.
 type DataSourceTable struct {
 	// ColumnSelectionType: The type to select columns for the data source
 	// table. Defaults to SELECTED.
@@ -5328,7 +5355,9 @@ func (s *DeleteRangeRequest) MarshalJSON() ([]byte, error) {
 
 // DeleteSheetRequest: Deletes the requested sheet.
 type DeleteSheetRequest struct {
-	// SheetId: The ID of the sheet to delete.
+	// SheetId: The ID of the sheet to delete. If the sheet is of
+	// SheetType.DATA_SOURCE type, the associated DataSource is also
+	// deleted.
 	SheetId int64 `json:"sheetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SheetId") to
@@ -5792,7 +5821,11 @@ type DuplicateSheetRequest struct {
 	// chosen for you.
 	NewSheetName string `json:"newSheetName,omitempty"`
 
-	// SourceSheetId: The sheet to duplicate.
+	// SourceSheetId: The sheet to duplicate. If the source sheet is of
+	// DATA_SOURCE type, its backing DataSource is also duplicated and
+	// associated with the new copy of the sheet. No data execution is
+	// triggered, the grid data of this sheet is also copied over but only
+	// available after the batch request completes.
 	SourceSheetId int64 `json:"sourceSheetId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InsertSheetIndex") to
@@ -6158,7 +6191,7 @@ func (s *FilterSpec) MarshalJSON() ([]byte, error) {
 type FilterView struct {
 	// Criteria: The criteria for showing/hiding values per column. The
 	// map's key is the column index, and the value is the criteria for that
-	// column.
+	// column. This field is deprecated in favor of filter_specs.
 	Criteria map[string]FilterCriteria `json:"criteria,omitempty"`
 
 	// FilterSpecs: The filter criteria for showing/hiding values per
@@ -7962,7 +7995,8 @@ type PivotTable struct {
 	// The map's key is the column offset of the source range that you want
 	// to filter, and the value is the criteria for that column. For
 	// example, if the source was `C10:E15`, a key of `0` will have the
-	// filter for column `C`, whereas the key `1` is for column `D`.
+	// filter for column `C`, whereas the key `1` is for column `D`. This
+	// field is deprecated in favor of filter_specs.
 	Criteria map[string]PivotFilterCriteria `json:"criteria,omitempty"`
 
 	// DataExecutionStatus: Output only. The data execution status for data
@@ -8234,7 +8268,7 @@ func (s *RefreshDataSourceObjectExecutionStatus) MarshalJSON() ([]byte, error) {
 
 // RefreshDataSourceRequest: Refreshes one or multiple data source
 // objects in the spreadsheet by the specified references. The request
-// requires an additional bigquery.readonly OAuth scope. If there're
+// requires an additional `bigquery.readonly` OAuth scope. If there are
 // multiple refresh requests referencing the same data source objects in
 // one batch, only the last refresh request is processed, and all those
 // requests will have the same response accordingly.
@@ -8719,7 +8753,10 @@ func (s *RowData) MarshalJSON() ([]byte, error) {
 // over time.
 type ScorecardChartSpec struct {
 	// AggregateType: The aggregation type for key and baseline chart data
-	// in scorecard chart. This field is optional.
+	// in scorecard chart. This field is not supported for data source
+	// charts. Use the ChartData.aggregateType field of the key_value_data
+	// or baseline_value_data instead for data source charts. This field is
+	// optional.
 	//
 	// Possible values:
 	//   "CHART_AGGREGATE_TYPE_UNSPECIFIED" - Default value, do not use.
@@ -8957,7 +8994,8 @@ type Sheet struct {
 	// `Sheet1!A1:C10` and `Sheet1!D15:E20`, then the first GridData will
 	// have a startRow/startColumn of `0`, while the second one will have
 	// `startRow 14` (zero-based row 15), and `startColumn 3` (zero-based
-	// column D).
+	// column D). For a DATA_SOURCE sheet, you can not request a specific
+	// range, the GridData contains all the values.
 	Data []*GridData `json:"data,omitempty"`
 
 	// DeveloperMetadata: The developer metadata associated with a sheet.
@@ -9008,13 +9046,16 @@ func (s *Sheet) MarshalJSON() ([]byte, error) {
 // SheetProperties: Properties of a sheet.
 type SheetProperties struct {
 	// DataSourceSheetProperties: Output only. If present, the field
-	// contains SheetType.DATA_SOURCE sheet specific properties.
+	// contains DATA_SOURCE sheet specific properties.
 	DataSourceSheetProperties *DataSourceSheetProperties `json:"dataSourceSheetProperties,omitempty"`
 
 	// GridProperties: Additional properties of the sheet if this sheet is a
 	// grid. (If the sheet is an object sheet, containing a chart or image,
 	// then this field will be absent.) When writing it is an error to set
-	// any grid properties on non-grid sheets.
+	// any grid properties on non-grid sheets. If this sheet is a
+	// DATA_SOURCE sheet, this field is output only but contains the
+	// properties that reflect how a data source sheet is rendered in the
+	// UI, e.g. row_count.
 	GridProperties *GridProperties `json:"gridProperties,omitempty"`
 
 	// Hidden: True if the sheet is hidden in the UI, false if it's visible.
@@ -10297,15 +10338,15 @@ func (s *UpdateConditionalFormatRuleResponse) MarshalJSON() ([]byte, error) {
 
 // UpdateDataSourceRequest: Updates a data source. After the data source
 // is updated successfully, an execution is triggered to refresh the
-// associated DataSource sheet to read data from the updated data
-// source. The request requires an additional bigquery.readonly OAuth
+// associated DATA_SOURCE sheet to read data from the updated data
+// source. The request requires an additional `bigquery.readonly` OAuth
 // scope.
 type UpdateDataSourceRequest struct {
 	// DataSource: The data source to update.
 	DataSource *DataSource `json:"dataSource,omitempty"`
 
 	// Fields: The fields that should be updated. At least one field must be
-	// specified. The root 'dataSource' is implied and should not be
+	// specified. The root `dataSource` is implied and should not be
 	// specified. A single "*" can be used as short-hand for listing every
 	// field.
 	Fields string `json:"fields,omitempty"`
@@ -11240,7 +11281,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11380,7 +11421,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11544,7 +11585,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11705,7 +11746,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11859,7 +11900,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12010,7 +12051,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12154,7 +12195,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12401,7 +12442,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12614,7 +12655,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12759,7 +12800,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12979,7 +13020,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13169,7 +13210,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13313,7 +13354,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13456,7 +13497,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13603,7 +13644,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13825,7 +13866,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14092,7 +14133,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200926")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

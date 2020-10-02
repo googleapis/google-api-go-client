@@ -891,10 +891,10 @@
                 "rejected"
               ],
               "enumDescriptions": [
+                "The comment is available for public display.",
+                "The comment is awaiting review by a moderator.",
                 "",
-                "",
-                "",
-                ""
+                "The comment is unfit for display."
               ],
               "location": "query",
               "type": "string"
@@ -908,8 +908,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "Order by time.",
+                "Order by relevance."
               ],
               "location": "query",
               "type": "string"
@@ -941,8 +941,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "Returns the comments in HTML format. This is the default value.",
+                "Returns the comments in plain text format."
               ],
               "location": "query",
               "type": "string"
@@ -1090,8 +1090,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "Returns the comments in HTML format. This is the default value.",
+                "Returns the comments in plain text format."
               ],
               "location": "query",
               "type": "string"
@@ -1159,10 +1159,10 @@
                 "rejected"
               ],
               "enumDescriptions": [
+                "The comment is available for public display.",
+                "The comment is awaiting review by a moderator.",
                 "",
-                "",
-                "",
-                ""
+                "The comment is unfit for display."
               ],
               "location": "query",
               "required": true,
@@ -1479,10 +1479,10 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                "",
-                ""
+                "Return all broadcasts.",
+                "Return current live broadcasts.",
+                "Return broadcasts that have not yet started.",
+                "Return broadcasts that have already ended."
               ],
               "location": "query",
               "type": "string"
@@ -1498,9 +1498,9 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                ""
+                "Return all broadcasts.",
+                "Return only scheduled event broadcasts.",
+                "Return only persistent broadcasts."
               ],
               "location": "query",
               "type": "string"
@@ -1576,9 +1576,9 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                ""
+                "Start testing the broadcast. YouTube transmits video to the broadcast's monitor stream. Note that you can only transition a broadcast to the testing state if its contentDetails.monitorStream.enableMonitorStream property is set to true.\",",
+                "Return only persistent broadcasts.",
+                "The broadcast is over. YouTube stops transmitting video."
               ],
               "location": "query",
               "required": true,
@@ -2133,8 +2133,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "Return only members that joined after the first call with this mode was made.",
+                "Return all current members, from newest to oldest."
               ],
               "location": "query",
               "type": "string"
@@ -2562,8 +2562,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "Return all channels.",
+                "Only retrieve shows."
               ],
               "location": "query",
               "type": "string"
@@ -2578,9 +2578,9 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                ""
+                "The live broadcast is upcoming.",
+                "The live broadcast is active.",
+                "The live broadcast has been completed."
               ],
               "location": "query",
               "type": "string"
@@ -2636,12 +2636,12 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                "Resources are sorted in reverse chronological order based on the date they were created.",
+                "Resources are sorted from highest to lowest rating.",
+                "Resources are sorted from highest to lowest number of views.",
+                "Resources are sorted based on their relevance to the search query. This is the default value for this parameter.",
+                "Resources are sorted alphabetically by title.",
+                "Channels are sorted in descending order of their number of uploaded videos."
               ],
               "location": "query",
               "type": "string"
@@ -2701,9 +2701,9 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                ""
+                "YouTube will not filter the search result set.",
+                "YouTube will filter some content from search results and, at the least, will filter content that is restricted in your locale. Based on their content, search results could be removed from search results or demoted in search results. This is the default parameter value.",
+                "YouTube will try to exclude all restricted content from the search result set. Based on their content, search results could be removed from search results or demoted in search results."
               ],
               "location": "query",
               "type": "string"
@@ -2730,9 +2730,9 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                ""
+                "Do not filter results based on caption availability.",
+                "Only include videos that have captions.",
+                "Only include videos that do not have captions."
               ],
               "location": "query",
               "type": "string"
@@ -2750,9 +2750,9 @@
                 "high"
               ],
               "enumDescriptions": [
-                "",
-                "",
-                ""
+                "Return all videos, regardless of their resolution.",
+                "Only retrieve videos in standard definition.",
+                "Only retrieve HD videos."
               ],
               "location": "query",
               "type": "string"
@@ -2766,8 +2766,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "2d",
-                "3d"
+                "Restrict search results to exclude 3D videos.",
+                "Restrict search results to only include 3D videos."
               ],
               "location": "query",
               "type": "string"
@@ -2783,10 +2783,10 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                "",
-                ""
+                "Do not filter video search results based on their duration. This is the default value.",
+                "Only include videos that are less than four minutes long.",
+                "Only include videos that are between four and 20 minutes long (inclusive).",
+                "Only include videos longer than 20 minutes."
               ],
               "location": "query",
               "type": "string"
@@ -2800,8 +2800,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "Return all videos, embeddable or not.",
+                "Only retrieve embeddable videos."
               ],
               "location": "query",
               "type": "string"
@@ -2814,9 +2814,9 @@
                 "creativeCommon"
               ],
               "enumDescriptions": [
-                "",
-                "",
-                ""
+                "Return all videos, regardless of which license they have, that match the query parameters.",
+                "Only return videos that have the standard YouTube license.",
+                "Only return videos that have a Creative Commons license. Users can reuse videos with this license in other videos that they create. Learn more."
               ],
               "location": "query",
               "type": "string"
@@ -2830,8 +2830,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "Return all videos, syndicated or not.",
+                "Only retrieve syndicated videos."
               ],
               "location": "query",
               "type": "string"
@@ -2846,9 +2846,9 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                ""
+                "Return all videos.",
+                "Only retrieve movies.",
+                "Only retrieve episodes of shows."
               ],
               "location": "query",
               "type": "string"
@@ -2888,8 +2888,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "Return the most recent sponsors, from newest to oldest.",
+                "Return all sponsors, from newest to oldest."
               ],
               "location": "query",
               "type": "string"
@@ -3047,9 +3047,9 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                "",
-                ""
+                "Sort by relevance.",
+                "Sort by order of activity.",
+                "Sort alphabetically."
               ],
               "location": "query",
               "type": "string"
@@ -3582,7 +3582,7 @@
               ],
               "enumDescriptions": [
                 "",
-                ""
+                "Return the most popular videos for the specified content region and video category."
               ],
               "location": "query",
               "type": "string"
@@ -3629,8 +3629,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "The entity is liked.",
+                "The entity is disliked."
               ],
               "location": "query",
               "type": "string"
@@ -3698,8 +3698,8 @@
               ],
               "enumDescriptions": [
                 "",
-                "",
-                ""
+                "The entity is liked.",
+                "The entity is disliked."
               ],
               "location": "query",
               "required": true,
@@ -3855,7 +3855,7 @@
       }
     }
   },
-  "revision": "20200929",
+  "revision": "20200930",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -5390,10 +5390,10 @@
             "rejected"
           ],
           "enumDescriptions": [
+            "The comment is available for public display.",
+            "The comment is awaiting review by a moderator.",
             "",
-            "",
-            "",
-            ""
+            "The comment is unfit for display."
           ],
           "type": "string"
         },
@@ -5430,8 +5430,8 @@
           ],
           "enumDescriptions": [
             "",
-            "",
-            ""
+            "The entity is liked.",
+            "The entity is disliked."
           ],
           "type": "string"
         }
@@ -9621,9 +9621,9 @@
           ],
           "enumDescriptions": [
             "",
-            "",
-            "",
-            ""
+            "The live broadcast is upcoming.",
+            "The live broadcast is active.",
+            "The live broadcast has been completed."
           ],
           "type": "string"
         },
@@ -10995,8 +10995,8 @@
           ],
           "enumDescriptions": [
             "",
-            "",
-            ""
+            "The entity is liked.",
+            "The entity is disliked."
           ],
           "type": "string"
         },
@@ -11094,9 +11094,9 @@
           ],
           "enumDescriptions": [
             "",
-            "",
-            "",
-            ""
+            "The live broadcast is upcoming.",
+            "The live broadcast is active.",
+            "The live broadcast has been completed."
           ],
           "type": "string"
         },

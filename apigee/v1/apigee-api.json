@@ -141,7 +141,7 @@
     "organizations": {
       "methods": {
         "create": {
-          "description": "Creates an Apigee organization. See [Create an organization](https://docs.apigee.com/hybrid/latest/precog-provision).",
+          "description": "Creates an Apigee organization. See [Create an Apigee organization](https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).",
           "flatPath": "v1/organizations",
           "httpMethod": "POST",
           "id": "apigee.organizations.create",
@@ -165,7 +165,7 @@
           ]
         },
         "get": {
-          "description": "Gets the profile for an Apigee organization. See [Organizations](https://docs.apigee.com/hybrid/latest/terminology#organizations).",
+          "description": "Gets the profile for an Apigee organization. See [Understanding organizations](https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).",
           "flatPath": "v1/organizations/{organizationsId}",
           "httpMethod": "GET",
           "id": "apigee.organizations.get",
@@ -215,7 +215,7 @@
           ]
         },
         "getSyncAuthorization": {
-          "description": "Lists the service accounts with the permissions required to allow the Synchronizer to download environment data from the control plane. An ETag is returned in the response to `getSyncAuthorization`. Pass that ETag when calling [setSyncAuthorization](setSyncAuthorization) to ensure that you are updating the correct version. If you don't pass the ETag in the call to `setSyncAuthorization`, then the existing authorization is overwritten indiscriminately. For more information, see [Enable Synchronizer access](https://docs.apigee.com/hybrid/latest/synchronizer-access#enable-synchronizer-access). **Note**: Available to Apigee hybrid only.",
+          "description": "Lists the service accounts with the permissions required to allow the Synchronizer to download environment data from the control plane. An ETag is returned in the response to `getSyncAuthorization`. Pass that ETag when calling [setSyncAuthorization](setSyncAuthorization) to ensure that you are updating the correct version. If you don't pass the ETag in the call to `setSyncAuthorization`, then the existing authorization is overwritten indiscriminately. For more information, see [Configure the Synchronizer](https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-access). **Note**: Available to Apigee hybrid only.",
           "flatPath": "v1/organizations/{organizationsId}:getSyncAuthorization",
           "httpMethod": "POST",
           "id": "apigee.organizations.getSyncAuthorization",
@@ -243,7 +243,7 @@
           ]
         },
         "list": {
-          "description": "Lists the Apigee organizations and associated GCP projects that you have permission to access. See [Organizations](https://docs.apigee.com/hybrid/latest/terminology#organizations).",
+          "description": "Lists the Apigee organizations and associated GCP projects that you have permission to access. See [Understanding organizations](https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).",
           "flatPath": "v1/organizations",
           "httpMethod": "GET",
           "id": "apigee.organizations.list",
@@ -268,7 +268,7 @@
           ]
         },
         "setSyncAuthorization": {
-          "description": "Sets the permissions required to allow the Synchronizer to download environment data from the control plane. You must call this API to enable proper functioning of hybrid. Pass the ETag when calling `setSyncAuthorization` to ensure that you are updating the correct version. To get an ETag, call [getSyncAuthorization](getSyncAuthorization). If you don't pass the ETag in the call to `setSyncAuthorization`, then the existing authorization is overwritten indiscriminately. For more information, see [Enable Synchronizer access](https://docs.apigee.com/hybrid/latest/synchronizer-access#enable-synchronizer-access). **Note**: Available to Apigee hybrid only.",
+          "description": "Sets the permissions required to allow the Synchronizer to download environment data from the control plane. You must call this API to enable proper functioning of hybrid. Pass the ETag when calling `setSyncAuthorization` to ensure that you are updating the correct version. To get an ETag, call [getSyncAuthorization](getSyncAuthorization). If you don't pass the ETag in the call to `setSyncAuthorization`, then the existing authorization is overwritten indiscriminately. For more information, see [Configure the Synchronizer](https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-access). **Note**: Available to Apigee hybrid only.",
           "flatPath": "v1/organizations/{organizationsId}:setSyncAuthorization",
           "httpMethod": "POST",
           "id": "apigee.organizations.setSyncAuthorization",
@@ -2435,7 +2435,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. Name of the organization in the following format: `organizations/{org}`.",
+                      "description": "Required. Name of the environment group in the following format: `organizations/{org}/envgroups/{envgroup}`.",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/envgroups/[^/]+$",
                       "required": true,
@@ -2590,7 +2590,7 @@
               ]
             },
             "getIamPolicy": {
-              "description": "Gets the IAM policy on an environment. For more information, see [Manage users, roles, and permissions using the API](https://docs.apigee.com/hybrid/latest/manage-users-roles). You must have the `apigee.environments.getIamPolicy` permission to call this API.",
+              "description": "Gets the IAM policy on an environment. For more information, see [Manage users, roles, and permissions using the API](https://cloud.google.com/apigee/docs/api-platform/system-administration/manage-users-roles). You must have the `apigee.environments.getIamPolicy` permission to call this API.",
               "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:getIamPolicy",
               "httpMethod": "GET",
               "id": "apigee.organizations.environments.getIamPolicy",
@@ -2621,7 +2621,7 @@
               ]
             },
             "setIamPolicy": {
-              "description": "Sets the IAM policy on an environment, if the policy already exists it will be replaced. For more information, see [Manage users, roles, and permissions using the API](https://docs.apigee.com/hybrid/latest/manage-users-roles). You must have the `apigee.environments.setIamPolicy` permission to call this API.",
+              "description": "Sets the IAM policy on an environment, if the policy already exists it will be replaced. For more information, see [Manage users, roles, and permissions using the API](https://cloud.google.com/apigee/docs/api-platform/system-administration/manage-users-roles). You must have the `apigee.environments.setIamPolicy` permission to call this API.",
               "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:setIamPolicy",
               "httpMethod": "POST",
               "id": "apigee.organizations.environments.setIamPolicy",
@@ -5505,7 +5505,7 @@
       }
     }
   },
-  "revision": "20200921",
+  "revision": "20200924",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -8084,7 +8084,7 @@
       "id": "GoogleCloudApigeeV1Organization",
       "properties": {
         "analyticsRegion": {
-          "description": "Required. Primary GCP region for analytics data storage. For valid values, see [Create an organization](https://docs.apigee.com/hybrid/latest/precog-provision).",
+          "description": "Required. Primary GCP region for analytics data storage. For valid values, see [Create an Apigee organization](https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).",
           "type": "string"
         },
         "attributes": {
@@ -8095,7 +8095,7 @@
           "type": "array"
         },
         "authorizedNetwork": {
-          "description": "Compute Engine network used for ServiceNetworking to be peered with Apigee runtime instances. See [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started). Valid only when [RuntimeType] is set to CLOUD. The value can be updated only when there are no runtime instances. For example: \"default\". **Note:** Not supported for Apigee hybrid.",
+          "description": "Compute Engine network used for Service Networking to be peered with Apigee runtime instances. See [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started). Valid only when [RuntimeType] is set to CLOUD. The value can be updated only when there are no runtime instances. For example: \"default\". **Note:** Not supported for Apigee hybrid.",
           "type": "string"
         },
         "caCertificate": {
@@ -8156,7 +8156,7 @@
             "HYBRID"
           ],
           "enumDescriptions": [
-            "",
+            "Runtime type not specified.",
             "Google-managed Apigee runtime.",
             "User-managed Apigee hybrid runtime."
           ],
@@ -8170,7 +8170,7 @@
             "TRIAL"
           ],
           "enumDescriptions": [
-            "",
+            "Subscription type not specified.",
             "Full subscription to Apigee has been purchased.",
             "Subscription to Apigee is free, limited, and used for evaluation purposes only."
           ],
@@ -9105,7 +9105,7 @@
           "type": "string"
         },
         "identities": {
-          "description": "Required. Array of service accounts to grant access to control plane resources, each specified using the following format: `serviceAccount:` service-account-name. The service-account-name is formatted like an email address. For example: `my-synchronizer-manager-service_account@my_project_id.iam.gserviceaccount.com` You might specify multiple service accounts, for example, if you have multiple environments and wish to assign a unique service account to each one. The service accounts must have **Apigee Synchronizer Manager** role. See also [Create service accounts](https://docs.apigee.com/hybrid/latest/sa-about#create-the-service-accounts).",
+          "description": "Required. Array of service accounts to grant access to control plane resources, each specified using the following format: `serviceAccount:` service-account-name. The service-account-name is formatted like an email address. For example: `my-synchronizer-manager-service_account@my_project_id.iam.gserviceaccount.com` You might specify multiple service accounts, for example, if you have multiple environments and wish to assign a unique service account to each one. The service accounts must have **Apigee Synchronizer Manager** role. See also [Create service accounts](https://cloud.google.com/apigee/docs/hybrid/latest/sa-about#create-the-service-accounts).",
           "items": {
             "type": "string"
           },

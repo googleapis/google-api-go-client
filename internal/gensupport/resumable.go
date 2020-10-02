@@ -24,8 +24,7 @@ type Backoff interface {
 
 // These are declared as global variables so that tests can overwrite them.
 var (
-	retryDeadline = 32 * time.Second
-	backoff       = func() Backoff {
+	backoff = func() Backoff {
 		return &gax.Backoff{Initial: 100 * time.Millisecond}
 	}
 	// isRetryable is a platform-specific hook, specified in retryable_linux.go
@@ -38,6 +37,12 @@ const (
 	// should be retried.
 	// https://cloud.google.com/storage/docs/json_api/v1/status-codes#standardcodes
 	statusTooManyRequests = 429
+
+	// retryDeadlineKey defines a context key to override the default retry deadline.
+	retryDeadlineKey = "retryDeadline"
+
+	// defaultRetryDeadline defines the default deadline duration for a single chunk uploading.
+	defaultRetryDeadline = 32 * time.Second
 )
 
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
@@ -177,13 +182,18 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 		return resp, nil
 	}
 
+	chunkDeadline := defaultRetryDeadline
+	if retryDeadline, ok := ctx.Value(retryDeadlineKey).(time.Duration); ok {
+		chunkDeadline = retryDeadline
+	}
+
 	// Send all chunks.
 	for {
 		var pause time.Duration
 
 		// Each chunk gets its own initialized-at-zero retry.
 		bo := backoff()
-		quitAfter := time.After(retryDeadline)
+		quitAfter := time.After(chunkDeadline)
 
 		// Retry loop for a single chunk.
 		for {

@@ -337,17 +337,13 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 		Callback:  func(int64) {},
 	}
 
-	oldRetryDeadline := retryDeadline
-	retryDeadline = 5 * time.Second
-	defer func() { retryDeadline = oldRetryDeadline }()
-
 	oldBackoff := backoff
 	backoff = func() Backoff { return new(PauseOneSecond) }
 	defer func() { backoff = oldBackoff }()
 
 	resCode := make(chan int, 1)
 	go func() {
-		resp, err := rx.Upload(context.Background())
+		resp, err := rx.Upload(context.WithValue(context.Background(), retryDeadlineKey, 5*time.Second))
 		if err != nil {
 			t.Error(err)
 			return

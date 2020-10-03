@@ -599,7 +599,7 @@
       }
     }
   },
-  "revision": "20200915",
+  "revision": "20200929",
   "rootUrl": "https://pubsublite.googleapis.com/",
   "schemas": {
     "Capacity": {
@@ -659,7 +659,7 @@
           "type": "string"
         },
         "minimumPublishTime": {
-          "description": "The minimum publish timestamp across these messages. Note that publish timestamps within a partition are non-decreasing. The timestamp will be unset if there are no messages.",
+          "description": "The minimum publish timestamp across these messages. Note that publish timestamps within a partition are not guaranteed to be non-decreasing. The timestamp will be unset if there are no messages.",
           "format": "google-datetime",
           "type": "string"
         }

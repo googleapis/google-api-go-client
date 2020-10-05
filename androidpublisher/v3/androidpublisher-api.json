@@ -2671,7 +2671,7 @@
       }
     }
   },
-  "revision": "20200916",
+  "revision": "20200930",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3485,6 +3485,10 @@
           "description": "The quantity associated with the purchase of the inapp product.",
           "format": "int32",
           "type": "integer"
+        },
+        "regionCode": {
+          "description": "ISO 3166-1 alpha-2 billing region code of the user at the time the product was granted.",
+          "type": "string"
         }
       },
       "type": "object"

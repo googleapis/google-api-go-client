@@ -266,7 +266,7 @@
                   ]
                 },
                 "failover": {
-                  "description": "Initiates a failover of the master node to current replica node for a specific STANDARD tier Cloud Memorystore for Redis instance.",
+                  "description": "Initiates a failover of the primary node to current replica node for a specific STANDARD tier Cloud Memorystore for Redis instance.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:failover",
                   "httpMethod": "POST",
                   "id": "redis.projects.locations.instances.failover",
@@ -313,6 +313,31 @@
                   "path": "v1beta1/{+name}",
                   "response": {
                     "$ref": "Instance"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "getAuthString": {
+                  "description": "Gets the AUTH string for a Redis instance. If AUTH is not enabled for the instance the response will be empty. This information is not included in the details returned to GetInstance.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/authString",
+                  "httpMethod": "GET",
+                  "id": "redis.projects.locations.instances.getAuthString",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Redis instance resource name using the form: `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id` refers to a GCP region.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}/authString",
+                  "response": {
+                    "$ref": "InstanceAuthString"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -571,7 +596,7 @@
       }
     }
   },
-  "revision": "20200916",
+  "revision": "20200928",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -604,7 +629,7 @@
           ],
           "enumDescriptions": [
             "Defaults to LIMITED_DATA_LOSS if a data protection mode is not specified.",
-            "Instance failover will be protected with data loss control. More specifically, the failover will only be performed if the current replication offset diff between master and replica is under a certain threshold.",
+            "Instance failover will be protected with data loss control. More specifically, the failover will only be performed if the current replication offset diff between primary and replica is under a certain threshold.",
             "Instance failover will be performed without data loss control."
           ],
           "type": "string"
@@ -721,6 +746,10 @@
         "alternativeLocationId": {
           "description": "Optional. Only applicable to STANDARD_HA tier which protects the instance against zonal failures by provisioning it across two zones. If provided, it must be a different zone from the one provided in location_id.",
           "type": "string"
+        },
+        "authEnabled": {
+          "description": "Optional. Indicates whether OSS Redis AUTH is enabled for the instance. If set to \"true\" AUTH is enabled on the instance. Default value is \"false\" meaning AUTH is disabled.",
+          "type": "boolean"
         },
         "authorizedNetwork": {
           "description": "Optional. The full name of the Google Compute Engine [network](https://cloud.google.com/vpc/docs/vpc) to which the instance is connected. If left unspecified, the `default` network will be used.",
@@ -855,12 +884,23 @@
       },
       "type": "object"
     },
+    "InstanceAuthString": {
+      "description": "Instance AUTH string details.",
+      "id": "InstanceAuthString",
+      "properties": {
+        "authString": {
+          "description": "AUTH string set on the instance.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListInstancesResponse": {
       "description": "Response for ListInstances.",
       "id": "ListInstancesResponse",
       "properties": {
         "instances": {
-          "description": "A list of Redis instances in the project in the specified location, or across all locations. If the `location_id` in the parent field of the request is \"-\", all regions available to the project are queried, and the results aggregated. If in such an aggregated query a location is unavailable, a dummy Redis entry is included in the response with the `name` field set to a value of the form `projects/{project_id}/locations/{location_id}/instances/`- and the `status` field set to ERROR and `status_message` field set to \"location not available for ListInstances\".",
+          "description": "A list of Redis instances in the project in the specified location, or across all locations. If the `location_id` in the parent field of the request is \"-\", all regions available to the project are queried, and the results aggregated. If in such an aggregated query a location is unavailable, a placeholder Redis entry is included in the response with the `name` field set to a value of the form `projects/{project_id}/locations/{location_id}/instances/`- and the `status` field set to ERROR and `status_message` field set to \"location not available for ListInstances\".",
           "items": {
             "$ref": "Instance"
           },

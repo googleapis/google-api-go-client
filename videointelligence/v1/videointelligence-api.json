@@ -416,7 +416,7 @@
       }
     }
   },
-  "revision": "20200831",
+  "revision": "20200921",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -445,20 +445,24 @@
               "LABEL_DETECTION",
               "SHOT_CHANGE_DETECTION",
               "EXPLICIT_CONTENT_DETECTION",
+              "FACE_DETECTION",
               "SPEECH_TRANSCRIPTION",
               "TEXT_DETECTION",
               "OBJECT_TRACKING",
-              "LOGO_RECOGNITION"
+              "LOGO_RECOGNITION",
+              "PERSON_DETECTION"
             ],
             "enumDescriptions": [
               "Unspecified.",
               "Label detection. Detect objects, such as dog or flower.",
               "Shot change detection.",
               "Explicit content detection.",
+              "Human face detection.",
               "Speech transcription.",
               "OCR text detection and tracking.",
               "Object detection and tracking.",
-              "Logo detection, tracking, and recognition."
+              "Logo detection, tracking, and recognition.",
+              "Person detection."
             ],
             "type": "string"
           },
@@ -617,6 +621,36 @@
         "timeOffset": {
           "description": "Time-offset, relative to the beginning of the video, corresponding to the video frame for this location.",
           "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1_FaceDetectionAnnotation": {
+      "description": "Face detection annotation.",
+      "id": "GoogleCloudVideointelligenceV1_FaceDetectionAnnotation",
+      "properties": {
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1_FaceDetectionConfig": {
+      "description": "Config for FACE_DETECTION.",
+      "id": "GoogleCloudVideointelligenceV1_FaceDetectionConfig",
+      "properties": {
+        "includeAttributes": {
+          "description": "Whether to enable face attributes detection, such as glasses, dark_glasses, mouth_open etc. Ignored if 'include_bounding_boxes' is set to false.",
+          "type": "boolean"
+        },
+        "includeBoundingBoxes": {
+          "description": "Whether bounding boxes are included in the face annotation output.",
+          "type": "boolean"
+        },
+        "model": {
+          "description": "Model to use for face detection. Supported values: \"builtin/stable\" (the default if unset) and \"builtin/latest\".",
           "type": "string"
         }
       },
@@ -874,6 +908,43 @@
           "description": "The timestamp of the frame in microseconds.",
           "format": "google-duration",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1_PersonDetectionAnnotation": {
+      "description": "Person detection annotation per video.",
+      "id": "GoogleCloudVideointelligenceV1_PersonDetectionAnnotation",
+      "properties": {
+        "tracks": {
+          "description": "The detected tracks of a person.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_Track"
+          },
+          "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVideointelligenceV1_PersonDetectionConfig": {
+      "description": "Config for PERSON_DETECTION.",
+      "id": "GoogleCloudVideointelligenceV1_PersonDetectionConfig",
+      "properties": {
+        "includeAttributes": {
+          "description": "Whether to enable person attributes detection, such as cloth color (black, blue, etc), type (coat, dress, etc), pattern (plain, floral, etc), hair, etc. Ignored if 'include_bounding_boxes' is set to false.",
+          "type": "boolean"
+        },
+        "includeBoundingBoxes": {
+          "description": "Whether bounding boxes are included in the person detection annotation output.",
+          "type": "boolean"
+        },
+        "includePoseLandmarks": {
+          "description": "Whether to enable pose landmarks detection. Ignored if 'include_bounding_boxes' is set to false.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -1149,20 +1220,24 @@
             "LABEL_DETECTION",
             "SHOT_CHANGE_DETECTION",
             "EXPLICIT_CONTENT_DETECTION",
+            "FACE_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
             "OBJECT_TRACKING",
-            "LOGO_RECOGNITION"
+            "LOGO_RECOGNITION",
+            "PERSON_DETECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
             "Label detection. Detect objects, such as dog or flower.",
             "Shot change detection.",
             "Explicit content detection.",
+            "Human face detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
             "Object detection and tracking.",
-            "Logo detection, tracking, and recognition."
+            "Logo detection, tracking, and recognition.",
+            "Person detection."
           ],
           "type": "string"
         },
@@ -1204,6 +1279,13 @@
           "$ref": "GoogleCloudVideointelligenceV1_ExplicitContentAnnotation",
           "description": "Explicit content annotation."
         },
+        "faceDetectionAnnotations": {
+          "description": "Face detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_FaceDetectionAnnotation"
+          },
+          "type": "array"
+        },
         "frameLabelAnnotations": {
           "description": "Label annotations on frame level. There is exactly one element for each unique label.",
           "items": {
@@ -1226,6 +1308,13 @@
           "description": "Annotations for list of objects detected and tracked in video.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1_ObjectTrackingAnnotation"
+          },
+          "type": "array"
+        },
+        "personDetectionAnnotations": {
+          "description": "Person detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1_PersonDetectionAnnotation"
           },
           "type": "array"
         },
@@ -1293,6 +1382,10 @@
           "$ref": "GoogleCloudVideointelligenceV1_ExplicitContentDetectionConfig",
           "description": "Config for EXPLICIT_CONTENT_DETECTION."
         },
+        "faceDetectionConfig": {
+          "$ref": "GoogleCloudVideointelligenceV1_FaceDetectionConfig",
+          "description": "Config for FACE_DETECTION."
+        },
         "labelDetectionConfig": {
           "$ref": "GoogleCloudVideointelligenceV1_LabelDetectionConfig",
           "description": "Config for LABEL_DETECTION."
@@ -1300,6 +1393,10 @@
         "objectTrackingConfig": {
           "$ref": "GoogleCloudVideointelligenceV1_ObjectTrackingConfig",
           "description": "Config for OBJECT_TRACKING."
+        },
+        "personDetectionConfig": {
+          "$ref": "GoogleCloudVideointelligenceV1_PersonDetectionConfig",
+          "description": "Config for PERSON_DETECTION."
         },
         "segments": {
           "description": "Video segments to annotate. The segments may overlap and are not required to be contiguous or span the whole video. If unspecified, each video is treated as a single segment.",
@@ -1510,6 +1607,17 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1beta2_FaceDetectionAnnotation": {
+      "description": "Face detection annotation.",
+      "id": "GoogleCloudVideointelligenceV1beta2_FaceDetectionAnnotation",
+      "properties": {
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1beta2_LabelAnnotation": {
       "description": "Label annotation.",
       "id": "GoogleCloudVideointelligenceV1beta2_LabelAnnotation",
@@ -1714,6 +1822,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1beta2_PersonDetectionAnnotation": {
+      "description": "Person detection annotation per video.",
+      "id": "GoogleCloudVideointelligenceV1beta2_PersonDetectionAnnotation",
+      "properties": {
+        "tracks": {
+          "description": "The detected tracks of a person.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_Track"
+          },
+          "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1beta2_SpeechRecognitionAlternative": {
       "description": "Alternative hypotheses (a.k.a. n-best list).",
       "id": "GoogleCloudVideointelligenceV1beta2_SpeechRecognitionAlternative",
@@ -1890,20 +2016,24 @@
             "LABEL_DETECTION",
             "SHOT_CHANGE_DETECTION",
             "EXPLICIT_CONTENT_DETECTION",
+            "FACE_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
             "OBJECT_TRACKING",
-            "LOGO_RECOGNITION"
+            "LOGO_RECOGNITION",
+            "PERSON_DETECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
             "Label detection. Detect objects, such as dog or flower.",
             "Shot change detection.",
             "Explicit content detection.",
+            "Human face detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
             "Object detection and tracking.",
-            "Logo detection, tracking, and recognition."
+            "Logo detection, tracking, and recognition.",
+            "Person detection."
           ],
           "type": "string"
         },
@@ -1945,6 +2075,13 @@
           "$ref": "GoogleCloudVideointelligenceV1beta2_ExplicitContentAnnotation",
           "description": "Explicit content annotation."
         },
+        "faceDetectionAnnotations": {
+          "description": "Face detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_FaceDetectionAnnotation"
+          },
+          "type": "array"
+        },
         "frameLabelAnnotations": {
           "description": "Label annotations on frame level. There is exactly one element for each unique label.",
           "items": {
@@ -1967,6 +2104,13 @@
           "description": "Annotations for list of objects detected and tracked in video.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1beta2_ObjectTrackingAnnotation"
+          },
+          "type": "array"
+        },
+        "personDetectionAnnotations": {
+          "description": "Person detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1beta2_PersonDetectionAnnotation"
           },
           "type": "array"
         },
@@ -2213,6 +2357,17 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p1beta1_FaceDetectionAnnotation": {
+      "description": "Face detection annotation.",
+      "id": "GoogleCloudVideointelligenceV1p1beta1_FaceDetectionAnnotation",
+      "properties": {
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p1beta1_LabelAnnotation": {
       "description": "Label annotation.",
       "id": "GoogleCloudVideointelligenceV1p1beta1_LabelAnnotation",
@@ -2417,6 +2572,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p1beta1_PersonDetectionAnnotation": {
+      "description": "Person detection annotation per video.",
+      "id": "GoogleCloudVideointelligenceV1p1beta1_PersonDetectionAnnotation",
+      "properties": {
+        "tracks": {
+          "description": "The detected tracks of a person.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_Track"
+          },
+          "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p1beta1_SpeechRecognitionAlternative": {
       "description": "Alternative hypotheses (a.k.a. n-best list).",
       "id": "GoogleCloudVideointelligenceV1p1beta1_SpeechRecognitionAlternative",
@@ -2593,20 +2766,24 @@
             "LABEL_DETECTION",
             "SHOT_CHANGE_DETECTION",
             "EXPLICIT_CONTENT_DETECTION",
+            "FACE_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
             "OBJECT_TRACKING",
-            "LOGO_RECOGNITION"
+            "LOGO_RECOGNITION",
+            "PERSON_DETECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
             "Label detection. Detect objects, such as dog or flower.",
             "Shot change detection.",
             "Explicit content detection.",
+            "Human face detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
             "Object detection and tracking.",
-            "Logo detection, tracking, and recognition."
+            "Logo detection, tracking, and recognition.",
+            "Person detection."
           ],
           "type": "string"
         },
@@ -2648,6 +2825,13 @@
           "$ref": "GoogleCloudVideointelligenceV1p1beta1_ExplicitContentAnnotation",
           "description": "Explicit content annotation."
         },
+        "faceDetectionAnnotations": {
+          "description": "Face detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_FaceDetectionAnnotation"
+          },
+          "type": "array"
+        },
         "frameLabelAnnotations": {
           "description": "Label annotations on frame level. There is exactly one element for each unique label.",
           "items": {
@@ -2670,6 +2854,13 @@
           "description": "Annotations for list of objects detected and tracked in video.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_ObjectTrackingAnnotation"
+          },
+          "type": "array"
+        },
+        "personDetectionAnnotations": {
+          "description": "Person detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p1beta1_PersonDetectionAnnotation"
           },
           "type": "array"
         },
@@ -2916,6 +3107,17 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p2beta1_FaceDetectionAnnotation": {
+      "description": "Face detection annotation.",
+      "id": "GoogleCloudVideointelligenceV1p2beta1_FaceDetectionAnnotation",
+      "properties": {
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p2beta1_LabelAnnotation": {
       "description": "Label annotation.",
       "id": "GoogleCloudVideointelligenceV1p2beta1_LabelAnnotation",
@@ -3120,6 +3322,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudVideointelligenceV1p2beta1_PersonDetectionAnnotation": {
+      "description": "Person detection annotation per video.",
+      "id": "GoogleCloudVideointelligenceV1p2beta1_PersonDetectionAnnotation",
+      "properties": {
+        "tracks": {
+          "description": "The detected tracks of a person.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_Track"
+          },
+          "type": "array"
+        },
+        "version": {
+          "description": "Feature version.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudVideointelligenceV1p2beta1_SpeechRecognitionAlternative": {
       "description": "Alternative hypotheses (a.k.a. n-best list).",
       "id": "GoogleCloudVideointelligenceV1p2beta1_SpeechRecognitionAlternative",
@@ -3296,20 +3516,24 @@
             "LABEL_DETECTION",
             "SHOT_CHANGE_DETECTION",
             "EXPLICIT_CONTENT_DETECTION",
+            "FACE_DETECTION",
             "SPEECH_TRANSCRIPTION",
             "TEXT_DETECTION",
             "OBJECT_TRACKING",
-            "LOGO_RECOGNITION"
+            "LOGO_RECOGNITION",
+            "PERSON_DETECTION"
           ],
           "enumDescriptions": [
             "Unspecified.",
             "Label detection. Detect objects, such as dog or flower.",
             "Shot change detection.",
             "Explicit content detection.",
+            "Human face detection.",
             "Speech transcription.",
             "OCR text detection and tracking.",
             "Object detection and tracking.",
-            "Logo detection, tracking, and recognition."
+            "Logo detection, tracking, and recognition.",
+            "Person detection."
           ],
           "type": "string"
         },
@@ -3351,6 +3575,13 @@
           "$ref": "GoogleCloudVideointelligenceV1p2beta1_ExplicitContentAnnotation",
           "description": "Explicit content annotation."
         },
+        "faceDetectionAnnotations": {
+          "description": "Face detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_FaceDetectionAnnotation"
+          },
+          "type": "array"
+        },
         "frameLabelAnnotations": {
           "description": "Label annotations on frame level. There is exactly one element for each unique label.",
           "items": {
@@ -3373,6 +3604,13 @@
           "description": "Annotations for list of objects detected and tracked in video.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p2beta1_ObjectTrackingAnnotation"
+          },
+          "type": "array"
+        },
+        "personDetectionAnnotations": {
+          "description": "Person detection annotations.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_PersonDetectionAnnotation"
           },
           "type": "array"
         },
@@ -3678,18 +3916,6 @@
       "description": "Face detection annotation.",
       "id": "GoogleCloudVideointelligenceV1p3beta1_FaceDetectionAnnotation",
       "properties": {
-        "thumbnail": {
-          "description": "The thumbnail of a person's face.",
-          "format": "byte",
-          "type": "string"
-        },
-        "tracks": {
-          "description": "The face tracks with attributes.",
-          "items": {
-            "$ref": "GoogleCloudVideointelligenceV1p3beta1_Track"
-          },
-          "type": "array"
-        },
         "version": {
           "description": "Feature version.",
           "type": "string"

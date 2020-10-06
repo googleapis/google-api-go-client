@@ -322,10 +322,12 @@ type GoogleCloudVideointelligenceV1AnnotateVideoRequest struct {
 	// flower.
 	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
 	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "FACE_DETECTION" - Human face detection.
 	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
 	//   "TEXT_DETECTION" - OCR text detection and tracking.
 	//   "OBJECT_TRACKING" - Object detection and tracking.
 	//   "LOGO_RECOGNITION" - Logo detection, tracking, and recognition.
+	//   "PERSON_DETECTION" - Person detection.
 	Features []string `json:"features,omitempty"`
 
 	// InputContent: The video data bytes. If unset, the input video(s)
@@ -666,6 +668,75 @@ type GoogleCloudVideointelligenceV1ExplicitContentFrame struct {
 
 func (s *GoogleCloudVideointelligenceV1ExplicitContentFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVideointelligenceV1ExplicitContentFrame
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVideointelligenceV1FaceDetectionAnnotation: Face detection
+// annotation.
+type GoogleCloudVideointelligenceV1FaceDetectionAnnotation struct {
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Version") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Version") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1FaceDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1FaceDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVideointelligenceV1FaceDetectionConfig: Config for
+// FACE_DETECTION.
+type GoogleCloudVideointelligenceV1FaceDetectionConfig struct {
+	// IncludeAttributes: Whether to enable face attributes detection, such
+	// as glasses, dark_glasses, mouth_open etc. Ignored if
+	// 'include_bounding_boxes' is set to false.
+	IncludeAttributes bool `json:"includeAttributes,omitempty"`
+
+	// IncludeBoundingBoxes: Whether bounding boxes are included in the face
+	// annotation output.
+	IncludeBoundingBoxes bool `json:"includeBoundingBoxes,omitempty"`
+
+	// Model: Model to use for face detection. Supported values:
+	// "builtin/stable" (the default if unset) and "builtin/latest".
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeAttributes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeAttributes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1FaceDetectionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1FaceDetectionConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1208,6 +1279,79 @@ func (s *GoogleCloudVideointelligenceV1ObjectTrackingFrame) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1PersonDetectionAnnotation: Person
+// detection annotation per video.
+type GoogleCloudVideointelligenceV1PersonDetectionAnnotation struct {
+	// Tracks: The detected tracks of a person.
+	Tracks []*GoogleCloudVideointelligenceV1Track `json:"tracks,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tracks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tracks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1PersonDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1PersonDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVideointelligenceV1PersonDetectionConfig: Config for
+// PERSON_DETECTION.
+type GoogleCloudVideointelligenceV1PersonDetectionConfig struct {
+	// IncludeAttributes: Whether to enable person attributes detection,
+	// such as cloth color (black, blue, etc), type (coat, dress, etc),
+	// pattern (plain, floral, etc), hair, etc. Ignored if
+	// 'include_bounding_boxes' is set to false.
+	IncludeAttributes bool `json:"includeAttributes,omitempty"`
+
+	// IncludeBoundingBoxes: Whether bounding boxes are included in the
+	// person detection annotation output.
+	IncludeBoundingBoxes bool `json:"includeBoundingBoxes,omitempty"`
+
+	// IncludePoseLandmarks: Whether to enable pose landmarks detection.
+	// Ignored if 'include_bounding_boxes' is set to false.
+	IncludePoseLandmarks bool `json:"includePoseLandmarks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeAttributes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeAttributes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1PersonDetectionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1PersonDetectionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1ShotChangeDetectionConfig: Config for
 // SHOT_CHANGE_DETECTION.
 type GoogleCloudVideointelligenceV1ShotChangeDetectionConfig struct {
@@ -1721,10 +1865,12 @@ type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 	// flower.
 	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
 	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "FACE_DETECTION" - Human face detection.
 	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
 	//   "TEXT_DETECTION" - OCR text detection and tracking.
 	//   "OBJECT_TRACKING" - Object detection and tracking.
 	//   "LOGO_RECOGNITION" - Logo detection, tracking, and recognition.
+	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in [Cloud
@@ -1778,6 +1924,9 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	// ExplicitAnnotation: Explicit content annotation.
 	ExplicitAnnotation *GoogleCloudVideointelligenceV1ExplicitContentAnnotation `json:"explicitAnnotation,omitempty"`
 
+	// FaceDetectionAnnotations: Face detection annotations.
+	FaceDetectionAnnotations []*GoogleCloudVideointelligenceV1FaceDetectionAnnotation `json:"faceDetectionAnnotations,omitempty"`
+
 	// FrameLabelAnnotations: Label annotations on frame level. There is
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
@@ -1793,6 +1942,9 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	// ObjectAnnotations: Annotations for list of objects detected and
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
+
+	// PersonDetectionAnnotations: Person detection annotations.
+	PersonDetectionAnnotations []*GoogleCloudVideointelligenceV1PersonDetectionAnnotation `json:"personDetectionAnnotations,omitempty"`
 
 	// Segment: Video segment on which the annotation is run.
 	Segment *GoogleCloudVideointelligenceV1VideoSegment `json:"segment,omitempty"`
@@ -1865,11 +2017,17 @@ type GoogleCloudVideointelligenceV1VideoContext struct {
 	// EXPLICIT_CONTENT_DETECTION.
 	ExplicitContentDetectionConfig *GoogleCloudVideointelligenceV1ExplicitContentDetectionConfig `json:"explicitContentDetectionConfig,omitempty"`
 
+	// FaceDetectionConfig: Config for FACE_DETECTION.
+	FaceDetectionConfig *GoogleCloudVideointelligenceV1FaceDetectionConfig `json:"faceDetectionConfig,omitempty"`
+
 	// LabelDetectionConfig: Config for LABEL_DETECTION.
 	LabelDetectionConfig *GoogleCloudVideointelligenceV1LabelDetectionConfig `json:"labelDetectionConfig,omitempty"`
 
 	// ObjectTrackingConfig: Config for OBJECT_TRACKING.
 	ObjectTrackingConfig *GoogleCloudVideointelligenceV1ObjectTrackingConfig `json:"objectTrackingConfig,omitempty"`
+
+	// PersonDetectionConfig: Config for PERSON_DETECTION.
+	PersonDetectionConfig *GoogleCloudVideointelligenceV1PersonDetectionConfig `json:"personDetectionConfig,omitempty"`
 
 	// Segments: Video segments to annotate. The segments may overlap and
 	// are not required to be contiguous or span the whole video. If
@@ -2303,6 +2461,35 @@ func (s *GoogleCloudVideointelligenceV1beta2ExplicitContentFrame) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1beta2FaceDetectionAnnotation: Face
+// detection annotation.
+type GoogleCloudVideointelligenceV1beta2FaceDetectionAnnotation struct {
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Version") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Version") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2FaceDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1beta2FaceDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1beta2LabelAnnotation: Label annotation.
 type GoogleCloudVideointelligenceV1beta2LabelAnnotation struct {
 	// CategoryEntities: Common categories for the detected entity. For
@@ -2729,6 +2916,38 @@ func (s *GoogleCloudVideointelligenceV1beta2ObjectTrackingFrame) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1beta2PersonDetectionAnnotation: Person
+// detection annotation per video.
+type GoogleCloudVideointelligenceV1beta2PersonDetectionAnnotation struct {
+	// Tracks: The detected tracks of a person.
+	Tracks []*GoogleCloudVideointelligenceV1beta2Track `json:"tracks,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tracks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tracks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2PersonDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1beta2PersonDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative:
 // Alternative hypotheses (a.k.a. n-best list).
 type GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative struct {
@@ -3056,10 +3275,12 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 	// flower.
 	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
 	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "FACE_DETECTION" - Human face detection.
 	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
 	//   "TEXT_DETECTION" - OCR text detection and tracking.
 	//   "OBJECT_TRACKING" - Object detection and tracking.
 	//   "LOGO_RECOGNITION" - Logo detection, tracking, and recognition.
+	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in [Cloud
@@ -3113,6 +3334,9 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	// ExplicitAnnotation: Explicit content annotation.
 	ExplicitAnnotation *GoogleCloudVideointelligenceV1beta2ExplicitContentAnnotation `json:"explicitAnnotation,omitempty"`
 
+	// FaceDetectionAnnotations: Face detection annotations.
+	FaceDetectionAnnotations []*GoogleCloudVideointelligenceV1beta2FaceDetectionAnnotation `json:"faceDetectionAnnotations,omitempty"`
+
 	// FrameLabelAnnotations: Label annotations on frame level. There is
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
@@ -3128,6 +3352,9 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	// ObjectAnnotations: Annotations for list of objects detected and
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1beta2ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
+
+	// PersonDetectionAnnotations: Person detection annotations.
+	PersonDetectionAnnotations []*GoogleCloudVideointelligenceV1beta2PersonDetectionAnnotation `json:"personDetectionAnnotations,omitempty"`
 
 	// Segment: Video segment on which the annotation is run.
 	Segment *GoogleCloudVideointelligenceV1beta2VideoSegment `json:"segment,omitempty"`
@@ -3586,6 +3813,35 @@ func (s *GoogleCloudVideointelligenceV1p1beta1ExplicitContentFrame) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation: Face
+// detection annotation.
+type GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation struct {
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Version") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Version") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1p1beta1LabelAnnotation: Label
 // annotation.
 type GoogleCloudVideointelligenceV1p1beta1LabelAnnotation struct {
@@ -4013,6 +4269,38 @@ func (s *GoogleCloudVideointelligenceV1p1beta1ObjectTrackingFrame) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1p1beta1PersonDetectionAnnotation:
+// Person detection annotation per video.
+type GoogleCloudVideointelligenceV1p1beta1PersonDetectionAnnotation struct {
+	// Tracks: The detected tracks of a person.
+	Tracks []*GoogleCloudVideointelligenceV1p1beta1Track `json:"tracks,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tracks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tracks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p1beta1PersonDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p1beta1PersonDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1p1beta1SpeechRecognitionAlternative:
 // Alternative hypotheses (a.k.a. n-best list).
 type GoogleCloudVideointelligenceV1p1beta1SpeechRecognitionAlternative struct {
@@ -4340,10 +4628,12 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 	// flower.
 	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
 	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "FACE_DETECTION" - Human face detection.
 	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
 	//   "TEXT_DETECTION" - OCR text detection and tracking.
 	//   "OBJECT_TRACKING" - Object detection and tracking.
 	//   "LOGO_RECOGNITION" - Logo detection, tracking, and recognition.
+	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in [Cloud
@@ -4397,6 +4687,9 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 	// ExplicitAnnotation: Explicit content annotation.
 	ExplicitAnnotation *GoogleCloudVideointelligenceV1p1beta1ExplicitContentAnnotation `json:"explicitAnnotation,omitempty"`
 
+	// FaceDetectionAnnotations: Face detection annotations.
+	FaceDetectionAnnotations []*GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation `json:"faceDetectionAnnotations,omitempty"`
+
 	// FrameLabelAnnotations: Label annotations on frame level. There is
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p1beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
@@ -4412,6 +4705,9 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 	// ObjectAnnotations: Annotations for list of objects detected and
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1p1beta1ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
+
+	// PersonDetectionAnnotations: Person detection annotations.
+	PersonDetectionAnnotations []*GoogleCloudVideointelligenceV1p1beta1PersonDetectionAnnotation `json:"personDetectionAnnotations,omitempty"`
 
 	// Segment: Video segment on which the annotation is run.
 	Segment *GoogleCloudVideointelligenceV1p1beta1VideoSegment `json:"segment,omitempty"`
@@ -4870,6 +5166,35 @@ func (s *GoogleCloudVideointelligenceV1p2beta1ExplicitContentFrame) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1p2beta1FaceDetectionAnnotation: Face
+// detection annotation.
+type GoogleCloudVideointelligenceV1p2beta1FaceDetectionAnnotation struct {
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Version") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Version") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p2beta1FaceDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p2beta1FaceDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1p2beta1LabelAnnotation: Label
 // annotation.
 type GoogleCloudVideointelligenceV1p2beta1LabelAnnotation struct {
@@ -5297,6 +5622,38 @@ func (s *GoogleCloudVideointelligenceV1p2beta1ObjectTrackingFrame) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1p2beta1PersonDetectionAnnotation:
+// Person detection annotation per video.
+type GoogleCloudVideointelligenceV1p2beta1PersonDetectionAnnotation struct {
+	// Tracks: The detected tracks of a person.
+	Tracks []*GoogleCloudVideointelligenceV1p2beta1Track `json:"tracks,omitempty"`
+
+	// Version: Feature version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tracks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tracks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p2beta1PersonDetectionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p2beta1PersonDetectionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative:
 // Alternative hypotheses (a.k.a. n-best list).
 type GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative struct {
@@ -5624,10 +5981,12 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 	// flower.
 	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
 	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "FACE_DETECTION" - Human face detection.
 	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
 	//   "TEXT_DETECTION" - OCR text detection and tracking.
 	//   "OBJECT_TRACKING" - Object detection and tracking.
 	//   "LOGO_RECOGNITION" - Logo detection, tracking, and recognition.
+	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
 	// InputUri: Video file location in [Cloud
@@ -5681,6 +6040,9 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 	// ExplicitAnnotation: Explicit content annotation.
 	ExplicitAnnotation *GoogleCloudVideointelligenceV1p2beta1ExplicitContentAnnotation `json:"explicitAnnotation,omitempty"`
 
+	// FaceDetectionAnnotations: Face detection annotations.
+	FaceDetectionAnnotations []*GoogleCloudVideointelligenceV1p2beta1FaceDetectionAnnotation `json:"faceDetectionAnnotations,omitempty"`
+
 	// FrameLabelAnnotations: Label annotations on frame level. There is
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p2beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
@@ -5696,6 +6058,9 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 	// ObjectAnnotations: Annotations for list of objects detected and
 	// tracked in video.
 	ObjectAnnotations []*GoogleCloudVideointelligenceV1p2beta1ObjectTrackingAnnotation `json:"objectAnnotations,omitempty"`
+
+	// PersonDetectionAnnotations: Person detection annotations.
+	PersonDetectionAnnotations []*GoogleCloudVideointelligenceV1p2beta1PersonDetectionAnnotation `json:"personDetectionAnnotations,omitempty"`
 
 	// Segment: Video segment on which the annotation is run.
 	Segment *GoogleCloudVideointelligenceV1p2beta1VideoSegment `json:"segment,omitempty"`
@@ -6263,16 +6628,10 @@ func (s *GoogleCloudVideointelligenceV1p3beta1ExplicitContentFrame) MarshalJSON(
 // GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation: Face
 // detection annotation.
 type GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation struct {
-	// Thumbnail: The thumbnail of a person's face.
-	Thumbnail string `json:"thumbnail,omitempty"`
-
-	// Tracks: The face tracks with attributes.
-	Tracks []*GoogleCloudVideointelligenceV1p3beta1Track `json:"tracks,omitempty"`
-
 	// Version: Feature version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
+	// ForceSendFields is a list of field names (e.g. "Version") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6280,7 +6639,7 @@ type GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Thumbnail") to include in
+	// NullFields is a list of field names (e.g. "Version") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -7682,7 +8041,7 @@ func (c *OperationsProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7815,7 +8174,7 @@ func (c *OperationsProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7958,7 +8317,7 @@ func (c *OperationsProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OperationsProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8104,7 +8463,7 @@ func (c *ProjectsLocationsCorporaOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCorporaOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8250,7 +8609,7 @@ func (c *ProjectsLocationsCorpuraOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCorpuraOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8394,7 +8753,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8535,7 +8894,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8678,7 +9037,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8852,7 +9211,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9027,7 +9386,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201002")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

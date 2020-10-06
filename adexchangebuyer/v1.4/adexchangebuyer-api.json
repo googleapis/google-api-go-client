@@ -15,7 +15,7 @@
   "description": "Accesses your bidding-account information, submits creatives for validation, finds available direct deals, and retrieves performance reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/b-YzxnFyEycD8JknR8SCUzUuWGE\"",
+  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/jgvyhwo-2198NR_j9usHx-LJ-6E\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -1255,7 +1255,7 @@
       }
     }
   },
-  "revision": "20200831",
+  "revision": "20201004",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3580,6 +3580,9 @@
           "format": "int64",
           "type": "string"
         },
+        "requestPlatformTargetingValue": {
+          "$ref": "TargetingValueRequestPlatformTargeting"
+        },
         "stringValue": {
           "description": "The string value to exclude/include.",
           "type": "string"
@@ -3680,6 +3683,18 @@
       "id": "TargetingValueDemogGenderCriteria",
       "properties": {
         "demogGenderCriteriaIds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TargetingValueRequestPlatformTargeting": {
+      "id": "TargetingValueRequestPlatformTargeting",
+      "properties": {
+        "requestPlatforms": {
           "items": {
             "type": "string"
           },

@@ -11,10 +11,10 @@
   "basePath": "",
   "baseUrl": "https://osconfig.googleapis.com/",
   "batchPath": "batch",
-  "canonicalName": "Systems Management",
+  "canonicalName": "OS Config",
   "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/",
+  "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -406,7 +406,7 @@
       }
     }
   },
-  "revision": "20200903",
+  "revision": "20200930",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "AptSettings": {
@@ -1388,7 +1388,7 @@
     }
   },
   "servicePath": "",
-  "title": "Cloud OS Config API",
+  "title": "OS Config API",
   "version": "v1",
   "version_module": true
 }

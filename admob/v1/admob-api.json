@@ -12,7 +12,7 @@
   "baseUrl": "https://admob.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "AdMob",
-  "description": "The Google AdMob API lets you programmatically get reports on earnings. ",
+  "description": "The AdMob API allows publishers to programmatically get information about their AdMob account. ",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admob/api/",
   "fullyEncodeReservedExpansion": true,
@@ -228,7 +228,7 @@
       }
     }
   },
-  "revision": "20200916",
+  "revision": "20201002",
   "rootUrl": "https://admob.googleapis.com/",
   "schemas": {
     "Date": {

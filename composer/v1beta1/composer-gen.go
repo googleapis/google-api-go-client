@@ -980,8 +980,8 @@ type SoftwareConfig struct {
 	// values can contain any character, and can be written in any
 	// lower/upper case format. Certain Apache Airflow configuration
 	// property values are
-	// [blacklisted](/composer/docs/how-to/managing/setting-airflow-configura
-	// tions#airflow_configuration_blacklists), and cannot be overridden.
+	// [blocked](/composer/docs/concepts/airflow-configurations), and cannot
+	// be overridden.
 	AirflowConfigOverrides map[string]string `json:"airflowConfigOverrides,omitempty"`
 
 	// EnvVariables: Optional. Additional environment variables to provide
@@ -1208,7 +1208,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1346,7 +1346,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1487,7 +1487,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1645,7 +1645,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1815,57 +1815,58 @@ func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *E
 // "config.softwareConfig.pypiPackages", and the patch environment would
 // be the following: { "config":{ "softwareConfig":{ "pypiPackages":{
 // "botocore":"==1.7.14" } } } } *Note:* Only the following fields can
-// be updated: *Mask* *Purpose* config.softwareConfig.pypiPackages
-// Replace all custom custom PyPI packages. If a replacement package map
-// is not included in `environment`, all custom PyPI packages are
-// cleared. It is an error to provide both this mask and a mask
-// specifying an individual package.
-// config.softwareConfig.pypiPackages.packagename Update the custom PyPI
-// package packagename, preserving other packages. To delete the
-// package, include it in `updateMask`, and omit the mapping for it in
-// `environment.config.softwareConfig.pypiPackages`. It is an error to
-// provide both a mask of this form and the
-// "config.softwareConfig.pypiPackages" mask. labels Replace all
+// be updated: * config.softwareConfig.pypiPackages * Replace all custom
+// custom PyPI packages. If a replacement package map is not included in
+// `environment`, all custom PyPI packages are cleared. It is an error
+// to provide both this mask and a mask specifying an individual
+// package. * config.softwareConfig.pypiPackages.packagename * Update
+// the custom PyPI package packagename, preserving other packages. To
+// delete the package, include it in `updateMask`, and omit the mapping
+// for it in `environment.config.softwareConfig.pypiPackages`. It is an
+// error to provide both a mask of this form and the
+// "config.softwareConfig.pypiPackages" mask. * labels * Replace all
 // environment labels. If a replacement labels map is not included in
 // `environment`, all labels are cleared. It is an error to provide both
-// this mask and a mask specifying one or more individual labels.
-// labels.labelName Set the label named labelName, while preserving
+// this mask and a mask specifying one or more individual labels. *
+// labels.labelName * Set the label named labelName, while preserving
 // other labels. To delete the label, include it in `updateMask` and
 // omit its mapping in `environment.labels`. It is an error to provide
-// both a mask of this form and the "labels" mask. config.nodeCount
+// both a mask of this form and the "labels" mask. * config.nodeCount *
 // Horizontally scale the number of nodes in the environment. An integer
 // greater than or equal to 3 must be provided in the `config.nodeCount`
-// field. config.webServerNetworkAccessControl Replace the environment's
-// current WebServerNetworkAccessControl.
-// config.softwareConfig.airflowConfigOverrides Replace all Apache
+// field. * config.webServerNetworkAccessControl * Replace the
+// environment's current WebServerNetworkAccessControl. *
+// config.softwareConfig.airflowConfigOverrides * Replace all Apache
 // Airflow config overrides. If a replacement config overrides map is
 // not included in `environment`, all config overrides are cleared. It
 // is an error to provide both this mask and a mask specifying one or
-// more individual config overrides.
-// config.softwareConfig.airflowConfigOverrides.section-name Override
+// more individual config overrides. *
+// config.softwareConfig.airflowConfigOverrides.section- name * Override
 // the Apache Airflow config property name in the section named section,
 // preserving other properties. To delete the property override, include
 // it in `updateMask` and omit its mapping in
 // `environment.config.softwareConfig.airflowConfigOverrides`. It is an
 // error to provide both a mask of this form and the
-// "config.softwareConfig.airflowConfigOverrides" mask.
-// config.softwareConfig.envVariables Replace all environment variables.
-// If a replacement environment variable map is not included in
-// `environment`, all custom environment variables are cleared. It is an
-// error to provide both this mask and a mask specifying one or more
-// individual environment variables. config.softwareConfig.imageVersion
-// Upgrade the version of the environment in-place. Refer to
-// `SoftwareConfig.image_version` for information on how to format the
-// new image version. Additionally, the new image version cannot effect
-// a version downgrade and must match the current image version's
-// Composer major version and Airflow major and minor versions. Consult
-// the Cloud Composer Version List for valid values.
-// config.databaseConfig.machineType Cloud SQL machine type used by
-// Airflow database. It has to be one of: db-n1-standard-2,
-// db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16.
-// config.webServerConfig.machineType Machine type on which Airflow web
-// server is running. It has to be one of: composer-n1-webserver-2,
-// composer-n1-webserver-4 or composer-n1-webserver-8.
+// "config.softwareConfig.airflowConfigOverrides" mask. *
+// config.softwareConfig.envVariables * Replace all environment
+// variables. If a replacement environment variable map is not included
+// in `environment`, all custom environment variables are cleared. It is
+// an error to provide both this mask and a mask specifying one or more
+// individual environment variables. *
+// config.softwareConfig.imageVersion * Upgrade the version of the
+// environment in-place. Refer to `SoftwareConfig.image_version` for
+// information on how to format the new image version. Additionally, the
+// new image version cannot effect a version downgrade and must match
+// the current image version's Composer major version and Airflow major
+// and minor versions. Consult the Cloud Composer Version List for valid
+// values. * config.databaseConfig.machineType * Cloud SQL machine type
+// used by Airflow database. It has to be one of: db-n1-standard-2,
+// db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. *
+// config.webServerConfig.machineType * Machine type on which Airflow
+// web server is running. It has to be one of: composer-n1-webserver-2,
+// composer-n1-webserver-4 or composer-n1-webserver-8. *
+// config.maintenanceWindow * Maintenance window during which Cloud
+// Composer components may be under maintenance.
 func (c *ProjectsLocationsEnvironmentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEnvironmentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1898,7 +1899,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1978,7 +1979,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of argparse, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.argparse\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and argparse will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } *Note:* Only the following fields can be updated: *Mask* *Purpose* config.softwareConfig.pypiPackages Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. config.softwareConfig.pypiPackages.packagename Update the custom PyPI package packagename, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the \"config.softwareConfig.pypiPackages\" mask. labels Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. labels.labelName Set the label named labelName, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the \"labels\" mask. config.nodeCount Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. config.webServerNetworkAccessControl Replace the environment's current WebServerNetworkAccessControl. config.softwareConfig.airflowConfigOverrides Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. config.softwareConfig.airflowConfigOverrides.section-name Override the Apache Airflow config property name in the section named section, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the \"config.softwareConfig.airflowConfigOverrides\" mask. config.softwareConfig.envVariables Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. config.softwareConfig.imageVersion Upgrade the version of the environment in-place. Refer to `SoftwareConfig.image_version` for information on how to format the new image version. Additionally, the new image version cannot effect a version downgrade and must match the current image version's Composer major version and Airflow major and minor versions. Consult the Cloud Composer Version List for valid values. config.databaseConfig.machineType Cloud SQL machine type used by Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. config.webServerConfig.machineType Machine type on which Airflow web server is running. It has to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. ",
+	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of argparse, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.argparse\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and argparse will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } *Note:* Only the following fields can be updated: * config.softwareConfig.pypiPackages * Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. * config.softwareConfig.pypiPackages.packagename * Update the custom PyPI package packagename, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the \"config.softwareConfig.pypiPackages\" mask. * labels * Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. * labels.labelName * Set the label named labelName, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the \"labels\" mask. * config.nodeCount * Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. * config.webServerNetworkAccessControl * Replace the environment's current WebServerNetworkAccessControl. * config.softwareConfig.airflowConfigOverrides * Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. * config.softwareConfig.airflowConfigOverrides.section- name * Override the Apache Airflow config property name in the section named section, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the \"config.softwareConfig.airflowConfigOverrides\" mask. * config.softwareConfig.envVariables * Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. * config.softwareConfig.imageVersion * Upgrade the version of the environment in-place. Refer to `SoftwareConfig.image_version` for information on how to format the new image version. Additionally, the new image version cannot effect a version downgrade and must match the current image version's Composer major version and Airflow major and minor versions. Consult the Cloud Composer Version List for valid values. * config.databaseConfig.machineType * Cloud SQL machine type used by Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. * config.webServerConfig.machineType * Machine type on which Airflow web server is running. It has to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. * config.maintenanceWindow * Maintenance window during which Cloud Composer components may be under maintenance.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2067,7 +2068,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2235,7 +2236,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2378,7 +2379,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2552,7 +2553,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201003")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

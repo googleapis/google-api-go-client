@@ -25,7 +25,7 @@
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   fitnessService, err := fitness.NewService(ctx, option.WithScopes(fitness.FitnessReproductiveHealthWriteScope))
+//   fitnessService, err := fitness.NewService(ctx, option.WithScopes(fitness.FitnessSleepWriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
@@ -121,6 +121,14 @@ const (
 	// app.
 	FitnessBodyTemperatureWriteScope = "https://www.googleapis.com/auth/fitness.body_temperature.write"
 
+	// See your heart rate data in Google Fit. I consent to Google sharing
+	// my heart rate information with this app.
+	FitnessHeartRateReadScope = "https://www.googleapis.com/auth/fitness.heart_rate.read"
+
+	// See and add to your heart rate data in Google Fit. I consent to
+	// Google sharing my heart rate information with this app.
+	FitnessHeartRateWriteScope = "https://www.googleapis.com/auth/fitness.heart_rate.write"
+
 	// See your Google Fit speed and distance data
 	FitnessLocationReadScope = "https://www.googleapis.com/auth/fitness.location.read"
 
@@ -150,6 +158,14 @@ const (
 	// consent to Google sharing my reproductive health information with
 	// this app.
 	FitnessReproductiveHealthWriteScope = "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+
+	// See your sleep data in Google Fit. I consent to Google sharing my
+	// sleep information with this app.
+	FitnessSleepReadScope = "https://www.googleapis.com/auth/fitness.sleep.read"
+
+	// See and add to your sleep data in Google Fit. I consent to Google
+	// sharing my sleep information with this app.
+	FitnessSleepWriteScope = "https://www.googleapis.com/auth/fitness.sleep.write"
 )
 
 // NewService creates a new Service.
@@ -165,6 +181,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/fitness.body.write",
 		"https://www.googleapis.com/auth/fitness.body_temperature.read",
 		"https://www.googleapis.com/auth/fitness.body_temperature.write",
+		"https://www.googleapis.com/auth/fitness.heart_rate.read",
+		"https://www.googleapis.com/auth/fitness.heart_rate.write",
 		"https://www.googleapis.com/auth/fitness.location.read",
 		"https://www.googleapis.com/auth/fitness.location.write",
 		"https://www.googleapis.com/auth/fitness.nutrition.read",
@@ -173,6 +191,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
 		"https://www.googleapis.com/auth/fitness.reproductive_health.read",
 		"https://www.googleapis.com/auth/fitness.reproductive_health.write",
+		"https://www.googleapis.com/auth/fitness.sleep.read",
+		"https://www.googleapis.com/auth/fitness.sleep.write",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1482,7 +1502,7 @@ func (c *UsersDataSourcesCreateCall) Header() http.Header {
 
 func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1574,10 +1594,12 @@ func (c *UsersDataSourcesCreateCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//     "https://www.googleapis.com/auth/fitness.blood_pressure.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.write",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -1630,7 +1652,7 @@ func (c *UsersDataSourcesDeleteCall) Header() http.Header {
 
 func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1722,10 +1744,12 @@ func (c *UsersDataSourcesDeleteCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//     "https://www.googleapis.com/auth/fitness.blood_pressure.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.write",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -1788,7 +1812,7 @@ func (c *UsersDataSourcesGetCall) Header() http.Header {
 
 func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1888,6 +1912,8 @@ func (c *UsersDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSource,
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.read",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.read",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
@@ -1895,7 +1921,9 @@ func (c *UsersDataSourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSource,
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.read",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
 	//     "https://www.googleapis.com/auth/fitness.reproductive_health.read",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.read",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -1967,7 +1995,7 @@ func (c *UsersDataSourcesListCall) Header() http.Header {
 
 func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2065,6 +2093,8 @@ func (c *UsersDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDataSo
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.read",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.read",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
@@ -2072,7 +2102,9 @@ func (c *UsersDataSourcesListCall) Do(opts ...googleapi.CallOption) (*ListDataSo
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.read",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
 	//     "https://www.googleapis.com/auth/fitness.reproductive_health.read",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.read",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -2129,7 +2161,7 @@ func (c *UsersDataSourcesUpdateCall) Header() http.Header {
 
 func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2229,10 +2261,12 @@ func (c *UsersDataSourcesUpdateCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//     "https://www.googleapis.com/auth/fitness.blood_pressure.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.write",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -2312,7 +2346,7 @@ func (c *UsersDataSourcesDataPointChangesListCall) Header() http.Header {
 
 func (c *UsersDataSourcesDataPointChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2423,6 +2457,8 @@ func (c *UsersDataSourcesDataPointChangesListCall) Do(opts ...googleapi.CallOpti
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.read",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.read",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
@@ -2430,7 +2466,9 @@ func (c *UsersDataSourcesDataPointChangesListCall) Do(opts ...googleapi.CallOpti
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.read",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
 	//     "https://www.googleapis.com/auth/fitness.reproductive_health.read",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.read",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -2525,7 +2563,7 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2609,10 +2647,12 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Do(opts ...googleapi.CallOption) er
 	//     "https://www.googleapis.com/auth/fitness.blood_pressure.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.write",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -2701,7 +2741,7 @@ func (c *UsersDataSourcesDatasetsGetCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2820,6 +2860,8 @@ func (c *UsersDataSourcesDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dat
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.read",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.read",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
@@ -2827,7 +2869,9 @@ func (c *UsersDataSourcesDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dat
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.read",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
 	//     "https://www.googleapis.com/auth/fitness.reproductive_health.read",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.read",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -2917,7 +2961,7 @@ func (c *UsersDataSourcesDatasetsPatchCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3031,10 +3075,12 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*D
 	//     "https://www.googleapis.com/auth/fitness.blood_pressure.write",
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.write",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -3110,7 +3156,7 @@ func (c *UsersDatasetAggregateCall) Header() http.Header {
 
 func (c *UsersDatasetAggregateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3207,6 +3253,8 @@ func (c *UsersDatasetAggregateCall) Do(opts ...googleapi.CallOption) (*Aggregate
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.read",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.read",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
@@ -3214,7 +3262,9 @@ func (c *UsersDatasetAggregateCall) Do(opts ...googleapi.CallOption) (*Aggregate
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.read",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
 	//     "https://www.googleapis.com/auth/fitness.reproductive_health.read",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.read",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -3273,7 +3323,7 @@ func (c *UsersSessionsDeleteCall) Header() http.Header {
 
 func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3338,7 +3388,8 @@ func (c *UsersSessionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "{userId}/sessions/{sessionId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fitness.activity.write"
+	//     "https://www.googleapis.com/auth/fitness.activity.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -3450,7 +3501,7 @@ func (c *UsersSessionsListCall) Header() http.Header {
 
 func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3569,6 +3620,8 @@ func (c *UsersSessionsListCall) Do(opts ...googleapi.CallOption) (*ListSessionsR
 	//     "https://www.googleapis.com/auth/fitness.body.write",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.read",
 	//     "https://www.googleapis.com/auth/fitness.body_temperature.write",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.read",
+	//     "https://www.googleapis.com/auth/fitness.heart_rate.write",
 	//     "https://www.googleapis.com/auth/fitness.location.read",
 	//     "https://www.googleapis.com/auth/fitness.location.write",
 	//     "https://www.googleapis.com/auth/fitness.nutrition.read",
@@ -3576,7 +3629,9 @@ func (c *UsersSessionsListCall) Do(opts ...googleapi.CallOption) (*ListSessionsR
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.read",
 	//     "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
 	//     "https://www.googleapis.com/auth/fitness.reproductive_health.read",
-	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write"
+	//     "https://www.googleapis.com/auth/fitness.reproductive_health.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.read",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 
@@ -3658,7 +3713,7 @@ func (c *UsersSessionsUpdateCall) Header() http.Header {
 
 func (c *UsersSessionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201006")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3759,7 +3814,8 @@ func (c *UsersSessionsUpdateCall) Do(opts ...googleapi.CallOption) (*Session, er
 	//     "$ref": "Session"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fitness.activity.write"
+	//     "https://www.googleapis.com/auth/fitness.activity.write",
+	//     "https://www.googleapis.com/auth/fitness.sleep.write"
 	//   ]
 	// }
 

@@ -138,7 +138,7 @@ type V1Service struct {
 type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// GrantType: Required. The grant type. Must be
 	// `urn:ietf:params:oauth:grant-type:token-exchange`, which indicates a
-	// token exchange is requested.
+	// token exchange.
 	GrantType string `json:"grantType,omitempty"`
 
 	// Options: A set of features that Security Token Service supports, in
@@ -151,11 +151,11 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// `urn:ietf:params:oauth:token-type:access_token`.
 	RequestedTokenType string `json:"requestedTokenType,omitempty"`
 
-	// SubjectToken: Required. Input subject token. You can use a
-	// Google-issued OAuth 2.0 access token with this field to obtain an
-	// access token with new security attributes applied, such as an
-	// AccessBoundary. Applying additional security attributes on access
-	// tokens that already contain security attributes is not allowed.
+	// SubjectToken: Required. The input token. You can use a Google-issued
+	// OAuth 2.0 access token with this field to obtain an access token with
+	// new security attributes applied, such as a Credential Access
+	// Boundary. If an access token already contains security attributes,
+	// you cannot apply additional security attributes.
 	SubjectToken string `json:"subjectToken,omitempty"`
 
 	// SubjectTokenType: Required. An identifier that indicates the type of
@@ -193,11 +193,11 @@ type GoogleIdentityStsV1ExchangeTokenResponse struct {
 	// response to the token exchange request.
 	AccessToken string `json:"access_token,omitempty"`
 
-	// ExpiresIn: The expiration time of `access_token` in seconds, measured
-	// from the time of issuance. This field is absent when the
-	// `subject_token` in the request is a Google-issued, short-lived access
-	// token. In this case, the expiration time of the `access_token` is the
-	// same as the `subject_token`.
+	// ExpiresIn: The amount of time, in seconds, between the time when the
+	// `access_token` was issued and the time when the `access_token` will
+	// expire. This field is absent when the `subject_token` in the request
+	// is a Google-issued, short-lived access token. In this case, the
+	// `access_token` has the same expiration time as the `subject_token`.
 	ExpiresIn int64 `json:"expires_in,omitempty"`
 
 	// IssuedTokenType: The token type. Always matches the value of
@@ -278,7 +278,7 @@ func (c *V1TokenCall) Header() http.Header {
 
 func (c *V1TokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -2484,7 +2484,7 @@
       }
     }
   },
-  "revision": "20200901",
+  "revision": "20200928",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3117,7 +3117,7 @@
           "enumDescriptions": [
             "Default value.",
             "Use the IPTables implementation based on kube-proxy.",
-            "Use the eBPF based data plane with additional visibility features."
+            "Use the eBPF based GKE Dataplane V2 with additional features. See the [GKE Dataplane V2 documentation](https://cloud.google.com/kubernetes-enginw/docs/how-to/dataplane-v2) for more."
           ],
           "type": "string"
         },
@@ -3960,7 +3960,7 @@
           "enumDescriptions": [
             "Default value.",
             "Use the IPTables implementation based on kube-proxy.",
-            "Use the eBPF based data plane with additional visibility features."
+            "Use the eBPF based GKE Dataplane V2 with additional features. See the [GKE Dataplane V2 documentation](https://cloud.google.com/kubernetes-enginw/docs/how-to/dataplane-v2) for more."
           ],
           "type": "string"
         },

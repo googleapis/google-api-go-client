@@ -132,7 +132,7 @@
               "type": "string"
             },
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -179,7 +179,7 @@
               "type": "string"
             },
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -213,7 +213,7 @@
           ],
           "parameters": {
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -296,7 +296,7 @@
               "type": "string"
             },
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -335,7 +335,7 @@
               "type": "string"
             },
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -531,7 +531,7 @@
               "type": "string"
             },
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -565,7 +565,7 @@
               "type": "string"
             },
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -647,7 +647,7 @@
               "type": "string"
             },
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -687,7 +687,7 @@
               "type": "string"
             },
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -990,7 +990,7 @@
           ],
           "parameters": {
             "managedZone": {
-              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or id.",
+              "description": "Identifies the managed zone addressed by this request. Can be the managed zone name or ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1037,7 +1037,7 @@
       }
     }
   },
-  "revision": "20200806",
+  "revision": "20200927",
   "rootUrl": "https://dns.googleapis.com/",
   "schemas": {
     "Change": {

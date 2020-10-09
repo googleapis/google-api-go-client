@@ -183,11 +183,6 @@ type EnterprisesStructuresRoomsService struct {
 // GoogleHomeEnterpriseSdmV1Device: Device resource represents an
 // instance of enterprise managed device in the property.
 type GoogleHomeEnterpriseSdmV1Device struct {
-	// Assignee: Output only. The name of the structure/room where the
-	// device is assigned to. For example: "enterprises/XYZ/structures/ABC"
-	// or "enterprises/XYZ/structures/ABC/rooms/123"
-	Assignee string `json:"assignee,omitempty"`
-
 	// Name: Required. The resource name of the device. For example:
 	// "enterprises/XYZ/devices/123".
 	Name string `json:"name,omitempty"`
@@ -208,7 +203,7 @@ type GoogleHomeEnterpriseSdmV1Device struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Assignee") to
+	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -216,8 +211,8 @@ type GoogleHomeEnterpriseSdmV1Device struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Assignee") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -338,7 +333,7 @@ func (s *GoogleHomeEnterpriseSdmV1ListDevicesResponse) MarshalJSON() ([]byte, er
 // SmartDeviceManagementService.ListRooms
 type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
 	// NextPageToken: The pagination token to retrieve the next page of
-	// results.
+	// results. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Rooms: The list of rooms.
@@ -375,7 +370,7 @@ func (s *GoogleHomeEnterpriseSdmV1ListRoomsResponse) MarshalJSON() ([]byte, erro
 // SmartDeviceManagementService.ListStructures
 type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
 	// NextPageToken: The pagination token to retrieve the next page of
-	// results.
+	// results. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Structures: The list of structures.
@@ -606,7 +601,7 @@ func (c *EnterprisesDevicesExecuteCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesExecuteCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -757,7 +752,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -889,25 +884,6 @@ func (c *EnterprisesDevicesListCall) PageToken(pageToken string) *EnterprisesDev
 	return c
 }
 
-// View sets the optional parameter "view": Additional details that need
-// to be provided for the device.
-//
-// Possible values:
-//   "DEVICE_DETAILS_VIEW_UNSPECIFIED" - Default option this would
-// return basic details for both Get and Listd Devices. Currently this
-// view is supported only for device types, SPEAKER, DISPLAY,
-//   "DEVICE_CONSOLE_VIEW" - Selecting this option would return the
-// structureId and structure name to which the device is assigned
-// alongwith other basic details. Currently this view is supported only
-// for device types -- sdm.devices.types.SPEAKER --
-// sdm.devices.types.CHROMECAST -- sdm.devices.types.DISPLAY --
-// sdm.devices.types.CAMERA Any other device type would only return a
-// basic view during ListDevices invocation.
-func (c *EnterprisesDevicesListCall) View(view string) *EnterprisesDevicesListCall {
-	c.urlParams_.Set("view", view)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -945,7 +921,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1039,19 +1015,6 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//       "pattern": "^enterprises/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Additional details that need to be provided for the device.",
-	//       "enum": [
-	//         "DEVICE_DETAILS_VIEW_UNSPECIFIED",
-	//         "DEVICE_CONSOLE_VIEW"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Default option this would return basic details for both Get and Listd Devices. Currently this view is supported only for device types, SPEAKER, DISPLAY,",
-	//         "Selecting this option would return the structureId and structure name to which the device is assigned alongwith other basic details. Currently this view is supported only for device types -- sdm.devices.types.SPEAKER -- sdm.devices.types.CHROMECAST -- sdm.devices.types.DISPLAY -- sdm.devices.types.CAMERA Any other device type would only return a basic view during ListDevices invocation."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1/{+parent}/devices",
@@ -1141,7 +1104,7 @@ func (c *EnterprisesStructuresGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1311,7 +1274,7 @@ func (c *EnterprisesStructuresListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1494,7 +1457,7 @@ func (c *EnterprisesStructuresRoomsGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1653,7 +1616,7 @@ func (c *EnterprisesStructuresRoomsListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

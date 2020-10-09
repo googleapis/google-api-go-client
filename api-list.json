@@ -2929,6 +2929,22 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "oauth2:v2",
+      "name": "oauth2",
+      "version": "v2",
+      "title": "Google OAuth2 API",
+      "description": "[Deprecated] Obtains end-user authorization grants for use with other Google APIs.",
+      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/oauth2/v2/rest",
+      "discoveryLink": "./apis/oauth2/v2/rest",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/accounts/docs/OAuth2",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "osconfig:v1alpha2",
       "name": "osconfig",
       "version": "v1alpha2",
@@ -4335,7 +4351,7 @@
       "name": "webmasters",
       "version": "v3",
       "title": "Search Console API",
-      "description": "View Google Search Console data for your verified sites.",
+      "description": "[Deprecated] View Google Search Console data for your verified sites.",
       "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/webmasters/v3/rest",
       "discoveryLink": "./apis/webmasters/v3/rest",
       "icons": {

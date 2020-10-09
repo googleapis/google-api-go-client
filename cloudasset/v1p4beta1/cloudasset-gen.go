@@ -402,9 +402,9 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 type GcsDestination struct {
 	// Uri: Required. The uri of the Cloud Storage object. It's the same uri
 	// that is used by gsutil. For example: "gs://bucket_name/object_name".
-	// See [Viewing and Editing Object
-	// Metadata](https://cloud.google.com/storage/docs/viewing-editing-metada
-	// ta) for more information.
+	// See [Quickstart: Using the gsutil tool]
+	// (https://cloud.google.com/storage/docs/quickstart-gsutil) for
+	// examples.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
@@ -1402,7 +1402,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1602,7 +1602,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

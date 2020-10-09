@@ -445,15 +445,16 @@ func (s *Creative) MarshalJSON() ([]byte, error) {
 // CreativeServingDecision: Top level status and detected attributes of
 // a creative.
 type CreativeServingDecision struct {
-	// ChinaServingStatus: The serving status of this creative in China.
-	// When approved or disapproved, this status applies to both deals and
+	// ChinaPolicyCompliance: The policy compliance of this creative in
+	// China. When approved or disapproved, this applies to both deals and
 	// open auction in China. When pending review, this creative is allowed
 	// to serve for deals but not for open auction.
-	ChinaServingStatus *ServingStatus `json:"chinaServingStatus,omitempty"`
+	ChinaPolicyCompliance *PolicyCompliance `json:"chinaPolicyCompliance,omitempty"`
 
-	// DealsServingStatus: Status of this creative when bidding on PG and PD
-	// deals (outside of Russia and China).
-	DealsServingStatus *ServingStatus `json:"dealsServingStatus,omitempty"`
+	// DealsPolicyCompliance: Policy compliance of this creative when
+	// bidding on Programmatic Guaranteed and Preferred Deals (outside of
+	// Russia and China).
+	DealsPolicyCompliance *PolicyCompliance `json:"dealsPolicyCompliance,omitempty"`
 
 	// DetectedAdvertisers: Detected advertisers and brands.
 	DetectedAdvertisers []*AdvertiserAndBrand `json:"detectedAdvertisers,omitempty"`
@@ -571,26 +572,33 @@ type CreativeServingDecision struct {
 	// be used to filter the response of the creatives.list method.
 	LastStatusUpdate string `json:"lastStatusUpdate,omitempty"`
 
-	// OpenAuctionServingStatus: Status of this creative when bidding in
-	// open auction, private auction, or auction packages (outside of Russia
-	// and China).
-	OpenAuctionServingStatus *ServingStatus `json:"openAuctionServingStatus,omitempty"`
+	// NetworkPolicyCompliance: Policy compliance of this creative when
+	// bidding in open auction, private auction, or auction packages
+	// (outside of Russia and China).
+	NetworkPolicyCompliance *PolicyCompliance `json:"networkPolicyCompliance,omitempty"`
 
-	// RussiaServingStatus: The serving status of this creative in Russia.
-	// When approved or disapproved, this status applies to both deals and
+	// PlatformPolicyCompliance: Policy compliance of this creative when
+	// bidding in Open Bidding (outside of Russia and China). For the list
+	// of platform policies, see:
+	// https://support.google.com/platformspolicy/answer/3013851.
+	PlatformPolicyCompliance *PolicyCompliance `json:"platformPolicyCompliance,omitempty"`
+
+	// RussiaPolicyCompliance: The policy compliance of this creative in
+	// Russia. When approved or disapproved, this applies to both deals and
 	// open auction in Russia. When pending review, this creative is allowed
 	// to serve for deals but not for open auction.
-	RussiaServingStatus *ServingStatus `json:"russiaServingStatus,omitempty"`
+	RussiaPolicyCompliance *PolicyCompliance `json:"russiaPolicyCompliance,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ChinaServingStatus")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ChinaPolicyCompliance") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ChinaServingStatus") to
+	// NullFields is a list of field names (e.g. "ChinaPolicyCompliance") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1307,6 +1315,48 @@ func (s *NativeContent) UnmarshalJSON(data []byte) error {
 type OpenUserListRequest struct {
 }
 
+// PolicyCompliance: Policy compliance of the creative for a transaction
+// type or a region.
+type PolicyCompliance struct {
+	// Status: Serving status for the given transaction type (e.g., open
+	// auction, deals) or region (e.g., China, Russia). Can be used to
+	// filter the response of the creatives.list method.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Default value that should never be used.
+	//   "PENDING_REVIEW" - Creative is pending review.
+	//   "DISAPPROVED" - Creative cannot serve.
+	//   "APPROVED" - Creative is approved.
+	Status string `json:"status,omitempty"`
+
+	// Topics: Topics related to the policy compliance for this transaction
+	// type (e.g., open auction, deals) or region (e.g., China, Russia).
+	// Topics may be present only if status is DISAPPROVED.
+	Topics []*PolicyTopicEntry `json:"topics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Status") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyCompliance) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyCompliance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PolicyTopicEntry: Each policy topic entry will represent a violation
 // of a policy topic for a creative, with the policy topic information
 // and optional evidence for the policy violation.
@@ -1398,48 +1448,6 @@ type PolicyTopicEvidence struct {
 
 func (s *PolicyTopicEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyTopicEvidence
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ServingStatus: Serving status of the creative for a transaction type
-// or a region.
-type ServingStatus struct {
-	// Status: Serving status for the given transaction type (e.g., open
-	// auction, deals) or region (e.g., China, Russia). Can be used to
-	// filter the response of the creatives.list method.
-	//
-	// Possible values:
-	//   "STATUS_UNSPECIFIED" - Default value that should never be used.
-	//   "PENDING_REVIEW" - Creative is pending review.
-	//   "DISAPPROVED" - Creative cannot serve.
-	//   "APPROVED" - Creative is approved.
-	Status string `json:"status,omitempty"`
-
-	// Topics: Policy topics related to the serving decision for this
-	// transaction type (e.g., open auction, deals) or region (e.g., China,
-	// Russia). Topics may be present only if status is DISAPPROVED.
-	Topics []*PolicyTopicEntry `json:"topics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Status") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Status") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServingStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod ServingStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1850,7 +1858,7 @@ func (c *BiddersCreativesListCall) Header() http.Header {
 
 func (c *BiddersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2043,7 +2051,7 @@ func (c *BiddersCreativesWatchCall) Header() http.Header {
 
 func (c *BiddersCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2195,7 +2203,7 @@ func (c *BuyersGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2330,7 +2338,7 @@ func (c *BuyersCreativesCreateCall) Header() http.Header {
 
 func (c *BuyersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2497,7 +2505,7 @@ func (c *BuyersCreativesGetCall) Header() http.Header {
 
 func (c *BuyersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2703,7 +2711,7 @@ func (c *BuyersCreativesListCall) Header() http.Header {
 
 func (c *BuyersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2897,7 +2905,7 @@ func (c *BuyersCreativesPatchCall) Header() http.Header {
 
 func (c *BuyersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3044,7 +3052,7 @@ func (c *BuyersUserListsCloseCall) Header() http.Header {
 
 func (c *BuyersUserListsCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3184,7 +3192,7 @@ func (c *BuyersUserListsCreateCall) Header() http.Header {
 
 func (c *BuyersUserListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3333,7 +3341,7 @@ func (c *BuyersUserListsGetCall) Header() http.Header {
 
 func (c *BuyersUserListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3480,7 +3488,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersUserListsGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3638,7 +3646,7 @@ func (c *BuyersUserListsListCall) Header() http.Header {
 
 func (c *BuyersUserListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3806,7 +3814,7 @@ func (c *BuyersUserListsOpenCall) Header() http.Header {
 
 func (c *BuyersUserListsOpenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3947,7 +3955,7 @@ func (c *BuyersUserListsUpdateCall) Header() http.Header {
 
 func (c *BuyersUserListsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201007")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201008")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

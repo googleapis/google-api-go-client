@@ -164,11 +164,6 @@ type AdministrationRegion struct {
 	// area.
 	ElectionAdministrationBody *AdministrativeBody `json:"electionAdministrationBody,omitempty"`
 
-	// Id: An ID for this object. IDs may change in future requests and
-	// should not be cached. Access to this field requires special access
-	// that can be requested from the Request more link on the Quotas page.
-	Id string `json:"id,omitempty"`
-
 	// LocalJurisdiction: The city or county that provides election
 	// information for this voter. This object can have the same elements as
 	// state.
@@ -401,11 +396,6 @@ type Contest struct {
 	// ElectorateSpecifications: A description of any additional eligibility
 	// requirements for voting in this contest.
 	ElectorateSpecifications string `json:"electorateSpecifications,omitempty"`
-
-	// Id: An ID for this object. IDs may change in future requests and
-	// should not be cached. Access to this field requires special access
-	// that can be requested from the Request more link on the Quotas page.
-	Id string `json:"id,omitempty"`
 
 	// Level: The levels of government of the office for this contest. There
 	// may be more than one in cases where a jurisdiction effectively acts
@@ -979,11 +969,6 @@ type PollingLocation struct {
 	// may be used. This field is not populated for polling locations.
 	EndDate string `json:"endDate,omitempty"`
 
-	// Id: An ID for this object. IDs may change in future requests and
-	// should not be cached. Access to this field requires special access
-	// that can be requested from the Request more link on the Quotas page.
-	Id string `json:"id,omitempty"`
-
 	// Latitude: Latitude of the location, in degrees north of the equator.
 	// Note this field may not be available for some locations.
 	Latitude float64 `json:"latitude,omitempty"`
@@ -1370,7 +1355,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201009")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1502,7 +1487,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201009")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1658,7 +1643,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201009")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1870,7 +1855,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201009")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2123,7 +2108,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201009")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/ddORqCNPE80KZPQB362t_vez4eE\"",
+  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/0S4Zq4Nku8cHHcfOzMZhLoRyEvk\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3774,7 +3774,7 @@
       }
     }
   },
-  "revision": "20201008",
+  "revision": "20201012",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6004,7 +6004,7 @@
       "id": "LocalInventory",
       "properties": {
         "availability": {
-          "description": "Availability of the product.",
+          "description": "Availability of the product. For accepted attribute values, see the local product inventory feed specification.",
           "type": "string"
         },
         "instoreProductLocation": {
@@ -6017,11 +6017,11 @@
           "type": "string"
         },
         "pickupMethod": {
-          "description": "Supported pickup method for this offer. Unless the value is \"not supported\", this field must be submitted together with `pickupSla`.",
+          "description": "Supported pickup method for this offer. Unless the value is \"not supported\", this field must be submitted together with `pickupSla`. For accepted attribute values, see the local product inventory feed specification.",
           "type": "string"
         },
         "pickupSla": {
-          "description": "Expected date that an order will be ready for pickup relative to the order date. Must be submitted together with `pickupMethod`.",
+          "description": "Expected date that an order will be ready for pickup relative to the order date. Must be submitted together with `pickupMethod`. For accepted attribute values, see the local product inventory feed specification.",
           "type": "string"
         },
         "price": {

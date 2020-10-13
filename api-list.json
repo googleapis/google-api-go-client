@@ -1871,7 +1871,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/cloud-dns",
+      "documentationLink": "https://cloud.google.com/dns/docs",
       "preferred": true
     },
     {
@@ -1886,7 +1886,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/cloud-dns",
+      "documentationLink": "https://cloud.google.com/dns/docs",
       "preferred": false
     },
     {

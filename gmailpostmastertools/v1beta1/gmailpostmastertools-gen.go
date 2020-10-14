@@ -654,7 +654,7 @@ func (c *DomainsGetCall) Header() http.Header {
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -816,7 +816,7 @@ func (c *DomainsListCall) Header() http.Header {
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -982,7 +982,7 @@ func (c *DomainsTrafficStatsGetCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1091,25 +1091,25 @@ func (r *DomainsTrafficStatsService) List(parent string) *DomainsTrafficStatsLis
 	return c
 }
 
-// EndDateDay sets the optional parameter "endDate.day": Day of month.
-// Must be from 1 to 31 and valid for the year and month, or 0 if
-// specifying a year by itself or a year and month where the day is not
+// EndDateDay sets the optional parameter "endDate.day": Day of a month.
+// Must be from 1 to 31 and valid for the year and month, or 0 to
+// specify a year by itself or a year and month where the day isn't
 // significant.
 func (c *DomainsTrafficStatsListCall) EndDateDay(endDateDay int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.day", fmt.Sprint(endDateDay))
 	return c
 }
 
-// EndDateMonth sets the optional parameter "endDate.month": Month of
-// year. Must be from 1 to 12, or 0 if specifying a year without a month
+// EndDateMonth sets the optional parameter "endDate.month": Month of a
+// year. Must be from 1 to 12, or 0 to specify a year without a month
 // and day.
 func (c *DomainsTrafficStatsListCall) EndDateMonth(endDateMonth int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.month", fmt.Sprint(endDateMonth))
 	return c
 }
 
-// EndDateYear sets the optional parameter "endDate.year": Year of date.
-// Must be from 1 to 9999, or 0 if specifying a date without a year.
+// EndDateYear sets the optional parameter "endDate.year": Year of the
+// date. Must be from 1 to 9999, or 0 to specify a date without a year.
 func (c *DomainsTrafficStatsListCall) EndDateYear(endDateYear int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.year", fmt.Sprint(endDateYear))
 	return c
@@ -1132,9 +1132,9 @@ func (c *DomainsTrafficStatsListCall) PageToken(pageToken string) *DomainsTraffi
 	return c
 }
 
-// StartDateDay sets the optional parameter "startDate.day": Day of
-// month. Must be from 1 to 31 and valid for the year and month, or 0 if
-// specifying a year by itself or a year and month where the day is not
+// StartDateDay sets the optional parameter "startDate.day": Day of a
+// month. Must be from 1 to 31 and valid for the year and month, or 0 to
+// specify a year by itself or a year and month where the day isn't
 // significant.
 func (c *DomainsTrafficStatsListCall) StartDateDay(startDateDay int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.day", fmt.Sprint(startDateDay))
@@ -1142,7 +1142,7 @@ func (c *DomainsTrafficStatsListCall) StartDateDay(startDateDay int64) *DomainsT
 }
 
 // StartDateMonth sets the optional parameter "startDate.month": Month
-// of year. Must be from 1 to 12, or 0 if specifying a year without a
+// of a year. Must be from 1 to 12, or 0 to specify a year without a
 // month and day.
 func (c *DomainsTrafficStatsListCall) StartDateMonth(startDateMonth int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.month", fmt.Sprint(startDateMonth))
@@ -1150,7 +1150,7 @@ func (c *DomainsTrafficStatsListCall) StartDateMonth(startDateMonth int64) *Doma
 }
 
 // StartDateYear sets the optional parameter "startDate.year": Year of
-// date. Must be from 1 to 9999, or 0 if specifying a date without a
+// the date. Must be from 1 to 9999, or 0 to specify a date without a
 // year.
 func (c *DomainsTrafficStatsListCall) StartDateYear(startDateYear int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.year", fmt.Sprint(startDateYear))
@@ -1194,7 +1194,7 @@ func (c *DomainsTrafficStatsListCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1265,19 +1265,19 @@ func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTra
 	//   ],
 	//   "parameters": {
 	//     "endDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year by itself or a year and month where the day is not significant.",
+	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "endDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a month and day.",
+	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "endDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.",
+	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1301,19 +1301,19 @@ func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTra
 	//       "type": "string"
 	//     },
 	//     "startDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year by itself or a year and month where the day is not significant.",
+	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a month and day.",
+	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.",
+	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

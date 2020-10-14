@@ -35,7 +35,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/l7m-JIhSvmu0HFIAKZgPpq4u-fg\"",
+  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/2nYuj3mcKfSYCTCLPtektgo9f7A\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -2185,7 +2185,7 @@
       }
     }
   },
-  "revision": "20200813",
+  "revision": "20201001",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -3666,7 +3666,7 @@
           "type": "boolean"
         },
         "publishedLink": {
-          "description": "A link to the published revision.",
+          "description": "A link to the published revision. This is only populated for Google Sites files.",
           "type": "string"
         },
         "publishedOutsideDomain": {

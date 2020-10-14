@@ -782,10 +782,11 @@ func (s *GoogleMapsUnityClientInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeLatLng: An object representing a latitude/longitude pair.
-// This is expressed as a pair of doubles representing degrees latitude
-// and degrees longitude. Unless specified otherwise, this must conform
-// to the WGS84 standard. Values must be within normalized ranges.
+// GoogleTypeLatLng: An object that represents a latitude/longitude
+// pair. This is expressed as a pair of doubles to represent degrees
+// latitude and degrees longitude. Unless specified otherwise, this must
+// conform to the WGS84 standard. Values must be within normalized
+// ranges.
 type GoogleTypeLatLng struct {
 	// Latitude: The latitude in degrees. It must be in the range [-90.0,
 	// +90.0].
@@ -881,7 +882,7 @@ func (c *V3LogImpressionsCall) Header() http.Header {
 
 func (c *V3LogImpressionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1008,7 +1009,7 @@ func (c *V3LogPlayerReportsCall) Header() http.Header {
 
 func (c *V3LogPlayerReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1135,7 +1136,7 @@ func (c *V3SamplePlayableLocationsCall) Header() http.Header {
 
 func (c *V3SamplePlayableLocationsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -600,25 +600,25 @@ func (r *AccountReportsService) Search() *AccountReportsSearchCall {
 	return c
 }
 
-// EndDateDay sets the optional parameter "endDate.day": Day of month.
-// Must be from 1 to 31 and valid for the year and month, or 0 if
-// specifying a year by itself or a year and month where the day is not
+// EndDateDay sets the optional parameter "endDate.day": Day of a month.
+// Must be from 1 to 31 and valid for the year and month, or 0 to
+// specify a year by itself or a year and month where the day isn't
 // significant.
 func (c *AccountReportsSearchCall) EndDateDay(endDateDay int64) *AccountReportsSearchCall {
 	c.urlParams_.Set("endDate.day", fmt.Sprint(endDateDay))
 	return c
 }
 
-// EndDateMonth sets the optional parameter "endDate.month": Month of
-// year. Must be from 1 to 12, or 0 if specifying a year without a month
+// EndDateMonth sets the optional parameter "endDate.month": Month of a
+// year. Must be from 1 to 12, or 0 to specify a year without a month
 // and day.
 func (c *AccountReportsSearchCall) EndDateMonth(endDateMonth int64) *AccountReportsSearchCall {
 	c.urlParams_.Set("endDate.month", fmt.Sprint(endDateMonth))
 	return c
 }
 
-// EndDateYear sets the optional parameter "endDate.year": Year of date.
-// Must be from 1 to 9999, or 0 if specifying a date without a year.
+// EndDateYear sets the optional parameter "endDate.year": Year of the
+// date. Must be from 1 to 9999, or 0 to specify a date without a year.
 func (c *AccountReportsSearchCall) EndDateYear(endDateYear int64) *AccountReportsSearchCall {
 	c.urlParams_.Set("endDate.year", fmt.Sprint(endDateYear))
 	return c
@@ -653,9 +653,9 @@ func (c *AccountReportsSearchCall) Query(query string) *AccountReportsSearchCall
 	return c
 }
 
-// StartDateDay sets the optional parameter "startDate.day": Day of
-// month. Must be from 1 to 31 and valid for the year and month, or 0 if
-// specifying a year by itself or a year and month where the day is not
+// StartDateDay sets the optional parameter "startDate.day": Day of a
+// month. Must be from 1 to 31 and valid for the year and month, or 0 to
+// specify a year by itself or a year and month where the day isn't
 // significant.
 func (c *AccountReportsSearchCall) StartDateDay(startDateDay int64) *AccountReportsSearchCall {
 	c.urlParams_.Set("startDate.day", fmt.Sprint(startDateDay))
@@ -663,7 +663,7 @@ func (c *AccountReportsSearchCall) StartDateDay(startDateDay int64) *AccountRepo
 }
 
 // StartDateMonth sets the optional parameter "startDate.month": Month
-// of year. Must be from 1 to 12, or 0 if specifying a year without a
+// of a year. Must be from 1 to 12, or 0 to specify a year without a
 // month and day.
 func (c *AccountReportsSearchCall) StartDateMonth(startDateMonth int64) *AccountReportsSearchCall {
 	c.urlParams_.Set("startDate.month", fmt.Sprint(startDateMonth))
@@ -671,7 +671,7 @@ func (c *AccountReportsSearchCall) StartDateMonth(startDateMonth int64) *Account
 }
 
 // StartDateYear sets the optional parameter "startDate.year": Year of
-// date. Must be from 1 to 9999, or 0 if specifying a date without a
+// the date. Must be from 1 to 9999, or 0 to specify a date without a
 // year.
 func (c *AccountReportsSearchCall) StartDateYear(startDateYear int64) *AccountReportsSearchCall {
 	c.urlParams_.Set("startDate.year", fmt.Sprint(startDateYear))
@@ -715,7 +715,7 @@ func (c *AccountReportsSearchCall) Header() http.Header {
 
 func (c *AccountReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -784,19 +784,19 @@ func (c *AccountReportsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleAdsH
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "endDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year by itself or a year and month where the day is not significant.",
+	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "endDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a month and day.",
+	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "endDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.",
+	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -818,19 +818,19 @@ func (c *AccountReportsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleAdsH
 	//       "type": "string"
 	//     },
 	//     "startDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year by itself or a year and month where the day is not significant.",
+	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a month and day.",
+	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.",
+	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -884,25 +884,25 @@ func (r *DetailedLeadReportsService) Search() *DetailedLeadReportsSearchCall {
 	return c
 }
 
-// EndDateDay sets the optional parameter "endDate.day": Day of month.
-// Must be from 1 to 31 and valid for the year and month, or 0 if
-// specifying a year by itself or a year and month where the day is not
+// EndDateDay sets the optional parameter "endDate.day": Day of a month.
+// Must be from 1 to 31 and valid for the year and month, or 0 to
+// specify a year by itself or a year and month where the day isn't
 // significant.
 func (c *DetailedLeadReportsSearchCall) EndDateDay(endDateDay int64) *DetailedLeadReportsSearchCall {
 	c.urlParams_.Set("endDate.day", fmt.Sprint(endDateDay))
 	return c
 }
 
-// EndDateMonth sets the optional parameter "endDate.month": Month of
-// year. Must be from 1 to 12, or 0 if specifying a year without a month
+// EndDateMonth sets the optional parameter "endDate.month": Month of a
+// year. Must be from 1 to 12, or 0 to specify a year without a month
 // and day.
 func (c *DetailedLeadReportsSearchCall) EndDateMonth(endDateMonth int64) *DetailedLeadReportsSearchCall {
 	c.urlParams_.Set("endDate.month", fmt.Sprint(endDateMonth))
 	return c
 }
 
-// EndDateYear sets the optional parameter "endDate.year": Year of date.
-// Must be from 1 to 9999, or 0 if specifying a date without a year.
+// EndDateYear sets the optional parameter "endDate.year": Year of the
+// date. Must be from 1 to 9999, or 0 to specify a date without a year.
 func (c *DetailedLeadReportsSearchCall) EndDateYear(endDateYear int64) *DetailedLeadReportsSearchCall {
 	c.urlParams_.Set("endDate.year", fmt.Sprint(endDateYear))
 	return c
@@ -938,9 +938,9 @@ func (c *DetailedLeadReportsSearchCall) Query(query string) *DetailedLeadReports
 	return c
 }
 
-// StartDateDay sets the optional parameter "startDate.day": Day of
-// month. Must be from 1 to 31 and valid for the year and month, or 0 if
-// specifying a year by itself or a year and month where the day is not
+// StartDateDay sets the optional parameter "startDate.day": Day of a
+// month. Must be from 1 to 31 and valid for the year and month, or 0 to
+// specify a year by itself or a year and month where the day isn't
 // significant.
 func (c *DetailedLeadReportsSearchCall) StartDateDay(startDateDay int64) *DetailedLeadReportsSearchCall {
 	c.urlParams_.Set("startDate.day", fmt.Sprint(startDateDay))
@@ -948,7 +948,7 @@ func (c *DetailedLeadReportsSearchCall) StartDateDay(startDateDay int64) *Detail
 }
 
 // StartDateMonth sets the optional parameter "startDate.month": Month
-// of year. Must be from 1 to 12, or 0 if specifying a year without a
+// of a year. Must be from 1 to 12, or 0 to specify a year without a
 // month and day.
 func (c *DetailedLeadReportsSearchCall) StartDateMonth(startDateMonth int64) *DetailedLeadReportsSearchCall {
 	c.urlParams_.Set("startDate.month", fmt.Sprint(startDateMonth))
@@ -956,7 +956,7 @@ func (c *DetailedLeadReportsSearchCall) StartDateMonth(startDateMonth int64) *De
 }
 
 // StartDateYear sets the optional parameter "startDate.year": Year of
-// date. Must be from 1 to 9999, or 0 if specifying a date without a
+// the date. Must be from 1 to 9999, or 0 to specify a date without a
 // year.
 func (c *DetailedLeadReportsSearchCall) StartDateYear(startDateYear int64) *DetailedLeadReportsSearchCall {
 	c.urlParams_.Set("startDate.year", fmt.Sprint(startDateYear))
@@ -1000,7 +1000,7 @@ func (c *DetailedLeadReportsSearchCall) Header() http.Header {
 
 func (c *DetailedLeadReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201010")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1069,19 +1069,19 @@ func (c *DetailedLeadReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "endDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year by itself or a year and month where the day is not significant.",
+	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "endDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a month and day.",
+	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "endDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.",
+	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1103,19 +1103,19 @@ func (c *DetailedLeadReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "startDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a year by itself or a year and month where the day is not significant.",
+	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a month and day.",
+	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "startDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without a year.",
+	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

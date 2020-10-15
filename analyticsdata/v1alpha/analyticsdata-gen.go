@@ -830,7 +830,7 @@ func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 // Entity: The unique identifier of the property whose events are
 // tracked.
 type Entity struct {
-	// PropertyId: A Google Analytics App + Web property id.
+	// PropertyId: A Google Analytics GA4 property id.
 	PropertyId string `json:"propertyId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PropertyId") to
@@ -2144,11 +2144,11 @@ type PropertiesGetMetadataCall struct {
 
 // GetMetadata: Returns metadata for dimensions and metrics available in
 // reporting methods. Used to explore the dimensions and metrics. In
-// this method, a Google Analytics App + Web Property Identifier is
-// specified in the request, and the metadata response includes Custom
-// dimensions and metrics as well as Universal metadata. For example if
-// a custom metric with parameter name `levels_unlocked` is registered
-// to a property, the Metadata response will contain
+// this method, a Google Analytics GA4 Property Identifier is specified
+// in the request, and the metadata response includes Custom dimensions
+// and metrics as well as Universal metadata. For example if a custom
+// metric with parameter name `levels_unlocked` is registered to a
+// property, the Metadata response will contain
 // `customEvent:levels_unlocked`. Universal metadata are dimensions and
 // metrics applicable to any property such as `country` and
 // `totalUsers`.
@@ -2195,7 +2195,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2257,7 +2257,7 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns metadata for dimensions and metrics available in reporting methods. Used to explore the dimensions and metrics. In this method, a Google Analytics App + Web Property Identifier is specified in the request, and the metadata response includes Custom dimensions and metrics as well as Universal metadata. For example if a custom metric with parameter name `levels_unlocked` is registered to a property, the Metadata response will contain `customEvent:levels_unlocked`. Universal metadata are dimensions and metrics applicable to any property such as `country` and `totalUsers`.",
+	//   "description": "Returns metadata for dimensions and metrics available in reporting methods. Used to explore the dimensions and metrics. In this method, a Google Analytics GA4 Property Identifier is specified in the request, and the metadata response includes Custom dimensions and metrics as well as Universal metadata. For example if a custom metric with parameter name `levels_unlocked` is registered to a property, the Metadata response will contain `customEvent:levels_unlocked`. Universal metadata are dimensions and metrics applicable to any property such as `country` and `totalUsers`.",
 	//   "flatPath": "v1alpha/properties/{propertiesId}/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "analyticsdata.properties.getMetadata",
@@ -2266,7 +2266,7 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics App + Web Property identifier. Example: properties/1234/metadata",
+	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics GA4 Property identifier. Example: properties/1234/metadata",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+/metadata$",
 	//       "required": true,
@@ -2330,7 +2330,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2457,7 +2457,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2597,7 +2597,7 @@ func (c *V1alphaGetUniversalMetadataCall) Header() http.Header {
 
 func (c *V1alphaGetUniversalMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2722,7 +2722,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2854,7 +2854,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201013")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

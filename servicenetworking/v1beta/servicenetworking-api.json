@@ -307,7 +307,7 @@
       }
     }
   },
-  "revision": "20201012",
+  "revision": "20201014",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -527,7 +527,7 @@
       "id": "AuthenticationRule",
       "properties": {
         "allowWithoutCredential": {
-          "description": "If true, the service accepts API keys without any other credential.",
+          "description": "If true, the service accepts API keys without any other credential. This flag only applies to HTTP and gRPC requests.",
           "type": "boolean"
         },
         "oauth": {
@@ -1808,7 +1808,7 @@
           "type": "string"
         },
         "role": {
-          "description": "Required. Role to apply. Only whitelisted roles can be used at the specified granularity. The role must be one of the following: - 'roles/container.hostServiceAgentUser' applied on the shared VPC host project - 'roles/compute.securityAdmin' applied on the shared VPC host project",
+          "description": "Required. Role to apply. Only allowlisted roles can be used at the specified granularity. The role must be one of the following: - 'roles/container.hostServiceAgentUser' applied on the shared VPC host project - 'roles/compute.securityAdmin' applied on the shared VPC host project",
           "type": "string"
         }
       },

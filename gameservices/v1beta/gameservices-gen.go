@@ -1052,8 +1052,8 @@ type GameServerCluster struct {
 	// label is a key-value pair.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Required. The resource name of the game server cluster. Uses
-	// the form:
+	// Name: Required. The resource name of the game server cluster, in the
+	// following form:
 	// `projects/{project}/locations/{location}/realms/{realm}/gameServerClus
 	// ters/{cluster}`. For example,
 	// `projects/my-project/locations/{location}/realms/zanzibar/gameServerCl
@@ -1143,7 +1143,8 @@ type GameServerConfig struct {
 	// label is a key-value pair.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The resource name of the game server config. Uses the form:
+	// Name: The resource name of the game server config, in the following
+	// form:
 	// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
 	// ment}/configs/{config}`. For example,
 	// `projects/my-project/locations/global/gameServerDeployments/my-game/co
@@ -1230,7 +1231,8 @@ type GameServerDeployment struct {
 	// label is a key-value pair.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The resource name of the game server deployment. Uses the form:
+	// Name: The resource name of the game server deployment, in the
+	// following form:
 	// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
 	// ment}`. For example,
 	// `projects/my-project/locations/global/gameServerDeployments/my-deploym
@@ -1287,8 +1289,8 @@ type GameServerDeploymentRollout struct {
 	// a match is found for a realm, the rest of the list is not processed.
 	GameServerConfigOverrides []*GameServerConfigOverride `json:"gameServerConfigOverrides,omitempty"`
 
-	// Name: The resource name of the game server deployment rollout. Uses
-	// the form:
+	// Name: The resource name of the game server deployment rollout, in the
+	// following form:
 	// `projects/{project}/locations/{location}/gameServerDeployments/{deploy
 	// ment}/rollout`. For example,
 	// `projects/my-project/locations/global/gameServerDeployments/my-deploym
@@ -2188,7 +2190,7 @@ type Realm struct {
 	// key-value pair.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The resource name of the realm. Uses the form:
+	// Name: The resource name of the realm, in the following form:
 	// `projects/{project}/locations/{location}/realms/{realm}`. For
 	// example, `projects/my-project/locations/{location}/realms/my-realm`.
 	Name string `json:"name,omitempty"`
@@ -2812,7 +2814,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2986,7 +2988,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3171,7 +3173,7 @@ func (c *ProjectsLocationsGameServerDeploymentsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsGameServerDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3249,7 +3251,7 @@ func (c *ProjectsLocationsGameServerDeploymentsCreateCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: `projects/{project}/locations/{location}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3314,7 +3316,7 @@ func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3382,7 +3384,7 @@ func (c *ProjectsLocationsGameServerDeploymentsDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server delpoyment to delete. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server delpoyment to delete, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -3449,7 +3451,7 @@ func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) Header(
 
 func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3522,7 +3524,7 @@ func (c *ProjectsLocationsGameServerDeploymentsFetchDeploymentStateCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server delpoyment. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server delpoyment, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -3598,7 +3600,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3669,7 +3671,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server delpoyment to retrieve. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
+	//       "description": "Required. The name of the game server delpoyment to retrieve, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -3759,7 +3761,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsGameServerDeploymentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3909,7 +3911,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Header() http.Hea
 
 func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3980,7 +3982,7 @@ func (c *ProjectsLocationsGameServerDeploymentsGetRolloutCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server delpoyment to retrieve. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.",
+	//       "description": "Required. The name of the game server delpoyment to retrieve, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4085,7 +4087,7 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4178,7 +4180,7 @@ func (c *ProjectsLocationsGameServerDeploymentsListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: `projects/{project}/locations/{location}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4273,7 +4275,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGameServerDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4346,7 +4348,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the game server deployment. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment`.",
+	//       "description": "The resource name of the game server deployment, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4438,7 +4440,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Header() http
 
 func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4513,7 +4515,7 @@ func (c *ProjectsLocationsGameServerDeploymentsPreviewRolloutCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the game server deployment rollout. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment/rollout`.",
+	//       "description": "The resource name of the game server deployment rollout, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -4594,7 +4596,7 @@ func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsGameServerDeploymentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4739,7 +4741,7 @@ func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsGameServerDeploymentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4895,7 +4897,7 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4968,7 +4970,7 @@ func (c *ProjectsLocationsGameServerDeploymentsUpdateRolloutCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the game server deployment rollout. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment/rollout`.",
+	//       "description": "The resource name of the game server deployment rollout, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/rollout`. For example, `projects/my-project/locations/global/gameServerDeployments/my-deployment/rollout`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -5051,7 +5053,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5129,7 +5131,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsCreateCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -5196,7 +5198,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5264,7 +5266,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsDeleteCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server config to delete. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
+	//       "description": "Required. The name of the game server config to delete, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+/configs/[^/]+$",
 	//       "required": true,
@@ -5337,7 +5339,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5408,7 +5410,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsGetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server config to retrieve. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
+	//       "description": "Required. The name of the game server config to retrieve, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/{config}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+/configs/[^/]+$",
 	//       "required": true,
@@ -5514,7 +5516,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Header() http.He
 
 func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5606,7 +5608,7 @@ func (c *ProjectsLocationsGameServerDeploymentsConfigsListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/*`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}/gameServerDeployments/{deployment}/configs/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/gameServerDeployments/[^/]+$",
 	//       "required": true,
@@ -5700,7 +5702,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5841,7 +5843,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5984,7 +5986,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6158,7 +6160,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6337,7 +6339,7 @@ func (c *ProjectsLocationsRealmsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6410,7 +6412,7 @@ func (c *ProjectsLocationsRealmsCreateCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: `projects/{project}/locations/{location}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -6480,7 +6482,7 @@ func (c *ProjectsLocationsRealmsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6548,7 +6550,7 @@ func (c *ProjectsLocationsRealmsDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the realm to delete. Uses the form: `projects/{project}/locations/{location}/realms/{realm}`.",
+	//       "description": "Required. The name of the realm to delete, in the following form: `projects/{project}/locations/{location}/realms/{realm}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -6621,7 +6623,7 @@ func (c *ProjectsLocationsRealmsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6692,7 +6694,7 @@ func (c *ProjectsLocationsRealmsGetCall) Do(opts ...googleapi.CallOption) (*Real
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the realm to retrieve. Uses the form: `projects/{project}/locations/{location}/realms/{realm}`.",
+	//       "description": "Required. The name of the realm to retrieve, in the following form: `projects/{project}/locations/{location}/realms/{realm}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -6797,7 +6799,7 @@ func (c *ProjectsLocationsRealmsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6889,7 +6891,7 @@ func (c *ProjectsLocationsRealmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: `projects/{project}/locations/{location}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -6983,7 +6985,7 @@ func (c *ProjectsLocationsRealmsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7056,7 +7058,7 @@ func (c *ProjectsLocationsRealmsPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the realm. Uses the form: `projects/{project}/locations/{location}/realms/{realm}`. For example, `projects/my-project/locations/{location}/realms/my-realm`.",
+	//       "description": "The resource name of the realm, in the following form: `projects/{project}/locations/{location}/realms/{realm}`. For example, `projects/my-project/locations/{location}/realms/my-realm`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7145,7 +7147,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRealmsPreviewUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7218,7 +7220,7 @@ func (c *ProjectsLocationsRealmsPreviewUpdateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the realm. Uses the form: `projects/{project}/locations/{location}/realms/{realm}`. For example, `projects/my-project/locations/{location}/realms/my-realm`.",
+	//       "description": "The resource name of the realm, in the following form: `projects/{project}/locations/{location}/realms/{realm}`. For example, `projects/my-project/locations/{location}/realms/my-realm`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7306,7 +7308,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7384,7 +7386,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersCreateCall) Do(opts ...googlea
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: `projects/{project}/locations/{location}/realms/{realm-id}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}/realms/{realm-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7449,7 +7451,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7517,7 +7519,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersDeleteCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server cluster to delete. Uses the form: `projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to delete, in the following form: `projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -7590,7 +7592,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsRealmsGameServerClustersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7661,7 +7663,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersGetCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server cluster to retrieve. Uses the form: `projects/{project}/locations/{location}/realms/{realm-id}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to retrieve, in the following form: `projects/{project}/locations/{location}/realms/{realm-id}/gameServerClusters/{cluster}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -7766,7 +7768,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Header() http.Header
 
 func (c *ProjectsLocationsRealmsGameServerClustersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7858,7 +7860,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: \"projects/{project}/locations/{location}/realms/{realm}\".",
+	//       "description": "Required. The parent resource name, in the following form: \"projects/{project}/locations/{location}/realms/{realm}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -7953,7 +7955,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8026,7 +8028,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPatchCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the game server cluster. Uses the form: `projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`. For example, `projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
+	//       "description": "Required. The resource name of the game server cluster, in the following form: `projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`. For example, `projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -8115,7 +8117,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8194,7 +8196,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewCreateCall) Do(opts ...
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Uses the form: `projects/{project}/locations/{location}/realms/{realm}`.",
+	//       "description": "Required. The parent resource name, in the following form: `projects/{project}/locations/{location}/realms/{realm}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+$",
 	//       "required": true,
@@ -8272,7 +8274,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8341,7 +8343,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewDeleteCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the game server cluster to delete. Uses the form: `projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
+	//       "description": "Required. The name of the game server cluster to delete, in the following form: `projects/{project}/locations/{location}/gameServerClusters/{cluster}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,
@@ -8428,7 +8430,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) Header() ht
 
 func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8502,7 +8504,7 @@ func (c *ProjectsLocationsRealmsGameServerClustersPreviewUpdateCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the game server cluster. Uses the form: `projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`. For example, `projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
+	//       "description": "Required. The resource name of the game server cluster, in the following form: `projects/{project}/locations/{location}/realms/{realm}/gameServerClusters/{cluster}`. For example, `projects/my-project/locations/{location}/realms/zanzibar/gameServerClusters/my-onprem-cluster`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/realms/[^/]+/gameServerClusters/[^/]+$",
 	//       "required": true,

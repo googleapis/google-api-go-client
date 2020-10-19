@@ -782,7 +782,8 @@ func (s *Authentication) MarshalJSON() ([]byte, error) {
 // credentials will be ignored.
 type AuthenticationRule struct {
 	// AllowWithoutCredential: If true, the service accepts API keys without
-	// any other credential.
+	// any other credential. This flag only applies to HTTP and gRPC
+	// requests.
 	AllowWithoutCredential bool `json:"allowWithoutCredential,omitempty"`
 
 	// Oauth: The requirements for OAuth credentials.
@@ -3451,7 +3452,7 @@ type PolicyBinding struct {
 	// serviceAccount:my-service-account@app.gserviceaccount.com
 	Member string `json:"member,omitempty"`
 
-	// Role: Required. Role to apply. Only whitelisted roles can be used at
+	// Role: Required. Role to apply. Only allowlisted roles can be used at
 	// the specified granularity. The role must be one of the following: -
 	// 'roles/container.hostServiceAgentUser' applied on the shared VPC host
 	// project - 'roles/compute.securityAdmin' applied on the shared VPC
@@ -4708,7 +4709,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4850,7 +4851,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4994,7 +4995,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5169,7 +5170,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5350,7 +5351,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5492,7 +5493,7 @@ func (c *ServicesDisableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesDisableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5634,7 +5635,7 @@ func (c *ServicesEnableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesEnableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5780,7 +5781,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5925,7 +5926,7 @@ func (c *ServicesValidateCall) Header() http.Header {
 
 func (c *ServicesValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6073,7 +6074,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6236,7 +6237,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6393,7 +6394,7 @@ func (c *ServicesConnectionsPatchCall) Header() http.Header {
 
 func (c *ServicesConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6546,7 +6547,7 @@ func (c *ServicesDnsRecordSetsAddCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6688,7 +6689,7 @@ func (c *ServicesDnsRecordSetsRemoveCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6830,7 +6831,7 @@ func (c *ServicesDnsRecordSetsUpdateCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6973,7 +6974,7 @@ func (c *ServicesDnsZonesAddCall) Header() http.Header {
 
 func (c *ServicesDnsZonesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7116,7 +7117,7 @@ func (c *ServicesDnsZonesRemoveCall) Header() http.Header {
 
 func (c *ServicesDnsZonesRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7259,7 +7260,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) Header() http
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7398,7 +7399,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) Header() http
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7540,7 +7541,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) Header() http.H
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7643,8 +7644,8 @@ type ServicesRolesAddCall struct {
 
 // Add: Service producers can use this method to add roles in the shared
 // VPC host project. Each role is bound to the provided member. Each
-// role must be selected from within a whitelisted set of roles. Each
-// role is applied at only the granularity specified in the whitelist.
+// role must be selected from within an allowlisted set of roles. Each
+// role is applied at only the granularity specified in the allowlist.
 func (r *ServicesRolesService) Add(parent string, addrolesrequest *AddRolesRequest) *ServicesRolesAddCall {
 	c := &ServicesRolesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7679,7 +7680,7 @@ func (c *ServicesRolesAddCall) Header() http.Header {
 
 func (c *ServicesRolesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7743,7 +7744,7 @@ func (c *ServicesRolesAddCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Service producers can use this method to add roles in the shared VPC host project. Each role is bound to the provided member. Each role must be selected from within a whitelisted set of roles. Each role is applied at only the granularity specified in the whitelist.",
+	//   "description": "Service producers can use this method to add roles in the shared VPC host project. Each role is bound to the provided member. Each role must be selected from within an allowlisted set of roles. Each role is applied at only the granularity specified in the allowlist.",
 	//   "flatPath": "v1/services/{servicesId}/roles:add",
 	//   "httpMethod": "POST",
 	//   "id": "servicenetworking.services.roles.add",

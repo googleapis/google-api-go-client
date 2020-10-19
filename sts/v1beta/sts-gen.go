@@ -176,8 +176,9 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// required. For more information, see [RFC 7523, Section
 	// 3](https://tools.ietf.org/html/rfc7523#section-3): - `iss`: The
 	// issuer of the token. The issuer must provide a discovery document at
-	// `/.well-known/openid-configuration`, formatted according to section
-	// 4.2 of the [OIDC 1.0 Discovery
+	// the URL `/.well-known/openid-configuration`, where `` is the value of
+	// this field. The document must be formatted according to section 4.2
+	// of the [OIDC 1.0 Discovery
 	// specification](https://openid.net/specs/openid-connect-discovery-1_0.h
 	// tml#ProviderConfigurationResponse). - `iat`: The issue time, in
 	// seconds, since the Unix epoch. Must be in the past. - `exp`: The
@@ -345,7 +346,7 @@ func (c *V1betaTokenCall) Header() http.Header {
 
 func (c *V1betaTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201014")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

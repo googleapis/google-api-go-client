@@ -152,6 +152,10 @@ type GoogleAdsHomeservicesLocalservicesV1AccountReport struct {
 	// AccountId: Unique identifier of the GLS account.
 	AccountId int64 `json:"accountId,omitempty,string"`
 
+	// AggregatorInfo: Aggregator specific information related to the
+	// account.
+	AggregatorInfo *GoogleAdsHomeservicesLocalservicesV1AggregatorInfo `json:"aggregatorInfo,omitempty"`
+
 	// AverageFiveStarRating: Average review rating score from 1-5 stars.
 	AverageFiveStarRating float64 `json:"averageFiveStarRating,omitempty"`
 
@@ -715,7 +719,7 @@ func (c *AccountReportsSearchCall) Header() http.Header {
 
 func (c *AccountReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1000,7 +1004,7 @@ func (c *DetailedLeadReportsSearchCall) Header() http.Header {
 
 func (c *DetailedLeadReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201015")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

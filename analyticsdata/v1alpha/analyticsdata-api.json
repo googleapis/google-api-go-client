@@ -235,7 +235,7 @@
       }
     }
   },
-  "revision": "20201013",
+  "revision": "20201016",
   "rootUrl": "https://analyticsdata.googleapis.com/",
   "schemas": {
     "BatchRunPivotReportsRequest": {
@@ -661,7 +661,7 @@
       "id": "Metadata",
       "properties": {
         "dimensions": {
-          "description": "The dimensions descriptions.",
+          "description": "The dimension descriptions.",
           "items": {
             "$ref": "DimensionMetadata"
           },

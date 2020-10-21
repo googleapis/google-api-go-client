@@ -562,7 +562,7 @@ func (s *AndroidModel) MarshalJSON() ([]byte, error) {
 
 // AndroidRoboTest: A test of an android application that explores the
 // application on a virtual or physical Android Device, finding culprits
-// and crashes as it goes. Next tag: 29
+// and crashes as it goes. Next tag: 30
 type AndroidRoboTest struct {
 	// AppApk: The APK for the application under test.
 	AppApk *FileReference `json:"appApk,omitempty"`
@@ -1029,27 +1029,27 @@ func (s *ClientInfoDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day and time zone are either specified elsewhere or are
-// not significant. The date is relative to the Proleptic Gregorian
-// Calendar. This can represent: * A full date, with non-zero year,
-// month and day values * A month and day value, with a zero year, e.g.
-// an anniversary * A year on its own, with zero month and day values *
-// A year and month value, with a zero day, e.g. a credit card
-// expiration date Related types are google.type.TimeOfDay and
-// `google.protobuf.Timestamp`.
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values * A month and day value,
+// with a zero year, such as an anniversary * A year on its own, with
+// zero month and day values * A year and month value, with a zero day,
+// such as a credit card expiration date Related types are
+// google.type.TimeOfDay and `google.protobuf.Timestamp`.
 type Date struct {
-	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 if specifying a year by itself or a year and month where
-	// the day is not significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
 	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
-	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
@@ -1952,7 +1952,7 @@ type ManualSharding struct {
 	// test methods to be run for each shard. When any physical devices are
 	// selected, the number of test_targets_for_shard must be >= 1 and <=
 	// 50. When no physical devices are selected, the number must be >= 1
-	// and <= 250.
+	// and <= 500.
 	TestTargetsForShard []*TestTargetsForShard `json:"testTargetsForShard,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestTargetsForShard")
@@ -2632,6 +2632,15 @@ type TestMatrix struct {
 	// on.
 	EnvironmentMatrix *EnvironmentMatrix `json:"environmentMatrix,omitempty"`
 
+	// FailFast: If true, only a single attempt at most will be made to run
+	// each execution/shard in the matrix. Flaky test attempts are not
+	// affected. Normally, 2 or more attempts are made if a potential
+	// infrastructure issue is detected. This feature is for latency
+	// sensitive workloads. The incidence of execution failures may be
+	// significantly greater for fail-fast matrices and support is more
+	// limited because of that expectation.
+	FailFast bool `json:"failFast,omitempty"`
+
 	// FlakyTestAttempts: The number of times a TestExecution should be
 	// re-attempted if one or more of its test cases fail for any reason.
 	// The maximum number of reruns allowed is 10. Default is 0, which
@@ -3155,7 +3164,7 @@ func (s *TrafficRule) UnmarshalJSON(data []byte) error {
 type UniformSharding struct {
 	// NumShards: Required. Total number of shards. When any physical
 	// devices are selected, the number must be >= 1 and <= 50. When no
-	// physical devices are selected, the number must be >= 1 and <= 250.
+	// physical devices are selected, the number must be >= 1 and <= 500.
 	NumShards int64 `json:"numShards,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NumShards") to
@@ -3257,7 +3266,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3390,7 +3399,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3496,11 +3505,11 @@ type ProjectsTestMatricesCreateCall struct {
 
 // Create: Creates and runs a matrix of tests according to the given
 // specifications. Unsupported environments will be returned in the
-// state UNSUPPORTED. Matrices are limited to at most 200 supported
-// executions. May return any of the following canonical error codes: -
-// PERMISSION_DENIED - if the user is not authorized to write to project
-// - INVALID_ARGUMENT - if the request is malformed or if the matrix
-// expands to more than 200 supported executions
+// state UNSUPPORTED. A test matrix is limited to use at most 2000
+// devices in parallel. May return any of the following canonical error
+// codes: - PERMISSION_DENIED - if the user is not authorized to write
+// to project - INVALID_ARGUMENT - if the request is malformed or if the
+// matrix tries to use too many simultaneous devices.
 func (r *ProjectsTestMatricesService) Create(projectId string, testmatrix *TestMatrix) *ProjectsTestMatricesCreateCall {
 	c := &ProjectsTestMatricesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -3544,7 +3553,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3608,7 +3617,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. Matrices are limited to at most 200 supported executions. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix expands to more than 200 supported executions",
+	//   "description": "Creates and runs a matrix of tests according to the given specifications. Unsupported environments will be returned in the state UNSUPPORTED. A test matrix is limited to use at most 2000 devices in parallel. May return any of the following canonical error codes: - PERMISSION_DENIED - if the user is not authorized to write to project - INVALID_ARGUMENT - if the request is malformed or if the matrix tries to use too many simultaneous devices.",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices",
 	//   "httpMethod": "POST",
 	//   "id": "testing.projects.testMatrices.create",
@@ -3702,7 +3711,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3864,7 +3873,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -163,7 +163,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			}
 			tlsConfig := &tls.Config{
 				GetClientCertificate: clientCertSource,
-				ServerName:           endpointURL.Host,
+				ServerName:           endpointURL.Hostname(),
 			}
 			grpcOpts = []grpc.DialOption{
 				grpc.WithPerRPCCredentials(grpcTokenSource{

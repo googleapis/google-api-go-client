@@ -499,7 +499,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -664,7 +664,7 @@ func (c *ApplicationsListCall) Header() http.Header {
 
 func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -836,7 +836,7 @@ func (c *TransfersGetCall) Header() http.Header {
 
 func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -969,7 +969,7 @@ func (c *TransfersInsertCall) Header() http.Header {
 
 func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1145,7 +1145,7 @@ func (c *TransfersListCall) Header() http.Header {
 
 func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

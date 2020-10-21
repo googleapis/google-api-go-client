@@ -1828,7 +1828,7 @@
       }
     }
   },
-  "revision": "20200903",
+  "revision": "20200930",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -1882,6 +1882,10 @@
       "description": "Database instance backup configuration.",
       "id": "BackupConfiguration",
       "properties": {
+        "backupRetentionSettings": {
+          "$ref": "BackupRetentionSettings",
+          "description": "Backup retention settings."
+        },
         "binaryLogEnabled": {
           "description": "(MySQL only) Whether binary log is enabled. If backup configuration is disabled, binarylog must be disabled as well.",
           "type": "boolean"
@@ -1908,6 +1912,35 @@
         },
         "startTime": {
           "description": "Start time for the daily backup configuration in UTC timezone in the 24 hour format - *HH:MM*.",
+          "type": "string"
+        },
+        "transactionLogRetentionDays": {
+          "description": "The number of days of transaction logs we retain for point in time restore, from 1-7.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "BackupRetentionSettings": {
+      "description": "We currently only support backup retention by specifying the number of backups we will retain.",
+      "id": "BackupRetentionSettings",
+      "properties": {
+        "retainedBackups": {
+          "description": "Depending on the value of retention_unit, this is used to determine if a backup needs to be deleted. If retention_unit is 'COUNT', we will retain this many backups.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "retentionUnit": {
+          "description": "The unit that 'retained_backups' represents.",
+          "enum": [
+            "RETENTION_UNIT_UNSPECIFIED",
+            "COUNT"
+          ],
+          "enumDescriptions": [
+            "Backup retention unit is unspecified, will be treated as COUNT.",
+            "Retention will be by count, eg. \"retain the most recent 7 backups\"."
+          ],
           "type": "string"
         }
       },
@@ -2191,7 +2224,7 @@
           "type": "string"
         },
         "databaseVersion": {
-          "description": "The database engine type and version. The *databaseVersion* field cannot be changed after instance creation. MySQL instances: *MYSQL_5_7* (default), or *MYSQL_5_6*. PostgreSQL instances: *POSTGRES_9_6*, *POSTGRES_10*, *POSTGRES_11* or *POSTGRES_12* (default). SQL Server instances: *SQLSERVER_2017_STANDARD* (default), *SQLSERVER_2017_ENTERPRISE*, *SQLSERVER_2017_EXPRESS*, or *SQLSERVER_2017_WEB*.",
+          "description": "The database engine type and version. The *databaseVersion* field cannot be changed after instance creation. MySQL instances: *MYSQL_8_0*, *MYSQL_5_7* (default), or *MYSQL_5_6*. PostgreSQL instances: *POSTGRES_9_6*, *POSTGRES_10*, *POSTGRES_11* or *POSTGRES_12* (default). SQL Server instances: *SQLSERVER_2017_STANDARD* (default), *SQLSERVER_2017_ENTERPRISE*, *SQLSERVER_2017_EXPRESS*, or *SQLSERVER_2017_WEB*.",
           "enum": [
             "SQL_DATABASE_VERSION_UNSPECIFIED",
             "MYSQL_5_1",
@@ -2206,7 +2239,8 @@
             "SQLSERVER_2017_WEB",
             "POSTGRES_10",
             "POSTGRES_12",
-            "MYSQL_8_0"
+            "MYSQL_8_0",
+            "POSTGRES_13"
           ],
           "enumDescriptions": [
             "This is an unknown database version.",
@@ -2222,7 +2256,8 @@
             "The database version is SQL Server 2017 Web.",
             "The database version is PostgreSQL 10.",
             "The database version is PostgreSQL 12.",
-            "The database version is MySQL 8."
+            "The database version is MySQL 8.",
+            "The database version is PostgreSQL 13."
           ],
           "type": "string"
         },
@@ -2348,7 +2383,7 @@
           "description": "The user settings."
         },
         "state": {
-          "description": "The current serving state of the Cloud SQL instance. This can be one of the following. *RUNNABLE*: The instance is running, or is ready to run when accessed. *SUSPENDED*: The instance is not available, for example due to problems with billing. *PENDING_CREATE*: The instance is being created. *MAINTENANCE*: The instance is down for maintenance. *FAILED*: The instance creation failed. *UNKNOWN_STATE*: The state of the instance is unknown.",
+          "description": "The current serving state of the Cloud SQL instance. This can be one of the following. *SQL_INSTANCE_STATE_UNSPECIFIED*: The state of the instance is unknown. *RUNNABLE*: The instance has been stopped by owner. It is not currently running, but it's ready to be restarted. *SUSPENDED*: The instance is not available, for example due to problems with billing. for example due to problems with billing. *PENDING_DELETE*: The instance is being deleted. *PENDING_CREATE*: The instance is being created. *MAINTENANCE*: The instance is down for maintenance. *FAILED*: The instance creation failed.",
           "enum": [
             "SQL_INSTANCE_STATE_UNSPECIFIED",
             "RUNNABLE",
@@ -2360,12 +2395,12 @@
           ],
           "enumDescriptions": [
             "The state of the instance is unknown.",
-            "The instance is running.",
-            "The instance is currently offline, but it may run again in the future.",
+            "The instance has been stopped by owner. It is not currently running, but it's ready to be restarted.",
+            "The instance is not available, for example due to problems with billing.",
             "The instance is being deleted.",
             "The instance is being created.",
             "The instance is down for maintenance.",
-            "The instance failed to be created."
+            "The creation of the instance failed or a fatal error occurred during maintenance."
           ],
           "type": "string"
         },
@@ -2475,6 +2510,25 @@
         },
         "username": {
           "description": "The username for the replication connection.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DenyMaintenancePeriod": {
+      "description": "Deny Maintenance Periods. This specifies a date range during when all CSA rollout will be denied.",
+      "id": "DenyMaintenancePeriod",
+      "properties": {
+        "endDate": {
+          "description": "\"deny maintenance period\" end date. If the year of the end date is empty, the year of the start date also must be empty. In this case, it means the deny maintenance period recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01",
+          "type": "string"
+        },
+        "startDate": {
+          "description": "\"deny maintenance period\" start date. If the year of the start date is empty, the year of the end date also must be empty. In this case, it means the deny maintenance period recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01",
+          "type": "string"
+        },
+        "time": {
+          "description": "Time in UTC when the \"deny maintenance period\" starts on start_date and ends on end_date. The time is in format: HH:mm:SS, i.e., 00:00:00",
           "type": "string"
         }
       },
@@ -2626,7 +2680,7 @@
           "type": "array"
         },
         "appliesTo": {
-          "description": "The database version this flag applies to. Can be *MYSQL_5_5*, *MYSQL_5_6*, or *MYSQL_5_7*. *MYSQL_5_7* is applicable only to Second Generation instances.",
+          "description": "The database version this flag applies to. Can be *MYSQL_8_0*, *MYSQL_5_6*, or *MYSQL_5_7*.",
           "items": {
             "enum": [
               "SQL_DATABASE_VERSION_UNSPECIFIED",
@@ -2642,7 +2696,8 @@
               "SQLSERVER_2017_WEB",
               "POSTGRES_10",
               "POSTGRES_12",
-              "MYSQL_8_0"
+              "MYSQL_8_0",
+              "POSTGRES_13"
             ],
             "enumDescriptions": [
               "This is an unknown database version.",
@@ -2658,7 +2713,8 @@
               "The database version is SQL Server 2017 Web.",
               "The database version is PostgreSQL 10.",
               "The database version is PostgreSQL 12.",
-              "The database version is MySQL 8."
+              "The database version is MySQL 8.",
+              "The database version is PostgreSQL 13."
             ],
             "type": "string"
           },
@@ -3026,25 +3082,6 @@
         },
         "zone": {
           "description": "The preferred Compute Engine zone (for example: us-central1-a, us-central1-b, etc.).",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "MaintenanceDenyPeriod": {
-      "description": "Maintenance Deny Periods. This specifies a date range during when all CSA rollout will be denied.",
-      "id": "MaintenanceDenyPeriod",
-      "properties": {
-        "endDate": {
-          "description": "\"maintenance deny period\" end date. If the year of the end date is empty, the year of the start date also must be empty. In this case, it means the no maintenance interval recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01",
-          "type": "string"
-        },
-        "startDate": {
-          "description": "\"maintenance deny period\" start date. If the year of the start date is empty, the year of the end date also must be empty. In this case, it means the no maintenance interval recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01",
-          "type": "string"
-        },
-        "time": {
-          "description": "Time in UTC when the \"no maintenance interval\" starts on start_date and ends on end_date. The time is in format: HH:mm:SS, i.e., 00:00:00",
           "type": "string"
         }
       },
@@ -3496,6 +3533,10 @@
           ],
           "type": "string"
         },
+        "activeDirectoryConfig": {
+          "$ref": "SqlActiveDirectoryConfig",
+          "description": "Active Directory configuration, for now relevant only for SQL Server"
+        },
         "authorizedGaeApplications": {
           "description": "The App Engine app IDs that can access this instance. (Deprecated) Applied to First Generation instances only.",
           "items": {
@@ -3561,6 +3602,13 @@
           "description": "Configuration specific to read replica instances. Indicates whether replication is enabled or not.",
           "type": "boolean"
         },
+        "denyMaintenancePeriods": {
+          "description": "Deny maintenance periods",
+          "items": {
+            "$ref": "DenyMaintenancePeriod"
+          },
+          "type": "array"
+        },
         "ipConfiguration": {
           "$ref": "IpConfiguration",
           "description": "The settings for IP Management. This allows to enable or disable the instance IP and manage which external networks can connect to the instance. The IPv4 address cannot be disabled for Second Generation instances."
@@ -3572,13 +3620,6 @@
         "locationPreference": {
           "$ref": "LocationPreference",
           "description": "The location preference settings. This allows the instance to be located as near as possible to either an App Engine app or Compute Engine zone for better performance. App Engine co-location was only applicable to First Generation instances."
-        },
-        "maintenanceDenyPeriods": {
-          "description": "Maintenance deny periods",
-          "items": {
-            "$ref": "MaintenanceDenyPeriod"
-          },
-          "type": "array"
         },
         "maintenanceWindow": {
           "$ref": "MaintenanceWindow",
@@ -3640,6 +3681,21 @@
       },
       "type": "object"
     },
+    "SqlActiveDirectoryConfig": {
+      "description": "Active Directory configuration, for now relevant only for SQL Server",
+      "id": "SqlActiveDirectoryConfig",
+      "properties": {
+        "domain": {
+          "description": "Domain name",
+          "type": "string"
+        },
+        "kind": {
+          "description": "This will be always sql#activeDirectoryConfig.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SqlExternalSyncSettingError": {
       "description": "External primary instance migration setting error.",
       "id": "SqlExternalSyncSettingError",
@@ -3673,7 +3729,8 @@
             "INVALID_RDS_LOGICAL_REPLICATION",
             "INVALID_LOGGING_SETUP",
             "INVALID_DB_PARAM",
-            "UNSUPPORTED_GTID_MODE"
+            "UNSUPPORTED_GTID_MODE",
+            "SQLSERVER_AGENT_NOT_RUNNING"
           ],
           "enumDescriptions": [
             "",
@@ -3694,7 +3751,8 @@
             "The value of parameter rds.logical_replication is not set to 1.",
             "The primary instance logging setup doesn't allow EM sync.",
             "The primary instance database parameter setup doesn't allow EM sync.",
-            "The gtid_mode is not supported, applicable for MySQL."
+            "The gtid_mode is not supported, applicable for MySQL.",
+            "SQL Server Agent is not running."
           ],
           "type": "string"
         }

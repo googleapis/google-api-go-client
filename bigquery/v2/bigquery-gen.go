@@ -81,6 +81,7 @@ const apiId = "bigquery:v2"
 const apiName = "bigquery"
 const apiVersion = "v2"
 const basePath = "https://bigquery.googleapis.com/bigquery/v2/"
+const mtlsBasePath = "https://www.mtls.googleapis.com/bigquery/v2/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -124,6 +125,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -153,6 +155,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Models = NewModelsService(s)
 	s.Projects = NewProjectsService(s)
 	s.Routines = NewRoutinesService(s)
+	s.RowAccessPolicies = NewRowAccessPoliciesService(s)
 	s.Tabledata = NewTabledataService(s)
 	s.Tables = NewTablesService(s)
 	return s, nil
@@ -172,6 +175,8 @@ type Service struct {
 	Projects *ProjectsService
 
 	Routines *RoutinesService
+
+	RowAccessPolicies *RowAccessPoliciesService
 
 	Tabledata *TabledataService
 
@@ -227,6 +232,15 @@ func NewRoutinesService(s *Service) *RoutinesService {
 }
 
 type RoutinesService struct {
+	s *Service
+}
+
+func NewRowAccessPoliciesService(s *Service) *RowAccessPoliciesService {
+	rs := &RowAccessPoliciesService{s: s}
+	return rs
+}
+
+type RowAccessPoliciesService struct {
 	s *Service
 }
 
@@ -1924,6 +1938,9 @@ type Dataset struct {
 	// https://cloud.google.com/bigquery/docs/locations.
 	Location string `json:"location,omitempty"`
 
+	// SatisfiesPZS: [Output-only] Reserved for future use.
+	SatisfiesPZS bool `json:"satisfiesPZS,omitempty"`
+
 	// SelfLink: [Output-only] A URL that can be used to access the resource
 	// again. You can use this URL in Get or Update requests to the
 	// resource.
@@ -2968,21 +2985,29 @@ func (s *GoogleSheetsOptions) MarshalJSON() ([]byte, error) {
 }
 
 type HivePartitioningOptions struct {
-	// Mode: [Optional, Trusted Tester] When set, what mode of hive
-	// partitioning to use when reading data. Two modes are supported. (1)
-	// AUTO: automatically infer partition key name(s) and type(s). (2)
-	// STRINGS: automatically infer partition key name(s). All types are
-	// interpreted as strings. Not all storage formats support hive
-	// partitioning. Requesting hive partitioning on an unsupported format
-	// will lead to an error. Currently supported types include: AVRO, CSV,
-	// JSON, ORC and Parquet.
+	// Mode: [Optional] When set, what mode of hive partitioning to use when
+	// reading data. The following modes are supported. (1) AUTO:
+	// automatically infer partition key name(s) and type(s). (2) STRINGS:
+	// automatically infer partition key name(s). All types are interpreted
+	// as strings. (3) CUSTOM: partition key schema is encoded in the source
+	// URI prefix. Not all storage formats support hive partitioning.
+	// Requesting hive partitioning on an unsupported format will lead to an
+	// error. Currently supported types include: AVRO, CSV, JSON, ORC and
+	// Parquet.
 	Mode string `json:"mode,omitempty"`
 
-	// SourceUriPrefix: [Optional, Trusted Tester] When hive partition
-	// detection is requested, a common prefix for all source uris should be
-	// supplied. The prefix must end immediately before the partition key
-	// encoding begins. For example, consider files following this data
-	// layout.
+	// RequirePartitionFilter: [Optional] If set to true, queries over this
+	// table require a partition filter that can be used for partition
+	// elimination to be specified. Note that this field should only be true
+	// when creating a permanent external table or querying a temporary
+	// external table. Hive-partitioned loads with requirePartitionFilter
+	// explicitly set to true will fail.
+	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
+
+	// SourceUriPrefix: [Optional] When hive partition detection is
+	// requested, a common prefix for all source uris should be supplied.
+	// The prefix must end immediately before the partition key encoding
+	// begins. For example, consider files following this data layout.
 	// gs://bucket/path_to_table/dt=2019-01-01/country=BR/id=7/file.avro
 	// gs://bucket/path_to_table/dt=2018-12-31/country=CA/id=3/file.avro
 	// When hive partitioning is requested with either AUTO or STRINGS
@@ -3238,10 +3263,11 @@ type JobConfigurationExtract struct {
 	Compression string `json:"compression,omitempty"`
 
 	// DestinationFormat: [Optional] The exported file format. Possible
-	// values include CSV, NEWLINE_DELIMITED_JSON or AVRO for tables and
-	// ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER for models. The default value
-	// for tables is CSV. Tables with nested or repeated fields cannot be
-	// exported as CSV. The default value for models is ML_TF_SAVED_MODEL.
+	// values include CSV, NEWLINE_DELIMITED_JSON, PARQUET or AVRO for
+	// tables and ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER for models. The
+	// default value for tables is CSV. Tables with nested or repeated
+	// fields cannot be exported as CSV. The default value for models is
+	// ML_TF_SAVED_MODEL.
 	DestinationFormat string `json:"destinationFormat,omitempty"`
 
 	// DestinationUri: [Pick one] DEPRECATED: Use destinationUris instead,
@@ -4399,6 +4425,42 @@ type ListRoutinesResponse struct {
 
 func (s *ListRoutinesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRoutinesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListRowAccessPoliciesResponse: Response message for the
+// ListRowAccessPolicies method.
+type ListRowAccessPoliciesResponse struct {
+	// NextPageToken: A token to request the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RowAccessPolicies: Row access policies on the requested table.
+	RowAccessPolicies []*RowAccessPolicy `json:"rowAccessPolicies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRowAccessPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRowAccessPoliciesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5710,6 +5772,56 @@ func (s *Row) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RowAccessPolicy: Represents access on a subset of rows on the
+// specified table, defined by its filter predicate. Access to the
+// subset of rows is controlled by its IAM policy.
+type RowAccessPolicy struct {
+	// CreationTime: Output only. The time when this row access policy was
+	// created, in milliseconds since the epoch.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// Etag: Output only. A hash of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// FilterPredicate: Required. A SQL boolean expression that represents
+	// the rows defined by this row access policy, similar to the boolean
+	// expression in a WHERE clause of a SELECT query on a table. References
+	// to other tables, routines, and temporary functions are not supported.
+	// Examples: region="EU" date_field = CAST('2019-9-27' as DATE)
+	// nullable_field is not NULL numeric_field BETWEEN 1.0 AND 5.0
+	FilterPredicate string `json:"filterPredicate,omitempty"`
+
+	// LastModifiedTime: Output only. The time when this row access policy
+	// was last modified, in milliseconds since the epoch.
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+
+	// RowAccessPolicyReference: Required. Reference describing the ID of
+	// this row access policy.
+	RowAccessPolicyReference *RowAccessPolicyReference `json:"rowAccessPolicyReference,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RowAccessPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod RowAccessPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type RowAccessPolicyReference struct {
 	// DatasetId: [Required] The ID of the dataset containing this row
 	// access policy.
@@ -6217,11 +6329,11 @@ type Table struct {
 
 	// Type: [Output-only] Describes the table type. The following values
 	// are supported: TABLE: A normal BigQuery table. VIEW: A virtual table
-	// defined by a SQL query. [TrustedTester] SNAPSHOT: An immutable,
-	// read-only table that is a copy of another table. [TrustedTester]
-	// MATERIALIZED_VIEW: SQL query whose result is persisted. EXTERNAL: A
-	// table that references data stored in an external storage system, such
-	// as Google Cloud Storage. The default value is TABLE.
+	// defined by a SQL query. SNAPSHOT: An immutable, read-only table that
+	// is a copy of another table. [TrustedTester] MATERIALIZED_VIEW: SQL
+	// query whose result is persisted. EXTERNAL: A table that references
+	// data stored in an external storage system, such as Google Cloud
+	// Storage. The default value is TABLE.
 	Type string `json:"type,omitempty"`
 
 	// View: [Optional] The view definition.
@@ -6899,8 +7011,10 @@ type TimePartitioning struct {
 
 	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
 
-	// Type: [Required] The only type supported is DAY, which will generate
-	// one partition per day.
+	// Type: [Required] The supported types are DAY, HOUR, MONTH, and YEAR,
+	// which will generate one partition per day, hour, month, and year,
+	// respectively. When the type is not specified, the default behavior is
+	// DAY.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpirationMs") to
@@ -7485,7 +7599,7 @@ func (c *DatasetsDeleteCall) Header() http.Header {
 
 func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7612,7 +7726,7 @@ func (c *DatasetsGetCall) Header() http.Header {
 
 func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7756,7 +7870,7 @@ func (c *DatasetsInsertCall) Header() http.Header {
 
 func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7936,7 +8050,7 @@ func (c *DatasetsListCall) Header() http.Header {
 
 func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8119,7 +8233,7 @@ func (c *DatasetsPatchCall) Header() http.Header {
 
 func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8270,7 +8384,7 @@ func (c *DatasetsUpdateCall) Header() http.Header {
 
 func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8428,7 +8542,7 @@ func (c *JobsCancelCall) Header() http.Header {
 
 func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8593,7 +8707,7 @@ func (c *JobsGetCall) Header() http.Header {
 
 func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8792,7 +8906,7 @@ func (c *JobsGetQueryResultsCall) Header() http.Header {
 
 func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9026,7 +9140,7 @@ func (c *JobsInsertCall) Header() http.Header {
 
 func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9293,7 +9407,7 @@ func (c *JobsListCall) Header() http.Header {
 
 func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9513,7 +9627,7 @@ func (c *JobsQueryCall) Header() http.Header {
 
 func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9656,7 +9770,7 @@ func (c *ModelsDeleteCall) Header() http.Header {
 
 func (c *ModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9792,7 +9906,7 @@ func (c *ModelsGetCall) Header() http.Header {
 
 func (c *ModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9975,7 +10089,7 @@ func (c *ModelsListCall) Header() http.Header {
 
 func (c *ModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10158,7 +10272,7 @@ func (c *ModelsPatchCall) Header() http.Header {
 
 func (c *ModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10327,7 +10441,7 @@ func (c *ProjectsGetServiceAccountCall) Header() http.Header {
 
 func (c *ProjectsGetServiceAccountCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10485,7 +10599,7 @@ func (c *ProjectsListCall) Header() http.Header {
 
 func (c *ProjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10643,7 +10757,7 @@ func (c *RoutinesDeleteCall) Header() http.Header {
 
 func (c *RoutinesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10787,7 +10901,7 @@ func (c *RoutinesGetCall) Header() http.Header {
 
 func (c *RoutinesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10951,7 +11065,7 @@ func (c *RoutinesInsertCall) Header() http.Header {
 
 func (c *RoutinesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11148,7 +11262,7 @@ func (c *RoutinesListCall) Header() http.Header {
 
 func (c *RoutinesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11343,7 +11457,7 @@ func (c *RoutinesUpdateCall) Header() http.Header {
 
 func (c *RoutinesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11456,6 +11570,222 @@ func (c *RoutinesUpdateCall) Do(opts ...googleapi.CallOption) (*Routine, error) 
 
 }
 
+// method id "bigquery.rowAccessPolicies.list":
+
+type RowAccessPoliciesListCall struct {
+	s            *Service
+	projectId    string
+	datasetId    string
+	tableId      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all row access policies on the specified table.
+func (r *RowAccessPoliciesService) List(projectId string, datasetId string, tableId string) *RowAccessPoliciesListCall {
+	c := &RowAccessPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.tableId = tableId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response page. Leverage the page
+// tokens to iterate through the entire collection.
+func (c *RowAccessPoliciesListCall) PageSize(pageSize int64) *RowAccessPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token,
+// returned by a previous call, to request the next page of results.
+func (c *RowAccessPoliciesListCall) PageToken(pageToken string) *RowAccessPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RowAccessPoliciesListCall) Fields(s ...googleapi.Field) *RowAccessPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RowAccessPoliciesListCall) IfNoneMatch(entityTag string) *RowAccessPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RowAccessPoliciesListCall) Context(ctx context.Context) *RowAccessPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RowAccessPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RowAccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/rowAccessPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"datasetId": c.datasetId,
+		"tableId":   c.tableId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.rowAccessPolicies.list" call.
+// Exactly one of *ListRowAccessPoliciesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListRowAccessPoliciesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RowAccessPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListRowAccessPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListRowAccessPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all row access policies on the specified table.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}/rowAccessPolicies",
+	//   "httpMethod": "GET",
+	//   "id": "bigquery.rowAccessPolicies.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "datasetId",
+	//     "tableId"
+	//   ],
+	//   "parameters": {
+	//     "datasetId": {
+	//       "description": "Required. Dataset ID of row access policies to list.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response page. Leverage the page tokens to iterate through the entire collection.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token, returned by a previous call, to request the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. Project ID of the row access policies to list.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "tableId": {
+	//       "description": "Required. Table ID of the table to list row access policies.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/rowAccessPolicies",
+	//   "response": {
+	//     "$ref": "ListRowAccessPoliciesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/bigquery.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RowAccessPoliciesListCall) Pages(ctx context.Context, f func(*ListRowAccessPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "bigquery.tabledata.insertAll":
 
 type TabledataInsertAllCall struct {
@@ -11507,7 +11837,7 @@ func (c *TabledataInsertAllCall) Header() http.Header {
 
 func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11706,7 +12036,7 @@ func (c *TabledataListCall) Header() http.Header {
 
 func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11904,7 +12234,7 @@ func (c *TablesDeleteCall) Header() http.Header {
 
 func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12046,7 +12376,7 @@ func (c *TablesGetCall) Header() http.Header {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12205,7 +12535,7 @@ func (c *TablesGetIamPolicyCall) Header() http.Header {
 
 func (c *TablesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12350,7 +12680,7 @@ func (c *TablesInsertCall) Header() http.Header {
 
 func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12523,7 +12853,7 @@ func (c *TablesListCall) Header() http.Header {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12706,7 +13036,7 @@ func (c *TablesPatchCall) Header() http.Header {
 
 func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12863,7 +13193,7 @@ func (c *TablesSetIamPolicyCall) Header() http.Header {
 
 func (c *TablesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13009,7 +13339,7 @@ func (c *TablesTestIamPermissionsCall) Header() http.Header {
 
 func (c *TablesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13158,7 +13488,7 @@ func (c *TablesUpdateCall) Header() http.Header {
 
 func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200925")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201016")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

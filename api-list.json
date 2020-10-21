@@ -209,7 +209,7 @@
       "name": "admob",
       "version": "v1",
       "title": "AdMob API",
-      "description": "The Google AdMob API lets you programmatically get reports on earnings.",
+      "description": "The AdMob API allows publishers to programmatically get information about their AdMob account.",
       "discoveryRestUrl": "https://admob.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -385,36 +385,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "apigateway:v1alpha1",
-      "name": "apigateway",
-      "version": "v1alpha1",
-      "title": "API Gateway API",
-      "description": "",
-      "discoveryRestUrl": "https://apigateway.googleapis.com/$discovery/rest?version=v1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": " https://cloud.google.com/api-gateway/docs",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "apigateway:v1alpha2",
-      "name": "apigateway",
-      "version": "v1alpha2",
-      "title": "API Gateway API",
-      "description": "",
-      "discoveryRestUrl": "https://apigateway.googleapis.com/$discovery/rest?version=v1alpha2",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": " https://cloud.google.com/api-gateway/docs",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "apigateway:v1beta",
       "name": "apigateway",
       "version": "v1beta",
@@ -426,7 +396,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": " https://cloud.google.com/api-gateway/docs",
-      "preferred": false
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",
@@ -517,22 +487,6 @@
       },
       "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
       "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "appsactivity:v1",
-      "name": "appsactivity",
-      "version": "v1",
-      "title": "Drive Activity API",
-      "description": "Provides a historical view of activity.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/appsactivity/v1/rest",
-      "discoveryLink": "./apis/appsactivity/v1/rest",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/google-apps/activity/",
-      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",
@@ -686,6 +640,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "billingbudgets:v1",
+      "name": "billingbudgets",
+      "version": "v1",
+      "title": "Cloud Billing Budget API",
+      "description": "The Cloud Billing Budget API stores Cloud Billing budgets, which define a budget plan and the rules to execute as spend is tracked against that plan.",
+      "discoveryRestUrl": "https://billingbudgets.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/billing/docs/how-to/budget-api-overview",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "billingbudgets:v1beta1",
       "name": "billingbudgets",
       "version": "v1beta1",
@@ -697,7 +666,7 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/billing/docs/how-to/budget-api-overview",
-      "preferred": true
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -779,15 +748,14 @@
       "id": "calendar:v3",
       "name": "calendar",
       "version": "v3",
-      "title": "Calendar API",
-      "description": "Manipulates events and other calendar data.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
-      "discoveryLink": "./apis/calendar/v3/rest",
+      "title": "Google Calendar API",
+      "description": "The Google Calendar API lets you manage your calendars and events.",
+      "discoveryRestUrl": "https://calendar-json.googleapis.com/$discovery/rest?version=v3",
       "icons": {
-        "x16": "http://www.google.com/images/icons/product/calendar-16.png",
-        "x32": "http://www.google.com/images/icons/product/calendar-32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/google-apps/calendar/firstapp",
+      "documentationLink": "http://code.google.com/apis/calendar/v3/",
       "preferred": true
     },
     {
@@ -1902,7 +1870,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/cloud-dns",
+      "documentationLink": "https://cloud.google.com/dns/docs",
       "preferred": true
     },
     {
@@ -1917,7 +1885,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/cloud-dns",
+      "documentationLink": "https://cloud.google.com/dns/docs",
       "preferred": false
     },
     {
@@ -1948,7 +1916,52 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/document-ai/docs/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "documentai:v1beta3",
+      "name": "documentai",
+      "version": "v1beta3",
+      "title": "Cloud Document AI API",
+      "description": "Service to parse structured information from unstructured or semi-structured documents using state-of-the-art Google AI such as natural language, computer vision, translation, and AutoML.",
+      "discoveryRestUrl": "https://documentai.googleapis.com/$discovery/rest?version=v1beta3",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/document-ai/docs/",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "domains:v1alpha2",
+      "name": "domains",
+      "version": "v1alpha2",
+      "title": "Cloud Domains API",
+      "description": "Enables management and configuration of domain names.",
+      "discoveryRestUrl": "https://domains.googleapis.com/$discovery/rest?version=v1alpha2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/domains/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "domains:v1beta1",
+      "name": "domains",
+      "version": "v1beta1",
+      "title": "Cloud Domains API",
+      "description": "Enables management and configuration of domain names.",
+      "discoveryRestUrl": "https://domains.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/domains/",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -2945,17 +2958,33 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "oauth2:v2",
+      "name": "oauth2",
+      "version": "v2",
+      "title": "Google OAuth2 API",
+      "description": "[Deprecated] Obtains end-user authorization grants for use with other Google APIs.",
+      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/oauth2/v2/rest",
+      "discoveryLink": "./apis/oauth2/v2/rest",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/accounts/docs/OAuth2",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "osconfig:v1alpha2",
       "name": "osconfig",
       "version": "v1alpha2",
-      "title": "Cloud OS Config API",
+      "title": "OS Config API",
       "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
       "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1alpha2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/",
+      "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
       "preferred": false
     },
     {
@@ -2963,14 +2992,14 @@
       "id": "osconfig:v1beta",
       "name": "osconfig",
       "version": "v1beta",
-      "title": "Cloud OS Config API",
+      "title": "OS Config API",
       "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
       "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1beta",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/",
+      "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
       "preferred": false
     },
     {
@@ -2978,14 +3007,14 @@
       "id": "osconfig:v1",
       "name": "osconfig",
       "version": "v1",
-      "title": "Cloud OS Config API",
+      "title": "OS Config API",
       "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
       "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/",
+      "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
       "preferred": true
     },
     {
@@ -3151,6 +3180,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/spectrum-access-system/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "programmablesearchelement:v1",
+      "name": "programmablesearchelement",
+      "version": "v1",
+      "title": "Programmable Search Element Paid API",
+      "description": "Used for quota management and billing of Programmable Search Element queries",
+      "discoveryRestUrl": "https://programmablesearchelement.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/custom-search/v1/introduction",
       "preferred": true
     },
     {
@@ -4336,7 +4380,7 @@
       "name": "webmasters",
       "version": "v3",
       "title": "Search Console API",
-      "description": "View Google Search Console data for your verified sites.",
+      "description": "[Deprecated] View Google Search Console data for your verified sites.",
       "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/webmasters/v3/rest",
       "discoveryLink": "./apis/webmasters/v3/rest",
       "icons": {
@@ -4412,7 +4456,7 @@
       "name": "workflows",
       "version": "v1beta",
       "title": "Workflows API",
-      "description": "",
+      "description": "Orchestrate Workflows consisting of Google Cloud APIs, SaaS APIs or private API endpoints.",
       "discoveryRestUrl": "https://workflows.googleapis.com/$discovery/rest?version=v1beta",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

@@ -116,3 +116,30 @@ func TestIsDirectPathEnabled(t *testing.T) {
 		})
 	}
 }
+
+func TestGetServerName(t *testing.T) {
+	testCases := []struct {
+		Endpoint string
+		Want     string
+	}{
+		{
+			Endpoint: "https://foo.googleapis.com/bar/baz",
+			Want:     "foo.googleapis.com",
+		},
+		{
+			Endpoint: "https://foo.googleapis.com:443",
+			Want:     "foo.googleapis.com",
+		},
+		{
+			Endpoint: "foo.googleapis.com:443",
+			Want:     "foo.googleapis.com",
+		},
+	}
+
+	for _, tc := range testCases {
+		got := getServerName(tc.Endpoint)
+		if tc.Want != got {
+			t.Errorf("getServerName(%q): got %v; want %v", tc.Endpoint, got, tc.Want)
+		}
+	}
+}

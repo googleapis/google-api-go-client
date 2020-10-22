@@ -157,13 +157,9 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			}
 			// TODO(cbro): add support for system parameters (quota project, request reason) via chained interceptor.
 		} else {
-			endpointURL, err := url.Parse(endpoint)
-			if err != nil {
-				return nil, err
-			}
 			tlsConfig := &tls.Config{
 				GetClientCertificate: clientCertSource,
-				ServerName:           endpointURL.Hostname(),
+				ServerName:           getServerName(endpoint),
 			}
 			grpcOpts = []grpc.DialOption{
 				grpc.WithPerRPCCredentials(grpcTokenSource{
@@ -304,4 +300,15 @@ func WithConnPool(p ConnPool) option.ClientOption {
 
 func (o connPoolOption) Apply(s *internal.DialSettings) {
 	s.GRPCConnPool = o.ConnPool
+}
+
+func getServerName(endpoint string) string {
+	if !strings.Contains(endpoint, "://") {
+		endpoint = "https://" + endpoint
+	}
+	endpointURL, err := url.Parse(endpoint)
+	if err != nil {
+		return ""
+	}
+	return endpointURL.Hostname()
 }

@@ -948,6 +948,14 @@ func (s *GoogleCloudMlV1__AddTrialMeasurementRequest) MarshalJSON() ([]byte, err
 // GoogleCloudMlV1__AutoScaling: Options for automatically scaling a
 // model.
 type GoogleCloudMlV1__AutoScaling struct {
+	// MaxNodes: The maximum number of nodes to scale this model under load.
+	// The actual value will depend on resource quota and availability.
+	MaxNodes int64 `json:"maxNodes,omitempty"`
+
+	// Metrics: MetricSpec contains the specifications to use to calculate
+	// the desired nodes count.
+	Metrics []*GoogleCloudMlV1__MetricSpec `json:"metrics,omitempty"`
+
 	// MinNodes: Optional. The minimum number of nodes to allocate for this
 	// model. These nodes are always up, starting from the time the model is
 	// deployed. Therefore, the cost of operating this model will be at
@@ -978,7 +986,7 @@ type GoogleCloudMlV1__AutoScaling struct {
 	// https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes -d @./update_body.json
 	MinNodes int64 `json:"minNodes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MinNodes") to
+	// ForceSendFields is a list of field names (e.g. "MaxNodes") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -986,7 +994,7 @@ type GoogleCloudMlV1__AutoScaling struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MinNodes") to include in
+	// NullFields is a list of field names (e.g. "MaxNodes") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1278,11 +1286,14 @@ func (s *GoogleCloudMlV1__Config) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__ContainerPort: ContainerPort represents a network
-// port in a single container.
+// GoogleCloudMlV1__ContainerPort: Represents a network port in a single
+// container. This message is a subset of the [Kubernetes ContainerPort
+// v1 core
+// specification](https://kubernetes.io/docs/reference/generated/kubernet
+// es-api/v1.18/#containerport-v1-core).
 type GoogleCloudMlV1__ContainerPort struct {
-	// ContainerPort: Number of port to expose on the pod's IP address. This
-	// must be a valid port number, 0 < x < 65536.
+	// ContainerPort: Number of the port to expose on the container. This
+	// must be a valid port number: 0 < PORT_NUMBER < 65536.
 	ContainerPort int64 `json:"containerPort,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContainerPort") to
@@ -1308,47 +1319,136 @@ func (s *GoogleCloudMlV1__ContainerPort) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__ContainerSpec: Specify a custom container to deploy.
-// Our ContainerSpec is a subset of the Kubernetes Container
-// specification.
-// https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#container-v1-core
+// GoogleCloudMlV1__ContainerSpec: Specification of a custom container
+// for serving predictions. This message is a subset of the [Kubernetes
+// Container v1 core
+// specification](https://kubernetes.io/docs/reference/generated/kubernet
+// es-api/v1.18/#container-v1-core).
 type GoogleCloudMlV1__ContainerSpec struct {
-	// Args: Immutable. Arguments to the entrypoint. The docker image's CMD
-	// is used if this is not provided. Variable references $(VAR_NAME) are
-	// expanded using the container's environment. If a variable cannot be
-	// resolved, the reference in the input string will be unchanged. The
-	// $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME).
-	// Escaped references will never be expanded, regardless of whether the
-	// variable exists or not. More info:
-	// https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+	// Args: Immutable. Specifies arguments for the command that runs when
+	// the container starts. This overrides the container's
+	// [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd).
+	// Specify this field as an array of executable and arguments, similar
+	// to a Docker `CMD`'s "default parameters" form. If you don't specify
+	// this field but do specify the command field, then the command from
+	// the `command` field runs without any additional arguments. See the
+	// [Kubernetes documentation about how the `command` and `args` fields
+	// interact with a container's `ENTRYPOINT` and
+	// `CMD`](https://kubernetes.io/docs/tasks/inject-data-application/define
+	// -command-argument-container/#notes). If you don't specify this field
+	// and don't specify the `commmand` field, then the container's
+	// [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#cmd)
+	// and `CMD` determine what runs based on their default behavior. See
+	// the [Docker documentation about how `CMD` and `ENTRYPOINT`
+	// interact](https://docs.docker.com/engine/reference/builder/#understand
+	// -how-cmd-and-entrypoint-interact). In this field, you can reference
+	// [environment variables set by AI Platform
+	// Prediction](/ai-platform/prediction/docs/custom-container-requirements
+	// #aip-variables) and environment variables set in the env field. You
+	// cannot reference environment variables set in the Docker image. In
+	// order for environment variables to be expanded, reference them by
+	// using the following syntax: $( VARIABLE_NAME) Note that this differs
+	// from Bash variable expansion, which does not use parentheses. If a
+	// variable cannot be resolved, the reference in the input string is
+	// used unchanged. To avoid variable expansion, you can escape this
+	// syntax with `$$`; for example: $$(VARIABLE_NAME) This field
+	// corresponds to the `args` field of the [Kubernetes Containers v1 core
+	// API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.
+	// 18/#container-v1-core).
 	Args []string `json:"args,omitempty"`
 
-	// Command: Immutable. Entrypoint array. Not executed within a shell.
-	// The docker image's ENTRYPOINT is used if this is not provided.
-	// Variable references $(VAR_NAME) are expanded using the container's
-	// environment. If a variable cannot be resolved, the reference in the
-	// input string will be unchanged. The $(VAR_NAME) syntax can be escaped
-	// with a double $$, ie: $$(VAR_NAME). Escaped references will never be
-	// expanded, regardless of whether the variable exists or not. More
-	// info:
-	// https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+	// Command: Immutable. Specifies the command that runs when the
+	// container starts. This overrides the container's
+	// [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entry
+	// point). Specify this field as an array of executable and arguments,
+	// similar to a Docker `ENTRYPOINT`'s "exec" form, not its "shell" form.
+	// If you do not specify this field, then the container's `ENTRYPOINT`
+	// runs, in conjunction with the args field or the container's
+	// [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd), if
+	// either exists. If this field is not specified and the container does
+	// not have an `ENTRYPOINT`, then refer to the [Docker documentation
+	// about how `CMD` and `ENTRYPOINT`
+	// interact](https://docs.docker.com/engine/reference/builder/#understand
+	// -how-cmd-and-entrypoint-interact). If you specify this field, then
+	// you can also specify the `args` field to provide additional arguments
+	// for this command. However, if you specify this field, then the
+	// container's `CMD` is ignored. See the [Kubernetes documentation about
+	// how the `command` and `args` fields interact with a container's
+	// `ENTRYPOINT` and
+	// `CMD`](https://kubernetes.io/docs/tasks/inject-data-application/define
+	// -command-argument-container/#notes). In this field, you can reference
+	// [environment variables set by AI Platform
+	// Prediction](/ai-platform/prediction/docs/custom-container-requirements
+	// #aip-variables) and environment variables set in the env field. You
+	// cannot reference environment variables set in the Docker image. In
+	// order for environment variables to be expanded, reference them by
+	// using the following syntax: $( VARIABLE_NAME) Note that this differs
+	// from Bash variable expansion, which does not use parentheses. If a
+	// variable cannot be resolved, the reference in the input string is
+	// used unchanged. To avoid variable expansion, you can escape this
+	// syntax with `$$`; for example: $$(VARIABLE_NAME) This field
+	// corresponds to the `command` field of the [Kubernetes Containers v1
+	// core
+	// API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.
+	// 18/#container-v1-core).
 	Command []string `json:"command,omitempty"`
 
 	// Env: Immutable. List of environment variables to set in the
-	// container.
+	// container. After the container starts running, code running in the
+	// container can read these environment variables. Additionally, the
+	// command and args fields can reference these variables. Later entries
+	// in this list can also reference earlier entries. For example, the
+	// following example sets the variable `VAR_2` to have the value `foo
+	// bar`: ```json [ { "name": "VAR_1", "value": "foo" }, { "name":
+	// "VAR_2", "value": "$(VAR_1) bar" } ] ``` If you switch the order of
+	// the variables in the example, then the expansion does not occur. This
+	// field corresponds to the `env` field of the [Kubernetes Containers v1
+	// core
+	// API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.
+	// 18/#container-v1-core).
 	Env []*GoogleCloudMlV1__EnvVar `json:"env,omitempty"`
 
-	// Image: Docker image name. More info:
-	// https://kubernetes.io/docs/concepts/containers/images
+	// Image: URI of the Docker image to be used as the custom container for
+	// serving predictions. This URI must identify [an image in Artifact
+	// Registry](/artifact-registry/docs/overview) and begin with the
+	// hostname `{REGION}-docker.pkg.dev`, where `{REGION}` is replaced by
+	// the region that matches AI Platform Prediction [regional
+	// endpoint](/ai-platform/prediction/docs/regional-endpoints) that you
+	// are using. For example, if you are using the
+	// `us-central1-ml.googleapis.com` endpoint, then this URI must begin
+	// with `us-central1-docker.pkg.dev`. To use a custom container, the [AI
+	// Platform Google-managed service
+	// account](/ai-platform/prediction/docs/custom-service-account#default)
+	// must have permission to pull (read) the Docker image at this URI. The
+	// AI Platform Google-managed service account has the following format:
+	// `service-{PROJECT_NUMBER}@cloud-ml.google.com.iam.gserviceaccount.com`
+	//  {PROJECT_NUMBER} is replaced by your Google Cloud project number. By
+	// default, this service account has necessary permissions to pull an
+	// Artifact Registry image in the same Google Cloud project where you
+	// are using AI Platform Prediction. In this case, no configuration is
+	// necessary. If you want to use an image from a different Google Cloud
+	// project, learn how to [grant the Artifact Registry Reader
+	// (roles/artifactregistry.reader) role for a
+	// repository](/artifact-registry/docs/access-control#grant-repo) to
+	// your projet's AI Platform Google-managed service account. To learn
+	// about the requirements for the Docker image itself, read [Custom
+	// container
+	// requirements](/ai-platform/prediction/docs/custom-container-requiremen
+	// ts).
 	Image string `json:"image,omitempty"`
 
-	// Ports: Immutable. List of ports to expose from the container.
-	// Exposing a port here gives the system additional information about
-	// the network connections a container uses, but is primarily
-	// informational. Not specifying a port here DOES NOT prevent that port
-	// from being exposed. Any port which is listening on the default
-	// "0.0.0.0" address inside a container will be accessible from the
-	// network.
+	// Ports: Immutable. List of ports to expose from the container. AI
+	// Platform Prediction sends any prediction requests that it receives to
+	// the first port on this list. AI Platform Prediction also sends
+	// [liveness and health
+	// checks](/ai-platform/prediction/docs/custom-container-requirements#hea
+	// lth) to this port. If you do not specify this field, it defaults to
+	// following value: ```json [ { "containerPort": 8080 } ] ``` AI
+	// Platform Prediction does not use ports other than the first one
+	// listed. This field corresponds to the `ports` field of the
+	// [Kubernetes Containers v1 core
+	// API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.
+	// 18/#container-v1-core).
 	Ports []*GoogleCloudMlV1__ContainerPort `json:"ports,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -1407,19 +1507,31 @@ func (s *GoogleCloudMlV1__EncryptionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__EnvVar: EnvVar represents an environment variable
-// present in a Container.
+// GoogleCloudMlV1__EnvVar: Represents an environment variable to be
+// made available in a container. This message is a subset of the
+// [Kubernetes EnvVar v1 core
+// specification](https://kubernetes.io/docs/reference/generated/kubernet
+// es-api/v1.18/#envvar-v1-core).
 type GoogleCloudMlV1__EnvVar struct {
-	// Name: Name of the environment variable. Must be a C_IDENTIFIER.
+	// Name: Name of the environment variable. Must be a [valid C
+	// identifier](https://github.com/kubernetes/kubernetes/blob/v1.18.8/stag
+	// ing/src/k8s.io/apimachinery/pkg/util/validation/validation.go#L258)
+	// and must not begin with the prefix `AIP_`.
 	Name string `json:"name,omitempty"`
 
-	// Value: Variable references $(VAR_NAME) are expanded using the
-	// previous defined environment variables in the container and any
-	// service environment variables. If a variable cannot be resolved, the
-	// reference in the input string will be unchanged. The $(VAR_NAME)
-	// syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped
-	// references will never be expanded, regardless of whether the variable
-	// exists or not. Defaults to "".
+	// Value: Value of the environment variable. Defaults to an empty
+	// string. In this field, you can reference [environment variables set
+	// by AI Platform
+	// Prediction](/ai-platform/prediction/docs/custom-container-requirements
+	// #aip-variables) and environment variables set earlier in the same env
+	// field as where this message occurs. You cannot reference environment
+	// variables set in the Docker image. In order for environment variables
+	// to be expanded, reference them by using the following syntax:
+	// $(VARIABLE_NAME) Note that this differs from Bash variable expansion,
+	// which does not use parentheses. If a variable cannot be resolved, the
+	// reference in the input string is used unchanged. To avoid variable
+	// expansion, you can escape this syntax with `$$`; for example:
+	// $$(VARIABLE_NAME)
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2161,6 +2273,46 @@ func (s *GoogleCloudMlV1__Measurement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudMlV1__MetricSpec: MetricSpec contains the specifications
+// to use to calculate the desired nodes count when autoscaling is
+// enabled.
+type GoogleCloudMlV1__MetricSpec struct {
+	// Name: metric name.
+	//
+	// Possible values:
+	//   "METRIC_NAME_UNSPECIFIED" - Unspecified MetricName.
+	//   "CPU_USAGE" - CPU usage.
+	//   "GPU_DUTY_CYCLE" - GPU duty cycle.
+	Name string `json:"name,omitempty"`
+
+	// Target: Target specifies the target value for the given metric; once
+	// real metric deviates from the threshold by a certain percentage, the
+	// node count changes.
+	Target int64 `json:"target,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__MetricSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__MetricSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__Model: Represents a machine learning solution. A
 // model can have multiple versions, each of which is a deployed,
 // trained model ready to receive prediction requests. The model itself
@@ -2197,19 +2349,19 @@ type GoogleCloudMlV1__Model struct {
 	Name string `json:"name,omitempty"`
 
 	// OnlinePredictionConsoleLogging: Optional. If true, online prediction
-	// nodes send `stderr` and `stdout` streams to Stackdriver Logging.
-	// These can be more verbose than the standard access logs (see
+	// nodes send `stderr` and `stdout` streams to Cloud Logging. These can
+	// be more verbose than the standard access logs (see
 	// `onlinePredictionLogging`) and can incur higher cost. However, they
-	// are helpful for debugging. Note that [Stackdriver logs may incur a
+	// are helpful for debugging. Note that [logs may incur a
 	// cost](/stackdriver/pricing), especially if your project receives
 	// prediction requests at a high QPS. Estimate your costs before
 	// enabling this option. Default is false.
 	OnlinePredictionConsoleLogging bool `json:"onlinePredictionConsoleLogging,omitempty"`
 
 	// OnlinePredictionLogging: Optional. If true, online prediction access
-	// logs are sent to StackDriver Logging. These logs are like standard
-	// server access logs, containing information like timestamp and latency
-	// for each request. Note that [Stackdriver logs may incur a
+	// logs are sent to Cloud Logging. These logs are like standard server
+	// access logs, containing information like timestamp and latency for
+	// each request. Note that [logs may incur a
 	// cost](/stackdriver/pricing), especially if your project receives
 	// prediction requests at a high queries per second rate (QPS). Estimate
 	// your costs before enabling this option. Default is false.
@@ -2756,15 +2908,53 @@ func (s *GoogleCloudMlV1__RequestLoggingConfig) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-// GoogleCloudMlV1__RouteMap: RouteMap is used to override HTTP paths
-// sent to a Custom Container. If specified, the HTTP server implemented
-// in the ContainerSpec must support the route. If unspecified, standard
-// HTTP paths will be used.
+// GoogleCloudMlV1__RouteMap: Specifies HTTP paths served by a custom
+// container. AI Platform Prediction sends requests to these paths on
+// the container; the custom container must run an HTTP server that
+// responds to these requests with appropriate responses. Read [Custom
+// container
+// requirements](/ai-platform/prediction/docs/custom-container-requiremen
+// ts) for details on how to create your container image to meet these
+// requirements.
 type GoogleCloudMlV1__RouteMap struct {
-	// Health: HTTP path to send health check requests.
+	// Health: HTTP path on the container to send health checkss to. AI
+	// Platform Prediction intermittently sends GET requests to this path on
+	// the container's IP address and port to check that the container is
+	// healthy. Read more about [health
+	// checks](/ai-platform/prediction/docs/custom-container-requirements#che
+	// cks). For example, if you set this field to `/bar`, then AI Platform
+	// Prediction intermittently sends a GET request to the following URL on
+	// the container: localhost:PORT/bar PORT refers to the first value of
+	// Version.container.ports. If you don't specify this field, it defaults
+	// to the following value: /v1/models/MODEL/versions/VERSION The
+	// placeholders in this value are replaced as follows: * MODEL: The name
+	// of the parent Model. This does not include the
+	// "projects/PROJECT_ID/models/" prefix that the API returns in output;
+	// it is the bare model name, as provided to projects.models.create. *
+	// VERSION: The name of the model version. This does not include the
+	// "projects/PROJECT_ID/models/MODEL/versions/" prefix that the API
+	// returns in output; it is the bare version name, as provided to
+	// projects.models.versions.create.
 	Health string `json:"health,omitempty"`
 
-	// Predict: HTTP path to send prediction requests.
+	// Predict: HTTP path on the container to send prediction requests to.
+	// AI Platform Prediction forwards requests sent using projects.predict
+	// to this path on the container's IP address and port. AI Platform
+	// Prediction then returns the container's response in the API response.
+	// For example, if you set this field to `/foo`, then when AI Platform
+	// Prediction receives a prediction request, it forwards the request
+	// body in a POST request to the following URL on the container:
+	// localhost:PORT/foo PORT refers to the first value of
+	// Version.container.ports. If you don't specify this field, it defaults
+	// to the following value: /v1/models/MODEL/versions/VERSION:predict The
+	// placeholders in this value are replaced as follows: * MODEL: The name
+	// of the parent Model. This does not include the
+	// "projects/PROJECT_ID/models/" prefix that the API returns in output;
+	// it is the bare model name, as provided to projects.models.create. *
+	// VERSION: The name of the model version. This does not include the
+	// "projects/PROJECT_ID/models/MODEL/versions/" prefix that the API
+	// returns in output; it is the bare version name, as provided to
+	// projects.models.versions.create.
 	Predict string `json:"predict,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Health") to
@@ -2957,7 +3147,7 @@ type GoogleCloudMlV1__StudyConfig struct {
 	//
 	// Possible values:
 	//   "ALGORITHM_UNSPECIFIED" - The default algorithm used by the Cloud
-	// AI Platform Optimization service.
+	// AI Platform Vizier service.
 	//   "GAUSSIAN_PROCESS_BANDIT" - Gaussian Process Bandit.
 	//   "GRID_SEARCH" - Simple grid search within the feasible space. To
 	// use grid search, all parameters must be `INTEGER`, `CATEGORICAL`, or
@@ -3574,19 +3764,32 @@ type GoogleCloudMlV1__Version struct {
 	// use specify `manual_scaling`.
 	AutoScaling *GoogleCloudMlV1__AutoScaling `json:"autoScaling,omitempty"`
 
+	// Container: Optional. Specifies a custom container to use for serving
+	// predictions. If you specify this field, then `machineType` is
+	// required. If you specify this field, then `deploymentUri` is
+	// optional. If you specify this field, then you must not specify
+	// `runtimeVersion`, `packageUris`, `framework`, `pythonVersion`, or
+	// `predictionClass`.
 	Container *GoogleCloudMlV1__ContainerSpec `json:"container,omitempty"`
 
 	// CreateTime: Output only. The time the version was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DeploymentUri: Required. The Cloud Storage location of the trained
-	// model used to create the version. See the [guide to model
-	// deployment](/ml-engine/docs/tensorflow/deploying-models) for more
-	// information. When passing Version to projects.models.versions.create
-	// the model service uses the specified location as the source of the
-	// model. Once deployed, the model version is hosted by the prediction
-	// service, so this location is useful only as a historical record. The
-	// total number of model files can't exceed 1000.
+	// DeploymentUri: The Cloud Storage URI of a directory containing
+	// trained model artifacts to be used to create the model version. See
+	// the [guide to deploying
+	// models](/ai-platform/prediction/docs/deploying-models) for more
+	// information. The total number of files under this directory must not
+	// exceed 1000. During projects.models.versions.create, AI Platform
+	// Prediction copies all files from the specified directory to a
+	// location managed by the service. From then on, AI Platform Prediction
+	// uses these copies of the model artifacts to serve predictions, not
+	// the original files in Cloud Storage, so this location is useful only
+	// as a historical record. If you specify container, then this field is
+	// optional. Otherwise, it is required. Learn [how to use this field
+	// with a custom
+	// container](/ai-platform/prediction/docs/custom-container-requirements#
+	// artifacts).
 	DeploymentUri string `json:"deploymentUri,omitempty"`
 
 	// Description: Optional. The description specified for the version when
@@ -3619,10 +3822,9 @@ type GoogleCloudMlV1__Version struct {
 	// framework. If you choose `SCIKIT_LEARN` or `XGBOOST`, you must also
 	// set the runtime version of the model to 1.4 or greater. Do **not**
 	// specify a framework if you're deploying a [custom prediction
-	// routine](/ml-engine/docs/tensorflow/custom-prediction-routines). If
-	// you specify a [Compute Engine (N1) machine
-	// type](/ml-engine/docs/machine-types-online-prediction) in the
-	// `machineType` field, you must specify `TENSORFLOW` for the framework.
+	// routine](/ai-platform/prediction/docs/custom-prediction-routines) or
+	// if you're using a [custom
+	// container](/ai-platform/prediction/docs/use-custom-container).
 	//
 	// Possible values:
 	//   "FRAMEWORK_UNSPECIFIED" - Unspecified framework. Assigns a value
@@ -3655,8 +3857,8 @@ type GoogleCloudMlV1__Version struct {
 	// `n1-standard-16` * `n1-standard-32` * `n1-highmem-2` * `n1-highmem-4`
 	// * `n1-highmem-8` * `n1-highmem-16` * `n1-highmem-32` * `n1-highcpu-2`
 	// * `n1-highcpu-4` * `n1-highcpu-8` * `n1-highcpu-16` * `n1-highcpu-32`
-	// `mls1-c1-m2` is generally available. All other machine types are
-	// available in beta. Learn more about the [differences between machine
+	// `mls1-c4-m2` is in beta. All other machine types are generally
+	// available. Learn more about the [differences between machine
 	// types](/ml-engine/docs/machine-types-online-prediction).
 	MachineType string `json:"machineType,omitempty"`
 
@@ -3735,6 +3937,14 @@ type GoogleCloudMlV1__Version struct {
 	// request-response pair logging on predictions from this Version.
 	RequestLoggingConfig *GoogleCloudMlV1__RequestLoggingConfig `json:"requestLoggingConfig,omitempty"`
 
+	// Routes: Optional. Specifies paths on a custom container's HTTP server
+	// where AI Platform Prediction sends certain requests. If you specify
+	// this field, then you must also specify the `container` field. If you
+	// specify the `container` field and do not specify this field, it
+	// defaults to the following: ```json { "predict":
+	// "/v1/models/MODEL/versions/VERSION:predict", "health":
+	// "/v1/models/MODEL/versions/VERSION" } ``` See RouteMap for more
+	// details about these default values.
 	Routes *GoogleCloudMlV1__RouteMap `json:"routes,omitempty"`
 
 	// RuntimeVersion: Required. The AI Platform runtime version to use for
@@ -3744,7 +3954,10 @@ type GoogleCloudMlV1__Version struct {
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ServiceAccount: Optional. Specifies the service account for resource
-	// access control.
+	// access control. If you specify this field, then you must also specify
+	// either the `containerSpec` or the `predictionClass` field. Learn more
+	// about [using a custom service
+	// account](/ai-platform/prediction/docs/custom-service-account).
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// State: Output only. The state of a version.
@@ -4472,7 +4685,7 @@ func (c *ProjectsExplainCall) Header() http.Header {
 
 func (c *ProjectsExplainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4625,7 +4838,7 @@ func (c *ProjectsGetConfigCall) Header() http.Header {
 
 func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4762,7 +4975,7 @@ func (c *ProjectsPredictCall) Header() http.Header {
 
 func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4907,7 +5120,7 @@ func (c *ProjectsJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5047,7 +5260,7 @@ func (c *ProjectsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5196,7 +5409,7 @@ func (c *ProjectsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5358,7 +5571,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5540,7 +5753,7 @@ func (c *ProjectsJobsListCall) Header() http.Header {
 
 func (c *ProjectsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5731,7 +5944,7 @@ func (c *ProjectsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5879,7 +6092,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6024,7 +6237,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6175,7 +6388,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6339,7 +6552,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6515,7 +6728,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6658,7 +6871,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6801,7 +7014,7 @@ func (c *ProjectsLocationsStudiesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6944,7 +7157,7 @@ func (c *ProjectsLocationsStudiesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7085,7 +7298,7 @@ func (c *ProjectsLocationsStudiesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7229,7 +7442,7 @@ func (c *ProjectsLocationsStudiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7367,7 +7580,7 @@ func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) Header() http.Header 
 
 func (c *ProjectsLocationsStudiesTrialsAddMeasurementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7509,7 +7722,7 @@ func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) Header() htt
 
 func (c *ProjectsLocationsStudiesTrialsCheckEarlyStoppingStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7649,7 +7862,7 @@ func (c *ProjectsLocationsStudiesTrialsCompleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7789,7 +8002,7 @@ func (c *ProjectsLocationsStudiesTrialsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7927,7 +8140,7 @@ func (c *ProjectsLocationsStudiesTrialsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8068,7 +8281,7 @@ func (c *ProjectsLocationsStudiesTrialsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8212,7 +8425,7 @@ func (c *ProjectsLocationsStudiesTrialsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8348,7 +8561,7 @@ func (c *ProjectsLocationsStudiesTrialsStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8492,7 +8705,7 @@ func (c *ProjectsLocationsStudiesTrialsSuggestCall) Header() http.Header {
 
 func (c *ProjectsLocationsStudiesTrialsSuggestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8635,7 +8848,7 @@ func (c *ProjectsModelsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8775,7 +8988,7 @@ func (c *ProjectsModelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8918,7 +9131,7 @@ func (c *ProjectsModelsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9080,7 +9293,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9258,7 +9471,7 @@ func (c *ProjectsModelsListCall) Header() http.Header {
 
 func (c *ProjectsModelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9448,7 +9661,7 @@ func (c *ProjectsModelsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9596,7 +9809,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsModelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9741,7 +9954,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsModelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9888,7 +10101,7 @@ func (c *ProjectsModelsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10030,7 +10243,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10174,7 +10387,7 @@ func (c *ProjectsModelsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10348,7 +10561,7 @@ func (c *ProjectsModelsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10540,7 +10753,7 @@ func (c *ProjectsModelsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10691,7 +10904,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Header() http.Header {
 
 func (c *ProjectsModelsVersionsSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10838,7 +11051,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10981,7 +11194,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11155,7 +11368,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

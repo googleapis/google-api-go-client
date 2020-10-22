@@ -34,9 +34,19 @@ func TestGetEndpoint(t *testing.T) {
 			Want:            "https://host/path/to/bar",
 		},
 		{
-			UserEndpoint:    "host:port",
+			UserEndpoint:    "host:123",
 			DefaultEndpoint: "",
-			Want:            "host:port",
+			Want:            "host:123",
+		},
+		{
+			UserEndpoint:    "host:123",
+			DefaultEndpoint: "default:443",
+			Want:            "host:123",
+		},
+		{
+			UserEndpoint:    "host:123",
+			DefaultEndpoint: "default:443/bar/baz",
+			Want:            "host:123/bar/baz",
 		},
 	}
 

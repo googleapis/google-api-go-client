@@ -1022,6 +1022,16 @@ func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
 	return c
 }
 
+// GroupIdFilter sets the optional parameter "groupIdFilter": Comma
+// separated group ids (obfuscated) on which user activities are
+// filtered, i.e, the response will contain activities for only those
+// users that are a part of at least one of the group ids mentioned
+// here. Format: "id:abc123,id:xyz456"
+func (c *ActivitiesListCall) GroupIdFilter(groupIdFilter string) *ActivitiesListCall {
+	c.urlParams_.Set("groupIdFilter", groupIdFilter)
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Determines how
 // many activity records are shown on each response page. For example,
 // if the request sets maxResults=1 and the report has two activities,
@@ -1100,7 +1110,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1251,6 +1261,12 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "description": "The filters query string is a comma-separated list. The list is composed of event parameters that are manipulated by relational operators. Event parameters are in the form parameter1 name[parameter1 value],parameter2 name[parameter2 value],... These event parameters are associated with a specific eventName. An empty report is returned if the filtered request's parameter does not belong to the eventName. For more information about eventName parameters, see the list of event names for various applications above in applicationName. In the following Admin Activity example, the \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=CHANGE_CALENDAR_SETTING \u0026filters=NEW_VALUE%3C%3EREAD_ONLY_ACCESS In the following Drive example, the list can be a view or edit event's doc_id parameter with a value that is manipulated by an 'equal to' (==) or 'not equal to' (\u003c\u003e) relational operator. In the first example, the report returns each edited document's doc_id. In the second example, the report returns each viewed document's doc_id that equals the value 12345 and does not return any viewed document's which have a doc_id value of 98765. The \u003c\u003e operator is URL-encoded in the request's query string (%3C%3E): GET...\u0026eventName=edit\u0026filters=doc_id GET...\u0026eventName=view\u0026filters=doc_id==12345,doc_id%3C%3E98765 The relational operators include: - == - 'equal to'. - \u003c\u003e - 'not equal to'. It is URL-encoded (%3C%3E). - \u003c - 'less than'. It is URL-encoded (%3C). - \u003c= - 'less than or equal to'. It is URL-encoded (%3C=). - \u003e - 'greater than'. It is URL-encoded (%3E). - \u003e= - 'greater than or equal to'. It is URL-encoded (%3E=). *Note:* The API doesn't accept multiple values of a parameter. If a particular parameter is supplied more than once in the API request, the API only accepts the last value of that request parameter. In addition, if an invalid request parameter is supplied in the API request, the API ignores that request parameter and returns the response corresponding to the remaining valid request parameters. If no parameters are requested, all parameters are returned. ",
 	//       "location": "query",
 	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
+	//       "type": "string"
+	//     },
+	//     "groupIdFilter": {
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "location": "query",
+	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
@@ -1436,6 +1452,16 @@ func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 	return c
 }
 
+// GroupIdFilter sets the optional parameter "groupIdFilter": Comma
+// separated group ids (obfuscated) on which user activities are
+// filtered, i.e, the response will contain activities for only those
+// users that are a part of at least one of the group ids mentioned
+// here. Format: "id:abc123,id:xyz456"
+func (c *ActivitiesWatchCall) GroupIdFilter(groupIdFilter string) *ActivitiesWatchCall {
+	c.urlParams_.Set("groupIdFilter", groupIdFilter)
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Determines how
 // many activity records are shown on each response page. For example,
 // if the request sets maxResults=1 and the report has two activities,
@@ -1504,7 +1530,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1659,6 +1685,12 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
 	//       "type": "string"
 	//     },
+	//     "groupIdFilter": {
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "location": "query",
+	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "default": "1000",
 	//       "description": "Determines how many activity records are shown on each response page. For example, if the request sets maxResults=1 and the report has two activities, the report has two pages. The response's nextPageToken property has the token to the second page. The maxResults query string is optional in the request. The default value is 1000.",
@@ -1751,7 +1783,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1901,7 +1933,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2153,7 +2185,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2376,6 +2408,16 @@ func (c *UserUsageReportGetCall) Filters(filters string) *UserUsageReportGetCall
 	return c
 }
 
+// GroupIdFilter sets the optional parameter "groupIdFilter": Comma
+// separated group ids (obfuscated) on which user activities are
+// filtered, i.e, the response will contain activities for only those
+// users that are a part of at least one of the group ids mentioned
+// here. Format: "id:abc123,id:xyz456"
+func (c *UserUsageReportGetCall) GroupIdFilter(groupIdFilter string) *UserUsageReportGetCall {
+	c.urlParams_.Set("groupIdFilter", groupIdFilter)
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Determines how
 // many activity records are shown on each response page. For example,
 // if the request sets maxResults=1 and the report has two activities,
@@ -2464,7 +2506,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2553,6 +2595,12 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "description": "The filters query string is a comma-separated list of an application's event parameters where the parameter's value is manipulated by a relational operator. The filters query string includes the name of the application whose usage is returned in the report. The application values for the Users Usage Report include accounts, docs, and gmail. Filters are in the form [application name]:parameter name[parameter value],.... In this example, the \u003c\u003e 'not equal to' operator is URL-encoded in the request's query string (%3C%3E): GET https://www.googleapis.com/admin/reports/v1/usage/users/all/dates/2013-03-03 ?parameters=accounts:last_login_time \u0026filters=accounts:last_login_time\u003e2010-10-28T10:26:35.000Z The relational operators include: - == - 'equal to'. - \u003c\u003e - 'not equal to'. It is URL-encoded (%3C%3E). - \u003c - 'less than'. It is URL-encoded (%3C). - \u003c= - 'less than or equal to'. It is URL-encoded (%3C=). - \u003e - 'greater than'. It is URL-encoded (%3E). - \u003e= - 'greater than or equal to'. It is URL-encoded (%3E=). ",
 	//       "location": "query",
 	//       "pattern": "(((accounts)|(classroom)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)|(drive)):[a-z0-9_]+[\u003c,\u003c=,==,\u003e=,\u003e,!=][^,]+,)*(((accounts)|(classroom)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)|(drive)):[a-z0-9_]+[\u003c,\u003c=,==,\u003e=,\u003e,!=][^,]+)",
+	//       "type": "string"
+	//     },
+	//     "groupIdFilter": {
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "location": "query",
+	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {

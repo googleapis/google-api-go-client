@@ -281,7 +281,7 @@ func (c *AccountsCustomAppsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201020")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -383,6 +383,10 @@ func (c *AccountsCustomAppsCreateCall) Do(opts ...googleapi.CallOption) (*Custom
 	//     ],
 	//     "maxSize": "10737418240",
 	//     "protocols": {
+	//       "resumable": {
+	//         "multipart": true,
+	//         "path": "/resumable/upload/playcustomapp/v1/accounts/{account}/customApps"
+	//       },
 	//       "simple": {
 	//         "multipart": true,
 	//         "path": "/upload/playcustomapp/v1/accounts/{account}/customApps"

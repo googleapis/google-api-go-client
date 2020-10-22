@@ -12,7 +12,6 @@ import (
 	"crypto/tls"
 	"errors"
 	"log"
-	"net/url"
 	"os"
 	"strings"
 
@@ -159,7 +158,6 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 		} else {
 			tlsConfig := &tls.Config{
 				GetClientCertificate: clientCertSource,
-				ServerName:           getServerName(endpoint),
 			}
 			grpcOpts = []grpc.DialOption{
 				grpc.WithPerRPCCredentials(grpcTokenSource{
@@ -300,15 +298,4 @@ func WithConnPool(p ConnPool) option.ClientOption {
 
 func (o connPoolOption) Apply(s *internal.DialSettings) {
 	s.GRPCConnPool = o.ConnPool
-}
-
-func getServerName(endpoint string) string {
-	if !strings.Contains(endpoint, "://") {
-		endpoint = "https://" + endpoint
-	}
-	endpointURL, err := url.Parse(endpoint)
-	if err != nil {
-		return ""
-	}
-	return endpointURL.Hostname()
 }

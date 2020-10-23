@@ -139,7 +139,7 @@ func mergeEndpoints(baseURL, newHost string) (string, error) {
 
 func fixScheme(baseURL string) string {
 	if !strings.Contains(baseURL, "://") {
-		return "https://" + host
+		return "https://" + baseURL
 	}
-	return host
+	return baseURL
 }

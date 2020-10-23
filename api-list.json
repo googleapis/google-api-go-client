@@ -269,14 +269,13 @@
       "name": "analytics",
       "version": "v3",
       "title": "Google Analytics API",
-      "description": "Views and manages your Google Analytics data.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/analytics/v3/rest",
-      "discoveryLink": "./apis/analytics/v3/rest",
+      "description": "The Analytics API provides access to Analytics configuration and report data.",
+      "discoveryRestUrl": "https://analytics.googleapis.com/$discovery/rest?version=v3",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/analytics-16.png",
-        "x32": "https://www.google.com/images/icons/product/analytics-32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/analytics/",
+      "documentationLink": "http://code.google.com/apis/analytics/docs/mgmt/home.html",
       "preferred": true
     },
     {
@@ -3485,21 +3484,6 @@
       },
       "documentationLink": "https://cloud.google.com/deployment-manager/runtime-configurator/",
       "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "safebrowsing:v4",
-      "name": "safebrowsing",
-      "version": "v4",
-      "title": "Safe Browsing API",
-      "description": "Enables client applications to check web resources (most commonly URLs) against Google-generated lists of unsafe web resources. The Safe Browsing APIs are for non-commercial use only. If you need to use APIs to detect malicious URLs for commercial purposes – meaning “for sale or revenue-generating purposes” – please refer to the Web Risk API.",
-      "discoveryRestUrl": "https://safebrowsing.googleapis.com/$discovery/rest?version=v4",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/safe-browsing/",
-      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",

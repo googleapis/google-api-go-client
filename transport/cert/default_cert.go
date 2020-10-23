@@ -14,6 +14,7 @@ package cert
 
 import (
 	"crypto/tls"
+	"crypto/x509"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -23,6 +24,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"sync"
+	"time"
 )
 
 const (
@@ -31,9 +33,11 @@ const (
 )
 
 var (
-	defaultSourceOnce sync.Once
-	defaultSource     Source
-	defaultSourceErr  error
+	defaultSourceOnce            sync.Once
+	defaultSource                Source
+	defaultSourceErr             error
+	defaultSourceCachedCertMutex sync.Mutex
+	defaultSourceCachedCert      *tls.Certificate
 )
 
 // Source is a function that can be passed into crypto/tls.Config.GetClientCertificate.
@@ -95,16 +99,30 @@ func validateMetadata(metadata secureConnectMetadata) error {
 }
 
 func (s *secureConnectSource) getClientCertificate(info *tls.CertificateRequestInfo) (*tls.Certificate, error) {
-	// TODO(cbro): consider caching valid certificates rather than exec'ing every time.
-	command := s.metadata.Cmd
-	data, err := exec.Command(command[0], command[1:]...).Output()
-	if err != nil {
-		// TODO(cbro): read stderr for error message? Might contain sensitive info.
-		return nil, err
+	defaultSourceCachedCertMutex.Lock()
+	defer defaultSourceCachedCertMutex.Unlock()
+	if defaultSourceCachedCert != nil && !isCertificateExpired(defaultSourceCachedCert) {
+		return defaultSourceCachedCert, nil
+	} else {
+		command := s.metadata.Cmd
+		data, err := exec.Command(command[0], command[1:]...).Output()
+		if err != nil {
+			// TODO(cbro): read stderr for error message? Might contain sensitive info.
+			return nil, err
+		}
+		cert, err := tls.X509KeyPair(data, data)
+		if err != nil {
+			return nil, err
+		}
+		defaultSourceCachedCert = &cert
+		return &cert, nil
 	}
-	cert, err := tls.X509KeyPair(data, data)
+}
+
+func isCertificateExpired(cert *tls.Certificate) bool {
+	parsed, err := x509.ParseCertificate(cert.Certificate[0])
 	if err != nil {
-		return nil, err
+		return true
 	}
-	return &cert, nil
+	return time.Now().After(parsed.NotAfter)
 }

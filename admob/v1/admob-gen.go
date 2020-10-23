@@ -885,7 +885,8 @@ type NetworkReportSpec struct {
 	// is a double precision (approximate) decimal value.
 	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad
 	// impressions. The value is in micros. For example, $1.03 would be
-	// represented as 1030000. **Warning:** The metric is incompatible with
+	// represented as 1030000. Equivalent to eCPM in the AdMob UI.
+	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "MATCHED_REQUESTS" - The number of times ads are returned in
 	// response to a request. The value is an integer.
@@ -1050,7 +1051,8 @@ type NetworkReportSpecSortCondition struct {
 	// is a double precision (approximate) decimal value.
 	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad
 	// impressions. The value is in micros. For example, $1.03 would be
-	// represented as 1030000. **Warning:** The metric is incompatible with
+	// represented as 1030000. Equivalent to eCPM in the AdMob UI.
+	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "MATCHED_REQUESTS" - The number of times ads are returned in
 	// response to a request. The value is an integer.
@@ -1471,7 +1473,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1631,7 +1633,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1787,7 +1789,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1928,7 +1930,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

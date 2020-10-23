@@ -4973,7 +4973,7 @@ func (c *BookshelvesGetCall) Header() http.Header {
 
 func (c *BookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5136,7 +5136,7 @@ func (c *BookshelvesListCall) Header() http.Header {
 
 func (c *BookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5315,7 +5315,7 @@ func (c *BookshelvesVolumesListCall) Header() http.Header {
 
 func (c *BookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5391,6 +5391,7 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "shelf": {
@@ -5413,6 +5414,7 @@ func (c *BookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes,
 	//       "description": "Index of the first element to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "userId": {
@@ -5503,7 +5505,7 @@ func (c *CloudloadingAddBookCall) Header() http.Header {
 
 func (c *CloudloadingAddBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5607,14 +5609,8 @@ type CloudloadingDeleteBookCall struct {
 }
 
 // DeleteBook: Remove the book and its contents
-func (r *CloudloadingService) DeleteBook() *CloudloadingDeleteBookCall {
+func (r *CloudloadingService) DeleteBook(volumeId string) *CloudloadingDeleteBookCall {
 	c := &CloudloadingDeleteBookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// VolumeId sets the optional parameter "volumeId": The id of the book
-// to be removed.
-func (c *CloudloadingDeleteBookCall) VolumeId(volumeId string) *CloudloadingDeleteBookCall {
 	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
@@ -5646,7 +5642,7 @@ func (c *CloudloadingDeleteBookCall) Header() http.Header {
 
 func (c *CloudloadingDeleteBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5706,11 +5702,14 @@ func (c *CloudloadingDeleteBookCall) Do(opts ...googleapi.CallOption) (*Empty, e
 	//   "flatPath": "books/v1/cloudloading/deleteBook",
 	//   "httpMethod": "POST",
 	//   "id": "books.cloudloading.deleteBook",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "volumeId"
+	//   ],
 	//   "parameters": {
 	//     "volumeId": {
 	//       "description": "The id of the book to be removed.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -5769,7 +5768,7 @@ func (c *CloudloadingUpdateBookCall) Header() http.Header {
 
 func (c *CloudloadingUpdateBookCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5862,14 +5861,8 @@ type DictionaryListOfflineMetadataCall struct {
 
 // ListOfflineMetadata: Returns a list of offline dictionary metadata
 // available
-func (r *DictionaryService) ListOfflineMetadata() *DictionaryListOfflineMetadataCall {
+func (r *DictionaryService) ListOfflineMetadata(cpksver string) *DictionaryListOfflineMetadataCall {
 	c := &DictionaryListOfflineMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Cpksver sets the optional parameter "cpksver": The device/version ID
-// from which to request the data.
-func (c *DictionaryListOfflineMetadataCall) Cpksver(cpksver string) *DictionaryListOfflineMetadataCall {
 	c.urlParams_.Set("cpksver", cpksver)
 	return c
 }
@@ -5911,7 +5904,7 @@ func (c *DictionaryListOfflineMetadataCall) Header() http.Header {
 
 func (c *DictionaryListOfflineMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5974,11 +5967,14 @@ func (c *DictionaryListOfflineMetadataCall) Do(opts ...googleapi.CallOption) (*M
 	//   "flatPath": "books/v1/dictionary/listOfflineMetadata",
 	//   "httpMethod": "GET",
 	//   "id": "books.dictionary.listOfflineMetadata",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "cpksver"
+	//   ],
 	//   "parameters": {
 	//     "cpksver": {
 	//       "description": "The device/version ID from which to request the data.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -6054,7 +6050,7 @@ func (c *FamilysharingGetFamilyInfoCall) Header() http.Header {
 
 func (c *FamilysharingGetFamilyInfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6198,7 +6194,7 @@ func (c *FamilysharingShareCall) Header() http.Header {
 
 func (c *FamilysharingShareCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6350,7 +6346,7 @@ func (c *FamilysharingUnshareCall) Header() http.Header {
 
 func (c *FamilysharingUnshareCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6510,7 +6506,7 @@ func (c *LayersGetCall) Header() http.Header {
 
 func (c *LayersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6699,7 +6695,7 @@ func (c *LayersListCall) Header() http.Header {
 
 func (c *LayersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6778,6 +6774,8 @@ func (c *LayersListCall) Do(opts ...googleapi.CallOption) (*Layersummaries, erro
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "200",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -6822,11 +6820,12 @@ type LayersAnnotationDataGetCall struct {
 }
 
 // Get: Gets the annotation data.
-func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string) *LayersAnnotationDataGetCall {
+func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annotationDataId string, contentVersion string) *LayersAnnotationDataGetCall {
 	c := &LayersAnnotationDataGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
 	c.layerId = layerId
 	c.annotationDataId = annotationDataId
+	c.urlParams_.Set("contentVersion", contentVersion)
 	return c
 }
 
@@ -6835,13 +6834,6 @@ func (r *LayersAnnotationDataService) Get(volumeId string, layerId string, annot
 // allow web definitions.
 func (c *LayersAnnotationDataGetCall) AllowWebDefinitions(allowWebDefinitions bool) *LayersAnnotationDataGetCall {
 	c.urlParams_.Set("allowWebDefinitions", fmt.Sprint(allowWebDefinitions))
-	return c
-}
-
-// ContentVersion sets the optional parameter "contentVersion": The
-// content version for the volume you are trying to retrieve.
-func (c *LayersAnnotationDataGetCall) ContentVersion(contentVersion string) *LayersAnnotationDataGetCall {
-	c.urlParams_.Set("contentVersion", contentVersion)
 	return c
 }
 
@@ -6918,7 +6910,7 @@ func (c *LayersAnnotationDataGetCall) Header() http.Header {
 
 func (c *LayersAnnotationDataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6989,7 +6981,8 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Diction
 	//   "parameterOrder": [
 	//     "volumeId",
 	//     "layerId",
-	//     "annotationDataId"
+	//     "annotationDataId",
+	//     "contentVersion"
 	//   ],
 	//   "parameters": {
 	//     "allowWebDefinitions": {
@@ -7006,6 +6999,7 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Diction
 	//     "contentVersion": {
 	//       "description": "The content version for the volume you are trying to retrieve.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "h": {
@@ -7029,6 +7023,7 @@ func (c *LayersAnnotationDataGetCall) Do(opts ...googleapi.CallOption) (*Diction
 	//       "description": "The requested scale for the image.",
 	//       "format": "int32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "source": {
@@ -7073,10 +7068,11 @@ type LayersAnnotationDataListCall struct {
 }
 
 // List: Gets the annotation data for a volume and layer.
-func (r *LayersAnnotationDataService) List(volumeId string, layerId string) *LayersAnnotationDataListCall {
+func (r *LayersAnnotationDataService) List(volumeId string, layerId string, contentVersion string) *LayersAnnotationDataListCall {
 	c := &LayersAnnotationDataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
 	c.layerId = layerId
+	c.urlParams_.Set("contentVersion", contentVersion)
 	return c
 }
 
@@ -7085,13 +7081,6 @@ func (r *LayersAnnotationDataService) List(volumeId string, layerId string) *Lay
 // this is set.
 func (c *LayersAnnotationDataListCall) AnnotationDataId(annotationDataId ...string) *LayersAnnotationDataListCall {
 	c.urlParams_.SetMulti("annotationDataId", append([]string{}, annotationDataId...))
-	return c
-}
-
-// ContentVersion sets the optional parameter "contentVersion": The
-// content version for the requested volume.
-func (c *LayersAnnotationDataListCall) ContentVersion(contentVersion string) *LayersAnnotationDataListCall {
-	c.urlParams_.Set("contentVersion", contentVersion)
 	return c
 }
 
@@ -7198,7 +7187,7 @@ func (c *LayersAnnotationDataListCall) Header() http.Header {
 
 func (c *LayersAnnotationDataListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7267,7 +7256,8 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//   "id": "books.layers.annotationData.list",
 	//   "parameterOrder": [
 	//     "volumeId",
-	//     "layerId"
+	//     "layerId",
+	//     "contentVersion"
 	//   ],
 	//   "parameters": {
 	//     "annotationDataId": {
@@ -7279,6 +7269,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//     "contentVersion": {
 	//       "description": "The content version for the requested volume.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "h": {
@@ -7302,6 +7293,8 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "200",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -7313,6 +7306,7 @@ func (c *LayersAnnotationDataListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "description": "The requested scale for the image.",
 	//       "format": "int32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "source": {
@@ -7449,7 +7443,7 @@ func (c *LayersVolumeAnnotationsGetCall) Header() http.Header {
 
 func (c *LayersVolumeAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7576,16 +7570,10 @@ type LayersVolumeAnnotationsListCall struct {
 }
 
 // List: Gets the volume annotations for a volume and layer.
-func (r *LayersVolumeAnnotationsService) List(volumeId string, layerId string) *LayersVolumeAnnotationsListCall {
+func (r *LayersVolumeAnnotationsService) List(volumeId string, layerId string, contentVersion string) *LayersVolumeAnnotationsListCall {
 	c := &LayersVolumeAnnotationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
 	c.layerId = layerId
-	return c
-}
-
-// ContentVersion sets the optional parameter "contentVersion": The
-// content version for the requested volume.
-func (c *LayersVolumeAnnotationsListCall) ContentVersion(contentVersion string) *LayersVolumeAnnotationsListCall {
 	c.urlParams_.Set("contentVersion", contentVersion)
 	return c
 }
@@ -7716,7 +7704,7 @@ func (c *LayersVolumeAnnotationsListCall) Header() http.Header {
 
 func (c *LayersVolumeAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7785,12 +7773,14 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//   "id": "books.layers.volumeAnnotations.list",
 	//   "parameterOrder": [
 	//     "volumeId",
-	//     "layerId"
+	//     "layerId",
+	//     "contentVersion"
 	//   ],
 	//   "parameters": {
 	//     "contentVersion": {
 	//       "description": "The content version for the requested volume.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "endOffset": {
@@ -7818,6 +7808,8 @@ func (c *LayersVolumeAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Vol
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "200",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -7959,7 +7951,7 @@ func (c *MyconfigGetUserSettingsCall) Header() http.Header {
 
 func (c *MyconfigGetUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8051,15 +8043,10 @@ type MyconfigReleaseDownloadAccessCall struct {
 }
 
 // ReleaseDownloadAccess: Release downloaded content access restriction.
-func (r *MyconfigService) ReleaseDownloadAccess() *MyconfigReleaseDownloadAccessCall {
+func (r *MyconfigService) ReleaseDownloadAccess(cpksver string, volumeIds []string) *MyconfigReleaseDownloadAccessCall {
 	c := &MyconfigReleaseDownloadAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Cpksver sets the optional parameter "cpksver": The device/version ID
-// from which to release the restriction.
-func (c *MyconfigReleaseDownloadAccessCall) Cpksver(cpksver string) *MyconfigReleaseDownloadAccessCall {
 	c.urlParams_.Set("cpksver", cpksver)
+	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
 	return c
 }
 
@@ -8074,13 +8061,6 @@ func (c *MyconfigReleaseDownloadAccessCall) Locale(locale string) *MyconfigRelea
 // originator of this request.
 func (c *MyconfigReleaseDownloadAccessCall) Source(source string) *MyconfigReleaseDownloadAccessCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// VolumeIds sets the optional parameter "volumeIds": The volume(s) to
-// release restrictions for.
-func (c *MyconfigReleaseDownloadAccessCall) VolumeIds(volumeIds ...string) *MyconfigReleaseDownloadAccessCall {
-	c.urlParams_.SetMulti("volumeIds", append([]string{}, volumeIds...))
 	return c
 }
 
@@ -8111,7 +8091,7 @@ func (c *MyconfigReleaseDownloadAccessCall) Header() http.Header {
 
 func (c *MyconfigReleaseDownloadAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8171,11 +8151,15 @@ func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*D
 	//   "flatPath": "books/v1/myconfig/releaseDownloadAccess",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.releaseDownloadAccess",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "cpksver",
+	//     "volumeIds"
+	//   ],
 	//   "parameters": {
 	//     "cpksver": {
 	//       "description": "The device/version ID from which to release the restriction.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "locale": {
@@ -8192,6 +8176,7 @@ func (c *MyconfigReleaseDownloadAccessCall) Do(opts ...googleapi.CallOption) (*D
 	//       "description": "The volume(s) to release restrictions for.",
 	//       "location": "query",
 	//       "repeated": true,
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -8216,15 +8201,12 @@ type MyconfigRequestAccessCall struct {
 }
 
 // RequestAccess: Request concurrent and download access restrictions.
-func (r *MyconfigService) RequestAccess() *MyconfigRequestAccessCall {
+func (r *MyconfigService) RequestAccess(cpksver string, nonce string, source string, volumeId string) *MyconfigRequestAccessCall {
 	c := &MyconfigRequestAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Cpksver sets the optional parameter "cpksver": The device/version ID
-// from which to request the restrictions.
-func (c *MyconfigRequestAccessCall) Cpksver(cpksver string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("cpksver", cpksver)
+	c.urlParams_.Set("nonce", nonce)
+	c.urlParams_.Set("source", source)
+	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -8245,26 +8227,6 @@ func (c *MyconfigRequestAccessCall) LicenseTypes(licenseTypes string) *MyconfigR
 // codes for message localization, i.e. en_US.
 func (c *MyconfigRequestAccessCall) Locale(locale string) *MyconfigRequestAccessCall {
 	c.urlParams_.Set("locale", locale)
-	return c
-}
-
-// Nonce sets the optional parameter "nonce": The client nonce value.
-func (c *MyconfigRequestAccessCall) Nonce(nonce string) *MyconfigRequestAccessCall {
-	c.urlParams_.Set("nonce", nonce)
-	return c
-}
-
-// Source sets the optional parameter "source": String to identify the
-// originator of this request.
-func (c *MyconfigRequestAccessCall) Source(source string) *MyconfigRequestAccessCall {
-	c.urlParams_.Set("source", source)
-	return c
-}
-
-// VolumeId sets the optional parameter "volumeId": The volume to
-// request concurrent/download restrictions for.
-func (c *MyconfigRequestAccessCall) VolumeId(volumeId string) *MyconfigRequestAccessCall {
-	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -8295,7 +8257,7 @@ func (c *MyconfigRequestAccessCall) Header() http.Header {
 
 func (c *MyconfigRequestAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8355,11 +8317,17 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	//   "flatPath": "books/v1/myconfig/requestAccess",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.requestAccess",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "cpksver",
+	//     "nonce",
+	//     "source",
+	//     "volumeId"
+	//   ],
 	//   "parameters": {
 	//     "cpksver": {
 	//       "description": "The device/version ID from which to request the restrictions.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "licenseTypes": {
@@ -8387,16 +8355,19 @@ func (c *MyconfigRequestAccessCall) Do(opts ...googleapi.CallOption) (*RequestAc
 	//     "nonce": {
 	//       "description": "The client nonce value.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumeId": {
 	//       "description": "The volume to request concurrent/download restrictions for.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -8422,15 +8393,11 @@ type MyconfigSyncVolumeLicensesCall struct {
 
 // SyncVolumeLicenses: Request downloaded content access for specified
 // volumes on the My eBooks shelf.
-func (r *MyconfigService) SyncVolumeLicenses() *MyconfigSyncVolumeLicensesCall {
+func (r *MyconfigService) SyncVolumeLicenses(cpksver string, nonce string, source string) *MyconfigSyncVolumeLicensesCall {
 	c := &MyconfigSyncVolumeLicensesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Cpksver sets the optional parameter "cpksver": The device/version ID
-// from which to release the restriction.
-func (c *MyconfigSyncVolumeLicensesCall) Cpksver(cpksver string) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.Set("cpksver", cpksver)
+	c.urlParams_.Set("nonce", nonce)
+	c.urlParams_.Set("source", source)
 	return c
 }
 
@@ -8460,23 +8427,10 @@ func (c *MyconfigSyncVolumeLicensesCall) Locale(locale string) *MyconfigSyncVolu
 	return c
 }
 
-// Nonce sets the optional parameter "nonce": The client nonce value.
-func (c *MyconfigSyncVolumeLicensesCall) Nonce(nonce string) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.Set("nonce", nonce)
-	return c
-}
-
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show pre-ordered books. Defaults to false.
 func (c *MyconfigSyncVolumeLicensesCall) ShowPreorders(showPreorders bool) *MyconfigSyncVolumeLicensesCall {
 	c.urlParams_.Set("showPreorders", fmt.Sprint(showPreorders))
-	return c
-}
-
-// Source sets the optional parameter "source": String to identify the
-// originator of this request.
-func (c *MyconfigSyncVolumeLicensesCall) Source(source string) *MyconfigSyncVolumeLicensesCall {
-	c.urlParams_.Set("source", source)
 	return c
 }
 
@@ -8514,7 +8468,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Header() http.Header {
 
 func (c *MyconfigSyncVolumeLicensesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8574,11 +8528,16 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//   "flatPath": "books/v1/myconfig/syncVolumeLicenses",
 	//   "httpMethod": "POST",
 	//   "id": "books.myconfig.syncVolumeLicenses",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "cpksver",
+	//     "nonce",
+	//     "source"
+	//   ],
 	//   "parameters": {
 	//     "cpksver": {
 	//       "description": "The device/version ID from which to release the restriction.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "features": {
@@ -8608,6 +8567,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//     "nonce": {
 	//       "description": "The client nonce value.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "showPreorders": {
@@ -8618,6 +8578,7 @@ func (c *MyconfigSyncVolumeLicensesCall) Do(opts ...googleapi.CallOption) (*Volu
 	//     "source": {
 	//       "description": "String to identify the originator of this request.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumeIds": {
@@ -8684,7 +8645,7 @@ func (c *MyconfigUpdateUserSettingsCall) Header() http.Header {
 
 func (c *MyconfigUpdateUserSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8816,7 +8777,7 @@ func (c *MylibraryAnnotationsDeleteCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8979,7 +8940,7 @@ func (c *MylibraryAnnotationsInsertCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9207,7 +9168,7 @@ func (c *MylibraryAnnotationsListCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9292,6 +9253,8 @@ func (c *MylibraryAnnotationsListCall) Do(opts ...googleapi.CallOption) (*Annota
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "40",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
@@ -9367,21 +9330,9 @@ type MylibraryAnnotationsSummaryCall struct {
 }
 
 // Summary: Gets the summary of specified layers.
-func (r *MylibraryAnnotationsService) Summary() *MylibraryAnnotationsSummaryCall {
+func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string) *MylibraryAnnotationsSummaryCall {
 	c := &MylibraryAnnotationsSummaryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// LayerIds sets the optional parameter "layerIds": Array of layer IDs
-// to get the summary for.
-func (c *MylibraryAnnotationsSummaryCall) LayerIds(layerIds ...string) *MylibraryAnnotationsSummaryCall {
 	c.urlParams_.SetMulti("layerIds", append([]string{}, layerIds...))
-	return c
-}
-
-// VolumeId sets the optional parameter "volumeId": Volume id to get the
-// summary for.
-func (c *MylibraryAnnotationsSummaryCall) VolumeId(volumeId string) *MylibraryAnnotationsSummaryCall {
 	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
@@ -9413,7 +9364,7 @@ func (c *MylibraryAnnotationsSummaryCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsSummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9473,17 +9424,22 @@ func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*Ann
 	//   "flatPath": "books/v1/mylibrary/annotations/summary",
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.annotations.summary",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "layerIds",
+	//     "volumeId"
+	//   ],
 	//   "parameters": {
 	//     "layerIds": {
 	//       "description": "Array of layer IDs to get the summary for.",
 	//       "location": "query",
 	//       "repeated": true,
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumeId": {
 	//       "description": "Volume id to get the summary for.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -9551,7 +9507,7 @@ func (c *MylibraryAnnotationsUpdateCall) Header() http.Header {
 
 func (c *MylibraryAnnotationsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9660,9 +9616,10 @@ type MylibraryBookshelvesAddVolumeCall struct {
 }
 
 // AddVolume: Adds a volume to a bookshelf.
-func (r *MylibraryBookshelvesService) AddVolume(shelf string) *MylibraryBookshelvesAddVolumeCall {
+func (r *MylibraryBookshelvesService) AddVolume(shelf string, volumeId string) *MylibraryBookshelvesAddVolumeCall {
 	c := &MylibraryBookshelvesAddVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
+	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -9683,12 +9640,6 @@ func (c *MylibraryBookshelvesAddVolumeCall) Reason(reason string) *MylibraryBook
 // originator of this request.
 func (c *MylibraryBookshelvesAddVolumeCall) Source(source string) *MylibraryBookshelvesAddVolumeCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// VolumeId sets the optional parameter "volumeId": ID of volume to add.
-func (c *MylibraryBookshelvesAddVolumeCall) VolumeId(volumeId string) *MylibraryBookshelvesAddVolumeCall {
-	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -9719,7 +9670,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesAddVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9783,7 +9734,8 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) (*E
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.addVolume",
 	//   "parameterOrder": [
-	//     "shelf"
+	//     "shelf",
+	//     "volumeId"
 	//   ],
 	//   "parameters": {
 	//     "reason": {
@@ -9817,6 +9769,7 @@ func (c *MylibraryBookshelvesAddVolumeCall) Do(opts ...googleapi.CallOption) (*E
 	//     "volumeId": {
 	//       "description": "ID of volume to add.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -9882,7 +9835,7 @@ func (c *MylibraryBookshelvesClearVolumesCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesClearVolumesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10035,7 +9988,7 @@ func (c *MylibraryBookshelvesGetCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10189,7 +10142,7 @@ func (c *MylibraryBookshelvesListCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10282,9 +10235,11 @@ type MylibraryBookshelvesMoveVolumeCall struct {
 }
 
 // MoveVolume: Moves a volume within a bookshelf.
-func (r *MylibraryBookshelvesService) MoveVolume(shelf string) *MylibraryBookshelvesMoveVolumeCall {
+func (r *MylibraryBookshelvesService) MoveVolume(shelf string, volumeId string, volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
 	c := &MylibraryBookshelvesMoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
+	c.urlParams_.Set("volumeId", volumeId)
+	c.urlParams_.Set("volumePosition", fmt.Sprint(volumePosition))
 	return c
 }
 
@@ -10292,21 +10247,6 @@ func (r *MylibraryBookshelvesService) MoveVolume(shelf string) *MylibraryBookshe
 // originator of this request.
 func (c *MylibraryBookshelvesMoveVolumeCall) Source(source string) *MylibraryBookshelvesMoveVolumeCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// VolumeId sets the optional parameter "volumeId": ID of volume to
-// move.
-func (c *MylibraryBookshelvesMoveVolumeCall) VolumeId(volumeId string) *MylibraryBookshelvesMoveVolumeCall {
-	c.urlParams_.Set("volumeId", volumeId)
-	return c
-}
-
-// VolumePosition sets the optional parameter "volumePosition": Position
-// on shelf to move the item (0 puts the item before the current first
-// item, 1 puts it between the first and the second and so on.)
-func (c *MylibraryBookshelvesMoveVolumeCall) VolumePosition(volumePosition int64) *MylibraryBookshelvesMoveVolumeCall {
-	c.urlParams_.Set("volumePosition", fmt.Sprint(volumePosition))
 	return c
 }
 
@@ -10337,7 +10277,7 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesMoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10401,7 +10341,9 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) (*
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.moveVolume",
 	//   "parameterOrder": [
-	//     "shelf"
+	//     "shelf",
+	//     "volumeId",
+	//     "volumePosition"
 	//   ],
 	//   "parameters": {
 	//     "shelf": {
@@ -10418,12 +10360,14 @@ func (c *MylibraryBookshelvesMoveVolumeCall) Do(opts ...googleapi.CallOption) (*
 	//     "volumeId": {
 	//       "description": "ID of volume to move.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumePosition": {
 	//       "description": "Position on shelf to move the item (0 puts the item before the current first item, 1 puts it between the first and the second and so on.)",
 	//       "format": "int32",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "integer"
 	//     }
 	//   },
@@ -10449,9 +10393,10 @@ type MylibraryBookshelvesRemoveVolumeCall struct {
 }
 
 // RemoveVolume: Removes a volume from a bookshelf.
-func (r *MylibraryBookshelvesService) RemoveVolume(shelf string) *MylibraryBookshelvesRemoveVolumeCall {
+func (r *MylibraryBookshelvesService) RemoveVolume(shelf string, volumeId string) *MylibraryBookshelvesRemoveVolumeCall {
 	c := &MylibraryBookshelvesRemoveVolumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.shelf = shelf
+	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -10470,13 +10415,6 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Reason(reason string) *MylibraryB
 // originator of this request.
 func (c *MylibraryBookshelvesRemoveVolumeCall) Source(source string) *MylibraryBookshelvesRemoveVolumeCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// VolumeId sets the optional parameter "volumeId": ID of volume to
-// remove.
-func (c *MylibraryBookshelvesRemoveVolumeCall) VolumeId(volumeId string) *MylibraryBookshelvesRemoveVolumeCall {
-	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -10507,7 +10445,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesRemoveVolumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10571,7 +10509,8 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) 
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.bookshelves.removeVolume",
 	//   "parameterOrder": [
-	//     "shelf"
+	//     "shelf",
+	//     "volumeId"
 	//   ],
 	//   "parameters": {
 	//     "reason": {
@@ -10601,6 +10540,7 @@ func (c *MylibraryBookshelvesRemoveVolumeCall) Do(opts ...googleapi.CallOption) 
 	//     "volumeId": {
 	//       "description": "ID of volume to remove.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -10724,7 +10664,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Header() http.Header {
 
 func (c *MylibraryBookshelvesVolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10803,6 +10743,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "Maximum number of results to return",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "projection": {
@@ -10845,6 +10786,7 @@ func (c *MylibraryBookshelvesVolumesListCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "Index of the first element to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     }
 	//   },
@@ -10928,7 +10870,7 @@ func (c *MylibraryReadingpositionsGetCall) Header() http.Header {
 
 func (c *MylibraryReadingpositionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11037,9 +10979,11 @@ type MylibraryReadingpositionsSetPositionCall struct {
 }
 
 // SetPosition: Sets my reading position information for a volume.
-func (r *MylibraryReadingpositionsService) SetPosition(volumeId string) *MylibraryReadingpositionsSetPositionCall {
+func (r *MylibraryReadingpositionsService) SetPosition(volumeId string, position string, timestamp string) *MylibraryReadingpositionsSetPositionCall {
 	c := &MylibraryReadingpositionsSetPositionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.volumeId = volumeId
+	c.urlParams_.Set("position", position)
+	c.urlParams_.Set("timestamp", timestamp)
 	return c
 }
 
@@ -11073,24 +11017,10 @@ func (c *MylibraryReadingpositionsSetPositionCall) DeviceCookie(deviceCookie str
 	return c
 }
 
-// Position sets the optional parameter "position": Position string for
-// the new volume reading position.
-func (c *MylibraryReadingpositionsSetPositionCall) Position(position string) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("position", position)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *MylibraryReadingpositionsSetPositionCall) Source(source string) *MylibraryReadingpositionsSetPositionCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// Timestamp sets the optional parameter "timestamp": RFC 3339 UTC
-// format timestamp associated with this reading position.
-func (c *MylibraryReadingpositionsSetPositionCall) Timestamp(timestamp string) *MylibraryReadingpositionsSetPositionCall {
-	c.urlParams_.Set("timestamp", timestamp)
 	return c
 }
 
@@ -11121,7 +11051,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Header() http.Header {
 
 func (c *MylibraryReadingpositionsSetPositionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11185,7 +11115,9 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//   "httpMethod": "POST",
 	//   "id": "books.mylibrary.readingpositions.setPosition",
 	//   "parameterOrder": [
-	//     "volumeId"
+	//     "volumeId",
+	//     "position",
+	//     "timestamp"
 	//   ],
 	//   "parameters": {
 	//     "action": {
@@ -11224,6 +11156,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//     "position": {
 	//       "description": "Position string for the new volume reading position.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "source": {
@@ -11234,6 +11167,7 @@ func (c *MylibraryReadingpositionsSetPositionCall) Do(opts ...googleapi.CallOpti
 	//     "timestamp": {
 	//       "description": "RFC 3339 UTC format timestamp associated with this reading position.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "volumeId": {
@@ -11265,8 +11199,9 @@ type NotificationGetCall struct {
 }
 
 // Get: Returns notification details for a given notification id.
-func (r *NotificationService) Get() *NotificationGetCall {
+func (r *NotificationService) Get(notificationId string) *NotificationGetCall {
 	c := &NotificationGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("notification_id", notificationId)
 	return c
 }
 
@@ -11275,13 +11210,6 @@ func (r *NotificationService) Get() *NotificationGetCall {
 // notification title and body.
 func (c *NotificationGetCall) Locale(locale string) *NotificationGetCall {
 	c.urlParams_.Set("locale", locale)
-	return c
-}
-
-// NotificationId sets the optional parameter "notification_id": String
-// to identify the notification.
-func (c *NotificationGetCall) NotificationId(notificationId string) *NotificationGetCall {
-	c.urlParams_.Set("notification_id", notificationId)
 	return c
 }
 
@@ -11329,7 +11257,7 @@ func (c *NotificationGetCall) Header() http.Header {
 
 func (c *NotificationGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11392,7 +11320,9 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	//   "flatPath": "books/v1/notification/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.notification.get",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "notification_id"
+	//   ],
 	//   "parameters": {
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating notification title and body.",
@@ -11402,6 +11332,7 @@ func (c *NotificationGetCall) Do(opts ...googleapi.CallOption) (*Notification, e
 	//     "notification_id": {
 	//       "description": "String to identify the notification.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "source": {
@@ -11481,7 +11412,7 @@ func (c *OnboardingListCategoriesCall) Header() http.Header {
 
 func (c *OnboardingListCategoriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11659,7 +11590,7 @@ func (c *OnboardingListCategoryVolumesCall) Header() http.Header {
 
 func (c *OnboardingListCategoryVolumesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11876,7 +11807,7 @@ func (c *PersonalizedstreamGetCall) Header() http.Header {
 
 func (c *PersonalizedstreamGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12070,7 +12001,7 @@ func (c *PromoofferAcceptCall) Header() http.Header {
 
 func (c *PromoofferAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12268,7 +12199,7 @@ func (c *PromoofferDismissCall) Header() http.Header {
 
 func (c *PromoofferDismissCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12467,7 +12398,7 @@ func (c *PromoofferGetCall) Header() http.Header {
 
 func (c *PromoofferGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12585,14 +12516,8 @@ type SeriesGetCall struct {
 }
 
 // Get: Returns Series metadata for the given series ids.
-func (r *SeriesService) Get() *SeriesGetCall {
+func (r *SeriesService) Get(seriesId []string) *SeriesGetCall {
 	c := &SeriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// SeriesId sets the optional parameter "series_id": String that
-// identifies the series
-func (c *SeriesGetCall) SeriesId(seriesId ...string) *SeriesGetCall {
 	c.urlParams_.SetMulti("series_id", append([]string{}, seriesId...))
 	return c
 }
@@ -12634,7 +12559,7 @@ func (c *SeriesGetCall) Header() http.Header {
 
 func (c *SeriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12697,12 +12622,15 @@ func (c *SeriesGetCall) Do(opts ...googleapi.CallOption) (*Series, error) {
 	//   "flatPath": "books/v1/series/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.series.get",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "series_id"
+	//   ],
 	//   "parameters": {
 	//     "series_id": {
 	//       "description": "String that identifies the series",
 	//       "location": "query",
 	//       "repeated": true,
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -12728,8 +12656,9 @@ type SeriesMembershipGetCall struct {
 }
 
 // Get: Returns Series membership data given the series id.
-func (r *SeriesMembershipService) Get() *SeriesMembershipGetCall {
+func (r *SeriesMembershipService) Get(seriesId string) *SeriesMembershipGetCall {
 	c := &SeriesMembershipGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("series_id", seriesId)
 	return c
 }
 
@@ -12744,13 +12673,6 @@ func (c *SeriesMembershipGetCall) PageSize(pageSize int64) *SeriesMembershipGetC
 // nextToken from the previous page.
 func (c *SeriesMembershipGetCall) PageToken(pageToken string) *SeriesMembershipGetCall {
 	c.urlParams_.Set("page_token", pageToken)
-	return c
-}
-
-// SeriesId sets the optional parameter "series_id": String that
-// identifies the series
-func (c *SeriesMembershipGetCall) SeriesId(seriesId string) *SeriesMembershipGetCall {
-	c.urlParams_.Set("series_id", seriesId)
 	return c
 }
 
@@ -12791,7 +12713,7 @@ func (c *SeriesMembershipGetCall) Header() http.Header {
 
 func (c *SeriesMembershipGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12854,7 +12776,9 @@ func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembe
 	//   "flatPath": "books/v1/series/membership/get",
 	//   "httpMethod": "GET",
 	//   "id": "books.series.membership.get",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "series_id"
+	//   ],
 	//   "parameters": {
 	//     "page_size": {
 	//       "description": "Number of maximum results per page to be included in the response.",
@@ -12870,6 +12794,7 @@ func (c *SeriesMembershipGetCall) Do(opts ...googleapi.CallOption) (*Seriesmembe
 	//     "series_id": {
 	//       "description": "String that identifies the series",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -12987,7 +12912,7 @@ func (c *VolumesGetCall) Header() http.Header {
 
 func (c *VolumesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13125,8 +13050,9 @@ type VolumesListCall struct {
 }
 
 // List: Performs a book search.
-func (r *VolumesService) List() *VolumesListCall {
+func (r *VolumesService) List(q string) *VolumesListCall {
 	c := &VolumesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("q", q)
 	return c
 }
 
@@ -13238,12 +13164,6 @@ func (c *VolumesListCall) Projection(projection string) *VolumesListCall {
 	return c
 }
 
-// Q sets the optional parameter "q": Full-text search query string.
-func (c *VolumesListCall) Q(q string) *VolumesListCall {
-	c.urlParams_.Set("q", q)
-	return c
-}
-
 // ShowPreorders sets the optional parameter "showPreorders": Set to
 // true to show books available for preorder. Defaults to false.
 func (c *VolumesListCall) ShowPreorders(showPreorders bool) *VolumesListCall {
@@ -13302,7 +13222,7 @@ func (c *VolumesListCall) Header() http.Header {
 
 func (c *VolumesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13365,7 +13285,9 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//   "flatPath": "books/v1/volumes",
 	//   "httpMethod": "GET",
 	//   "id": "books.volumes.list",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "q"
+	//   ],
 	//   "parameters": {
 	//     "download": {
 	//       "description": "Restrict to volumes by download availability.",
@@ -13440,6 +13362,8 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//       "description": "Maximum number of results to return.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "40",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "orderBy": {
@@ -13497,6 +13421,7 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//     "q": {
 	//       "description": "Full-text search query string.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "showPreorders": {
@@ -13513,6 +13438,7 @@ func (c *VolumesListCall) Do(opts ...googleapi.CallOption) (*Volumes, error) {
 	//       "description": "Index of the first result to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     }
 	//   },
@@ -13624,7 +13550,7 @@ func (c *VolumesAssociatedListCall) Header() http.Header {
 
 func (c *VolumesAssociatedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13875,7 +13801,7 @@ func (c *VolumesMybooksListCall) Header() http.Header {
 
 func (c *VolumesMybooksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13982,6 +13908,8 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "description": "Maximum number of results to return.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "processingState": {
@@ -14011,6 +13939,7 @@ func (c *VolumesMybooksListCall) Do(opts ...googleapi.CallOption) (*Volumes, err
 	//       "description": "Index of the first result to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     }
 	//   },
@@ -14107,7 +14036,7 @@ func (c *VolumesRecommendedListCall) Header() http.Header {
 
 func (c *VolumesRecommendedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14219,8 +14148,10 @@ type VolumesRecommendedRateCall struct {
 }
 
 // Rate: Rate a recommended book for the current user.
-func (r *VolumesRecommendedService) Rate() *VolumesRecommendedRateCall {
+func (r *VolumesRecommendedService) Rate(rating string, volumeId string) *VolumesRecommendedRateCall {
 	c := &VolumesRecommendedRateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("rating", rating)
+	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -14232,30 +14163,10 @@ func (c *VolumesRecommendedRateCall) Locale(locale string) *VolumesRecommendedRa
 	return c
 }
 
-// Rating sets the optional parameter "rating": Rating to be given to
-// the volume.
-//
-// Possible values:
-//   "RATING_UNDEFINED"
-//   "HAVE_IT" - Rating indicating a dismissal due to ownership.
-//   "NOT_INTERESTED" - Rating indicating a negative dismissal of a
-// volume.
-func (c *VolumesRecommendedRateCall) Rating(rating string) *VolumesRecommendedRateCall {
-	c.urlParams_.Set("rating", rating)
-	return c
-}
-
 // Source sets the optional parameter "source": String to identify the
 // originator of this request.
 func (c *VolumesRecommendedRateCall) Source(source string) *VolumesRecommendedRateCall {
 	c.urlParams_.Set("source", source)
-	return c
-}
-
-// VolumeId sets the optional parameter "volumeId": ID of the source
-// volume.
-func (c *VolumesRecommendedRateCall) VolumeId(volumeId string) *VolumesRecommendedRateCall {
-	c.urlParams_.Set("volumeId", volumeId)
 	return c
 }
 
@@ -14286,7 +14197,7 @@ func (c *VolumesRecommendedRateCall) Header() http.Header {
 
 func (c *VolumesRecommendedRateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14347,7 +14258,10 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	//   "flatPath": "books/v1/volumes/recommended/rate",
 	//   "httpMethod": "POST",
 	//   "id": "books.volumes.recommended.rate",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "rating",
+	//     "volumeId"
+	//   ],
 	//   "parameters": {
 	//     "locale": {
 	//       "description": "ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used for generating recommendations.",
@@ -14367,6 +14281,7 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	//         "Rating indicating a negative dismissal of a volume."
 	//       ],
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "source": {
@@ -14377,6 +14292,7 @@ func (c *VolumesRecommendedRateCall) Do(opts ...googleapi.CallOption) (*BooksVol
 	//     "volumeId": {
 	//       "description": "ID of the source volume.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -14494,7 +14410,7 @@ func (c *VolumesUseruploadedListCall) Header() http.Header {
 
 func (c *VolumesUseruploadedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201021")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201022")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14568,6 +14484,8 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//       "description": "Maximum number of results to return.",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "maximum": "40",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "processingState": {
@@ -14597,6 +14515,7 @@ func (c *VolumesUseruploadedListCall) Do(opts ...googleapi.CallOption) (*Volumes
 	//       "description": "Index of the first result to return (starts at 0)",
 	//       "format": "uint32",
 	//       "location": "query",
+	//       "minimum": "0",
 	//       "type": "integer"
 	//     },
 	//     "volumeId": {

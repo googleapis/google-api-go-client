@@ -103,20 +103,19 @@ func (s *secureConnectSource) getClientCertificate(info *tls.CertificateRequestI
 	defer defaultSourceCachedCertMutex.Unlock()
 	if defaultSourceCachedCert != nil && !isCertificateExpired(defaultSourceCachedCert) {
 		return defaultSourceCachedCert, nil
-	} else {
-		command := s.metadata.Cmd
-		data, err := exec.Command(command[0], command[1:]...).Output()
-		if err != nil {
-			// TODO(cbro): read stderr for error message? Might contain sensitive info.
-			return nil, err
-		}
-		cert, err := tls.X509KeyPair(data, data)
-		if err != nil {
-			return nil, err
-		}
-		defaultSourceCachedCert = &cert
-		return &cert, nil
 	}
+	command := s.metadata.Cmd
+	data, err := exec.Command(command[0], command[1:]...).Output()
+	if err != nil {
+		// TODO(cbro): read stderr for error message? Might contain sensitive info.
+		return nil, err
+	}
+	cert, err := tls.X509KeyPair(data, data)
+	if err != nil {
+		return nil, err
+	}
+	defaultSourceCachedCert = &cert
+	return &cert, nil
 }
 
 func isCertificateExpired(cert *tls.Certificate) bool {

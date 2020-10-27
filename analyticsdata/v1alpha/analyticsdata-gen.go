@@ -606,8 +606,9 @@ func (s *DateRange) MarshalJSON() ([]byte, error) {
 }
 
 // Dimension: Dimensions are attributes of your data. For example, the
-// dimension City indicates the city, for example, "Paris" or "New
-// York", from which an event originates. Requests are allowed up to 8
+// dimension city indicates the city from which an event originates.
+// Dimension values in report responses are strings; for example, city
+// could be "Paris" or "New York". Requests are allowed up to 8
 // dimensions.
 type Dimension struct {
 	// DimensionExpression: One dimension can be the result of an expression
@@ -615,7 +616,14 @@ type Dimension struct {
 	// concatenate(country, ", ", city).
 	DimensionExpression *DimensionExpression `json:"dimensionExpression,omitempty"`
 
-	// Name: The name of the dimension.
+	// Name: The name of the dimension. See the [API
+	// Dimensions](https://developers.google.com/analytics/trusted-testing/an
+	// alytics-data/api-schema#dimensions) for the list of dimension names.
+	// If `dimensionExpression` is specified, `name` can be any string that
+	// you would like. For example if a `dimensionExpression` concatenates
+	// `country` and `city`, you could call that dimension `countryAndCity`.
+	// Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`,
+	// `dimensionExpression`, and `pivots`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionExpression")
@@ -830,7 +838,10 @@ func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 // Entity: The unique identifier of the property whose events are
 // tracked.
 type Entity struct {
-	// PropertyId: A Google Analytics GA4 property id.
+	// PropertyId: A Google Analytics GA4 property id. To learn more, see
+	// [where to find your Property
+	// ID](https://developers.google.com/analytics/trusted-testing/analytics-
+	// data/property-id).
 	PropertyId string `json:"propertyId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PropertyId") to
@@ -1040,19 +1051,27 @@ func (s *Metadata) MarshalJSON() ([]byte, error) {
 }
 
 // Metric: The quantitative measurements of a report. For example, the
-// metric eventCount is the total number of events. Requests are allowed
-// up to 10 metrics.
+// metric `eventCount` is the total number of events. Requests are
+// allowed up to 10 metrics.
 type Metric struct {
 	// Expression: A mathematical expression for derived metrics. For
-	// example, the metric Event count per user is eventCount/totalUsers.
+	// example, the metric Event count per user is `eventCount/totalUsers`.
 	Expression string `json:"expression,omitempty"`
 
-	// Invisible: Indicates if a metric is invisible. If a metric is
-	// invisible, the metric is not in the response, but can be used in
-	// filters, order_bys or being referred to in a metric expression.
+	// Invisible: Indicates if a metric is invisible in the report response.
+	// If a metric is invisible, the metric will not produce a column in the
+	// response, but can be used in `metricFilter`, `orderBys`, or a metric
+	// `expression`.
 	Invisible bool `json:"invisible,omitempty"`
 
-	// Name: The name of the metric.
+	// Name: The name of the metric. See the [API
+	// Metrics](https://developers.google.com/analytics/trusted-testing/analy
+	// tics-data/api-schema#metrics) for the list of metric names. If
+	// `expression` is specified, `name` can be any string that you would
+	// like. For example if `expression` is `screenPageViews/sessions`, you
+	// could call that metric's name = `viewsPerSession`. Metrics are
+	// referenced by `name` in `metricFilter`, `orderBys`, and metric
+	// `expression`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Expression") to
@@ -2195,7 +2214,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2266,7 +2285,7 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics GA4 Property identifier. Example: properties/1234/metadata",
+	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics GA4 Property identifier. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/trusted-testing/analytics-data/property-id). Example: properties/1234/metadata",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+/metadata$",
 	//       "required": true,
@@ -2330,7 +2349,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2457,7 +2476,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2597,7 +2616,7 @@ func (c *V1alphaGetUniversalMetadataCall) Header() http.Header {
 
 func (c *V1alphaGetUniversalMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2722,7 +2741,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2854,7 +2873,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

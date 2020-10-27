@@ -485,9 +485,6 @@ type GoogleHomeEnterpriseSdmV1Structure struct {
 	// "enterprises/XYZ/structures/ABC".
 	Name string `json:"name,omitempty"`
 
-	// ParentRelations: Assignee details of the structure.
-	ParentRelations []*GoogleHomeEnterpriseSdmV1StructureParentRelation `json:"parentRelations,omitempty"`
-
 	// Traits: Structure traits.
 	Traits googleapi.RawMessage `json:"traits,omitempty"`
 
@@ -514,42 +511,6 @@ type GoogleHomeEnterpriseSdmV1Structure struct {
 
 func (s *GoogleHomeEnterpriseSdmV1Structure) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1Structure
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleHomeEnterpriseSdmV1StructureParentRelation: Represents
-// structure assignee relationships, for instance, group to which the
-// structure is assigned to.
-type GoogleHomeEnterpriseSdmV1StructureParentRelation struct {
-	// DisplayName: Output only. The custom name of the relation -- e.g.,
-	// group, to which the structure is assigned to.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Parent: Output only. The name of the relation -- e.g., group to which
-	// the structure is assigned to. For example:
-	// "enterprises/XYZ/groups/ABC"
-	Parent string `json:"parent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleHomeEnterpriseSdmV1StructureParentRelation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleHomeEnterpriseSdmV1StructureParentRelation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -601,7 +562,7 @@ func (c *EnterprisesDevicesExecuteCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesExecuteCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -752,7 +713,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -860,10 +821,8 @@ func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListC
 }
 
 // Filter sets the optional parameter "filter": Optional filter to list
-// devices. Filters can match the exact assignee (could be a structure
-// or a room). E.g. 'assignee=enterprises/XYZ/structures/abc' Also could
-// filter by parent (group): 'parent=enterprises/XYZ/groups/jkl' or
-// filter by device custom name (substring match): 'customName=wing'
+// devices. Filters can be done on: Device custom name (substring
+// match): 'customName=wing'
 func (c *EnterprisesDevicesListCall) Filter(filter string) *EnterprisesDevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -921,7 +880,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -994,7 +953,7 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional filter to list devices. Filters can match the exact assignee (could be a structure or a room). E.g. 'assignee=enterprises/XYZ/structures/abc' Also could filter by parent (group): 'parent=enterprises/XYZ/groups/jkl' or filter by device custom name (substring match): 'customName=wing'",
+	//       "description": "Optional filter to list devices. Filters can be done on: Device custom name (substring match): 'customName=wing'",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1104,7 +1063,7 @@ func (c *EnterprisesStructuresGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1213,10 +1172,7 @@ func (r *EnterprisesStructuresService) List(parent string) *EnterprisesStructure
 }
 
 // Filter sets the optional parameter "filter": Optional filter to list
-// structures. Filters can match the exact album assigned to the
-// structure. E.g. 'album=enterprises/XYZ/albums/abc' It also support
-// filtering by parent (only groups for now): E.g.
-// 'parent=enterprises/XYZ/groups/124'
+// structures.
 func (c *EnterprisesStructuresListCall) Filter(filter string) *EnterprisesStructuresListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1274,7 +1230,7 @@ func (c *EnterprisesStructuresListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1347,7 +1303,7 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional filter to list structures. Filters can match the exact album assigned to the structure. E.g. 'album=enterprises/XYZ/albums/abc' It also support filtering by parent (only groups for now): E.g. 'parent=enterprises/XYZ/groups/124'",
+	//       "description": "Optional filter to list structures.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1457,7 +1413,7 @@ func (c *EnterprisesStructuresRoomsGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1616,7 +1572,7 @@ func (c *EnterprisesStructuresRoomsListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

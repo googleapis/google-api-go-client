@@ -764,7 +764,7 @@ type CopyOtherContactToMyContactsGroupRequest struct {
 	ReadMask string `json:"readMask,omitempty"`
 
 	// Sources: Optional. A mask of what source types to return. Defaults to
-	// ReadSourceType.CONTACT and ReadSourceType.PROFILE if not set.
+	// READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.
 	//
 	// Possible values:
 	//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -2859,7 +2859,7 @@ type UpdateContactPhotoRequest struct {
 	PhotoBytes string `json:"photoBytes,omitempty"`
 
 	// Sources: Optional. A mask of what source types to return. Defaults to
-	// ReadSourceType.CONTACT and ReadSourceType.PROFILE if not set.
+	// READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.
 	//
 	// Possible values:
 	//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -3072,7 +3072,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3206,7 +3206,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3339,7 +3339,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3494,7 +3494,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3669,7 +3669,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3831,7 +3831,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3975,7 +3975,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4117,7 +4117,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4315,7 +4315,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4476,8 +4476,8 @@ func (c *PeopleCreateContactCall) PersonFields(personFields string) *PeopleCreat
 }
 
 // Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to ReadSourceType.CONTACT and
-// ReadSourceType.PROFILE if not set.
+// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
+// READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -4518,7 +4518,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4592,7 +4592,7 @@ func (c *PeopleCreateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "type": "string"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to ReadSourceType.CONTACT and ReadSourceType.PROFILE if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
@@ -4669,7 +4669,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4788,8 +4788,8 @@ func (c *PeopleDeleteContactPhotoCall) PersonFields(personFields string) *People
 }
 
 // Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to ReadSourceType.CONTACT and
-// ReadSourceType.PROFILE if not set.
+// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
+// READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -4830,7 +4830,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4911,7 +4911,7 @@ func (c *PeopleDeleteContactPhotoCall) Do(opts ...googleapi.CallOption) (*Delete
 	//       "type": "string"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to ReadSourceType.CONTACT and ReadSourceType.PROFILE if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
@@ -4984,8 +4984,8 @@ func (c *PeopleGetCall) RequestMaskIncludeField(requestMaskIncludeField string) 
 }
 
 // Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to ReadSourceType.PROFILE and
-// ReadSourceType.CONTACT if not set.
+// types to return. Defaults to READ_SOURCE_TYPE_PROFILE and
+// READ_SOURCE_TYPE_CONTACT if not set.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -5036,7 +5036,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5126,7 +5126,7 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//       "type": "string"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to ReadSourceType.PROFILE and ReadSourceType.CONTACT if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_PROFILE and READ_SOURCE_TYPE_CONTACT if not set.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
@@ -5223,8 +5223,8 @@ func (c *PeopleGetBatchGetCall) ResourceNames(resourceNames ...string) *PeopleGe
 }
 
 // Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to ReadSourceType.CONTACT and
-// ReadSourceType.PROFILE if not set.
+// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
+// READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -5275,7 +5275,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5359,7 +5359,7 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//       "type": "string"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to ReadSourceType.CONTACT and ReadSourceType.PROFILE if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
@@ -5528,7 +5528,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5803,7 +5803,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6002,8 +6002,8 @@ func (c *PeopleUpdateContactCall) PersonFields(personFields string) *PeopleUpdat
 }
 
 // Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to ReadSourceType.CONTACT and
-// ReadSourceType.PROFILE if not set.
+// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
+// READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -6058,7 +6058,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6144,7 +6144,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "type": "string"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to ReadSourceType.CONTACT and ReadSourceType.PROFILE if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",
@@ -6228,7 +6228,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6410,8 +6410,8 @@ func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectio
 }
 
 // Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to ReadSourceType.CONTACT and
-// ReadSourceType.PROFILE if not set.
+// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
+// READ_SOURCE_TYPE_PROFILE if not set.
 //
 // Possible values:
 //   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -6473,7 +6473,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201024")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6596,7 +6596,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "type": "string"
 	//     },
 	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to ReadSourceType.CONTACT and ReadSourceType.PROFILE if not set.",
+	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
 	//       "enum": [
 	//         "READ_SOURCE_TYPE_UNSPECIFIED",
 	//         "READ_SOURCE_TYPE_PROFILE",

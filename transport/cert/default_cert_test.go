@@ -17,7 +17,7 @@ func TestGetClientCertificateSuccess(t *testing.T) {
 		t.Error(err)
 	}
 	if cert.Certificate == nil {
-		t.Error("getClientCertificate: want non-nil cert, got nil")
+		t.Error("getClientCertificate: want non-nil Certificate, got nil")
 	}
 	if cert.PrivateKey == nil {
 		t.Error("getClientCertificate: want non-nil PrivateKey, got nil")
@@ -86,6 +86,9 @@ func TestCertificateCaching(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+	if cert == nil {
+		t.Error("getClientCertificate: want non-nil cert, got nil")
+	}
 	if defaultSourceCachedCert == nil {
 		t.Error("getClientCertificate: want non-nil defaultSourceCachedCert, got nil")
 	}
@@ -95,7 +98,7 @@ func TestCertificateCaching(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if bytes.Compare(cert.Certificate[0], defaultSourceCachedCert.Certificate[0]) != 0 {
+	if !bytes.Equal(cert.Certificate[0], defaultSourceCachedCert.Certificate[0]) {
 		t.Error("getClientCertificate: want cached Certificate, got different Certificate")
 	}
 	if cert.PrivateKey != defaultSourceCachedCert.PrivateKey {

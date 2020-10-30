@@ -11,7 +11,6 @@ import (
 	"errors"
 	"fmt"
 	"net"
-	"os"
 	"syscall"
 	"testing"
 	"time"
@@ -19,6 +18,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/sys/unix"
 	"google.golang.org/api/option"
+	"google.golang.org/api/option/internaloption"
 	"google.golang.org/grpc"
 )
 
@@ -90,9 +90,6 @@ func getTCPUserTimeout(conn net.Conn) (int, error) {
 
 // Check that tcp timeout dialer overwrites user defined dialer.
 func TestDialWithDirectPathEnabled(t *testing.T) {
-	os.Setenv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "example,other")
-	defer os.Clearenv()
-
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
 
 	userDialer := grpc.WithDialer(func(addr string, timeout time.Duration) (net.Conn, error) {
@@ -104,7 +101,8 @@ func TestDialWithDirectPathEnabled(t *testing.T) {
 	conn, err := Dial(ctx,
 		option.WithTokenSource(oauth2.StaticTokenSource(nil)), // No creds.
 		option.WithGRPCDialOption(userDialer),
-		option.WithEndpoint("example.google.com:443"))
+		option.WithEndpoint("example.google.com:443"),
+		internaloption.EnableDirectPath(true))
 	if err != nil {
 		t.Errorf("DialGRPC: error %v, want nil", err)
 	}

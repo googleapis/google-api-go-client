@@ -168,6 +168,118 @@ type V1Service struct {
 	s *Service
 }
 
+// AccessSelector: Specifies roles and/or permissions to analyze, to
+// determine both the identities possessing them and the resources they
+// control. If multiple values are specified, results will include roles
+// or permissions matching any of them. The total number of roles and
+// permissions should be equal or less than 10.
+type AccessSelector struct {
+	// Permissions: Optional. The permissions to appear in result.
+	Permissions []string `json:"permissions,omitempty"`
+
+	// Roles: Optional. The roles to appear in result.
+	Roles []string `json:"roles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permissions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzeIamPolicyLongrunningRequest: A request message for
+// AssetService.AnalyzeIamPolicyLongrunning.
+type AnalyzeIamPolicyLongrunningRequest struct {
+	// AnalysisQuery: Required. The request query.
+	AnalysisQuery *IamPolicyAnalysisQuery `json:"analysisQuery,omitempty"`
+
+	// OutputConfig: Required. Output configuration indicating where the
+	// results will be output to.
+	OutputConfig *IamPolicyAnalysisOutputConfig `json:"outputConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisQuery") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisQuery") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeIamPolicyLongrunningRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeIamPolicyLongrunningRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AnalyzeIamPolicyResponse: A response message for
+// AssetService.AnalyzeIamPolicy.
+type AnalyzeIamPolicyResponse struct {
+	// FullyExplored: Represents whether all entries in the main_analysis
+	// and service_account_impersonation_analysis have been fully explored
+	// to answer the query in the request.
+	FullyExplored bool `json:"fullyExplored,omitempty"`
+
+	// MainAnalysis: The main analysis that matches the original request.
+	MainAnalysis *IamPolicyAnalysis `json:"mainAnalysis,omitempty"`
+
+	// ServiceAccountImpersonationAnalysis: The service account
+	// impersonation analysis if
+	// AnalyzeIamPolicyRequest.analyze_service_account_impersonation is
+	// enabled.
+	ServiceAccountImpersonationAnalysis []*IamPolicyAnalysis `json:"serviceAccountImpersonationAnalysis,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "FullyExplored") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullyExplored") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeIamPolicyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeIamPolicyResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Asset: An asset in Google Cloud. An asset can be any resource in the
 // Google Cloud [resource
 // hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platfo
@@ -916,6 +1028,328 @@ type GcsDestination struct {
 
 func (s *GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1Access: An IAM role or permission under analysis.
+type GoogleCloudAssetV1Access struct {
+	// AnalysisState: The analysis state of this access.
+	AnalysisState *IamPolicyAnalysisState `json:"analysisState,omitempty"`
+
+	// Permission: The permission.
+	Permission string `json:"permission,omitempty"`
+
+	// Role: The role.
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1Access) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1Access
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1AccessControlList: An access control list, derived
+// from the above IAM policy binding, which contains a set of resources
+// and accesses. May include one item from each set to compose an access
+// control entry. NOTICE that there could be multiple access control
+// lists for one IAM policy binding. The access control lists are
+// created based on resource and access combinations. For example,
+// assume we have the following cases in one IAM policy binding: -
+// Permission P1 and P2 apply to resource R1 and R2; - Permission P3
+// applies to resource R2 and R3; This will result in the following
+// access control lists: - AccessControlList 1: [R1, R2], [P1, P2] -
+// AccessControlList 2: [R2, R3], [P3]
+type GoogleCloudAssetV1AccessControlList struct {
+	// Accesses: The accesses that match one of the following conditions: -
+	// The access_selector, if it is specified in request; - Otherwise,
+	// access specifiers reachable from the policy binding's role.
+	Accesses []*GoogleCloudAssetV1Access `json:"accesses,omitempty"`
+
+	// ResourceEdges: Resource edges of the graph starting from the policy
+	// attached resource to any descendant resources. The Edge.source_node
+	// contains the full resource name of a parent resource and
+	// Edge.target_node contains the full resource name of a child resource.
+	// This field is present only if the output_resource_edges option is
+	// enabled in request.
+	ResourceEdges []*GoogleCloudAssetV1Edge `json:"resourceEdges,omitempty"`
+
+	// Resources: The resources that match one of the following conditions:
+	// - The resource_selector, if it is specified in request; - Otherwise,
+	// resources reachable from the policy attached resource.
+	Resources []*GoogleCloudAssetV1Resource `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Accesses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Accesses") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1AccessControlList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1AccessControlList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1BigQueryDestination: A BigQuery destination.
+type GoogleCloudAssetV1BigQueryDestination struct {
+	// Dataset: Required. The BigQuery dataset in format
+	// "projects/projectId/datasets/datasetId", to which the analysis
+	// results should be exported. If this dataset does not exist, the
+	// export call will return an INVALID_ARGUMENT error.
+	Dataset string `json:"dataset,omitempty"`
+
+	// PartitionKey: The partition key for BigQuery partitioned table.
+	//
+	// Possible values:
+	//   "PARTITION_KEY_UNSPECIFIED" - Unspecified partition key. Tables
+	// won't be partitioned using this option.
+	//   "REQUEST_TIME" - The time when the request is received. If
+	// specified as partition key, the result table(s) is partitoned by the
+	// RequestTime column, an additional timestamp column representing when
+	// the request was received.
+	PartitionKey string `json:"partitionKey,omitempty"`
+
+	// TablePrefix: Required. The prefix of the BigQuery tables to which the
+	// analysis results will be written. Tables will be created based on
+	// this table_prefix if not exist: * _analysis table will contain export
+	// operation's metadata. * _analysis_result will contain all the
+	// IamPolicyAnalysisResult. When [partition_key] is specified, both
+	// tables will be partitioned based on the [partition_key].
+	TablePrefix string `json:"tablePrefix,omitempty"`
+
+	// WriteDisposition: Optional. Specifies the action that occurs if the
+	// destination table or partition already exists. The following values
+	// are supported: * WRITE_TRUNCATE: If the table or partition already
+	// exists, BigQuery overwrites the entire table or all the partitions
+	// data. * WRITE_APPEND: If the table or partition already exists,
+	// BigQuery appends the data to the table or the latest partition. *
+	// WRITE_EMPTY: If the table already exists and contains data, an error
+	// is returned. The default value is WRITE_APPEND. Each action is atomic
+	// and only occurs if BigQuery is able to complete the job successfully.
+	// Details are at
+	// https://cloud.google.com/bigquery/docs/loading-data-local#appending_to_or_overwriting_a_table_using_a_local_file.
+	WriteDisposition string `json:"writeDisposition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dataset") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1BigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1BigQueryDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1Edge: A directional edge.
+type GoogleCloudAssetV1Edge struct {
+	// SourceNode: The source node of the edge. For example, it could be a
+	// full resource name for a resource node or an email of an identity.
+	SourceNode string `json:"sourceNode,omitempty"`
+
+	// TargetNode: The target node of the edge. For example, it could be a
+	// full resource name for a resource node or an email of an identity.
+	TargetNode string `json:"targetNode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SourceNode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SourceNode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1Edge) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1Edge
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1GcsDestination: A Cloud Storage location.
+type GoogleCloudAssetV1GcsDestination struct {
+	// Uri: Required. The uri of the Cloud Storage object. It's the same uri
+	// that is used by gsutil. For example: "gs://bucket_name/object_name".
+	// See [Quickstart: Using the gsutil tool]
+	// (https://cloud.google.com/storage/docs/quickstart-gsutil) for
+	// examples.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1GcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1GcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1Identity: An identity under analysis.
+type GoogleCloudAssetV1Identity struct {
+	// AnalysisState: The analysis state of this identity.
+	AnalysisState *IamPolicyAnalysisState `json:"analysisState,omitempty"`
+
+	// Name: The identity name in any form of members appear in [IAM policy
+	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding),
+	// such as: - user:foo@google.com - group:group1@google.com -
+	// serviceAccount:s1@prj1.iam.gserviceaccount.com -
+	// projectOwner:some_project_id - domain:google.com - allUsers - etc.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1Identity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1Identity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1IdentityList: The identities and group edges.
+type GoogleCloudAssetV1IdentityList struct {
+	// GroupEdges: Group identity edges of the graph starting from the
+	// binding's group members to any node of the identities. The
+	// Edge.source_node contains a group, such as `group:parent@google.com`.
+	// The Edge.target_node contains a member of the group, such as
+	// `group:child@google.com` or `user:foo@google.com`. This field is
+	// present only if the output_group_edges option is enabled in request.
+	GroupEdges []*GoogleCloudAssetV1Edge `json:"groupEdges,omitempty"`
+
+	// Identities: Only the identities that match one of the following
+	// conditions will be presented: - The identity_selector, if it is
+	// specified in request; - Otherwise, identities reachable from the
+	// policy binding's members.
+	Identities []*GoogleCloudAssetV1Identity `json:"identities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GroupEdges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GroupEdges") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1IdentityList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1IdentityList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssetV1Resource: A Google Cloud resource under analysis.
+type GoogleCloudAssetV1Resource struct {
+	// AnalysisState: The analysis state of this resource.
+	AnalysisState *IamPolicyAnalysisState `json:"analysisState,omitempty"`
+
+	// FullResourceName: The [full resource
+	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
+	// at)
+	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssetV1Resource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssetV1Resource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1737,6 +2171,306 @@ func (s *GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IamPolicyAnalysis: An analysis message to group the query and
+// results.
+type IamPolicyAnalysis struct {
+	// AnalysisQuery: The analysis query.
+	AnalysisQuery *IamPolicyAnalysisQuery `json:"analysisQuery,omitempty"`
+
+	// AnalysisResults: A list of IamPolicyAnalysisResult that matches the
+	// analysis query, or empty if no result is found.
+	AnalysisResults []*IamPolicyAnalysisResult `json:"analysisResults,omitempty"`
+
+	// FullyExplored: Represents whether all entries in the analysis_results
+	// have been fully explored to answer the query.
+	FullyExplored bool `json:"fullyExplored,omitempty"`
+
+	// NonCriticalErrors: A list of non-critical errors happened during the
+	// query handling.
+	NonCriticalErrors []*IamPolicyAnalysisState `json:"nonCriticalErrors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalysisQuery") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalysisQuery") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IamPolicyAnalysis) MarshalJSON() ([]byte, error) {
+	type NoMethod IamPolicyAnalysis
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IamPolicyAnalysisOutputConfig: Output configuration for export IAM
+// policy analysis destination.
+type IamPolicyAnalysisOutputConfig struct {
+	// BigqueryDestination: Destination on BigQuery.
+	BigqueryDestination *GoogleCloudAssetV1BigQueryDestination `json:"bigqueryDestination,omitempty"`
+
+	// GcsDestination: Destination on Cloud Storage.
+	GcsDestination *GoogleCloudAssetV1GcsDestination `json:"gcsDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigqueryDestination")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigqueryDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IamPolicyAnalysisOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IamPolicyAnalysisOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IamPolicyAnalysisQuery: IAM policy analysis query message.
+type IamPolicyAnalysisQuery struct {
+	// AccessSelector: Optional. Specifies roles or permissions for
+	// analysis. This is optional.
+	AccessSelector *AccessSelector `json:"accessSelector,omitempty"`
+
+	// IdentitySelector: Optional. Specifies an identity for analysis.
+	IdentitySelector *IdentitySelector `json:"identitySelector,omitempty"`
+
+	// Options: Optional. The query options.
+	Options *Options `json:"options,omitempty"`
+
+	// ResourceSelector: Optional. Specifies a resource for analysis.
+	ResourceSelector *ResourceSelector `json:"resourceSelector,omitempty"`
+
+	// Scope: Required. The relative name of the root asset. Only resources
+	// and IAM policies within the scope will be analyzed. This can only be
+	// an organization number (such as "organizations/123"), a folder number
+	// (such as "folders/123"), a project ID (such as
+	// "projects/my-project-id"), or a project number (such as
+	// "projects/12345"). To know how to get organization id, visit [here
+	// ](https://cloud.google.com/resource-manager/docs/creating-managing-org
+	// anization#retrieving_your_organization_id). To know how to get folder
+	// or project id, visit [here
+	// ](https://cloud.google.com/resource-manager/docs/creating-managing-fol
+	// ders#viewing_or_listing_folders_and_projects).
+	Scope string `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessSelector") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessSelector") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IamPolicyAnalysisQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod IamPolicyAnalysisQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IamPolicyAnalysisResult: IAM Policy analysis result, consisting of
+// one IAM policy binding and derived access control lists.
+type IamPolicyAnalysisResult struct {
+	// AccessControlLists: The access control lists derived from the
+	// iam_binding that match or potentially match resource and access
+	// selectors specified in the request.
+	AccessControlLists []*GoogleCloudAssetV1AccessControlList `json:"accessControlLists,omitempty"`
+
+	// AttachedResourceFullName: The [full resource
+	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
+	// at) of the resource to which the iam_binding policy attaches.
+	AttachedResourceFullName string `json:"attachedResourceFullName,omitempty"`
+
+	// FullyExplored: Represents whether all analyses on the iam_binding
+	// have successfully finished.
+	FullyExplored bool `json:"fullyExplored,omitempty"`
+
+	// IamBinding: The Cloud IAM policy binding under analysis.
+	IamBinding *Binding `json:"iamBinding,omitempty"`
+
+	// IdentityList: The identity list derived from members of the
+	// iam_binding that match or potentially match identity selector
+	// specified in the request.
+	IdentityList *GoogleCloudAssetV1IdentityList `json:"identityList,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessControlLists")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessControlLists") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IamPolicyAnalysisResult) MarshalJSON() ([]byte, error) {
+	type NoMethod IamPolicyAnalysisResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IamPolicyAnalysisState: Represents the detailed state of an entity
+// under analysis, such as a resource, an identity or an access.
+type IamPolicyAnalysisState struct {
+	// Cause: The human-readable description of the cause of failure.
+	Cause string `json:"cause,omitempty"`
+
+	// Code: The Google standard error code that best describes the state.
+	// For example: - OK means the analysis on this entity has been
+	// successfully finished; - PERMISSION_DENIED means an access denied
+	// error is encountered; - DEADLINE_EXCEEDED means the analysis on this
+	// entity hasn't been started in time;
+	//
+	// Possible values:
+	//   "OK" - Not an error; returned on success HTTP Mapping: 200 OK
+	//   "CANCELLED" - The operation was cancelled, typically by the caller.
+	// HTTP Mapping: 499 Client Closed Request
+	//   "UNKNOWN" - Unknown error. For example, this error may be returned
+	// when a `Status` value received from another address space belongs to
+	// an error space that is not known in this address space. Also errors
+	// raised by APIs that do not return enough error information may be
+	// converted to this error. HTTP Mapping: 500 Internal Server Error
+	//   "INVALID_ARGUMENT" - The client specified an invalid argument. Note
+	// that this differs from `FAILED_PRECONDITION`. `INVALID_ARGUMENT`
+	// indicates arguments that are problematic regardless of the state of
+	// the system (e.g., a malformed file name). HTTP Mapping: 400 Bad
+	// Request
+	//   "DEADLINE_EXCEEDED" - The deadline expired before the operation
+	// could complete. For operations that change the state of the system,
+	// this error may be returned even if the operation has completed
+	// successfully. For example, a successful response from a server could
+	// have been delayed long enough for the deadline to expire. HTTP
+	// Mapping: 504 Gateway Timeout
+	//   "NOT_FOUND" - Some requested entity (e.g., file or directory) was
+	// not found. Note to server developers: if a request is denied for an
+	// entire class of users, such as gradual feature rollout or
+	// undocumented allowlist, `NOT_FOUND` may be used. If a request is
+	// denied for some users within a class of users, such as user-based
+	// access control, `PERMISSION_DENIED` must be used. HTTP Mapping: 404
+	// Not Found
+	//   "ALREADY_EXISTS" - The entity that a client attempted to create
+	// (e.g., file or directory) already exists. HTTP Mapping: 409 Conflict
+	//   "PERMISSION_DENIED" - The caller does not have permission to
+	// execute the specified operation. `PERMISSION_DENIED` must not be used
+	// for rejections caused by exhausting some resource (use
+	// `RESOURCE_EXHAUSTED` instead for those errors). `PERMISSION_DENIED`
+	// must not be used if the caller can not be identified (use
+	// `UNAUTHENTICATED` instead for those errors). This error code does not
+	// imply the request is valid or the requested entity exists or
+	// satisfies other pre-conditions. HTTP Mapping: 403 Forbidden
+	//   "UNAUTHENTICATED" - The request does not have valid authentication
+	// credentials for the operation. HTTP Mapping: 401 Unauthorized
+	//   "RESOURCE_EXHAUSTED" - Some resource has been exhausted, perhaps a
+	// per-user quota, or perhaps the entire file system is out of space.
+	// HTTP Mapping: 429 Too Many Requests
+	//   "FAILED_PRECONDITION" - The operation was rejected because the
+	// system is not in a state required for the operation's execution. For
+	// example, the directory to be deleted is non-empty, an rmdir operation
+	// is applied to a non-directory, etc. Service implementors can use the
+	// following guidelines to decide between `FAILED_PRECONDITION`,
+	// `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can
+	// retry just the failing call. (b) Use `ABORTED` if the client should
+	// retry at a higher level (e.g., when a client-specified test-and-set
+	// fails, indicating the client should restart a read-modify-write
+	// sequence). (c) Use `FAILED_PRECONDITION` if the client should not
+	// retry until the system state has been explicitly fixed. E.g., if an
+	// "rmdir" fails because the directory is non-empty,
+	// `FAILED_PRECONDITION` should be returned since the client should not
+	// retry unless the files are deleted from the directory. HTTP Mapping:
+	// 400 Bad Request
+	//   "ABORTED" - The operation was aborted, typically due to a
+	// concurrency issue such as a sequencer check failure or transaction
+	// abort. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 409 Conflict
+	//   "OUT_OF_RANGE" - The operation was attempted past the valid range.
+	// E.g., seeking or reading past end-of-file. Unlike `INVALID_ARGUMENT`,
+	// this error indicates a problem that may be fixed if the system state
+	// changes. For example, a 32-bit file system will generate
+	// `INVALID_ARGUMENT` if asked to read at an offset that is not in the
+	// range [0,2^32-1], but it will generate `OUT_OF_RANGE` if asked to
+	// read from an offset past the current file size. There is a fair bit
+	// of overlap between `FAILED_PRECONDITION` and `OUT_OF_RANGE`. We
+	// recommend using `OUT_OF_RANGE` (the more specific error) when it
+	// applies so that callers who are iterating through a space can easily
+	// look for an `OUT_OF_RANGE` error to detect when they are done. HTTP
+	// Mapping: 400 Bad Request
+	//   "UNIMPLEMENTED" - The operation is not implemented or is not
+	// supported/enabled in this service. HTTP Mapping: 501 Not Implemented
+	//   "INTERNAL" - Internal errors. This means that some invariants
+	// expected by the underlying system have been broken. This error code
+	// is reserved for serious errors. HTTP Mapping: 500 Internal Server
+	// Error
+	//   "UNAVAILABLE" - The service is currently unavailable. This is most
+	// likely a transient condition, which can be corrected by retrying with
+	// a backoff. Note that it is not always safe to retry non-idempotent
+	// operations. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 503 Service Unavailable
+	//   "DATA_LOSS" - Unrecoverable data loss or corruption. HTTP Mapping:
+	// 500 Internal Server Error
+	Code string `json:"code,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cause") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cause") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IamPolicyAnalysisState) MarshalJSON() ([]byte, error) {
+	type NoMethod IamPolicyAnalysisState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IamPolicySearchResult: A result of IAM Policy search, containing
 // information of an IAM policy.
 type IamPolicySearchResult struct {
@@ -1794,6 +2528,43 @@ type IamPolicySearchResult struct {
 
 func (s *IamPolicySearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod IamPolicySearchResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentitySelector: Specifies an identity for which to determine
+// resource access, based on roles assigned either directly to them or
+// to the groups they belong to, directly or indirectly.
+type IdentitySelector struct {
+	// Identity: Required. The identity appear in the form of members in
+	// [IAM policy
+	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The
+	// examples of supported forms are: "user:mike@example.com",
+	// "group:admins@example.com", "domain:google.com",
+	// "serviceAccount:my-project-id@appspot.gserviceaccount.com". Notice
+	// that wildcard characters (such as * and ?) are not supported. You
+	// must give a specific identity.
+	Identity string `json:"identity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identity") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentitySelector) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentitySelector
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1887,6 +2658,98 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Options: Contains query options.
+type Options struct {
+	// AnalyzeServiceAccountImpersonation: Optional. If true, the response
+	// will include access analysis from identities to resources via service
+	// account impersonation. This is a very expensive operation, because
+	// many derived queries will be executed. We highly recommend you use
+	// AssetService.AnalyzeIamPolicyLongrunning rpc instead. For example, if
+	// the request analyzes for which resources user A has permission P, and
+	// there's an IAM policy states user A has
+	// iam.serviceAccounts.getAccessToken permission to a service account
+	// SA, and there's another IAM policy states service account SA has
+	// permission P to a GCP folder F, then user A potentially has access to
+	// the GCP folder F. And those advanced analysis results will be
+	// included in
+	// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
+	// Another example, if the request analyzes for who has permission P to
+	// a GCP folder F, and there's an IAM policy states user A has
+	// iam.serviceAccounts.actAs permission to a service account SA, and
+	// there's another IAM policy states service account SA has permission P
+	// to the GCP folder F, then user A potentially has access to the GCP
+	// folder F. And those advanced analysis results will be included in
+	// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
+	// Default is false.
+	AnalyzeServiceAccountImpersonation bool `json:"analyzeServiceAccountImpersonation,omitempty"`
+
+	// ExpandGroups: Optional. If true, the identities section of the result
+	// will expand any Google groups appearing in an IAM policy binding. If
+	// IamPolicyAnalysisQuery.identity_selector is specified, the identity
+	// in the result will be determined by the selector, and this flag is
+	// not allowed to set. Default is false.
+	ExpandGroups bool `json:"expandGroups,omitempty"`
+
+	// ExpandResources: Optional. If true and
+	// IamPolicyAnalysisQuery.resource_selector is not specified, the
+	// resource section of the result will expand any resource attached to
+	// an IAM policy to include resources lower in the resource hierarchy.
+	// For example, if the request analyzes for which resources user A has
+	// permission P, and the results include an IAM policy with P on a GCP
+	// folder, the results will also include resources in that folder with
+	// permission P. If true and IamPolicyAnalysisQuery.resource_selector is
+	// specified, the resource section of the result will expand the
+	// specified resource to include resources lower in the resource
+	// hierarchy. Only project or lower resources are supported. Folder and
+	// organization resource cannot be used together with this option. For
+	// example, if the request analyzes for which users have permission P on
+	// a GCP project with this option enabled, the results will include all
+	// users who have permission P on that project or any lower resource.
+	// Default is false.
+	ExpandResources bool `json:"expandResources,omitempty"`
+
+	// ExpandRoles: Optional. If true, the access section of result will
+	// expand any roles appearing in IAM policy bindings to include their
+	// permissions. If IamPolicyAnalysisQuery.access_selector is specified,
+	// the access section of the result will be determined by the selector,
+	// and this flag is not allowed to set. Default is false.
+	ExpandRoles bool `json:"expandRoles,omitempty"`
+
+	// OutputGroupEdges: Optional. If true, the result will output group
+	// identity edges, starting from the binding's group members, to any
+	// expanded identities. Default is false.
+	OutputGroupEdges bool `json:"outputGroupEdges,omitempty"`
+
+	// OutputResourceEdges: Optional. If true, the result will output
+	// resource edges, starting from the policy attached resource, to any
+	// expanded resources. Default is false.
+	OutputResourceEdges bool `json:"outputResourceEdges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AnalyzeServiceAccountImpersonation") to unconditionally include in
+	// API requests. By default, fields with empty values are omitted from
+	// API requests. However, any non-pointer, non-interface field appearing
+	// in ForceSendFields will be sent to the server regardless of whether
+	// the field is empty or not. This may be used to include empty fields
+	// in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AnalyzeServiceAccountImpersonation") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Options) MarshalJSON() ([]byte, error) {
+	type NoMethod Options
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2294,6 +3157,41 @@ func (s *ResourceSearchResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ResourceSelector: Specifies the resource to analyze for access
+// policies, which may be set directly on the resource, or on ancestors
+// such as organizations, folders or projects.
+type ResourceSelector struct {
+	// FullResourceName: Required. The [full resource name]
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of a resource of [supported resource
+	// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
+	// ypes#analyzable_asset_types).
+	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullResourceName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SearchAllIamPoliciesResponse: Search all IAM policies response.
 type SearchAllIamPoliciesResponse struct {
 	// NextPageToken: Set if there are more results than those appearing in
@@ -2585,7 +3483,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2723,7 +3621,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2864,7 +3762,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3008,7 +3906,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3143,7 +4041,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3294,7 +4192,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3373,6 +4271,503 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.analyzeIamPolicy":
+
+type V1AnalyzeIamPolicyCall struct {
+	s            *Service
+	scope        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AnalyzeIamPolicy: Analyzes IAM policies to answer which identities
+// have what accesses on which resources.
+func (r *V1Service) AnalyzeIamPolicy(scope string) *V1AnalyzeIamPolicyCall {
+	c := &V1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	return c
+}
+
+// AnalysisQueryAccessSelectorPermissions sets the optional parameter
+// "analysisQuery.accessSelector.permissions": The permissions to appear
+// in result.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorPermissions(analysisQueryAccessSelectorPermissions ...string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.SetMulti("analysisQuery.accessSelector.permissions", append([]string{}, analysisQueryAccessSelectorPermissions...))
+	return c
+}
+
+// AnalysisQueryAccessSelectorRoles sets the optional parameter
+// "analysisQuery.accessSelector.roles": The roles to appear in result.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorRoles(analysisQueryAccessSelectorRoles ...string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.SetMulti("analysisQuery.accessSelector.roles", append([]string{}, analysisQueryAccessSelectorRoles...))
+	return c
+}
+
+// AnalysisQueryIdentitySelectorIdentity sets the optional parameter
+// "analysisQuery.identitySelector.identity": Required. The identity
+// appear in the form of members in [IAM policy
+// binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The
+// examples of supported forms are: "user:mike@example.com",
+// "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com". Notice
+// that wildcard characters (such as * and ?) are not supported. You
+// must give a specific identity.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(analysisQueryIdentitySelectorIdentity string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.identitySelector.identity", analysisQueryIdentitySelectorIdentity)
+	return c
+}
+
+// AnalysisQueryOptionsAnalyzeServiceAccountImpersonation sets the
+// optional parameter
+// "analysisQuery.options.analyzeServiceAccountImpersonation": If true,
+// the response will include access analysis from identities to
+// resources via service account impersonation. This is a very expensive
+// operation, because many derived queries will be executed. We highly
+// recommend you use AssetService.AnalyzeIamPolicyLongrunning rpc
+// instead. For example, if the request analyzes for which resources
+// user A has permission P, and there's an IAM policy states user A has
+// iam.serviceAccounts.getAccessToken permission to a service account
+// SA, and there's another IAM policy states service account SA has
+// permission P to a GCP folder F, then user A potentially has access to
+// the GCP folder F. And those advanced analysis results will be
+// included in
+// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
+// Another example, if the request analyzes for who has permission P to
+// a GCP folder F, and there's an IAM policy states user A has
+// iam.serviceAccounts.actAs permission to a service account SA, and
+// there's another IAM policy states service account SA has permission P
+// to the GCP folder F, then user A potentially has access to the GCP
+// folder F. And those advanced analysis results will be included in
+// AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
+// Default is false.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsAnalyzeServiceAccountImpersonation(analysisQueryOptionsAnalyzeServiceAccountImpersonation bool) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.options.analyzeServiceAccountImpersonation", fmt.Sprint(analysisQueryOptionsAnalyzeServiceAccountImpersonation))
+	return c
+}
+
+// AnalysisQueryOptionsExpandGroups sets the optional parameter
+// "analysisQuery.options.expandGroups": If true, the identities section
+// of the result will expand any Google groups appearing in an IAM
+// policy binding. If IamPolicyAnalysisQuery.identity_selector is
+// specified, the identity in the result will be determined by the
+// selector, and this flag is not allowed to set. Default is false.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandGroups(analysisQueryOptionsExpandGroups bool) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.options.expandGroups", fmt.Sprint(analysisQueryOptionsExpandGroups))
+	return c
+}
+
+// AnalysisQueryOptionsExpandResources sets the optional parameter
+// "analysisQuery.options.expandResources": If true and
+// IamPolicyAnalysisQuery.resource_selector is not specified, the
+// resource section of the result will expand any resource attached to
+// an IAM policy to include resources lower in the resource hierarchy.
+// For example, if the request analyzes for which resources user A has
+// permission P, and the results include an IAM policy with P on a GCP
+// folder, the results will also include resources in that folder with
+// permission P. If true and IamPolicyAnalysisQuery.resource_selector is
+// specified, the resource section of the result will expand the
+// specified resource to include resources lower in the resource
+// hierarchy. Only project or lower resources are supported. Folder and
+// organization resource cannot be used together with this option. For
+// example, if the request analyzes for which users have permission P on
+// a GCP project with this option enabled, the results will include all
+// users who have permission P on that project or any lower resource.
+// Default is false.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandResources(analysisQueryOptionsExpandResources bool) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.options.expandResources", fmt.Sprint(analysisQueryOptionsExpandResources))
+	return c
+}
+
+// AnalysisQueryOptionsExpandRoles sets the optional parameter
+// "analysisQuery.options.expandRoles": If true, the access section of
+// result will expand any roles appearing in IAM policy bindings to
+// include their permissions. If IamPolicyAnalysisQuery.access_selector
+// is specified, the access section of the result will be determined by
+// the selector, and this flag is not allowed to set. Default is false.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandRoles(analysisQueryOptionsExpandRoles bool) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.options.expandRoles", fmt.Sprint(analysisQueryOptionsExpandRoles))
+	return c
+}
+
+// AnalysisQueryOptionsOutputGroupEdges sets the optional parameter
+// "analysisQuery.options.outputGroupEdges": If true, the result will
+// output group identity edges, starting from the binding's group
+// members, to any expanded identities. Default is false.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputGroupEdges(analysisQueryOptionsOutputGroupEdges bool) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.options.outputGroupEdges", fmt.Sprint(analysisQueryOptionsOutputGroupEdges))
+	return c
+}
+
+// AnalysisQueryOptionsOutputResourceEdges sets the optional parameter
+// "analysisQuery.options.outputResourceEdges": If true, the result will
+// output resource edges, starting from the policy attached resource, to
+// any expanded resources. Default is false.
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputResourceEdges(analysisQueryOptionsOutputResourceEdges bool) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.options.outputResourceEdges", fmt.Sprint(analysisQueryOptionsOutputResourceEdges))
+	return c
+}
+
+// AnalysisQueryResourceSelectorFullResourceName sets the optional
+// parameter "analysisQuery.resourceSelector.fullResourceName":
+// Required. The [full resource name]
+// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+// of a resource of [supported resource
+// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
+// ypes#analyzable_asset_types).
+func (c *V1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(analysisQueryResourceSelectorFullResourceName string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("analysisQuery.resourceSelector.fullResourceName", analysisQueryResourceSelectorFullResourceName)
+	return c
+}
+
+// ExecutionTimeout sets the optional parameter "executionTimeout":
+// Amount of time executable has to complete. See JSON representation of
+// [Duration](https://developers.google.com/protocol-buffers/docs/proto3#
+// json). If this field is set with a value less than the RPC deadline,
+// and the execution of your query hasn't finished in the specified
+// execution timeout, you will get a response with partial result.
+// Otherwise, your query's execution will continue until the RPC
+// deadline. If it's not finished until then, you will get a
+// DEADLINE_EXCEEDED error. Default is empty.
+func (c *V1AnalyzeIamPolicyCall) ExecutionTimeout(executionTimeout string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("executionTimeout", executionTimeout)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeIamPolicyCall) Fields(s ...googleapi.Field) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1AnalyzeIamPolicyCall) IfNoneMatch(entityTag string) *V1AnalyzeIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeIamPolicyCall) Context(ctx context.Context) *V1AnalyzeIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}:analyzeIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeIamPolicy" call.
+// Exactly one of *AnalyzeIamPolicyResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *AnalyzeIamPolicyResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPolicyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AnalyzeIamPolicyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes IAM policies to answer which identities have what accesses on which resources.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.analyzeIamPolicy",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "analysisQuery.accessSelector.permissions": {
+	//       "description": "Optional. The permissions to appear in result.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "analysisQuery.accessSelector.roles": {
+	//       "description": "Optional. The roles to appear in result.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "analysisQuery.identitySelector.identity": {
+	//       "description": "Required. The identity appear in the form of members in [IAM policy binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The examples of supported forms are: \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\". Notice that wildcard characters (such as * and ?) are not supported. You must give a specific identity.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "analysisQuery.options.analyzeServiceAccountImpersonation": {
+	//       "description": "Optional. If true, the response will include access analysis from identities to resources via service account impersonation. This is a very expensive operation, because many derived queries will be executed. We highly recommend you use AssetService.AnalyzeIamPolicyLongrunning rpc instead. For example, if the request analyzes for which resources user A has permission P, and there's an IAM policy states user A has iam.serviceAccounts.getAccessToken permission to a service account SA, and there's another IAM policy states service account SA has permission P to a GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Another example, if the request analyzes for who has permission P to a GCP folder F, and there's an IAM policy states user A has iam.serviceAccounts.actAs permission to a service account SA, and there's another IAM policy states service account SA has permission P to the GCP folder F, then user A potentially has access to the GCP folder F. And those advanced analysis results will be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "analysisQuery.options.expandGroups": {
+	//       "description": "Optional. If true, the identities section of the result will expand any Google groups appearing in an IAM policy binding. If IamPolicyAnalysisQuery.identity_selector is specified, the identity in the result will be determined by the selector, and this flag is not allowed to set. Default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "analysisQuery.options.expandResources": {
+	//       "description": "Optional. If true and IamPolicyAnalysisQuery.resource_selector is not specified, the resource section of the result will expand any resource attached to an IAM policy to include resources lower in the resource hierarchy. For example, if the request analyzes for which resources user A has permission P, and the results include an IAM policy with P on a GCP folder, the results will also include resources in that folder with permission P. If true and IamPolicyAnalysisQuery.resource_selector is specified, the resource section of the result will expand the specified resource to include resources lower in the resource hierarchy. Only project or lower resources are supported. Folder and organization resource cannot be used together with this option. For example, if the request analyzes for which users have permission P on a GCP project with this option enabled, the results will include all users who have permission P on that project or any lower resource. Default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "analysisQuery.options.expandRoles": {
+	//       "description": "Optional. If true, the access section of result will expand any roles appearing in IAM policy bindings to include their permissions. If IamPolicyAnalysisQuery.access_selector is specified, the access section of the result will be determined by the selector, and this flag is not allowed to set. Default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "analysisQuery.options.outputGroupEdges": {
+	//       "description": "Optional. If true, the result will output group identity edges, starting from the binding's group members, to any expanded identities. Default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "analysisQuery.options.outputResourceEdges": {
+	//       "description": "Optional. If true, the result will output resource edges, starting from the policy attached resource, to any expanded resources. Default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "analysisQuery.resourceSelector.fullResourceName": {
+	//       "description": "Required. The [full resource name] (https://cloud.google.com/asset-inventory/docs/resource-name-format) of a resource of [supported resource types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "executionTimeout": {
+	//       "description": "Optional. Amount of time executable has to complete. See JSON representation of [Duration](https://developers.google.com/protocol-buffers/docs/proto3#json). If this field is set with a value less than the RPC deadline, and the execution of your query hasn't finished in the specified execution timeout, you will get a response with partial result. Otherwise, your query's execution will continue until the RPC deadline. If it's not finished until then, you will get a DEADLINE_EXCEEDED error. Default is empty.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scope": {
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}:analyzeIamPolicy",
+	//   "response": {
+	//     "$ref": "AnalyzeIamPolicyResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.analyzeIamPolicyLongrunning":
+
+type V1AnalyzeIamPolicyLongrunningCall struct {
+	s                                  *Service
+	scope                              string
+	analyzeiampolicylongrunningrequest *AnalyzeIamPolicyLongrunningRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// AnalyzeIamPolicyLongrunning: Analyzes IAM policies asynchronously to
+// answer which identities have what accesses on which resources, and
+// writes the analysis results to a Google Cloud Storage or a BigQuery
+// destination. For Cloud Storage destination, the output format is the
+// JSON format that represents a AnalyzeIamPolicyResponse. This method
+// implements the google.longrunning.Operation, which allows you to
+// track the operation status. We recommend intervals of at least 2
+// seconds with exponential backoff retry to poll the operation result.
+// The metadata contains the request to help callers to map responses to
+// requests.
+func (r *V1Service) AnalyzeIamPolicyLongrunning(scope string, analyzeiampolicylongrunningrequest *AnalyzeIamPolicyLongrunningRequest) *V1AnalyzeIamPolicyLongrunningCall {
+	c := &V1AnalyzeIamPolicyLongrunningCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scope = scope
+	c.analyzeiampolicylongrunningrequest = analyzeiampolicylongrunningrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1AnalyzeIamPolicyLongrunningCall) Fields(s ...googleapi.Field) *V1AnalyzeIamPolicyLongrunningCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1AnalyzeIamPolicyLongrunningCall) Context(ctx context.Context) *V1AnalyzeIamPolicyLongrunningCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.analyzeiampolicylongrunningrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scope}:analyzeIamPolicyLongrunning")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scope": c.scope,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.analyzeIamPolicyLongrunning" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *V1AnalyzeIamPolicyLongrunningCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Analyzes IAM policies asynchronously to answer which identities have what accesses on which resources, and writes the analysis results to a Google Cloud Storage or a BigQuery destination. For Cloud Storage destination, the output format is the JSON format that represents a AnalyzeIamPolicyResponse. This method implements the google.longrunning.Operation, which allows you to track the operation status. We recommend intervals of at least 2 seconds with exponential backoff retry to poll the operation result. The metadata contains the request to help callers to map responses to requests.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeIamPolicyLongrunning",
+	//   "httpMethod": "POST",
+	//   "id": "cloudasset.analyzeIamPolicyLongrunning",
+	//   "parameterOrder": [
+	//     "scope"
+	//   ],
+	//   "parameters": {
+	//     "scope": {
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scope}:analyzeIamPolicyLongrunning",
+	//   "request": {
+	//     "$ref": "AnalyzeIamPolicyLongrunningRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -3487,7 +4882,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3669,7 +5064,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3870,7 +5265,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4132,7 +5527,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

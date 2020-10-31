@@ -170,7 +170,9 @@ type TransferOperationsService struct {
 
 // AwsAccessKey: AWS access key (see [AWS Security
 // Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-securit
-// y-credentials.html)).
+// y-credentials.html)). For information on our data retention policy
+// for user credentials, see [User
+// credentials](data-retention#user-credentials).
 type AwsAccessKey struct {
 	// AccessKeyId: Required. AWS access key ID.
 	AccessKeyId string `json:"accessKeyId,omitempty"`
@@ -208,7 +210,9 @@ func (s *AwsAccessKey) MarshalJSON() ([]byte, error) {
 type AwsS3Data struct {
 	// AwsAccessKey: Required. Input only. AWS access key used to sign the
 	// API requests to the AWS S3 bucket. Permissions on the bucket must be
-	// granted to the access ID of the AWS access key.
+	// granted to the access ID of the AWS access key. For information on
+	// our data retention policy for user credentials, see [User
+	// credentials](data-retention#user-credentials).
 	AwsAccessKey *AwsAccessKey `json:"awsAccessKey,omitempty"`
 
 	// BucketName: Required. S3 Bucket name (see [Creating a
@@ -251,7 +255,9 @@ func (s *AwsS3Data) MarshalJSON() ([]byte, error) {
 // -and-referencing-containers--blobs--and-metadata#blob-names).
 type AzureBlobStorageData struct {
 	// AzureCredentials: Required. Input only. Credentials used to
-	// authenticate API requests to Azure.
+	// authenticate API requests to Azure. For information on our data
+	// retention policy for user credentials, see [User
+	// credentials](data-retention#user-credentials).
 	AzureCredentials *AzureCredentials `json:"azureCredentials,omitempty"`
 
 	// Container: Required. The container to transfer from the Azure Storage
@@ -285,7 +291,9 @@ func (s *AzureBlobStorageData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AzureCredentials: Azure credentials
+// AzureCredentials: Azure credentials For information on our data
+// retention policy for user credentials, see [User
+// credentials](data-retention#user-credentials).
 type AzureCredentials struct {
 	// SasToken: Required. Azure shared access signature. (see [Grant
 	// limited access to Azure Storage resources using shared access
@@ -1368,8 +1376,11 @@ type TransferOptions struct {
 	// delete_objects_from_source_after_transfer are mutually exclusive.
 	DeleteObjectsUniqueInSink bool `json:"deleteObjectsUniqueInSink,omitempty"`
 
-	// OverwriteObjectsAlreadyExistingInSink: Whether overwriting objects
-	// that already exist in the sink is allowed.
+	// OverwriteObjectsAlreadyExistingInSink: When to overwrite objects that
+	// already exist in the sink. The default is that only objects that are
+	// different from the source are ovewritten. If true, all objects in the
+	// sink whose name matches an object in the source will be overwritten
+	// with the source object.
 	OverwriteObjectsAlreadyExistingInSink bool `json:"overwriteObjectsAlreadyExistingInSink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1558,7 +1569,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1690,7 +1701,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1827,7 +1838,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1991,7 +2002,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2158,7 +2169,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2316,7 +2327,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2467,7 +2478,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2626,7 +2637,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2800,7 +2811,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2940,7 +2951,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

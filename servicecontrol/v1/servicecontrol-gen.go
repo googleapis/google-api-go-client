@@ -2430,6 +2430,31 @@ func (s *RequestMetadata) MarshalJSON() ([]byte, error) {
 // resource is an addressable (named) entity provided by the destination
 // service. For example, a file stored on a network storage service.
 type Resource struct {
+	// Annotations: Annotations is an unstructured key-value map stored with
+	// a resource that may be set by external tools to store and retrieve
+	// arbitrary metadata. They are not queryable and should be preserved
+	// when modifying objects. More info:
+	// http://kubernetes.io/docs/user-guide/annotations
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CreateTime: Output only. The timestamp when the resource was created.
+	// This may be either the time creation was initiated or when it was
+	// completed.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. The timestamp when the resource was deleted.
+	// If the resource is not deleted, this must be empty.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisplayName: Mutable. The display name set by clients. Must be <= 63
+	// characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Output only. An opaque value that uniquely identifies a version
+	// or generation of a resource. It can be used to confirm that the
+	// client and server agree on the ordering of a resource being written.
+	Etag string `json:"etag,omitempty"`
+
 	// Labels: The labels or tags on the resource, such as AWS resource tags
 	// and Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2463,7 +2488,13 @@ type Resource struct {
 	// resources with resource name reuses. This should be a UUID4.
 	Uid string `json:"uid,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// UpdateTime: Output only. The timestamp when the resource was last
+	// updated. Any change to the resource made by users must refresh this
+	// value. Changes to a resource made by the service should refresh this
+	// value.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2471,10 +2502,10 @@ type Resource struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2916,7 +2947,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3068,7 +3099,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3218,7 +3249,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201029")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -160,15 +160,14 @@
       "id": "admin:datatransfer_v1",
       "name": "admin",
       "version": "datatransfer_v1",
-      "title": "Admin Data Transfer API",
-      "description": "Transfers user data from one user to another.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/admin/datatransfer_v1/rest",
-      "discoveryLink": "./apis/admin/datatransfer_v1/rest",
+      "title": "Admin SDK",
+      "description": "Admin SDK lets administrators of enterprise domains to view and manage resources like user, groups etc. It also provides audit and usage reports of domain.",
+      "discoveryRestUrl": "https://admin.googleapis.com/$discovery/rest?version=datatransfer_v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/admin-sdk/data-transfer/",
+      "documentationLink": "http://developers.google.com/admin-sdk/",
       "preferred": false
     },
     {
@@ -176,15 +175,14 @@
       "id": "admin:directory_v1",
       "name": "admin",
       "version": "directory_v1",
-      "title": "Admin Directory API",
-      "description": "Manages enterprise resources such as users and groups, administrative notifications, security features, and more.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/admin/directory_v1/rest",
-      "discoveryLink": "./apis/admin/directory_v1/rest",
+      "title": "Admin SDK",
+      "description": "Admin SDK lets administrators of enterprise domains to view and manage resources like user, groups etc. It also provides audit and usage reports of domain.",
+      "discoveryRestUrl": "https://admin.googleapis.com/$discovery/rest?version=directory_v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/admin-sdk/directory/",
+      "documentationLink": "http://developers.google.com/admin-sdk/",
       "preferred": false
     },
     {
@@ -192,15 +190,14 @@
       "id": "admin:reports_v1",
       "name": "admin",
       "version": "reports_v1",
-      "title": "Admin Reports API",
-      "description": "Fetches reports for the administrators of G Suite customers about the usage, collaboration, security, and risk for their users.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/admin/reports_v1/rest",
-      "discoveryLink": "./apis/admin/reports_v1/rest",
+      "title": "Admin SDK",
+      "description": "Admin SDK lets administrators of enterprise domains to view and manage resources like user, groups etc. It also provides audit and usage reports of domain.",
+      "discoveryRestUrl": "https://admin.googleapis.com/$discovery/rest?version=reports_v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "/admin-sdk/reports/",
+      "documentationLink": "http://developers.google.com/admin-sdk/",
       "preferred": true
     },
     {
@@ -1587,6 +1584,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "datamigration:v1beta1",
+      "name": "datamigration",
+      "version": "v1beta1",
+      "title": "Database Migration API",
+      "description": "Manage Cloud Database Migration Service resources on Google Cloud Platform.",
+      "discoveryRestUrl": "https://datamigration.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/datamigration/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "dataproc:v1beta2",
       "name": "dataproc",
       "version": "v1beta2",
@@ -1710,7 +1722,7 @@
       "id": "dfareporting:v3.3",
       "name": "dfareporting",
       "version": "v3.3",
-      "title": "DCM/DFA Reporting And Trafficking API",
+      "title": "Campaign Manager 360 API",
       "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
       "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.3",
       "icons": {
@@ -1725,7 +1737,7 @@
       "id": "dfareporting:v3.4",
       "name": "dfareporting",
       "version": "v3.4",
-      "title": "DCM/DFA Reporting And Trafficking API",
+      "title": "Campaign Manager 360 API",
       "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
       "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.4",
       "icons": {
@@ -3215,7 +3227,7 @@
       "name": "privateca",
       "version": "v1beta1",
       "title": "Certificate Authority API",
-      "description": "",
+      "description": "The Certificate Authority Service API is a highly-available, scalable service that enables you to simplify and automate the management of private certificate authorities (CAs) while staying in control of your private keys.\"",
       "discoveryRestUrl": "https://privateca.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3968,18 +3980,14 @@
       "id": "storage:v1",
       "name": "storage",
       "version": "v1",
-      "title": "Cloud Storage JSON API",
-      "description": "Stores and retrieves potentially large, immutable data objects.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/storage/v1/rest",
-      "discoveryLink": "./apis/storage/v1/rest",
+      "title": "Cloud Storage API",
+      "description": "Lets you store and retrieve potentially-large, immutable data objects.",
+      "discoveryRestUrl": "https://storage.googleapis.com/$discovery/rest?version=v1",
       "icons": {
-        "x16": "https://www.google.com/images/icons/product/cloud_storage-16.png",
-        "x32": "https://www.google.com/images/icons/product/cloud_storage-32.png"
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/storage/docs/json_api/",
-      "labels": [
-        "labs"
-      ],
+      "documentationLink": "https://developers.google.com/storage/docs/json_api/v1/",
       "preferred": true
     },
     {

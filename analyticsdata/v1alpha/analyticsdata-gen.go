@@ -879,7 +879,10 @@ type Filter struct {
 	// InListFilter: A filter for in list values.
 	InListFilter *InListFilter `json:"inListFilter,omitempty"`
 
-	// NullFilter: A filter for null values.
+	// NullFilter: A filter for null values. If True, a null dimension value
+	// is matched by this filter. Null filter is commonly used inside a NOT
+	// filter expression. For example, a NOT expression of a null filter
+	// removes rows when a dimension is null.
 	NullFilter bool `json:"nullFilter,omitempty"`
 
 	// NumericFilter: A filter for numeric or date values.
@@ -1609,19 +1612,24 @@ func (s *PivotSelection) MarshalJSON() ([]byte, error) {
 // Property. If any quota for a property is exhausted, all requests to
 // that property will return Resource Exhausted errors.
 type PropertyQuota struct {
-	// ConcurrentRequests: Analytics Properties can send up to 10 concurrent
-	// requests.
+	// ConcurrentRequests: Standard Analytics Properties can send up to 10
+	// concurrent requests; Analytics 360 Properties can use up to 50
+	// concurrent requests.
 	ConcurrentRequests *QuotaStatus `json:"concurrentRequests,omitempty"`
 
-	// ServerErrorsPerProjectPerHour: Analytics Properties and cloud project
-	// pairs can have up to 10 server errors per hour.
+	// ServerErrorsPerProjectPerHour: Standard Analytics Properties and
+	// cloud project pairs can have up to 10 server errors per hour;
+	// Analytics 360 Properties and cloud project pairs can have up to 50
+	// server errors per hour.
 	ServerErrorsPerProjectPerHour *QuotaStatus `json:"serverErrorsPerProjectPerHour,omitempty"`
 
-	// TokensPerDay: Analytics Properties can use up to 25,000 tokens per
+	// TokensPerDay: Standard Analytics Properties can use up to 25,000
+	// tokens per day; Analytics 360 Properties can use 250,000 tokens per
 	// day. Most requests consume fewer than 10 tokens.
 	TokensPerDay *QuotaStatus `json:"tokensPerDay,omitempty"`
 
-	// TokensPerHour: Analytics Properties can use up to 5,000 tokens per
+	// TokensPerHour: Standard Analytics Properties can use up to 5,000
+	// tokens per day; Analytics 360 Properties can use 50,000 tokens per
 	// day. An API request consumes a single number of tokens, and that
 	// number is deducted from both the hourly and daily quotas.
 	TokensPerHour *QuotaStatus `json:"tokensPerHour,omitempty"`
@@ -1715,11 +1723,12 @@ func (s *ResponseMetaData) MarshalJSON() ([]byte, error) {
 }
 
 // Row: Report data for each row. For example if RunReportRequest
-// contains: ```none dimensions { name: "eventName" } dimensions { name:
-// "countryId" } metrics { name: "eventCount" } ``` One row with
-// 'in_app_purchase' as the eventName, 'us' as the countryId, and 15 as
-// the eventCount, would be: ```none dimension_values { name:
-// 'in_app_purchase' name: 'us' } metric_values { int64_value: 15 } ```
+// contains: ```none "dimensions": [ { "name": "eventName" }, { "name":
+// "countryId" } ], "metrics": [ { "name": "eventCount" } ] ``` One row
+// with 'in_app_purchase' as the eventName, 'JP' as the countryId, and
+// 15 as the eventCount, would be: ```none "dimensionValues": [ {
+// "value": "in_app_purchase" }, { "value": "JP" } ], "metricValues": [
+// { "value": "15" } ] ```
 type Row struct {
 	// DimensionValues: List of requested dimension values. In a
 	// PivotReport, dimension_values are only listed for dimensions included
@@ -1903,6 +1912,136 @@ type RunPivotReportResponse struct {
 
 func (s *RunPivotReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunPivotReportResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RunRealtimeReportRequest: The request to generate a realtime report.
+type RunRealtimeReportRequest struct {
+	// DimensionFilter: The filter clause of dimensions. Dimensions must be
+	// requested to be used in this filter. Metrics cannot be used in this
+	// filter.
+	DimensionFilter *FilterExpression `json:"dimensionFilter,omitempty"`
+
+	// Dimensions: The dimensions requested and displayed.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
+
+	// Limit: The number of rows to return. If unspecified, 10 rows are
+	// returned. If -1, all rows are returned.
+	Limit int64 `json:"limit,omitempty,string"`
+
+	// MetricAggregations: Aggregation of metrics. Aggregated metric values
+	// will be shown in rows where the dimension_values are set to
+	// "RESERVED_(MetricAggregation)".
+	//
+	// Possible values:
+	//   "METRIC_AGGREGATION_UNSPECIFIED" - Unspecified operator.
+	//   "TOTAL" - SUM operator.
+	//   "MINIMUM" - Minimum operator.
+	//   "MAXIMUM" - Maximum operator.
+	//   "COUNT" - Count operator.
+	MetricAggregations []string `json:"metricAggregations,omitempty"`
+
+	// MetricFilter: The filter clause of metrics. Applied at post
+	// aggregation phase, similar to SQL having-clause. Metrics must be
+	// requested to be used in this filter. Dimensions cannot be used in
+	// this filter.
+	MetricFilter *FilterExpression `json:"metricFilter,omitempty"`
+
+	// Metrics: The metrics requested and displayed.
+	Metrics []*Metric `json:"metrics,omitempty"`
+
+	// OrderBys: Specifies how rows are ordered in the response.
+	OrderBys []*OrderBy `json:"orderBys,omitempty"`
+
+	// ReturnPropertyQuota: Toggles whether to return the current state of
+	// this Analytics Property's Realtime quota. Quota is returned in
+	// [PropertyQuota](#PropertyQuota).
+	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunRealtimeReportRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunRealtimeReportRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RunRealtimeReportResponse: The response realtime report table
+// corresponding to a request.
+type RunRealtimeReportResponse struct {
+	// DimensionHeaders: Describes dimension columns. The number of
+	// DimensionHeaders and ordering of DimensionHeaders matches the
+	// dimensions present in rows.
+	DimensionHeaders []*DimensionHeader `json:"dimensionHeaders,omitempty"`
+
+	// Maximums: If requested, the maximum values of metrics.
+	Maximums []*Row `json:"maximums,omitempty"`
+
+	// MetricHeaders: Describes metric columns. The number of MetricHeaders
+	// and ordering of MetricHeaders matches the metrics present in rows.
+	MetricHeaders []*MetricHeader `json:"metricHeaders,omitempty"`
+
+	// Minimums: If requested, the minimum values of metrics.
+	Minimums []*Row `json:"minimums,omitempty"`
+
+	// PropertyQuota: This Analytics Property's Realtime quota state
+	// including this request.
+	PropertyQuota *PropertyQuota `json:"propertyQuota,omitempty"`
+
+	// RowCount: The total number of rows in the query result, regardless of
+	// the number of rows returned in the response. For example if a query
+	// returns 175 rows and includes limit = 50 in the API request, the
+	// response will contain row_count = 175 but only 50 rows.
+	RowCount int64 `json:"rowCount,omitempty"`
+
+	// Rows: Rows of dimension value combinations and metric values in the
+	// report.
+	Rows []*Row `json:"rows,omitempty"`
+
+	// Totals: If requested, the totaled values of metrics.
+	Totals []*Row `json:"totals,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionHeaders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionHeaders") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunRealtimeReportResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RunRealtimeReportResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2214,7 +2353,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2304,6 +2443,149 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 
 }
 
+// method id "analyticsdata.properties.runRealtimeReport":
+
+type PropertiesRunRealtimeReportCall struct {
+	s                        *Service
+	propertyid               string
+	runrealtimereportrequest *RunRealtimeReportRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// RunRealtimeReport: The Google Analytics Realtime API returns a
+// customized report of realtime event data for your property. These
+// reports show events and usage from the last 30 minutes.
+func (r *PropertiesService) RunRealtimeReport(propertyid string, runrealtimereportrequest *RunRealtimeReportRequest) *PropertiesRunRealtimeReportCall {
+	c := &PropertiesRunRealtimeReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.propertyid = propertyid
+	c.runrealtimereportrequest = runrealtimereportrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesRunRealtimeReportCall) Fields(s ...googleapi.Field) *PropertiesRunRealtimeReportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesRunRealtimeReportCall) Context(ctx context.Context) *PropertiesRunRealtimeReportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runrealtimereportrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+property}:runRealtimeReport")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"property": c.propertyid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsdata.properties.runRealtimeReport" call.
+// Exactly one of *RunRealtimeReportResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *RunRealtimeReportResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesRunRealtimeReportCall) Do(opts ...googleapi.CallOption) (*RunRealtimeReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RunRealtimeReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "The Google Analytics Realtime API returns a customized report of realtime event data for your property. These reports show events and usage from the last 30 minutes.",
+	//   "flatPath": "v1alpha/properties/{propertiesId}:runRealtimeReport",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsdata.properties.runRealtimeReport",
+	//   "parameterOrder": [
+	//     "property"
+	//   ],
+	//   "parameters": {
+	//     "property": {
+	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/trusted-testing/analytics-data/property-id). Example: properties/1234",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+property}:runRealtimeReport",
+	//   "request": {
+	//     "$ref": "RunRealtimeReportRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RunRealtimeReportResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "analyticsdata.batchRunPivotReports":
 
 type V1alphaBatchRunPivotReportsCall struct {
@@ -2349,7 +2631,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2476,7 +2758,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2616,7 +2898,7 @@ func (c *V1alphaGetUniversalMetadataCall) Header() http.Header {
 
 func (c *V1alphaGetUniversalMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2741,7 +3023,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2873,7 +3155,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201030")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

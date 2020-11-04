@@ -78,8 +78,8 @@ var _ = internaloption.WithDefaultEndpoint
 const apiId = "admin:datatransfer_v1"
 const apiName = "admin"
 const apiVersion = "datatransfer_v1"
-const basePath = "https://www.googleapis.com/"
-const mtlsBasePath = "https://www.mtls.googleapis.com/"
+const basePath = "https://admin.googleapis.com/"
+const mtlsBasePath = "https://admin.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -499,7 +499,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -664,7 +664,7 @@ func (c *ApplicationsListCall) Header() http.Header {
 
 func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -836,7 +836,7 @@ func (c *TransfersGetCall) Header() http.Header {
 
 func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -969,7 +969,7 @@ func (c *TransfersInsertCall) Header() http.Header {
 
 func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1145,7 +1145,7 @@ func (c *TransfersListCall) Header() http.Header {
 
 func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

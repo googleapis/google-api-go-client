@@ -620,6 +620,8 @@ func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // GoogleIamV1Binding: Associates `members` with a `role`.
 type GoogleIamV1Binding struct {
+	BindingId string `json:"bindingId,omitempty"`
+
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
@@ -669,7 +671,7 @@ type GoogleIamV1Binding struct {
 	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// ForceSendFields is a list of field names (e.g. "BindingId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -677,7 +679,7 @@ type GoogleIamV1Binding struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Condition") to include in
+	// NullFields is a list of field names (e.g. "BindingId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -897,7 +899,7 @@ func (c *IamTroubleshootCall) Header() http.Header {
 
 func (c *IamTroubleshootCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201031")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

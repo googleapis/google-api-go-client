@@ -146,8 +146,6 @@ type V1beta1Service struct {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// BindingId: A client-specified ID for this binding. Expected to be
-	// globally unique to support the internal bindings-by-ID API.
 	BindingId string `json:"bindingId,omitempty"`
 
 	// Condition: The condition that is associated with this binding. If the
@@ -594,7 +592,7 @@ func (c *V1beta1GetIamPolicyCall) Header() http.Header {
 
 func (c *V1beta1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -737,7 +735,7 @@ func (c *V1beta1SetIamPolicyCall) Header() http.Header {
 
 func (c *V1beta1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -882,7 +880,7 @@ func (c *V1beta1TestIamPermissionsCall) Header() http.Header {
 
 func (c *V1beta1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

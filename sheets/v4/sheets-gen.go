@@ -2556,8 +2556,8 @@ type BubbleChartSpec struct {
 	// optional.
 	BubbleSizes *ChartData `json:"bubbleSizes,omitempty"`
 
-	// BubbleTextStyle: The format of the text inside the bubbles. Underline
-	// and Strikethrough are not supported.
+	// BubbleTextStyle: The format of the text inside the bubbles.
+	// Strikethrough and underline are not supported.
 	BubbleTextStyle *TextFormat `json:"bubbleTextStyle,omitempty"`
 
 	// Domain: The data containing the bubble x-values. These values locate
@@ -2802,9 +2802,10 @@ type CellData struct {
 	// it's shown to the user. This field is read-only.
 	FormattedValue string `json:"formattedValue,omitempty"`
 
-	// Hyperlink: A hyperlink this cell points to, if any. This field is
-	// read-only. (To set it, use a `=HYPERLINK` formula in the
-	// userEnteredValue.formulaValue field.)
+	// Hyperlink: A hyperlink this cell points to, if any. If the cell
+	// contains multiple hyperlinks, this field will be empty. This field is
+	// read-only. To set it, use a `=HYPERLINK` formula in the
+	// userEnteredValue.formulaValue field.
 	Hyperlink string `json:"hyperlink,omitempty"`
 
 	// Note: Any note on the cell.
@@ -2820,12 +2821,11 @@ type CellData struct {
 
 	// TextFormatRuns: Runs of rich text applied to subsections of the cell.
 	// Runs are only valid on user entered strings, not formulas, bools, or
-	// numbers. Runs start at specific indexes in the text and continue
-	// until the next run. Properties of a run will continue unless
-	// explicitly changed in a subsequent run (and properties of the first
-	// run will continue the properties of the cell unless explicitly
-	// changed). When writing, the new runs will overwrite any prior runs.
-	// When writing a new user_entered_value, previous runs are erased.
+	// numbers. Properties of a run start at a specific index in the text
+	// and continue until the next run. Runs will inherit the properties of
+	// the cell unless explicitly changed. When writing, the new runs will
+	// overwrite any prior runs. When writing a new user_entered_value,
+	// previous runs are erased.
 	TextFormatRuns []*TextFormatRun `json:"textFormatRuns,omitempty"`
 
 	// UserEnteredFormat: The format the user entered for the cell. When
@@ -7684,11 +7684,31 @@ func (s *PieChartSpec) UnmarshalJSON(data []byte) error {
 // PivotFilterCriteria: Criteria for showing/hiding rows in a pivot
 // table.
 type PivotFilterCriteria struct {
+	// Condition: A condition that must be true for values to be shown.
+	// (`visibleValues` does not override this -- even if a value is listed
+	// there, it is still hidden if it does not meet the condition.)
+	// Condition values that refer to ranges in A1-notation are evaluated
+	// relative to the pivot table sheet. References are treated absolutely,
+	// so are not filled down the pivot table. For example, a condition
+	// value of `=A1` on "Pivot Table 1" is treated as `'Pivot Table
+	// 1'!$A$1`. The source data of the pivot table can be referenced by
+	// column header name. For example, if the source data has columns named
+	// "Revenue" and "Cost" and a condition is applied to the "Revenue"
+	// column with type `NUMBER_GREATER` and value `=Cost`, then only
+	// columns where "Revenue" > "Cost" are included.
+	Condition *BooleanCondition `json:"condition,omitempty"`
+
+	// VisibleByDefault: Whether values are visible by default. If true, the
+	// visible_values are ignored, all values that meet condition (if
+	// specified) are shown. If false, values that are both in
+	// visible_values and meet condition are shown.
+	VisibleByDefault bool `json:"visibleByDefault,omitempty"`
+
 	// VisibleValues: Values that should be included. Values not listed here
 	// are excluded.
 	VisibleValues []string `json:"visibleValues,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "VisibleValues") to
+	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -7696,10 +7716,10 @@ type PivotFilterCriteria struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "VisibleValues") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Condition") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -11281,7 +11301,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11421,7 +11441,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11585,7 +11605,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11746,7 +11766,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11900,7 +11920,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12051,7 +12071,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12195,7 +12215,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12442,7 +12462,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12655,7 +12675,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12800,7 +12820,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13020,7 +13040,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13210,7 +13230,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13354,7 +13374,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13497,7 +13517,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13644,7 +13664,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13866,7 +13886,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14133,7 +14153,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1489,6 +1489,9 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 	// (true) or had to pull the Docker image (false) for this command.
 	DockerCacheHit bool `json:"dockerCacheHit,omitempty"`
 
+	// DockerImageName: Docker Image name.
+	DockerImageName string `json:"dockerImageName,omitempty"`
+
 	// InputCacheMiss: The input cache miss ratio.
 	InputCacheMiss float64 `json:"inputCacheMiss,omitempty"`
 
@@ -1966,6 +1969,8 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaFeaturePolicy struct {
 	//   "LINUX_ISOLATION_UNSPECIFIED" - Default value. Will be using Linux
 	// default runtime.
 	//   "GVISOR" - Use gVisor runsc runtime.
+	//   "OFF" - Use stardard Linux runtime. This has the same behaviour as
+	// unspecified, but it can be used to revert back from gVisor.
 	LinuxIsolation string `json:"linuxIsolation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3371,7 +3376,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3564,7 +3569,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3753,7 +3758,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3894,7 +3899,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4065,7 +4070,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4249,7 +4254,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

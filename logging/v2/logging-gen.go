@@ -213,10 +213,22 @@ type BillingAccountsService struct {
 
 func NewBillingAccountsBucketsService(s *Service) *BillingAccountsBucketsService {
 	rs := &BillingAccountsBucketsService{s: s}
+	rs.Views = NewBillingAccountsBucketsViewsService(s)
 	return rs
 }
 
 type BillingAccountsBucketsService struct {
+	s *Service
+
+	Views *BillingAccountsBucketsViewsService
+}
+
+func NewBillingAccountsBucketsViewsService(s *Service) *BillingAccountsBucketsViewsService {
+	rs := &BillingAccountsBucketsViewsService{s: s}
+	return rs
+}
+
+type BillingAccountsBucketsViewsService struct {
 	s *Service
 }
 
@@ -243,10 +255,22 @@ type BillingAccountsLocationsService struct {
 
 func NewBillingAccountsLocationsBucketsService(s *Service) *BillingAccountsLocationsBucketsService {
 	rs := &BillingAccountsLocationsBucketsService{s: s}
+	rs.Views = NewBillingAccountsLocationsBucketsViewsService(s)
 	return rs
 }
 
 type BillingAccountsLocationsBucketsService struct {
+	s *Service
+
+	Views *BillingAccountsLocationsBucketsViewsService
+}
+
+func NewBillingAccountsLocationsBucketsViewsService(s *Service) *BillingAccountsLocationsBucketsViewsService {
+	rs := &BillingAccountsLocationsBucketsViewsService{s: s}
+	return rs
+}
+
+type BillingAccountsLocationsBucketsViewsService struct {
 	s *Service
 }
 
@@ -330,10 +354,22 @@ type FoldersLocationsService struct {
 
 func NewFoldersLocationsBucketsService(s *Service) *FoldersLocationsBucketsService {
 	rs := &FoldersLocationsBucketsService{s: s}
+	rs.Views = NewFoldersLocationsBucketsViewsService(s)
 	return rs
 }
 
 type FoldersLocationsBucketsService struct {
+	s *Service
+
+	Views *FoldersLocationsBucketsViewsService
+}
+
+func NewFoldersLocationsBucketsViewsService(s *Service) *FoldersLocationsBucketsViewsService {
+	rs := &FoldersLocationsBucketsViewsService{s: s}
+	return rs
+}
+
+type FoldersLocationsBucketsViewsService struct {
 	s *Service
 }
 
@@ -369,10 +405,22 @@ type LocationsService struct {
 
 func NewLocationsBucketsService(s *Service) *LocationsBucketsService {
 	rs := &LocationsBucketsService{s: s}
+	rs.Views = NewLocationsBucketsViewsService(s)
 	return rs
 }
 
 type LocationsBucketsService struct {
+	s *Service
+
+	Views *LocationsBucketsViewsService
+}
+
+func NewLocationsBucketsViewsService(s *Service) *LocationsBucketsViewsService {
+	rs := &LocationsBucketsViewsService{s: s}
+	return rs
+}
+
+type LocationsBucketsViewsService struct {
 	s *Service
 }
 
@@ -438,10 +486,22 @@ type OrganizationsLocationsService struct {
 
 func NewOrganizationsLocationsBucketsService(s *Service) *OrganizationsLocationsBucketsService {
 	rs := &OrganizationsLocationsBucketsService{s: s}
+	rs.Views = NewOrganizationsLocationsBucketsViewsService(s)
 	return rs
 }
 
 type OrganizationsLocationsBucketsService struct {
+	s *Service
+
+	Views *OrganizationsLocationsBucketsViewsService
+}
+
+func NewOrganizationsLocationsBucketsViewsService(s *Service) *OrganizationsLocationsBucketsViewsService {
+	rs := &OrganizationsLocationsBucketsViewsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsBucketsViewsService struct {
 	s *Service
 }
 
@@ -510,10 +570,22 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsBucketsService(s *Service) *ProjectsLocationsBucketsService {
 	rs := &ProjectsLocationsBucketsService{s: s}
+	rs.Views = NewProjectsLocationsBucketsViewsService(s)
 	return rs
 }
 
 type ProjectsLocationsBucketsService struct {
+	s *Service
+
+	Views *ProjectsLocationsBucketsViewsService
+}
+
+func NewProjectsLocationsBucketsViewsService(s *Service) *ProjectsLocationsBucketsViewsService {
+	rs := &ProjectsLocationsBucketsViewsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBucketsViewsService struct {
 	s *Service
 }
 
@@ -863,7 +935,8 @@ type HttpRequest struct {
 	Referer string `json:"referer,omitempty"`
 
 	// RemoteIp: The IP address (IPv4 or IPv6) of the client that issued the
-	// HTTP request. Examples: "192.168.1.1", "FE80::0202:B3FF:FE1E:8329".
+	// HTTP request. This field can include port information. Examples:
+	// "192.168.1.1", "10.0.0.1:80", "FE80::0202:B3FF:FE1E:8329".
 	RemoteIp string `json:"remoteIp,omitempty"`
 
 	// RequestMethod: The request method. Examples: "GET", "HEAD", "PUT",
@@ -885,7 +958,8 @@ type HttpRequest struct {
 	ResponseSize int64 `json:"responseSize,omitempty,string"`
 
 	// ServerIp: The IP address (IPv4 or IPv6) of the origin server that the
-	// request was sent to.
+	// request was sent to. This field can include port information.
+	// Examples: "192.168.1.1", "10.0.0.1:80", "FE80::0202:B3FF:FE1E:8329".
 	ServerIp string `json:"serverIp,omitempty"`
 
 	// Status: The response code indicating the status of response.
@@ -1091,6 +1165,43 @@ func (s *ListExclusionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListLocationsResponse: The response message for
+// Locations.ListLocations.
+type ListLocationsResponse struct {
+	// Locations: A list of locations that matches the specified filter in
+	// the request.
+	Locations []*Location `json:"locations,omitempty"`
+
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Locations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListLogEntriesRequest: The parameters to ListLogEntries.
 type ListLogEntriesRequest struct {
 	// Filter: Optional. A filter that chooses which log entries to return.
@@ -1133,8 +1244,16 @@ type ListLogEntriesRequest struct {
 	// ResourceNames: Required. Names of one or more parent resources from
 	// which to retrieve log entries: "projects/[PROJECT_ID]"
 	// "organizations/[ORGANIZATION_ID]"
-	// "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" Projects
-	// listed in the project_ids field are added to this list.
+	// "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" May
+	// alternatively be one or more views
+	// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
+	// _ID
+	// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
+	// iews/VIEW_ID
+	// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
+	// T_ID/views/VIEW_ID
+	// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
+	// DProjects listed in the project_ids field are added to this list.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -1358,6 +1477,94 @@ type ListSinksResponse struct {
 
 func (s *ListSinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListViewsResponse: The response from ListViews.
+type ListViewsResponse struct {
+	// NextPageToken: If there might be more results than appear in this
+	// response, then nextPageToken is included. To get the next set of
+	// results, call the same method again using the value of nextPageToken
+	// as pageToken.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Views: A list of views.
+	Views []*LogView `json:"views,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListViewsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListViewsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Location: A resource that represents Google Cloud Platform location.
+type Location struct {
+	// DisplayName: The friendly name for this location, typically a nearby
+	// city name. For example, "Tokyo".
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Labels: Cross-service attributes for the location. For example
+	// {"cloud.googleapis.com/region": "us-east1"}
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LocationId: The canonical id for this location. For example:
+	// "us-east1".
+	LocationId string `json:"locationId,omitempty"`
+
+	// Metadata: Service-specific metadata. For example the available
+	// capacity at the given location.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: Resource name for the location, which may vary between
+	// implementations. For example:
+	// "projects/example-project/locations/us-east1"
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1795,8 +2002,8 @@ func (s *LogLine) MarshalJSON() ([]byte, error) {
 
 // LogMetric: Describes a logs-based metric. The value of the metric is
 // the number of log entries that match a logs filter in a given time
-// interval.Logs-based metric can also be used to extract values from
-// logs and create a a distribution of the values. The distribution
+// interval.Logs-based metrics can also be used to extract values from
+// logs and create a distribution of the values. The distribution
 // records the statistics of the extracted values along with an optional
 // histogram of the values as specified by the bucket options.
 type LogMetric struct {
@@ -2044,16 +2251,58 @@ func (s *LogSink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LogView: Describes a view over logs in a bucket.
+type LogView struct {
+	// CreateTime: Output only. The creation timestamp of the view.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Describes this view.
+	Description string `json:"description,omitempty"`
+
+	// Filter: Filter that restricts which log entries in a bucket are
+	// visible in this view. Filters are restricted to be a logical AND of
+	// ==/!= of any of the following: originating
+	// project/folder/organization/billing account. resource type log id
+	Filter string `json:"filter,omitempty"`
+
+	// Name: The resource name of the view. For example
+	// "projects/my-project-id/locations/my-location/buckets/my-bucket-id/vie
+	// ws/my-view
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The last update timestamp of the view.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogView) MarshalJSON() ([]byte, error) {
+	type NoMethod LogView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MetricDescriptor: Defines a metric type and its schema. Once a metric
 // descriptor is created, deleting or altering it stops data collection
-// and makes the metric type's existing data unusable.The following are
-// specific rules for service defined Monitoring metric descriptors:
-// type, metric_kind, value_type and description fields are all
-// required. The unit field must be specified if the value_type is any
-// of DOUBLE, INT64, DISTRIBUTION. Maximum of default 500 metric
-// descriptors per service is allowed. Maximum of default 10 labels per
-// metric descriptor is allowed.The default maximum limit can be
-// overridden. Please follow https://cloud.google.com/monitoring/quotas
+// and makes the metric type's existing data unusable.
 type MetricDescriptor struct {
 	// Description: A detailed description of the metric, which can be used
 	// in documentation.
@@ -2067,10 +2316,7 @@ type MetricDescriptor struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: The set of labels that can be used to describe a specific
-	// instance of this metric type.The label key name must follow: Only
-	// upper and lower-case letters, digits and underscores (_) are allowed.
-	// Label name must start with a letter or digit. The maximum length of a
-	// label name is 100 characters.For example, the
+	// instance of this metric type. For example, the
 	// appengine.googleapis.com/http/server/response_latencies metric type
 	// has a label for the HTTP response code, response_code, so you can
 	// look at latencies for successful responses or just for responses that
@@ -2094,7 +2340,7 @@ type MetricDescriptor struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2143,15 +2389,9 @@ type MetricDescriptor struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: The metric type, including its DNS name prefix. The type is not
-	// URL-encoded.All service defined metrics must be prefixed with the
-	// service name, in the format of {service name}/{relative metric name},
-	// such as cloudsql.googleapis.com/database/cpu/utilization. The
-	// relative metric name must follow: Only upper and lower-case letters,
-	// digits, '/' and underscores '_' are allowed. The maximum number of
-	// characters allowed for the relative_metric_name is 100.All
-	// user-defined metric types have the DNS name custom.googleapis.com,
-	// external.googleapis.com, or logging.googleapis.com/user/.Metric types
-	// should use a natural hierarchical grouping. For example:
+	// URL-encoded. All user-defined metric types have the DNS name
+	// custom.googleapis.com or external.googleapis.com. Metric types should
+	// use a natural hierarchical grouping. For example:
 	// "custom.googleapis.com/invoice/paid/amount"
 	// "external.googleapis.com/prometheus/up"
 	// "appengine.googleapis.com/http/server/response_latencies"
@@ -2273,7 +2513,7 @@ type MetricDescriptorMetadata struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2372,17 +2612,9 @@ func (s *MonitoredResource) MarshalJSON() ([]byte, error) {
 // example, the monitored resource descriptor for Google Compute Engine
 // VM instances has a type of "gce_instance" and specifies the use of
 // the labels "instance_id" and "zone" to identify particular VM
-// instances.Different services can support different monitored resource
-// types.The following are specific rules to service defined monitored
-// resources for Monitoring and Logging: The type, display_name,
-// description, labels and launch_stage fields are all required. The
-// first label of the monitored resource descriptor must be
-// resource_container. There are legacy monitored resource descritptors
-// start with project_id. It must include a location label. Maximum of
-// default 5 service defined monitored resource descriptors is allowed
-// per service. Maximum of default 10 labels per monitored resource is
-// allowed.The default maximum limit can be overridden. Please follow
-// https://cloud.google.com/monitoring/quotas
+// instances.Different APIs can support different monitored resource
+// types. APIs generally provide a list method that returns the
+// monitored resource descriptors used by the API.
 type MonitoredResourceDescriptor struct {
 	// Description: Optional. A detailed description of the monitored
 	// resource type that might be used in documentation.
@@ -2395,12 +2627,9 @@ type MonitoredResourceDescriptor struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Required. A set of labels used to describe instances of this
-	// monitored resource type. The label key name must follow: Only upper
-	// and lower-case letters, digits and underscores (_) are allowed. Label
-	// name must start with a letter or digit. The maximum length of a label
-	// name is 100 characters.For example, an individual Google Cloud SQL
-	// database is identified by values for the labels database_id and
-	// location.
+	// monitored resource type. For example, an individual Google Cloud SQL
+	// database is identified by values for the labels "database_id" and
+	// "zone".
 	Labels []*LabelDescriptor `json:"labels,omitempty"`
 
 	// LaunchStage: Optional. The launch stage of the monitored resource
@@ -2421,7 +2650,7 @@ type MonitoredResourceDescriptor struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2451,15 +2680,7 @@ type MonitoredResourceDescriptor struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Required. The monitored resource type. For example, the type
-	// cloudsql_database represents databases in Google Cloud SQL.All
-	// service defined monitored resource types must be prefixed with the
-	// service name, in the format of {service name}/{relative resource
-	// name}. The relative resource name must follow: Only upper and
-	// lower-case letters and digits are allowed. It must start with upper
-	// case character and is recommended to use Upper Camel Case style. The
-	// maximum number of characters allowed for the relative_resource_name
-	// is 100.Note there are legacy service monitored resources not
-	// following this rule.
+	// "cloudsql_database" represents databases in Google Cloud SQL.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2765,6 +2986,144 @@ func (s *SourceReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SuppressionInfo: Information about entries that were omitted from the
+// session.
+type SuppressionInfo struct {
+	// Reason: The reason that entries were omitted from the session.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unexpected default.
+	//   "RATE_LIMIT" - Indicates suppression occurred due to relevant
+	// entries being received in excess of rate limits.
+	//   "NOT_CONSUMED" - Indicates suppression occurred due to the client
+	// not consuming responses quickly enough.
+	Reason string `json:"reason,omitempty"`
+
+	// SuppressedCount: A lower bound on the count of entries omitted due to
+	// reason.
+	SuppressedCount int64 `json:"suppressedCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Reason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SuppressionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SuppressionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TailLogEntriesRequest: The parameters to TailLogEntries.
+type TailLogEntriesRequest struct {
+	// BufferWindow: Optional. The amount of time to buffer log entries at
+	// the server before being returned to prevent out of order results due
+	// to late arriving log entries. Valid values are between 0-60000
+	// milliseconds. Defaults to 2000 milliseconds.
+	BufferWindow string `json:"bufferWindow,omitempty"`
+
+	// Filter: Optional. A filter that chooses which log entries to return.
+	// See Advanced Logs Filters
+	// (https://cloud.google.com/logging/docs/view/advanced_filters). Only
+	// log entries that match the filter are returned. An empty filter
+	// matches all log entries in the resources listed in resource_names.
+	// Referencing a parent resource that is not in resource_names will
+	// cause the filter to return no results. The maximum length of the
+	// filter is 20000 characters.
+	Filter string `json:"filter,omitempty"`
+
+	// ResourceNames: Required. Name of a parent resource from which to
+	// retrieve log entries: "projects/[PROJECT_ID]"
+	// "organizations/[ORGANIZATION_ID]"
+	// "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" May
+	// alternatively be one or more views:
+	// "projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIE
+	// W_ID"
+	// "organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+	// views/VIEW_ID"
+	// "billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCK
+	// ET_ID/views/VIEW_ID"
+	// "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_
+	// ID"
+	ResourceNames []string `json:"resourceNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BufferWindow") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BufferWindow") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TailLogEntriesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod TailLogEntriesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TailLogEntriesResponse: Result returned from TailLogEntries.
+type TailLogEntriesResponse struct {
+	// Entries: A list of log entries. Each response in the stream will
+	// order entries with increasing values of LogEntry.timestamp. Ordering
+	// is not guaranteed between separate responses.
+	Entries []*LogEntry `json:"entries,omitempty"`
+
+	// SuppressionInfo: If entries that otherwise would have been included
+	// in the session were not sent back to the client, counts of relevant
+	// entries omitted from the session with the reason that they were not
+	// included. There will be at most one of each reason per response. The
+	// counts represent the number of suppressed entries since the last
+	// streamed response.
+	SuppressionInfo []*SuppressionInfo `json:"suppressionInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TailLogEntriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod TailLogEntriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UndeleteBucketRequest: The parameters to UndeleteBucket.
 type UndeleteBucketRequest struct {
 }
@@ -2920,7 +3279,7 @@ func (c *BillingAccountsBucketsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3012,6 +3371,153 @@ func (c *BillingAccountsBucketsGetCall) Do(opts ...googleapi.CallOption) (*LogBu
 
 }
 
+// method id "logging.billingAccounts.buckets.views.get":
+
+type BillingAccountsBucketsViewsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a view.
+func (r *BillingAccountsBucketsViewsService) Get(name string) *BillingAccountsBucketsViewsGetCall {
+	c := &BillingAccountsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsBucketsViewsGetCall) Fields(s ...googleapi.Field) *BillingAccountsBucketsViewsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsBucketsViewsGetCall) IfNoneMatch(entityTag string) *BillingAccountsBucketsViewsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsBucketsViewsGetCall) Context(ctx context.Context) *BillingAccountsBucketsViewsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsBucketsViewsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.buckets.views.get" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsBucketsViewsGetCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a view.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.billingAccounts.buckets.views.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the policy: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
 // method id "logging.billingAccounts.exclusions.create":
 
 type BillingAccountsExclusionsCreateCall struct {
@@ -3060,7 +3566,7 @@ func (c *BillingAccountsExclusionsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3199,7 +3705,7 @@ func (c *BillingAccountsExclusionsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3341,7 +3847,7 @@ func (c *BillingAccountsExclusionsGetCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3507,7 +4013,7 @@ func (c *BillingAccountsExclusionsListCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3689,7 +4195,7 @@ func (c *BillingAccountsExclusionsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3790,6 +4296,359 @@ func (c *BillingAccountsExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "logging.billingAccounts.locations.get":
+
+type BillingAccountsLocationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a location.
+func (r *BillingAccountsLocationsService) Get(name string) *BillingAccountsLocationsGetCall {
+	c := &BillingAccountsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsGetCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsLocationsGetCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsGetCall) Context(ctx context.Context) *BillingAccountsLocationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.get" call.
+// Exactly one of *Location or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Location{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a location.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.billingAccounts.locations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name for the location.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Location"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.locations.list":
+
+type BillingAccountsLocationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists information about the supported locations for this
+// service.
+func (r *BillingAccountsLocationsService) List(name string) *BillingAccountsLocationsListCall {
+	c := &BillingAccountsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *BillingAccountsLocationsListCall) Filter(filter string) *BillingAccountsLocationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *BillingAccountsLocationsListCall) PageSize(pageSize int64) *BillingAccountsLocationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *BillingAccountsLocationsListCall) PageToken(pageToken string) *BillingAccountsLocationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsListCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsLocationsListCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsListCall) Context(ctx context.Context) *BillingAccountsLocationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/locations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.list" call.
+// Exactly one of *ListLocationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLocationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists information about the supported locations for this service.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations",
+	//   "httpMethod": "GET",
+	//   "id": "logging.billingAccounts.locations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The resource that owns the locations collection, if applicable.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/locations",
+	//   "response": {
+	//     "$ref": "ListLocationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingAccountsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "logging.billingAccounts.locations.buckets.create":
 
 type BillingAccountsLocationsBucketsCreateCall struct {
@@ -3846,7 +4705,7 @@ func (c *BillingAccountsLocationsBucketsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3992,7 +4851,7 @@ func (c *BillingAccountsLocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4153,7 +5012,7 @@ func (c *BillingAccountsLocationsBucketsListCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4341,7 +5200,7 @@ func (c *BillingAccountsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4489,7 +5348,7 @@ func (c *BillingAccountsLocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4584,6 +5443,649 @@ func (c *BillingAccountsLocationsBucketsUndeleteCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "logging.billingAccounts.locations.buckets.views.create":
+
+type BillingAccountsLocationsBucketsViewsCreateCall struct {
+	s          *Service
+	parent     string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a view over logs in a bucket. A bucket may contain a
+// maximum of 50 views.
+func (r *BillingAccountsLocationsBucketsViewsService) Create(parent string, logview *LogView) *BillingAccountsLocationsBucketsViewsCreateCall {
+	c := &BillingAccountsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logview = logview
+	return c
+}
+
+// ViewId sets the optional parameter "viewId": Required. The id to use
+// for this view.
+func (c *BillingAccountsLocationsBucketsViewsCreateCall) ViewId(viewId string) *BillingAccountsLocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("viewId", viewId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsBucketsViewsCreateCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsBucketsViewsCreateCall) Context(ctx context.Context) *BillingAccountsLocationsBucketsViewsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsBucketsViewsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.buckets.views.create" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsLocationsBucketsViewsCreateCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "POST",
+	//   "id": "logging.billingAccounts.locations.buckets.views.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The bucket in which to create the view \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" Example: \"projects/my-logging-project/locations/my-location/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "viewId": {
+	//       "description": "Required. The id to use for this view.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.locations.buckets.views.delete":
+
+type BillingAccountsLocationsBucketsViewsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a view from a bucket.
+func (r *BillingAccountsLocationsBucketsViewsService) Delete(name string) *BillingAccountsLocationsBucketsViewsDeleteCall {
+	c := &BillingAccountsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsBucketsViewsDeleteCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsBucketsViewsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsBucketsViewsDeleteCall) Context(ctx context.Context) *BillingAccountsLocationsBucketsViewsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsBucketsViewsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.buckets.views.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsLocationsBucketsViewsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a view from a bucket.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.billingAccounts.locations.buckets.views.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to delete: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.locations.buckets.views.list":
+
+type BillingAccountsLocationsBucketsViewsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists views on a bucket..
+func (r *BillingAccountsLocationsBucketsViewsService) List(parent string) *BillingAccountsLocationsBucketsViewsListCall {
+	c := &BillingAccountsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *BillingAccountsLocationsBucketsViewsListCall) PageSize(pageSize int64) *BillingAccountsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *BillingAccountsLocationsBucketsViewsListCall) PageToken(pageToken string) *BillingAccountsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsBucketsViewsListCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsLocationsBucketsViewsListCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsBucketsViewsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsBucketsViewsListCall) Context(ctx context.Context) *BillingAccountsLocationsBucketsViewsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsBucketsViewsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.buckets.views.list" call.
+// Exactly one of *ListViewsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListViewsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsBucketsViewsListCall) Do(opts ...googleapi.CallOption) (*ListViewsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListViewsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists views on a bucket..",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "GET",
+	//   "id": "logging.billingAccounts.locations.buckets.views.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The bucket whose views are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "response": {
+	//     "$ref": "ListViewsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingAccountsLocationsBucketsViewsListCall) Pages(ctx context.Context, f func(*ListViewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.billingAccounts.locations.buckets.views.patch":
+
+type BillingAccountsLocationsBucketsViewsPatchCall struct {
+	s          *Service
+	name       string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a view. This method replaces the following fields in
+// the existing view with values from the new view: filter.
+func (r *BillingAccountsLocationsBucketsViewsService) Patch(name string, logview *LogView) *BillingAccountsLocationsBucketsViewsPatchCall {
+	c := &BillingAccountsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logview = logview
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask that
+// specifies the fields in view that need an update. A field will be
+// overwritten if, and only if, it is in the update mask. name and
+// output only fields cannot be updated.For a detailed FieldMask
+// definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample:
+// updateMask=filter.
+func (c *BillingAccountsLocationsBucketsViewsPatchCall) UpdateMask(updateMask string) *BillingAccountsLocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsBucketsViewsPatchCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsBucketsViewsPatchCall) Context(ctx context.Context) *BillingAccountsLocationsBucketsViewsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsBucketsViewsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.buckets.views.patch" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a view. This method replaces the following fields in the existing view with values from the new view: filter.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "logging.billingAccounts.locations.buckets.views.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to update \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask that specifies the fields in view that need an update. A field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=filter.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.billingAccounts.logs.delete":
 
 type BillingAccountsLogsDeleteCall struct {
@@ -4631,7 +6133,7 @@ func (c *BillingAccountsLogsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4756,6 +6258,23 @@ func (c *BillingAccountsLogsListCall) PageToken(pageToken string) *BillingAccoun
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": The
+// resource name that owns the logs:
+// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
+// _ID
+// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
+// iews/VIEW_ID
+// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
+// T_ID/views/VIEW_ID
+// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
+// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
+// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
+// "folders/FOLDER_ID"
+func (c *BillingAccountsLogsListCall) ResourceNames(resourceNames ...string) *BillingAccountsLogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4793,7 +6312,7 @@ func (c *BillingAccountsLogsListCall) Header() http.Header {
 
 func (c *BillingAccountsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4879,6 +6398,12 @@ func (c *BillingAccountsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLog
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -4983,7 +6508,7 @@ func (c *BillingAccountsSinksCreateCall) Header() http.Header {
 
 func (c *BillingAccountsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5128,7 +6653,7 @@ func (c *BillingAccountsSinksDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5270,7 +6795,7 @@ func (c *BillingAccountsSinksGetCall) Header() http.Header {
 
 func (c *BillingAccountsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5436,7 +6961,7 @@ func (c *BillingAccountsSinksListCall) Header() http.Header {
 
 func (c *BillingAccountsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5639,7 +7164,7 @@ func (c *BillingAccountsSinksPatchCall) Header() http.Header {
 
 func (c *BillingAccountsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5824,7 +7349,7 @@ func (c *BillingAccountsSinksUpdateCall) Header() http.Header {
 
 func (c *BillingAccountsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5977,7 +7502,7 @@ func (c *EntriesListCall) Header() http.Header {
 
 func (c *EntriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6082,6 +7607,135 @@ func (c *EntriesListCall) Pages(ctx context.Context, f func(*ListLogEntriesRespo
 	}
 }
 
+// method id "logging.entries.tail":
+
+type EntriesTailCall struct {
+	s                     *Service
+	taillogentriesrequest *TailLogEntriesRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Tail: Streaming read of log entries as they are ingested. Until the
+// stream is terminated, it will continue reading logs.
+func (r *EntriesService) Tail(taillogentriesrequest *TailLogEntriesRequest) *EntriesTailCall {
+	c := &EntriesTailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.taillogentriesrequest = taillogentriesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EntriesTailCall) Fields(s ...googleapi.Field) *EntriesTailCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EntriesTailCall) Context(ctx context.Context) *EntriesTailCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EntriesTailCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EntriesTailCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.taillogentriesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/entries:tail")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.entries.tail" call.
+// Exactly one of *TailLogEntriesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TailLogEntriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EntriesTailCall) Do(opts ...googleapi.CallOption) (*TailLogEntriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TailLogEntriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Streaming read of log entries as they are ingested. Until the stream is terminated, it will continue reading logs.",
+	//   "flatPath": "v2/entries:tail",
+	//   "httpMethod": "POST",
+	//   "id": "logging.entries.tail",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v2/entries:tail",
+	//   "request": {
+	//     "$ref": "TailLogEntriesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TailLogEntriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
 // method id "logging.entries.write":
 
 type EntriesWriteCall struct {
@@ -6131,7 +7785,7 @@ func (c *EntriesWriteCall) Header() http.Header {
 
 func (c *EntriesWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6262,7 +7916,7 @@ func (c *ExclusionsCreateCall) Header() http.Header {
 
 func (c *ExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6401,7 +8055,7 @@ func (c *ExclusionsDeleteCall) Header() http.Header {
 
 func (c *ExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6543,7 +8197,7 @@ func (c *ExclusionsGetCall) Header() http.Header {
 
 func (c *ExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6709,7 +8363,7 @@ func (c *ExclusionsListCall) Header() http.Header {
 
 func (c *ExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6891,7 +8545,7 @@ func (c *ExclusionsPatchCall) Header() http.Header {
 
 func (c *ExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7040,7 +8694,7 @@ func (c *FoldersExclusionsCreateCall) Header() http.Header {
 
 func (c *FoldersExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7179,7 +8833,7 @@ func (c *FoldersExclusionsDeleteCall) Header() http.Header {
 
 func (c *FoldersExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7321,7 +8975,7 @@ func (c *FoldersExclusionsGetCall) Header() http.Header {
 
 func (c *FoldersExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7487,7 +9141,7 @@ func (c *FoldersExclusionsListCall) Header() http.Header {
 
 func (c *FoldersExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7669,7 +9323,7 @@ func (c *FoldersExclusionsPatchCall) Header() http.Header {
 
 func (c *FoldersExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7770,6 +9424,359 @@ func (c *FoldersExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*LogExclu
 
 }
 
+// method id "logging.folders.locations.get":
+
+type FoldersLocationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a location.
+func (r *FoldersLocationsService) Get(name string) *FoldersLocationsGetCall {
+	c := &FoldersLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsGetCall) Fields(s ...googleapi.Field) *FoldersLocationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersLocationsGetCall) IfNoneMatch(entityTag string) *FoldersLocationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsGetCall) Context(ctx context.Context) *FoldersLocationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.get" call.
+// Exactly one of *Location or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Location{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a location.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.folders.locations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name for the location.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Location"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.locations.list":
+
+type FoldersLocationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists information about the supported locations for this
+// service.
+func (r *FoldersLocationsService) List(name string) *FoldersLocationsListCall {
+	c := &FoldersLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *FoldersLocationsListCall) Filter(filter string) *FoldersLocationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *FoldersLocationsListCall) PageSize(pageSize int64) *FoldersLocationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *FoldersLocationsListCall) PageToken(pageToken string) *FoldersLocationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsListCall) Fields(s ...googleapi.Field) *FoldersLocationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersLocationsListCall) IfNoneMatch(entityTag string) *FoldersLocationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsListCall) Context(ctx context.Context) *FoldersLocationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/locations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.list" call.
+// Exactly one of *ListLocationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLocationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists information about the supported locations for this service.",
+	//   "flatPath": "v2/folders/{foldersId}/locations",
+	//   "httpMethod": "GET",
+	//   "id": "logging.folders.locations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The resource that owns the locations collection, if applicable.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/locations",
+	//   "response": {
+	//     "$ref": "ListLocationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "logging.folders.locations.buckets.create":
 
 type FoldersLocationsBucketsCreateCall struct {
@@ -7826,7 +9833,7 @@ func (c *FoldersLocationsBucketsCreateCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7972,7 +9979,7 @@ func (c *FoldersLocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8114,7 +10121,7 @@ func (c *FoldersLocationsBucketsGetCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8280,7 +10287,7 @@ func (c *FoldersLocationsBucketsListCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8468,7 +10475,7 @@ func (c *FoldersLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8616,7 +10623,7 @@ func (c *FoldersLocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *FoldersLocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8711,6 +10718,796 @@ func (c *FoldersLocationsBucketsUndeleteCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "logging.folders.locations.buckets.views.create":
+
+type FoldersLocationsBucketsViewsCreateCall struct {
+	s          *Service
+	parent     string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a view over logs in a bucket. A bucket may contain a
+// maximum of 50 views.
+func (r *FoldersLocationsBucketsViewsService) Create(parent string, logview *LogView) *FoldersLocationsBucketsViewsCreateCall {
+	c := &FoldersLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logview = logview
+	return c
+}
+
+// ViewId sets the optional parameter "viewId": Required. The id to use
+// for this view.
+func (c *FoldersLocationsBucketsViewsCreateCall) ViewId(viewId string) *FoldersLocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("viewId", viewId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsBucketsViewsCreateCall) Fields(s ...googleapi.Field) *FoldersLocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsBucketsViewsCreateCall) Context(ctx context.Context) *FoldersLocationsBucketsViewsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsBucketsViewsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.buckets.views.create" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersLocationsBucketsViewsCreateCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "POST",
+	//   "id": "logging.folders.locations.buckets.views.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The bucket in which to create the view \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" Example: \"projects/my-logging-project/locations/my-location/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "viewId": {
+	//       "description": "Required. The id to use for this view.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.locations.buckets.views.delete":
+
+type FoldersLocationsBucketsViewsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a view from a bucket.
+func (r *FoldersLocationsBucketsViewsService) Delete(name string) *FoldersLocationsBucketsViewsDeleteCall {
+	c := &FoldersLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsBucketsViewsDeleteCall) Fields(s ...googleapi.Field) *FoldersLocationsBucketsViewsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsBucketsViewsDeleteCall) Context(ctx context.Context) *FoldersLocationsBucketsViewsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsBucketsViewsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.buckets.views.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersLocationsBucketsViewsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a view from a bucket.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.folders.locations.buckets.views.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to delete: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.locations.buckets.views.get":
+
+type FoldersLocationsBucketsViewsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a view.
+func (r *FoldersLocationsBucketsViewsService) Get(name string) *FoldersLocationsBucketsViewsGetCall {
+	c := &FoldersLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsBucketsViewsGetCall) Fields(s ...googleapi.Field) *FoldersLocationsBucketsViewsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersLocationsBucketsViewsGetCall) IfNoneMatch(entityTag string) *FoldersLocationsBucketsViewsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsBucketsViewsGetCall) Context(ctx context.Context) *FoldersLocationsBucketsViewsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsBucketsViewsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.buckets.views.get" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersLocationsBucketsViewsGetCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a view.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.folders.locations.buckets.views.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the policy: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.locations.buckets.views.list":
+
+type FoldersLocationsBucketsViewsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists views on a bucket..
+func (r *FoldersLocationsBucketsViewsService) List(parent string) *FoldersLocationsBucketsViewsListCall {
+	c := &FoldersLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *FoldersLocationsBucketsViewsListCall) PageSize(pageSize int64) *FoldersLocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *FoldersLocationsBucketsViewsListCall) PageToken(pageToken string) *FoldersLocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsBucketsViewsListCall) Fields(s ...googleapi.Field) *FoldersLocationsBucketsViewsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersLocationsBucketsViewsListCall) IfNoneMatch(entityTag string) *FoldersLocationsBucketsViewsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsBucketsViewsListCall) Context(ctx context.Context) *FoldersLocationsBucketsViewsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsBucketsViewsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.buckets.views.list" call.
+// Exactly one of *ListViewsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListViewsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersLocationsBucketsViewsListCall) Do(opts ...googleapi.CallOption) (*ListViewsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListViewsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists views on a bucket..",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "GET",
+	//   "id": "logging.folders.locations.buckets.views.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The bucket whose views are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "response": {
+	//     "$ref": "ListViewsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsBucketsViewsListCall) Pages(ctx context.Context, f func(*ListViewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.folders.locations.buckets.views.patch":
+
+type FoldersLocationsBucketsViewsPatchCall struct {
+	s          *Service
+	name       string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a view. This method replaces the following fields in
+// the existing view with values from the new view: filter.
+func (r *FoldersLocationsBucketsViewsService) Patch(name string, logview *LogView) *FoldersLocationsBucketsViewsPatchCall {
+	c := &FoldersLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logview = logview
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask that
+// specifies the fields in view that need an update. A field will be
+// overwritten if, and only if, it is in the update mask. name and
+// output only fields cannot be updated.For a detailed FieldMask
+// definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample:
+// updateMask=filter.
+func (c *FoldersLocationsBucketsViewsPatchCall) UpdateMask(updateMask string) *FoldersLocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsBucketsViewsPatchCall) Fields(s ...googleapi.Field) *FoldersLocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsBucketsViewsPatchCall) Context(ctx context.Context) *FoldersLocationsBucketsViewsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsBucketsViewsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.buckets.views.patch" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a view. This method replaces the following fields in the existing view with values from the new view: filter.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "logging.folders.locations.buckets.views.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to update \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask that specifies the fields in view that need an update. A field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=filter.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.folders.logs.delete":
 
 type FoldersLogsDeleteCall struct {
@@ -8758,7 +11555,7 @@ func (c *FoldersLogsDeleteCall) Header() http.Header {
 
 func (c *FoldersLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8883,6 +11680,23 @@ func (c *FoldersLogsListCall) PageToken(pageToken string) *FoldersLogsListCall {
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": The
+// resource name that owns the logs:
+// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
+// _ID
+// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
+// iews/VIEW_ID
+// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
+// T_ID/views/VIEW_ID
+// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
+// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
+// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
+// "folders/FOLDER_ID"
+func (c *FoldersLogsListCall) ResourceNames(resourceNames ...string) *FoldersLogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -8920,7 +11734,7 @@ func (c *FoldersLogsListCall) Header() http.Header {
 
 func (c *FoldersLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9006,6 +11820,12 @@ func (c *FoldersLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespons
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -9110,7 +11930,7 @@ func (c *FoldersSinksCreateCall) Header() http.Header {
 
 func (c *FoldersSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9255,7 +12075,7 @@ func (c *FoldersSinksDeleteCall) Header() http.Header {
 
 func (c *FoldersSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9397,7 +12217,7 @@ func (c *FoldersSinksGetCall) Header() http.Header {
 
 func (c *FoldersSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9563,7 +12383,7 @@ func (c *FoldersSinksListCall) Header() http.Header {
 
 func (c *FoldersSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9766,7 +12586,7 @@ func (c *FoldersSinksPatchCall) Header() http.Header {
 
 func (c *FoldersSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9951,7 +12771,7 @@ func (c *FoldersSinksUpdateCall) Header() http.Header {
 
 func (c *FoldersSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10057,6 +12877,359 @@ func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 
 }
 
+// method id "logging.locations.get":
+
+type LocationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a location.
+func (r *LocationsService) Get(name string) *LocationsGetCall {
+	c := &LocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsGetCall) Fields(s ...googleapi.Field) *LocationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LocationsGetCall) IfNoneMatch(entityTag string) *LocationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsGetCall) Context(ctx context.Context) *LocationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.get" call.
+// Exactly one of *Location or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Location{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a location.",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.locations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name for the location.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Location"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.locations.list":
+
+type LocationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists information about the supported locations for this
+// service.
+func (r *LocationsService) List(name string) *LocationsListCall {
+	c := &LocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *LocationsListCall) Filter(filter string) *LocationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *LocationsListCall) PageSize(pageSize int64) *LocationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *LocationsListCall) PageToken(pageToken string) *LocationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsListCall) Fields(s ...googleapi.Field) *LocationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LocationsListCall) IfNoneMatch(entityTag string) *LocationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsListCall) Context(ctx context.Context) *LocationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/locations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.list" call.
+// Exactly one of *ListLocationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLocationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists information about the supported locations for this service.",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations",
+	//   "httpMethod": "GET",
+	//   "id": "logging.locations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The resource that owns the locations collection, if applicable.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/locations",
+	//   "response": {
+	//     "$ref": "ListLocationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "logging.locations.buckets.create":
 
 type LocationsBucketsCreateCall struct {
@@ -10113,7 +13286,7 @@ func (c *LocationsBucketsCreateCall) Header() http.Header {
 
 func (c *LocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10259,7 +13432,7 @@ func (c *LocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *LocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10401,7 +13574,7 @@ func (c *LocationsBucketsGetCall) Header() http.Header {
 
 func (c *LocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10567,7 +13740,7 @@ func (c *LocationsBucketsListCall) Header() http.Header {
 
 func (c *LocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10755,7 +13928,7 @@ func (c *LocationsBucketsPatchCall) Header() http.Header {
 
 func (c *LocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10903,7 +14076,7 @@ func (c *LocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *LocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10998,6 +14171,796 @@ func (c *LocationsBucketsUndeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 
 }
 
+// method id "logging.locations.buckets.views.create":
+
+type LocationsBucketsViewsCreateCall struct {
+	s          *Service
+	parent     string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a view over logs in a bucket. A bucket may contain a
+// maximum of 50 views.
+func (r *LocationsBucketsViewsService) Create(parent string, logview *LogView) *LocationsBucketsViewsCreateCall {
+	c := &LocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logview = logview
+	return c
+}
+
+// ViewId sets the optional parameter "viewId": Required. The id to use
+// for this view.
+func (c *LocationsBucketsViewsCreateCall) ViewId(viewId string) *LocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("viewId", viewId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsBucketsViewsCreateCall) Fields(s ...googleapi.Field) *LocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsBucketsViewsCreateCall) Context(ctx context.Context) *LocationsBucketsViewsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsBucketsViewsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.buckets.views.create" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *LocationsBucketsViewsCreateCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "POST",
+	//   "id": "logging.locations.buckets.views.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The bucket in which to create the view \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" Example: \"projects/my-logging-project/locations/my-location/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "viewId": {
+	//       "description": "Required. The id to use for this view.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.locations.buckets.views.delete":
+
+type LocationsBucketsViewsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a view from a bucket.
+func (r *LocationsBucketsViewsService) Delete(name string) *LocationsBucketsViewsDeleteCall {
+	c := &LocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsBucketsViewsDeleteCall) Fields(s ...googleapi.Field) *LocationsBucketsViewsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsBucketsViewsDeleteCall) Context(ctx context.Context) *LocationsBucketsViewsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsBucketsViewsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.buckets.views.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *LocationsBucketsViewsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a view from a bucket.",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.locations.buckets.views.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to delete: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.locations.buckets.views.get":
+
+type LocationsBucketsViewsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a view.
+func (r *LocationsBucketsViewsService) Get(name string) *LocationsBucketsViewsGetCall {
+	c := &LocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsBucketsViewsGetCall) Fields(s ...googleapi.Field) *LocationsBucketsViewsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LocationsBucketsViewsGetCall) IfNoneMatch(entityTag string) *LocationsBucketsViewsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsBucketsViewsGetCall) Context(ctx context.Context) *LocationsBucketsViewsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsBucketsViewsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.buckets.views.get" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *LocationsBucketsViewsGetCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a view.",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.locations.buckets.views.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the policy: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.locations.buckets.views.list":
+
+type LocationsBucketsViewsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists views on a bucket..
+func (r *LocationsBucketsViewsService) List(parent string) *LocationsBucketsViewsListCall {
+	c := &LocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *LocationsBucketsViewsListCall) PageSize(pageSize int64) *LocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *LocationsBucketsViewsListCall) PageToken(pageToken string) *LocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsBucketsViewsListCall) Fields(s ...googleapi.Field) *LocationsBucketsViewsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LocationsBucketsViewsListCall) IfNoneMatch(entityTag string) *LocationsBucketsViewsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsBucketsViewsListCall) Context(ctx context.Context) *LocationsBucketsViewsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsBucketsViewsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.buckets.views.list" call.
+// Exactly one of *ListViewsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListViewsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LocationsBucketsViewsListCall) Do(opts ...googleapi.CallOption) (*ListViewsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListViewsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists views on a bucket..",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "GET",
+	//   "id": "logging.locations.buckets.views.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The bucket whose views are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "response": {
+	//     "$ref": "ListViewsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LocationsBucketsViewsListCall) Pages(ctx context.Context, f func(*ListViewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.locations.buckets.views.patch":
+
+type LocationsBucketsViewsPatchCall struct {
+	s          *Service
+	name       string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a view. This method replaces the following fields in
+// the existing view with values from the new view: filter.
+func (r *LocationsBucketsViewsService) Patch(name string, logview *LogView) *LocationsBucketsViewsPatchCall {
+	c := &LocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logview = logview
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask that
+// specifies the fields in view that need an update. A field will be
+// overwritten if, and only if, it is in the update mask. name and
+// output only fields cannot be updated.For a detailed FieldMask
+// definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample:
+// updateMask=filter.
+func (c *LocationsBucketsViewsPatchCall) UpdateMask(updateMask string) *LocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LocationsBucketsViewsPatchCall) Fields(s ...googleapi.Field) *LocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LocationsBucketsViewsPatchCall) Context(ctx context.Context) *LocationsBucketsViewsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LocationsBucketsViewsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.locations.buckets.views.patch" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *LocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a view. This method replaces the following fields in the existing view with values from the new view: filter.",
+	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "logging.locations.buckets.views.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to update \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask that specifies the fields in view that need an update. A field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=filter.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.logs.delete":
 
 type LogsDeleteCall struct {
@@ -11045,7 +15008,7 @@ func (c *LogsDeleteCall) Header() http.Header {
 
 func (c *LogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11170,6 +15133,23 @@ func (c *LogsListCall) PageToken(pageToken string) *LogsListCall {
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": The
+// resource name that owns the logs:
+// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
+// _ID
+// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
+// iews/VIEW_ID
+// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
+// T_ID/views/VIEW_ID
+// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
+// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
+// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
+// "folders/FOLDER_ID"
+func (c *LogsListCall) ResourceNames(resourceNames ...string) *LogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11207,7 +15187,7 @@ func (c *LogsListCall) Header() http.Header {
 
 func (c *LogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11293,6 +15273,12 @@ func (c *LogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsResponse, erro
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -11404,7 +15390,7 @@ func (c *MonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *MonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11579,7 +15565,7 @@ func (c *OrganizationsGetCmekSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11736,7 +15722,7 @@ func (c *OrganizationsUpdateCmekSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11885,7 +15871,7 @@ func (c *OrganizationsExclusionsCreateCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12024,7 +16010,7 @@ func (c *OrganizationsExclusionsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12166,7 +16152,7 @@ func (c *OrganizationsExclusionsGetCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12332,7 +16318,7 @@ func (c *OrganizationsExclusionsListCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12514,7 +16500,7 @@ func (c *OrganizationsExclusionsPatchCall) Header() http.Header {
 
 func (c *OrganizationsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12615,6 +16601,359 @@ func (c *OrganizationsExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*Lo
 
 }
 
+// method id "logging.organizations.locations.get":
+
+type OrganizationsLocationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a location.
+func (r *OrganizationsLocationsService) Get(name string) *OrganizationsLocationsGetCall {
+	c := &OrganizationsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsGetCall) Context(ctx context.Context) *OrganizationsLocationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.get" call.
+// Exactly one of *Location or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Location{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a location.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.organizations.locations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name for the location.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Location"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.organizations.locations.list":
+
+type OrganizationsLocationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists information about the supported locations for this
+// service.
+func (r *OrganizationsLocationsService) List(name string) *OrganizationsLocationsListCall {
+	c := &OrganizationsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *OrganizationsLocationsListCall) Filter(filter string) *OrganizationsLocationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *OrganizationsLocationsListCall) PageSize(pageSize int64) *OrganizationsLocationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *OrganizationsLocationsListCall) PageToken(pageToken string) *OrganizationsLocationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsListCall) Context(ctx context.Context) *OrganizationsLocationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/locations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.list" call.
+// Exactly one of *ListLocationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLocationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists information about the supported locations for this service.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations",
+	//   "httpMethod": "GET",
+	//   "id": "logging.organizations.locations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The resource that owns the locations collection, if applicable.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/locations",
+	//   "response": {
+	//     "$ref": "ListLocationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "logging.organizations.locations.buckets.create":
 
 type OrganizationsLocationsBucketsCreateCall struct {
@@ -12671,7 +17010,7 @@ func (c *OrganizationsLocationsBucketsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12817,7 +17156,7 @@ func (c *OrganizationsLocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12959,7 +17298,7 @@ func (c *OrganizationsLocationsBucketsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13125,7 +17464,7 @@ func (c *OrganizationsLocationsBucketsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13313,7 +17652,7 @@ func (c *OrganizationsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13461,7 +17800,7 @@ func (c *OrganizationsLocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13556,6 +17895,796 @@ func (c *OrganizationsLocationsBucketsUndeleteCall) Do(opts ...googleapi.CallOpt
 
 }
 
+// method id "logging.organizations.locations.buckets.views.create":
+
+type OrganizationsLocationsBucketsViewsCreateCall struct {
+	s          *Service
+	parent     string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a view over logs in a bucket. A bucket may contain a
+// maximum of 50 views.
+func (r *OrganizationsLocationsBucketsViewsService) Create(parent string, logview *LogView) *OrganizationsLocationsBucketsViewsCreateCall {
+	c := &OrganizationsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logview = logview
+	return c
+}
+
+// ViewId sets the optional parameter "viewId": Required. The id to use
+// for this view.
+func (c *OrganizationsLocationsBucketsViewsCreateCall) ViewId(viewId string) *OrganizationsLocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("viewId", viewId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsBucketsViewsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsBucketsViewsCreateCall) Context(ctx context.Context) *OrganizationsLocationsBucketsViewsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsBucketsViewsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.buckets.views.create" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsLocationsBucketsViewsCreateCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "POST",
+	//   "id": "logging.organizations.locations.buckets.views.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The bucket in which to create the view \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" Example: \"projects/my-logging-project/locations/my-location/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "viewId": {
+	//       "description": "Required. The id to use for this view.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.organizations.locations.buckets.views.delete":
+
+type OrganizationsLocationsBucketsViewsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a view from a bucket.
+func (r *OrganizationsLocationsBucketsViewsService) Delete(name string) *OrganizationsLocationsBucketsViewsDeleteCall {
+	c := &OrganizationsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsBucketsViewsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsBucketsViewsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsBucketsViewsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsBucketsViewsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsBucketsViewsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.buckets.views.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsLocationsBucketsViewsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a view from a bucket.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.organizations.locations.buckets.views.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to delete: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.organizations.locations.buckets.views.get":
+
+type OrganizationsLocationsBucketsViewsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a view.
+func (r *OrganizationsLocationsBucketsViewsService) Get(name string) *OrganizationsLocationsBucketsViewsGetCall {
+	c := &OrganizationsLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsBucketsViewsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsBucketsViewsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsBucketsViewsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsBucketsViewsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsBucketsViewsGetCall) Context(ctx context.Context) *OrganizationsLocationsBucketsViewsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsBucketsViewsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.buckets.views.get" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsLocationsBucketsViewsGetCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a view.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.organizations.locations.buckets.views.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the policy: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.organizations.locations.buckets.views.list":
+
+type OrganizationsLocationsBucketsViewsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists views on a bucket..
+func (r *OrganizationsLocationsBucketsViewsService) List(parent string) *OrganizationsLocationsBucketsViewsListCall {
+	c := &OrganizationsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *OrganizationsLocationsBucketsViewsListCall) PageSize(pageSize int64) *OrganizationsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *OrganizationsLocationsBucketsViewsListCall) PageToken(pageToken string) *OrganizationsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsBucketsViewsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsBucketsViewsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsBucketsViewsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsBucketsViewsListCall) Context(ctx context.Context) *OrganizationsLocationsBucketsViewsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsBucketsViewsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.buckets.views.list" call.
+// Exactly one of *ListViewsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListViewsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsBucketsViewsListCall) Do(opts ...googleapi.CallOption) (*ListViewsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListViewsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists views on a bucket..",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "GET",
+	//   "id": "logging.organizations.locations.buckets.views.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The bucket whose views are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "response": {
+	//     "$ref": "ListViewsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsBucketsViewsListCall) Pages(ctx context.Context, f func(*ListViewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.organizations.locations.buckets.views.patch":
+
+type OrganizationsLocationsBucketsViewsPatchCall struct {
+	s          *Service
+	name       string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a view. This method replaces the following fields in
+// the existing view with values from the new view: filter.
+func (r *OrganizationsLocationsBucketsViewsService) Patch(name string, logview *LogView) *OrganizationsLocationsBucketsViewsPatchCall {
+	c := &OrganizationsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logview = logview
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask that
+// specifies the fields in view that need an update. A field will be
+// overwritten if, and only if, it is in the update mask. name and
+// output only fields cannot be updated.For a detailed FieldMask
+// definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample:
+// updateMask=filter.
+func (c *OrganizationsLocationsBucketsViewsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsBucketsViewsPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsBucketsViewsPatchCall) Context(ctx context.Context) *OrganizationsLocationsBucketsViewsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsBucketsViewsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.buckets.views.patch" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a view. This method replaces the following fields in the existing view with values from the new view: filter.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "logging.organizations.locations.buckets.views.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to update \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask that specifies the fields in view that need an update. A field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=filter.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.organizations.logs.delete":
 
 type OrganizationsLogsDeleteCall struct {
@@ -13603,7 +18732,7 @@ func (c *OrganizationsLogsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13728,6 +18857,23 @@ func (c *OrganizationsLogsListCall) PageToken(pageToken string) *OrganizationsLo
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": The
+// resource name that owns the logs:
+// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
+// _ID
+// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
+// iews/VIEW_ID
+// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
+// T_ID/views/VIEW_ID
+// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
+// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
+// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
+// "folders/FOLDER_ID"
+func (c *OrganizationsLogsListCall) ResourceNames(resourceNames ...string) *OrganizationsLogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13765,7 +18911,7 @@ func (c *OrganizationsLogsListCall) Header() http.Header {
 
 func (c *OrganizationsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13851,6 +18997,12 @@ func (c *OrganizationsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsR
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -13955,7 +19107,7 @@ func (c *OrganizationsSinksCreateCall) Header() http.Header {
 
 func (c *OrganizationsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14100,7 +19252,7 @@ func (c *OrganizationsSinksDeleteCall) Header() http.Header {
 
 func (c *OrganizationsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14242,7 +19394,7 @@ func (c *OrganizationsSinksGetCall) Header() http.Header {
 
 func (c *OrganizationsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14408,7 +19560,7 @@ func (c *OrganizationsSinksListCall) Header() http.Header {
 
 func (c *OrganizationsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14611,7 +19763,7 @@ func (c *OrganizationsSinksPatchCall) Header() http.Header {
 
 func (c *OrganizationsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14796,7 +19948,7 @@ func (c *OrganizationsSinksUpdateCall) Header() http.Header {
 
 func (c *OrganizationsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14950,7 +20102,7 @@ func (c *ProjectsExclusionsCreateCall) Header() http.Header {
 
 func (c *ProjectsExclusionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15089,7 +20241,7 @@ func (c *ProjectsExclusionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsExclusionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15231,7 +20383,7 @@ func (c *ProjectsExclusionsGetCall) Header() http.Header {
 
 func (c *ProjectsExclusionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15397,7 +20549,7 @@ func (c *ProjectsExclusionsListCall) Header() http.Header {
 
 func (c *ProjectsExclusionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15579,7 +20731,7 @@ func (c *ProjectsExclusionsPatchCall) Header() http.Header {
 
 func (c *ProjectsExclusionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15680,6 +20832,359 @@ func (c *ProjectsExclusionsPatchCall) Do(opts ...googleapi.CallOption) (*LogExcl
 
 }
 
+// method id "logging.projects.locations.get":
+
+type ProjectsLocationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a location.
+func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
+	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetCall) Context(ctx context.Context) *ProjectsLocationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.get" call.
+// Exactly one of *Location or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Location{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a location.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.projects.locations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name for the location.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Location"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.locations.list":
+
+type ProjectsLocationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists information about the supported locations for this
+// service.
+func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
+	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsListCall) Context(ctx context.Context) *ProjectsLocationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/locations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.list" call.
+// Exactly one of *ListLocationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListLocationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists information about the supported locations for this service.",
+	//   "flatPath": "v2/projects/{projectsId}/locations",
+	//   "httpMethod": "GET",
+	//   "id": "logging.projects.locations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The resource that owns the locations collection, if applicable.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/locations",
+	//   "response": {
+	//     "$ref": "ListLocationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "logging.projects.locations.buckets.create":
 
 type ProjectsLocationsBucketsCreateCall struct {
@@ -15736,7 +21241,7 @@ func (c *ProjectsLocationsBucketsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15882,7 +21387,7 @@ func (c *ProjectsLocationsBucketsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16024,7 +21529,7 @@ func (c *ProjectsLocationsBucketsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16190,7 +21695,7 @@ func (c *ProjectsLocationsBucketsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16378,7 +21883,7 @@ func (c *ProjectsLocationsBucketsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16526,7 +22031,7 @@ func (c *ProjectsLocationsBucketsUndeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsBucketsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16621,6 +22126,796 @@ func (c *ProjectsLocationsBucketsUndeleteCall) Do(opts ...googleapi.CallOption) 
 
 }
 
+// method id "logging.projects.locations.buckets.views.create":
+
+type ProjectsLocationsBucketsViewsCreateCall struct {
+	s          *Service
+	parent     string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a view over logs in a bucket. A bucket may contain a
+// maximum of 50 views.
+func (r *ProjectsLocationsBucketsViewsService) Create(parent string, logview *LogView) *ProjectsLocationsBucketsViewsCreateCall {
+	c := &ProjectsLocationsBucketsViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.logview = logview
+	return c
+}
+
+// ViewId sets the optional parameter "viewId": Required. The id to use
+// for this view.
+func (c *ProjectsLocationsBucketsViewsCreateCall) ViewId(viewId string) *ProjectsLocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("viewId", viewId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBucketsViewsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsBucketsViewsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBucketsViewsCreateCall) Context(ctx context.Context) *ProjectsLocationsBucketsViewsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBucketsViewsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBucketsViewsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.buckets.views.create" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsBucketsViewsCreateCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "POST",
+	//   "id": "logging.projects.locations.buckets.views.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The bucket in which to create the view \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" Example: \"projects/my-logging-project/locations/my-location/buckets/my-bucket\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "viewId": {
+	//       "description": "Required. The id to use for this view.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.locations.buckets.views.delete":
+
+type ProjectsLocationsBucketsViewsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a view from a bucket.
+func (r *ProjectsLocationsBucketsViewsService) Delete(name string) *ProjectsLocationsBucketsViewsDeleteCall {
+	c := &ProjectsLocationsBucketsViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBucketsViewsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsBucketsViewsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBucketsViewsDeleteCall) Context(ctx context.Context) *ProjectsLocationsBucketsViewsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBucketsViewsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBucketsViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.buckets.views.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsBucketsViewsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a view from a bucket.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.projects.locations.buckets.views.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to delete: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.locations.buckets.views.get":
+
+type ProjectsLocationsBucketsViewsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a view.
+func (r *ProjectsLocationsBucketsViewsService) Get(name string) *ProjectsLocationsBucketsViewsGetCall {
+	c := &ProjectsLocationsBucketsViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBucketsViewsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBucketsViewsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsBucketsViewsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBucketsViewsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBucketsViewsGetCall) Context(ctx context.Context) *ProjectsLocationsBucketsViewsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBucketsViewsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBucketsViewsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.buckets.views.get" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsBucketsViewsGetCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a view.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "GET",
+	//   "id": "logging.projects.locations.buckets.views.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the policy: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.locations.buckets.views.list":
+
+type ProjectsLocationsBucketsViewsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists views on a bucket..
+func (r *ProjectsLocationsBucketsViewsService) List(parent string) *ProjectsLocationsBucketsViewsListCall {
+	c := &ProjectsLocationsBucketsViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *ProjectsLocationsBucketsViewsListCall) PageSize(pageSize int64) *ProjectsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *ProjectsLocationsBucketsViewsListCall) PageToken(pageToken string) *ProjectsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBucketsViewsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBucketsViewsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsBucketsViewsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBucketsViewsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBucketsViewsListCall) Context(ctx context.Context) *ProjectsLocationsBucketsViewsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBucketsViewsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBucketsViewsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/views")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.buckets.views.list" call.
+// Exactly one of *ListViewsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListViewsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBucketsViewsListCall) Do(opts ...googleapi.CallOption) (*ListViewsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListViewsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists views on a bucket..",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views",
+	//   "httpMethod": "GET",
+	//   "id": "logging.projects.locations.buckets.views.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The bucket whose views are to be listed: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]\" ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/views",
+	//   "response": {
+	//     "$ref": "ListViewsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBucketsViewsListCall) Pages(ctx context.Context, f func(*ListViewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.projects.locations.buckets.views.patch":
+
+type ProjectsLocationsBucketsViewsPatchCall struct {
+	s          *Service
+	name       string
+	logview    *LogView
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a view. This method replaces the following fields in
+// the existing view with values from the new view: filter.
+func (r *ProjectsLocationsBucketsViewsService) Patch(name string, logview *LogView) *ProjectsLocationsBucketsViewsPatchCall {
+	c := &ProjectsLocationsBucketsViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.logview = logview
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask that
+// specifies the fields in view that need an update. A field will be
+// overwritten if, and only if, it is in the update mask. name and
+// output only fields cannot be updated.For a detailed FieldMask
+// definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample:
+// updateMask=filter.
+func (c *ProjectsLocationsBucketsViewsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBucketsViewsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsBucketsViewsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBucketsViewsPatchCall) Context(ctx context.Context) *ProjectsLocationsBucketsViewsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBucketsViewsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBucketsViewsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.logview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.buckets.views.patch" call.
+// Exactly one of *LogView or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LogView.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption) (*LogView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LogView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a view. This method replaces the following fields in the existing view with values from the new view: filter.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "logging.projects.locations.buckets.views.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the view to update \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]\" Example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id/views/my-view-id\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/buckets/[^/]+/views/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask that specifies the fields in view that need an update. A field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskExample: updateMask=filter.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "LogView"
+	//   },
+	//   "response": {
+	//     "$ref": "LogView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
 // method id "logging.projects.logs.delete":
 
 type ProjectsLogsDeleteCall struct {
@@ -16668,7 +22963,7 @@ func (c *ProjectsLogsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLogsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16793,6 +23088,23 @@ func (c *ProjectsLogsListCall) PageToken(pageToken string) *ProjectsLogsListCall
 	return c
 }
 
+// ResourceNames sets the optional parameter "resourceNames": The
+// resource name that owns the logs:
+// projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW
+// _ID
+// organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/v
+// iews/VIEW_ID
+// billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKE
+// T_ID/views/VIEW_ID
+// folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_I
+// DTo support legacy queries, it could also be: "projects/PROJECT_ID"
+// "organizations/ORGANIZATION_ID" "billingAccounts/BILLING_ACCOUNT_ID"
+// "folders/FOLDER_ID"
+func (c *ProjectsLogsListCall) ResourceNames(resourceNames ...string) *ProjectsLogsListCall {
+	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -16830,7 +23142,7 @@ func (c *ProjectsLogsListCall) Header() http.Header {
 
 func (c *ProjectsLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16917,6 +23229,12 @@ func (c *ProjectsLogsListCall) Do(opts ...googleapi.CallOption) (*ListLogsRespon
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "resourceNames": {
+	//       "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v2/{+parent}/logs",
@@ -17000,7 +23318,7 @@ func (c *ProjectsMetricsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17140,7 +23458,7 @@ func (c *ProjectsMetricsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17283,7 +23601,7 @@ func (c *ProjectsMetricsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17449,7 +23767,7 @@ func (c *ProjectsMetricsListCall) Header() http.Header {
 
 func (c *ProjectsMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17619,7 +23937,7 @@ func (c *ProjectsMetricsUpdateCall) Header() http.Header {
 
 func (c *ProjectsMetricsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17781,7 +24099,7 @@ func (c *ProjectsSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17926,7 +24244,7 @@ func (c *ProjectsSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18068,7 +24386,7 @@ func (c *ProjectsSinksGetCall) Header() http.Header {
 
 func (c *ProjectsSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18234,7 +24552,7 @@ func (c *ProjectsSinksListCall) Header() http.Header {
 
 func (c *ProjectsSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18437,7 +24755,7 @@ func (c *ProjectsSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18622,7 +24940,7 @@ func (c *ProjectsSinksUpdateCall) Header() http.Header {
 
 func (c *ProjectsSinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18794,7 +25112,7 @@ func (c *SinksCreateCall) Header() http.Header {
 
 func (c *SinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18939,7 +25257,7 @@ func (c *SinksDeleteCall) Header() http.Header {
 
 func (c *SinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19081,7 +25399,7 @@ func (c *SinksGetCall) Header() http.Header {
 
 func (c *SinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19247,7 +25565,7 @@ func (c *SinksListCall) Header() http.Header {
 
 func (c *SinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19450,7 +25768,7 @@ func (c *SinksUpdateCall) Header() http.Header {
 
 func (c *SinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19617,7 +25935,7 @@ func (c *V2GetCmekSettingsCall) Header() http.Header {
 
 func (c *V2GetCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19774,7 +26092,7 @@ func (c *V2UpdateCmekSettingsCall) Header() http.Header {
 
 func (c *V2UpdateCmekSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -348,7 +348,7 @@
       }
     }
   },
-  "revision": "20200824",
+  "revision": "20201012",
   "rootUrl": "https://civicinfo.googleapis.com/",
   "schemas": {
     "AdministrationRegion": {
@@ -358,10 +358,6 @@
         "electionAdministrationBody": {
           "$ref": "AdministrativeBody",
           "description": "The election administration body for this area."
-        },
-        "id": {
-          "description": "An ID for this object. IDs may change in future requests and should not be cached. Access to this field requires special access that can be requested from the Request more link on the Quotas page.",
-          "type": "string"
         },
         "local_jurisdiction": {
           "$ref": "AdministrationRegion",
@@ -399,6 +395,14 @@
         },
         "electionInfoUrl": {
           "description": "A URL provided by this administrative body for looking up general election information.",
+          "type": "string"
+        },
+        "electionNoticeText": {
+          "description": "A last minute or emergency notification text provided by this administrative body.",
+          "type": "string"
+        },
+        "electionNoticeUrl": {
+          "description": "A URL provided by this administrative body for additional information related to the last minute or emergency notification.",
           "type": "string"
         },
         "electionOfficials": {
@@ -530,10 +534,6 @@
         },
         "electorateSpecifications": {
           "description": "A description of any additional eligibility requirements for voting in this contest.",
-          "type": "string"
-        },
-        "id": {
-          "description": "An ID for this object. IDs may change in future requests and should not be cached. Access to this field requires special access that can be requested from the Request more link on the Quotas page.",
           "type": "string"
         },
         "level": {
@@ -1029,17 +1029,13 @@
           "description": "The last date that this early vote site or drop off location may be used. This field is not populated for polling locations.",
           "type": "string"
         },
-        "id": {
-          "description": "An ID for this object. IDs may change in future requests and should not be cached. Access to this field requires special access that can be requested from the Request more link on the Quotas page.",
-          "type": "string"
-        },
         "latitude": {
-          "description": "Latitude of the location, in degrees north of the equator. Only some locations -- generally, ballot drop boxes for vote-by-mail elections -- will have this set; for others, use a geocoding service like the Google Maps API to resolve the address to a geographic point.",
+          "description": "Latitude of the location, in degrees north of the equator. Note this field may not be available for some locations.",
           "format": "double",
           "type": "number"
         },
         "longitude": {
-          "description": "Longitude of the location, in degrees east of the Prime Meridian. Only some locations -- generally, ballot drop boxes for vote-by-mail elections -- will have this set; for others, use a geocoding service like the Google Maps API to resolve the address to a geographic point.",
+          "description": "Longitude of the location, in degrees east of the Prime Meridian. Note this field may not be available for some locations.",
           "format": "double",
           "type": "number"
         },

@@ -3125,7 +3125,7 @@
       }
     }
   },
-  "revision": "20200826",
+  "revision": "20201022",
   "rootUrl": "https://tagmanager.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3617,9 +3617,11 @@
               "ios",
               "androidSdk5",
               "iosSdk5",
-              "amp"
+              "amp",
+              "server"
             ],
             "enumDescriptions": [
+              "",
               "",
               "",
               "",
@@ -3793,6 +3795,10 @@
           "description": "Container version display name.",
           "type": "string"
         },
+        "numClients": {
+          "description": "Number of clients in the container version.",
+          "type": "string"
+        },
         "numCustomTemplates": {
           "description": "Number of custom templates in the container version.",
           "type": "string"
@@ -3948,9 +3954,13 @@
           ],
           "type": "string"
         },
+        "client": {
+          "$ref": "Client",
+          "description": "The client being represented by the entity."
+        },
         "folder": {
           "$ref": "Folder",
-          "description": "The Folder being represented by the entity."
+          "description": "The folder being represented by the entity."
         },
         "tag": {
           "$ref": "Tag",

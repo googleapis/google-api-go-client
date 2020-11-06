@@ -525,8 +525,8 @@ func (s *NetworkEndpoint) MarshalJSON() ([]byte, error) {
 
 // Node: A TPU instance.
 type Node struct {
-	// AcceleratorType: The type of hardware accelerators associated with
-	// this node. Required.
+	// AcceleratorType: Required. The type of hardware accelerators
+	// associated with this node.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
 
 	// CidrBlock: The CIDR block that the TPU node will use when selecting
@@ -571,7 +571,7 @@ type Node struct {
 	// Labels: Resource labels to represent user-provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. The immutable name of the TPU
+	// Name: Output only. Immutable. The name of the TPU
 	Name string `json:"name,omitempty"`
 
 	// Network: The name of a network they wish to peer the TPU node to. It
@@ -590,6 +590,7 @@ type Node struct {
 	// network port for the TPU Node as visible to Compute Engine instances.
 	Port string `json:"port,omitempty"`
 
+	// SchedulingConfig: The scheduling options for this node.
 	SchedulingConfig *SchedulingConfig `json:"schedulingConfig,omitempty"`
 
 	// ServiceAccount: Output only. The service account used to run the
@@ -621,8 +622,12 @@ type Node struct {
 	//   "UNHIDING" - TPU node is currently unhiding.
 	State string `json:"state,omitempty"`
 
-	// TensorflowVersion: The version of Tensorflow running in the Node.
-	// Required.
+	// Symptoms: Output only. The Symptoms that have occurred to the TPU
+	// Node.
+	Symptoms []*Symptom `json:"symptoms,omitempty"`
+
+	// TensorflowVersion: Required. The version of Tensorflow running in the
+	// Node.
 	TensorflowVersion string `json:"tensorflowVersion,omitempty"`
 
 	// UseServiceNetworking: Whether the VPC peering for the node is set up
@@ -887,6 +892,53 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 type StopNodeRequest struct {
 }
 
+// Symptom: A Symptom instance.
+type Symptom struct {
+	// CreateTime: Timestamp when the Symptom is created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Details: Detailed information of the current Symptom.
+	Details string `json:"details,omitempty"`
+
+	// SymptomType: Type of the Symptom.
+	//
+	// Possible values:
+	//   "SYMPTOM_TYPE_UNSPECIFIED" - Unspecified symptom.
+	//   "LOW_MEMORY" - TPU VM memory is low.
+	//   "OUT_OF_MEMORY" - TPU runtime is out of memory.
+	//   "EXECUTE_TIMED_OUT" - TPU runtime execution has timed out.
+	//   "MESH_BUILD_FAIL" - TPU runtime fails to construct a mesh that
+	// recognizes each TPU device's neighbors.
+	//   "HBM_OUT_OF_MEMORY" - TPU HBM is out of memory.
+	SymptomType string `json:"symptomType,omitempty"`
+
+	// WorkerId: A string used to uniquely distinguish a worker within a TPU
+	// node.
+	WorkerId string `json:"workerId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Symptom) MarshalJSON() ([]byte, error) {
+	type NoMethod Symptom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TensorFlowVersion: A tensorflow version that a Node can be configured
 // with.
 type TensorFlowVersion struct {
@@ -978,7 +1030,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1144,7 +1196,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1325,7 +1377,7 @@ func (c *ProjectsLocationsAcceleratorTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAcceleratorTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1396,7 +1448,7 @@ func (c *ProjectsLocationsAcceleratorTypesGetCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/acceleratorTypes/[^/]+$",
 	//       "required": true,
@@ -1495,7 +1547,7 @@ func (c *ProjectsLocationsAcceleratorTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAcceleratorTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1587,7 +1639,7 @@ func (c *ProjectsLocationsAcceleratorTypesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent resource name.",
+	//       "description": "Required. The parent resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -1679,7 +1731,7 @@ func (c *ProjectsLocationsNodesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1757,7 +1809,7 @@ func (c *ProjectsLocationsNodesCreateCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent resource name.",
+	//       "description": "Required. The parent resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -1822,7 +1874,7 @@ func (c *ProjectsLocationsNodesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsNodesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1890,7 +1942,7 @@ func (c *ProjectsLocationsNodesDeleteCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,
@@ -1963,7 +2015,7 @@ func (c *ProjectsLocationsNodesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsNodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2034,7 +2086,7 @@ func (c *ProjectsLocationsNodesGetCall) Do(opts ...googleapi.CallOption) (*Node,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,
@@ -2121,7 +2173,7 @@ func (c *ProjectsLocationsNodesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2203,7 +2255,7 @@ func (c *ProjectsLocationsNodesListCall) Do(opts ...googleapi.CallOption) (*List
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent resource name.",
+	//       "description": "Required. The parent resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2288,7 +2340,7 @@ func (c *ProjectsLocationsNodesReimageCall) Header() http.Header {
 
 func (c *ProjectsLocationsNodesReimageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2428,7 +2480,7 @@ func (c *ProjectsLocationsNodesStartCall) Header() http.Header {
 
 func (c *ProjectsLocationsNodesStartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2568,7 +2620,7 @@ func (c *ProjectsLocationsNodesStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsNodesStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2715,7 +2767,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2848,7 +2900,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2991,7 +3043,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3165,7 +3217,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3346,7 +3398,7 @@ func (c *ProjectsLocationsTensorflowVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTensorflowVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3417,7 +3469,7 @@ func (c *ProjectsLocationsTensorflowVersionsGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name.",
+	//       "description": "Required. The resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tensorflowVersions/[^/]+$",
 	//       "required": true,
@@ -3516,7 +3568,7 @@ func (c *ProjectsLocationsTensorflowVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTensorflowVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3608,7 +3660,7 @@ func (c *ProjectsLocationsTensorflowVersionsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent resource name.",
+	//       "description": "Required. The parent resource name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

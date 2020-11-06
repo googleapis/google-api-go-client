@@ -438,7 +438,8 @@ func (s *Authentication) MarshalJSON() ([]byte, error) {
 // credentials will be ignored.
 type AuthenticationRule struct {
 	// AllowWithoutCredential: If true, the service accepts API keys without
-	// any other credential.
+	// any other credential. This flag only applies to HTTP and gRPC
+	// requests.
 	AllowWithoutCredential bool `json:"allowWithoutCredential,omitempty"`
 
 	// Oauth: The requirements for OAuth credentials.
@@ -717,7 +718,7 @@ func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 // `google.rpc.context.ProjectContext` and
 // `google.rpc.context.OriginContext`. Available context types are
 // defined in package `google.rpc.context`. This also provides mechanism
-// to whitelist any protobuf message extension that can be sent in grpc
+// to allowlist any protobuf message extension that can be sent in grpc
 // metadata using “x-goog-ext--bin” and “x-goog-ext--jspb”
 // format. For example, list any service specific protobuf types that
 // can appear in grpc metadata as follows in your yaml file: Example:
@@ -1500,10 +1501,6 @@ type HttpRule struct {
 	// (that is, the nesting may only be one level deep).
 	AdditionalBindings []*HttpRule `json:"additionalBindings,omitempty"`
 
-	// AllowHalfDuplex: When this flag is set to true, HTTP requests will be
-	// allowed to invoke a half-duplex streaming method.
-	AllowHalfDuplex bool `json:"allowHalfDuplex,omitempty"`
-
 	// Body: The name of the request field whose value is mapped to the HTTP
 	// request body, or `*` for mapping all request fields not captured by
 	// the path pattern to the HTTP body, or omitted for not having any HTTP
@@ -1872,7 +1869,7 @@ type MetricDescriptor struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2050,7 +2047,7 @@ type MetricDescriptorMetadata struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2245,7 +2242,7 @@ type MonitoredResourceDescriptor struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2775,10 +2772,7 @@ type Service struct {
 	// Billing: Billing configuration.
 	Billing *Billing `json:"billing,omitempty"`
 
-	// ConfigVersion: The semantic version of the service configuration. The
-	// config version affects the interpretation of the service
-	// configuration. For example, certain features are enabled by default
-	// for certain config versions. The latest config version is `3`.
+	// ConfigVersion: This field is obsolete. Its value must be set to `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -2890,48 +2884,6 @@ type Service struct {
 
 func (s *Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ServiceIdentity: The per-product per-project service identity for a
-// service. Use this field to configure per-product per-project service
-// identity. Example of a service identity configuration. usage:
-// service_identity: - service_account_parent: "projects/123456789"
-// display_name: "Cloud XXX Service Agent" description: "Used as the
-// identity of Cloud XXX to access resources"
-type ServiceIdentity struct {
-	// Description: Optional. A user-specified opaque description of the
-	// service account. Must be less than or equal to 256 UTF-8 bytes.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Optional. A user-specified name for the service account.
-	// Must be less than or equal to 100 UTF-8 bytes.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// ServiceAccountParent: A service account project that hosts the
-	// service accounts. An example name would be: `projects/123456789`
-	ServiceAccountParent string `json:"serviceAccountParent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServiceIdentity) MarshalJSON() ([]byte, error) {
-	type NoMethod ServiceIdentity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3227,10 +3179,6 @@ type Usage struct {
 	// **NOTE:** All service configuration rules follow "last one wins"
 	// order.
 	Rules []*UsageRule `json:"rules,omitempty"`
-
-	// ServiceIdentity: The configuration of a per-product per-project
-	// service identity.
-	ServiceIdentity *ServiceIdentity `json:"serviceIdentity,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ProducerNotificationChannel") to unconditionally include in API
@@ -4247,7 +4195,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4410,7 +4358,7 @@ func (c *ServicesConsumerQuotaMetricsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4563,7 +4511,7 @@ func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) Header() http.
 
 func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4749,7 +4697,7 @@ func (c *ServicesConsumerQuotaMetricsListCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4960,7 +4908,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsLimitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5128,7 +5076,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5282,7 +5230,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5442,7 +5390,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Header() h
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5628,7 +5576,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Header() 
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -35,7 +35,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/l7m-JIhSvmu0HFIAKZgPpq4u-fg\"",
+  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/-5f4JITqQCh5VuAJ_W3YhyHUYa8\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -2185,7 +2185,7 @@
       }
     }
   },
-  "revision": "20200813",
+  "revision": "20201101",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -2985,7 +2985,7 @@
             "description": "A mapping from export format to URL",
             "type": "string"
           },
-          "description": "Links for exporting Google Docs to specific formats.",
+          "description": "Links for exporting Docs Editors files to specific formats.",
           "type": "object"
         },
         "fileExtension": {
@@ -3272,7 +3272,7 @@
           "type": "string"
         },
         "thumbnailLink": {
-          "description": "A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours. Only populated when the requesting app can access the file's content.",
+          "description": "A short-lived link to the file's thumbnail, if available. Typically lasts on the order of hours. Only populated when the requesting app can access the file's content. If the file isn't shared publicly, the URL returned in Files.thumbnailLink must be fetched using a credentialed request.",
           "type": "string"
         },
         "thumbnailVersion": {
@@ -3620,7 +3620,7 @@
             "description": "A mapping from export format to URL",
             "type": "string"
           },
-          "description": "Links for exporting Google Docs to specific formats.",
+          "description": "Links for exporting Docs Editors files to specific formats.",
           "type": "object"
         },
         "id": {
@@ -3658,19 +3658,19 @@
           "type": "string"
         },
         "publishAuto": {
-          "description": "Whether subsequent revisions will be automatically republished. This is only applicable to Google Docs.",
+          "description": "Whether subsequent revisions will be automatically republished. This is only applicable to Docs Editors files.",
           "type": "boolean"
         },
         "published": {
-          "description": "Whether this revision is published. This is only applicable to Google Docs.",
+          "description": "Whether this revision is published. This is only applicable to Docs Editors files.",
           "type": "boolean"
         },
         "publishedLink": {
-          "description": "A link to the published revision.",
+          "description": "A link to the published revision. This is only populated for Google Sites files.",
           "type": "string"
         },
         "publishedOutsideDomain": {
-          "description": "Whether this revision is published outside the domain. This is only applicable to Google Docs.",
+          "description": "Whether this revision is published outside the domain. This is only applicable to Docs Editors files.",
           "type": "boolean"
         },
         "size": {

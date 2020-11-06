@@ -797,6 +797,43 @@ func (s *Event) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExistingDisk: Configuration for an existing disk to be attached to
+// the VM.
+type ExistingDisk struct {
+	// Disk: If `disk` contains slashes, the Cloud Life Sciences API assumes
+	// that it is a complete URL for the disk. If `disk` does not contain
+	// slashes, the Cloud Life Sciences API assumes that the disk is a zonal
+	// disk and a URL will be generated of the form `zones//disks/`, where
+	// `` is the zone in which the instance is allocated. The disk must be
+	// ext4 formatted. If all `Mount` references to this disk have the
+	// `read_only` flag set to true, the disk will be attached in
+	// `read-only` mode and can be shared with other instances. Otherwise,
+	// the disk will be available for writing but cannot be shared.
+	Disk string `json:"disk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disk") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExistingDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod ExistingDisk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FailedEvent: An event generated when the execution of a pipeline has
 // failed. Note that other events can continue to occur after this
 // event.
@@ -1041,6 +1078,35 @@ func (s *Mount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NFSMount: Configuration for an `NFSMount` to be attached to the VM.
+type NFSMount struct {
+	// Target: A target NFS mount. The target must be specified as
+	// `address:/mount".
+	Target string `json:"target,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Target") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Target") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NFSMount) MarshalJSON() ([]byte, error) {
+	type NoMethod NFSMount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Network: VM networking options.
 type Network struct {
 	// Name: The network name to attach the VM's network interface to. The
@@ -1232,6 +1298,50 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PersistentDisk: Configuration for a persistent disk to be attached to
+// the VM. See https://cloud.google.com/compute/docs/disks/performance
+// for more information about disk type, size, and performance
+// considerations.
+type PersistentDisk struct {
+	// SizeGb: The size, in GB, of the disk to attach. If the size is not
+	// specified, a default is chosen to ensure reasonable I/O performance.
+	// If the disk type is specified as `local-ssd`, multiple local drives
+	// are automatically combined to provide the requested size. Note,
+	// however, that each physical SSD is 375GB in size, and no more than 8
+	// drives can be attached to a single instance.
+	SizeGb int64 `json:"sizeGb,omitempty"`
+
+	// SourceImage: An image to put on the disk before attaching it to the
+	// VM.
+	SourceImage string `json:"sourceImage,omitempty"`
+
+	// Type: The Compute Engine disk type. If unspecified, `pd-standard` is
+	// used.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SizeGb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SizeGb") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersistentDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod PersistentDisk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1722,6 +1832,10 @@ type VirtualMachine struct {
 	// the pipeline.
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 
+	// Volumes: The list of disks and other storage to create or attach to
+	// the VM.
+	Volumes []*Volume `json:"volumes,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1741,6 +1855,46 @@ type VirtualMachine struct {
 
 func (s *VirtualMachine) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualMachine
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Volume: Carries information about storage that can be attached to a
+// VM.
+type Volume struct {
+	// ExistingDisk: Configuration for a existing disk.
+	ExistingDisk *ExistingDisk `json:"existingDisk,omitempty"`
+
+	// NfsMount: Configuration for an NFS mount.
+	NfsMount *NFSMount `json:"nfsMount,omitempty"`
+
+	// PersistentDisk: Configuration for a persistent disk.
+	PersistentDisk *PersistentDisk `json:"persistentDisk,omitempty"`
+
+	// Volume: A user-supplied name for the volume. Used when mounting the
+	// volume into `Actions`. The name must contain only upper and lowercase
+	// alphanumeric characters and hyphens and cannot start with a hyphen.
+	Volume string `json:"volume,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExistingDisk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExistingDisk") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Volume) MarshalJSON() ([]byte, error) {
+	type NoMethod Volume
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1908,7 +2062,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2042,7 +2196,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2196,7 +2350,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2384,7 +2538,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2558,7 +2712,7 @@ func (c *ProjectsWorkersCheckInCall) Header() http.Header {
 
 func (c *ProjectsWorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2700,7 +2854,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

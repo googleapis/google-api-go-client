@@ -120,7 +120,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. The project that the agent to delete is associated with. Format: `projects/`.",
+              "description": "Required. The project that the agent to delete is associated with. Format: `projects/` or `projects//locations/`.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -146,7 +146,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. The project that the agent to fetch is associated with. Format: `projects/`.",
+              "description": "Required. The project that the agent to fetch is associated with. Format: `projects/` or `projects//locations/`.",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -172,7 +172,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. The project of this agent. Format: `projects/`.",
+              "description": "Required. The project of this agent. Format: `projects/` or `projects//locations/`",
               "location": "path",
               "pattern": "^projects/[^/]+$",
               "required": true,
@@ -211,7 +211,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project that the agent to export is associated with. Format: `projects/`.",
+                  "description": "Required. The project that the agent to export is associated with. Format: `projects/` or `projects//locations/`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -240,7 +240,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The name of the fulfillment. Format: `projects//agent/fulfillment`.",
+                  "description": "Required. The name of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
                   "location": "path",
                   "pattern": "^projects/[^/]+/agent/fulfillment$",
                   "required": true,
@@ -271,7 +271,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The project that the agent is associated with. Format: `projects/`.",
+                  "description": "Required. The project that the agent is associated with. Format: `projects/` or `projects//locations/`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -297,7 +297,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project that the agent to import is associated with. Format: `projects/`.",
+                  "description": "Required. The project that the agent to import is associated with. Format: `projects/` or `projects//locations/`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -326,7 +326,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project that the agent to restore is associated with. Format: `projects/`.",
+                  "description": "Required. The project that the agent to restore is associated with. Format: `projects/` or `projects//locations/`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -366,7 +366,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The project to list agents from. Format: `projects/`.",
+                  "description": "Required. The project to list agents from. Format: `projects/` or `projects//locations/`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -392,7 +392,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project that the agent to train is associated with. Format: `projects/`.",
+                  "description": "Required. The project that the agent to train is associated with. Format: `projects/` or `projects//locations/`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -421,7 +421,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The unique identifier of the fulfillment. Format: `projects//agent/fulfillment`.",
+                  "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
                   "location": "path",
                   "pattern": "^projects/[^/]+/agent/fulfillment$",
                   "required": true,
@@ -460,7 +460,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+                      "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent`, - `projects//locations//agent`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -489,7 +489,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the agent to update or create entity types in. Format: `projects//agent`.",
+                      "description": "Required. The name of the agent to update or create entity types in. Supported formats: - `projects//agent` - `projects//locations//agent`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -523,7 +523,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The agent to create a entity type for. Format: `projects//agent`.",
+                      "description": "Required. The agent to create a entity type for. Supported formats: - `projects//agent` - `projects//locations//agent`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -552,7 +552,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The name of the entity type to delete. Format: `projects//agent/entityTypes/`.",
+                      "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                       "required": true,
@@ -583,7 +583,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Required. The name of the entity type. Format: `projects//agent/entityTypes/`.",
+                      "description": "Required. The name of the entity type. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                       "required": true,
@@ -625,7 +625,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The agent to list all entity types from. Format: `projects//agent`.",
+                      "description": "Required. The agent to list all entity types from. Supported formats: - `projects//agent` - `projects//locations//agent`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -656,7 +656,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Format: `projects//agent/entityTypes/`.",
+                      "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                       "required": true,
@@ -695,7 +695,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the entity type to create entities in. Format: `projects//agent/entityTypes/`.",
+                          "description": "Required. The name of the entity type to create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                           "required": true,
@@ -724,7 +724,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the entity type to delete entries for. Format: `projects//agent/entityTypes/`.",
+                          "description": "Required. The name of the entity type to delete entries for. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                           "required": true,
@@ -753,7 +753,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the entity type to update or create entities in. Format: `projects//agent/entityTypes/`.",
+                          "description": "Required. The name of the entity type to update or create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                           "required": true,
@@ -799,7 +799,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent",
+                      "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -831,7 +831,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                               "required": true,
@@ -857,7 +857,7 @@
                           ],
                           "parameters": {
                             "session": {
-                              "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+                              "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
                               "location": "path",
                               "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                               "required": true,
@@ -890,7 +890,7 @@
                               ],
                               "parameters": {
                                 "parent": {
-                                  "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                   "required": true,
@@ -919,7 +919,7 @@
                               ],
                               "parameters": {
                                 "name": {
-                                  "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
                                   "required": true,
@@ -945,7 +945,7 @@
                               ],
                               "parameters": {
                                 "name": {
-                                  "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
                                   "required": true,
@@ -982,7 +982,7 @@
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                   "required": true,
@@ -1008,7 +1008,7 @@
                               ],
                               "parameters": {
                                 "name": {
-                                  "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+                                  "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
                                   "required": true,
@@ -1047,7 +1047,7 @@
                               ],
                               "parameters": {
                                 "parent": {
-                                  "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                   "required": true,
@@ -1076,7 +1076,7 @@
                               ],
                               "parameters": {
                                 "name": {
-                                  "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
                                   "required": true,
@@ -1102,7 +1102,7 @@
                               ],
                               "parameters": {
                                 "name": {
-                                  "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
                                   "required": true,
@@ -1139,7 +1139,7 @@
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                   "required": true,
@@ -1165,7 +1165,7 @@
                               ],
                               "parameters": {
                                 "name": {
-                                  "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+                                  "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
                                   "required": true,
@@ -1210,7 +1210,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+                      "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent` - `projects//locations//agent`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -1239,7 +1239,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the agent to update or create intents in. Format: `projects//agent`.",
+                      "description": "Required. The name of the agent to update or create intents in. Supported formats: - `projects//agent` - `projects//locations//agent`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -1286,7 +1286,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The agent to create a intent for. Format: `projects//agent`.",
+                      "description": "Required. The agent to create a intent for. Supported formats: - `projects//agent` - `projects//locations//agent`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent$",
                       "required": true,
@@ -1315,7 +1315,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Format: `projects//agent/intents/`.",
+                      "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
                       "required": true,
@@ -1359,7 +1359,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Required. The name of the intent. Format: `projects//agent/intents/`.",
+                      "description": "Required. The name of the intent. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
                       "required": true,
@@ -1458,7 +1458,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format: `projects//agent/intents/`.",
+                      "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
                       "required": true,
@@ -1582,14 +1582,19 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression used to filter knowledge bases returned by the list method. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * display_name with has(:) operator * language_code with equals(=) operator Examples: * 'language_code=en-us' matches knowledge bases with en-us language code. * 'display_name:articles' matches knowledge bases whose display name contains \"articles\". * 'display_name:\"Best Articles\"' matches knowledge bases whose display name contains \"Best Articles\". * 'language_code=en-gb AND display_name=articles' matches all knowledge bases whose display name contains \"articles\" and whose language code is \"en-gb\". Note: An empty filter string (i.e. \"\") is a no-op and will result in no filtering. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
-                      "description": "Optional. The maximum number of items to return in a single page. By default 10 and at most 100.",
+                      "description": "The maximum number of items to return in a single page. By default 10 and at most 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional. The next_page_token value returned from a previous list request.",
+                      "description": "The next_page_token value returned from a previous list request.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1659,7 +1664,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The knoweldge base to create a document for. Format: `projects//knowledgeBases/`.",
+                          "description": "Required. The knowledge base to create a document for. Format: `projects//knowledgeBases/`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/knowledgeBases/[^/]+$",
                           "required": true,
@@ -1739,6 +1744,11 @@
                         "parent"
                       ],
                       "parameters": {
+                        "filter": {
+                          "description": "The filter expression used to filter documents returned by the list method. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * knowledge_types with has(:) operator * display_name with has(:) operator * state with equals(=) operator Examples: * \"knowledge_types:FAQ\" matches documents with FAQ knowledge type. * \"display_name:customer\" matches documents whose display name contains \"customer\". * \"state=ACTIVE\" matches documents with ACTIVE state. * \"knowledge_types:FAQ AND state=ACTIVE\" matches all active FAQ documents. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+                          "location": "query",
+                          "type": "string"
+                        },
                         "pageSize": {
                           "description": "The maximum number of items to return in a single page. By default 10 and at most 100.",
                           "format": "int32",
@@ -1847,7 +1857,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                      "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                       "required": true,
@@ -1873,7 +1883,7 @@
                   ],
                   "parameters": {
                     "session": {
-                      "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+                      "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                       "required": true,
@@ -1906,7 +1916,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                           "required": true,
@@ -1935,7 +1945,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
                           "required": true,
@@ -1961,7 +1971,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
                           "required": true,
@@ -1998,7 +2008,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                           "required": true,
@@ -2024,7 +2034,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+                          "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
                           "required": true,
@@ -2063,7 +2073,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                           "required": true,
@@ -2092,7 +2102,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
                           "required": true,
@@ -2118,7 +2128,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
                           "required": true,
@@ -2155,7 +2165,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                           "required": true,
@@ -2181,7 +2191,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+                          "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
                           "required": true,
@@ -2309,14 +2319,19 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression used to filter knowledge bases returned by the list method. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * display_name with has(:) operator * language_code with equals(=) operator Examples: * 'language_code=en-us' matches knowledge bases with en-us language code. * 'display_name:articles' matches knowledge bases whose display name contains \"articles\". * 'display_name:\"Best Articles\"' matches knowledge bases whose display name contains \"Best Articles\". * 'language_code=en-gb AND display_name=articles' matches all knowledge bases whose display name contains \"articles\" and whose language code is \"en-gb\". Note: An empty filter string (i.e. \"\") is a no-op and will result in no filtering. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
-                  "description": "Optional. The maximum number of items to return in a single page. By default 10 and at most 100.",
+                  "description": "The maximum number of items to return in a single page. By default 10 and at most 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Optional. The next_page_token value returned from a previous list request.",
+                  "description": "The next_page_token value returned from a previous list request.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2386,7 +2401,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The knoweldge base to create a document for. Format: `projects//knowledgeBases/`.",
+                      "description": "Required. The knowledge base to create a document for. Format: `projects//knowledgeBases/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/knowledgeBases/[^/]+$",
                       "required": true,
@@ -2466,6 +2481,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression used to filter documents returned by the list method. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * knowledge_types with has(:) operator * display_name with has(:) operator * state with equals(=) operator Examples: * \"knowledge_types:FAQ\" matches documents with FAQ knowledge type. * \"display_name:customer\" matches documents whose display name contains \"customer\". * \"state=ACTIVE\" matches documents with ACTIVE state. * \"knowledge_types:FAQ AND state=ACTIVE\" matches all active FAQ documents. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of items to return in a single page. By default 10 and at most 100.",
                       "format": "int32",
@@ -2574,7 +2594,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project that the agent to delete is associated with. Format: `projects/`.",
+                  "description": "Required. The project that the agent to delete is associated with. Format: `projects/` or `projects//locations/`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+$",
                   "required": true,
@@ -2600,7 +2620,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project that the agent to fetch is associated with. Format: `projects/`.",
+                  "description": "Required. The project that the agent to fetch is associated with. Format: `projects/` or `projects//locations/`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+$",
                   "required": true,
@@ -2626,7 +2646,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The project of this agent. Format: `projects/`.",
+                  "description": "Required. The project of this agent. Format: `projects/` or `projects//locations/`",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+$",
                   "required": true,
@@ -2665,7 +2685,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The project that the agent to export is associated with. Format: `projects/`.",
+                      "description": "Required. The project that the agent to export is associated with. Format: `projects/` or `projects//locations/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2694,7 +2714,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The name of the fulfillment. Format: `projects//agent/fulfillment`.",
+                      "description": "Required. The name of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
                       "required": true,
@@ -2725,7 +2745,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The project that the agent is associated with. Format: `projects/`.",
+                      "description": "Required. The project that the agent is associated with. Format: `projects/` or `projects//locations/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2751,7 +2771,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The project that the agent to import is associated with. Format: `projects/`.",
+                      "description": "Required. The project that the agent to import is associated with. Format: `projects/` or `projects//locations/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2780,7 +2800,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The project that the agent to restore is associated with. Format: `projects/`.",
+                      "description": "Required. The project that the agent to restore is associated with. Format: `projects/` or `projects//locations/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2820,7 +2840,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The project to list agents from. Format: `projects/`.",
+                      "description": "Required. The project to list agents from. Format: `projects/` or `projects//locations/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2846,7 +2866,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The project that the agent to train is associated with. Format: `projects/`.",
+                      "description": "Required. The project that the agent to train is associated with. Format: `projects/` or `projects//locations/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2875,7 +2895,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The unique identifier of the fulfillment. Format: `projects//agent/fulfillment`.",
+                      "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
                       "required": true,
@@ -2914,7 +2934,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+                          "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent`, - `projects//locations//agent`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -2943,7 +2963,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the agent to update or create entity types in. Format: `projects//agent`.",
+                          "description": "Required. The name of the agent to update or create entity types in. Supported formats: - `projects//agent` - `projects//locations//agent`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -2977,7 +2997,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The agent to create a entity type for. Format: `projects//agent`.",
+                          "description": "Required. The agent to create a entity type for. Supported formats: - `projects//agent` - `projects//locations//agent`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -3006,7 +3026,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the entity type to delete. Format: `projects//agent/entityTypes/`.",
+                          "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
                           "required": true,
@@ -3037,7 +3057,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "Required. The name of the entity type. Format: `projects//agent/entityTypes/`.",
+                          "description": "Required. The name of the entity type. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
                           "required": true,
@@ -3079,7 +3099,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The agent to list all entity types from. Format: `projects//agent`.",
+                          "description": "Required. The agent to list all entity types from. Supported formats: - `projects//agent` - `projects//locations//agent`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -3110,7 +3130,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Format: `projects//agent/entityTypes/`.",
+                          "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
                           "required": true,
@@ -3149,7 +3169,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Required. The name of the entity type to create entities in. Format: `projects//agent/entityTypes/`.",
+                              "description": "Required. The name of the entity type to create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
                               "required": true,
@@ -3178,7 +3198,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Required. The name of the entity type to delete entries for. Format: `projects//agent/entityTypes/`.",
+                              "description": "Required. The name of the entity type to delete entries for. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
                               "required": true,
@@ -3207,7 +3227,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Required. The name of the entity type to update or create entities in. Format: `projects//agent/entityTypes/`.",
+                              "description": "Required. The name of the entity type to update or create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
                               "required": true,
@@ -3253,7 +3273,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent",
+                          "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -3285,7 +3305,7 @@
                               ],
                               "parameters": {
                                 "parent": {
-                                  "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                  "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                   "required": true,
@@ -3311,7 +3331,7 @@
                               ],
                               "parameters": {
                                 "session": {
-                                  "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+                                  "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                   "required": true,
@@ -3344,7 +3364,7 @@
                                   ],
                                   "parameters": {
                                     "parent": {
-                                      "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                      "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                       "required": true,
@@ -3373,7 +3393,7 @@
                                   ],
                                   "parameters": {
                                     "name": {
-                                      "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                      "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
                                       "required": true,
@@ -3399,7 +3419,7 @@
                                   ],
                                   "parameters": {
                                     "name": {
-                                      "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                      "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
                                       "required": true,
@@ -3436,7 +3456,7 @@
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                      "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                       "required": true,
@@ -3462,7 +3482,7 @@
                                   ],
                                   "parameters": {
                                     "name": {
-                                      "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+                                      "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
                                       "required": true,
@@ -3501,7 +3521,7 @@
                                   ],
                                   "parameters": {
                                     "parent": {
-                                      "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                      "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                       "required": true,
@@ -3530,7 +3550,7 @@
                                   ],
                                   "parameters": {
                                     "name": {
-                                      "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                      "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
                                       "required": true,
@@ -3556,7 +3576,7 @@
                                   ],
                                   "parameters": {
                                     "name": {
-                                      "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                      "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
                                       "required": true,
@@ -3593,7 +3613,7 @@
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                                      "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                                       "required": true,
@@ -3619,7 +3639,7 @@
                                   ],
                                   "parameters": {
                                     "name": {
-                                      "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+                                      "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
                                       "required": true,
@@ -3664,7 +3684,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+                          "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent` - `projects//locations//agent`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -3693,7 +3713,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the agent to update or create intents in. Format: `projects//agent`.",
+                          "description": "Required. The name of the agent to update or create intents in. Supported formats: - `projects//agent` - `projects//locations//agent`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -3740,7 +3760,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The agent to create a intent for. Format: `projects//agent`.",
+                          "description": "Required. The agent to create a intent for. Supported formats: - `projects//agent` - `projects//locations//agent`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
                           "required": true,
@@ -3769,7 +3789,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Format: `projects//agent/intents/`.",
+                          "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
                           "required": true,
@@ -3813,7 +3833,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "Required. The name of the intent. Format: `projects//agent/intents/`.",
+                          "description": "Required. The name of the intent. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
                           "required": true,
@@ -3912,7 +3932,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format: `projects//agent/intents/`.",
+                          "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
                           "required": true,
@@ -3951,7 +3971,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                          "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
                           "required": true,
@@ -3977,7 +3997,7 @@
                       ],
                       "parameters": {
                         "session": {
-                          "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+                          "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
                           "required": true,
@@ -4010,7 +4030,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
                               "required": true,
@@ -4039,7 +4059,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
                               "required": true,
@@ -4065,7 +4085,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
                               "required": true,
@@ -4102,7 +4122,7 @@
                               "type": "string"
                             },
                             "parent": {
-                              "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
                               "required": true,
@@ -4128,7 +4148,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+                              "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
                               "required": true,
@@ -4167,7 +4187,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
                               "required": true,
@@ -4196,7 +4216,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
                               "required": true,
@@ -4222,7 +4242,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
                               "required": true,
@@ -4259,7 +4279,7 @@
                               "type": "string"
                             },
                             "parent": {
-                              "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+                              "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
                               "required": true,
@@ -4285,7 +4305,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+                              "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
                               "required": true,
@@ -4517,9 +4537,415 @@
       }
     }
   },
-  "revision": "20200823",
+  "revision": "20201028",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
+    "GoogleCloudDialogflowCxV3PageInfo": {
+      "description": "Represents page information communicated to and from the webhook.",
+      "id": "GoogleCloudDialogflowCxV3PageInfo",
+      "properties": {
+        "currentPage": {
+          "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The unique identifier of the current page. Format: `projects//locations//agents//flows//pages/`.",
+          "type": "string"
+        },
+        "formInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3PageInfoFormInfo",
+          "description": "Optional for both WebhookRequest and WebhookResponse. Information about the form."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3PageInfoFormInfo": {
+      "description": "Represents form information.",
+      "id": "GoogleCloudDialogflowCxV3PageInfoFormInfo",
+      "properties": {
+        "parameterInfo": {
+          "description": "Optional for both WebhookRequest and WebhookResponse. The parameters contained in the form. Note that the webhook cannot add or remove any form parameter.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo": {
+      "description": "Represents parameter information.",
+      "id": "GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo",
+      "properties": {
+        "displayName": {
+          "description": "Always present for WebhookRequest. Required for WebhookResponse. The human-readable name of the parameter, unique within the form. This field cannot be modified by the webhook.",
+          "type": "string"
+        },
+        "justCollected": {
+          "description": "Optional for WebhookRequest. Ignored for WebhookResponse. Indicates if the parameter value was just collected on the last conversation turn.",
+          "type": "boolean"
+        },
+        "required": {
+          "description": "Optional for both WebhookRequest and WebhookResponse. Indicates whether the parameter is required. Optional parameters will not trigger prompts; however, they are filled if the user specifies them. Required parameters must be filled before form filling concludes.",
+          "type": "boolean"
+        },
+        "state": {
+          "description": "Always present for WebhookRequest. Required for WebhookResponse. The state of the parameter. This field can be set to INVALID by the webhook to invalidate the parameter; other values set by the webhook will be ignored.",
+          "enum": [
+            "PARAMETER_STATE_UNSPECIFIED",
+            "EMPTY",
+            "INVALID",
+            "FILLED"
+          ],
+          "enumDescriptions": [
+            "Not specified. This value should be never used.",
+            "Indicates that the parameter does not have a value.",
+            "Indicates that the parameter value is invalid. This field can be used by the webhook to invalidate the parameter and ask the server to collect it from the user again.",
+            "Indicates that the parameter has a value."
+          ],
+          "type": "string"
+        },
+        "value": {
+          "description": "Optional for both WebhookRequest and WebhookResponse. The value of the parameter. This field can be set by the webhook to change the parameter value.",
+          "type": "any"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessage": {
+      "description": "Represents a response message that can be returned by a conversational agent. Response messages are also used for output audio synthesis. The approach is as follows: * If at least one OutputAudioText response is present, then all OutputAudioText responses are linearly concatenated, and the result is used for output audio synthesis. * If the OutputAudioText responses are a mixture of text and SSML, then the concatenated result is treated as SSML; otherwise, the result is treated as either text or SSML as appropriate. The agent designer should ideally use either text or SSML consistently throughout the bot design. * Otherwise, all Text responses are linearly concatenated, and the result is used for output audio synthesis. This approach allows for more sophisticated user experience scenarios, where the text displayed to the user may differ from what is heard.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessage",
+      "properties": {
+        "conversationSuccess": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess",
+          "description": "Indicates that the conversation succeeded."
+        },
+        "endInteraction": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageEndInteraction",
+          "description": "Output only. A signal that indicates the interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only when the conversation reaches `END_SESSION` or `END_PAGE` page. It is not supposed to be defined by the user. It's guaranteed that there is at most one such message in each response.",
+          "readOnly": true
+        },
+        "liveAgentHandoff": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff",
+          "description": "Hands off conversation to a human agent."
+        },
+        "mixedAudio": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageMixedAudio",
+          "description": "Output only. An audio response message composed of both the synthesized Dialogflow agent responses and responses defined via play_audio. This message is generated by Dialogflow only and not supposed to be defined by the user.",
+          "readOnly": true
+        },
+        "outputAudioText": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText",
+          "description": "A text or ssml response that is preferentially used for TTS output audio synthesis, as described in the comment on the ResponseMessage message."
+        },
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Returns a response containing a custom, platform-specific payload.",
+          "type": "object"
+        },
+        "playAudio": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio",
+          "description": "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way."
+        },
+        "text": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageText",
+          "description": "Returns a text response."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess": {
+      "description": "Indicates that the conversation succeeded, i.e., the bot handled the issue that the customer talked to it about. Dialogflow only uses this to determine which conversations should be counted as successful and doesn't process the metadata in this message in any way. Note that Dialogflow also considers conversations that get to the conversation end page as successful even if they don't return ConversationSuccess. You may set this, for example: * In the entry_fulfillment of a Page if entering the page indicates that the conversation succeeded. * In a webhook response when you determine that you handled the customer issue.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess",
+      "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Custom metadata. Dialogflow doesn't impose any structure on this.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageEndInteraction": {
+      "description": "Indicates that interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only and not supposed to be defined by the user.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageEndInteraction",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff": {
+      "description": "Indicates that the conversation should be handed off to a live agent. Dialogflow only uses this to determine which conversations were handed off to a human agent for measurement purposes. What else to do with this signal is up to you and your handoff procedures. You may set this, for example: * In the entry_fulfillment of a Page if entering the page indicates something went extremely wrong in the conversation. * In a webhook response when you determine that the customer issue can only be handled by a human.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff",
+      "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Custom metadata for your handoff procedure. Dialogflow doesn't impose any structure on this.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageMixedAudio": {
+      "description": "Represents an audio message that is composed of both segments synthesized from the Dialogflow agent prompts and ones hosted externally at the specified URIs. The external URIs are specified via play_audio. This message is generated by Dialogflow only and not supposed to be defined by the user.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageMixedAudio",
+      "properties": {
+        "segments": {
+          "description": "Segments this audio response is composed of.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment": {
+      "description": "Represents one segment of audio.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment",
+      "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this segment can be interrupted by the end user's speech and the client should then start the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "audio": {
+          "description": "Raw audio synthesized from the Dialogflow agent's response using the output config specified in the request.",
+          "format": "byte",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Client-specific URI that points to an audio clip accessible to the client. Dialogflow does not impose any validation on it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText": {
+      "description": "A text or ssml response that is preferentially used for TTS output audio synthesis, as described in the comment on the ResponseMessage message.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText",
+      "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "ssml": {
+          "description": "The SSML text to be synthesized. For more information, see [SSML](/speech/text-to-speech/docs/ssml).",
+          "type": "string"
+        },
+        "text": {
+          "description": "The raw text to be synthesized.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio": {
+      "description": "Specifies an audio clip to be played by the client as part of the response.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio",
+      "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "audioUri": {
+          "description": "Required. URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageText": {
+      "description": "The text response message.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageText",
+      "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "text": {
+          "description": "Required. A collection of text responses.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3SessionInfo": {
+      "description": "Represents session information communicated to and from the webhook.",
+      "id": "GoogleCloudDialogflowCxV3SessionInfo",
+      "properties": {
+        "parameters": {
+          "additionalProperties": {
+            "type": "any"
+          },
+          "description": "Optional for WebhookRequest. Optional for WebhookResponse. All parameters collected from forms and intents during the session. Parameters can be created, updated, or removed by the webhook. To remove a parameter from the session, the webhook should explicitly set the parameter value to null in WebhookResponse. The map is keyed by parameters' display names.",
+          "type": "object"
+        },
+        "session": {
+          "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The unique identifier of the session. This field can be used by the webhook to identify a user. Format: `projects//locations//agents//sessions/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequest": {
+      "description": "The request message for a webhook call.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequest",
+      "properties": {
+        "detectIntentResponseId": {
+          "description": "Always present. The unique identifier of the DetectIntentResponse that will be returned to the API caller.",
+          "type": "string"
+        },
+        "fulfillmentInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo",
+          "description": "Always present. Information about the fulfillment that triggered this webhook call."
+        },
+        "intentInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfo",
+          "description": "Information about the last matched intent."
+        },
+        "messages": {
+          "description": "The list of rich message responses to present to the user. Webhook can choose to append or replace this list in WebhookResponse.fulfillment_response;",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3ResponseMessage"
+          },
+          "type": "array"
+        },
+        "pageInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3PageInfo",
+          "description": "Information about page status."
+        },
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Custom data set in QueryParameters.payload.",
+          "type": "object"
+        },
+        "sessionInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3SessionInfo",
+          "description": "Information about session status."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo": {
+      "description": "Represents fulfillment information communicated to the webhook.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo",
+      "properties": {
+        "tag": {
+          "description": "Always present. The tag used to identify which fulfillment is being called.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequestIntentInfo": {
+      "description": "Represents intent information communicated to the webhook.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfo",
+      "properties": {
+        "lastMatchedIntent": {
+          "description": "Always present. The unique identifier of the last matched intent. Format: `projects//locations//agents//intents/`.",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue"
+          },
+          "description": "Parameters identified as a result of intent matching. This is a map of the name of the identified parameter to the value of the parameter identified from the user's utterance. All parameters defined in the matched intent that are identified will be surfaced here.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue": {
+      "description": "Represents a value for an intent parameter.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue",
+      "properties": {
+        "originalValue": {
+          "description": "Always present. Original text value extracted from user utterance.",
+          "type": "string"
+        },
+        "resolvedValue": {
+          "description": "Always present. Structured value for the parameter extracted from user utterance.",
+          "type": "any"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookResponse": {
+      "description": "The response message for a webhook call.",
+      "id": "GoogleCloudDialogflowCxV3WebhookResponse",
+      "properties": {
+        "fulfillmentResponse": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse",
+          "description": "The fulfillment response to send to the user. This field can be omitted by the webhook if it does not intend to send any response to the user."
+        },
+        "pageInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3PageInfo",
+          "description": "Information about page status. This field can be omitted by the webhook if it does not intend to modify page status."
+        },
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Value to append directly to QueryResult.webhook_payloads.",
+          "type": "object"
+        },
+        "sessionInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3SessionInfo",
+          "description": "Information about session status. This field can be omitted by the webhook if it does not intend to modify session status."
+        },
+        "targetFlow": {
+          "description": "The target flow to transition to. Format: `projects//locations//agents//flows/`.",
+          "type": "string"
+        },
+        "targetPage": {
+          "description": "The target page to transition to. Format: `projects//locations//agents//flows//pages/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse": {
+      "description": "Represents a fulfillment response to the user.",
+      "id": "GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse",
+      "properties": {
+        "mergeBehavior": {
+          "description": "Merge behavior for `messages`.",
+          "enum": [
+            "MERGE_BEHAVIOR_UNSPECIFIED",
+            "APPEND",
+            "REPLACE"
+          ],
+          "enumDescriptions": [
+            "Not specified. `APPEND` will be used.",
+            "`messages` will be appended to the list of messages waiting to be sent to the user.",
+            "`messages` will replace the list of messages waiting to be sent to the user."
+          ],
+          "type": "string"
+        },
+        "messages": {
+          "description": "The list of rich message responses to present to the user.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3ResponseMessage"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata": {
       "description": "Metadata associated with the long running operation for Versions.CreateVersion.",
       "id": "GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata",
@@ -4542,17 +4968,6 @@
         },
         "agentUri": {
           "description": "The URI to a file containing the exported agent. This field is populated only if `agent_uri` is specified in ExportAgentRequest.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowCxV3beta1ImportAgentResponse": {
-      "description": "The response message for Agents.ImportAgent.",
-      "id": "GoogleCloudDialogflowCxV3beta1ImportAgentResponse",
-      "properties": {
-        "agent": {
-          "description": "The unique identifier of the new agent. Format: `projects//locations//agents/`.",
           "type": "string"
         }
       },
@@ -4746,6 +5161,11 @@
       "description": "A text or ssml response that is preferentially used for TTS output audio synthesis, as described in the comment on the ResponseMessage message.",
       "id": "GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText",
       "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "ssml": {
           "description": "The SSML text to be synthesized. For more information, see [SSML](/speech/text-to-speech/docs/ssml).",
           "type": "string"
@@ -6159,7 +6579,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of the `QueryParameters.payload` field passed in the request. Some integrations that query a Dialogflow agent may provide additional information in the payload. In particular, for the Dialogflow Phone Gateway integration, this field has the form: { \"telephony\": { \"caller_id\": \"+18558363987\" } } Note: The caller ID field (`caller_id`) will be redacted for Standard Edition agents and populated with the caller ID in [E.164 format](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition agents.",
+          "description": "Optional. This field is set to the value of the `QueryParameters.payload` field passed in the request. Some integrations that query a Dialogflow agent may provide additional information in the payload. In particular, for the Dialogflow Phone Gateway integration, this field has the form: { \"telephony\": { \"caller_id\": \"+18558363987\" } } Note: The caller ID field (`caller_id`) will be redacted for Trial Edition agents and populated with the caller ID in [E.164 format](https://en.wikipedia.org/wiki/E.164) for Essentials Edition agents.",
           "type": "object"
         },
         "source": {
@@ -6278,7 +6698,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2SentimentAnalysisResult": {
-      "description": "The result of sentiment analysis. Sentiment analysis inspects user input and identifies the prevailing subjective opinion, especially to determine a user's attitude as positive, negative, or neutral. For Participants.AnalyzeContent, it needs to be configured in DetectIntentRequest.query_params. For Participants.StreamingAnalyzeContent, it needs to be configured in StreamingDetectIntentRequest.query_params. And for Participants.AnalyzeContent and Participants.StreamingAnalyzeContent, it needs to be configured in ConversationProfile.human_agent_assistant_config",
+      "description": "The result of sentiment analysis. Sentiment analysis inspects user input and identifies the prevailing subjective opinion, especially to determine a user's attitude as positive, negative, or neutral. For Participants.DetectIntent, it needs to be configured in DetectIntentRequest.query_params. For Participants.StreamingDetectIntent, it needs to be configured in StreamingDetectIntentRequest.query_params. And for Participants.AnalyzeContent and Participants.StreamingAnalyzeContent, it needs to be configured in ConversationProfile.human_agent_assistant_config",
       "id": "GoogleCloudDialogflowV2SentimentAnalysisResult",
       "properties": {
         "queryTextSentiment": {
@@ -6451,7 +6871,7 @@
           "type": "string"
         },
         "parent": {
-          "description": "Required. The project of this agent. Format: `projects/`.",
+          "description": "Required. The project of this agent. Format: `projects/` or `projects//locations/`",
           "type": "string"
         },
         "supportedLanguageCodes": {
@@ -6480,71 +6900,6 @@
         "timeZone": {
           "description": "Required. The time zone of this agent from the [time zone database](https://www.iana.org/time-zones), e.g., America/New_York, Europe/Paris.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1AnnotatedConversationDataset": {
-      "description": "Represents an annotated conversation dataset. ConversationDataset can have multiple AnnotatedConversationDataset, each of them represents one result from one annotation task. AnnotatedConversationDataset can only be generated from annotation task, which will be triggered by LabelConversation.",
-      "id": "GoogleCloudDialogflowV2beta1AnnotatedConversationDataset",
-      "properties": {
-        "completedExampleCount": {
-          "description": "Output only. Number of examples that have annotations in the annotated conversation dataset.",
-          "format": "int64",
-          "readOnly": true,
-          "type": "string"
-        },
-        "createTime": {
-          "description": "Output only. Creation time of this annotated conversation dataset.",
-          "format": "google-datetime",
-          "readOnly": true,
-          "type": "string"
-        },
-        "description": {
-          "description": "Optional. The description of the annotated conversation dataset. Maximum of 10000 bytes.",
-          "type": "string"
-        },
-        "displayName": {
-          "description": "Required. The display name of the annotated conversation dataset. It's specified when user starts an annotation task. Maximum of 64 bytes.",
-          "type": "string"
-        },
-        "exampleCount": {
-          "description": "Output only. Number of examples in the annotated conversation dataset.",
-          "format": "int64",
-          "readOnly": true,
-          "type": "string"
-        },
-        "name": {
-          "description": "Output only. AnnotatedConversationDataset resource name. Format: `projects//conversationDatasets//annotatedConversationDatasets/`",
-          "readOnly": true,
-          "type": "string"
-        },
-        "questionTypeName": {
-          "description": "Output only. Question type name that identifies a labeling task. A question is a single task that a worker answers. A question type is set of related questions. Each question belongs to a particular question type. It can be used in CrowdCompute UI to filter and manage labeling tasks.",
-          "readOnly": true,
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1AutoApproveSmartMessagingEntriesResponse": {
-      "description": "Response message for [Documents.AutoApproveSmartMessagingEntries].",
-      "id": "GoogleCloudDialogflowV2beta1AutoApproveSmartMessagingEntriesResponse",
-      "properties": {
-        "disabledCount": {
-          "description": "Number of smart messaging entries disabled.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "enabledCount": {
-          "description": "Number of smart messaging entries enabled.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "unreviewedCount": {
-          "description": "Number of smart messaging entries unreviewed.",
-          "format": "int32",
-          "type": "integer"
         }
       },
       "type": "object"
@@ -6734,7 +7089,7 @@
           "type": "integer"
         },
         "name": {
-          "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+          "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
           "type": "string"
         },
         "parameters": {
@@ -6934,7 +7289,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Format: `projects//agent/entityTypes/`.",
+          "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
           "type": "string"
         }
       },
@@ -6977,7 +7332,7 @@
       "id": "GoogleCloudDialogflowV2beta1Environment",
       "properties": {
         "agentVersion": {
-          "description": "Optional. The agent version loaded into this environment. Format: `projects//agent/versions/`.",
+          "description": "Optional. The agent version loaded into this environment. Supported formats: - `projects//agent/versions/` - `projects//locations//agent/versions/`",
           "type": "string"
         },
         "description": {
@@ -6985,7 +7340,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Output only. The unique identifier of this agent environment. Format: - `projects//agent/environments/` - `projects//locations//agent/environments/`",
+          "description": "Output only. The unique identifier of this agent environment. Supported formats: - `projects//agent/environments/` - `projects//locations//agent/environments/`",
           "readOnly": true,
           "type": "string"
         },
@@ -7070,15 +7425,15 @@
       "id": "GoogleCloudDialogflowV2beta1Fulfillment",
       "properties": {
         "displayName": {
-          "description": "Optional. The human-readable name of the fulfillment, unique within the agent.",
+          "description": "The human-readable name of the fulfillment, unique within the agent.",
           "type": "string"
         },
         "enabled": {
-          "description": "Optional. Whether fulfillment is enabled.",
+          "description": "Whether fulfillment is enabled.",
           "type": "boolean"
         },
         "features": {
-          "description": "Optional. The field defines whether the fulfillment is enabled for certain features.",
+          "description": "The field defines whether the fulfillment is enabled for certain features.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1FulfillmentFeature"
           },
@@ -7089,7 +7444,7 @@
           "description": "Configuration for a generic web service."
         },
         "name": {
-          "description": "Required. The unique identifier of the fulfillment. Format: `projects//agent/fulfillment`.",
+          "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
           "type": "string"
         }
       },
@@ -7119,18 +7474,18 @@
       "id": "GoogleCloudDialogflowV2beta1FulfillmentGenericWebService",
       "properties": {
         "isCloudFunction": {
-          "description": "Optional. Indicates if generic web service is created through Cloud Functions integration. Defaults to false.",
+          "description": "Indicates if generic web service is created through Cloud Functions integration. Defaults to false.",
           "type": "boolean"
         },
         "password": {
-          "description": "Optional. The password for HTTP Basic authentication.",
+          "description": "The password for HTTP Basic authentication.",
           "type": "string"
         },
         "requestHeaders": {
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. The HTTP request headers to send together with fulfillment requests.",
+          "description": "The HTTP request headers to send together with fulfillment requests.",
           "type": "object"
         },
         "uri": {
@@ -7138,7 +7493,7 @@
           "type": "string"
         },
         "username": {
-          "description": "Optional. The user name for HTTP Basic authentication.",
+          "description": "The user name for HTTP Basic authentication.",
           "type": "string"
         }
       },
@@ -7318,7 +7673,7 @@
           "type": "array"
         },
         "inputContextNames": {
-          "description": "Optional. The list of context names required for this intent to be triggered. Format: `projects//agent/sessions/-/contexts/`.",
+          "description": "Optional. The list of context names required for this intent to be triggered. Formats: - `projects//agent/sessions/-/contexts/` - `projects//locations//agent/sessions/-/contexts/`",
           "items": {
             "type": "string"
           },
@@ -7344,7 +7699,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format: `projects//agent/intents/`.",
+          "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
           "type": "string"
         },
         "outputContexts": {
@@ -8566,17 +8921,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1LabelConversationResponse": {
-      "description": "The response for ConversationDatasets.LabelConversation.",
-      "id": "GoogleCloudDialogflowV2beta1LabelConversationResponse",
-      "properties": {
-        "annotatedConversationDataset": {
-          "$ref": "GoogleCloudDialogflowV2beta1AnnotatedConversationDataset",
-          "description": "New annotated conversation dataset created by the labeling task."
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1ListContextsResponse": {
       "description": "The response message for Contexts.ListContexts.",
       "id": "GoogleCloudDialogflowV2beta1ListContextsResponse",
@@ -8712,7 +9056,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of the `QueryParameters.payload` field passed in the request. Some integrations that query a Dialogflow agent may provide additional information in the payload. In particular, for the Dialogflow Phone Gateway integration, this field has the form: { \"telephony\": { \"caller_id\": \"+18558363987\" } } Note: The caller ID field (`caller_id`) will be redacted for Standard Edition agents and populated with the caller ID in [E.164 format](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition agents.",
+          "description": "Optional. This field is set to the value of the `QueryParameters.payload` field passed in the request. Some integrations that query a Dialogflow agent may provide additional information in the payload. In particular, for the Dialogflow Phone Gateway integration, this field has the form: { \"telephony\": { \"caller_id\": \"+18558363987\" } } Note: The caller ID field (`caller_id`) will be redacted for Trial Edition agents and populated with the caller ID in [E.164 format](https://en.wikipedia.org/wiki/E.164) for Essentials Edition agents.",
           "type": "object"
         },
         "source": {
@@ -8813,7 +9157,7 @@
         },
         "sentimentAnalysisRequestConfig": {
           "$ref": "GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig",
-          "description": "Configures the type of sentiment analysis to perform. If not provided, sentiment analysis is not performed. Note: Sentiment Analysis is only currently available for Enterprise Edition agents."
+          "description": "Configures the type of sentiment analysis to perform. If not provided, sentiment analysis is not performed. Note: Sentiment Analysis is only currently available for Essentials Edition agents."
         },
         "sessionEntityTypes": {
           "description": "Additional session entity types to replace or extend developer entity types with. The entity synonyms apply to all languages and persist for the session of this query.",
@@ -9008,7 +9352,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1SentimentAnalysisResult": {
-      "description": "The result of sentiment analysis. Sentiment analysis inspects user input and identifies the prevailing subjective opinion, especially to determine a user's attitude as positive, negative, or neutral. For Participants.AnalyzeContent, it needs to be configured in DetectIntentRequest.query_params. For Participants.StreamingAnalyzeContent, it needs to be configured in StreamingDetectIntentRequest.query_params. And for Participants.AnalyzeContent and Participants.StreamingAnalyzeContent, it needs to be configured in ConversationProfile.human_agent_assistant_config",
+      "description": "The result of sentiment analysis. Sentiment analysis inspects user input and identifies the prevailing subjective opinion, especially to determine a user's attitude as positive, negative, or neutral. For Participants.DetectIntent, it needs to be configured in DetectIntentRequest.query_params. For Participants.StreamingDetectIntent, it needs to be configured in StreamingDetectIntentRequest.query_params. And for Participants.AnalyzeContent and Participants.StreamingAnalyzeContent, it needs to be configured in ConversationProfile.human_agent_assistant_config",
       "id": "GoogleCloudDialogflowV2beta1SentimentAnalysisResult",
       "properties": {
         "queryTextSentiment": {
@@ -9044,7 +9388,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+          "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
           "type": "string"
         }
       },
@@ -9078,7 +9422,7 @@
           "type": "string"
         },
         "project": {
-          "description": "Required. The project of this agent. Format: `projects/`.",
+          "description": "Required. The project of this agent. Format: `projects/` or `projects//locations/`.",
           "type": "string"
         }
       },
@@ -9239,7 +9583,7 @@
           "type": "string"
         },
         "session": {
-          "description": "The unique identifier of detectIntent request session. Can be used to identify end-user inside webhook implementation. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`.",
+          "description": "The unique identifier of detectIntent request session. Can be used to identify end-user inside webhook implementation. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`,",
           "type": "string"
         }
       },
@@ -9297,39 +9641,39 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV3alpha1CreateVersionOperationMetadata": {
-      "description": "Metadata associated with the long running operation for Versions.CreateVersion.",
-      "id": "GoogleCloudDialogflowV3alpha1CreateVersionOperationMetadata",
+    "GoogleCloudKnowledgeV1alpha1OperationMetadata": {
+      "description": "Metadata in google::longrunning::Operation.",
+      "id": "GoogleCloudKnowledgeV1alpha1OperationMetadata",
       "properties": {
-        "version": {
-          "description": "Name of the created version. Format: `projects//locations//agents//flows//versions/`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV3alpha1ExportAgentResponse": {
-      "description": "The response message for Agents.ExportAgent.",
-      "id": "GoogleCloudDialogflowV3alpha1ExportAgentResponse",
-      "properties": {
-        "agentContent": {
-          "description": "Uncompressed raw byte content for agent.",
-          "format": "byte",
-          "type": "string"
+        "errorCode": {
+          "description": "The error codes from Manifold endpoints' last failures.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
         },
-        "agentUri": {
-          "description": "The URI to a file containing the exported agent. This field is populated only if `agent_uri` is specified in ExportAgentRequest.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV3alpha1ImportAgentResponse": {
-      "description": "The response message for Agents.ImportAgent.",
-      "id": "GoogleCloudDialogflowV3alpha1ImportAgentResponse",
-      "properties": {
-        "agent": {
-          "description": "The unique identifier of the new agent. Format: `projects//locations//agents/`.",
+        "message": {
+          "description": "The failure messages from Manifold endpoints' last failures.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "state": {
+          "description": "Required. The current state of this operation.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "RUNNING",
+            "DONE"
+          ],
+          "enumDescriptions": [
+            "Unspecified state. Should never be used.",
+            "The operation has been created.",
+            "The operation is currently running.",
+            "The operation is done, either cancelled or completed."
+          ],
           "type": "string"
         }
       },
@@ -9422,7 +9766,7 @@
       "type": "object"
     },
     "GoogleTypeLatLng": {
-      "description": "An object representing a latitude/longitude pair. This is expressed as a pair of doubles representing degrees latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must be within normalized ranges.",
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must be within normalized ranges.",
       "id": "GoogleTypeLatLng",
       "properties": {
         "latitude": {

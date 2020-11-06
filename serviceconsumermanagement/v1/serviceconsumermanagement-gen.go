@@ -175,8 +175,8 @@ type AddTenantProjectRequest struct {
 	// tenancy unit resources.
 	ProjectConfig *TenantProjectConfig `json:"projectConfig,omitempty"`
 
-	// Tag: Tag of the added project. Must be less than 128 characters.
-	// Required.
+	// Tag: Required. Tag of the added project. Must be less than 128
+	// characters. Required.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProjectConfig") to
@@ -283,7 +283,8 @@ type ApplyTenantProjectConfigRequest struct {
 	// tenant project.
 	ProjectConfig *TenantProjectConfig `json:"projectConfig,omitempty"`
 
-	// Tag: Tag of the project. Must be less than 128 characters. Required.
+	// Tag: Required. Tag of the project. Must be less than 128 characters.
+	// Required.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProjectConfig") to
@@ -322,8 +323,8 @@ type AttachTenantProjectRequest struct {
 	// tenant resource must be in an active state.
 	ReservedResource string `json:"reservedResource,omitempty"`
 
-	// Tag: Tag of the tenant resource after attachment. Must be less than
-	// 128 characters. Required.
+	// Tag: Required. Tag of the tenant resource after attachment. Must be
+	// less than 128 characters. Required.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExternalResource") to
@@ -522,7 +523,8 @@ func (s *Authentication) MarshalJSON() ([]byte, error) {
 // credentials will be ignored.
 type AuthenticationRule struct {
 	// AllowWithoutCredential: If true, the service accepts API keys without
-	// any other credential.
+	// any other credential. This flag only applies to HTTP and gRPC
+	// requests.
 	AllowWithoutCredential bool `json:"allowWithoutCredential,omitempty"`
 
 	// Oauth: The requirements for OAuth credentials.
@@ -837,7 +839,7 @@ type CancelOperationRequest struct {
 // `google.rpc.context.ProjectContext` and
 // `google.rpc.context.OriginContext`. Available context types are
 // defined in package `google.rpc.context`. This also provides mechanism
-// to whitelist any protobuf message extension that can be sent in grpc
+// to allowlist any protobuf message extension that can be sent in grpc
 // metadata using “x-goog-ext--bin” and “x-goog-ext--jspb”
 // format. For example, list any service specific protobuf types that
 // can appear in grpc metadata as follows in your yaml file: Example:
@@ -1095,7 +1097,7 @@ func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 // DeleteTenantProjectRequest: Request message to delete tenant project
 // resource from the tenancy unit.
 type DeleteTenantProjectRequest struct {
-	// Tag: Tag of the resource within the tenancy unit.
+	// Tag: Required. Tag of the resource within the tenancy unit.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -1688,10 +1690,6 @@ type HttpRule struct {
 	// (that is, the nesting may only be one level deep).
 	AdditionalBindings []*HttpRule `json:"additionalBindings,omitempty"`
 
-	// AllowHalfDuplex: When this flag is set to true, HTTP requests will be
-	// allowed to invoke a half-duplex streaming method.
-	AllowHalfDuplex bool `json:"allowHalfDuplex,omitempty"`
-
 	// Body: The name of the request field whose value is mapped to the HTTP
 	// request body, or `*` for mapping all request fields not captured by
 	// the path pattern to the HTTP body, or omitted for not having any HTTP
@@ -2132,7 +2130,7 @@ type MetricDescriptor struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2310,7 +2308,7 @@ type MetricDescriptorMetadata struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2505,7 +2503,7 @@ type MonitoredResourceDescriptor struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -3043,7 +3041,7 @@ func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
 // RemoveTenantProjectRequest: Request message to remove a tenant
 // project resource from the tenancy unit.
 type RemoveTenantProjectRequest struct {
-	// Tag: Tag of the resource within the tenancy unit.
+	// Tag: Required. Tag of the resource within the tenancy unit.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -3134,10 +3132,7 @@ type Service struct {
 	// Billing: Billing configuration.
 	Billing *Billing `json:"billing,omitempty"`
 
-	// ConfigVersion: The semantic version of the service configuration. The
-	// config version affects the interpretation of the service
-	// configuration. For example, certain features are enabled by default
-	// for certain config versions. The latest config version is `3`.
+	// ConfigVersion: This field is obsolete. Its value must be set to `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -3287,48 +3282,6 @@ type ServiceAccountConfig struct {
 
 func (s *ServiceAccountConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccountConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ServiceIdentity: The per-product per-project service identity for a
-// service. Use this field to configure per-product per-project service
-// identity. Example of a service identity configuration. usage:
-// service_identity: - service_account_parent: "projects/123456789"
-// display_name: "Cloud XXX Service Agent" description: "Used as the
-// identity of Cloud XXX to access resources"
-type ServiceIdentity struct {
-	// Description: Optional. A user-specified opaque description of the
-	// service account. Must be less than or equal to 256 UTF-8 bytes.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Optional. A user-specified name for the service account.
-	// Must be less than or equal to 100 UTF-8 bytes.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// ServiceAccountParent: A service account project that hosts the
-	// service accounts. An example name would be: `projects/123456789`
-	ServiceAccountParent string `json:"serviceAccountParent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServiceIdentity) MarshalJSON() ([]byte, error) {
-	type NoMethod ServiceIdentity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3558,11 +3511,12 @@ func (s *SystemParameters) MarshalJSON() ([]byte, error) {
 
 // TenancyUnit: Representation of a tenancy unit.
 type TenancyUnit struct {
-	// Consumer: @OutputOnly Cloud resource name of the consumer of this
-	// service. For example 'projects/123456'.
+	// Consumer: Output only. @OutputOnly Cloud resource name of the
+	// consumer of this service. For example 'projects/123456'.
 	Consumer string `json:"consumer,omitempty"`
 
-	// CreateTime: @OutputOnly The time this tenancy unit was created.
+	// CreateTime: Output only. @OutputOnly The time this tenancy unit was
+	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Name: Globally unique identifier of this tenancy unit
@@ -3699,9 +3653,9 @@ func (s *TenantProjectPolicy) MarshalJSON() ([]byte, error) {
 
 // TenantResource: Resource constituting the TenancyUnit.
 type TenantResource struct {
-	// Resource: @OutputOnly Identifier of the tenant resource. For cloud
-	// projects, it is in the form 'projects/{number}'. For example
-	// 'projects/123456'.
+	// Resource: Output only. @OutputOnly Identifier of the tenant resource.
+	// For cloud projects, it is in the form 'projects/{number}'. For
+	// example 'projects/123456'.
 	Resource string `json:"resource,omitempty"`
 
 	// Status: Status of tenant resource.
@@ -3793,7 +3747,7 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 // UndeleteTenantProjectRequest: Request message to undelete tenant
 // project resource previously deleted from the tenancy unit.
 type UndeleteTenantProjectRequest struct {
-	// Tag: Tag of the resource within the tenancy unit.
+	// Tag: Required. Tag of the resource within the tenancy unit.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
@@ -3839,10 +3793,6 @@ type Usage struct {
 	// **NOTE:** All service configuration rules follow "last one wins"
 	// order.
 	Rules []*UsageRule `json:"rules,omitempty"`
-
-	// ServiceIdentity: The configuration of a per-product per-project
-	// service identity.
-	ServiceIdentity *ServiceIdentity `json:"serviceIdentity,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ProducerNotificationChannel") to unconditionally include in API
@@ -4549,7 +4499,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4690,7 +4640,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4833,7 +4783,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5007,7 +4957,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5224,7 +5174,7 @@ func (c *ServicesSearchCall) Header() http.Header {
 
 func (c *ServicesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5306,7 +5256,7 @@ func (c *ServicesSearchCall) Do(opts ...googleapi.CallOption) (*SearchTenancyUni
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Service for which search is performed. services/{service} {service} the name of a service, for example 'service.googleapis.com'.",
+	//       "description": "Required. Service for which search is performed. services/{service} {service} the name of a service, for example 'service.googleapis.com'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -5362,7 +5312,7 @@ type ServicesTenancyUnitsAddProjectCall struct {
 }
 
 // AddProject: Add a new tenant project to the tenancy unit. There can
-// be a maximum of 512 tenant projects in a tenancy unit. If there are
+// be a maximum of 1024 tenant projects in a tenancy unit. If there are
 // previously failed `AddTenantProject` calls, you might need to call
 // `RemoveTenantProject` first to resolve them before you can make
 // another call to `AddTenantProject` with the same tag. Operation.
@@ -5400,7 +5350,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAddProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5464,7 +5414,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Add a new tenant project to the tenancy unit. There can be a maximum of 512 tenant projects in a tenancy unit. If there are previously failed `AddTenantProject` calls, you might need to call `RemoveTenantProject` first to resolve them before you can make another call to `AddTenantProject` with the same tag. Operation.",
+	//   "description": "Add a new tenant project to the tenancy unit. There can be a maximum of 1024 tenant projects in a tenancy unit. If there are previously failed `AddTenantProject` calls, you might need to call `RemoveTenantProject` first to resolve them before you can make another call to `AddTenantProject` with the same tag. Operation.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:addProject",
 	//   "httpMethod": "POST",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.addProject",
@@ -5473,7 +5423,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -5555,7 +5505,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsApplyProjectConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5628,7 +5578,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -5704,7 +5654,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsAttachProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5777,7 +5727,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit that the project will be attached to. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit that the project will be attached to. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -5848,7 +5798,7 @@ func (c *ServicesTenancyUnitsCreateCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5921,7 +5871,7 @@ func (c *ServicesTenancyUnitsCreateCall) Do(opts ...googleapi.CallOption) (*Tena
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a managed service, such as 'service.googleapis.com'. Enables service binding using the new tenancy unit.",
+	//       "description": "Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a managed service, such as 'service.googleapis.com'. Enables service binding using the new tenancy unit.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -5988,7 +5938,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6056,7 +6006,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit to be deleted.",
+	//       "description": "Required. Name of the tenancy unit to be deleted.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -6128,7 +6078,7 @@ func (c *ServicesTenancyUnitsDeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsDeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6201,7 +6151,7 @@ func (c *ServicesTenancyUnitsDeleteProjectCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -6245,7 +6195,7 @@ func (r *ServicesTenancyUnitsService) List(parent string) *ServicesTenancyUnitsL
 }
 
 // Filter sets the optional parameter "filter": Filter expression over
-// tenancy resources field.
+// tenancy resources field. Optional.
 func (c *ServicesTenancyUnitsListCall) Filter(filter string) *ServicesTenancyUnitsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6304,7 +6254,7 @@ func (c *ServicesTenancyUnitsListCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6375,23 +6325,23 @@ func (c *ServicesTenancyUnitsListCall) Do(opts ...googleapi.CallOption) (*ListTe
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression over tenancy resources field. Optional.",
+	//       "description": "Optional. Filter expression over tenancy resources field. Optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results returned by this request.",
+	//       "description": "Optional. The maximum number of results returned by this request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of `nextPageToken` from the previous response.",
+	//       "description": "Optional. The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of `nextPageToken` from the previous response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Managed service and service consumer. Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a service, such as 'service.googleapis.com'.",
+	//       "description": "Required. Managed service and service consumer. Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a service, such as 'service.googleapis.com'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -6483,7 +6433,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsRemoveProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6556,7 +6506,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -6628,7 +6578,7 @@ func (c *ServicesTenancyUnitsUndeleteProjectCall) Header() http.Header {
 
 func (c *ServicesTenancyUnitsUndeleteProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6701,7 +6651,7 @@ func (c *ServicesTenancyUnitsUndeleteProjectCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,

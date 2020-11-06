@@ -170,7 +170,9 @@ type TransferOperationsService struct {
 
 // AwsAccessKey: AWS access key (see [AWS Security
 // Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-securit
-// y-credentials.html)).
+// y-credentials.html)). For information on our data retention policy
+// for user credentials, see [User
+// credentials](data-retention#user-credentials).
 type AwsAccessKey struct {
 	// AccessKeyId: Required. AWS access key ID.
 	AccessKeyId string `json:"accessKeyId,omitempty"`
@@ -206,9 +208,11 @@ func (s *AwsAccessKey) MarshalJSON() ([]byte, error) {
 // sink. In an AwsS3Data resource, an object's name is the S3 object's
 // key name.
 type AwsS3Data struct {
-	// AwsAccessKey: Required. AWS access key used to sign the API requests
-	// to the AWS S3 bucket. Permissions on the bucket must be granted to
-	// the access ID of the AWS access key.
+	// AwsAccessKey: Required. Input only. AWS access key used to sign the
+	// API requests to the AWS S3 bucket. Permissions on the bucket must be
+	// granted to the access ID of the AWS access key. For information on
+	// our data retention policy for user credentials, see [User
+	// credentials](data-retention#user-credentials).
 	AwsAccessKey *AwsAccessKey `json:"awsAccessKey,omitempty"`
 
 	// BucketName: Required. S3 Bucket name (see [Creating a
@@ -250,8 +254,10 @@ func (s *AwsS3Data) MarshalJSON() ([]byte, error) {
 // name](https://docs.microsoft.com/en-us/rest/api/storageservices/naming
 // -and-referencing-containers--blobs--and-metadata#blob-names).
 type AzureBlobStorageData struct {
-	// AzureCredentials: Required. Credentials used to authenticate API
-	// requests to Azure.
+	// AzureCredentials: Required. Input only. Credentials used to
+	// authenticate API requests to Azure. For information on our data
+	// retention policy for user credentials, see [User
+	// credentials](data-retention#user-credentials).
 	AzureCredentials *AzureCredentials `json:"azureCredentials,omitempty"`
 
 	// Container: Required. The container to transfer from the Azure Storage
@@ -285,7 +291,9 @@ func (s *AzureBlobStorageData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AzureCredentials: Azure credentials
+// AzureCredentials: Azure credentials For information on our data
+// retention policy for user credentials, see [User
+// credentials](data-retention#user-credentials).
 type AzureCredentials struct {
 	// SasToken: Required. Azure shared access signature. (see [Grant
 	// limited access to Azure Storage resources using shared access
@@ -317,27 +325,32 @@ func (s *AzureCredentials) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day and time zone are either specified elsewhere or are
-// not significant. The date is relative to the Proleptic Gregorian
-// Calendar. This can represent: * A full date, with non-zero year,
-// month and day values * A month and day value, with a zero year, e.g.
-// an anniversary * A year on its own, with zero month and day values *
-// A year and month value, with a zero day, e.g. a credit card
-// expiration date Related types are google.type.TimeOfDay and
-// `google.protobuf.Timestamp`.
+// CancelOperationRequest: The request message for
+// Operations.CancelOperation.
+type CancelOperationRequest struct {
+}
+
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values * A month and day value,
+// with a zero year, such as an anniversary * A year on its own, with
+// zero month and day values * A year and month value, with a zero day,
+// such as a credit card expiration date Related types are
+// google.type.TimeOfDay and `google.protobuf.Timestamp`.
 type Date struct {
-	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 if specifying a year by itself or a year and month where
-	// the day is not significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
 	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
-	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
@@ -1207,6 +1220,11 @@ type TransferJob struct {
 	// last modified.
 	LastModificationTime string `json:"lastModificationTime,omitempty"`
 
+	// LatestOperationName: The name of the most recently started
+	// TransferOperation of this JobConfig. Present if and only if at least
+	// one TransferOperation has been created for this JobConfig.
+	LatestOperationName string `json:"latestOperationName,omitempty"`
+
 	// Name: A unique name (within the transfer project) assigned when the
 	// job is created. If this field is empty in a CreateTransferJobRequest,
 	// Storage Transfer Service will assign a unique name. Otherwise, the
@@ -1358,8 +1376,11 @@ type TransferOptions struct {
 	// delete_objects_from_source_after_transfer are mutually exclusive.
 	DeleteObjectsUniqueInSink bool `json:"deleteObjectsUniqueInSink,omitempty"`
 
-	// OverwriteObjectsAlreadyExistingInSink: Whether overwriting objects
-	// that already exist in the sink is allowed.
+	// OverwriteObjectsAlreadyExistingInSink: When to overwrite objects that
+	// already exist in the sink. The default is that only objects that are
+	// different from the source are ovewritten. If true, all objects in the
+	// sink whose name matches an object in the source will be overwritten
+	// with the source object.
 	OverwriteObjectsAlreadyExistingInSink bool `json:"overwriteObjectsAlreadyExistingInSink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1411,9 +1432,9 @@ type TransferSpec struct {
 	ObjectConditions *ObjectConditions `json:"objectConditions,omitempty"`
 
 	// TransferOptions: If the option delete_objects_unique_in_sink is
-	// `true`, object conditions based on objects' "last modification time"
-	// are ignored and do not exclude objects in a data source or a data
-	// sink.
+	// `true` and time-based object conditions such as 'last modification
+	// time' are specified, the request fails with an INVALID_ARGUMENT
+	// error.
 	TransferOptions *TransferOptions `json:"transferOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AwsS3DataSource") to
@@ -1450,7 +1471,8 @@ type UpdateTransferJobRequest struct {
 	// to specify only four fields: description, transfer_spec,
 	// notification_config, and status. An `UpdateTransferJobRequest` that
 	// specifies other fields will be rejected with the error
-	// INVALID_ARGUMENT.
+	// INVALID_ARGUMENT. Updating a job satus to DELETED requires
+	// `storagetransfer.jobs.delete` permissions.
 	TransferJob *TransferJob `json:"transferJob,omitempty"`
 
 	// UpdateTransferJobFieldMask: The field mask of the fields in
@@ -1547,7 +1569,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1679,7 +1701,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1772,15 +1794,9 @@ type TransferJobsGetCall struct {
 }
 
 // Get: Gets a transfer job.
-func (r *TransferJobsService) Get(jobName string) *TransferJobsGetCall {
+func (r *TransferJobsService) Get(jobName string, projectId string) *TransferJobsGetCall {
 	c := &TransferJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
-	return c
-}
-
-// ProjectId sets the optional parameter "projectId": Required. The ID
-// of the Google Cloud Platform Console project that owns the job.
-func (c *TransferJobsGetCall) ProjectId(projectId string) *TransferJobsGetCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
 }
@@ -1822,7 +1838,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1889,11 +1905,12 @@ func (c *TransferJobsGetCall) Do(opts ...googleapi.CallOption) (*TransferJob, er
 	//   "httpMethod": "GET",
 	//   "id": "storagetransfer.transferJobs.get",
 	//   "parameterOrder": [
-	//     "jobName"
+	//     "jobName",
+	//     "projectId"
 	//   ],
 	//   "parameters": {
 	//     "jobName": {
-	//       "description": "Required. The job to get.",
+	//       "description": "Required. \" The job to get.",
 	//       "location": "path",
 	//       "pattern": "^transferJobs/.*$",
 	//       "required": true,
@@ -1902,6 +1919,7 @@ func (c *TransferJobsGetCall) Do(opts ...googleapi.CallOption) (*TransferJob, er
 	//     "projectId": {
 	//       "description": "Required. The ID of the Google Cloud Platform Console project that owns the job.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -1927,20 +1945,8 @@ type TransferJobsListCall struct {
 }
 
 // List: Lists transfer jobs.
-func (r *TransferJobsService) List() *TransferJobsListCall {
+func (r *TransferJobsService) List(filter string) *TransferJobsListCall {
 	c := &TransferJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Filter sets the optional parameter "filter": Required. A list of
-// query parameters specified as JSON text in the form of:
-// {"project_id":"my_project_id", "job_names":["jobid1","jobid2",...],
-// "job_statuses":["status1","status2",...]}. Since `job_names` and
-// `job_statuses` support multiple values, their values must be
-// specified with array notation. `project``_``id` is required.
-// `job_names` and `job_statuses` are optional. The valid values for
-// `job_statuses` are case-insensitive: ENABLED, DISABLED, and DELETED.
-func (c *TransferJobsListCall) Filter(filter string) *TransferJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
@@ -1996,7 +2002,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2059,11 +2065,14 @@ func (c *TransferJobsListCall) Do(opts ...googleapi.CallOption) (*ListTransferJo
 	//   "flatPath": "v1/transferJobs",
 	//   "httpMethod": "GET",
 	//   "id": "storagetransfer.transferJobs.list",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "filter"
+	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. A list of query parameters specified as JSON text in the form of: {\"project_id\":\"my_project_id\", \"job_names\":[\"jobid1\",\"jobid2\",...], \"job_statuses\":[\"status1\",\"status2\",...]}. Since `job_names` and `job_statuses` support multiple values, their values must be specified with array notation. `project``_``id` is required. `job_names` and `job_statuses` are optional. The valid values for `job_statuses` are case-insensitive: ENABLED, DISABLED, and DELETED.",
+	//       "description": "Required. A list of query parameters specified as JSON text in the form of: `{\"projectId\":\"my_project_id\", \"jobNames\":[\"jobid1\",\"jobid2\",...], \"jobStatuses\":[\"status1\",\"status2\",...]}` Since `jobNames` and `jobStatuses` support multiple values, their values must be specified with array notation. `projectId` is required. `jobNames` and `jobStatuses` are optional. The valid values for `jobStatuses` are case-insensitive: ENABLED, DISABLED, and DELETED.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
@@ -2160,7 +2169,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2257,11 +2266,12 @@ func (c *TransferJobsPatchCall) Do(opts ...googleapi.CallOption) (*TransferJob, 
 // method id "storagetransfer.transferOperations.cancel":
 
 type TransferOperationsCancelCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                      *Service
+	name                   string
+	canceloperationrequest *CancelOperationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
 }
 
 // Cancel: Cancels a transfer. Use the transferOperations.get method to
@@ -2283,9 +2293,10 @@ type TransferOperationsCancelCall struct {
 // transferred five files before you canceled the job, tomorrow's
 // transfer operation will compute a new delta with the five files that
 // were not copied today plus any new files discovered tomorrow.
-func (r *TransferOperationsService) Cancel(name string) *TransferOperationsCancelCall {
+func (r *TransferOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *TransferOperationsCancelCall {
 	c := &TransferOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	c.canceloperationrequest = canceloperationrequest
 	return c
 }
 
@@ -2316,12 +2327,17 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
@@ -2392,6 +2408,9 @@ func (c *TransferOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//     }
 	//   },
 	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelOperationRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Empty"
 	//   },
@@ -2459,7 +2478,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2560,23 +2579,9 @@ type TransferOperationsListCall struct {
 }
 
 // List: Lists transfer operations.
-func (r *TransferOperationsService) List(name string) *TransferOperationsListCall {
+func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
 	c := &TransferOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	return c
-}
-
-// Filter sets the optional parameter "filter": Required. A list of
-// query parameters specified as JSON text in the form of:
-// {"project_id":"my_project_id", "job_names":["jobid1","jobid2",...],
-// "operation_names":["opid1","opid2",...],
-// "transfer_statuses":["status1","status2",...]}. Since `job_names`,
-// `operation_names`, and `transfer_statuses` support multiple values,
-// they must be specified with array notation. `project``_``id` is
-// required. `job_names`, `operation_names`, and `transfer_statuses` are
-// optional. The valid values for `transfer_statuses` are
-// case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.
-func (c *TransferOperationsListCall) Filter(filter string) *TransferOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
@@ -2632,7 +2637,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2699,12 +2704,14 @@ func (c *TransferOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 	//   "httpMethod": "GET",
 	//   "id": "storagetransfer.transferOperations.list",
 	//   "parameterOrder": [
-	//     "name"
+	//     "name",
+	//     "filter"
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. A list of query parameters specified as JSON text in the form of: {\"project_id\":\"my_project_id\", \"job_names\":[\"jobid1\",\"jobid2\",...], \"operation_names\":[\"opid1\",\"opid2\",...], \"transfer_statuses\":[\"status1\",\"status2\",...]}. Since `job_names`, `operation_names`, and `transfer_statuses` support multiple values, they must be specified with array notation. `project``_``id` is required. `job_names`, `operation_names`, and `transfer_statuses` are optional. The valid values for `transfer_statuses` are case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.",
+	//       "description": "Required. A list of query parameters specified as JSON text in the form of: `{\"projectId\":\"my_project_id\", \"jobNames\":[\"jobid1\",\"jobid2\",...], \"operationNames\":[\"opid1\",\"opid2\",...], \"transferStatuses\":[\"status1\",\"status2\",...]}` Since `jobNames`, `operationNames`, and `transferStatuses` support multiple values, they must be specified with array notation. `projectId` is required. `jobNames`, `operationNames`, and `transferStatuses` are optional. The valid values for `transferStatuses` are case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "name": {
@@ -2804,7 +2811,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2944,7 +2951,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

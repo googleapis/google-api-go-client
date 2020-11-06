@@ -251,7 +251,7 @@
               "type": "string"
             },
             "parent": {
-              "description": "Service for which search is performed. services/{service} {service} the name of a service, for example 'service.googleapis.com'.",
+              "description": "Required. Service for which search is performed. services/{service} {service} the name of a service, for example 'service.googleapis.com'.",
               "location": "path",
               "pattern": "^services/[^/]+$",
               "required": true,
@@ -276,7 +276,7 @@
         "tenancyUnits": {
           "methods": {
             "addProject": {
-              "description": "Add a new tenant project to the tenancy unit. There can be a maximum of 512 tenant projects in a tenancy unit. If there are previously failed `AddTenantProject` calls, you might need to call `RemoveTenantProject` first to resolve them before you can make another call to `AddTenantProject` with the same tag. Operation.",
+              "description": "Add a new tenant project to the tenancy unit. There can be a maximum of 1024 tenant projects in a tenancy unit. If there are previously failed `AddTenantProject` calls, you might need to call `RemoveTenantProject` first to resolve them before you can make another call to `AddTenantProject` with the same tag. Operation.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:addProject",
               "httpMethod": "POST",
               "id": "serviceconsumermanagement.services.tenancyUnits.addProject",
@@ -285,7 +285,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+                  "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
                   "required": true,
@@ -313,7 +313,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+                  "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
                   "required": true,
@@ -341,7 +341,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the tenancy unit that the project will be attached to. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+                  "description": "Required. Name of the tenancy unit that the project will be attached to. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
                   "required": true,
@@ -369,7 +369,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a managed service, such as 'service.googleapis.com'. Enables service binding using the new tenancy unit.",
+                  "description": "Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a managed service, such as 'service.googleapis.com'. Enables service binding using the new tenancy unit.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+$",
                   "required": true,
@@ -397,7 +397,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the tenancy unit to be deleted.",
+                  "description": "Required. Name of the tenancy unit to be deleted.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
                   "required": true,
@@ -422,7 +422,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+                  "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
                   "required": true,
@@ -450,23 +450,23 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Filter expression over tenancy resources field. Optional.",
+                  "description": "Optional. Filter expression over tenancy resources field. Optional.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The maximum number of results returned by this request.",
+                  "description": "Optional. The maximum number of results returned by this request.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of `nextPageToken` from the previous response.",
+                  "description": "Optional. The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of `nextPageToken` from the previous response.",
                   "location": "query",
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Managed service and service consumer. Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a service, such as 'service.googleapis.com'.",
+                  "description": "Required. Managed service and service consumer. Required. services/{service}/{collection id}/{resource id} {collection id} is the cloud resource collection type representing the service consumer, for example 'projects', or 'organizations'. {resource id} is the consumer numeric id, such as project number: '123456'. {service} the name of a service, such as 'service.googleapis.com'.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+$",
                   "required": true,
@@ -491,7 +491,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+                  "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
                   "required": true,
@@ -519,7 +519,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+                  "description": "Required. Name of the tenancy unit. Such as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
                   "location": "path",
                   "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
                   "required": true,
@@ -542,7 +542,7 @@
       }
     }
   },
-  "revision": "20200818",
+  "revision": "20201021",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -554,7 +554,7 @@
           "description": "Configuration of the new tenant project to be added to tenancy unit resources."
         },
         "tag": {
-          "description": "Tag of the added project. Must be less than 128 characters. Required.",
+          "description": "Required. Tag of the added project. Must be less than 128 characters. Required.",
           "type": "string"
         }
       },
@@ -621,7 +621,7 @@
           "description": "Configuration that should be applied to the existing tenant project."
         },
         "tag": {
-          "description": "Tag of the project. Must be less than 128 characters. Required.",
+          "description": "Required. Tag of the project. Must be less than 128 characters. Required.",
           "type": "string"
         }
       },
@@ -640,7 +640,7 @@
           "type": "string"
         },
         "tag": {
-          "description": "Tag of the tenant resource after attachment. Must be less than 128 characters. Required.",
+          "description": "Required. Tag of the tenant resource after attachment. Must be less than 128 characters. Required.",
           "type": "string"
         }
       },
@@ -721,7 +721,7 @@
       "id": "AuthenticationRule",
       "properties": {
         "allowWithoutCredential": {
-          "description": "If true, the service accepts API keys without any other credential.",
+          "description": "If true, the service accepts API keys without any other credential. This flag only applies to HTTP and gRPC requests.",
           "type": "boolean"
         },
         "oauth": {
@@ -861,7 +861,7 @@
       "type": "object"
     },
     "Context": {
-      "description": "`Context` defines which contexts an API requests. Example: context: rules: - selector: \"*\" requested: - google.rpc.context.ProjectContext - google.rpc.context.OriginContext The above specifies that all methods in the API request `google.rpc.context.ProjectContext` and `google.rpc.context.OriginContext`. Available context types are defined in package `google.rpc.context`. This also provides mechanism to whitelist any protobuf message extension that can be sent in grpc metadata using “x-goog-ext--bin” and “x-goog-ext--jspb” format. For example, list any service specific protobuf types that can appear in grpc metadata as follows in your yaml file: Example: context: rules: - selector: \"google.example.library.v1.LibraryService.CreateBook\" allowed_request_extensions: - google.foo.v1.NewExtension allowed_response_extensions: - google.foo.v1.NewExtension You can also specify extension ID instead of fully qualified extension name here.",
+      "description": "`Context` defines which contexts an API requests. Example: context: rules: - selector: \"*\" requested: - google.rpc.context.ProjectContext - google.rpc.context.OriginContext The above specifies that all methods in the API request `google.rpc.context.ProjectContext` and `google.rpc.context.OriginContext`. Available context types are defined in package `google.rpc.context`. This also provides mechanism to allowlist any protobuf message extension that can be sent in grpc metadata using “x-goog-ext--bin” and “x-goog-ext--jspb” format. For example, list any service specific protobuf types that can appear in grpc metadata as follows in your yaml file: Example: context: rules: - selector: \"google.example.library.v1.LibraryService.CreateBook\" allowed_request_extensions: - google.foo.v1.NewExtension allowed_response_extensions: - google.foo.v1.NewExtension You can also specify extension ID instead of fully qualified extension name here.",
       "id": "Context",
       "properties": {
         "rules": {
@@ -991,7 +991,7 @@
       "id": "DeleteTenantProjectRequest",
       "properties": {
         "tag": {
-          "description": "Tag of the resource within the tenancy unit.",
+          "description": "Required. Tag of the resource within the tenancy unit.",
           "type": "string"
         }
       },
@@ -1284,10 +1284,6 @@
           },
           "type": "array"
         },
-        "allowHalfDuplex": {
-          "description": "When this flag is set to true, HTTP requests will be allowed to invoke a half-duplex streaming method.",
-          "type": "boolean"
-        },
         "body": {
           "description": "The name of the request field whose value is mapped to the HTTP request body, or `*` for mapping all request fields not captured by the path pattern to the HTTP body, or omitted for not having any HTTP request body. NOTE: the referred field must be present at the top-level of the request message type.",
           "type": "string"
@@ -1558,7 +1554,7 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
             "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
@@ -1655,7 +1651,7 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
             "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
@@ -1740,7 +1736,7 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
             "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
@@ -1982,7 +1978,7 @@
       "id": "RemoveTenantProjectRequest",
       "properties": {
         "tag": {
-          "description": "Tag of the resource within the tenancy unit.",
+          "description": "Required. Tag of the resource within the tenancy unit.",
           "type": "string"
         }
       },
@@ -2030,7 +2026,7 @@
           "description": "Billing configuration."
         },
         "configVersion": {
-          "description": "The semantic version of the service configuration. The config version affects the interpretation of the service configuration. For example, certain features are enabled by default for certain config versions. The latest config version is `3`.",
+          "description": "This field is obsolete. Its value must be set to `3`.",
           "format": "uint32",
           "type": "integer"
         },
@@ -2164,25 +2160,6 @@
       },
       "type": "object"
     },
-    "ServiceIdentity": {
-      "description": "The per-product per-project service identity for a service. Use this field to configure per-product per-project service identity. Example of a service identity configuration. usage: service_identity: - service_account_parent: \"projects/123456789\" display_name: \"Cloud XXX Service Agent\" description: \"Used as the identity of Cloud XXX to access resources\"",
-      "id": "ServiceIdentity",
-      "properties": {
-        "description": {
-          "description": "Optional. A user-specified opaque description of the service account. Must be less than or equal to 256 UTF-8 bytes.",
-          "type": "string"
-        },
-        "displayName": {
-          "description": "Optional. A user-specified name for the service account. Must be less than or equal to 100 UTF-8 bytes.",
-          "type": "string"
-        },
-        "serviceAccountParent": {
-          "description": "A service account project that hosts the service accounts. An example name would be: `projects/123456789`",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "SourceContext": {
       "description": "`SourceContext` represents information about the source of a protobuf element, like the file in which it is defined.",
       "id": "SourceContext",
@@ -2295,12 +2272,14 @@
       "id": "TenancyUnit",
       "properties": {
         "consumer": {
-          "description": "@OutputOnly Cloud resource name of the consumer of this service. For example 'projects/123456'.",
+          "description": "Output only. @OutputOnly Cloud resource name of the consumer of this service. For example 'projects/123456'.",
+          "readOnly": true,
           "type": "string"
         },
         "createTime": {
-          "description": "@OutputOnly The time this tenancy unit was created.",
+          "description": "Output only. @OutputOnly The time this tenancy unit was created.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "name": {
@@ -2309,6 +2288,7 @@
         },
         "service": {
           "description": "Output only. Google Cloud API name of the managed service owning this tenancy unit. For example 'serviceconsumermanagement.googleapis.com'.",
+          "readOnly": true,
           "type": "string"
         },
         "tenantResources": {
@@ -2377,7 +2357,8 @@
       "id": "TenantResource",
       "properties": {
         "resource": {
-          "description": "@OutputOnly Identifier of the tenant resource. For cloud projects, it is in the form 'projects/{number}'. For example 'projects/123456'.",
+          "description": "Output only. @OutputOnly Identifier of the tenant resource. For cloud projects, it is in the form 'projects/{number}'. For example 'projects/123456'.",
+          "readOnly": true,
           "type": "string"
         },
         "status": {
@@ -2460,7 +2441,7 @@
       "id": "UndeleteTenantProjectRequest",
       "properties": {
         "tag": {
-          "description": "Tag of the resource within the tenancy unit.",
+          "description": "Required. Tag of the resource within the tenancy unit.",
           "type": "string"
         }
       },
@@ -2487,10 +2468,6 @@
             "$ref": "UsageRule"
           },
           "type": "array"
-        },
-        "serviceIdentity": {
-          "$ref": "ServiceIdentity",
-          "description": "The configuration of a per-product per-project service identity."
         }
       },
       "type": "object"

@@ -168,11 +168,17 @@ type BillingAccountsBudgetsService struct {
 // defines notifications that are sent based on budget spend and
 // thresholds.
 type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
+	// DisableDefaultIamRecipients: Optional. When set to true, disables
+	// default notifications sent when a threshold is exceeded. Default
+	// notifications are sent to those with Billing Account Administrator
+	// and Billing Account User IAM roles for the target account.
+	DisableDefaultIamRecipients bool `json:"disableDefaultIamRecipients,omitempty"`
+
 	// MonitoringNotificationChannels: Optional. Targets to send
 	// notifications to when a threshold is exceeded. This is in addition to
-	// default recipients who have billing account roles. The value is the
-	// full REST resource name of a monitoring notification channel with the
-	// form `projects/{project_id}/notificationChannels/{channel_id}`. A
+	// default recipients who have billing account IAM roles. The value is
+	// the full REST resource name of a monitoring notification channel with
+	// the form `projects/{project_id}/notificationChannels/{channel_id}`. A
 	// maximum of 5 channels are allowed. See
 	// https://cloud.google.com/billing/docs/how-to/budgets-notification-recipients for more
 	// details.
@@ -194,7 +200,7 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	SchemaVersion string `json:"schemaVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "MonitoringNotificationChannels") to unconditionally include in API
+	// "DisableDefaultIamRecipients") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -203,7 +209,7 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "MonitoringNotificationChannels") to include in API requests with the
+	// "DisableDefaultIamRecipients") to include in API requests with the
 	// JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
@@ -351,6 +357,15 @@ func (s *GoogleCloudBillingBudgetsV1beta1CreateBudgetRequest) MarshalJSON() ([]b
 // GoogleCloudBillingBudgetsV1beta1Filter: A filter for a budget,
 // limiting the scope of the cost to calculate.
 type GoogleCloudBillingBudgetsV1beta1Filter struct {
+	// CreditTypes: Optional. A list of credit types to be subtracted from
+	// gross cost to determine the spend for threshold calculations if and
+	// only if credit_types_treatment is INCLUDE_SPECIFIED_CREDITS. If
+	// credit_types_treatment is not INCLUDE_SPECIFIED_CREDITS, this field
+	// must be empty. See credits.type at
+	// https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tables#data-schema for a list of acceptable credit type values in this
+	// field.
+	CreditTypes []string `json:"creditTypes,omitempty"`
+
 	// CreditTypesTreatment: Optional. If not set, default behavior is
 	// `INCLUDE_ALL_CREDITS`.
 	//
@@ -360,6 +375,9 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// gross cost to determine the spend for threshold calculations.
 	//   "EXCLUDE_ALL_CREDITS" - All types of credit are added to the net
 	// cost to determine the spend for threshold calculations.
+	//   "INCLUDE_SPECIFIED_CREDITS" - Credit types specified in the
+	// credit_types field are subtracted from the gross cost to determine
+	// the spend for threshold calculations.
 	CreditTypesTreatment string `json:"creditTypesTreatment,omitempty"`
 
 	// Labels: Optional. A single label and value pair specifying that usage
@@ -393,22 +411,20 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// from the parent account and all subaccounts, if they exist.
 	Subaccounts []string `json:"subaccounts,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "CreditTypesTreatment") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CreditTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreditTypesTreatment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CreditTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -579,7 +595,7 @@ type GoogleProtobufEmpty struct {
 // GoogleTypeMoney: Represents an amount of money with its currency
 // type.
 type GoogleTypeMoney struct {
-	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// Nanos: Number of nano (10^-9) units of the amount. The value must be
@@ -664,7 +680,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -804,7 +820,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -949,7 +965,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1115,7 +1131,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1288,7 +1304,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

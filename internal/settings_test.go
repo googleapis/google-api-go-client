@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"testing"
 
+	"google.golang.org/api/internal/impersonate"
 	"google.golang.org/grpc"
 
 	"golang.org/x/oauth2"
@@ -35,6 +36,8 @@ func TestSettingsValidate(t *testing.T) {
 		// the check feasible.
 		{NoAuth: true, Scopes: []string{"s"}},
 		{ClientCertSource: dummyGetClientCertificate},
+		{ImpersonationConfig: &impersonate.Config{Scopes: []string{"x"}}},
+		{ImpersonationConfig: &impersonate.Config{}, Scopes: []string{"x"}},
 	} {
 		err := ds.Validate()
 		if err != nil {
@@ -63,6 +66,7 @@ func TestSettingsValidate(t *testing.T) {
 		{ClientCertSource: dummyGetClientCertificate, GRPCConnPool: struct{ ConnPool }{}},
 		{ClientCertSource: dummyGetClientCertificate, GRPCDialOpts: []grpc.DialOption{grpc.WithInsecure()}},
 		{ClientCertSource: dummyGetClientCertificate, GRPCConnPoolSize: 1},
+		{ImpersonationConfig: &impersonate.Config{}},
 	} {
 		err := ds.Validate()
 		if err == nil {

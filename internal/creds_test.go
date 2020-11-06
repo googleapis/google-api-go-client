@@ -37,7 +37,7 @@ func TestTokenSource(t *testing.T) {
 	// TODO(jba): make this an error?
 	ds = &DialSettings{
 		TokenSource:     ts,
-		CredentialsFile: "service-account.json",
+		CredentialsFile: "testdata/service-account.json",
 	}
 	got, err = Creds(ctx, ds)
 	if err != nil {
@@ -54,7 +54,7 @@ func TestDefaultServiceAccount(t *testing.T) {
 
 	// Load a valid JSON file. No way to really test the contents; we just
 	// verify that there is no error.
-	ds := &DialSettings{CredentialsFile: "service-account.json"}
+	ds := &DialSettings{CredentialsFile: "testdata/service-account.json"}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
 	}
@@ -72,7 +72,7 @@ func TestJWTWithAudience(t *testing.T) {
 
 	// Load a valid JSON file. No way to really test the contents; we just
 	// verify that there is no error.
-	ds := &DialSettings{CredentialsFile: "service-account.json", Audiences: []string{"foo"}}
+	ds := &DialSettings{CredentialsFile: "testdata/service-account.json", Audiences: []string{"foo"}}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
 	}
@@ -90,7 +90,7 @@ func TestOAuth(t *testing.T) {
 
 	// Load a valid JSON file. No way to really test the contents; we just
 	// verify that there is no error.
-	ds := &DialSettings{CredentialsFile: "service-account.json", Scopes: []string{"foo"}}
+	ds := &DialSettings{CredentialsFile: "testdata/service-account.json", Scopes: []string{"foo"}}
 	if _, err := Creds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
 	}

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package http
+package dca
 
 import (
 	"testing"
@@ -34,9 +34,19 @@ func TestGetEndpoint(t *testing.T) {
 			Want:            "https://host/path/to/bar",
 		},
 		{
-			UserEndpoint:    "host:port",
+			UserEndpoint:    "host:123",
 			DefaultEndpoint: "",
-			WantErr:         true,
+			Want:            "host:123",
+		},
+		{
+			UserEndpoint:    "host:123",
+			DefaultEndpoint: "default:443",
+			Want:            "host:123",
+		},
+		{
+			UserEndpoint:    "host:123",
+			DefaultEndpoint: "default:443/bar/baz",
+			Want:            "host:123/bar/baz",
 		},
 	}
 
@@ -62,18 +72,21 @@ func TestGetEndpoint(t *testing.T) {
 func TestGetEndpointWithClientCertSource(t *testing.T) {
 	dummyClientCertSource := func(info *tls.CertificateRequestInfo) (*tls.Certificate, error) { return nil, nil }
 	testCases := []struct {
-		UserEndpoint    string
-		DefaultEndpoint string
-		Want            string
-		WantErr         bool
+		UserEndpoint        string
+		DefaultEndpoint     string
+		DefaultMTLSEndpoint string
+		Want                string
+		WantErr             bool
 	}{
 		{
-			DefaultEndpoint: "https://foo.googleapis.com/bar/baz",
-			Want:            "https://foo.googleapis.com/bar/baz",
+			DefaultEndpoint:     "https://foo.googleapis.com/bar/baz",
+			DefaultMTLSEndpoint: "https://foo.mtls.googleapis.com/bar/baz",
+			Want:                "https://foo.mtls.googleapis.com/bar/baz",
 		},
 		{
-			DefaultEndpoint: "https://staging-foo.sandbox.googleapis.com/bar/baz",
-			Want:            "https://staging-foo.sandbox.googleapis.com/bar/baz",
+			DefaultEndpoint:     "https://staging-foo.sandbox.googleapis.com/bar/baz",
+			DefaultMTLSEndpoint: "https://staging-foo.mtls.sandbox.googleapis.com/bar/baz",
+			Want:                "https://staging-foo.mtls.sandbox.googleapis.com/bar/baz",
 		},
 		{
 			UserEndpoint:    "myhost:3999",
@@ -88,14 +101,15 @@ func TestGetEndpointWithClientCertSource(t *testing.T) {
 		{
 			UserEndpoint:    "host:port",
 			DefaultEndpoint: "",
-			WantErr:         true,
+			Want:            "host:port",
 		},
 	}
 
 	for _, tc := range testCases {
 		got, err := getEndpoint(&internal.DialSettings{
-			Endpoint:        tc.UserEndpoint,
-			DefaultEndpoint: tc.DefaultEndpoint,
+			Endpoint:            tc.UserEndpoint,
+			DefaultEndpoint:     tc.DefaultEndpoint,
+			DefaultMTLSEndpoint: tc.DefaultMTLSEndpoint,
 		}, dummyClientCertSource)
 		if tc.WantErr && err == nil {
 			t.Errorf("want err, got nil err")

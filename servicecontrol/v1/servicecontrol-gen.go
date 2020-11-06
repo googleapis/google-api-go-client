@@ -528,9 +528,11 @@ type AuthenticationInfo struct {
 
 	// PrincipalEmail: The email address of the authenticated user (or
 	// service account on behalf of third party principal) making the
-	// request. For privacy reasons, the principal email address is redacted
-	// for all read-only operations that fail with a "permission denied"
-	// error.
+	// request. For third party identity callers, the `principal_subject`
+	// field is populated instead of this field. For privacy reasons, the
+	// principal email address is sometimes redacted. For more information,
+	// see [Caller identities in audit
+	// logs](https://cloud.google.com/logging/docs/audit#user-id).
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
 	// PrincipalSubject: String representation of identity of requesting
@@ -1546,7 +1548,8 @@ type MetricValue struct {
 	DoubleValue *float64 `json:"doubleValue,omitempty"`
 
 	// EndTime: The end of the time period over which this metric value's
-	// measurement applies.
+	// measurement applies. If not specified,
+	// google.api.servicecontrol.v1.Operation.end_time will be used.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Int64Value: A signed 64-bit integer value.
@@ -1565,7 +1568,8 @@ type MetricValue struct {
 	// value's measurement applies. The time period has different semantics
 	// for different metric types (cumulative, delta, and gauge). See the
 	// metric definition documentation in the service configuration for
-	// details.
+	// details. If not specified,
+	// google.api.servicecontrol.v1.Operation.start_time will be used.
 	StartTime string `json:"startTime,omitempty"`
 
 	// StringValue: A text string value.
@@ -1645,7 +1649,7 @@ func (s *MetricValueSet) MarshalJSON() ([]byte, error) {
 
 // Money: Represents an amount of money with its currency type.
 type Money struct {
-	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// Nanos: Number of nano (10^-9) units of the amount. The value must be
@@ -1713,7 +1717,7 @@ type Operation struct {
 	//   "DEBUG" - In addition to the behavior described in HIGH, DEBUG
 	// enables additional validation logic that is only useful during the
 	// onboarding process. This is only available to Google internal
-	// services and the service must be whitelisted by
+	// services and the service must be allowlisted by
 	// chemist-dev@google.com in order to use this level.
 	Importance string `json:"importance,omitempty"`
 
@@ -1890,6 +1894,10 @@ type QuotaError struct {
 	// error.
 	Description string `json:"description,omitempty"`
 
+	// Status: Contains additional information about the quota error. If
+	// available, `status.code` will be non zero.
+	Status *Status `json:"status,omitempty"`
+
 	// Subject: Subject to whom this error applies. See the specific enum
 	// for more details on this field. For example, "clientip:" or
 	// "project:".
@@ -2037,7 +2045,7 @@ type QuotaOperation struct {
 	// this returns the effective quota limit(s) in the response, and no
 	// quota check will be performed. Not supported for other requests, and
 	// even for AllocateQuotaRequest, this is currently supported only for
-	// whitelisted services.
+	// allowlisted services.
 	//   "ADJUST_ONLY" - The operation allocates quota for the amount
 	// specified in the service configuration or specified using the quota
 	// metrics. If the requested amount is higher than the available quota,
@@ -2422,6 +2430,31 @@ func (s *RequestMetadata) MarshalJSON() ([]byte, error) {
 // resource is an addressable (named) entity provided by the destination
 // service. For example, a file stored on a network storage service.
 type Resource struct {
+	// Annotations: Annotations is an unstructured key-value map stored with
+	// a resource that may be set by external tools to store and retrieve
+	// arbitrary metadata. They are not queryable and should be preserved
+	// when modifying objects. More info:
+	// http://kubernetes.io/docs/user-guide/annotations
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CreateTime: Output only. The timestamp when the resource was created.
+	// This may be either the time creation was initiated or when it was
+	// completed.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. The timestamp when the resource was deleted.
+	// If the resource is not deleted, this must be empty.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisplayName: Mutable. The display name set by clients. Must be <= 63
+	// characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Output only. An opaque value that uniquely identifies a version
+	// or generation of a resource. It can be used to confirm that the
+	// client and server agree on the ordering of a resource being written.
+	Etag string `json:"etag,omitempty"`
+
 	// Labels: The labels or tags on the resource, such as AWS resource tags
 	// and Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2448,7 +2481,20 @@ type Resource struct {
 	// Google APIs, the type format must be "{service}/{kind}".
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// Uid: The unique identifier of the resource. UID is unique in the time
+	// and space for this resource within the scope of the service. It is
+	// typically generated by the server on successful creation of a
+	// resource and must not be changed. UID is used to uniquely identify
+	// resources with resource name reuses. This should be a UUID4.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the resource was last
+	// updated. Any change to the resource made by users must refresh this
+	// value. Changes to a resource made by the service should refresh this
+	// value.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2456,10 +2502,10 @@ type Resource struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2474,8 +2520,8 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 // ResourceInfo: Describes a resource associated with this operation.
 type ResourceInfo struct {
 	// ResourceContainer: The identifier of the parent of this resource
-	// instance. Must be in one of the following formats: - “projects/”
-	// - “folders/” - “organizations/”
+	// instance. Must be in one of the following formats: - `projects/` -
+	// `folders/` - `organizations/`
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
 	// ResourceLocation: The location of the resource. If not empty, the
@@ -2558,6 +2604,11 @@ type ServiceAccountDelegationInfo struct {
 	// FirstPartyPrincipal: First party (Google) identity as the real
 	// authority.
 	FirstPartyPrincipal *FirstPartyPrincipal `json:"firstPartyPrincipal,omitempty"`
+
+	// PrincipalSubject: A string representing the principal_subject
+	// associated with the identity. See go/3pical for more info on how
+	// principal_subject is formatted.
+	PrincipalSubject string `json:"principalSubject,omitempty"`
 
 	// ThirdPartyPrincipal: Third party identity as the real authority.
 	ThirdPartyPrincipal *ThirdPartyPrincipal `json:"thirdPartyPrincipal,omitempty"`
@@ -2896,7 +2947,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3048,7 +3099,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3198,7 +3249,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

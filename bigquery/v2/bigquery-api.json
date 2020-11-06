@@ -41,6 +41,7 @@
   },
   "id": "bigquery:v2",
   "kind": "discovery#restDescription",
+  "mtlsRootUrl": "https://www.mtls.googleapis.com/",
   "name": "bigquery",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -1075,6 +1076,65 @@
         }
       }
     },
+    "rowAccessPolicies": {
+      "methods": {
+        "list": {
+          "description": "Lists all row access policies on the specified table.",
+          "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}/rowAccessPolicies",
+          "httpMethod": "GET",
+          "id": "bigquery.rowAccessPolicies.list",
+          "parameterOrder": [
+            "projectId",
+            "datasetId",
+            "tableId"
+          ],
+          "parameters": {
+            "datasetId": {
+              "description": "Required. Dataset ID of row access policies to list.",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "pageSize": {
+              "description": "The maximum number of results to return in a single response page. Leverage the page tokens to iterate through the entire collection.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "Page token, returned by a previous call, to request the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "projectId": {
+              "description": "Required. Project ID of the row access policies to list.",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "tableId": {
+              "description": "Required. Table ID of the table to list row access policies.",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/rowAccessPolicies",
+          "response": {
+            "$ref": "ListRowAccessPoliciesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/bigquery.readonly",
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only"
+          ]
+        }
+      }
+    },
     "tabledata": {
       "methods": {
         "insertAll": {
@@ -1519,8 +1579,8 @@
       }
     }
   },
-  "revision": "20200818",
-  "rootUrl": "https://bigquery.googleapis.com/",
+  "revision": "20201022",
+  "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
       "description": "Aggregate metrics for classification/classifier models. For multi-class models, the metrics are either macro-averaged or micro-averaged. When macro-averaged, the metrics are calculated for each label and then an unweighted average is taken of those values. When micro-averaged, the metric is calculated globally by counting the total number of correctly predicted rows.",
@@ -1693,15 +1753,6 @@
         },
         "seasonalPeriods": {
           "description": "Seasonal periods. Repeated because multiple periods are supported for one time series.",
-          "enumDescriptions": [
-            "",
-            "No seasonality",
-            "Daily period, 24 hours.",
-            "Weekly period, 7 days.",
-            "Monthly period, 30 days or irregular.",
-            "Quarterly period, 90 days or irregular.",
-            "Yearly period, 365 days or irregular."
-          ],
           "items": {
             "enum": [
               "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
@@ -1757,15 +1808,6 @@
         },
         "seasonalPeriods": {
           "description": "Seasonal periods. Repeated because multiple periods are supported for one time series.",
-          "enumDescriptions": [
-            "",
-            "No seasonality",
-            "Daily period, 24 hours.",
-            "Weekly period, 7 days.",
-            "Monthly period, 30 days or irregular.",
-            "Quarterly period, 90 days or irregular.",
-            "Yearly period, 365 days or irregular."
-          ],
           "items": {
             "enum": [
               "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
@@ -1831,15 +1873,6 @@
         },
         "seasonalPeriods": {
           "description": "Seasonal periods. Repeated because multiple periods are supported for one time series.",
-          "enumDescriptions": [
-            "",
-            "No seasonality",
-            "Daily period, 24 hours.",
-            "Weekly period, 7 days.",
-            "Monthly period, 30 days or irregular.",
-            "Quarterly period, 90 days or irregular.",
-            "Yearly period, 365 days or irregular."
-          ],
           "items": {
             "enum": [
               "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
@@ -1884,15 +1917,6 @@
         },
         "seasonalPeriods": {
           "description": "Seasonal periods. Repeated because multiple periods are supported for one time series.",
-          "enumDescriptions": [
-            "",
-            "No seasonality",
-            "Daily period, 24 hours.",
-            "Weekly period, 7 days.",
-            "Monthly period, 30 days or irregular.",
-            "Quarterly period, 90 days or irregular.",
-            "Yearly period, 365 days or irregular."
-          ],
           "items": {
             "enum": [
               "SEASONAL_PERIOD_TYPE_UNSPECIFIED",
@@ -2476,6 +2500,10 @@
                 "description": "[Required] An IAM role ID that should be granted to the user, group, or domain specified in this access entry. The following legacy mappings will be applied: OWNER  roles/bigquery.dataOwner WRITER  roles/bigquery.dataEditor READER  roles/bigquery.dataViewer This field will accept any of the above formats, but will return only the legacy format. For example, if you set this field to \"roles/bigquery.dataOwner\", it will be returned back as \"OWNER\".",
                 "type": "string"
               },
+              "routine": {
+                "$ref": "RoutineReference",
+                "description": "[Pick one] A routine from a different dataset to grant access to. Queries executed against that routine will have read access to views/tables/routines in this dataset. Only UDF is supported for now. The role field is not required when this field is set. If that routine is updated by any user, access to the routine needs to be granted again via an update operation."
+              },
               "specialGroup": {
                 "description": "[Pick one] A special group to grant access to. Possible values include: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. Maps to similarly-named IAM members.",
                 "type": "string"
@@ -2551,6 +2579,10 @@
         "location": {
           "description": "The geographic location where the dataset should reside. The default value is US. See details at https://cloud.google.com/bigquery/docs/locations.",
           "type": "string"
+        },
+        "satisfiesPZS": {
+          "description": "[Output-only] Reserved for future use.",
+          "type": "boolean"
         },
         "selfLink": {
           "description": "[Output-only] A URL that can be used to access the resource again. You can use this URL in Get or Update requests to the resource.",
@@ -2915,6 +2947,22 @@
       },
       "type": "object"
     },
+    "Explanation": {
+      "description": "Explanation for a single feature.",
+      "id": "Explanation",
+      "properties": {
+        "attribution": {
+          "description": "Attribution of feature.",
+          "format": "double",
+          "type": "number"
+        },
+        "featureName": {
+          "description": "Full name of the feature. For non-numerical features, will be formatted like .. Overall size of feature name will always be truncated to first 120 characters.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Expr": {
       "description": "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() \u003c 100\" Example (Equality): title: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\" Example (Logic): title: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\" Example (Data Manipulation): title: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.",
       "id": "Expr",
@@ -3118,6 +3166,24 @@
       },
       "type": "object"
     },
+    "GlobalExplanation": {
+      "description": "Global explanations containing the top most important features after training.",
+      "id": "GlobalExplanation",
+      "properties": {
+        "classLabel": {
+          "description": "Class label for this set of global explanations. Will be empty/null for binary logistic and linear regression models. Sorted alphabetically in descending order.",
+          "type": "string"
+        },
+        "explanations": {
+          "description": "A list of the top global explanations. Sorted by absolute value of attribution in descending order.",
+          "items": {
+            "$ref": "Explanation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleSheetsOptions": {
       "id": "GoogleSheetsOptions",
       "properties": {
@@ -3137,11 +3203,15 @@
       "id": "HivePartitioningOptions",
       "properties": {
         "mode": {
-          "description": "[Optional, Trusted Tester] When set, what mode of hive partitioning to use when reading data. Two modes are supported. (1) AUTO: automatically infer partition key name(s) and type(s). (2) STRINGS: automatically infer partition key name(s). All types are interpreted as strings. Not all storage formats support hive partitioning. Requesting hive partitioning on an unsupported format will lead to an error. Currently supported types include: AVRO, CSV, JSON, ORC and Parquet.",
+          "description": "[Optional] When set, what mode of hive partitioning to use when reading data. The following modes are supported. (1) AUTO: automatically infer partition key name(s) and type(s). (2) STRINGS: automatically infer partition key name(s). All types are interpreted as strings. (3) CUSTOM: partition key schema is encoded in the source URI prefix. Not all storage formats support hive partitioning. Requesting hive partitioning on an unsupported format will lead to an error. Currently supported types include: AVRO, CSV, JSON, ORC and Parquet.",
           "type": "string"
         },
+        "requirePartitionFilter": {
+          "description": "[Optional] If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified. Note that this field should only be true when creating a permanent external table or querying a temporary external table. Hive-partitioned loads with requirePartitionFilter explicitly set to true will fail.",
+          "type": "boolean"
+        },
         "sourceUriPrefix": {
-          "description": "[Optional, Trusted Tester] When hive partition detection is requested, a common prefix for all source uris should be supplied. The prefix must end immediately before the partition key encoding begins. For example, consider files following this data layout. gs://bucket/path_to_table/dt=2019-01-01/country=BR/id=7/file.avro gs://bucket/path_to_table/dt=2018-12-31/country=CA/id=3/file.avro When hive partitioning is requested with either AUTO or STRINGS detection, the common prefix can be either of gs://bucket/path_to_table or gs://bucket/path_to_table/ (trailing slash does not matter).",
+          "description": "[Optional] When hive partition detection is requested, a common prefix for all source uris should be supplied. The prefix must end immediately before the partition key encoding begins. For example, consider files following this data layout. gs://bucket/path_to_table/dt=2019-01-01/country=BR/id=7/file.avro gs://bucket/path_to_table/dt=2018-12-31/country=CA/id=3/file.avro When hive partitioning is requested with either AUTO or STRINGS detection, the common prefix can be either of gs://bucket/path_to_table or gs://bucket/path_to_table/ (trailing slash does not matter).",
           "type": "string"
         }
       },
@@ -3297,7 +3367,7 @@
           "type": "string"
         },
         "destinationFormat": {
-          "description": "[Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON or AVRO for tables and ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER for models. The default value for tables is CSV. Tables with nested or repeated fields cannot be exported as CSV. The default value for models is ML_TF_SAVED_MODEL.",
+          "description": "[Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON, PARQUET or AVRO for tables and ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER for models. The default value for tables is CSV. Tables with nested or repeated fields cannot be exported as CSV. The default value for models is ML_TF_SAVED_MODEL.",
           "type": "string"
         },
         "destinationUri": {
@@ -3357,6 +3427,13 @@
         "createDisposition": {
           "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.",
           "type": "string"
+        },
+        "decimalTargetTypes": {
+          "description": "[Trusted Tester] Defines the list of possible SQL data types to which the source decimal values are converted. This list and the precision and the scale parameters of the decimal field determine the target type. In the order of NUMERIC, BIGNUMERIC, and STRING, a type is picked if it is in the specified list and if it supports the precision and the scale. STRING supports all precision and scale values. If none of the listed types supports the precision and the scale, the type supporting the widest range in the specified list is picked, and if a value exceeds the supported range when reading the data, an error will be thrown. For example: suppose decimal_target_type = [\"NUMERIC\", \"BIGNUMERIC\"]. Then if (precision,scale) is: * (38,9) -\u003e NUMERIC; * (39,9) -\u003e BIGNUMERIC (NUMERIC cannot hold 30 integer digits); * (38,10) -\u003e BIGNUMERIC (NUMERIC cannot hold 10 fractional digits); * (76,38) -\u003e BIGNUMERIC; * (77,38) -\u003e BIGNUMERIC (error if value exeeds supported range). For duplicated types in this field, only one will be considered and the rest will be ignored. The order of the types in this field is ignored. For example, [\"BIGNUMERIC\", \"NUMERIC\"] is the same as [\"NUMERIC\", \"BIGNUMERIC\"] and NUMERIC always takes precedence over BIGNUMERIC.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "destinationEncryptionConfiguration": {
           "$ref": "EncryptionConfiguration",
@@ -3806,6 +3883,10 @@
           "description": "[Output-only] Slot-milliseconds for the job.",
           "format": "int64",
           "type": "string"
+        },
+        "transactionInfoTemplate": {
+          "$ref": "TransactionInfo",
+          "description": "[Output-only] [Alpha] Information of the multi-statement transaction if this job is part of one."
         }
       },
       "type": "object"
@@ -4066,6 +4147,24 @@
           "description": "Routines in the requested dataset. Unless read_mask is set in the request, only the following fields are populated: etag, project_id, dataset_id, routine_id, routine_type, creation_time, last_modified_time, and language.",
           "items": {
             "$ref": "Routine"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListRowAccessPoliciesResponse": {
+      "description": "Response message for the ListRowAccessPolicies method.",
+      "id": "ListRowAccessPoliciesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token to request the next page of results.",
+          "type": "string"
+        },
+        "rowAccessPolicies": {
+          "description": "Row access policies on the requested table.",
+          "items": {
+            "$ref": "RowAccessPolicy"
           },
           "type": "array"
         }
@@ -4865,6 +4964,38 @@
       },
       "type": "object"
     },
+    "RowAccessPolicy": {
+      "description": "Represents access on a subset of rows on the specified table, defined by its filter predicate. Access to the subset of rows is controlled by its IAM policy.",
+      "id": "RowAccessPolicy",
+      "properties": {
+        "creationTime": {
+          "description": "Output only. The time when this row access policy was created, in milliseconds since the epoch.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "etag": {
+          "description": "Output only. A hash of this resource.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "filterPredicate": {
+          "description": "Required. A SQL boolean expression that represents the rows defined by this row access policy, similar to the boolean expression in a WHERE clause of a SELECT query on a table. References to other tables, routines, and temporary functions are not supported. Examples: region=\"EU\" date_field = CAST('2019-9-27' as DATE) nullable_field is not NULL numeric_field BETWEEN 1.0 AND 5.0",
+          "type": "string"
+        },
+        "lastModifiedTime": {
+          "description": "Output only. The time when this row access policy was last modified, in milliseconds since the epoch.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "rowAccessPolicyReference": {
+          "$ref": "RowAccessPolicyReference",
+          "description": "Required. Reference describing the ID of this row access policy."
+        }
+      },
+      "type": "object"
+    },
     "RowAccessPolicyReference": {
       "id": "RowAccessPolicyReference",
       "properties": {
@@ -5204,7 +5335,7 @@
           "description": "Time-based partitioning specification for this table. Only one of timePartitioning and rangePartitioning should be specified."
         },
         "type": {
-          "description": "[Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. [TrustedTester] SNAPSHOT: An immutable, read-only table that is a copy of another table. [TrustedTester] MATERIALIZED_VIEW: SQL query whose result is persisted. EXTERNAL: A table that references data stored in an external storage system, such as Google Cloud Storage. The default value is TABLE.",
+          "description": "[Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. SNAPSHOT: An immutable, read-only table that is a copy of another table. [TrustedTester] MATERIALIZED_VIEW: SQL query whose result is persisted. EXTERNAL: A table that references data stored in an external storage system, such as Google Cloud Storage. The default value is TABLE.",
           "type": "string"
         },
         "view": {
@@ -5576,7 +5707,7 @@
           "type": "boolean"
         },
         "type": {
-          "description": "[Required] The only type supported is DAY, which will generate one partition per day.",
+          "description": "[Required] The supported types are DAY, HOUR, MONTH, and YEAR, which will generate one partition per day, hour, month, and year, respectively. When the type is not specified, the default behavior is DAY.",
           "type": "string"
         }
       },
@@ -6040,6 +6171,13 @@
           "$ref": "EvaluationMetrics",
           "description": "The evaluation metrics over training/eval data that were computed at the end of training."
         },
+        "globalExplanations": {
+          "description": "Global explanations for important features of the model. For multi-class models, there is one entry for each label class. For other models, there is only one entry in the list.",
+          "items": {
+            "$ref": "GlobalExplanation"
+          },
+          "type": "array"
+        },
         "results": {
           "description": "Output of each iteration run, results.size() \u003c= max_iterations.",
           "items": {
@@ -6055,6 +6193,16 @@
         "trainingOptions": {
           "$ref": "TrainingOptions",
           "description": "Options that were used for this training run, includes user specified and default options that were used."
+        }
+      },
+      "type": "object"
+    },
+    "TransactionInfo": {
+      "id": "TransactionInfo",
+      "properties": {
+        "transactionId": {
+          "description": "[Output-only] // [Alpha] Id of the transaction.",
+          "type": "string"
         }
       },
       "type": "object"

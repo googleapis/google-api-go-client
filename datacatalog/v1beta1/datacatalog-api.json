@@ -1808,13 +1808,17 @@
       }
     }
   },
-  "revision": "20200810",
+  "revision": "20201021",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
       "properties": {
+        "bindingId": {
+          "description": "A client-specified ID for this binding. Expected to be globally unique to support the internal bindings-by-ID API.",
+          "type": "string"
+        },
         "condition": {
           "$ref": "Expr",
           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the members in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
@@ -2461,7 +2465,7 @@
           "type": "array"
         },
         "unreachable": {
-          "description": "Unreachable locations. Search result does not include data from those locations. Users can get additional information on the error by repeating the search request with a more restrictive parameter -- setting the value for `SearchDataCatalogRequest.scope.include_locations`.",
+          "description": "Unreachable locations. Search result does not include data from those locations. Users can get additional information on the error by repeating the search request with a more restrictive parameter -- setting the value for `SearchDataCatalogRequest.scope.restricted_locations`.",
           "items": {
             "type": "string"
           },
@@ -2535,6 +2539,21 @@
       "description": "Message capturing a taxonomy and its policy tag hierarchy as a nested proto. Used for taxonomy import/export and mutation.",
       "id": "GoogleCloudDatacatalogV1beta1SerializedTaxonomy",
       "properties": {
+        "activatedPolicyTypes": {
+          "description": "A list of policy types that are activated for a taxonomy.",
+          "items": {
+            "enum": [
+              "POLICY_TYPE_UNSPECIFIED",
+              "FINE_GRAINED_ACCESS_CONTROL"
+            ],
+            "enumDescriptions": [
+              "Unspecified policy type.",
+              "Fine grained access control policy, which enables access control on tagged resources."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
         "description": {
           "description": "Description of the serialized taxonomy. The length of the description is limited to 2000 bytes when encoded in UTF-8. If not set, defaults to an empty description.",
           "type": "string"
@@ -2696,6 +2715,10 @@
       "description": "The template for an individual field within a tag template.",
       "id": "GoogleCloudDatacatalogV1beta1TagTemplateField",
       "properties": {
+        "description": {
+          "description": "The description for this field. Defaults to an empty string.",
+          "type": "string"
+        },
         "displayName": {
           "description": "The display name for this field. Defaults to an empty string.",
           "type": "string"
@@ -2727,10 +2750,6 @@
       "properties": {
         "activatedPolicyTypes": {
           "description": "Optional. A list of policy types that are activated for this taxonomy. If not set, defaults to an empty list.",
-          "enumDescriptions": [
-            "Unspecified policy type.",
-            "Fine grained access control policy, which enables access control on tagged resources."
-          ],
           "items": {
             "enum": [
               "POLICY_TYPE_UNSPECIFIED",
@@ -2756,6 +2775,17 @@
           "description": "Output only. Resource name of this taxonomy, whose format is: \"projects/{project_number}/locations/{location_id}/taxonomies/{id}\".",
           "readOnly": true,
           "type": "string"
+        },
+        "policyTagCount": {
+          "description": "Output only. Number of policy tags contained in this taxonomy.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "taxonomyTimestamps": {
+          "$ref": "GoogleCloudDatacatalogV1beta1SystemTimestamps",
+          "description": "Output only. Timestamps about this taxonomy. Only create_time and update_time are used.",
+          "readOnly": true
         }
       },
       "type": "object"

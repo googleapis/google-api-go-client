@@ -228,34 +228,6 @@
             "https://www.googleapis.com/auth/service.management"
           ]
         },
-        "disable": {
-          "description": "Disables a service for a project, so it can no longer be be used for the project. It prevents accidental usage that may cause unexpected billing charges or security leaks. Operation",
-          "flatPath": "v1/services/{serviceName}:disable",
-          "httpMethod": "POST",
-          "id": "servicemanagement.services.disable",
-          "parameterOrder": [
-            "serviceName"
-          ],
-          "parameters": {
-            "serviceName": {
-              "description": "Required. Name of the service to disable. Specifying an unknown service name will cause the request to fail.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/services/{serviceName}:disable",
-          "request": {
-            "$ref": "DisableServiceRequest"
-          },
-          "response": {
-            "$ref": "Operation"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/service.management"
-          ]
-        },
         "enable": {
           "description": "Enables a service for a project, so it can be used for the project. See [Cloud Auth Guide](https://cloud.google.com/docs/authentication) for more information. Operation",
           "flatPath": "v1/services/{serviceName}:enable",
@@ -885,7 +857,7 @@
       }
     }
   },
-  "revision": "20200824",
+  "revision": "20201103",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -1074,7 +1046,7 @@
       "id": "AuthenticationRule",
       "properties": {
         "allowWithoutCredential": {
-          "description": "If true, the service accepts API keys without any other credential.",
+          "description": "If true, the service accepts API keys without any other credential. This flag only applies to HTTP and gRPC requests.",
           "type": "boolean"
         },
         "oauth": {
@@ -1200,6 +1172,9 @@
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
       "properties": {
+        "bindingId": {
+          "type": "string"
+        },
         "condition": {
           "$ref": "Expr",
           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the members in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
@@ -1340,7 +1315,7 @@
       "type": "object"
     },
     "Context": {
-      "description": "`Context` defines which contexts an API requests. Example: context: rules: - selector: \"*\" requested: - google.rpc.context.ProjectContext - google.rpc.context.OriginContext The above specifies that all methods in the API request `google.rpc.context.ProjectContext` and `google.rpc.context.OriginContext`. Available context types are defined in package `google.rpc.context`. This also provides mechanism to whitelist any protobuf message extension that can be sent in grpc metadata using “x-goog-ext--bin” and “x-goog-ext--jspb” format. For example, list any service specific protobuf types that can appear in grpc metadata as follows in your yaml file: Example: context: rules: - selector: \"google.example.library.v1.LibraryService.CreateBook\" allowed_request_extensions: - google.foo.v1.NewExtension allowed_response_extensions: - google.foo.v1.NewExtension You can also specify extension ID instead of fully qualified extension name here.",
+      "description": "`Context` defines which contexts an API requests. Example: context: rules: - selector: \"*\" requested: - google.rpc.context.ProjectContext - google.rpc.context.OriginContext The above specifies that all methods in the API request `google.rpc.context.ProjectContext` and `google.rpc.context.OriginContext`. Available context types are defined in package `google.rpc.context`. This also provides mechanism to allowlist any protobuf message extension that can be sent in grpc metadata using “x-goog-ext--bin” and “x-goog-ext--jspb” format. For example, list any service specific protobuf types that can appear in grpc metadata as follows in your yaml file: Example: context: rules: - selector: \"google.example.library.v1.LibraryService.CreateBook\" allowed_request_extensions: - google.foo.v1.NewExtension allowed_response_extensions: - google.foo.v1.NewExtension You can also specify extension ID instead of fully qualified extension name here.",
       "id": "Context",
       "properties": {
         "rules": {
@@ -1482,17 +1457,6 @@
         },
         "message": {
           "description": "Message describing the error or warning.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DisableServiceRequest": {
-      "description": "Request message for DisableService method.",
-      "id": "DisableServiceRequest",
-      "properties": {
-        "consumerId": {
-          "description": "Required. The identity of consumer resource which service disablement will be applied to. The Google Service Management implementation accepts the following forms: - \"project:\" Note: this is made compatible with google.api.servicecontrol.v1.Operation.consumer_id.",
           "type": "string"
         }
       },
@@ -1915,10 +1879,6 @@
           },
           "type": "array"
         },
-        "allowHalfDuplex": {
-          "description": "When this flag is set to true, HTTP requests will be allowed to invoke a half-duplex streaming method.",
-          "type": "boolean"
-        },
         "body": {
           "description": "The name of the request field whose value is mapped to the HTTP request body, or `*` for mapping all request fields not captured by the path pattern to the HTTP body, or omitted for not having any HTTP request body. NOTE: the referred field must be present at the top-level of the request message type.",
           "type": "string"
@@ -2240,7 +2200,7 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
             "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
@@ -2337,7 +2297,7 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
             "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
@@ -2422,7 +2382,7 @@
             "The feature is not yet implemented. Users can not use it.",
             "Prelaunch features are hidden from users and are only visible internally.",
             "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
-            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects whitelisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
             "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
             "GA features are open to all developers and are considered stable and fully qualified for production use.",
             "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
@@ -2796,7 +2756,7 @@
           "description": "Billing configuration."
         },
         "configVersion": {
-          "description": "The semantic version of the service configuration. The config version affects the interpretation of the service configuration. For example, certain features are enabled by default for certain config versions. The latest config version is `3`.",
+          "description": "This field is obsolete. Its value must be set to `3`.",
           "format": "uint32",
           "type": "integer"
         },
@@ -2908,25 +2868,6 @@
         "usage": {
           "$ref": "Usage",
           "description": "Configuration controlling usage of this service."
-        }
-      },
-      "type": "object"
-    },
-    "ServiceIdentity": {
-      "description": "The per-product per-project service identity for a service. Use this field to configure per-product per-project service identity. Example of a service identity configuration. usage: service_identity: - service_account_parent: \"projects/123456789\" display_name: \"Cloud XXX Service Agent\" description: \"Used as the identity of Cloud XXX to access resources\"",
-      "id": "ServiceIdentity",
-      "properties": {
-        "description": {
-          "description": "Optional. A user-specified opaque description of the service account. Must be less than or equal to 256 UTF-8 bytes.",
-          "type": "string"
-        },
-        "displayName": {
-          "description": "Optional. A user-specified name for the service account. Must be less than or equal to 100 UTF-8 bytes.",
-          "type": "string"
-        },
-        "serviceAccountParent": {
-          "description": "A service account project that hosts the service accounts. An example name would be: `projects/123456789`",
-          "type": "string"
         }
       },
       "type": "object"
@@ -3234,10 +3175,6 @@
             "$ref": "UsageRule"
           },
           "type": "array"
-        },
-        "serviceIdentity": {
-          "$ref": "ServiceIdentity",
-          "description": "The configuration of a per-product per-project service identity."
         }
       },
       "type": "object"

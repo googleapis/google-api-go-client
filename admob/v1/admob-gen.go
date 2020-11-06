@@ -77,8 +77,19 @@ const apiVersion = "v1"
 const basePath = "https://admob.googleapis.com/"
 const mtlsBasePath = "https://admob.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See your AdMob data
+	AdmobReportScope = "https://www.googleapis.com/auth/admob.report"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/admob.report",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -157,27 +168,27 @@ type AccountsNetworkReportService struct {
 	s *Service
 }
 
-// Date: Represents a whole or partial calendar date, e.g. a birthday.
-// The time of day and time zone are either specified elsewhere or are
-// not significant. The date is relative to the Proleptic Gregorian
-// Calendar. This can represent: * A full date, with non-zero year,
-// month and day values * A month and day value, with a zero year, e.g.
-// an anniversary * A year on its own, with zero month and day values *
-// A year and month value, with a zero day, e.g. a credit card
-// expiration date Related types are google.type.TimeOfDay and
-// `google.protobuf.Timestamp`.
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values * A month and day value,
+// with a zero year, such as an anniversary * A year on its own, with
+// zero month and day values * A year and month value, with a zero day,
+// such as a credit card expiration date Related types are
+// google.type.TimeOfDay and `google.protobuf.Timestamp`.
 type Date struct {
-	// Day: Day of month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 if specifying a year by itself or a year and month where
-	// the day is not significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
 	// without a month and day.
 	Month int64 `json:"month,omitempty"`
 
-	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
-	// without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
 	Year int64 `json:"year,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
@@ -509,8 +520,9 @@ type MediationReportSpec struct {
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
 	// format (for example, "2018-12-21"). Requests can specify at most one
 	// time dimension.
-	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and "AdMob Network" as label value).
+	//   "AD_SOURCE" - The [unique ID of the ad
+	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
+	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
 	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
@@ -536,8 +548,8 @@ type MediationReportSpec struct {
 
 	// MaxReportRows: Maximum number of report data rows to return. If the
 	// value is not set, the API returns as many rows as possible, up to
-	// 100000. Acceptable values are 1-100000, inclusive. Any other values
-	// are treated as 100000.
+	// 100000. Acceptable values are 1-100000, inclusive. Values larger than
+	// 100000 return an error.
 	MaxReportRows int64 `json:"maxReportRows,omitempty"`
 
 	// Metrics: List of metrics of the report. A report must specify at
@@ -627,8 +639,9 @@ type MediationReportSpecDimensionFilter struct {
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
 	// format (for example, "2018-12-21"). Requests can specify at most one
 	// time dimension.
-	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and "AdMob Network" as label value).
+	//   "AD_SOURCE" - The [unique ID of the ad
+	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
+	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
 	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
@@ -691,8 +704,9 @@ type MediationReportSpecSortCondition struct {
 	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
 	// format (for example, "2018-12-21"). Requests can specify at most one
 	// time dimension.
-	//   "AD_SOURCE" - The unique ID of the ad source (for example,
-	// "5450213213286189855" and "AdMob Network" as label value).
+	//   "AD_SOURCE" - The [unique ID of the ad
+	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
+	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
 	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
 	// value).
@@ -845,8 +859,8 @@ type NetworkReportSpec struct {
 
 	// MaxReportRows: Maximum number of report data rows to return. If the
 	// value is not set, the API returns as many rows as possible, up to
-	// 100000. Acceptable values are 1-100000, inclusive. Any other values
-	// are treated as 100000.
+	// 100000. Acceptable values are 1-100000, inclusive. Values larger than
+	// 100000 return an error.
 	MaxReportRows int64 `json:"maxReportRows,omitempty"`
 
 	// Metrics: List of metrics of the report. A report must specify at
@@ -871,7 +885,8 @@ type NetworkReportSpec struct {
 	// is a double precision (approximate) decimal value.
 	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad
 	// impressions. The value is in micros. For example, $1.03 would be
-	// represented as 1030000. **Warning:** The metric is incompatible with
+	// represented as 1030000. Equivalent to eCPM in the AdMob UI.
+	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "MATCHED_REQUESTS" - The number of times ads are returned in
 	// response to a request. The value is an integer.
@@ -1036,7 +1051,8 @@ type NetworkReportSpecSortCondition struct {
 	// is a double precision (approximate) decimal value.
 	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad
 	// impressions. The value is in micros. For example, $1.03 would be
-	// represented as 1030000. **Warning:** The metric is incompatible with
+	// represented as 1030000. Equivalent to eCPM in the AdMob UI.
+	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "MATCHED_REQUESTS" - The number of times ads are returned in
 	// response to a request. The value is an integer.
@@ -1457,7 +1473,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1538,7 +1554,10 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*PublisherAccount, e
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "PublisherAccount"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.report"
+	//   ]
 	// }
 
 }
@@ -1614,7 +1633,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1694,7 +1713,10 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	//   "path": "v1/accounts",
 	//   "response": {
 	//     "$ref": "ListPublisherAccountsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.report"
+	//   ]
 	// }
 
 }
@@ -1767,7 +1789,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1853,7 +1875,10 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "response": {
 	//     "$ref": "GenerateMediationReportResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.report"
+	//   ]
 	// }
 
 }
@@ -1905,7 +1930,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1991,7 +2016,10 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "response": {
 	//     "$ref": "GenerateNetworkReportResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.report"
+	//   ]
 	// }
 
 }

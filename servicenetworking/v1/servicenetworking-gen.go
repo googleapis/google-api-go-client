@@ -491,13 +491,6 @@ type AddSubnetworkRequest struct {
 	// range.
 	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
 
-	// PrivateIpv6GoogleAccess: Optional. The private IPv6 google access
-	// type for the VMs in this subnet. For information about the access
-	// types that can be set using this field, see
-	// [subnetwork](/compute/docs/reference/rest/v1/subnetworks) in the
-	// Compute API documentation.
-	PrivateIpv6GoogleAccess string `json:"privateIpv6GoogleAccess,omitempty"`
-
 	// Region: Required. The name of a [region](/compute/docs/regions-zones)
 	// for the subnet, such `europe-west1`.
 	Region string `json:"region,omitempty"`
@@ -509,6 +502,10 @@ type AddSubnetworkRequest struct {
 	// to the private connection. If the CIDR range isn't available, the
 	// call fails.
 	RequestedAddress string `json:"requestedAddress,omitempty"`
+
+	// SecondaryIpRangeSpecs: Optional. A list of secondary IP ranges to be
+	// created within the new subnetwork.
+	SecondaryIpRangeSpecs []*SecondaryIpRangeSpec `json:"secondaryIpRangeSpecs,omitempty"`
 
 	// Subnetwork: Required. A name for the new subnet. For information
 	// about the naming requirements, see
@@ -789,7 +786,8 @@ func (s *Authentication) MarshalJSON() ([]byte, error) {
 // credentials will be ignored.
 type AuthenticationRule struct {
 	// AllowWithoutCredential: If true, the service accepts API keys without
-	// any other credential.
+	// any other credential. This flag only applies to HTTP and gRPC
+	// requests.
 	AllowWithoutCredential bool `json:"allowWithoutCredential,omitempty"`
 
 	// Oauth: The requirements for OAuth credentials.
@@ -1121,6 +1119,81 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConsumerConfig: Configuration information for a private service
+// access connection.
+type ConsumerConfig struct {
+	// ConsumerExportCustomRoutes: Export custom routes flag value for
+	// peering from consumer to producer.
+	ConsumerExportCustomRoutes bool `json:"consumerExportCustomRoutes,omitempty"`
+
+	// ConsumerExportSubnetRoutesWithPublicIp: Export subnet routes with
+	// public ip flag value for peering from consumer to producer.
+	ConsumerExportSubnetRoutesWithPublicIp bool `json:"consumerExportSubnetRoutesWithPublicIp,omitempty"`
+
+	// ConsumerImportCustomRoutes: Import custom routes flag value for
+	// peering from consumer to producer.
+	ConsumerImportCustomRoutes bool `json:"consumerImportCustomRoutes,omitempty"`
+
+	// ConsumerImportSubnetRoutesWithPublicIp: Import subnet routes with
+	// public ip flag value for peering from consumer to producer.
+	ConsumerImportSubnetRoutesWithPublicIp bool `json:"consumerImportSubnetRoutesWithPublicIp,omitempty"`
+
+	// ProducerExportCustomRoutes: Export custom routes flag value for
+	// peering from producer to consumer.
+	ProducerExportCustomRoutes bool `json:"producerExportCustomRoutes,omitempty"`
+
+	// ProducerExportSubnetRoutesWithPublicIp: Export subnet routes with
+	// public ip flag value for peering from producer to consumer.
+	ProducerExportSubnetRoutesWithPublicIp bool `json:"producerExportSubnetRoutesWithPublicIp,omitempty"`
+
+	// ProducerImportCustomRoutes: Import custom routes flag value for
+	// peering from producer to consumer.
+	ProducerImportCustomRoutes bool `json:"producerImportCustomRoutes,omitempty"`
+
+	// ProducerImportSubnetRoutesWithPublicIp: Import subnet routes with
+	// public ip flag value for peering from producer to consumer.
+	ProducerImportSubnetRoutesWithPublicIp bool `json:"producerImportSubnetRoutesWithPublicIp,omitempty"`
+
+	// ProducerNetwork: Output only. The VPC host network that is used to
+	// host managed service instances. In the format,
+	// projects/{project}/global/networks/{network} where {project} is the
+	// project number e.g. '12345' and {network} is the network name.
+	ProducerNetwork string `json:"producerNetwork,omitempty"`
+
+	// ReservedRanges: Output only. The name of the allocated IP address
+	// ranges for this private service access connection.
+	ReservedRanges []string `json:"reservedRanges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConsumerExportCustomRoutes") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ConsumerExportCustomRoutes") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsumerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsumerConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConsumerConfigMetadata: Metadata provided through GetOperation
+// request for the LRO generated by UpdateConsumerConfig API.
+type ConsumerConfigMetadata struct {
+}
+
 // ConsumerProject: Represents a consumer project.
 type ConsumerProject struct {
 	// ProjectNum: Required. Project number of the consumer that is
@@ -1159,7 +1232,7 @@ func (s *ConsumerProject) MarshalJSON() ([]byte, error) {
 // `google.rpc.context.ProjectContext` and
 // `google.rpc.context.OriginContext`. Available context types are
 // defined in package `google.rpc.context`. This also provides mechanism
-// to whitelist any protobuf message extension that can be sent in grpc
+// to allowlist any protobuf message extension that can be sent in grpc
 // metadata using “x-goog-ext--bin” and “x-goog-ext--jspb”
 // format. For example, list any service specific protobuf types that
 // can appear in grpc metadata as follows in your yaml file: Example:
@@ -2133,10 +2206,6 @@ type HttpRule struct {
 	// (that is, the nesting may only be one level deep).
 	AdditionalBindings []*HttpRule `json:"additionalBindings,omitempty"`
 
-	// AllowHalfDuplex: When this flag is set to true, HTTP requests will be
-	// allowed to invoke a half-duplex streaming method.
-	AllowHalfDuplex bool `json:"allowHalfDuplex,omitempty"`
-
 	// Body: The name of the request field whose value is mapped to the HTTP
 	// request body, or `*` for mapping all request fields not captured by
 	// the path pattern to the HTTP body, or omitted for not having any HTTP
@@ -2609,7 +2678,7 @@ type MetricDescriptor struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2787,7 +2856,7 @@ type MetricDescriptorMetadata struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -2982,7 +3051,7 @@ type MonitoredResourceDescriptor struct {
 	// they are cleared for widespread use. By Alpha, all significant design
 	// issues are resolved and we are in the process of verifying
 	// functionality. Alpha customers need to apply for access, agree to
-	// applicable terms, and have their projects whitelisted. Alpha releases
+	// applicable terms, and have their projects allowlisted. Alpha releases
 	// don’t have to be feature complete, no SLAs are provided, and there
 	// are no technical support obligations, but they will be far enough
 	// along that customers can actually use them in test environments or
@@ -3383,7 +3452,7 @@ type PolicyBinding struct {
 	// serviceAccount:my-service-account@app.gserviceaccount.com
 	Member string `json:"member,omitempty"`
 
-	// Role: Required. Role to apply. Only whitelisted roles can be used at
+	// Role: Required. Role to apply. Only allowlisted roles can be used at
 	// the specified granularity. The role must be one of the following: -
 	// 'roles/container.hostServiceAgentUser' applied on the shared VPC host
 	// project - 'roles/compute.securityAdmin' applied on the shared VPC
@@ -3817,6 +3886,81 @@ func (s *SearchRangeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type SecondaryIpRange struct {
+	// IpCidrRange: Secondary IP CIDR range in `x.x.x.x/y` format.
+	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// RangeName: Name of the secondary IP range.
+	RangeName string `json:"rangeName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpCidrRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecondaryIpRange) MarshalJSON() ([]byte, error) {
+	type NoMethod SecondaryIpRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SecondaryIpRangeSpec struct {
+	// IpPrefixLength: Required. The prefix length of the secondary IP
+	// range. Use CIDR range notation, such as `30` to provision a secondary
+	// IP range with an `x.x.x.x/30` CIDR range. The IP address range is
+	// drawn from a pool of available ranges in the service consumer's
+	// allocated range.
+	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
+
+	// RangeName: Required. A name for the secondary IP range. The name must
+	// be 1-63 characters long, and comply with RFC1035. The name must be
+	// unique within the subnetwork.
+	RangeName string `json:"rangeName,omitempty"`
+
+	// RequestedAddress: Optional. The starting address of a range. The
+	// address must be a valid IPv4 address in the x.x.x.x format. This
+	// value combined with the IP prefix range is the CIDR range for the
+	// secondary IP range. The range must be within the allocated range that
+	// is assigned to the private connection. If the CIDR range isn't
+	// available, the call fails.
+	RequestedAddress string `json:"requestedAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpPrefixLength") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpPrefixLength") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecondaryIpRangeSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod SecondaryIpRangeSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Service: `Service` is the root object of Google service configuration
 // schema. It describes basic information about a service, such as the
 // name and the title, and delegates other aspects to sub-sections. Each
@@ -3847,10 +3991,7 @@ type Service struct {
 	// Billing: Billing configuration.
 	Billing *Billing `json:"billing,omitempty"`
 
-	// ConfigVersion: The semantic version of the service configuration. The
-	// config version affects the interpretation of the service
-	// configuration. For example, certain features are enabled by default
-	// for certain config versions. The latest config version is `3`.
+	// ConfigVersion: This field is obsolete. Its value must be set to `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -3962,48 +4103,6 @@ type Service struct {
 
 func (s *Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ServiceIdentity: The per-product per-project service identity for a
-// service. Use this field to configure per-product per-project service
-// identity. Example of a service identity configuration. usage:
-// service_identity: - service_account_parent: "projects/123456789"
-// display_name: "Cloud XXX Service Agent" description: "Used as the
-// identity of Cloud XXX to access resources"
-type ServiceIdentity struct {
-	// Description: Optional. A user-specified opaque description of the
-	// service account. Must be less than or equal to 256 UTF-8 bytes.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Optional. A user-specified name for the service account.
-	// Must be less than or equal to 100 UTF-8 bytes.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// ServiceAccountParent: A service account project that hosts the
-	// service accounts. An example name would be: `projects/123456789`
-	ServiceAccountParent string `json:"serviceAccountParent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServiceIdentity) MarshalJSON() ([]byte, error) {
-	type NoMethod ServiceIdentity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4128,6 +4227,9 @@ type Subnetwork struct {
 	// OutsideAllocation: This is a discovered subnet that is not within the
 	// current consumer allocated ranges.
 	OutsideAllocation bool `json:"outsideAllocation,omitempty"`
+
+	// SecondaryIpRanges: List of secondary IP ranges in this subnetwork.
+	SecondaryIpRanges []*SecondaryIpRange `json:"secondaryIpRanges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
 	// unconditionally include in API requests. By default, fields with
@@ -4393,10 +4495,6 @@ type Usage struct {
 	// order.
 	Rules []*UsageRule `json:"rules,omitempty"`
 
-	// ServiceIdentity: The configuration of a per-product per-project
-	// service identity.
-	ServiceIdentity *ServiceIdentity `json:"serviceIdentity,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
 	// "ProducerNotificationChannel") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -4640,7 +4738,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4782,7 +4880,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4926,7 +5024,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5101,7 +5199,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5282,7 +5380,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5424,7 +5522,7 @@ func (c *ServicesDisableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesDisableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5566,7 +5664,7 @@ func (c *ServicesEnableVpcServiceControlsCall) Header() http.Header {
 
 func (c *ServicesEnableVpcServiceControlsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5712,7 +5810,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5857,7 +5955,7 @@ func (c *ServicesValidateCall) Header() http.Header {
 
 func (c *ServicesValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6005,7 +6103,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6168,7 +6266,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6325,7 +6423,7 @@ func (c *ServicesConnectionsPatchCall) Header() http.Header {
 
 func (c *ServicesConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6478,7 +6576,7 @@ func (c *ServicesDnsRecordSetsAddCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6620,7 +6718,7 @@ func (c *ServicesDnsRecordSetsRemoveCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6762,7 +6860,7 @@ func (c *ServicesDnsRecordSetsUpdateCall) Header() http.Header {
 
 func (c *ServicesDnsRecordSetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6905,7 +7003,7 @@ func (c *ServicesDnsZonesAddCall) Header() http.Header {
 
 func (c *ServicesDnsZonesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7048,7 +7146,7 @@ func (c *ServicesDnsZonesRemoveCall) Header() http.Header {
 
 func (c *ServicesDnsZonesRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7191,7 +7289,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) Header() http
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7330,7 +7428,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) Header() http
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7472,7 +7570,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) Header() http.H
 
 func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7575,8 +7673,8 @@ type ServicesRolesAddCall struct {
 
 // Add: Service producers can use this method to add roles in the shared
 // VPC host project. Each role is bound to the provided member. Each
-// role must be selected from within a whitelisted set of roles. Each
-// role is applied at only the granularity specified in the whitelist.
+// role must be selected from within an allowlisted set of roles. Each
+// role is applied at only the granularity specified in the allowlist.
 func (r *ServicesRolesService) Add(parent string, addrolesrequest *AddRolesRequest) *ServicesRolesAddCall {
 	c := &ServicesRolesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7611,7 +7709,7 @@ func (c *ServicesRolesAddCall) Header() http.Header {
 
 func (c *ServicesRolesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7675,7 +7773,7 @@ func (c *ServicesRolesAddCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Service producers can use this method to add roles in the shared VPC host project. Each role is bound to the provided member. Each role must be selected from within a whitelisted set of roles. Each role is applied at only the granularity specified in the whitelist.",
+	//   "description": "Service producers can use this method to add roles in the shared VPC host project. Each role is bound to the provided member. Each role must be selected from within an allowlisted set of roles. Each role is applied at only the granularity specified in the allowlist.",
 	//   "flatPath": "v1/services/{servicesId}/roles:add",
 	//   "httpMethod": "POST",
 	//   "id": "servicenetworking.services.roles.add",

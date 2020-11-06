@@ -87,8 +87,8 @@
     }
   },
   "basePath": "",
-  "baseUrl": "https://www.googleapis.com/",
-  "batchPath": "batch/admin/directory_v1",
+  "baseUrl": "https://admin.googleapis.com/",
+  "batchPath": "batch",
   "canonicalName": "directory",
   "description": "Admin SDK lets administrators of enterprise domains to view and manage resources like user, groups etc. It also provides audit and usage reports of domain.",
   "discoveryVersion": "v1",
@@ -100,7 +100,7 @@
   },
   "id": "admin:directory_v1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://www.mtls.googleapis.com/",
+  "mtlsRootUrl": "https://admin.mtls.googleapis.com/",
   "name": "admin",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -290,7 +290,8 @@
             "https://www.googleapis.com/auth/admin.directory.user",
             "https://www.googleapis.com/auth/admin.directory.user.alias",
             "https://www.googleapis.com/auth/admin.directory.user.alias.readonly",
-            "https://www.googleapis.com/auth/admin.directory.user.readonly"
+            "https://www.googleapis.com/auth/admin.directory.user.readonly",
+            "https://www.googleapis.com/auth/cloud-platform"
           ]
         }
       }
@@ -606,6 +607,98 @@
           "scopes": [
             "https://www.googleapis.com/auth/admin.directory.device.chromeos"
           ]
+        }
+      }
+    },
+    "customer": {
+      "resources": {
+        "devices": {
+          "resources": {
+            "chromeos": {
+              "methods": {
+                "issueCommand": {
+                  "description": "Issues a command for the device to execute.",
+                  "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos/{deviceId}:issueCommand",
+                  "httpMethod": "POST",
+                  "id": "admin.customer.devices.chromeos.issueCommand",
+                  "parameterOrder": [
+                    "customerId",
+                    "deviceId"
+                  ],
+                  "parameters": {
+                    "customerId": {
+                      "description": "Immutable. Immutable ID of the G Suite account.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "deviceId": {
+                      "description": "Immutable. Immutable ID of Chrome OS Device.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/customer/{customerId}/devices/chromeos/{deviceId}:issueCommand",
+                  "request": {
+                    "$ref": "DirectoryChromeosdevicesIssueCommandRequest"
+                  },
+                  "response": {
+                    "$ref": "DirectoryChromeosdevicesIssueCommandResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.directory.device.chromeos"
+                  ]
+                }
+              },
+              "resources": {
+                "commands": {
+                  "methods": {
+                    "get": {
+                      "description": "Gets command data a specific command issued to the device.",
+                      "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos/{deviceId}/commands/{commandId}",
+                      "httpMethod": "GET",
+                      "id": "admin.customer.devices.chromeos.commands.get",
+                      "parameterOrder": [
+                        "customerId",
+                        "deviceId",
+                        "commandId"
+                      ],
+                      "parameters": {
+                        "commandId": {
+                          "description": "Immutable. Immutable ID of Chrome OS Device Command.",
+                          "format": "int64",
+                          "location": "path",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "customerId": {
+                          "description": "Immutable. Immutable ID of the G Suite account.",
+                          "location": "path",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "deviceId": {
+                          "description": "Immutable. Immutable ID of Chrome OS Device.",
+                          "location": "path",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "admin/directory/v1/customer/{customerId}/devices/chromeos/{deviceId}/commands/{commandId}",
+                      "response": {
+                        "$ref": "DirectoryChromeosdevicesCommand"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/admin.directory.device.chromeos",
+                        "https://www.googleapis.com/auth/admin.directory.device.chromeos.readonly"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3213,6 +3306,31 @@
         }
       }
     },
+    "twoStepVerification": {
+      "methods": {
+        "turnOff": {
+          "description": "Turn off 2-Step Verification for user.",
+          "flatPath": "admin/directory/v1/users/{userKey}/twoStepVerification/turnOff",
+          "httpMethod": "POST",
+          "id": "directory.twoStepVerification.turnOff",
+          "parameterOrder": [
+            "userKey"
+          ],
+          "parameters": {
+            "userKey": {
+              "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "admin/directory/v1/users/{userKey}/twoStepVerification/turnOff",
+          "scopes": [
+            "https://www.googleapis.com/auth/admin.directory.user.security"
+          ]
+        }
+      }
+    },
     "users": {
       "methods": {
         "delete": {
@@ -3492,6 +3610,27 @@
             "https://www.googleapis.com/auth/admin.directory.user"
           ]
         },
+        "signOut": {
+          "description": "Sign a user out of all web and device sessions and reset their sign-in cookies. User will have to sign in by authenticating again.",
+          "flatPath": "admin/directory/v1/users/{userKey}/signOut",
+          "httpMethod": "POST",
+          "id": "directory.users.signOut",
+          "parameterOrder": [
+            "userKey"
+          ],
+          "parameters": {
+            "userKey": {
+              "description": "Identifies the target user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "admin/directory/v1/users/{userKey}/signOut",
+          "scopes": [
+            "https://www.googleapis.com/auth/admin.directory.user.security"
+          ]
+        },
         "undelete": {
           "description": "Undelete a deleted user",
           "flatPath": "admin/directory/v1/users/{userKey}/undelete",
@@ -3550,6 +3689,11 @@
           "id": "directory.users.watch",
           "parameterOrder": [],
           "parameters": {
+            "customFieldMask": {
+              "description": "Comma-separated list of schema names. All fields from these schemas are fetched. This should only be set when projection=custom.",
+              "location": "query",
+              "type": "string"
+            },
             "customer": {
               "description": "Immutable ID of the G Suite account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
               "location": "query",
@@ -3580,6 +3724,94 @@
               ],
               "location": "query",
               "type": "string"
+            },
+            "maxResults": {
+              "default": "100",
+              "description": "Maximum number of results to return.",
+              "format": "int32",
+              "location": "query",
+              "maximum": "500",
+              "minimum": "1",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Column to use for sorting results",
+              "enum": [
+                "orderByUnspecified",
+                "email",
+                "familyName",
+                "givenName"
+              ],
+              "enumDescriptions": [
+                "",
+                "Primary email of the user.",
+                "User's family name.",
+                "User's given name."
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Token to specify next page in the list",
+              "location": "query",
+              "type": "string"
+            },
+            "projection": {
+              "default": "basic",
+              "description": "What subset of fields to fetch for this user.",
+              "enum": [
+                "projectionUnspecified",
+                "basic",
+                "custom",
+                "full"
+              ],
+              "enumDescriptions": [
+                "",
+                "Do not include any custom fields for the user.",
+                "Include custom fields from schemas mentioned in customFieldMask.",
+                "Include all fields associated with this user."
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "query": {
+              "description": "Query string search. Should be of the form \"\". Complete documentation is at https: //developers.google.com/admin-sdk/directory/v1/guides/search-users",
+              "location": "query",
+              "type": "string"
+            },
+            "showDeleted": {
+              "description": "If set to true, retrieves the list of deleted users. (Default: false)",
+              "location": "query",
+              "type": "string"
+            },
+            "sortOrder": {
+              "description": "Whether to return results in ascending or descending order.",
+              "enum": [
+                "sortOrderUnspecified",
+                "ASCENDING",
+                "DESCENDING"
+              ],
+              "enumDescriptions": [
+                "",
+                "Ascending order.",
+                "Descending order."
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "viewType": {
+              "default": "admin_view",
+              "description": "Whether to fetch the ADMIN_VIEW or DOMAIN_PUBLIC view of the user.",
+              "enum": [
+                "admin_view",
+                "domain_public"
+              ],
+              "enumDescriptions": [
+                "Fetches the ADMIN_VIEW of the user.",
+                "Fetches the DOMAIN_PUBLIC view of the user."
+              ],
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "admin/directory/v1/users/watch",
@@ -3591,7 +3823,8 @@
           },
           "scopes": [
             "https://www.googleapis.com/auth/admin.directory.user",
-            "https://www.googleapis.com/auth/admin.directory.user.readonly"
+            "https://www.googleapis.com/auth/admin.directory.user.readonly",
+            "https://www.googleapis.com/auth/cloud-platform"
           ]
         }
       },
@@ -3906,8 +4139,8 @@
       }
     }
   },
-  "revision": "20200819",
-  "rootUrl": "https://www.googleapis.com/",
+  "revision": "20201031",
+  "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {
       "description": "JSON template for Alias object in Directory API.",
@@ -4770,6 +5003,153 @@
         },
         "region": {
           "description": "Name of the region. An example of a region value is NY for the state of New York.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DirectoryChromeosdevicesCommand": {
+      "description": "Information regarding a command that was issued to a device.",
+      "id": "DirectoryChromeosdevicesCommand",
+      "properties": {
+        "commandExpireTime": {
+          "description": "The time at which the command will expire. If the device doesn't execute the command within this time the command will become expired.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "commandId": {
+          "description": "Unique ID of a device command.",
+          "format": "int64",
+          "type": "string"
+        },
+        "commandResult": {
+          "$ref": "DirectoryChromeosdevicesCommandResult",
+          "description": "The result of the command execution."
+        },
+        "issueTime": {
+          "description": "The timestamp when the command was issued by the admin.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "payload": {
+          "description": "The payload that the command specified, if any.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Indicates the command state.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "EXPIRED",
+            "CANCELLED",
+            "SENT_TO_CLIENT",
+            "ACKED_BY_CLIENT",
+            "EXECUTED_BY_CLIENT"
+          ],
+          "enumDescriptions": [
+            "The command status was unspecified.",
+            "An unexpired command not yet sent to the client.",
+            "The command didn't get executed by the client within the expected time.",
+            "The command is cancelled by admin while in PENDING.",
+            "The command has been sent to the client.",
+            "The client has responded that it received the command.",
+            "The client has (un)successfully executed the command."
+          ],
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of the command.",
+          "enum": [
+            "COMMAND_TYPE_UNSPECIFIED",
+            "REBOOT",
+            "TAKE_A_SCREENSHOT",
+            "SET_VOLUME",
+            "WIPE_USERS",
+            "REMOTE_POWERWASH"
+          ],
+          "enumDescriptions": [
+            "The command type was unspecified.",
+            "Reboot the device. Can only be issued to Kiosk and managed guest session devices.",
+            "Take a screenshot of the device. Only available if the device is in Kiosk Mode.",
+            "Set the volume of the device. Can only be issued to Kiosk and managed guest session devices.",
+            "Wipe all the users off of the device. Executing this command in the device will remove all user profile data, but it will keep device policy and enrollment.",
+            "Wipes the device by performing a power wash. Executing this command in the device will remove all data including user policies, device policies and enrollment policies. Warning: This will revert the device back to a factory state with no enrollment unless the device is subject to forced or auto enrollment. Use with caution, as this is an irreversible action!"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DirectoryChromeosdevicesCommandResult": {
+      "description": "The result of executing a command.",
+      "id": "DirectoryChromeosdevicesCommandResult",
+      "properties": {
+        "errorMessage": {
+          "description": "The error message with a short explanation as to why the command failed. Only present if the command failed.",
+          "type": "string"
+        },
+        "executeTime": {
+          "description": "The time at which the command was executed or failed to execute.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "result": {
+          "description": "The result of the command.",
+          "enum": [
+            "COMMAND_RESULT_TYPE_UNSPECIFIED",
+            "IGNORED",
+            "FAILURE",
+            "SUCCESS"
+          ],
+          "enumDescriptions": [
+            "The command result was unspecified.",
+            "The command was ignored as obsolete.",
+            "The command could not be executed successfully.",
+            "The command was successfully executed."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DirectoryChromeosdevicesIssueCommandRequest": {
+      "description": "A request for issuing a command.",
+      "id": "DirectoryChromeosdevicesIssueCommandRequest",
+      "properties": {
+        "commandType": {
+          "description": "The type of command.",
+          "enum": [
+            "COMMAND_TYPE_UNSPECIFIED",
+            "REBOOT",
+            "TAKE_A_SCREENSHOT",
+            "SET_VOLUME",
+            "WIPE_USERS",
+            "REMOTE_POWERWASH"
+          ],
+          "enumDescriptions": [
+            "The command type was unspecified.",
+            "Reboot the device. Can only be issued to Kiosk and managed guest session devices.",
+            "Take a screenshot of the device. Only available if the device is in Kiosk Mode.",
+            "Set the volume of the device. Can only be issued to Kiosk and managed guest session devices.",
+            "Wipe all the users off of the device. Executing this command in the device will remove all user profile data, but it will keep device policy and enrollment.",
+            "Wipes the device by performing a power wash. Executing this command in the device will remove all data including user policies, device policies and enrollment policies. Warning: This will revert the device back to a factory state with no enrollment unless the device is subject to forced or auto enrollment. Use with caution, as this is an irreversible action!"
+          ],
+          "type": "string"
+        },
+        "payload": {
+          "description": "The payload for the command, provide it only if command supports it. The following commands support adding payload: - SET_VOLUME: Payload is a stringified JSON object in the form: { \"volume\": 50 }. The volume has to be an integer in the range [0,100].",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DirectoryChromeosdevicesIssueCommandResponse": {
+      "description": "A response for issuing a command.",
+      "id": "DirectoryChromeosdevicesIssueCommandResponse",
+      "properties": {
+        "commandId": {
+          "description": "The unique ID of the issued command, used to retrieve the command status.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -6203,6 +6583,9 @@
       "type": "object"
     },
     "UserCustomProperties": {
+      "additionalProperties": {
+        "type": "any"
+      },
       "description": "JSON template for a set of custom properties (i.e. all fields in a particular schema)",
       "id": "UserCustomProperties",
       "type": "object"
@@ -6538,7 +6921,7 @@
       "type": "object"
     },
     "UserPosixAccount": {
-      "description": "JSON template for a POSIX account entry. Description of the field family: go/fbs-posix.",
+      "description": "JSON template for a POSIX account entry.",
       "id": "UserPosixAccount",
       "properties": {
         "accountId": {

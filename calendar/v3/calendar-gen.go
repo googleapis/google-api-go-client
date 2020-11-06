@@ -86,44 +86,8 @@ const (
 	// access using Google Calendar
 	CalendarScope = "https://www.googleapis.com/auth/calendar"
 
-	// See and change the sharing permissions of Google calendars you own
-	CalendarAclsScope = "https://www.googleapis.com/auth/calendar.acls"
-
-	// See the sharing permissions of Google calendars you own
-	CalendarAclsReadonlyScope = "https://www.googleapis.com/auth/calendar.acls.readonly"
-
-	// Make secondary Google calendars, and see, create, change, and delete
-	// events on them
-	CalendarAppCreatedScope = "https://www.googleapis.com/auth/calendar.app.created"
-
-	// See, add, and remove Google calendars you’re subscribed to
-	CalendarCalendarlistScope = "https://www.googleapis.com/auth/calendar.calendarlist"
-
-	// See the list of Google calendars you’re subscribed to
-	CalendarCalendarlistReadonlyScope = "https://www.googleapis.com/auth/calendar.calendarlist.readonly"
-
-	// See and change the properties of Google calendars you have access to,
-	// and create secondary calendars
-	CalendarCalendarsScope = "https://www.googleapis.com/auth/calendar.calendars"
-
-	// See the title, description, default time zone, and other properties
-	// of Google calendars you have access to
-	CalendarCalendarsReadonlyScope = "https://www.googleapis.com/auth/calendar.calendars.readonly"
-
 	// View and edit events on all your calendars
 	CalendarEventsScope = "https://www.googleapis.com/auth/calendar.events"
-
-	// See the availability on Google calendars you have access to
-	CalendarEventsFreebusyScope = "https://www.googleapis.com/auth/calendar.events.freebusy"
-
-	// See, create, change, and delete events on Google calendars you own
-	CalendarEventsOwnedScope = "https://www.googleapis.com/auth/calendar.events.owned"
-
-	// See the events on Google calendars you own
-	CalendarEventsOwnedReadonlyScope = "https://www.googleapis.com/auth/calendar.events.owned.readonly"
-
-	// See the events on public calendars
-	CalendarEventsPublicReadonlyScope = "https://www.googleapis.com/auth/calendar.events.public.readonly"
 
 	// View events on all your calendars
 	CalendarEventsReadonlyScope = "https://www.googleapis.com/auth/calendar.events.readonly"
@@ -139,18 +103,7 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/calendar",
-		"https://www.googleapis.com/auth/calendar.acls",
-		"https://www.googleapis.com/auth/calendar.acls.readonly",
-		"https://www.googleapis.com/auth/calendar.app.created",
-		"https://www.googleapis.com/auth/calendar.calendarlist",
-		"https://www.googleapis.com/auth/calendar.calendarlist.readonly",
-		"https://www.googleapis.com/auth/calendar.calendars",
-		"https://www.googleapis.com/auth/calendar.calendars.readonly",
 		"https://www.googleapis.com/auth/calendar.events",
-		"https://www.googleapis.com/auth/calendar.events.freebusy",
-		"https://www.googleapis.com/auth/calendar.events.owned",
-		"https://www.googleapis.com/auth/calendar.events.owned.readonly",
-		"https://www.googleapis.com/auth/calendar.events.public.readonly",
 		"https://www.googleapis.com/auth/calendar.events.readonly",
 		"https://www.googleapis.com/auth/calendar.readonly",
 		"https://www.googleapis.com/auth/calendar.settings.readonly",
@@ -1112,7 +1065,7 @@ type ConferenceSolutionKey struct {
 	// The possible values are:
 	// - "eventHangout" for Hangouts for consumers
 	// (http://hangouts.google.com)
-	// - "eventNamedHangout" for classic Hangouts for G Suite users
+	// - "eventNamedHangout" for classic Hangouts for Google Workspace users
 	// (http://hangouts.google.com)
 	// - "hangoutsMeet" for Google Meet (http://meet.google.com)
 	// - "addOn" for 3P conference providers
@@ -1349,7 +1302,8 @@ type Event struct {
 
 	// Attendees: The attendees of the event. See the Events with attendees
 	// guide for more information on scheduling events with other calendar
-	// users.
+	// users. Service accounts need to use domain-wide delegation of
+	// authority to populate the attendee list.
 	Attendees []*EventAttendee `json:"attendees,omitempty"`
 
 	// AttendeesOmitted: Whether attendees may have been omitted from the
@@ -1396,7 +1350,9 @@ type Event struct {
 	// ExtendedProperties: Extended properties of the event.
 	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
 
-	// Gadget: A gadget that extends this event.
+	// Gadget: A gadget that extends this event. Gadgets are deprecated;
+	// this structure is instead only used for returning birthday calendar
+	// metadata.
 	Gadget *EventGadget `json:"gadget,omitempty"`
 
 	// GuestsCanInviteOthers: Whether attendees other than the organizer can
@@ -1672,9 +1628,11 @@ func (s *EventExtendedProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EventGadget: A gadget that extends this event.
+// EventGadget: A gadget that extends this event. Gadgets are
+// deprecated; this structure is instead only used for returning
+// birthday calendar metadata.
 type EventGadget struct {
-	// Display: The gadget's display mode. Optional. Possible values are:
+	// Display: The gadget's display mode. Deprecated. Possible values are:
 	//
 	// - "icon" - The gadget displays next to the event's title in the
 	// calendar view.
@@ -1682,26 +1640,27 @@ type EventGadget struct {
 	Display string `json:"display,omitempty"`
 
 	// Height: The gadget's height in pixels. The height must be an integer
-	// greater than 0. Optional.
+	// greater than 0. Optional. Deprecated.
 	Height int64 `json:"height,omitempty"`
 
 	// IconLink: The gadget's icon URL. The URL scheme must be HTTPS.
+	// Deprecated.
 	IconLink string `json:"iconLink,omitempty"`
 
-	// Link: The gadget's URL. The URL scheme must be HTTPS.
+	// Link: The gadget's URL. The URL scheme must be HTTPS. Deprecated.
 	Link string `json:"link,omitempty"`
 
 	// Preferences: Preferences.
 	Preferences map[string]string `json:"preferences,omitempty"`
 
-	// Title: The gadget's title.
+	// Title: The gadget's title. Deprecated.
 	Title string `json:"title,omitempty"`
 
-	// Type: The gadget's type.
+	// Type: The gadget's type. Deprecated.
 	Type string `json:"type,omitempty"`
 
 	// Width: The gadget's width in pixels. The width must be an integer
-	// greater than 0. Optional.
+	// greater than 0. Optional. Deprecated.
 	Width int64 `json:"width,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Display") to
@@ -2465,7 +2424,7 @@ func (c *AclDeleteCall) Header() http.Header {
 
 func (c *AclDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2523,8 +2482,7 @@ func (c *AclDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "calendars/{calendarId}/acl/{ruleId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.acls"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -2587,7 +2545,7 @@ func (c *AclGetCall) Header() http.Header {
 
 func (c *AclGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2677,8 +2635,6 @@ func (c *AclGetCall) Do(opts ...googleapi.CallOption) (*AclRule, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.acls",
-	//     "https://www.googleapis.com/auth/calendar.acls.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
 	// }
@@ -2739,7 +2695,7 @@ func (c *AclInsertCall) Header() http.Header {
 
 func (c *AclInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2830,8 +2786,7 @@ func (c *AclInsertCall) Do(opts ...googleapi.CallOption) (*AclRule, error) {
 	//     "$ref": "AclRule"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.acls"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -2932,7 +2887,7 @@ func (c *AclListCall) Header() http.Header {
 
 func (c *AclListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3035,9 +2990,7 @@ func (c *AclListCall) Do(opts ...googleapi.CallOption) (*Acl, error) {
 	//     "$ref": "Acl"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.acls",
-	//     "https://www.googleapis.com/auth/calendar.acls.readonly"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ],
 	//   "supportsSubscription": true
 	// }
@@ -3123,7 +3076,7 @@ func (c *AclPatchCall) Header() http.Header {
 
 func (c *AclPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3222,8 +3175,7 @@ func (c *AclPatchCall) Do(opts ...googleapi.CallOption) (*AclRule, error) {
 	//     "$ref": "AclRule"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.acls"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -3286,7 +3238,7 @@ func (c *AclUpdateCall) Header() http.Header {
 
 func (c *AclUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3385,8 +3337,7 @@ func (c *AclUpdateCall) Do(opts ...googleapi.CallOption) (*AclRule, error) {
 	//     "$ref": "AclRule"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.acls"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -3478,7 +3429,7 @@ func (c *AclWatchCall) Header() http.Header {
 
 func (c *AclWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3587,9 +3538,7 @@ func (c *AclWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     "$ref": "Channel"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.acls",
-	//     "https://www.googleapis.com/auth/calendar.acls.readonly"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ],
 	//   "supportsSubscription": true
 	// }
@@ -3640,7 +3589,7 @@ func (c *CalendarListDeleteCall) Header() http.Header {
 
 func (c *CalendarListDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3690,9 +3639,7 @@ func (c *CalendarListDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "users/me/calendarList/{calendarId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -3753,7 +3700,7 @@ func (c *CalendarListGetCall) Header() http.Header {
 
 func (c *CalendarListGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3835,9 +3782,6 @@ func (c *CalendarListGetCall) Do(opts ...googleapi.CallOption) (*CalendarListEnt
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
 	// }
@@ -3898,7 +3842,7 @@ func (c *CalendarListInsertCall) Header() http.Header {
 
 func (c *CalendarListInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3977,8 +3921,7 @@ func (c *CalendarListInsertCall) Do(opts ...googleapi.CallOption) (*CalendarList
 	//     "$ref": "CalendarListEntry"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -4102,7 +4045,7 @@ func (c *CalendarListListCall) Header() http.Header {
 
 func (c *CalendarListListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4216,8 +4159,6 @@ func (c *CalendarListListCall) Do(opts ...googleapi.CallOption) (*CalendarList, 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -4303,7 +4244,7 @@ func (c *CalendarListPatchCall) Header() http.Header {
 
 func (c *CalendarListPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4394,9 +4335,7 @@ func (c *CalendarListPatchCall) Do(opts ...googleapi.CallOption) (*CalendarListE
 	//     "$ref": "CalendarListEntry"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -4458,7 +4397,7 @@ func (c *CalendarListUpdateCall) Header() http.Header {
 
 func (c *CalendarListUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4549,9 +4488,7 @@ func (c *CalendarListUpdateCall) Do(opts ...googleapi.CallOption) (*CalendarList
 	//     "$ref": "CalendarListEntry"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -4666,7 +4603,7 @@ func (c *CalendarListWatchCall) Header() http.Header {
 
 func (c *CalendarListWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4786,8 +4723,6 @@ func (c *CalendarListWatchCall) Do(opts ...googleapi.CallOption) (*Channel, erro
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -4840,7 +4775,7 @@ func (c *CalendarsClearCall) Header() http.Header {
 
 func (c *CalendarsClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4890,8 +4825,7 @@ func (c *CalendarsClearCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "calendars/{calendarId}/clear",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.calendars"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -4942,7 +4876,7 @@ func (c *CalendarsDeleteCall) Header() http.Header {
 
 func (c *CalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4992,9 +4926,7 @@ func (c *CalendarsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "calendars/{calendarId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendars"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -5055,7 +4987,7 @@ func (c *CalendarsGetCall) Header() http.Header {
 
 func (c *CalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5137,9 +5069,6 @@ func (c *CalendarsGetCall) Do(opts ...googleapi.CallOption) (*Calendar, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendars",
-	//     "https://www.googleapis.com/auth/calendar.calendars.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
 	// }
@@ -5190,7 +5119,7 @@ func (c *CalendarsInsertCall) Header() http.Header {
 
 func (c *CalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5262,8 +5191,7 @@ func (c *CalendarsInsertCall) Do(opts ...googleapi.CallOption) (*Calendar, error
 	//     "$ref": "Calendar"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.calendars"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -5316,7 +5244,7 @@ func (c *CalendarsPatchCall) Header() http.Header {
 
 func (c *CalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5402,9 +5330,7 @@ func (c *CalendarsPatchCall) Do(opts ...googleapi.CallOption) (*Calendar, error)
 	//     "$ref": "Calendar"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendars"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -5456,7 +5382,7 @@ func (c *CalendarsUpdateCall) Header() http.Header {
 
 func (c *CalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5542,9 +5468,7 @@ func (c *CalendarsUpdateCall) Do(opts ...googleapi.CallOption) (*Calendar, error
 	//     "$ref": "Calendar"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendars"
+	//     "https://www.googleapis.com/auth/calendar"
 	//   ]
 	// }
 
@@ -5594,7 +5518,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5640,16 +5564,7 @@ func (c *ChannelsStopCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.acls",
-	//     "https://www.googleapis.com/auth/calendar.acls.readonly",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
 	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.freebusy",
-	//     "https://www.googleapis.com/auth/calendar.events.owned",
-	//     "https://www.googleapis.com/auth/calendar.events.owned.readonly",
-	//     "https://www.googleapis.com/auth/calendar.events.public.readonly",
 	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly",
 	//     "https://www.googleapis.com/auth/calendar.settings.readonly"
@@ -5711,7 +5626,7 @@ func (c *ColorsGetCall) Header() http.Header {
 
 func (c *ColorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5779,13 +5694,6 @@ func (c *ColorsGetCall) Do(opts ...googleapi.CallOption) (*Colors, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist",
-	//     "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
-	//     "https://www.googleapis.com/auth/calendar.events.freebusy",
-	//     "https://www.googleapis.com/auth/calendar.events.owned",
-	//     "https://www.googleapis.com/auth/calendar.events.owned.readonly",
-	//     "https://www.googleapis.com/auth/calendar.events.public.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
 	// }
@@ -5864,7 +5772,7 @@ func (c *EventsDeleteCall) Header() http.Header {
 
 func (c *EventsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5943,9 +5851,7 @@ func (c *EventsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   "path": "calendars/{calendarId}/events/{eventId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.owned"
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -6034,7 +5940,7 @@ func (c *EventsGetCall) Header() http.Header {
 
 func (c *EventsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6141,12 +6047,7 @@ func (c *EventsGetCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
 	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.freebusy",
-	//     "https://www.googleapis.com/auth/calendar.events.owned",
-	//     "https://www.googleapis.com/auth/calendar.events.owned.readonly",
-	//     "https://www.googleapis.com/auth/calendar.events.public.readonly",
 	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
@@ -6221,7 +6122,7 @@ func (c *EventsImportCall) Header() http.Header {
 
 func (c *EventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6321,9 +6222,7 @@ func (c *EventsImportCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.owned"
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -6431,7 +6330,7 @@ func (c *EventsInsertCall) Header() http.Header {
 
 func (c *EventsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6558,9 +6457,7 @@ func (c *EventsInsertCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.owned"
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -6698,7 +6595,7 @@ func (c *EventsInstancesCall) Header() http.Header {
 
 func (c *EventsInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6839,12 +6736,7 @@ func (c *EventsInstancesCall) Do(opts ...googleapi.CallOption) (*Events, error) 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
 	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.freebusy",
-	//     "https://www.googleapis.com/auth/calendar.events.owned",
-	//     "https://www.googleapis.com/auth/calendar.events.owned.readonly",
-	//     "https://www.googleapis.com/auth/calendar.events.public.readonly",
 	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ],
@@ -7111,7 +7003,7 @@ func (c *EventsListCall) Header() http.Header {
 
 func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7296,12 +7188,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
 	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.freebusy",
-	//     "https://www.googleapis.com/auth/calendar.events.owned",
-	//     "https://www.googleapis.com/auth/calendar.events.owned.readonly",
-	//     "https://www.googleapis.com/auth/calendar.events.public.readonly",
 	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ],
@@ -7406,7 +7293,7 @@ func (c *EventsMoveCall) Header() http.Header {
 
 func (c *EventsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7520,8 +7407,7 @@ func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.owned"
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -7641,7 +7527,7 @@ func (c *EventsPatchCall) Header() http.Header {
 
 func (c *EventsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7781,9 +7667,7 @@ func (c *EventsPatchCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.owned"
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -7860,7 +7744,7 @@ func (c *EventsQuickAddCall) Header() http.Header {
 
 func (c *EventsQuickAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7966,9 +7850,7 @@ func (c *EventsQuickAddCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.owned"
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -8088,7 +7970,7 @@ func (c *EventsUpdateCall) Header() http.Header {
 
 func (c *EventsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8228,9 +8110,7 @@ func (c *EventsUpdateCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
-	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.owned"
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -8464,7 +8344,7 @@ func (c *EventsWatchCall) Header() http.Header {
 
 func (c *EventsWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8655,12 +8535,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.app.created",
 	//     "https://www.googleapis.com/auth/calendar.events",
-	//     "https://www.googleapis.com/auth/calendar.events.freebusy",
-	//     "https://www.googleapis.com/auth/calendar.events.owned",
-	//     "https://www.googleapis.com/auth/calendar.events.owned.readonly",
-	//     "https://www.googleapis.com/auth/calendar.events.public.readonly",
 	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ],
@@ -8713,7 +8588,7 @@ func (c *FreebusyQueryCall) Header() http.Header {
 
 func (c *FreebusyQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8786,7 +8661,6 @@ func (c *FreebusyQueryCall) Do(opts ...googleapi.CallOption) (*FreeBusyResponse,
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.events.freebusy",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
 	// }
@@ -8848,7 +8722,7 @@ func (c *SettingsGetCall) Header() http.Header {
 
 func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9019,7 +8893,7 @@ func (c *SettingsListCall) Header() http.Header {
 
 func (c *SettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9208,7 +9082,7 @@ func (c *SettingsWatchCall) Header() http.Header {
 
 func (c *SettingsWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

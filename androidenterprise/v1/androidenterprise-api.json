@@ -9,8 +9,8 @@
     }
   },
   "basePath": "",
-  "baseUrl": "https://www.googleapis.com/",
-  "batchPath": "batch/androidenterprise/v1",
+  "baseUrl": "https://androidenterprise.googleapis.com/",
+  "batchPath": "batch",
   "canonicalName": "Android Enterprise",
   "description": "Manages the deployment of apps to Android Enterprise devices.",
   "discoveryVersion": "v1",
@@ -21,7 +21,7 @@
   },
   "id": "androidenterprise:v1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://www.mtls.googleapis.com/",
+  "mtlsRootUrl": "https://androidenterprise.mtls.googleapis.com/",
   "name": "androidenterprise",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -2610,8 +2610,8 @@
       }
     }
   },
-  "revision": "20200825",
-  "rootUrl": "https://www.googleapis.com/",
+  "revision": "20200915",
+  "rootUrl": "https://androidenterprise.googleapis.com/",
   "schemas": {
     "Administrator": {
       "description": "This represents an enterprise admin who can manage the enterprise in the managed Google Play store.",

@@ -526,6 +526,771 @@ type ProjectsOperationsService struct {
 	s *Service
 }
 
+// GoogleCloudDialogflowCxV3PageInfo: Represents page information
+// communicated to and from the webhook.
+type GoogleCloudDialogflowCxV3PageInfo struct {
+	// CurrentPage: Always present for WebhookRequest. Ignored for
+	// WebhookResponse. The unique identifier of the current page. Format:
+	// `projects//locations//agents//flows//pages/`.
+	CurrentPage string `json:"currentPage,omitempty"`
+
+	// FormInfo: Optional for both WebhookRequest and WebhookResponse.
+	// Information about the form.
+	FormInfo *GoogleCloudDialogflowCxV3PageInfoFormInfo `json:"formInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentPage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentPage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3PageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3PageInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3PageInfoFormInfo: Represents form
+// information.
+type GoogleCloudDialogflowCxV3PageInfoFormInfo struct {
+	// ParameterInfo: Optional for both WebhookRequest and WebhookResponse.
+	// The parameters contained in the form. Note that the webhook cannot
+	// add or remove any form parameter.
+	ParameterInfo []*GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo `json:"parameterInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ParameterInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ParameterInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3PageInfoFormInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3PageInfoFormInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo: Represents
+// parameter information.
+type GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo struct {
+	// DisplayName: Always present for WebhookRequest. Required for
+	// WebhookResponse. The human-readable name of the parameter, unique
+	// within the form. This field cannot be modified by the webhook.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// JustCollected: Optional for WebhookRequest. Ignored for
+	// WebhookResponse. Indicates if the parameter value was just collected
+	// on the last conversation turn.
+	JustCollected bool `json:"justCollected,omitempty"`
+
+	// Required: Optional for both WebhookRequest and WebhookResponse.
+	// Indicates whether the parameter is required. Optional parameters will
+	// not trigger prompts; however, they are filled if the user specifies
+	// them. Required parameters must be filled before form filling
+	// concludes.
+	Required bool `json:"required,omitempty"`
+
+	// State: Always present for WebhookRequest. Required for
+	// WebhookResponse. The state of the parameter. This field can be set to
+	// INVALID by the webhook to invalidate the parameter; other values set
+	// by the webhook will be ignored.
+	//
+	// Possible values:
+	//   "PARAMETER_STATE_UNSPECIFIED" - Not specified. This value should be
+	// never used.
+	//   "EMPTY" - Indicates that the parameter does not have a value.
+	//   "INVALID" - Indicates that the parameter value is invalid. This
+	// field can be used by the webhook to invalidate the parameter and ask
+	// the server to collect it from the user again.
+	//   "FILLED" - Indicates that the parameter has a value.
+	State string `json:"state,omitempty"`
+
+	// Value: Optional for both WebhookRequest and WebhookResponse. The
+	// value of the parameter. This field can be set by the webhook to
+	// change the parameter value.
+	Value interface{} `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessage: Represents a response
+// message that can be returned by a conversational agent. Response
+// messages are also used for output audio synthesis. The approach is as
+// follows: * If at least one OutputAudioText response is present, then
+// all OutputAudioText responses are linearly concatenated, and the
+// result is used for output audio synthesis. * If the OutputAudioText
+// responses are a mixture of text and SSML, then the concatenated
+// result is treated as SSML; otherwise, the result is treated as either
+// text or SSML as appropriate. The agent designer should ideally use
+// either text or SSML consistently throughout the bot design. *
+// Otherwise, all Text responses are linearly concatenated, and the
+// result is used for output audio synthesis. This approach allows for
+// more sophisticated user experience scenarios, where the text
+// displayed to the user may differ from what is heard.
+type GoogleCloudDialogflowCxV3ResponseMessage struct {
+	// ConversationSuccess: Indicates that the conversation succeeded.
+	ConversationSuccess *GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess `json:"conversationSuccess,omitempty"`
+
+	// EndInteraction: Output only. A signal that indicates the interaction
+	// with the Dialogflow agent has ended. This message is generated by
+	// Dialogflow only when the conversation reaches `END_SESSION` or
+	// `END_PAGE` page. It is not supposed to be defined by the user. It's
+	// guaranteed that there is at most one such message in each response.
+	EndInteraction *GoogleCloudDialogflowCxV3ResponseMessageEndInteraction `json:"endInteraction,omitempty"`
+
+	// LiveAgentHandoff: Hands off conversation to a human agent.
+	LiveAgentHandoff *GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff `json:"liveAgentHandoff,omitempty"`
+
+	// MixedAudio: Output only. An audio response message composed of both
+	// the synthesized Dialogflow agent responses and responses defined via
+	// play_audio. This message is generated by Dialogflow only and not
+	// supposed to be defined by the user.
+	MixedAudio *GoogleCloudDialogflowCxV3ResponseMessageMixedAudio `json:"mixedAudio,omitempty"`
+
+	// OutputAudioText: A text or ssml response that is preferentially used
+	// for TTS output audio synthesis, as described in the comment on the
+	// ResponseMessage message.
+	OutputAudioText *GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText `json:"outputAudioText,omitempty"`
+
+	// Payload: Returns a response containing a custom, platform-specific
+	// payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// PlayAudio: Signal that the client should play an audio clip hosted at
+	// a client-specific URI. Dialogflow uses this to construct mixed_audio.
+	// However, Dialogflow itself does not try to read or process the URI in
+	// any way.
+	PlayAudio *GoogleCloudDialogflowCxV3ResponseMessagePlayAudio `json:"playAudio,omitempty"`
+
+	// Text: Returns a text response.
+	Text *GoogleCloudDialogflowCxV3ResponseMessageText `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationSuccess")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationSuccess") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess:
+// Indicates that the conversation succeeded, i.e., the bot handled the
+// issue that the customer talked to it about. Dialogflow only uses this
+// to determine which conversations should be counted as successful and
+// doesn't process the metadata in this message in any way. Note that
+// Dialogflow also considers conversations that get to the conversation
+// end page as successful even if they don't return ConversationSuccess.
+// You may set this, for example: * In the entry_fulfillment of a Page
+// if entering the page indicates that the conversation succeeded. * In
+// a webhook response when you determine that you handled the customer
+// issue.
+type GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess struct {
+	// Metadata: Custom metadata. Dialogflow doesn't impose any structure on
+	// this.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageEndInteraction: Indicates
+// that interaction with the Dialogflow agent has ended. This message is
+// generated by Dialogflow only and not supposed to be defined by the
+// user.
+type GoogleCloudDialogflowCxV3ResponseMessageEndInteraction struct {
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff: Indicates
+// that the conversation should be handed off to a live agent.
+// Dialogflow only uses this to determine which conversations were
+// handed off to a human agent for measurement purposes. What else to do
+// with this signal is up to you and your handoff procedures. You may
+// set this, for example: * In the entry_fulfillment of a Page if
+// entering the page indicates something went extremely wrong in the
+// conversation. * In a webhook response when you determine that the
+// customer issue can only be handled by a human.
+type GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff struct {
+	// Metadata: Custom metadata for your handoff procedure. Dialogflow
+	// doesn't impose any structure on this.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageMixedAudio: Represents an
+// audio message that is composed of both segments synthesized from the
+// Dialogflow agent prompts and ones hosted externally at the specified
+// URIs. The external URIs are specified via play_audio. This message is
+// generated by Dialogflow only and not supposed to be defined by the
+// user.
+type GoogleCloudDialogflowCxV3ResponseMessageMixedAudio struct {
+	// Segments: Segments this audio response is composed of.
+	Segments []*GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment `json:"segments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Segments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Segments") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageMixedAudio
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment: Represents
+// one segment of audio.
+type GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// segment can be interrupted by the end user's speech and the client
+	// should then start the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// Audio: Raw audio synthesized from the Dialogflow agent's response
+	// using the output config specified in the request.
+	Audio string `json:"audio,omitempty"`
+
+	// Uri: Client-specific URI that points to an audio clip accessible to
+	// the client. Dialogflow does not impose any validation on it.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText: A text or
+// ssml response that is preferentially used for TTS output audio
+// synthesis, as described in the comment on the ResponseMessage
+// message.
+type GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// message can be interrupted by the end user's speech and the client
+	// can then starts the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// Ssml: The SSML text to be synthesized. For more information, see
+	// [SSML](/speech/text-to-speech/docs/ssml).
+	Ssml string `json:"ssml,omitempty"`
+
+	// Text: The raw text to be synthesized.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessagePlayAudio: Specifies an audio
+// clip to be played by the client as part of the response.
+type GoogleCloudDialogflowCxV3ResponseMessagePlayAudio struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// message can be interrupted by the end user's speech and the client
+	// can then starts the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// AudioUri: Required. URI of the audio clip. Dialogflow does not impose
+	// any validation on this value. It is specific to the client that reads
+	// it.
+	AudioUri string `json:"audioUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessagePlayAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessagePlayAudio
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageText: The text response
+// message.
+type GoogleCloudDialogflowCxV3ResponseMessageText struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// message can be interrupted by the end user's speech and the client
+	// can then starts the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// Text: Required. A collection of text responses.
+	Text []string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageText
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3SessionInfo: Represents session information
+// communicated to and from the webhook.
+type GoogleCloudDialogflowCxV3SessionInfo struct {
+	// Parameters: Optional for WebhookRequest. Optional for
+	// WebhookResponse. All parameters collected from forms and intents
+	// during the session. Parameters can be created, updated, or removed by
+	// the webhook. To remove a parameter from the session, the webhook
+	// should explicitly set the parameter value to null in WebhookResponse.
+	// The map is keyed by parameters' display names.
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+
+	// Session: Always present for WebhookRequest. Ignored for
+	// WebhookResponse. The unique identifier of the session. This field can
+	// be used by the webhook to identify a user. Format:
+	// `projects//locations//agents//sessions/`.
+	Session string `json:"session,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parameters") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3SessionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3SessionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookRequest: The request message for a
+// webhook call.
+type GoogleCloudDialogflowCxV3WebhookRequest struct {
+	// DetectIntentResponseId: Always present. The unique identifier of the
+	// DetectIntentResponse that will be returned to the API caller.
+	DetectIntentResponseId string `json:"detectIntentResponseId,omitempty"`
+
+	// FulfillmentInfo: Always present. Information about the fulfillment
+	// that triggered this webhook call.
+	FulfillmentInfo *GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo `json:"fulfillmentInfo,omitempty"`
+
+	// IntentInfo: Information about the last matched intent.
+	IntentInfo *GoogleCloudDialogflowCxV3WebhookRequestIntentInfo `json:"intentInfo,omitempty"`
+
+	// Messages: The list of rich message responses to present to the user.
+	// Webhook can choose to append or replace this list in
+	// WebhookResponse.fulfillment_response;
+	Messages []*GoogleCloudDialogflowCxV3ResponseMessage `json:"messages,omitempty"`
+
+	// PageInfo: Information about page status.
+	PageInfo *GoogleCloudDialogflowCxV3PageInfo `json:"pageInfo,omitempty"`
+
+	// Payload: Custom data set in QueryParameters.payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// SessionInfo: Information about session status.
+	SessionInfo *GoogleCloudDialogflowCxV3SessionInfo `json:"sessionInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DetectIntentResponseId") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectIntentResponseId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo: Represents
+// fulfillment information communicated to the webhook.
+type GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo struct {
+	// Tag: Always present. The tag used to identify which fulfillment is
+	// being called.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookRequestIntentInfo: Represents intent
+// information communicated to the webhook.
+type GoogleCloudDialogflowCxV3WebhookRequestIntentInfo struct {
+	// LastMatchedIntent: Always present. The unique identifier of the last
+	// matched intent. Format: `projects//locations//agents//intents/`.
+	LastMatchedIntent string `json:"lastMatchedIntent,omitempty"`
+
+	// Parameters: Parameters identified as a result of intent matching.
+	// This is a map of the name of the identified parameter to the value of
+	// the parameter identified from the user's utterance. All parameters
+	// defined in the matched intent that are identified will be surfaced
+	// here.
+	Parameters map[string]GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastMatchedIntent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LastMatchedIntent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookRequestIntentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestIntentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue:
+//  Represents a value for an intent parameter.
+type GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue struct {
+	// OriginalValue: Always present. Original text value extracted from
+	// user utterance.
+	OriginalValue string `json:"originalValue,omitempty"`
+
+	// ResolvedValue: Always present. Structured value for the parameter
+	// extracted from user utterance.
+	ResolvedValue interface{} `json:"resolvedValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OriginalValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OriginalValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookResponse: The response message for a
+// webhook call.
+type GoogleCloudDialogflowCxV3WebhookResponse struct {
+	// FulfillmentResponse: The fulfillment response to send to the user.
+	// This field can be omitted by the webhook if it does not intend to
+	// send any response to the user.
+	FulfillmentResponse *GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse `json:"fulfillmentResponse,omitempty"`
+
+	// PageInfo: Information about page status. This field can be omitted by
+	// the webhook if it does not intend to modify page status.
+	PageInfo *GoogleCloudDialogflowCxV3PageInfo `json:"pageInfo,omitempty"`
+
+	// Payload: Value to append directly to QueryResult.webhook_payloads.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// SessionInfo: Information about session status. This field can be
+	// omitted by the webhook if it does not intend to modify session
+	// status.
+	SessionInfo *GoogleCloudDialogflowCxV3SessionInfo `json:"sessionInfo,omitempty"`
+
+	// TargetFlow: The target flow to transition to. Format:
+	// `projects//locations//agents//flows/`.
+	TargetFlow string `json:"targetFlow,omitempty"`
+
+	// TargetPage: The target page to transition to. Format:
+	// `projects//locations//agents//flows//pages/`.
+	TargetPage string `json:"targetPage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FulfillmentResponse")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FulfillmentResponse") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse:
+// Represents a fulfillment response to the user.
+type GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse struct {
+	// MergeBehavior: Merge behavior for `messages`.
+	//
+	// Possible values:
+	//   "MERGE_BEHAVIOR_UNSPECIFIED" - Not specified. `APPEND` will be
+	// used.
+	//   "APPEND" - `messages` will be appended to the list of messages
+	// waiting to be sent to the user.
+	//   "REPLACE" - `messages` will replace the list of messages waiting to
+	// be sent to the user.
+	MergeBehavior string `json:"mergeBehavior,omitempty"`
+
+	// Messages: The list of rich message responses to present to the user.
+	Messages []*GoogleCloudDialogflowCxV3ResponseMessage `json:"messages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MergeBehavior") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MergeBehavior") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1CreateVersionOperationMetadata:
 // Metadata associated with the long running operation for
 // Versions.CreateVersion.
@@ -586,36 +1351,6 @@ type GoogleCloudDialogflowCxV3beta1ExportAgentResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1ExportAgentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ExportAgentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1ImportAgentResponse: The response
-// message for Agents.ImportAgent.
-type GoogleCloudDialogflowCxV3beta1ImportAgentResponse struct {
-	// Agent: The unique identifier of the new agent. Format:
-	// `projects//locations//agents/`.
-	Agent string `json:"agent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Agent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Agent") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ImportAgentResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ImportAgentResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -987,6 +1722,11 @@ func (s *GoogleCloudDialogflowCxV3beta1ResponseMessageMixedAudioSegment) Marshal
 // synthesis, as described in the comment on the ResponseMessage
 // message.
 type GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// message can be interrupted by the end user's speech and the client
+	// can then starts the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
 	// Ssml: The SSML text to be synthesized. For more information, see
 	// [SSML](/speech/text-to-speech/docs/ssml).
 	Ssml string `json:"ssml,omitempty"`
@@ -994,20 +1734,22 @@ type GoogleCloudDialogflowCxV3beta1ResponseMessageOutputAudioText struct {
 	// Text: The raw text to be synthesized.
 	Text string `json:"text,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Ssml") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Ssml") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3317,9 +4059,9 @@ type GoogleCloudDialogflowV2OriginalDetectIntentRequest struct {
 	// information in the payload. In particular, for the Dialogflow Phone
 	// Gateway integration, this field has the form: { "telephony": {
 	// "caller_id": "+18558363987" } } Note: The caller ID field
-	// (`caller_id`) will be redacted for Standard Edition agents and
-	// populated with the caller ID in [E.164
-	// format](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition
+	// (`caller_id`) will be redacted for Trial Edition agents and populated
+	// with the caller ID in [E.164
+	// format](https://en.wikipedia.org/wiki/E.164) for Essentials Edition
 	// agents.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
@@ -3547,9 +4289,9 @@ func (s *GoogleCloudDialogflowV2Sentiment) UnmarshalJSON(data []byte) error {
 // sentiment analysis. Sentiment analysis inspects user input and
 // identifies the prevailing subjective opinion, especially to determine
 // a user's attitude as positive, negative, or neutral. For
-// Participants.AnalyzeContent, it needs to be configured in
+// Participants.DetectIntent, it needs to be configured in
 // DetectIntentRequest.query_params. For
-// Participants.StreamingAnalyzeContent, it needs to be configured in
+// Participants.StreamingDetectIntent, it needs to be configured in
 // StreamingDetectIntentRequest.query_params. And for
 // Participants.AnalyzeContent and Participants.StreamingAnalyzeContent,
 // it needs to be configured in
@@ -3847,7 +4589,8 @@ type GoogleCloudDialogflowV2beta1Agent struct {
 	// large custom entities.
 	MatchMode string `json:"matchMode,omitempty"`
 
-	// Parent: Required. The project of this agent. Format: `projects/`.
+	// Parent: Required. The project of this agent. Format: `projects/` or
+	// `projects//locations/`
 	Parent string `json:"parent,omitempty"`
 
 	// SupportedLanguageCodes: Optional. The list of all languages supported
@@ -3909,106 +4652,6 @@ func (s *GoogleCloudDialogflowV2beta1Agent) UnmarshalJSON(data []byte) error {
 	}
 	s.ClassificationThreshold = float64(s1.ClassificationThreshold)
 	return nil
-}
-
-// GoogleCloudDialogflowV2beta1AnnotatedConversationDataset: Represents
-// an annotated conversation dataset. ConversationDataset can have
-// multiple AnnotatedConversationDataset, each of them represents one
-// result from one annotation task. AnnotatedConversationDataset can
-// only be generated from annotation task, which will be triggered by
-// LabelConversation.
-type GoogleCloudDialogflowV2beta1AnnotatedConversationDataset struct {
-	// CompletedExampleCount: Output only. Number of examples that have
-	// annotations in the annotated conversation dataset.
-	CompletedExampleCount int64 `json:"completedExampleCount,omitempty,string"`
-
-	// CreateTime: Output only. Creation time of this annotated conversation
-	// dataset.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// Description: Optional. The description of the annotated conversation
-	// dataset. Maximum of 10000 bytes.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Required. The display name of the annotated conversation
-	// dataset. It's specified when user starts an annotation task. Maximum
-	// of 64 bytes.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// ExampleCount: Output only. Number of examples in the annotated
-	// conversation dataset.
-	ExampleCount int64 `json:"exampleCount,omitempty,string"`
-
-	// Name: Output only. AnnotatedConversationDataset resource name.
-	// Format:
-	// `projects//conversationDatasets//annotatedConversationDatasets/`
-	Name string `json:"name,omitempty"`
-
-	// QuestionTypeName: Output only. Question type name that identifies a
-	// labeling task. A question is a single task that a worker answers. A
-	// question type is set of related questions. Each question belongs to a
-	// particular question type. It can be used in CrowdCompute UI to filter
-	// and manage labeling tasks.
-	QuestionTypeName string `json:"questionTypeName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CompletedExampleCount") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompletedExampleCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1AnnotatedConversationDataset) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1AnnotatedConversationDataset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2beta1AutoApproveSmartMessagingEntriesResponse:
-// Response message for [Documents.AutoApproveSmartMessagingEntries].
-type GoogleCloudDialogflowV2beta1AutoApproveSmartMessagingEntriesResponse struct {
-	// DisabledCount: Number of smart messaging entries disabled.
-	DisabledCount int64 `json:"disabledCount,omitempty"`
-
-	// EnabledCount: Number of smart messaging entries enabled.
-	EnabledCount int64 `json:"enabledCount,omitempty"`
-
-	// UnreviewedCount: Number of smart messaging entries unreviewed.
-	UnreviewedCount int64 `json:"unreviewedCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DisabledCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisabledCount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1AutoApproveSmartMessagingEntriesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1AutoApproveSmartMessagingEntriesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest: The request
@@ -4367,10 +5010,12 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// 20 minutes if there are no matching queries.
 	LifespanCount int64 `json:"lifespanCount,omitempty"`
 
-	// Name: Required. The unique identifier of the context. Format:
-	// `projects//agent/sessions//contexts/`, or
-	// `projects//agent/environments//users//sessions//contexts/`. The
-	// `Context ID` is always converted to lowercase, may only contain
+	// Name: Required. The unique identifier of the context. Supported
+	// formats: - `projects//agent/sessions//contexts/`, -
+	// `projects//locations//agent/sessions//contexts/`, -
+	// `projects//agent/environments//users//sessions//contexts/`, -
+	// `projects//locations//agent/environments//users//sessions//contexts/`,
+	//  The `Context ID` is always converted to lowercase, may only contain
 	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If
 	// `Environment ID` is not specified, we assume default 'draft'
 	// environment. If `User ID` is not specified, we assume default '-'
@@ -4720,7 +5365,8 @@ type GoogleCloudDialogflowV2beta1EntityType struct {
 
 	// Name: The unique identifier of the entity type. Required for
 	// EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes
-	// methods. Format: `projects//agent/entityTypes/`.
+	// methods. Supported formats: - `projects//agent/entityTypes/` -
+	// `projects//locations//agent/entityTypes/`
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4833,7 +5479,8 @@ func (s *GoogleCloudDialogflowV2beta1EntityTypeEntity) MarshalJSON() ([]byte, er
 // guide](https://cloud.google.com/dialogflow/docs/agents-versions).
 type GoogleCloudDialogflowV2beta1Environment struct {
 	// AgentVersion: Optional. The agent version loaded into this
-	// environment. Format: `projects//agent/versions/`.
+	// environment. Supported formats: - `projects//agent/versions/` -
+	// `projects//locations//agent/versions/`
 	AgentVersion string `json:"agentVersion,omitempty"`
 
 	// Description: Optional. The developer-provided description for this
@@ -4842,7 +5489,7 @@ type GoogleCloudDialogflowV2beta1Environment struct {
 	Description string `json:"description,omitempty"`
 
 	// Name: Output only. The unique identifier of this agent environment.
-	// Format: - `projects//agent/environments/` -
+	// Supported formats: - `projects//agent/environments/` -
 	// `projects//locations//agent/environments/`
 	Name string `json:"name,omitempty"`
 
@@ -5011,22 +5658,23 @@ func (s *GoogleCloudDialogflowV2beta1ExportAgentResponse) MarshalJSON() ([]byte,
 // [fulfillment
 // guide](https://cloud.google.com/dialogflow/docs/fulfillment-overview).
 type GoogleCloudDialogflowV2beta1Fulfillment struct {
-	// DisplayName: Optional. The human-readable name of the fulfillment,
-	// unique within the agent.
+	// DisplayName: The human-readable name of the fulfillment, unique
+	// within the agent.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Enabled: Optional. Whether fulfillment is enabled.
+	// Enabled: Whether fulfillment is enabled.
 	Enabled bool `json:"enabled,omitempty"`
 
-	// Features: Optional. The field defines whether the fulfillment is
-	// enabled for certain features.
+	// Features: The field defines whether the fulfillment is enabled for
+	// certain features.
 	Features []*GoogleCloudDialogflowV2beta1FulfillmentFeature `json:"features,omitempty"`
 
 	// GenericWebService: Configuration for a generic web service.
 	GenericWebService *GoogleCloudDialogflowV2beta1FulfillmentGenericWebService `json:"genericWebService,omitempty"`
 
-	// Name: Required. The unique identifier of the fulfillment. Format:
-	// `projects//agent/fulfillment`.
+	// Name: Required. The unique identifier of the fulfillment. Supported
+	// formats: - `projects//agent/fulfillment` -
+	// `projects//locations//agent/fulfillment`
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5096,22 +5744,22 @@ func (s *GoogleCloudDialogflowV2beta1FulfillmentFeature) MarshalJSON() ([]byte, 
 // headers. More information could be found at:
 // https://cloud.google.com/dialogflow/docs/fulfillment-configure.
 type GoogleCloudDialogflowV2beta1FulfillmentGenericWebService struct {
-	// IsCloudFunction: Optional. Indicates if generic web service is
-	// created through Cloud Functions integration. Defaults to false.
+	// IsCloudFunction: Indicates if generic web service is created through
+	// Cloud Functions integration. Defaults to false.
 	IsCloudFunction bool `json:"isCloudFunction,omitempty"`
 
-	// Password: Optional. The password for HTTP Basic authentication.
+	// Password: The password for HTTP Basic authentication.
 	Password string `json:"password,omitempty"`
 
-	// RequestHeaders: Optional. The HTTP request headers to send together
-	// with fulfillment requests.
+	// RequestHeaders: The HTTP request headers to send together with
+	// fulfillment requests.
 	RequestHeaders map[string]string `json:"requestHeaders,omitempty"`
 
 	// Uri: Required. The fulfillment URI for receiving POST requests. It
 	// must use https protocol.
 	Uri string `json:"uri,omitempty"`
 
-	// Username: Optional. The user name for HTTP Basic authentication.
+	// Username: The user name for HTTP Basic authentication.
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsCloudFunction") to
@@ -5405,8 +6053,9 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	FollowupIntentInfo []*GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo `json:"followupIntentInfo,omitempty"`
 
 	// InputContextNames: Optional. The list of context names required for
-	// this intent to be triggered. Format:
-	// `projects//agent/sessions/-/contexts/`.
+	// this intent to be triggered. Formats: -
+	// `projects//agent/sessions/-/contexts/` -
+	// `projects//locations//agent/sessions/-/contexts/`
 	InputContextNames []string `json:"inputContextNames,omitempty"`
 
 	// IsFallback: Optional. Indicates whether this is a fallback intent.
@@ -5434,8 +6083,9 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	MlEnabled bool `json:"mlEnabled,omitempty"`
 
 	// Name: Optional. The unique identifier of this intent. Required for
-	// Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format:
-	// `projects//agent/intents/`.
+	// Intents.UpdateIntent and Intents.BatchUpdateIntents methods.
+	// Supported formats: - `projects//agent/intents/` -
+	// `projects//locations//agent/intents/`
 	Name string `json:"name,omitempty"`
 
 	// OutputContexts: Optional. The collection of contexts that are
@@ -7534,38 +8184,6 @@ func (s *GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2beta1LabelConversationResponse: The response
-// for ConversationDatasets.LabelConversation.
-type GoogleCloudDialogflowV2beta1LabelConversationResponse struct {
-	// AnnotatedConversationDataset: New annotated conversation dataset
-	// created by the labeling task.
-	AnnotatedConversationDataset *GoogleCloudDialogflowV2beta1AnnotatedConversationDataset `json:"annotatedConversationDataset,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AnnotatedConversationDataset") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AnnotatedConversationDataset") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1LabelConversationResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1LabelConversationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV2beta1ListContextsResponse: The response
 // message for Contexts.ListContexts.
 type GoogleCloudDialogflowV2beta1ListContextsResponse struct {
@@ -7842,9 +8460,9 @@ type GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest struct {
 	// information in the payload. In particular, for the Dialogflow Phone
 	// Gateway integration, this field has the form: { "telephony": {
 	// "caller_id": "+18558363987" } } Note: The caller ID field
-	// (`caller_id`) will be redacted for Standard Edition agents and
-	// populated with the caller ID in [E.164
-	// format](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition
+	// (`caller_id`) will be redacted for Trial Edition agents and populated
+	// with the caller ID in [E.164
+	// format](https://en.wikipedia.org/wiki/E.164) for Essentials Edition
 	// agents.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
@@ -8003,7 +8621,7 @@ type GoogleCloudDialogflowV2beta1QueryParameters struct {
 	// SentimentAnalysisRequestConfig: Configures the type of sentiment
 	// analysis to perform. If not provided, sentiment analysis is not
 	// performed. Note: Sentiment Analysis is only currently available for
-	// Enterprise Edition agents.
+	// Essentials Edition agents.
 	SentimentAnalysisRequestConfig *GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig `json:"sentimentAnalysisRequestConfig,omitempty"`
 
 	// SessionEntityTypes: Additional session entity types to replace or
@@ -8390,9 +9008,9 @@ func (s *GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig) MarshalJSON
 // sentiment analysis. Sentiment analysis inspects user input and
 // identifies the prevailing subjective opinion, especially to determine
 // a user's attitude as positive, negative, or neutral. For
-// Participants.AnalyzeContent, it needs to be configured in
+// Participants.DetectIntent, it needs to be configured in
 // DetectIntentRequest.query_params. For
-// Participants.StreamingAnalyzeContent, it needs to be configured in
+// Participants.StreamingDetectIntent, it needs to be configured in
 // StreamingDetectIntentRequest.query_params. And for
 // Participants.AnalyzeContent and Participants.StreamingAnalyzeContent,
 // it needs to be configured in
@@ -8458,12 +9076,16 @@ type GoogleCloudDialogflowV2beta1SessionEntityType struct {
 	EntityOverrideMode string `json:"entityOverrideMode,omitempty"`
 
 	// Name: Required. The unique identifier of this session entity type.
-	// Format: `projects//agent/sessions//entityTypes/`, or
-	// `projects//agent/environments//users//sessions//entityTypes/`. If
-	// `Environment ID` is not specified, we assume default 'draft'
-	// environment. If `User ID` is not specified, we assume default '-'
-	// user. `` must be the display name of an existing entity type in the
-	// same agent that will be overridden or supplemented.
+	// Supported formats: - `projects//agent/sessions//entityTypes/` -
+	// `projects//locations//agent/sessions//entityTypes/` -
+	// `projects//agent/environments//users//sessions//entityTypes/` -
+	// `projects//locations//agent/environments/
+	// /users//sessions//entityTypes/` If `Location ID` is not specified we
+	// assume default 'us' location. If `Environment ID` is not specified,
+	// we assume default 'draft' environment. If `User ID` is not specified,
+	// we assume default '-' user. `` must be the display name of an
+	// existing entity type in the same agent that will be overridden or
+	// supplemented.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8560,7 +9182,8 @@ type GoogleCloudDialogflowV2beta1SubAgent struct {
 	// environment if `environment` is not set.
 	Environment string `json:"environment,omitempty"`
 
-	// Project: Required. The project of this agent. Format: `projects/`.
+	// Project: Required. The project of this agent. Format: `projects/` or
+	// `projects//locations/`.
 	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
@@ -8859,9 +9482,11 @@ type GoogleCloudDialogflowV2beta1WebhookRequest struct {
 	ResponseId string `json:"responseId,omitempty"`
 
 	// Session: The unique identifier of detectIntent request session. Can
-	// be used to identify end-user inside webhook implementation. Format:
-	// `projects//agent/sessions/`, or
-	// `projects//agent/environments//users//sessions/`.
+	// be used to identify end-user inside webhook implementation. Supported
+	// formats: - `projects//agent/sessions/, -
+	// `projects//locations//agent/sessions/`, -
+	// `projects//agent/environments//users//sessions/`, -
+	// `projects//locations//agent/environments//users//sessions/`,
 	Session string `json:"session,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -8980,15 +9605,25 @@ func (s *GoogleCloudDialogflowV2beta1WebhookResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV3alpha1CreateVersionOperationMetadata: Metadata
-// associated with the long running operation for
-// Versions.CreateVersion.
-type GoogleCloudDialogflowV3alpha1CreateVersionOperationMetadata struct {
-	// Version: Name of the created version. Format:
-	// `projects//locations//agents//flows//versions/`.
-	Version string `json:"version,omitempty"`
+// GoogleCloudKnowledgeV1alpha1OperationMetadata: Metadata in
+// google::longrunning::Operation.
+type GoogleCloudKnowledgeV1alpha1OperationMetadata struct {
+	// ErrorCode: The error codes from Manifold endpoints' last failures.
+	ErrorCode []int64 `json:"errorCode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Version") to
+	// Message: The failure messages from Manifold endpoints' last failures.
+	Message []string `json:"message,omitempty"`
+
+	// State: Required. The current state of this operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state. Should never be used.
+	//   "PENDING" - The operation has been created.
+	//   "RUNNING" - The operation is currently running.
+	//   "DONE" - The operation is done, either cancelled or completed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -8996,7 +9631,7 @@ type GoogleCloudDialogflowV3alpha1CreateVersionOperationMetadata struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Version") to include in
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -9005,71 +9640,8 @@ type GoogleCloudDialogflowV3alpha1CreateVersionOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDialogflowV3alpha1CreateVersionOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1CreateVersionOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV3alpha1ExportAgentResponse: The response
-// message for Agents.ExportAgent.
-type GoogleCloudDialogflowV3alpha1ExportAgentResponse struct {
-	// AgentContent: Uncompressed raw byte content for agent.
-	AgentContent string `json:"agentContent,omitempty"`
-
-	// AgentUri: The URI to a file containing the exported agent. This field
-	// is populated only if `agent_uri` is specified in ExportAgentRequest.
-	AgentUri string `json:"agentUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AgentContent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentContent") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV3alpha1ExportAgentResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1ExportAgentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV3alpha1ImportAgentResponse: The response
-// message for Agents.ImportAgent.
-type GoogleCloudDialogflowV3alpha1ImportAgentResponse struct {
-	// Agent: The unique identifier of the new agent. Format:
-	// `projects//locations//agents/`.
-	Agent string `json:"agent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Agent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Agent") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV3alpha1ImportAgentResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV3alpha1ImportAgentResponse
+func (s *GoogleCloudKnowledgeV1alpha1OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudKnowledgeV1alpha1OperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9229,10 +9801,11 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeLatLng: An object representing a latitude/longitude pair.
-// This is expressed as a pair of doubles representing degrees latitude
-// and degrees longitude. Unless specified otherwise, this must conform
-// to the WGS84 standard. Values must be within normalized ranges.
+// GoogleTypeLatLng: An object that represents a latitude/longitude
+// pair. This is expressed as a pair of doubles to represent degrees
+// latitude and degrees longitude. Unless specified otherwise, this must
+// conform to the WGS84 standard. Values must be within normalized
+// ranges.
 type GoogleTypeLatLng struct {
 	// Latitude: The latitude in degrees. It must be in the range [-90.0,
 	// +90.0].
@@ -9325,7 +9898,7 @@ func (c *ProjectsDeleteAgentCall) Header() http.Header {
 
 func (c *ProjectsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9393,7 +9966,7 @@ func (c *ProjectsDeleteAgentCall) Do(opts ...googleapi.CallOption) (*GoogleProto
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to delete is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to delete is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9467,7 +10040,7 @@ func (c *ProjectsGetAgentCall) Header() http.Header {
 
 func (c *ProjectsGetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9539,7 +10112,7 @@ func (c *ProjectsGetAgentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDia
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to fetch is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to fetch is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9611,7 +10184,7 @@ func (c *ProjectsSetAgentCall) Header() http.Header {
 
 func (c *ProjectsSetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9685,7 +10258,7 @@ func (c *ProjectsSetAgentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDia
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project of this agent. Format: `projects/`.",
+	//       "description": "Required. The project of this agent. Format: `projects/` or `projects//locations/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9759,7 +10332,7 @@ func (c *ProjectsAgentExportCall) Header() http.Header {
 
 func (c *ProjectsAgentExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9832,7 +10405,7 @@ func (c *ProjectsAgentExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to export is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to export is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9909,7 +10482,7 @@ func (c *ProjectsAgentGetFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsAgentGetFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9981,7 +10554,7 @@ func (c *ProjectsAgentGetFulfillmentCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the fulfillment. Format: `projects//agent/fulfillment`.",
+	//       "description": "Required. The name of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/fulfillment$",
 	//       "required": true,
@@ -10068,7 +10641,7 @@ func (c *ProjectsAgentGetValidationResultCall) Header() http.Header {
 
 func (c *ProjectsAgentGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10146,7 +10719,7 @@ func (c *ProjectsAgentGetValidationResultCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project that the agent is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10220,7 +10793,7 @@ func (c *ProjectsAgentImportCall) Header() http.Header {
 
 func (c *ProjectsAgentImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10293,7 +10866,7 @@ func (c *ProjectsAgentImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to import is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to import is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10369,7 +10942,7 @@ func (c *ProjectsAgentRestoreCall) Header() http.Header {
 
 func (c *ProjectsAgentRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10442,7 +11015,7 @@ func (c *ProjectsAgentRestoreCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to restore is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to restore is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10539,7 +11112,7 @@ func (c *ProjectsAgentSearchCall) Header() http.Header {
 
 func (c *ProjectsAgentSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10623,7 +11196,7 @@ func (c *ProjectsAgentSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project to list agents from. Format: `projects/`.",
+	//       "description": "Required. The project to list agents from. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10709,7 +11282,7 @@ func (c *ProjectsAgentTrainCall) Header() http.Header {
 
 func (c *ProjectsAgentTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10782,7 +11355,7 @@ func (c *ProjectsAgentTrainCall) Do(opts ...googleapi.CallOption) (*GoogleLongru
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to train is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to train is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10858,7 +11431,7 @@ func (c *ProjectsAgentUpdateFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsAgentUpdateFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10932,7 +11505,7 @@ func (c *ProjectsAgentUpdateFulfillmentCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the fulfillment. Format: `projects//agent/fulfillment`.",
+	//       "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/fulfillment$",
 	//       "required": true,
@@ -11006,7 +11579,7 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11079,7 +11652,7 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent`, - `projects//locations//agent`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -11148,7 +11721,7 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11221,7 +11794,7 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to update or create entity types in. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to update or create entity types in. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -11300,7 +11873,7 @@ func (c *ProjectsAgentEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11379,7 +11952,7 @@ func (c *ProjectsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to create a entity type for. Format: `projects//agent`.",
+	//       "description": "Required. The agent to create a entity type for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -11445,7 +12018,7 @@ func (c *ProjectsAgentEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11513,7 +12086,7 @@ func (c *ProjectsAgentEntityTypesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -11598,7 +12171,7 @@ func (c *ProjectsAgentEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11675,7 +12248,7 @@ func (c *ProjectsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the entity type. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -11774,7 +12347,7 @@ func (c *ProjectsAgentEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11863,7 +12436,7 @@ func (c *ProjectsAgentEntityTypesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to list all entity types from. Format: `projects//agent`.",
+	//       "description": "Required. The agent to list all entity types from. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -11967,7 +12540,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12046,7 +12619,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Format: `projects//agent/entityTypes/`.",
+	//       "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -12121,7 +12694,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12194,7 +12767,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to create entities in. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -12262,7 +12835,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12335,7 +12908,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to delete entries for. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to delete entries for. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -12405,7 +12978,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12478,7 +13051,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to update or create entities in. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to update or create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -12570,7 +13143,7 @@ func (c *ProjectsAgentEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12654,7 +13227,7 @@ func (c *ProjectsAgentEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent",
+	//       "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -12738,7 +13311,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12806,7 +13379,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDeleteContextsCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -12874,7 +13447,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) Header() http.H
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12949,7 +13522,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+	//       "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -13018,7 +13591,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13092,7 +13665,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsCreateCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -13158,7 +13731,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13226,7 +13799,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsDeleteCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -13300,7 +13873,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) Header() http.He
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13372,7 +13945,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsGetCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -13460,7 +14033,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) Header() http.H
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13544,7 +14117,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsListCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -13637,7 +14210,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Header() http.
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13711,7 +14284,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -13789,7 +14362,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) Header() h
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13864,7 +14437,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -13933,7 +14506,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) Header() h
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14001,7 +14574,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -14077,7 +14650,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Header() http
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14150,7 +14723,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -14241,7 +14814,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) Header() htt
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14326,7 +14899,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -14421,7 +14994,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Header() ht
 
 func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14496,7 +15069,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+	//       "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -14570,7 +15143,7 @@ func (c *ProjectsAgentIntentsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14643,7 +15216,7 @@ func (c *ProjectsAgentIntentsBatchDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -14712,7 +15285,7 @@ func (c *ProjectsAgentIntentsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14785,7 +15358,7 @@ func (c *ProjectsAgentIntentsBatchUpdateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to update or create intents in. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to update or create intents in. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -14876,7 +15449,7 @@ func (c *ProjectsAgentIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14968,7 +15541,7 @@ func (c *ProjectsAgentIntentsCreateCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to create a intent for. Format: `projects//agent`.",
+	//       "description": "Required. The agent to create a intent for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent$",
 	//       "required": true,
@@ -15035,7 +15608,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15103,7 +15676,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Format: `projects//agent/intents/`.",
+	//       "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -15200,7 +15773,7 @@ func (c *ProjectsAgentIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15290,7 +15863,7 @@ func (c *ProjectsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the intent. Format: `projects//agent/intents/`.",
+	//       "description": "Required. The name of the intent. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -15401,7 +15974,7 @@ func (c *ProjectsAgentIntentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15619,7 +16192,7 @@ func (c *ProjectsAgentIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15711,7 +16284,7 @@ func (c *ProjectsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format: `projects//agent/intents/`.",
+	//       "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -15787,7 +16360,7 @@ func (c *ProjectsAgentKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15938,7 +16511,7 @@ func (c *ProjectsAgentKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16087,7 +16660,7 @@ func (c *ProjectsAgentKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16199,6 +16772,25 @@ func (r *ProjectsAgentKnowledgeBasesService) List(parent string) *ProjectsAgentK
 	return c
 }
 
+// Filter sets the optional parameter "filter": The filter expression
+// used to filter knowledge bases returned by the list method. The
+// expression has the following syntax: [AND ] ... The following fields
+// and operators are supported: * display_name with has(:) operator *
+// language_code with equals(=) operator Examples: *
+// 'language_code=en-us' matches knowledge bases with en-us language
+// code. * 'display_name:articles' matches knowledge bases whose display
+// name contains "articles". * 'display_name:"Best Articles"' matches
+// knowledge bases whose display name contains "Best Articles". *
+// 'language_code=en-gb AND display_name=articles' matches all knowledge
+// bases whose display name contains "articles" and whose language code
+// is "en-gb". Note: An empty filter string (i.e. "") is a no-op and
+// will result in no filtering. For more information about filtering,
+// see [API Filtering](https://aip.dev/160).
+func (c *ProjectsAgentKnowledgeBasesListCall) Filter(filter string) *ProjectsAgentKnowledgeBasesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of items to return in a single page. By default 10 and at most 100.
 func (c *ProjectsAgentKnowledgeBasesListCall) PageSize(pageSize int64) *ProjectsAgentKnowledgeBasesListCall {
@@ -16250,7 +16842,7 @@ func (c *ProjectsAgentKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16323,14 +16915,19 @@ func (c *ProjectsAgentKnowledgeBasesListCall) Do(opts ...googleapi.CallOption) (
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression used to filter knowledge bases returned by the list method. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * display_name with has(:) operator * language_code with equals(=) operator Examples: * 'language_code=en-us' matches knowledge bases with en-us language code. * 'display_name:articles' matches knowledge bases whose display name contains \"articles\". * 'display_name:\"Best Articles\"' matches knowledge bases whose display name contains \"Best Articles\". * 'language_code=en-gb AND display_name=articles' matches all knowledge bases whose display name contains \"articles\" and whose language code is \"en-gb\". Note: An empty filter string (i.e. \"\") is a no-op and will result in no filtering. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return in a single page. By default 10 and at most 100.",
+	//       "description": "The maximum number of items to return in a single page. By default 10 and at most 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "description": "The next_page_token value returned from a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16432,7 +17029,7 @@ func (c *ProjectsAgentKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16583,7 +17180,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16656,7 +17253,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The knoweldge base to create a document for. Format: `projects//knowledgeBases/`.",
+	//       "description": "Required. The knowledge base to create a document for. Format: `projects//knowledgeBases/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/knowledgeBases/[^/]+$",
 	//       "required": true,
@@ -16724,7 +17321,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16868,7 +17465,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16979,6 +17576,22 @@ func (r *ProjectsAgentKnowledgeBasesDocumentsService) List(parent string) *Proje
 	return c
 }
 
+// Filter sets the optional parameter "filter": The filter expression
+// used to filter documents returned by the list method. The expression
+// has the following syntax: [AND ] ... The following fields and
+// operators are supported: * knowledge_types with has(:) operator *
+// display_name with has(:) operator * state with equals(=) operator
+// Examples: * "knowledge_types:FAQ" matches documents with FAQ
+// knowledge type. * "display_name:customer" matches documents whose
+// display name contains "customer". * "state=ACTIVE" matches documents
+// with ACTIVE state. * "knowledge_types:FAQ AND state=ACTIVE" matches
+// all active FAQ documents. For more information about filtering, see
+// [API Filtering](https://aip.dev/160).
+func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) Filter(filter string) *ProjectsAgentKnowledgeBasesDocumentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of items to return in a single page. By default 10 and at most 100.
 func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) PageSize(pageSize int64) *ProjectsAgentKnowledgeBasesDocumentsListCall {
@@ -17030,7 +17643,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17102,6 +17715,11 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsListCall) Do(opts ...googleapi.Call
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression used to filter documents returned by the list method. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * knowledge_types with has(:) operator * display_name with has(:) operator * state with equals(=) operator Examples: * \"knowledge_types:FAQ\" matches documents with FAQ knowledge type. * \"display_name:customer\" matches documents whose display name contains \"customer\". * \"state=ACTIVE\" matches documents with ACTIVE state. * \"knowledge_types:FAQ AND state=ACTIVE\" matches all active FAQ documents. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of items to return in a single page. By default 10 and at most 100.",
 	//       "format": "int32",
@@ -17211,7 +17829,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17364,7 +17982,7 @@ func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) Header() http.Header {
 
 func (c *ProjectsAgentKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17503,7 +18121,7 @@ func (c *ProjectsAgentSessionsDeleteContextsCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17571,7 +18189,7 @@ func (c *ProjectsAgentSessionsDeleteContextsCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -17639,7 +18257,7 @@ func (c *ProjectsAgentSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17714,7 +18332,7 @@ func (c *ProjectsAgentSessionsDetectIntentCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+	//       "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -17783,7 +18401,7 @@ func (c *ProjectsAgentSessionsContextsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17857,7 +18475,7 @@ func (c *ProjectsAgentSessionsContextsCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -17923,7 +18541,7 @@ func (c *ProjectsAgentSessionsContextsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17991,7 +18609,7 @@ func (c *ProjectsAgentSessionsContextsDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -18065,7 +18683,7 @@ func (c *ProjectsAgentSessionsContextsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18137,7 +18755,7 @@ func (c *ProjectsAgentSessionsContextsGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -18225,7 +18843,7 @@ func (c *ProjectsAgentSessionsContextsListCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18309,7 +18927,7 @@ func (c *ProjectsAgentSessionsContextsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -18402,7 +19020,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18476,7 +19094,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -18554,7 +19172,7 @@ func (c *ProjectsAgentSessionsEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18629,7 +19247,7 @@ func (c *ProjectsAgentSessionsEntityTypesCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -18698,7 +19316,7 @@ func (c *ProjectsAgentSessionsEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18766,7 +19384,7 @@ func (c *ProjectsAgentSessionsEntityTypesDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -18842,7 +19460,7 @@ func (c *ProjectsAgentSessionsEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18915,7 +19533,7 @@ func (c *ProjectsAgentSessionsEntityTypesGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -19006,7 +19624,7 @@ func (c *ProjectsAgentSessionsEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19091,7 +19709,7 @@ func (c *ProjectsAgentSessionsEntityTypesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -19186,7 +19804,7 @@ func (c *ProjectsAgentSessionsEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19261,7 +19879,7 @@ func (c *ProjectsAgentSessionsEntityTypesPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+	//       "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -19337,7 +19955,7 @@ func (c *ProjectsKnowledgeBasesCreateCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19488,7 +20106,7 @@ func (c *ProjectsKnowledgeBasesDeleteCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19637,7 +20255,7 @@ func (c *ProjectsKnowledgeBasesGetCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19749,6 +20367,25 @@ func (r *ProjectsKnowledgeBasesService) List(parent string) *ProjectsKnowledgeBa
 	return c
 }
 
+// Filter sets the optional parameter "filter": The filter expression
+// used to filter knowledge bases returned by the list method. The
+// expression has the following syntax: [AND ] ... The following fields
+// and operators are supported: * display_name with has(:) operator *
+// language_code with equals(=) operator Examples: *
+// 'language_code=en-us' matches knowledge bases with en-us language
+// code. * 'display_name:articles' matches knowledge bases whose display
+// name contains "articles". * 'display_name:"Best Articles"' matches
+// knowledge bases whose display name contains "Best Articles". *
+// 'language_code=en-gb AND display_name=articles' matches all knowledge
+// bases whose display name contains "articles" and whose language code
+// is "en-gb". Note: An empty filter string (i.e. "") is a no-op and
+// will result in no filtering. For more information about filtering,
+// see [API Filtering](https://aip.dev/160).
+func (c *ProjectsKnowledgeBasesListCall) Filter(filter string) *ProjectsKnowledgeBasesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of items to return in a single page. By default 10 and at most 100.
 func (c *ProjectsKnowledgeBasesListCall) PageSize(pageSize int64) *ProjectsKnowledgeBasesListCall {
@@ -19800,7 +20437,7 @@ func (c *ProjectsKnowledgeBasesListCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19873,14 +20510,19 @@ func (c *ProjectsKnowledgeBasesListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression used to filter knowledge bases returned by the list method. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * display_name with has(:) operator * language_code with equals(=) operator Examples: * 'language_code=en-us' matches knowledge bases with en-us language code. * 'display_name:articles' matches knowledge bases whose display name contains \"articles\". * 'display_name:\"Best Articles\"' matches knowledge bases whose display name contains \"Best Articles\". * 'language_code=en-gb AND display_name=articles' matches all knowledge bases whose display name contains \"articles\" and whose language code is \"en-gb\". Note: An empty filter string (i.e. \"\") is a no-op and will result in no filtering. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return in a single page. By default 10 and at most 100.",
+	//       "description": "The maximum number of items to return in a single page. By default 10 and at most 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. The next_page_token value returned from a previous list request.",
+	//       "description": "The next_page_token value returned from a previous list request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19982,7 +20624,7 @@ func (c *ProjectsKnowledgeBasesPatchCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20133,7 +20775,7 @@ func (c *ProjectsKnowledgeBasesDocumentsCreateCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20206,7 +20848,7 @@ func (c *ProjectsKnowledgeBasesDocumentsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The knoweldge base to create a document for. Format: `projects//knowledgeBases/`.",
+	//       "description": "Required. The knowledge base to create a document for. Format: `projects//knowledgeBases/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/knowledgeBases/[^/]+$",
 	//       "required": true,
@@ -20274,7 +20916,7 @@ func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20418,7 +21060,7 @@ func (c *ProjectsKnowledgeBasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20529,6 +21171,22 @@ func (r *ProjectsKnowledgeBasesDocumentsService) List(parent string) *ProjectsKn
 	return c
 }
 
+// Filter sets the optional parameter "filter": The filter expression
+// used to filter documents returned by the list method. The expression
+// has the following syntax: [AND ] ... The following fields and
+// operators are supported: * knowledge_types with has(:) operator *
+// display_name with has(:) operator * state with equals(=) operator
+// Examples: * "knowledge_types:FAQ" matches documents with FAQ
+// knowledge type. * "display_name:customer" matches documents whose
+// display name contains "customer". * "state=ACTIVE" matches documents
+// with ACTIVE state. * "knowledge_types:FAQ AND state=ACTIVE" matches
+// all active FAQ documents. For more information about filtering, see
+// [API Filtering](https://aip.dev/160).
+func (c *ProjectsKnowledgeBasesDocumentsListCall) Filter(filter string) *ProjectsKnowledgeBasesDocumentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of items to return in a single page. By default 10 and at most 100.
 func (c *ProjectsKnowledgeBasesDocumentsListCall) PageSize(pageSize int64) *ProjectsKnowledgeBasesDocumentsListCall {
@@ -20580,7 +21238,7 @@ func (c *ProjectsKnowledgeBasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20652,6 +21310,11 @@ func (c *ProjectsKnowledgeBasesDocumentsListCall) Do(opts ...googleapi.CallOptio
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression used to filter documents returned by the list method. The expression has the following syntax: [AND ] ... The following fields and operators are supported: * knowledge_types with has(:) operator * display_name with has(:) operator * state with equals(=) operator Examples: * \"knowledge_types:FAQ\" matches documents with FAQ knowledge type. * \"display_name:customer\" matches documents whose display name contains \"customer\". * \"state=ACTIVE\" matches documents with ACTIVE state. * \"knowledge_types:FAQ AND state=ACTIVE\" matches all active FAQ documents. For more information about filtering, see [API Filtering](https://aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of items to return in a single page. By default 10 and at most 100.",
 	//       "format": "int32",
@@ -20761,7 +21424,7 @@ func (c *ProjectsKnowledgeBasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20914,7 +21577,7 @@ func (c *ProjectsKnowledgeBasesDocumentsReloadCall) Header() http.Header {
 
 func (c *ProjectsKnowledgeBasesDocumentsReloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21053,7 +21716,7 @@ func (c *ProjectsLocationsDeleteAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21121,7 +21784,7 @@ func (c *ProjectsLocationsDeleteAgentCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to delete is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to delete is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21195,7 +21858,7 @@ func (c *ProjectsLocationsGetAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21267,7 +21930,7 @@ func (c *ProjectsLocationsGetAgentCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to fetch is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to fetch is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21339,7 +22002,7 @@ func (c *ProjectsLocationsSetAgentCall) Header() http.Header {
 
 func (c *ProjectsLocationsSetAgentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21413,7 +22076,7 @@ func (c *ProjectsLocationsSetAgentCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project of this agent. Format: `projects/`.",
+	//       "description": "Required. The project of this agent. Format: `projects/` or `projects//locations/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21487,7 +22150,7 @@ func (c *ProjectsLocationsAgentExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21560,7 +22223,7 @@ func (c *ProjectsLocationsAgentExportCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to export is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to export is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21637,7 +22300,7 @@ func (c *ProjectsLocationsAgentGetFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentGetFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21709,7 +22372,7 @@ func (c *ProjectsLocationsAgentGetFulfillmentCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the fulfillment. Format: `projects//agent/fulfillment`.",
+	//       "description": "Required. The name of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
 	//       "required": true,
@@ -21796,7 +22459,7 @@ func (c *ProjectsLocationsAgentGetValidationResultCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21874,7 +22537,7 @@ func (c *ProjectsLocationsAgentGetValidationResultCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project that the agent is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21948,7 +22611,7 @@ func (c *ProjectsLocationsAgentImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22021,7 +22684,7 @@ func (c *ProjectsLocationsAgentImportCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to import is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to import is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22097,7 +22760,7 @@ func (c *ProjectsLocationsAgentRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22170,7 +22833,7 @@ func (c *ProjectsLocationsAgentRestoreCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to restore is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to restore is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22267,7 +22930,7 @@ func (c *ProjectsLocationsAgentSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22351,7 +23014,7 @@ func (c *ProjectsLocationsAgentSearchCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project to list agents from. Format: `projects/`.",
+	//       "description": "Required. The project to list agents from. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22437,7 +23100,7 @@ func (c *ProjectsLocationsAgentTrainCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22510,7 +23173,7 @@ func (c *ProjectsLocationsAgentTrainCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project that the agent to train is associated with. Format: `projects/`.",
+	//       "description": "Required. The project that the agent to train is associated with. Format: `projects/` or `projects//locations/`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22586,7 +23249,7 @@ func (c *ProjectsLocationsAgentUpdateFulfillmentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentUpdateFulfillmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22660,7 +23323,7 @@ func (c *ProjectsLocationsAgentUpdateFulfillmentCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the fulfillment. Format: `projects//agent/fulfillment`.",
+	//       "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
 	//       "required": true,
@@ -22734,7 +23397,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22807,7 +23470,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent`, - `projects//locations//agent`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -22876,7 +23539,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22949,7 +23612,7 @@ func (c *ProjectsLocationsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to update or create entity types in. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to update or create entity types in. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -23028,7 +23691,7 @@ func (c *ProjectsLocationsAgentEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23107,7 +23770,7 @@ func (c *ProjectsLocationsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to create a entity type for. Format: `projects//agent`.",
+	//       "description": "Required. The agent to create a entity type for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -23173,7 +23836,7 @@ func (c *ProjectsLocationsAgentEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23241,7 +23904,7 @@ func (c *ProjectsLocationsAgentEntityTypesDeleteCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -23326,7 +23989,7 @@ func (c *ProjectsLocationsAgentEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23403,7 +24066,7 @@ func (c *ProjectsLocationsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the entity type. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -23502,7 +24165,7 @@ func (c *ProjectsLocationsAgentEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23591,7 +24254,7 @@ func (c *ProjectsLocationsAgentEntityTypesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to list all entity types from. Format: `projects//agent`.",
+	//       "description": "Required. The agent to list all entity types from. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -23695,7 +24358,7 @@ func (c *ProjectsLocationsAgentEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23774,7 +24437,7 @@ func (c *ProjectsLocationsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Format: `projects//agent/entityTypes/`.",
+	//       "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType and EntityTypes.BatchUpdateEntityTypes methods. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -23849,7 +24512,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23922,7 +24585,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchCreateCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to create entities in. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -23990,7 +24653,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24063,7 +24726,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchDeleteCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to delete entries for. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to delete entries for. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -24133,7 +24796,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) Header() http
 
 func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24206,7 +24869,7 @@ func (c *ProjectsLocationsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to update or create entities in. Format: `projects//agent/entityTypes/`.",
+	//       "description": "Required. The name of the entity type to update or create entities in. Supported formats: - `projects//agent/entityTypes/` - `projects//locations//agent/entityTypes/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -24298,7 +24961,7 @@ func (c *ProjectsLocationsAgentEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24382,7 +25045,7 @@ func (c *ProjectsLocationsAgentEnvironmentsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent",
+	//       "description": "Required. The agent to list all environments from. Format: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -24466,7 +25129,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24534,7 +25197,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDeleteContextsCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -24602,7 +25265,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) Header
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24677,7 +25340,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsDetectIntentCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+	//       "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -24746,7 +25409,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24820,7 +25483,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsCreateCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -24886,7 +25549,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24954,7 +25617,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsDeleteCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -25028,7 +25691,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) Header(
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25100,7 +25763,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsGetCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -25188,7 +25851,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) Header
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25272,7 +25935,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsListCall) Do(opt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -25365,7 +26028,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Heade
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25439,7 +26102,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsContextsPatchCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -25517,7 +26180,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) H
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25592,7 +26255,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesCreateCall) D
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -25661,7 +26324,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) H
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25729,7 +26392,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesDeleteCall) D
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -25805,7 +26468,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Head
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25878,7 +26541,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesGetCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -25969,7 +26632,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) Hea
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26054,7 +26717,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesListCall) Do(
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -26149,7 +26812,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) He
 
 func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26224,7 +26887,7 @@ func (c *ProjectsLocationsAgentEnvironmentsUsersSessionsEntityTypesPatchCall) Do
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+	//       "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -26298,7 +26961,7 @@ func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26371,7 +27034,7 @@ func (c *ProjectsLocationsAgentIntentsBatchDeleteCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to delete all entities types for. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to delete all entities types for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -26440,7 +27103,7 @@ func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26513,7 +27176,7 @@ func (c *ProjectsLocationsAgentIntentsBatchUpdateCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the agent to update or create intents in. Format: `projects//agent`.",
+	//       "description": "Required. The name of the agent to update or create intents in. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -26604,7 +27267,7 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26696,7 +27359,7 @@ func (c *ProjectsLocationsAgentIntentsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The agent to create a intent for. Format: `projects//agent`.",
+	//       "description": "Required. The agent to create a intent for. Supported formats: - `projects//agent` - `projects//locations//agent`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent$",
 	//       "required": true,
@@ -26763,7 +27426,7 @@ func (c *ProjectsLocationsAgentIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26831,7 +27494,7 @@ func (c *ProjectsLocationsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Format: `projects//agent/intents/`.",
+	//       "description": "Required. The name of the intent to delete. If this intent has direct or indirect followup intents, we also delete them. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -26928,7 +27591,7 @@ func (c *ProjectsLocationsAgentIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27018,7 +27681,7 @@ func (c *ProjectsLocationsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the intent. Format: `projects//agent/intents/`.",
+	//       "description": "Required. The name of the intent. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -27129,7 +27792,7 @@ func (c *ProjectsLocationsAgentIntentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27347,7 +28010,7 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27439,7 +28102,7 @@ func (c *ProjectsLocationsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Format: `projects//agent/intents/`.",
+	//       "description": "Optional. The unique identifier of this intent. Required for Intents.UpdateIntent and Intents.BatchUpdateIntents methods. Supported formats: - `projects//agent/intents/` - `projects//locations//agent/intents/`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -27511,7 +28174,7 @@ func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27579,7 +28242,7 @@ func (c *ProjectsLocationsAgentSessionsDeleteContextsCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the session to delete all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session to delete all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -27647,7 +28310,7 @@ func (c *ProjectsLocationsAgentSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27722,7 +28385,7 @@ func (c *ProjectsLocationsAgentSessionsDetectIntentCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
+	//       "description": "Required. The name of the session this query is sent to. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -27791,7 +28454,7 @@ func (c *ProjectsLocationsAgentSessionsContextsCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsContextsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27865,7 +28528,7 @@ func (c *ProjectsLocationsAgentSessionsContextsCreateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a context for. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a context for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -27931,7 +28594,7 @@ func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27999,7 +28662,7 @@ func (c *ProjectsLocationsAgentSessionsContextsDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context to delete. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context to delete. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -28073,7 +28736,7 @@ func (c *ProjectsLocationsAgentSessionsContextsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28145,7 +28808,7 @@ func (c *ProjectsLocationsAgentSessionsContextsGetCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the context. Format: `projects//agent/sessions//contexts/` or `projects//agent/environments//users//sessions//contexts/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -28233,7 +28896,7 @@ func (c *ProjectsLocationsAgentSessionsContextsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28317,7 +28980,7 @@ func (c *ProjectsLocationsAgentSessionsContextsListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all contexts from. Format: `projects//agent/sessions/` or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all contexts from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -28410,7 +29073,7 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentSessionsContextsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28484,7 +29147,7 @@ func (c *ProjectsLocationsAgentSessionsContextsPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format: `projects//agent/sessions//contexts/`, or `projects//agent/environments//users//sessions//contexts/`. The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
+	//       "description": "Required. The unique identifier of the context. Supported formats: - `projects//agent/sessions//contexts/`, - `projects//locations//agent/sessions//contexts/`, - `projects//agent/environments//users//sessions//contexts/`, - `projects//locations//agent/environments//users//sessions//contexts/`, The `Context ID` is always converted to lowercase, may only contain characters in a-zA-Z0-9_-% and may be at most 250 bytes long. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. The following context names are reserved for internal use by Dialogflow. You should not use these contexts or create contexts with these names: * `__system_counters__` * `*_id_dialog_context` * `*_dialog_params_size`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,
@@ -28562,7 +29225,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28637,7 +29300,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesCreateCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The session to create a session entity type for. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to create a session entity type for. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -28706,7 +29369,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28774,7 +29437,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesDeleteCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the entity type to delete. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the entity type to delete. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -28850,7 +29513,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28923,7 +29586,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesGetCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the session entity type. Format: `projects//agent/sessions//entityTypes/` or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The name of the session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -29014,7 +29677,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) Header() http.Header
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29099,7 +29762,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesListCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The session to list all session entity types from. Format: `projects//agent/sessions/` or `projects//agent/environments//users// sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
+	//       "description": "Required. The session to list all session entity types from. Supported formats: - `projects//agent/sessions/, - `projects//locations//agent/sessions/`, - `projects//agent/environments//users//sessions/`, - `projects//locations//agent/environments//users//sessions/`, If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,
@@ -29194,7 +29857,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29269,7 +29932,7 @@ func (c *ProjectsLocationsAgentSessionsEntityTypesPatchCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format: `projects//agent/sessions//entityTypes/`, or `projects//agent/environments//users//sessions//entityTypes/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
+	//       "description": "Required. The unique identifier of this session entity type. Supported formats: - `projects//agent/sessions//entityTypes/` - `projects//locations//agent/sessions//entityTypes/` - `projects//agent/environments//users//sessions//entityTypes/` - `projects//locations//agent/environments/ /users//sessions//entityTypes/` If `Location ID` is not specified we assume default 'us' location. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we assume default '-' user. `` must be the display name of an existing entity type in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,
@@ -29350,7 +30013,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29494,7 +30157,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29669,7 +30332,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29850,7 +30513,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29994,7 +30657,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30169,7 +30832,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200827")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1,5 +1,13 @@
 # Changes
 
+## [0.35.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.34.0...v0.35.0) (2020-11-06)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#743](https://www.github.com/googleapis/google-api-go-client/issues/743) [#741](https://www.github.com/googleapis/google-api-go-client/issues/741) [#739](https://www.github.com/googleapis/google-api-go-client/issues/739) [#737](https://www.github.com/googleapis/google-api-go-client/issues/737) [#735](https://www.github.com/googleapis/google-api-go-client/issues/735) [#733](https://www.github.com/googleapis/google-api-go-client/issues/733) [#730](https://www.github.com/googleapis/google-api-go-client/issues/730) [#729](https://www.github.com/googleapis/google-api-go-client/issues/729) [#724](https://www.github.com/googleapis/google-api-go-client/issues/724)
+* **internaloption:** add EnableDirectPath internaloption ([#732](https://www.github.com/googleapis/google-api-go-client/issues/732)) ([baf33b2](https://www.github.com/googleapis/google-api-go-client/commit/baf33b2baf0a1a5459e7b4ff193fa47117829169))
+
 ## v0.34.0
 
 - transport:

@@ -263,8 +263,6 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// BindingId: A client-specified ID for this binding. Expected to be
-	// globally unique to support the internal bindings-by-ID API.
 	BindingId string `json:"bindingId,omitempty"`
 
 	// Condition: The condition that is associated with this binding. If the
@@ -339,6 +337,98 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudresourcemanagerGoogleCloudResourcemanagerV2alpha1FolderOperation:
+//  Metadata describing a long running folder operation
+type CloudresourcemanagerGoogleCloudResourcemanagerV2alpha1FolderOperation struct {
+	// DestinationParent: The resource name of the folder or organization we
+	// are either creating the folder under or moving the folder to.
+	DestinationParent string `json:"destinationParent,omitempty"`
+
+	// DisplayName: The display name of the folder.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// OperationType: The type of this operation.
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type not specified.
+	//   "CREATE" - A create folder operation.
+	//   "MOVE" - A move folder operation.
+	OperationType string `json:"operationType,omitempty"`
+
+	// SourceParent: The resource name of the folder's parent. Only
+	// applicable when the operation_type is MOVE.
+	SourceParent string `json:"sourceParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationParent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationParent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudresourcemanagerGoogleCloudResourcemanagerV2alpha1FolderOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudresourcemanagerGoogleCloudResourcemanagerV2alpha1FolderOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudresourcemanagerGoogleCloudResourcemanagerV2beta1FolderOperation:
+// Metadata describing a long running folder operation
+type CloudresourcemanagerGoogleCloudResourcemanagerV2beta1FolderOperation struct {
+	// DestinationParent: The resource name of the folder or organization we
+	// are either creating the folder under or moving the folder to.
+	DestinationParent string `json:"destinationParent,omitempty"`
+
+	// DisplayName: The display name of the folder.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// OperationType: The type of this operation.
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type not specified.
+	//   "CREATE" - A create folder operation.
+	//   "MOVE" - A move folder operation.
+	OperationType string `json:"operationType,omitempty"`
+
+	// SourceParent: The resource name of the folder's parent. Only
+	// applicable when the operation_type is MOVE.
+	SourceParent string `json:"sourceParent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationParent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationParent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudresourcemanagerGoogleCloudResourcemanagerV2beta1FolderOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudresourcemanagerGoogleCloudResourcemanagerV2beta1FolderOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression
 // Language (CEL) syntax. CEL is a C-like expression language. The
 // syntax and semantics of CEL are documented at
@@ -406,13 +496,13 @@ type Folder struct {
 	// Assigned by the server.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DisplayName: The folder’s display name. A folder’s display name
-	// must be unique amongst its siblings, e.g. no two folders with the
-	// same parent can share the same display name. The display name must
-	// start and end with a letter or digit, may contain letters, digits,
-	// spaces, hyphens and underscores and can be no longer than 30
-	// characters. This is captured by the regular expression:
-	// [\p{L}\p{N}]([\p{L}\p{N}_- ]{0,28}[\p{L}\p{N}])?.
+	// DisplayName: The folder's display name. A folder's display name must
+	// be unique amongst its siblings, e.g. no two folders with the same
+	// parent can share the same display name. The display name must start
+	// and end with a letter or digit, may contain letters, digits, spaces,
+	// hyphens and underscores and can be no longer than 30 characters. This
+	// is captured by the regular expression: `[\p{L}\p{N}]([\p{L}\p{N}_-
+	// ]{0,28}[\p{L}\p{N}])?`.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LifecycleState: Output only. The lifecycle state of the folder.
@@ -430,8 +520,8 @@ type Folder struct {
 	// `folders/{folder_id}`, for example: "folders/1234".
 	Name string `json:"name,omitempty"`
 
-	// Parent: Required. The Folder’s parent's resource name. Updates to
-	// the folder's parent must be performed via MoveFolder.
+	// Parent: Required. The Folder's parent's resource name. Updates to the
+	// folder's parent must be performed via MoveFolder.
 	Parent string `json:"parent,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1152,17 +1242,17 @@ type FoldersCreateCall struct {
 // populated with the created Folder. In order to succeed, the addition
 // of this new Folder must not violate the Folder naming, height or
 // fanout constraints. + The Folder's display_name must be distinct from
-// all other Folder's that share its parent. + The addition of the
-// Folder must not cause the active Folder hierarchy to exceed a height
-// of 10. Note, the full active + deleted Folder hierarchy is allowed to
-// reach a height of 20; this provides additional headroom when moving
-// folders that contain deleted folders. + The addition of the Folder
-// must not cause the total number of Folders under its parent to exceed
-// 300. If the operation fails due to a folder constraint violation,
-// some errors may be returned by the CreateFolder request, with status
-// code FAILED_PRECONDITION and an error description. Other folder
-// constraint violations will be communicated in the Operation, with the
-// specific PreconditionFailure returned via the details list in the
+// all other Folders that share its parent. + The addition of the Folder
+// must not cause the active Folder hierarchy to exceed a height of 10.
+// Note, the full active + deleted Folder hierarchy is allowed to reach
+// a height of 20; this provides additional headroom when moving folders
+// that contain deleted folders. + The addition of the Folder must not
+// cause the total number of Folders under its parent to exceed 300. If
+// the operation fails due to a folder constraint violation, some errors
+// may be returned by the CreateFolder request, with status code
+// FAILED_PRECONDITION and an error description. Other folder constraint
+// violations will be communicated in the Operation, with the specific
+// PreconditionFailure returned via the details list in the
 // Operation.error field. The caller must have
 // `resourcemanager.folders.create` permission on the identified parent.
 func (r *FoldersService) Create(folder *Folder) *FoldersCreateCall {
@@ -1206,7 +1296,7 @@ func (c *FoldersCreateCall) Header() http.Header {
 
 func (c *FoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1267,7 +1357,7 @@ func (c *FoldersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Folder in the resource hierarchy. Returns an Operation which can be used to track the progress of the folder creation workflow. Upon success the Operation.response field will be populated with the created Folder. In order to succeed, the addition of this new Folder must not violate the Folder naming, height or fanout constraints. + The Folder's display_name must be distinct from all other Folder's that share its parent. + The addition of the Folder must not cause the active Folder hierarchy to exceed a height of 10. Note, the full active + deleted Folder hierarchy is allowed to reach a height of 20; this provides additional headroom when moving folders that contain deleted folders. + The addition of the Folder must not cause the total number of Folders under its parent to exceed 300. If the operation fails due to a folder constraint violation, some errors may be returned by the CreateFolder request, with status code FAILED_PRECONDITION and an error description. Other folder constraint violations will be communicated in the Operation, with the specific PreconditionFailure returned via the details list in the Operation.error field. The caller must have `resourcemanager.folders.create` permission on the identified parent.",
+	//   "description": "Creates a Folder in the resource hierarchy. Returns an Operation which can be used to track the progress of the folder creation workflow. Upon success the Operation.response field will be populated with the created Folder. In order to succeed, the addition of this new Folder must not violate the Folder naming, height or fanout constraints. + The Folder's display_name must be distinct from all other Folders that share its parent. + The addition of the Folder must not cause the active Folder hierarchy to exceed a height of 10. Note, the full active + deleted Folder hierarchy is allowed to reach a height of 20; this provides additional headroom when moving folders that contain deleted folders. + The addition of the Folder must not cause the total number of Folders under its parent to exceed 300. If the operation fails due to a folder constraint violation, some errors may be returned by the CreateFolder request, with status code FAILED_PRECONDITION and an error description. Other folder constraint violations will be communicated in the Operation, with the specific PreconditionFailure returned via the details list in the Operation.error field. The caller must have `resourcemanager.folders.create` permission on the identified parent.",
 	//   "flatPath": "v2/folders",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.folders.create",
@@ -1342,7 +1432,7 @@ func (c *FoldersDeleteCall) Header() http.Header {
 
 func (c *FoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1486,7 +1576,7 @@ func (c *FoldersGetCall) Header() http.Header {
 
 func (c *FoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1627,7 +1717,7 @@ func (c *FoldersGetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1814,7 +1904,7 @@ func (c *FoldersListCall) Header() http.Header {
 
 func (c *FoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1993,7 +2083,7 @@ func (c *FoldersMoveCall) Header() http.Header {
 
 func (c *FoldersMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2104,8 +2194,8 @@ type FoldersPatchCall struct {
 // CreateFolder documentation. The Folder's display name must start and
 // end with a letter or digit, may contain letters, digits, spaces,
 // hyphens and underscores and can be no longer than 30 characters. This
-// is captured by the regular expression: [\p{L}\p{N}]([\p{L}\p{N}_-
-// ]{0,28}[\p{L}\p{N}])?. The caller must have
+// is captured by the regular expression: `[\p{L}\p{N}]([\p{L}\p{N}_-
+// ]{0,28}[\p{L}\p{N}])?`. The caller must have
 // `resourcemanager.folders.update` permission on the identified folder.
 // If the update fails due to the unique name constraint then a
 // PreconditionFailure explaining this violation will be returned in the
@@ -2151,7 +2241,7 @@ func (c *FoldersPatchCall) Header() http.Header {
 
 func (c *FoldersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2215,7 +2305,7 @@ func (c *FoldersPatchCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a Folder, changing its display_name. Changes to the folder display_name will be rejected if they violate either the display_name formatting rules or naming constraints described in the CreateFolder documentation. The Folder's display name must start and end with a letter or digit, may contain letters, digits, spaces, hyphens and underscores and can be no longer than 30 characters. This is captured by the regular expression: [\\p{L}\\p{N}]([\\p{L}\\p{N}_- ]{0,28}[\\p{L}\\p{N}])?. The caller must have `resourcemanager.folders.update` permission on the identified folder. If the update fails due to the unique name constraint then a PreconditionFailure explaining this violation will be returned in the Status.details field.",
+	//   "description": "Updates a Folder, changing its display_name. Changes to the folder display_name will be rejected if they violate either the display_name formatting rules or naming constraints described in the CreateFolder documentation. The Folder's display name must start and end with a letter or digit, may contain letters, digits, spaces, hyphens and underscores and can be no longer than 30 characters. This is captured by the regular expression: `[\\p{L}\\p{N}]([\\p{L}\\p{N}_- ]{0,28}[\\p{L}\\p{N}])?`. The caller must have `resourcemanager.folders.update` permission on the identified folder. If the update fails due to the unique name constraint then a PreconditionFailure explaining this violation will be returned in the Status.details field.",
 	//   "flatPath": "v2/folders/{foldersId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudresourcemanager.folders.patch",
@@ -2299,7 +2389,7 @@ func (c *FoldersSearchCall) Header() http.Header {
 
 func (c *FoldersSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2452,7 +2542,7 @@ func (c *FoldersSetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2595,7 +2685,7 @@ func (c *FoldersTestIamPermissionsCall) Header() http.Header {
 
 func (c *FoldersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2742,7 +2832,7 @@ func (c *FoldersUndeleteCall) Header() http.Header {
 
 func (c *FoldersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2893,7 +2983,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -3065,7 +3065,7 @@ func (c *DevicesCancelWipeCall) Header() http.Header {
 
 func (c *DevicesCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3200,7 +3200,7 @@ func (c *DevicesCreateCall) Header() http.Header {
 
 func (c *DevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3333,7 +3333,7 @@ func (c *DevicesDeleteCall) Header() http.Header {
 
 func (c *DevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3485,7 +3485,7 @@ func (c *DevicesGetCall) Header() http.Header {
 
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3691,7 +3691,7 @@ func (c *DevicesListCall) Header() http.Header {
 
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3873,7 +3873,7 @@ func (c *DevicesWipeCall) Header() http.Header {
 
 func (c *DevicesWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4010,7 +4010,7 @@ func (c *DevicesDeviceUsersApproveCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4147,7 +4147,7 @@ func (c *DevicesDeviceUsersBlockCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersBlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4286,7 +4286,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4433,7 +4433,7 @@ func (c *DevicesDeviceUsersDeleteCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4587,7 +4587,7 @@ func (c *DevicesDeviceUsersGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4778,7 +4778,7 @@ func (c *DevicesDeviceUsersListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5026,7 +5026,7 @@ func (c *DevicesDeviceUsersLookupCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5208,7 +5208,7 @@ func (c *DevicesDeviceUsersWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5365,7 +5365,7 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5521,7 +5521,7 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5681,7 +5681,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5823,7 +5823,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5965,7 +5965,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6151,7 +6151,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6359,7 +6359,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6502,7 +6502,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6699,7 +6699,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6840,10 +6840,13 @@ type GroupsMembershipsCheckTransitiveMembershipCall struct {
 }
 
 // CheckTransitiveMembership: Check a potential member for membership in
-// a group. A member has membership to a group as long as there is a
-// single viewable transitive membership between the group and the
-// member. The actor must have view permissions to at least one
-// transitive membership between the member and group.
+// a group. **Note:** This feature is only available to Google Workspace
+// Enterprise Standard, Enterprise Plus, and Enterprise for Education;
+// and Cloud Identity Premium accounts. A member has membership to a
+// group as long as there is a single viewable transitive membership
+// between the group and the member. The actor must have view
+// permissions to at least one transitive membership between the member
+// and group.
 func (r *GroupsMembershipsService) CheckTransitiveMembership(parent string) *GroupsMembershipsCheckTransitiveMembershipCall {
 	c := &GroupsMembershipsCheckTransitiveMembershipCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6898,7 +6901,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Header() http.Header {
 
 func (c *GroupsMembershipsCheckTransitiveMembershipCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6961,7 +6964,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Check a potential member for membership in a group. A member has membership to a group as long as there is a single viewable transitive membership between the group and the member. The actor must have view permissions to at least one transitive membership between the member and group.",
+	//   "description": "Check a potential member for membership in a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. A member has membership to a group as long as there is a single viewable transitive membership between the group and the member. The actor must have view permissions to at least one transitive membership between the member and group.",
 	//   "flatPath": "v1beta1/groups/{groupsId}/memberships:checkTransitiveMembership",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.checkTransitiveMembership",
@@ -7041,7 +7044,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7180,7 +7183,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7322,7 +7325,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7425,10 +7428,12 @@ type GroupsMembershipsGetMembershipGraphCall struct {
 }
 
 // GetMembershipGraph: Get a membership graph of just a member or both a
-// member and a group. Given a member, the response will contain all
-// membership paths from the member. Given both a group and a member,
-// the response will contain all membership paths between the group and
-// the member.
+// member and a group. **Note:** This feature is only available to
+// Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise
+// for Education; and Cloud Identity Premium accounts. Given a member,
+// the response will contain all membership paths from the member. Given
+// both a group and a member, the response will contain all membership
+// paths between the group and the member.
 func (r *GroupsMembershipsService) GetMembershipGraph(parent string) *GroupsMembershipsGetMembershipGraphCall {
 	c := &GroupsMembershipsGetMembershipGraphCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7483,7 +7488,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetMembershipGraphCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7545,7 +7550,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a membership graph of just a member or both a member and a group. Given a member, the response will contain all membership paths from the member. Given both a group and a member, the response will contain all membership paths between the group and the member.",
+	//   "description": "Get a membership graph of just a member or both a member and a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. Given a member, the response will contain all membership paths from the member. Given both a group and a member, the response will contain all membership paths between the group and the member.",
 	//   "flatPath": "v1beta1/groups/{groupsId}/memberships:getMembershipGraph",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.getMembershipGraph",
@@ -7666,7 +7671,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7881,7 +7886,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8029,7 +8034,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8135,10 +8140,12 @@ type GroupsMembershipsSearchTransitiveGroupsCall struct {
 	header_      http.Header
 }
 
-// SearchTransitiveGroups: Search transitive groups of a member. A
-// transitive group is any group that has a direct or indirect
-// membership to the member. Actor must have view permissions all
-// transitive groups.
+// SearchTransitiveGroups: Search transitive groups of a member.
+// **Note:** This feature is only available to Google Workspace
+// Enterprise Standard, Enterprise Plus, and Enterprise for Education;
+// and Cloud Identity Premium accounts. A transitive group is any group
+// that has a direct or indirect membership to the member. Actor must
+// have view permissions all transitive groups.
 func (r *GroupsMembershipsService) SearchTransitiveGroups(parent string) *GroupsMembershipsSearchTransitiveGroupsCall {
 	c := &GroupsMembershipsSearchTransitiveGroupsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8209,7 +8216,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Header() http.Header {
 
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8271,7 +8278,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Search transitive groups of a member. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.",
+	//   "description": "Search transitive groups of a member. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. A transitive group is any group that has a direct or indirect membership to the member. Actor must have view permissions all transitive groups.",
 	//   "flatPath": "v1beta1/groups/{groupsId}/memberships:searchTransitiveGroups",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.searchTransitiveGroups",
@@ -8349,9 +8356,11 @@ type GroupsMembershipsSearchTransitiveMembershipsCall struct {
 }
 
 // SearchTransitiveMemberships: Search transitive memberships of a
-// group. A transitive membership is any direct or indirect membership
-// of a group. Actor must have view permissions to all transitive
-// memberships.
+// group. **Note:** This feature is only available to Google Workspace
+// Enterprise Standard, Enterprise Plus, and Enterprise for Education;
+// and Cloud Identity Premium accounts. A transitive membership is any
+// direct or indirect membership of a group. Actor must have view
+// permissions to all transitive memberships.
 func (r *GroupsMembershipsService) SearchTransitiveMemberships(parent string) *GroupsMembershipsSearchTransitiveMembershipsCall {
 	c := &GroupsMembershipsSearchTransitiveMembershipsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8409,7 +8418,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Header() http.Header 
 
 func (c *GroupsMembershipsSearchTransitiveMembershipsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8472,7 +8481,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Search transitive memberships of a group. A transitive membership is any direct or indirect membership of a group. Actor must have view permissions to all transitive memberships.",
+	//   "description": "Search transitive memberships of a group. **Note:** This feature is only available to Google Workspace Enterprise Standard, Enterprise Plus, and Enterprise for Education; and Cloud Identity Premium accounts. A transitive membership is any direct or indirect membership of a group. Actor must have view permissions to all transitive memberships.",
 	//   "flatPath": "v1beta1/groups/{groupsId}/memberships:searchTransitiveMemberships",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.groups.memberships.searchTransitiveMemberships",

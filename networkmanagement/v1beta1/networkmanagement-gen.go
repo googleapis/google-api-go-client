@@ -353,6 +353,8 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
+	BindingId string `json:"bindingId,omitempty"`
+
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
@@ -402,7 +404,7 @@ type Binding struct {
 	// `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// ForceSendFields is a list of field names (e.g. "BindingId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -410,7 +412,7 @@ type Binding struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Condition") to include in
+	// NullFields is a list of field names (e.g. "BindingId") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1143,6 +1145,68 @@ func (s *InstanceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LatencyDistribution: Describes measured latency distribution.
+type LatencyDistribution struct {
+	// LatencyPercentiles: Representative latency percentiles.
+	LatencyPercentiles []*LatencyPercentile `json:"latencyPercentiles,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LatencyPercentiles")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LatencyPercentiles") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatencyDistribution) MarshalJSON() ([]byte, error) {
+	type NoMethod LatencyDistribution
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LatencyPercentile: Latency percentile rank and value.
+type LatencyPercentile struct {
+	// LatencyMicros: percent-th percentile of latency observed, in
+	// microseconds. Fraction of percent/100 of samples have latency lower
+	// or equal to the value of this field.
+	LatencyMicros int64 `json:"latencyMicros,omitempty,string"`
+
+	// Percent: Percentage of samples this data point applies to.
+	Percent int64 `json:"percent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LatencyMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LatencyMicros") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatencyPercentile) MarshalJSON() ([]byte, error) {
+	type NoMethod LatencyPercentile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListConnectivityTestsResponse: Response for the
 // `ListConnectivityTests` method.
 type ListConnectivityTestsResponse struct {
@@ -1685,6 +1749,11 @@ type ProbingDetails struct {
 	// Error: The details of an internal failure or a cancellation of
 	// reachability analysis.
 	Error *Status `json:"error,omitempty"`
+
+	// ProbingLatency: One way probing latency distribution. The latency is
+	// measured as duration of packet traversal of Google Cloud network,
+	// from source to destination endpoint.
+	ProbingLatency *LatencyDistribution `json:"probingLatency,omitempty"`
 
 	// Result: The overall reachability result of the test.
 	//
@@ -2372,7 +2441,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2538,7 +2607,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2730,7 +2799,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2873,7 +2942,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalConnectivityTestsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3014,7 +3083,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3175,7 +3244,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3363,7 +3432,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsGlobalConnectivityTestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3559,7 +3628,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3713,7 +3782,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) Header() http.Header
 
 func (c *ProjectsLocationsGlobalConnectivityTestsRerunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3855,7 +3924,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) Header() http
 
 func (c *ProjectsLocationsGlobalConnectivityTestsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4000,7 +4069,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) Header(
 
 func (c *ProjectsLocationsGlobalConnectivityTestsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4149,7 +4218,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4290,7 +4359,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4433,7 +4502,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4607,7 +4676,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201105")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

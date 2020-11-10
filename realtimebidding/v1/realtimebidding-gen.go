@@ -142,6 +142,7 @@ func (s *Service) userAgent() string {
 func NewBiddersService(s *Service) *BiddersService {
 	rs := &BiddersService{s: s}
 	rs.Creatives = NewBiddersCreativesService(s)
+	rs.PretargetingConfigs = NewBiddersPretargetingConfigsService(s)
 	return rs
 }
 
@@ -149,6 +150,8 @@ type BiddersService struct {
 	s *Service
 
 	Creatives *BiddersCreativesService
+
+	PretargetingConfigs *BiddersPretargetingConfigsService
 }
 
 func NewBiddersCreativesService(s *Service) *BiddersCreativesService {
@@ -157,6 +160,15 @@ func NewBiddersCreativesService(s *Service) *BiddersCreativesService {
 }
 
 type BiddersCreativesService struct {
+	s *Service
+}
+
+func NewBiddersPretargetingConfigsService(s *Service) *BiddersPretargetingConfigsService {
+	rs := &BiddersPretargetingConfigsService{s: s}
+	return rs
+}
+
+type BiddersPretargetingConfigsService struct {
 	s *Service
 }
 
@@ -191,6 +203,157 @@ func NewBuyersUserListsService(s *Service) *BuyersUserListsService {
 
 type BuyersUserListsService struct {
 	s *Service
+}
+
+// ActivatePretargetingConfigRequest: A request to activate a
+// pretargeting configuration. Sets the configuration's state to ACTIVE.
+type ActivatePretargetingConfigRequest struct {
+}
+
+// AddTargetedAppsRequest: A request to start targeting the provided app
+// IDs in a specific pretargeting configuration. The pretargeting
+// configuration itself specifies how these apps are targeted. in
+// PretargetingConfig.appTargeting.mobileAppTargeting.
+type AddTargetedAppsRequest struct {
+	// AppIds: A list of app IDs to target in the pretargeting
+	// configuration. These values will be added to the list of targeted app
+	// IDs in PretargetingConfig.appTargeting.mobileAppTargeting.values.
+	AppIds []string `json:"appIds,omitempty"`
+
+	// TargetingMode: Required. The targeting mode that should be applied to
+	// the list of app IDs. If there are existing targeted app IDs, must be
+	// equal to the existing
+	// PretargetingConfig.appTargeting.mobileAppTargeting.targetingMode or a
+	// 400 bad request error will be returned.
+	//
+	// Possible values:
+	//   "TARGETING_MODE_UNSPECIFIED" - Placeholder for undefined targeting
+	// mode.
+	//   "INCLUSIVE" - The inclusive list type. Inventory must match an item
+	// in this list to be targeted.
+	//   "EXCLUSIVE" - The exclusive list type. Inventory must not match any
+	// item in this list to be targeted.
+	TargetingMode string `json:"targetingMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppIds") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddTargetedAppsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddTargetedAppsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddTargetedPublishersRequest: A request to start targeting the
+// provided publishers in a specific pretargeting configuration. The
+// pretargeting configuration itself specifies how these publishers are
+// targeted in PretargetingConfig.publisherTargeting.
+type AddTargetedPublishersRequest struct {
+	// PublisherIds: A list of publisher IDs to target in the pretargeting
+	// configuration. These values will be added to the list of targeted
+	// publisher IDs in PretargetingConfig.publisherTargeting.values.
+	// Publishers are identified by their publisher ID from ads.txt /
+	// app-ads.txt. See https://iabtechlab.com/ads-txt/ and
+	// https://iabtechlab.com/app-ads-txt/ for more details.
+	PublisherIds []string `json:"publisherIds,omitempty"`
+
+	// TargetingMode: Required. The targeting mode that should be applied to
+	// the list of publisher IDs. If are existing publisher IDs, must be
+	// equal to the existing
+	// PretargetingConfig.publisherTargeting.targetingMode or a 400 bad
+	// request error will be returned.
+	//
+	// Possible values:
+	//   "TARGETING_MODE_UNSPECIFIED" - Placeholder for undefined targeting
+	// mode.
+	//   "INCLUSIVE" - The inclusive list type. Inventory must match an item
+	// in this list to be targeted.
+	//   "EXCLUSIVE" - The exclusive list type. Inventory must not match any
+	// item in this list to be targeted.
+	TargetingMode string `json:"targetingMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublisherIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublisherIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddTargetedPublishersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddTargetedPublishersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddTargetedSitesRequest: A request to start targeting the provided
+// sites in a specific pretargeting configuration. The pretargeting
+// configuration itself specifies how these sites are targeted in
+// PretargetingConfig.webTargeting.
+type AddTargetedSitesRequest struct {
+	// Sites: A list of site URLs to target in the pretargeting
+	// configuration. These values will be added to the list of targeted
+	// URLs in PretargetingConfig.webTargeting.values.
+	Sites []string `json:"sites,omitempty"`
+
+	// TargetingMode: Required. The targeting mode that should be applied to
+	// the list of site URLs. If there are existing targeted sites, must be
+	// equal to the existing PretargetingConfig.webTargeting.targetingMode
+	// or a 400 bad request error will be returned.
+	//
+	// Possible values:
+	//   "TARGETING_MODE_UNSPECIFIED" - Placeholder for undefined targeting
+	// mode.
+	//   "INCLUSIVE" - The inclusive list type. Inventory must match an item
+	// in this list to be targeted.
+	//   "EXCLUSIVE" - The exclusive list type. Inventory must not match any
+	// item in this list to be targeted.
+	TargetingMode string `json:"targetingMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sites") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sites") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddTargetedSitesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddTargetedSitesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserAndBrand: Detected advertiser and brand information.
@@ -234,6 +397,45 @@ type AdvertiserAndBrand struct {
 
 func (s *AdvertiserAndBrand) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserAndBrand
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppTargeting: A subset of app inventory to target. Bid requests that
+// match criteria in at least one of the specified dimensions will be
+// sent.
+type AppTargeting struct {
+	// MobileAppCategoryTargeting: Lists of included and excluded mobile app
+	// categories as defined in
+	// https://developers.google.com/adwords/api/docs/appendix/mobileappcategories.csv.
+	MobileAppCategoryTargeting *NumericTargetingDimension `json:"mobileAppCategoryTargeting,omitempty"`
+
+	// MobileAppTargeting: Targeted app IDs. App IDs can refer to those
+	// found in an app store or ones that are not published in an app store.
+	// A maximum of 30,000 app IDs can be targeted.
+	MobileAppTargeting *StringTargetingDimension `json:"mobileAppTargeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MobileAppCategoryTargeting") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MobileAppCategoryTargeting") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod AppTargeting
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -438,6 +640,38 @@ type Creative struct {
 
 func (s *Creative) MarshalJSON() ([]byte, error) {
 	type NoMethod Creative
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreativeDimensions: The dimensions of a creative. This applies to
+// only HTML and Native creatives.
+type CreativeDimensions struct {
+	// Height: The height of the creative in pixels.
+	Height int64 `json:"height,omitempty,string"`
+
+	// Width: The width of the creative in pixels.
+	Width int64 `json:"width,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Height") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Height") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreativeDimensions) MarshalJSON() ([]byte, error) {
+	type NoMethod CreativeDimensions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -923,6 +1157,18 @@ func (s *DownloadSizeEvidence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GetRemarketingTagResponse: Response for a request to get remarketing
 // tag.
 type GetRemarketingTagResponse struct {
@@ -1136,6 +1382,44 @@ func (s *ListCreativesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListPretargetingConfigsResponse: A response containing pretargeting
+// configurations.
+type ListPretargetingConfigsResponse struct {
+	// NextPageToken: A token which can be passed to a subsequent call to
+	// the `ListPretargetingConfigs` method to retrieve the next page of
+	// results in ListPretargetingConfigsRequest.pageToken.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PretargetingConfigs: List of pretargeting configurations.
+	PretargetingConfigs []*PretargetingConfig `json:"pretargetingConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPretargetingConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPretargetingConfigsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListUserListsResponse: The list user list response.
 type ListUserListsResponse struct {
 	// NextPageToken: The continuation page token to send back to the server
@@ -1311,6 +1595,39 @@ func (s *NativeContent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// NumericTargetingDimension: Generic targeting used for targeting
+// dimensions that contain a list of included and excluded numeric IDs
+// used in app, user list, geo, and vertical id targeting.
+type NumericTargetingDimension struct {
+	// ExcludedIds: The IDs excluded in a configuration.
+	ExcludedIds googleapi.Int64s `json:"excludedIds,omitempty"`
+
+	// IncludedIds: The IDs included in a configuration.
+	IncludedIds googleapi.Int64s `json:"includedIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExcludedIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExcludedIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NumericTargetingDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod NumericTargetingDimension
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OpenUserListRequest: A request to open a specified user list.
 type OpenUserListRequest struct {
 }
@@ -1450,6 +1767,389 @@ func (s *PolicyTopicEvidence) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyTopicEvidence
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PretargetingConfig: Pretargeting configuration: a set of targeting
+// dimensions applied at the pretargeting stage of the RTB funnel. These
+// control which inventory a bidder will receive bid requests for.
+type PretargetingConfig struct {
+	// AllowedUserTargetingModes: Targeting modes included by this
+	// configuration. A bid request must allow all the specified targeting
+	// modes. An unset value allows all bid requests to be sent, regardless
+	// of which targeting modes they allow.
+	//
+	// Possible values:
+	//   "USER_TARGETING_MODE_UNSPECIFIED" - Placeholder for undefined user
+	// targeting mode.
+	//   "REMARKETING_ADS" - Remarketing ads are allowed to serve.
+	//   "INTEREST_BASED_TARGETING" - Ads based on user interest category
+	// targeting are allowed to serve.
+	AllowedUserTargetingModes []string `json:"allowedUserTargetingModes,omitempty"`
+
+	// AppTargeting: Targeting on a subset of app inventory. If APP is
+	// listed in targeted_environments, the specified targeting is applied.
+	// A maximum of 30,000 app IDs can be targeted. An unset value for
+	// targeting allows all app-based bid requests to be sent. Apps can
+	// either be targeting positively (bid requests will be sent only if the
+	// destination app is listed in the targeting dimension) or negatively
+	// (bid requests will be sent only if the destination app is not listed
+	// in the targeting dimension).
+	AppTargeting *AppTargeting `json:"appTargeting,omitempty"`
+
+	// BillingId: Output only. The identifier that corresponds to this
+	// pretargeting configuration that helps buyers track and attribute
+	// their spend across their own arbitrary divisions. If a bid request
+	// matches more than one configuration, the buyer chooses which
+	// billing_id to attribute each of their bids.
+	BillingId int64 `json:"billingId,omitempty,string"`
+
+	// DisplayName: The diplay name associated with this configuration. This
+	// name must be unique among all the pretargeting configurations a
+	// bidder has.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExcludedContentLabelIds: The sensitive content category label IDs
+	// excluded in this configuration. Bid requests for inventory with any
+	// of the specified content label IDs will not be sent. Refer to this
+	// file
+	// https://storage.googleapis.com/adx-rtb-dictionaries/content-labels.txt for category
+	// IDs.
+	ExcludedContentLabelIds googleapi.Int64s `json:"excludedContentLabelIds,omitempty"`
+
+	// GeoTargeting: The geos included or excluded in this configuration
+	// defined in
+	// https://storage.googleapis.com/adx-rtb-dictionaries/geo-table.csv
+	GeoTargeting *NumericTargetingDimension `json:"geoTargeting,omitempty"`
+
+	// IncludedCreativeDimensions: Creative dimensions included by this
+	// configuration. Only bid requests eligible for at least one of the
+	// specified creative dimensions will be sent. An unset value allows all
+	// bid requests to be sent, regardless of creative dimension.
+	IncludedCreativeDimensions []*CreativeDimensions `json:"includedCreativeDimensions,omitempty"`
+
+	// IncludedEnvironments: Environments that are being included. Bid
+	// requests will not be sent for a given environment if it is not
+	// included. Further restrictions can be applied to included
+	// environments to target only a subset of its inventory. An unset value
+	// includes all environments.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Placeholder for unspecified
+	// environment. This value should not be used.
+	//   "APP" - App environment.
+	//   "WEB" - Web environment.
+	IncludedEnvironments []string `json:"includedEnvironments,omitempty"`
+
+	// IncludedFormats: Creative formats included by this configuration.
+	// Only bid requests eligible for at least one of the specified creative
+	// formats will be sent. An unset value will allow all bid requests to
+	// be sent, regardless of format.
+	//
+	// Possible values:
+	//   "CREATIVE_FORMAT_UNSPECIFIED" - Placeholder for undefined creative
+	// format. This value should not be used.
+	//   "HTML" - HTML and AMPHTML creatives.
+	//   "VAST" - VAST video or audio creative.
+	//   "NATIVE" - Native creative, including standard and video native
+	// ads.
+	IncludedFormats []string `json:"includedFormats,omitempty"`
+
+	// IncludedLanguages: The languages included in this configuration,
+	// represented by their language code. See
+	// https://developers.google.com/adwords/api/docs/appendix/languagecodes.
+	IncludedLanguages []string `json:"includedLanguages,omitempty"`
+
+	// IncludedMobileOperatingSystemIds: The mobile operating systems
+	// included in this configuration as defined in
+	// https://storage.googleapis.com/adx-rtb-dictionaries/mobile-os.csv
+	IncludedMobileOperatingSystemIds googleapi.Int64s `json:"includedMobileOperatingSystemIds,omitempty"`
+
+	// IncludedPlatforms: The platforms included by this configration. Bid
+	// requests for devices with the specified platform types will be sent.
+	// An unset value allows all bid requests to be sent, regardless of
+	// platform.
+	//
+	// Possible values:
+	//   "PLATFORM_UNSPECIFIED" - Placeholder for an undefined platform.
+	// This value should not be used.
+	//   "PERSONAL_COMPUTER" - The personal computer platform.
+	//   "PHONE" - The mobile platform.
+	//   "TABLET" - The tablet platform.
+	//   "CONNECTED_TV" - The connected TV platform.
+	IncludedPlatforms []string `json:"includedPlatforms,omitempty"`
+
+	// IncludedUserIdTypes: User identifier types included in this
+	// configuration. At least one of the user identifier types specified in
+	// this list must be available for the bid request to be sent.
+	//
+	// Possible values:
+	//   "USER_ID_TYPE_UNSPECIFIED" - Placeholder for unspecified user
+	// identifier.
+	//   "HOSTED_MATCH_DATA" - Hosted match data, referring to
+	// hosted_match_data in the bid request.
+	//   "GOOGLE_COOKIE" - Google cookie, referring to google_user_id in the
+	// bid request.
+	//   "DEVICE_ID" - Mobile device advertising ID.
+	IncludedUserIdTypes []string `json:"includedUserIdTypes,omitempty"`
+
+	// InterstitialTargeting: The interstitial targeting specified for this
+	// configuration. The unset value will allow bid requests to be sent
+	// regardless of whether they are for interstitials or not.
+	//
+	// Possible values:
+	//   "INTERSTITIAL_TARGETING_UNSPECIFIED" - Unspecified interstitial
+	// targeting. Represents an interstitial-agnostic selection.
+	//   "ONLY_INTERSTITIAL_REQUESTS" - Only bid requests for interstitial
+	// inventory should be sent.
+	//   "ONLY_NON_INTERSTITIAL_REQUESTS" - Only bid requests for
+	// non-interstitial inventory should be sent.
+	InterstitialTargeting string `json:"interstitialTargeting,omitempty"`
+
+	// InvalidGeoIds: Output only. Existing included or excluded geos that
+	// are invalid. Previously targeted geos may become invalid due to
+	// privacy restrictions.
+	InvalidGeoIds googleapi.Int64s `json:"invalidGeoIds,omitempty"`
+
+	// MaximumQps: The maximum QPS threshold for this configuration. The
+	// bidder should receive no more than this number of bid requests
+	// matching this configuration per second across all their bidding
+	// endpoints among all trading locations. Further information available
+	// at https://developers.google.com/authorized-buyers/rtb/peer-guide
+	MaximumQps int64 `json:"maximumQps,omitempty,string"`
+
+	// MinimumViewabilityDecile: The targeted minimum viewability decile,
+	// ranging in values [0, 10]. A value of 5 means that the configuration
+	// will only match adslots for which we predict at least 50%
+	// viewability. Values > 10 will be rounded down to 10. An unset value
+	// or a value of 0 indicates that bid requests will be sent regardless
+	// of viewability.
+	MinimumViewabilityDecile int64 `json:"minimumViewabilityDecile,omitempty"`
+
+	// Name: Output only. Name of the pretargeting configuration that must
+	// follow the pattern
+	// `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`
+	Name string `json:"name,omitempty"`
+
+	// PublisherTargeting: Targeting on a subset of publisher inventory.
+	// Publishers can either be targeted positively (bid requests will be
+	// sent only if the publisher is listed in the targeting dimension) or
+	// negatively (bid requests will be sent only if the publisher is not
+	// listed in the targeting dimension). A maximum of 10,000 publisher IDs
+	// can be targeted. Publisher IDs are found in
+	// [ads.txt](https://iabtechlab.com/ads-txt/) /
+	// [app-ads.txt](https://iabtechlab.com/app-ads-txt/) and in bid
+	// requests in the `BidRequest.publisher_id` field on the [Google RTB
+	// protocol](https://developers.google.com/authorized-buyers/rtb/download
+	// s/realtime-bidding-proto) or the `BidRequest.site.publisher.id` /
+	// `BidRequest.app.publisher.id` field on the [OpenRTB
+	// protocol](https://developers.google.com/authorized-buyers/rtb/download
+	// s/openrtb-adx-proto).
+	PublisherTargeting *StringTargetingDimension `json:"publisherTargeting,omitempty"`
+
+	// State: Output only. The state of this pretargeting configuration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Placeholder for undefined state.
+	//   "ACTIVE" - This pretargeting configuration is actively being used
+	// to filter bid requests.
+	//   "SUSPENDED" - This pretargeting configuration is suspended and not
+	// used in serving.
+	State string `json:"state,omitempty"`
+
+	// UserListTargeting: The remarketing lists included or excluded in this
+	// configuration as defined in UserList.
+	UserListTargeting *NumericTargetingDimension `json:"userListTargeting,omitempty"`
+
+	// VerticalTargeting: The verticals included or excluded in this
+	// configuration as defined in
+	// https://developers.google.com/authorized-buyers/rtb/downloads/publisher-verticals
+	VerticalTargeting *NumericTargetingDimension `json:"verticalTargeting,omitempty"`
+
+	// WebTargeting: Targeting on a subset of site inventory. If WEB is
+	// listed in included_environments, the specified targeting is applied.
+	// A maximum of 50,000 site URLs can be targeted. An unset value for
+	// targeting allows all web-based bid requests to be sent. Sites can
+	// either be targeting positively (bid requests will be sent only if the
+	// destination site is listed in the targeting dimension) or negatively
+	// (bid requests will be sent only if the destination site is not listed
+	// in the pretargeting configuration).
+	WebTargeting *StringTargetingDimension `json:"webTargeting,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedUserTargetingModes") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowedUserTargetingModes") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PretargetingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PretargetingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoveTargetedAppsRequest: A request to stop targeting the provided
+// apps in a specific pretargeting configuration. The pretargeting
+// configuration itself specifies how these apps are targeted. in
+// PretargetingConfig.appTargeting.mobileAppTargeting.
+type RemoveTargetedAppsRequest struct {
+	// AppIds: A list of app IDs to stop targeting in the pretargeting
+	// configuration. These values will be removed from the list of targeted
+	// app IDs in PretargetingConfig.appTargeting.mobileAppTargeting.values.
+	AppIds []string `json:"appIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppIds") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoveTargetedAppsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveTargetedAppsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoveTargetedPublishersRequest: A request to stop targeting
+// publishers in a specific configuration. The pretargeting
+// configuration itself specifies how these publishers are targeted in
+// PretargetingConfig.publisherTargeting.
+type RemoveTargetedPublishersRequest struct {
+	// PublisherIds: A list of publisher IDs to stop targeting in the
+	// pretargeting configuration. These values will be removed from the
+	// list of targeted publisher IDs in
+	// PretargetingConfig.publisherTargeting.values. Publishers are
+	// identified by their publisher ID from ads.txt / app-ads.txt. See
+	// https://iabtechlab.com/ads-txt/ and
+	// https://iabtechlab.com/app-ads-txt/ for more details.
+	PublisherIds []string `json:"publisherIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublisherIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublisherIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoveTargetedPublishersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveTargetedPublishersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoveTargetedSitesRequest: A request to stop targeting sites in a
+// specific pretargeting configuration. The pretargeting configuration
+// itself specifies how these sites are targeted in
+// PretargetingConfig.webTargeting.
+type RemoveTargetedSitesRequest struct {
+	// Sites: A list of site URLs to stop targeting in the pretargeting
+	// configuration. These values will be removed from the list of targeted
+	// URLs in PretargetingConfig.webTargeting.values.
+	Sites []string `json:"sites,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Sites") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sites") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoveTargetedSitesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveTargetedSitesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StringTargetingDimension: Generic targeting with string values used
+// in app, website and publisher targeting.
+type StringTargetingDimension struct {
+	// TargetingMode: How the items in this list should be targeted.
+	//
+	// Possible values:
+	//   "TARGETING_MODE_UNSPECIFIED" - Placeholder for undefined targeting
+	// mode.
+	//   "INCLUSIVE" - The inclusive list type. Inventory must match an item
+	// in this list to be targeted.
+	//   "EXCLUSIVE" - The exclusive list type. Inventory must not match any
+	// item in this list to be targeted.
+	TargetingMode string `json:"targetingMode,omitempty"`
+
+	// Values: The values specified.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetingMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetingMode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StringTargetingDimension) MarshalJSON() ([]byte, error) {
+	type NoMethod StringTargetingDimension
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SuspendPretargetingConfigRequest: A request to suspend a pretargeting
+// configuration. Sets the configuration's state to SUSPENDED.
+type SuspendPretargetingConfigRequest struct {
 }
 
 // UrlDownloadSize: The URL-level breakdown for the download size.
@@ -1858,7 +2558,7 @@ func (c *BiddersCreativesListCall) Header() http.Header {
 
 func (c *BiddersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2051,7 +2751,7 @@ func (c *BiddersCreativesWatchCall) Header() http.Header {
 
 func (c *BiddersCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2145,6 +2845,1897 @@ func (c *BiddersCreativesWatchCall) Do(opts ...googleapi.CallOption) (*WatchCrea
 
 }
 
+// method id "realtimebidding.bidders.pretargetingConfigs.activate":
+
+type BiddersPretargetingConfigsActivateCall struct {
+	s                                 *Service
+	name                              string
+	activatepretargetingconfigrequest *ActivatePretargetingConfigRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Activate: Activates a pretargeting configuration.
+func (r *BiddersPretargetingConfigsService) Activate(name string, activatepretargetingconfigrequest *ActivatePretargetingConfigRequest) *BiddersPretargetingConfigsActivateCall {
+	c := &BiddersPretargetingConfigsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.activatepretargetingconfigrequest = activatepretargetingconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsActivateCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsActivateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsActivateCall) Context(ctx context.Context) *BiddersPretargetingConfigsActivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsActivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsActivateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.activatepretargetingconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:activate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.activate" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsActivateCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Activates a pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}:activate",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.activate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the pretargeting configuration. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:activate",
+	//   "request": {
+	//     "$ref": "ActivatePretargetingConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.addTargetedApps":
+
+type BiddersPretargetingConfigsAddTargetedAppsCall struct {
+	s                      *Service
+	pretargetingConfig     string
+	addtargetedappsrequest *AddTargetedAppsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// AddTargetedApps: Adds targeted apps to the pretargeting
+// configuration.
+func (r *BiddersPretargetingConfigsService) AddTargetedApps(pretargetingConfig string, addtargetedappsrequest *AddTargetedAppsRequest) *BiddersPretargetingConfigsAddTargetedAppsCall {
+	c := &BiddersPretargetingConfigsAddTargetedAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.pretargetingConfig = pretargetingConfig
+	c.addtargetedappsrequest = addtargetedappsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsAddTargetedAppsCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsAddTargetedAppsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsAddTargetedAppsCall) Context(ctx context.Context) *BiddersPretargetingConfigsAddTargetedAppsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsAddTargetedAppsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsAddTargetedAppsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addtargetedappsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+pretargetingConfig}:addTargetedApps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"pretargetingConfig": c.pretargetingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.addTargetedApps" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsAddTargetedAppsCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds targeted apps to the pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}:addTargetedApps",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.addTargetedApps",
+	//   "parameterOrder": [
+	//     "pretargetingConfig"
+	//   ],
+	//   "parameters": {
+	//     "pretargetingConfig": {
+	//       "description": "Required. The name of the pretargeting configuration. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+pretargetingConfig}:addTargetedApps",
+	//   "request": {
+	//     "$ref": "AddTargetedAppsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.addTargetedPublishers":
+
+type BiddersPretargetingConfigsAddTargetedPublishersCall struct {
+	s                            *Service
+	pretargetingConfig           string
+	addtargetedpublishersrequest *AddTargetedPublishersRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// AddTargetedPublishers: Adds targeted publishers to the pretargeting
+// config.
+func (r *BiddersPretargetingConfigsService) AddTargetedPublishers(pretargetingConfig string, addtargetedpublishersrequest *AddTargetedPublishersRequest) *BiddersPretargetingConfigsAddTargetedPublishersCall {
+	c := &BiddersPretargetingConfigsAddTargetedPublishersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.pretargetingConfig = pretargetingConfig
+	c.addtargetedpublishersrequest = addtargetedpublishersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsAddTargetedPublishersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) Context(ctx context.Context) *BiddersPretargetingConfigsAddTargetedPublishersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addtargetedpublishersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+pretargetingConfig}:addTargetedPublishers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"pretargetingConfig": c.pretargetingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.addTargetedPublishers" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds targeted publishers to the pretargeting config.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}:addTargetedPublishers",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.addTargetedPublishers",
+	//   "parameterOrder": [
+	//     "pretargetingConfig"
+	//   ],
+	//   "parameters": {
+	//     "pretargetingConfig": {
+	//       "description": "Required. The name of the pretargeting configuration. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+pretargetingConfig}:addTargetedPublishers",
+	//   "request": {
+	//     "$ref": "AddTargetedPublishersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.addTargetedSites":
+
+type BiddersPretargetingConfigsAddTargetedSitesCall struct {
+	s                       *Service
+	pretargetingConfig      string
+	addtargetedsitesrequest *AddTargetedSitesRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// AddTargetedSites: Adds targeted sites to the pretargeting
+// configuration.
+func (r *BiddersPretargetingConfigsService) AddTargetedSites(pretargetingConfig string, addtargetedsitesrequest *AddTargetedSitesRequest) *BiddersPretargetingConfigsAddTargetedSitesCall {
+	c := &BiddersPretargetingConfigsAddTargetedSitesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.pretargetingConfig = pretargetingConfig
+	c.addtargetedsitesrequest = addtargetedsitesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsAddTargetedSitesCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsAddTargetedSitesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsAddTargetedSitesCall) Context(ctx context.Context) *BiddersPretargetingConfigsAddTargetedSitesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsAddTargetedSitesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsAddTargetedSitesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addtargetedsitesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+pretargetingConfig}:addTargetedSites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"pretargetingConfig": c.pretargetingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.addTargetedSites" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsAddTargetedSitesCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds targeted sites to the pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}:addTargetedSites",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.addTargetedSites",
+	//   "parameterOrder": [
+	//     "pretargetingConfig"
+	//   ],
+	//   "parameters": {
+	//     "pretargetingConfig": {
+	//       "description": "Required. The name of the pretargeting configuration. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+pretargetingConfig}:addTargetedSites",
+	//   "request": {
+	//     "$ref": "AddTargetedSitesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.create":
+
+type BiddersPretargetingConfigsCreateCall struct {
+	s                  *Service
+	parent             string
+	pretargetingconfig *PretargetingConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a pretargeting configuration. A pretargeting
+// configuration's state (PretargetingConfig.state) is active upon
+// creation, and it will start to affect traffic shortly after. A bidder
+// may create a maximum of 10 pretargeting configurations. Attempts to
+// exceed this maximum results in a 400 bad request error.
+func (r *BiddersPretargetingConfigsService) Create(parent string, pretargetingconfig *PretargetingConfig) *BiddersPretargetingConfigsCreateCall {
+	c := &BiddersPretargetingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.pretargetingconfig = pretargetingconfig
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsCreateCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsCreateCall) Context(ctx context.Context) *BiddersPretargetingConfigsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pretargetingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/pretargetingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.create" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsCreateCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a pretargeting configuration. A pretargeting configuration's state (PretargetingConfig.state) is active upon creation, and it will start to affect traffic shortly after. A bidder may create a maximum of 10 pretargeting configurations. Attempts to exceed this maximum results in a 400 bad request error.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the bidder to create the pretargeting configuration for. Format: bidders/{bidderAccountId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/pretargetingConfigs",
+	//   "request": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.delete":
+
+type BiddersPretargetingConfigsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a pretargeting configuration.
+func (r *BiddersPretargetingConfigsService) Delete(name string) *BiddersPretargetingConfigsDeleteCall {
+	c := &BiddersPretargetingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsDeleteCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsDeleteCall) Context(ctx context.Context) *BiddersPretargetingConfigsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BiddersPretargetingConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the pretargeting configuration to delete. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.get":
+
+type BiddersPretargetingConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a pretargeting configuration.
+func (r *BiddersPretargetingConfigsService) Get(name string) *BiddersPretargetingConfigsGetCall {
+	c := &BiddersPretargetingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsGetCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BiddersPretargetingConfigsGetCall) IfNoneMatch(entityTag string) *BiddersPretargetingConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsGetCall) Context(ctx context.Context) *BiddersPretargetingConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.get" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsGetCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}",
+	//   "httpMethod": "GET",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the pretargeting configuration to get. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.list":
+
+type BiddersPretargetingConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all pretargeting configurations for a single bidder.
+func (r *BiddersPretargetingConfigsService) List(parent string) *BiddersPretargetingConfigsListCall {
+	c := &BiddersPretargetingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of pretargeting configurations to return. If unspecified, at most 10
+// pretargeting configurations will be returned. The maximum value is
+// 100; values above 100 will be coerced to 100.
+func (c *BiddersPretargetingConfigsListCall) PageSize(pageSize int64) *BiddersPretargetingConfigsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. This value is
+// received from a previous `ListPretargetingConfigs` call in
+// ListPretargetingConfigsResponse.nextPageToken.
+func (c *BiddersPretargetingConfigsListCall) PageToken(pageToken string) *BiddersPretargetingConfigsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsListCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BiddersPretargetingConfigsListCall) IfNoneMatch(entityTag string) *BiddersPretargetingConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsListCall) Context(ctx context.Context) *BiddersPretargetingConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/pretargetingConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.list" call.
+// Exactly one of *ListPretargetingConfigsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListPretargetingConfigsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsListCall) Do(opts ...googleapi.CallOption) (*ListPretargetingConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPretargetingConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all pretargeting configurations for a single bidder.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs",
+	//   "httpMethod": "GET",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of pretargeting configurations to return. If unspecified, at most 10 pretargeting configurations will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. This value is received from a previous `ListPretargetingConfigs` call in ListPretargetingConfigsResponse.nextPageToken.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the bidder whose pretargeting configurations will be listed. Format: bidders/{bidderAccountId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/pretargetingConfigs",
+	//   "response": {
+	//     "$ref": "ListPretargetingConfigsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BiddersPretargetingConfigsListCall) Pages(ctx context.Context, f func(*ListPretargetingConfigsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.patch":
+
+type BiddersPretargetingConfigsPatchCall struct {
+	s                  *Service
+	name               string
+	pretargetingconfig *PretargetingConfig
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch: Updates a pretargeting configuration.
+func (r *BiddersPretargetingConfigsService) Patch(name string, pretargetingconfig *PretargetingConfig) *BiddersPretargetingConfigsPatchCall {
+	c := &BiddersPretargetingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.pretargetingconfig = pretargetingconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask to
+// use for partial in-place updates.
+func (c *BiddersPretargetingConfigsPatchCall) UpdateMask(updateMask string) *BiddersPretargetingConfigsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsPatchCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsPatchCall) Context(ctx context.Context) *BiddersPretargetingConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pretargetingconfig)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.patch" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsPatchCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Name of the pretargeting configuration that must follow the pattern `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Field mask to use for partial in-place updates.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.removeTargetedApps":
+
+type BiddersPretargetingConfigsRemoveTargetedAppsCall struct {
+	s                         *Service
+	pretargetingConfig        string
+	removetargetedappsrequest *RemoveTargetedAppsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// RemoveTargetedApps: Removes targeted apps from the pretargeting
+// configuration.
+func (r *BiddersPretargetingConfigsService) RemoveTargetedApps(pretargetingConfig string, removetargetedappsrequest *RemoveTargetedAppsRequest) *BiddersPretargetingConfigsRemoveTargetedAppsCall {
+	c := &BiddersPretargetingConfigsRemoveTargetedAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.pretargetingConfig = pretargetingConfig
+	c.removetargetedappsrequest = removetargetedappsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsRemoveTargetedAppsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) Context(ctx context.Context) *BiddersPretargetingConfigsRemoveTargetedAppsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removetargetedappsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+pretargetingConfig}:removeTargetedApps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"pretargetingConfig": c.pretargetingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.removeTargetedApps" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes targeted apps from the pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}:removeTargetedApps",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.removeTargetedApps",
+	//   "parameterOrder": [
+	//     "pretargetingConfig"
+	//   ],
+	//   "parameters": {
+	//     "pretargetingConfig": {
+	//       "description": "Required. The name of the pretargeting configuration. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+pretargetingConfig}:removeTargetedApps",
+	//   "request": {
+	//     "$ref": "RemoveTargetedAppsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.removeTargetedPublishers":
+
+type BiddersPretargetingConfigsRemoveTargetedPublishersCall struct {
+	s                               *Service
+	pretargetingConfig              string
+	removetargetedpublishersrequest *RemoveTargetedPublishersRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// RemoveTargetedPublishers: Removes targeted publishers from the
+// pretargeting config.
+func (r *BiddersPretargetingConfigsService) RemoveTargetedPublishers(pretargetingConfig string, removetargetedpublishersrequest *RemoveTargetedPublishersRequest) *BiddersPretargetingConfigsRemoveTargetedPublishersCall {
+	c := &BiddersPretargetingConfigsRemoveTargetedPublishersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.pretargetingConfig = pretargetingConfig
+	c.removetargetedpublishersrequest = removetargetedpublishersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsRemoveTargetedPublishersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) Context(ctx context.Context) *BiddersPretargetingConfigsRemoveTargetedPublishersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removetargetedpublishersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+pretargetingConfig}:removeTargetedPublishers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"pretargetingConfig": c.pretargetingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.removeTargetedPublishers" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes targeted publishers from the pretargeting config.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}:removeTargetedPublishers",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.removeTargetedPublishers",
+	//   "parameterOrder": [
+	//     "pretargetingConfig"
+	//   ],
+	//   "parameters": {
+	//     "pretargetingConfig": {
+	//       "description": "Required. The name of the pretargeting configuration. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+pretargetingConfig}:removeTargetedPublishers",
+	//   "request": {
+	//     "$ref": "RemoveTargetedPublishersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.removeTargetedSites":
+
+type BiddersPretargetingConfigsRemoveTargetedSitesCall struct {
+	s                          *Service
+	pretargetingConfig         string
+	removetargetedsitesrequest *RemoveTargetedSitesRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// RemoveTargetedSites: Removes targeted sites from the pretargeting
+// configuration.
+func (r *BiddersPretargetingConfigsService) RemoveTargetedSites(pretargetingConfig string, removetargetedsitesrequest *RemoveTargetedSitesRequest) *BiddersPretargetingConfigsRemoveTargetedSitesCall {
+	c := &BiddersPretargetingConfigsRemoveTargetedSitesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.pretargetingConfig = pretargetingConfig
+	c.removetargetedsitesrequest = removetargetedsitesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsRemoveTargetedSitesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) Context(ctx context.Context) *BiddersPretargetingConfigsRemoveTargetedSitesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removetargetedsitesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+pretargetingConfig}:removeTargetedSites")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"pretargetingConfig": c.pretargetingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.removeTargetedSites" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes targeted sites from the pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}:removeTargetedSites",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.removeTargetedSites",
+	//   "parameterOrder": [
+	//     "pretargetingConfig"
+	//   ],
+	//   "parameters": {
+	//     "pretargetingConfig": {
+	//       "description": "Required. The name of the pretargeting configuration. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+pretargetingConfig}:removeTargetedSites",
+	//   "request": {
+	//     "$ref": "RemoveTargetedSitesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.pretargetingConfigs.suspend":
+
+type BiddersPretargetingConfigsSuspendCall struct {
+	s                                *Service
+	name                             string
+	suspendpretargetingconfigrequest *SuspendPretargetingConfigRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Suspend: Suspends a pretargeting configuration.
+func (r *BiddersPretargetingConfigsService) Suspend(name string, suspendpretargetingconfigrequest *SuspendPretargetingConfigRequest) *BiddersPretargetingConfigsSuspendCall {
+	c := &BiddersPretargetingConfigsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.suspendpretargetingconfigrequest = suspendpretargetingconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersPretargetingConfigsSuspendCall) Fields(s ...googleapi.Field) *BiddersPretargetingConfigsSuspendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersPretargetingConfigsSuspendCall) Context(ctx context.Context) *BiddersPretargetingConfigsSuspendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersPretargetingConfigsSuspendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersPretargetingConfigsSuspendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.suspendpretargetingconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:suspend")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.pretargetingConfigs.suspend" call.
+// Exactly one of *PretargetingConfig or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PretargetingConfig.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersPretargetingConfigsSuspendCall) Do(opts ...googleapi.CallOption) (*PretargetingConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PretargetingConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Suspends a pretargeting configuration.",
+	//   "flatPath": "v1/bidders/{biddersId}/pretargetingConfigs/{pretargetingConfigsId}:suspend",
+	//   "httpMethod": "POST",
+	//   "id": "realtimebidding.bidders.pretargetingConfigs.suspend",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the pretargeting configuration. Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/pretargetingConfigs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:suspend",
+	//   "request": {
+	//     "$ref": "SuspendPretargetingConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "PretargetingConfig"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
 // method id "realtimebidding.buyers.getRemarketingTag":
 
 type BuyersGetRemarketingTagCall struct {
@@ -2203,7 +4794,7 @@ func (c *BuyersGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2338,7 +4929,7 @@ func (c *BuyersCreativesCreateCall) Header() http.Header {
 
 func (c *BuyersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2505,7 +5096,7 @@ func (c *BuyersCreativesGetCall) Header() http.Header {
 
 func (c *BuyersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2711,7 +5302,7 @@ func (c *BuyersCreativesListCall) Header() http.Header {
 
 func (c *BuyersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2905,7 +5496,7 @@ func (c *BuyersCreativesPatchCall) Header() http.Header {
 
 func (c *BuyersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3052,7 +5643,7 @@ func (c *BuyersUserListsCloseCall) Header() http.Header {
 
 func (c *BuyersUserListsCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3192,7 +5783,7 @@ func (c *BuyersUserListsCreateCall) Header() http.Header {
 
 func (c *BuyersUserListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3341,7 +5932,7 @@ func (c *BuyersUserListsGetCall) Header() http.Header {
 
 func (c *BuyersUserListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3488,7 +6079,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersUserListsGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3646,7 +6237,7 @@ func (c *BuyersUserListsListCall) Header() http.Header {
 
 func (c *BuyersUserListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3814,7 +6405,7 @@ func (c *BuyersUserListsOpenCall) Header() http.Header {
 
 func (c *BuyersUserListsOpenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3955,7 +6546,7 @@ func (c *BuyersUserListsUpdateCall) Header() http.Header {
 
 func (c *BuyersUserListsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

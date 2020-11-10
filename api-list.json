@@ -2966,6 +2966,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "notebooks:v1",
+      "name": "notebooks",
+      "version": "v1",
+      "title": "Notebooks API",
+      "description": "AI Platform Notebooks API is used to manage notebook resources in Google Cloud.",
+      "discoveryRestUrl": "https://notebooks.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/ai-platform/notebooks/docs/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "oauth2:v2",
       "name": "oauth2",
       "version": "v2",

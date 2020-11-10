@@ -164,7 +164,7 @@
         "mediationReport": {
           "methods": {
             "generate": {
-              "description": "Generates an AdMob Mediation report based on the provided report specification.",
+              "description": "Generates an AdMob Mediation report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
               "flatPath": "v1/accounts/{accountsId}/mediationReport:generate",
               "httpMethod": "POST",
               "id": "admob.accounts.mediationReport.generate",
@@ -196,7 +196,7 @@
         "networkReport": {
           "methods": {
             "generate": {
-              "description": "Generates an AdMob Network report based on the provided report specification.",
+              "description": "Generates an AdMob Network report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
               "flatPath": "v1/accounts/{accountsId}/networkReport:generate",
               "httpMethod": "POST",
               "id": "admob.accounts.networkReport.generate",
@@ -228,7 +228,7 @@
       }
     }
   },
-  "revision": "20201022",
+  "revision": "20201107",
   "rootUrl": "https://admob.googleapis.com/",
   "schemas": {
     "Date": {

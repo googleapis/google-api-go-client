@@ -1473,7 +1473,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1633,7 +1633,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1754,7 +1754,8 @@ type AccountsMediationReportGenerateCall struct {
 }
 
 // Generate: Generates an AdMob Mediation report based on the provided
-// report specification.
+// report specification. Returns result of a server-side streaming RPC.
+// The result is returned in a sequence of responses.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1789,7 +1790,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1853,7 +1854,7 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an AdMob Mediation report based on the provided report specification.",
+	//   "description": "Generates an AdMob Mediation report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
 	//   "flatPath": "v1/accounts/{accountsId}/mediationReport:generate",
 	//   "httpMethod": "POST",
 	//   "id": "admob.accounts.mediationReport.generate",
@@ -1895,7 +1896,8 @@ type AccountsNetworkReportGenerateCall struct {
 }
 
 // Generate: Generates an AdMob Network report based on the provided
-// report specification.
+// report specification. Returns result of a server-side streaming RPC.
+// The result is returned in a sequence of responses.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1930,7 +1932,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1994,7 +1996,7 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an AdMob Network report based on the provided report specification.",
+	//   "description": "Generates an AdMob Network report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
 	//   "flatPath": "v1/accounts/{accountsId}/networkReport:generate",
 	//   "httpMethod": "POST",
 	//   "id": "admob.accounts.networkReport.generate",

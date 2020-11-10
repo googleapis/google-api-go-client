@@ -287,13 +287,15 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 
 	// Name: Optional. The resource name of the workload. Format:
 	// organizations/{organization}/locations/{location}/workloads/{workload}
-	//  Read-only. The UI extracts the location and workload name from this
-	// string, since they aren't set directly on the workload object. If the
-	// format of this field changes, the UI should likely be updated.
-	// LINT.IfChange
-	// LINT.ThenChange(//depot/google3/cloud/console/web/compliance/assurant/
-	// common/workload_helper.ts)
+	//  Read-only.
 	Name string `json:"name,omitempty"`
+
+	// ProvisionedResourcesParent: Input only. The parent resource for the
+	// resources managed by this Assured Workload. May be either an
+	// organization or a folder. Must be the same or a child of the Workload
+	// parent. If not specified all resources are created under the Workload
+	// parent. Formats: folders/{folder_id} organizations/{organization_id}
+	ProvisionedResourcesParent string `json:"provisionedResourcesParent,omitempty"`
 
 	// Resources: Output only. The resources associated with this workload.
 	// These resources will be created when creating the workload. If any of
@@ -666,13 +668,15 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 
 	// Name: Optional. The resource name of the workload. Format:
 	// organizations/{organization}/locations/{location}/workloads/{workload}
-	//  Read-only. The UI extracts the location and workload name from this
-	// string, since they aren't set directly on the workload object. If the
-	// format of this field changes, the UI should likely be updated.
-	// LINT.IfChange
-	// LINT.ThenChange(//depot/google3/cloud/console/web/compliance/assurant/
-	// common/workload_helper.ts)
+	//  Read-only.
 	Name string `json:"name,omitempty"`
+
+	// ProvisionedResourcesParent: Input only. The parent resource for the
+	// resources managed by this Assured Workload. May be either an
+	// organization or a folder. Must be the same or a child of the Workload
+	// parent. If not specified all resources are created under the Workload
+	// parent. Formats: folders/{folder_id} organizations/{organization_id}
+	ProvisionedResourcesParent string `json:"provisionedResourcesParent,omitempty"`
 
 	// Resources: Output only. The resources associated with this workload.
 	// These resources will be created when creating the workload. If any of
@@ -1117,7 +1121,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1291,7 +1295,7 @@ func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1474,7 +1478,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1626,7 +1630,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1772,7 +1776,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1941,7 +1945,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2126,7 +2130,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2201,7 +2205,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional. The resource name of the workload. Format: organizations/{organization}/locations/{location}/workloads/{workload} Read-only. The UI extracts the location and workload name from this string, since they aren't set directly on the workload object. If the format of this field changes, the UI should likely be updated. LINT.IfChange LINT.ThenChange(//depot/google3/cloud/console/web/compliance/assurant/common/workload_helper.ts)",
+	//       "description": "Optional. The resource name of the workload. Format: organizations/{organization}/locations/{location}/workloads/{workload} Read-only.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
 	//       "required": true,

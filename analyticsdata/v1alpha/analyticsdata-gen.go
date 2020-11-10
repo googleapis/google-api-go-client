@@ -560,8 +560,7 @@ func (s *ConcatenateExpression) MarshalJSON() ([]byte, error) {
 }
 
 // DateRange: A contiguous set of days: startDate, startDate + 1, ...,
-// endDate. Requests are allowed up to 4 date ranges, and the union of
-// the ranges can cover up to 1 year.
+// endDate. Requests are allowed up to 4 date ranges.
 type DateRange struct {
 	// EndDate: The inclusive end date for the query in the format
 	// `YYYY-MM-DD`. Cannot be before `start_date`. The format `NdaysAgo`,
@@ -2253,42 +2252,6 @@ func (s *StringFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UniversalMetadata: The dimensions and metrics currently accepted in
-// reporting methods.
-type UniversalMetadata struct {
-	// Dimensions: The dimensions descriptions.
-	Dimensions []*DimensionMetadata `json:"dimensions,omitempty"`
-
-	// Metrics: The metric descriptions.
-	Metrics []*MetricMetadata `json:"metrics,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UniversalMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod UniversalMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // method id "analyticsdata.properties.getMetadata":
 
 type PropertiesGetMetadataCall struct {
@@ -2353,7 +2316,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2424,7 +2387,7 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics GA4 Property identifier. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/trusted-testing/analytics-data/property-id). Example: properties/1234/metadata",
+	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics GA4 Property identifier. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/trusted-testing/analytics-data/property-id). Example: properties/1234/metadata Set the Property ID to 0 for dimensions and metrics common to all properties. In this special mode, this method will not return custom dimensions and metrics.",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+/metadata$",
 	//       "required": true,
@@ -2491,7 +2454,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2631,7 +2594,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2758,7 +2721,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2840,141 +2803,6 @@ func (c *V1alphaBatchRunReportsCall) Do(opts ...googleapi.CallOption) (*BatchRun
 
 }
 
-// method id "analyticsdata.getUniversalMetadata":
-
-type V1alphaGetUniversalMetadataCall struct {
-	s            *Service
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetUniversalMetadata: Returns metadata for dimensions and metrics
-// available in reporting methods. Used to explore the dimensions and
-// metrics. Dimensions and metrics will be mostly added over time, but
-// renames and deletions may occur. This method returns Universal
-// Metadata. Universal Metadata are dimensions and metrics applicable to
-// any property such as `country` and `totalUsers`.
-func (r *V1alphaService) GetUniversalMetadata() *V1alphaGetUniversalMetadataCall {
-	c := &V1alphaGetUniversalMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *V1alphaGetUniversalMetadataCall) Fields(s ...googleapi.Field) *V1alphaGetUniversalMetadataCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *V1alphaGetUniversalMetadataCall) IfNoneMatch(entityTag string) *V1alphaGetUniversalMetadataCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *V1alphaGetUniversalMetadataCall) Context(ctx context.Context) *V1alphaGetUniversalMetadataCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *V1alphaGetUniversalMetadataCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *V1alphaGetUniversalMetadataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/universalMetadata")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "analyticsdata.getUniversalMetadata" call.
-// Exactly one of *UniversalMetadata or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *UniversalMetadata.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *V1alphaGetUniversalMetadataCall) Do(opts ...googleapi.CallOption) (*UniversalMetadata, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &UniversalMetadata{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns metadata for dimensions and metrics available in reporting methods. Used to explore the dimensions and metrics. Dimensions and metrics will be mostly added over time, but renames and deletions may occur. This method returns Universal Metadata. Universal Metadata are dimensions and metrics applicable to any property such as `country` and `totalUsers`.",
-	//   "flatPath": "v1alpha/universalMetadata",
-	//   "httpMethod": "GET",
-	//   "id": "analyticsdata.getUniversalMetadata",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1alpha/universalMetadata",
-	//   "response": {
-	//     "$ref": "UniversalMetadata"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/analytics",
-	//     "https://www.googleapis.com/auth/analytics.readonly"
-	//   ]
-	// }
-
-}
-
 // method id "analyticsdata.runPivotReport":
 
 type V1alphaRunPivotReportCall struct {
@@ -3023,7 +2851,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3155,7 +2983,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

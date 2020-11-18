@@ -164,11 +164,8 @@ type TransfersService struct {
 	s *Service
 }
 
-// Application: The JSON template for an Application resource.
-// STEPLADDER: Generated unstable field number for field 'kind'. (See
-// http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable
-// field number for field 'etag'. (See
-// http://go/stepladder-help#fieldNumber)
+// Application: Applications resources represent applications installed
+// on the domain that support transferring ownership of user data.
 type Application struct {
 	// Etag: Etag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -286,10 +283,6 @@ func (s *ApplicationTransferParam) MarshalJSON() ([]byte, error) {
 }
 
 // ApplicationsListResponse: Template for a collection of Applications.
-// STEPLADDER: Generated unstable field number for field 'kind'. (See
-// http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable
-// field number for field 'etag'. (See
-// http://go/stepladder-help#fieldNumber)
 type ApplicationsListResponse struct {
 	// Applications: List of applications that support data transfer and are
 	// also installed for the customer.
@@ -332,11 +325,8 @@ func (s *ApplicationsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataTransfer: The JSON template for a DataTransfer resource.
-// STEPLADDER: Generated unstable field number for field 'kind'. (See
-// http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable
-// field number for field 'etag'. (See
-// http://go/stepladder-help#fieldNumber)
+// DataTransfer: A Transfer resource represents the transfer of the
+// ownership of user data between users.
 type DataTransfer struct {
 	// ApplicationDataTransfers: List of per application data transfer
 	// resources. It contains data transfer details of the applications
@@ -397,10 +387,7 @@ func (s *DataTransfer) MarshalJSON() ([]byte, error) {
 }
 
 // DataTransfersListResponse: Template for a collection of DataTransfer
-// resources. STEPLADDER: Generated unstable field number for field
-// 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER:
-// Generated unstable field number for field 'etag'. (See
-// http://go/stepladder-help#fieldNumber)
+// resources.
 type DataTransfersListResponse struct {
 	// DataTransfers: List of data transfer requests.
 	DataTransfers []*DataTransfer `json:"dataTransfers,omitempty"`
@@ -499,7 +486,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -664,7 +651,7 @@ func (c *ApplicationsListCall) Header() http.Header {
 
 func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -836,7 +823,7 @@ func (c *TransfersGetCall) Header() http.Header {
 
 func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -969,7 +956,7 @@ func (c *TransfersInsertCall) Header() http.Header {
 
 func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1145,7 +1132,7 @@ func (c *TransfersListCall) Header() http.Header {
 
 func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

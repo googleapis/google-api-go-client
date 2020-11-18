@@ -4139,7 +4139,7 @@
       }
     }
   },
-  "revision": "20201031",
+  "revision": "20201117",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4186,7 +4186,7 @@
       "type": "object"
     },
     "Asp": {
-      "description": "The template that returns individual ASP (Access Code) data. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "The template that returns individual ASP (Access Code) data.",
       "id": "Asp",
       "properties": {
         "codeId": {
@@ -4225,7 +4225,6 @@
       "type": "object"
     },
     "Asps": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
       "id": "Asps",
       "properties": {
         "etag": {
@@ -4531,7 +4530,6 @@
       "type": "object"
     },
     "ChromeOsDevice": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
       "id": "ChromeOsDevice",
       "properties": {
         "activeTimeRanges": {
@@ -4876,7 +4874,6 @@
       "type": "object"
     },
     "ChromeOsDevices": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
       "id": "ChromeOsDevices",
       "properties": {
         "chromeosdevices": {
@@ -4921,7 +4918,6 @@
       "type": "object"
     },
     "Customer": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
       "id": "Customer",
       "properties": {
         "alternateEmail": {
@@ -4966,7 +4962,6 @@
       "type": "object"
     },
     "CustomerPostalAddress": {
-      "description": "STEPLADDER: Generated unstable field number for field 'address_line2' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'address_line3' to avoid collision. (See http://go/stepladder-help#fieldNumber)",
       "id": "CustomerPostalAddress",
       "properties": {
         "addressLine1": {
@@ -5359,7 +5354,6 @@
       "type": "object"
     },
     "Group": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
       "id": "Group",
       "properties": {
         "adminCreated": {
@@ -5419,7 +5413,6 @@
       "type": "object"
     },
     "Groups": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
       "id": "Groups",
       "properties": {
         "etag": {
@@ -5772,7 +5765,7 @@
       "type": "object"
     },
     "OrgUnit": {
-      "description": "JSON template for Org Unit resource in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON template for Org Unit resource in Directory API.",
       "id": "OrgUnit",
       "properties": {
         "blockInheritance": {
@@ -5821,7 +5814,7 @@
       "type": "object"
     },
     "OrgUnits": {
-      "description": "JSON response template for List Organization Units operation in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON response template for List Organization Units operation in Directory API.",
       "id": "OrgUnits",
       "properties": {
         "etag": {
@@ -6054,7 +6047,7 @@
       "type": "object"
     },
     "Schema": {
-      "description": "JSON template for Schema resource in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON template for Schema resource in Directory API.",
       "id": "Schema",
       "properties": {
         "displayName": {
@@ -6105,7 +6098,7 @@
       "type": "object"
     },
     "SchemaFieldSpec": {
-      "description": "JSON template for FieldSpec resource for Schemas in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON template for FieldSpec resource for Schemas in Directory API.",
       "id": "SchemaFieldSpec",
       "properties": {
         "displayName": {
@@ -6185,7 +6178,7 @@
       "type": "object"
     },
     "Schemas": {
-      "description": "JSON response template for List Schema operation in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON response template for List Schema operation in Directory API.",
       "id": "Schemas",
       "properties": {
         "etag": {
@@ -6208,7 +6201,7 @@
       "type": "object"
     },
     "Token": {
-      "description": "JSON template for token resource in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON template for token resource in Directory API.",
       "id": "Token",
       "properties": {
         "anonymous": {
@@ -6251,7 +6244,7 @@
       "type": "object"
     },
     "Tokens": {
-      "description": "JSON response template for List tokens operation in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON response template for List tokens operation in Directory API.",
       "id": "Tokens",
       "properties": {
         "etag": {
@@ -6274,7 +6267,6 @@
       "type": "object"
     },
     "User": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'external_ids' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'relations' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'addresses' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'organizations' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'phones' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'languages' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'posix_accounts' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'ssh_public_keys' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'notes' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'websites' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'locations' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'keywords' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'gender' to avoid collision. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'thumbnail_photo_etag' to avoid collision. (See http://go/stepladder-help#fieldNumber)",
       "id": "User",
       "properties": {
         "addresses": {
@@ -6873,7 +6865,6 @@
       "type": "object"
     },
     "UserPhoto": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
       "id": "UserPhoto",
       "properties": {
         "etag": {
@@ -7043,7 +7034,6 @@
       "type": "object"
     },
     "Users": {
-      "description": "STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
       "id": "Users",
       "properties": {
         "etag": {
@@ -7074,7 +7064,7 @@
       "type": "object"
     },
     "VerificationCode": {
-      "description": "JSON template for verification codes in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON template for verification codes in Directory API.",
       "id": "VerificationCode",
       "properties": {
         "etag": {
@@ -7098,7 +7088,7 @@
       "type": "object"
     },
     "VerificationCodes": {
-      "description": "JSON response template for List verification codes operation in Directory API. STEPLADDER: Generated unstable field number for field 'kind'. (See http://go/stepladder-help#fieldNumber) STEPLADDER: Generated unstable field number for field 'etag'. (See http://go/stepladder-help#fieldNumber)",
+      "description": "JSON response template for List verification codes operation in Directory API.",
       "id": "VerificationCodes",
       "properties": {
         "etag": {

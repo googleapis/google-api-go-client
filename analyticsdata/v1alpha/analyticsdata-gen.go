@@ -725,6 +725,10 @@ type DimensionMetadata struct {
 	// `name`. For example, `eventName`.
 	ApiName string `json:"apiName,omitempty"`
 
+	// CustomDefinition: True if the dimension is a custom dimension for
+	// this property.
+	CustomDefinition bool `json:"customDefinition,omitempty"`
+
 	// DeprecatedApiNames: Still usable but deprecated names for this
 	// dimension. If populated, this dimension is available by either
 	// `apiName` or one of `deprecatedApiNames` for a period of time. After
@@ -1160,6 +1164,10 @@ type MetricMetadata struct {
 	// ApiName: A metric name. Useable in [Metric](#Metric)'s `name`. For
 	// example, `eventCount`.
 	ApiName string `json:"apiName,omitempty"`
+
+	// CustomDefinition: True if the metric is a custom metric for this
+	// property.
+	CustomDefinition bool `json:"customDefinition,omitempty"`
 
 	// DeprecatedApiNames: Still usable but deprecated names for this
 	// metric. If populated, this metric is available by either `apiName` or
@@ -2082,7 +2090,10 @@ type RunReportRequest struct {
 	KeepEmptyRows bool `json:"keepEmptyRows,omitempty"`
 
 	// Limit: The number of rows to return. If unspecified, 10 rows are
-	// returned. If -1, all rows are returned.
+	// returned. If -1, all rows are returned. To learn more about this
+	// pagination parameter, see
+	// [Pagination](https://developers.google.com/analytics/devguides/reporti
+	// ng/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregation of metrics. Aggregated metric values
@@ -2107,7 +2118,9 @@ type RunReportRequest struct {
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// Offset: The row count of the start row. The first row is counted as
-	// row 0.
+	// row 0. To learn more about this pagination parameter, see
+	// [Pagination](https://developers.google.com/analytics/devguides/reporti
+	// ng/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
 
 	// OrderBys: Specifies how rows are ordered in the response.
@@ -2169,7 +2182,10 @@ type RunReportResponse struct {
 	// RowCount: The total number of rows in the query result, regardless of
 	// the number of rows returned in the response. For example if a query
 	// returns 175 rows and includes limit = 50 in the API request, the
-	// response will contain row_count = 175 but only 50 rows.
+	// response will contain row_count = 175 but only 50 rows. To learn more
+	// about this pagination parameter, see
+	// [Pagination](https://developers.google.com/analytics/devguides/reporti
+	// ng/data/v1/basics#pagination).
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// Rows: Rows of dimension value combinations and metric values in the
@@ -2316,7 +2332,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2454,7 +2470,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2594,7 +2610,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2721,7 +2737,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2851,7 +2867,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2983,7 +2999,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

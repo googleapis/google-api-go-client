@@ -628,10 +628,10 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 // actual size of the object fetched, the object will not be
 // transferred. * If the specified MD5 does not match the MD5 computed
 // from the transferred bytes, the object transfer will fail. For more
-// information, see [Generating MD5
-// hashes](https://cloud.google.com/storage-transfer/docs/create-url-list
-// #md5) * Ensure that each URL you specify is publicly accessible. For
-// example, in Cloud Storage you can [share an object publicly]
+// information, see [Generating MD5 hashes]
+// (https://cloud.google.com/storage-transfer/docs/create-url-list#md5-ch
+// ecksum) * Ensure that each URL you specify is publicly accessible.
+// For example, in Cloud Storage you can [share an object publicly]
 // (https://cloud.google.com/storage/docs/cloud-console#_sharingdata)
 // and get a link to it. * Storage Transfer Service obeys `robots.txt`
 // rules and requires the source HTTP server to support `Range` requests
@@ -968,6 +968,23 @@ type ResumeTransferOperationRequest struct {
 
 // Schedule: Transfers can be scheduled to recur or to run just once.
 type Schedule struct {
+	// EndTimeOfDay: The time in UTC that no further transfer operations are
+	// scheduled. Combined with schedule_end_date, `end_time_of_day`
+	// specifies the end date and time for starting new transfer operations.
+	// This field must be greater than or equal to the timestamp
+	// corresponding to the combintation of schedule_start_date and
+	// start_time_of_day, and is subject to the following: * If
+	// `end_time_of_day` is not set and `schedule_end_date` is set, then a
+	// default value of `23:59:59` is used for `end_time_of_day`. * If
+	// `end_time_of_day` is set and `schedule_end_date` is not set, then
+	// INVALID_ARGUMENT is returned.
+	EndTimeOfDay *TimeOfDay `json:"endTimeOfDay,omitempty"`
+
+	// RepeatInterval: Interval between the start of each scheduled
+	// TransferOperation. If unspecified, the default value is 24 hours.
+	// This value may not be less than 1 hour.
+	RepeatInterval string `json:"repeatInterval,omitempty"`
+
 	// ScheduleEndDate: The last day a transfer runs. Date boundaries are
 	// determined relative to UTC time. A job will run once per 24 hours
 	// within the following guidelines: * If `schedule_end_date` and
@@ -1001,7 +1018,7 @@ type Schedule struct {
 	// specified time each day, through `schedule_end_date`.
 	StartTimeOfDay *TimeOfDay `json:"startTimeOfDay,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ScheduleEndDate") to
+	// ForceSendFields is a list of field names (e.g. "EndTimeOfDay") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1009,13 +1026,12 @@ type Schedule struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ScheduleEndDate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EndTimeOfDay") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1569,7 +1585,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1701,7 +1717,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1838,7 +1854,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2002,7 +2018,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2131,10 +2147,9 @@ type TransferJobsPatchCall struct {
 }
 
 // Patch: Updates a transfer job. Updating a job's transfer spec does
-// not affect transfer operations that are running already. Updating a
-// job's schedule is not allowed. **Note:** The job's status field can
-// be modified using this RPC (for example, to set a job's status to
-// DELETED, DISABLED, or ENABLED).
+// not affect transfer operations that are running already. **Note:**
+// The job's status field can be modified using this RPC (for example,
+// to set a job's status to DELETED, DISABLED, or ENABLED).
 func (r *TransferJobsService) Patch(jobName string, updatetransferjobrequest *UpdateTransferJobRequest) *TransferJobsPatchCall {
 	c := &TransferJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -2169,7 +2184,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2233,7 +2248,7 @@ func (c *TransferJobsPatchCall) Do(opts ...googleapi.CallOption) (*TransferJob, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a transfer job. Updating a job's transfer spec does not affect transfer operations that are running already. Updating a job's schedule is not allowed. **Note:** The job's status field can be modified using this RPC (for example, to set a job's status to DELETED, DISABLED, or ENABLED).",
+	//   "description": "Updates a transfer job. Updating a job's transfer spec does not affect transfer operations that are running already. **Note:** The job's status field can be modified using this RPC (for example, to set a job's status to DELETED, DISABLED, or ENABLED).",
 	//   "flatPath": "v1/transferJobs/{transferJobsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "storagetransfer.transferJobs.patch",
@@ -2327,7 +2342,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2478,7 +2493,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2637,7 +2652,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2811,7 +2826,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2951,7 +2966,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

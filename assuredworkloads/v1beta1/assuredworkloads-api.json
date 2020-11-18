@@ -351,7 +351,7 @@
       }
     }
   },
-  "revision": "20201105",
+  "revision": "20201112",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata": {
@@ -400,10 +400,6 @@
           "description": "Required. Input only. The billing account used for the resources which are direct children of workload. This billing account is initially associated with the resources created as part of Workload creation. After the initial creation of these resources, the customer can change the assigned billing account. The resource name has the form `billingAccounts/{billing_account_id}`. For example, `billingAccounts/012345-567890-ABCDEF`.",
           "type": "string"
         },
-        "cjisSettings": {
-          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadCJISSettings",
-          "description": "Required. Input only. Immutable. Settings specific to resources needed for CJIS."
-        },
         "complianceRegime": {
           "description": "Required. Immutable. Compliance Regime associated with this workload.",
           "enum": [
@@ -436,17 +432,9 @@
           "description": "Optional. ETag of the workload, it is calculated on the basis of the Workload contents. It will be used in Update \u0026 Delete operations.",
           "type": "string"
         },
-        "fedrampHighSettings": {
-          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadFedrampHighSettings",
-          "description": "Required. Input only. Immutable. Settings specific to resources needed for FedRAMP High."
-        },
-        "fedrampModerateSettings": {
-          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadFedrampModerateSettings",
-          "description": "Required. Input only. Immutable. Settings specific to resources needed for FedRAMP Moderate."
-        },
-        "il4Settings": {
-          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadIL4Settings",
-          "description": "Required. Input only. Immutable. Settings specific to resources needed for IL4."
+        "kmsSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadKMSSettings",
+          "description": "Input only. Settings used to create a CMEK crypto key. When set a project with a KMS CMEK key is provisioned. This field is mandatory for a subset of Compliance Regimes."
         },
         "labels": {
           "additionalProperties": {
@@ -470,50 +458,6 @@
           },
           "readOnly": true,
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAssuredworkloadsV1WorkloadCJISSettings": {
-      "description": "Settings specific to resources needed for CJIS.",
-      "id": "GoogleCloudAssuredworkloadsV1WorkloadCJISSettings",
-      "properties": {
-        "kmsSettings": {
-          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadKMSSettings",
-          "description": "Required. Input only. Immutable. Settings used to create a CMEK crypto key."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAssuredworkloadsV1WorkloadFedrampHighSettings": {
-      "description": "Settings specific to resources needed for FedRAMP High.",
-      "id": "GoogleCloudAssuredworkloadsV1WorkloadFedrampHighSettings",
-      "properties": {
-        "kmsSettings": {
-          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadKMSSettings",
-          "description": "Required. Input only. Immutable. Settings used to create a CMEK crypto key."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAssuredworkloadsV1WorkloadFedrampModerateSettings": {
-      "description": "Settings specific to resources needed for FedRAMP Moderate.",
-      "id": "GoogleCloudAssuredworkloadsV1WorkloadFedrampModerateSettings",
-      "properties": {
-        "kmsSettings": {
-          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadKMSSettings",
-          "description": "Required. Input only. Immutable. Settings used to create a CMEK crypto key."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAssuredworkloadsV1WorkloadIL4Settings": {
-      "description": "Settings specific to resources needed for IL4.",
-      "id": "GoogleCloudAssuredworkloadsV1WorkloadIL4Settings",
-      "properties": {
-        "kmsSettings": {
-          "$ref": "GoogleCloudAssuredworkloadsV1WorkloadKMSSettings",
-          "description": "Required. Input only. Immutable. Settings used to create a CMEK crypto key."
         }
       },
       "type": "object"
@@ -672,6 +616,10 @@
         "il4Settings": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings",
           "description": "Required. Input only. Immutable. Settings specific to resources needed for IL4."
+        },
+        "kmsSettings": {
+          "$ref": "GoogleCloudAssuredworkloadsV1beta1WorkloadKMSSettings",
+          "description": "Input only. Settings used to create a CMEK crypto key. When set a project with a KMS CMEK key is provisioned. This field is mandatory for a subset of Compliance Regimes."
         },
         "labels": {
           "additionalProperties": {

@@ -134,7 +134,8 @@
           "scopes": [
             "https://www.googleapis.com/auth/admob.readonly",
             "https://www.googleapis.com/auth/admob.report"
-          ]
+          ],
+          "streamingType": "NONE"
         },
         "list": {
           "description": "Lists the AdMob publisher account accessible with the client credential. Currently, all credentials have access to at most one AdMob account.",
@@ -162,7 +163,8 @@
           "scopes": [
             "https://www.googleapis.com/auth/admob.readonly",
             "https://www.googleapis.com/auth/admob.report"
-          ]
+          ],
+          "streamingType": "NONE"
         }
       },
       "resources": {
@@ -193,8 +195,10 @@
                 "$ref": "GenerateMediationReportResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/admob.readonly",
                 "https://www.googleapis.com/auth/admob.report"
-              ]
+              ],
+              "streamingType": "SERVER_SIDE"
             }
           }
         },
@@ -225,15 +229,17 @@
                 "$ref": "GenerateNetworkReportResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/admob.readonly",
                 "https://www.googleapis.com/auth/admob.report"
-              ]
+              ],
+              "streamingType": "SERVER_SIDE"
             }
           }
         }
       }
     }
   },
-  "revision": "20201110",
+  "revision": "20201117",
   "rootUrl": "https://admob.googleapis.com/",
   "schemas": {
     "Date": {

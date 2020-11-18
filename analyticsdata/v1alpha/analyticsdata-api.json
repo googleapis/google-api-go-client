@@ -248,7 +248,7 @@
       }
     }
   },
-  "revision": "20201106",
+  "revision": "20201116",
   "rootUrl": "https://analyticsdata.googleapis.com/",
   "schemas": {
     "BatchRunPivotReportsRequest": {
@@ -516,6 +516,10 @@
           "description": "This dimension's name. Useable in [Dimension](#Dimension)'s `name`. For example, `eventName`.",
           "type": "string"
         },
+        "customDefinition": {
+          "description": "True if the dimension is a custom dimension for this property.",
+          "type": "boolean"
+        },
         "deprecatedApiNames": {
           "description": "Still usable but deprecated names for this dimension. If populated, this dimension is available by either `apiName` or one of `deprecatedApiNames` for a period of time. After the deprecation period, the dimension will be available only by `apiName`.",
           "items": {
@@ -765,6 +769,10 @@
         "apiName": {
           "description": "A metric name. Useable in [Metric](#Metric)'s `name`. For example, `eventCount`.",
           "type": "string"
+        },
+        "customDefinition": {
+          "description": "True if the metric is a custom metric for this property.",
+          "type": "boolean"
         },
         "deprecatedApiNames": {
           "description": "Still usable but deprecated names for this metric. If populated, this metric is available by either `apiName` or one of `deprecatedApiNames` for a period of time. After the deprecation period, the metric will be available only by `apiName`.",
@@ -1381,7 +1389,7 @@
           "type": "boolean"
         },
         "limit": {
-          "description": "The number of rows to return. If unspecified, 10 rows are returned. If -1, all rows are returned.",
+          "description": "The number of rows to return. If unspecified, 10 rows are returned. If -1, all rows are returned. To learn more about this pagination parameter, see [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).",
           "format": "int64",
           "type": "string"
         },
@@ -1418,7 +1426,7 @@
           "type": "array"
         },
         "offset": {
-          "description": "The row count of the start row. The first row is counted as row 0.",
+          "description": "The row count of the start row. The first row is counted as row 0. To learn more about this pagination parameter, see [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).",
           "format": "int64",
           "type": "string"
         },
@@ -1477,7 +1485,7 @@
           "description": "This Analytics Property's quota state including this request."
         },
         "rowCount": {
-          "description": "The total number of rows in the query result, regardless of the number of rows returned in the response. For example if a query returns 175 rows and includes limit = 50 in the API request, the response will contain row_count = 175 but only 50 rows.",
+          "description": "The total number of rows in the query result, regardless of the number of rows returned in the response. For example if a query returns 175 rows and includes limit = 50 in the API request, the response will contain row_count = 175 but only 50 rows. To learn more about this pagination parameter, see [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).",
           "format": "int32",
           "type": "integer"
         },

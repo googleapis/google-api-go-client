@@ -116,7 +116,9 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Folders = NewFoldersService(s)
 	s.Organizations = NewOrganizationsService(s)
+	s.Projects = NewProjectsService(s)
 	return s, nil
 }
 
@@ -125,7 +127,11 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Folders *FoldersService
+
 	Organizations *OrganizationsService
+
+	Projects *ProjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -133,6 +139,51 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewFoldersService(s *Service) *FoldersService {
+	rs := &FoldersService{s: s}
+	rs.Assets = NewFoldersAssetsService(s)
+	rs.Sources = NewFoldersSourcesService(s)
+	return rs
+}
+
+type FoldersService struct {
+	s *Service
+
+	Assets *FoldersAssetsService
+
+	Sources *FoldersSourcesService
+}
+
+func NewFoldersAssetsService(s *Service) *FoldersAssetsService {
+	rs := &FoldersAssetsService{s: s}
+	return rs
+}
+
+type FoldersAssetsService struct {
+	s *Service
+}
+
+func NewFoldersSourcesService(s *Service) *FoldersSourcesService {
+	rs := &FoldersSourcesService{s: s}
+	rs.Findings = NewFoldersSourcesFindingsService(s)
+	return rs
+}
+
+type FoldersSourcesService struct {
+	s *Service
+
+	Findings *FoldersSourcesFindingsService
+}
+
+func NewFoldersSourcesFindingsService(s *Service) *FoldersSourcesFindingsService {
+	rs := &FoldersSourcesFindingsService{s: s}
+	return rs
+}
+
+type FoldersSourcesFindingsService struct {
+	s *Service
 }
 
 func NewOrganizationsService(s *Service) *OrganizationsService {
@@ -204,6 +255,51 @@ type OrganizationsSourcesFindingsService struct {
 	s *Service
 }
 
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Assets = NewProjectsAssetsService(s)
+	rs.Sources = NewProjectsSourcesService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Assets *ProjectsAssetsService
+
+	Sources *ProjectsSourcesService
+}
+
+func NewProjectsAssetsService(s *Service) *ProjectsAssetsService {
+	rs := &ProjectsAssetsService{s: s}
+	return rs
+}
+
+type ProjectsAssetsService struct {
+	s *Service
+}
+
+func NewProjectsSourcesService(s *Service) *ProjectsSourcesService {
+	rs := &ProjectsSourcesService{s: s}
+	rs.Findings = NewProjectsSourcesFindingsService(s)
+	return rs
+}
+
+type ProjectsSourcesService struct {
+	s *Service
+
+	Findings *ProjectsSourcesFindingsService
+}
+
+func NewProjectsSourcesFindingsService(s *Service) *ProjectsSourcesFindingsService {
+	rs := &ProjectsSourcesFindingsService{s: s}
+	return rs
+}
+
+type ProjectsSourcesFindingsService struct {
+	s *Service
+}
+
 // Asset: Security Command Center representation of a Google Cloud
 // resource. The Asset is a Security Command Center resource that
 // captures information about a single Google Cloud resource. All
@@ -270,6 +366,10 @@ func (s *Asset) MarshalJSON() ([]byte, error) {
 // AssetDiscoveryConfig: The configuration used for Asset Discovery
 // runs.
 type AssetDiscoveryConfig struct {
+	// FolderIds: The folder ids to use for filtering asset discovery. It
+	// consists of only digits, e.g., 756619654966.
+	FolderIds []string `json:"folderIds,omitempty"`
+
 	// InclusionMode: The mode to use for filtering asset discovery.
 	//
 	// Possible values:
@@ -285,7 +385,7 @@ type AssetDiscoveryConfig struct {
 	// ProjectIds: The project ids to use for filtering asset discovery.
 	ProjectIds []string `json:"projectIds,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InclusionMode") to
+	// ForceSendFields is a list of field names (e.g. "FolderIds") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -293,10 +393,10 @@ type AssetDiscoveryConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InclusionMode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "FolderIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -648,6 +748,41 @@ func (s *Finding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Folder: Message that contains the resource name and display name of a
+// folder resource.
+type Folder struct {
+	// ResourceFolder: Full resource name of this folder. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	ResourceFolder string `json:"resourceFolder,omitempty"`
+
+	// ResourceFolderDisplayName: The user defined display name for this
+	// folder.
+	ResourceFolderDisplayName string `json:"resourceFolderDisplayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceFolder") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceFolder") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Folder) MarshalJSON() ([]byte, error) {
+	type NoMethod Folder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
 	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
@@ -755,6 +890,11 @@ func (s *GoogleCloudSecuritycenterV1NotificationMessage) MarshalJSON() ([]byte, 
 // GoogleCloudSecuritycenterV1Resource: Information related to the
 // Google Cloud resource.
 type GoogleCloudSecuritycenterV1Resource struct {
+	// Folders: Output only. Contains a Folder message for each folder in
+	// the assets ancestry. The first folder is the deepest nested folder,
+	// and the last folder is the folder directly under the Organization.
+	Folders []*Folder `json:"folders,omitempty"`
+
 	// Name: The full resource name of the resource. See:
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	Name string `json:"name,omitempty"`
@@ -773,7 +913,7 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Folders") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -781,8 +921,8 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Folders") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -980,6 +1120,41 @@ func (s *GoogleCloudSecuritycenterV1p1beta1Finding) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudSecuritycenterV1p1beta1Folder: Message that contains the
+// resource name and display name of a folder resource.
+type GoogleCloudSecuritycenterV1p1beta1Folder struct {
+	// ResourceFolder: Full resource name of this folder. See:
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	ResourceFolder string `json:"resourceFolder,omitempty"`
+
+	// ResourceFolderDisplayName: The user defined display name for this
+	// folder.
+	ResourceFolderDisplayName string `json:"resourceFolderDisplayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceFolder") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceFolder") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1p1beta1Folder) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1p1beta1Folder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV1p1beta1NotificationMessage: Security
 // Command Center's Notification
 type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
@@ -1020,6 +1195,11 @@ func (s *GoogleCloudSecuritycenterV1p1beta1NotificationMessage) MarshalJSON() ([
 // GoogleCloudSecuritycenterV1p1beta1Resource: Information related to
 // the Google Cloud resource.
 type GoogleCloudSecuritycenterV1p1beta1Resource struct {
+	// Folders: Output only. Contains a Folder message for each folder in
+	// the assets ancestry. The first folder is the deepest nested folder,
+	// and the last folder is the folder directly under the Organization.
+	Folders []*GoogleCloudSecuritycenterV1p1beta1Folder `json:"folders,omitempty"`
+
 	// Name: The full resource name of the resource. See:
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	Name string `json:"name,omitempty"`
@@ -1038,7 +1218,7 @@ type GoogleCloudSecuritycenterV1p1beta1Resource struct {
 	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Folders") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1046,8 +1226,8 @@ type GoogleCloudSecuritycenterV1p1beta1Resource struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Folders") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2066,6 +2246,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // Resource: Information related to the Google Cloud resource that is
 // associated with this finding. LINT.IfChange
 type Resource struct {
+	// Folders: Contains a Folder message for each folder in the assets
+	// ancestry. The first folder is the deepest nested folder, and the last
+	// folder is the folder directly under the Organization.
+	Folders []*Folder `json:"folders,omitempty"`
+
 	// Name: The full resource name of the resource. See:
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	Name string `json:"name,omitempty"`
@@ -2084,7 +2269,7 @@ type Resource struct {
 	// belongs to.
 	ProjectName string `json:"projectName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Folders") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2092,8 +2277,8 @@ type Resource struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Folders") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2116,6 +2301,11 @@ type RunAssetDiscoveryRequest struct {
 // These properties are managed by Security Command Center and cannot be
 // modified by the user.
 type SecurityCenterProperties struct {
+	// Folders: Contains a Folder message for each folder in the assets
+	// ancestry. The first folder is the deepest nested folder, and the last
+	// folder is the folder directly under the Organization.
+	Folders []*Folder `json:"folders,omitempty"`
+
 	// ResourceDisplayName: The user defined display name for this resource.
 	ResourceDisplayName string `json:"resourceDisplayName,omitempty"`
 
@@ -2152,21 +2342,20 @@ type SecurityCenterProperties struct {
 	// producer of the resource and is immutable after create time.
 	ResourceType string `json:"resourceType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ResourceDisplayName")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Folders") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ResourceDisplayName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Folders") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2501,6 +2690,1806 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "securitycenter.folders.assets.group":
+
+type FoldersAssetsGroupCall struct {
+	s                  *Service
+	parent             string
+	groupassetsrequest *GroupAssetsRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Group: Filters an organization's assets and groups them by their
+// specified properties.
+func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
+	c := &FoldersAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.groupassetsrequest = groupassetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersAssetsGroupCall) Fields(s ...googleapi.Field) *FoldersAssetsGroupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersAssetsGroupCall) Context(ctx context.Context) *FoldersAssetsGroupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersAssetsGroupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupassetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/assets:group")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.assets.group" call.
+// Exactly one of *GroupAssetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GroupAssetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GroupAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Filters an organization's assets and groups them by their specified properties.",
+	//   "flatPath": "v1/folders/{foldersId}/assets:group",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.assets.group",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/assets:group",
+	//   "request": {
+	//     "$ref": "GroupAssetsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GroupAssetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersAssetsGroupCall) Pages(ctx context.Context, f func(*GroupAssetsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.groupassetsrequest.PageToken = pt }(c.groupassetsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.groupassetsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "securitycenter.folders.assets.list":
+
+type FoldersAssetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists an organization's assets.
+func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
+	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// CompareDuration sets the optional parameter "compareDuration": When
+// compare_duration is set, the ListAssetsResult's "state_change"
+// attribute is updated to indicate whether the asset was added,
+// removed, or remained present during the compare_duration period of
+// time that precedes the read_time. This is the time between (read_time
+// - compare_duration) and read_time. The state_change value is derived
+// based on the presence of the asset at the two points in time.
+// Intermediate state changes between the two times don't affect the
+// result. For example, the results aren't affected if the asset is
+// removed and re-created again. Possible "state_change" values when
+// compare_duration is specified: * "ADDED": indicates that the asset
+// was not present at the start of compare_duration, but present at
+// read_time. * "REMOVED": indicates that the asset was present at the
+// start of compare_duration, but not present at read_time. * "ACTIVE":
+// indicates that the asset was present at both the start and the end of
+// the time period defined by compare_duration and read_time. If
+// compare_duration is not specified, then the only possible
+// state_change is "UNUSED", which will be the state_change set for all
+// assets present at read_time.
+func (c *FoldersAssetsListCall) CompareDuration(compareDuration string) *FoldersAssetsListCall {
+	c.urlParams_.Set("compareDuration", compareDuration)
+	return c
+}
+
+// FieldMask sets the optional parameter "fieldMask": A field mask to
+// specify the ListAssetsResult fields to be listed in the response. An
+// empty field mask will list all fields.
+func (c *FoldersAssetsListCall) FieldMask(fieldMask string) *FoldersAssetsListCall {
+	c.urlParams_.Set("fieldMask", fieldMask)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Expression that defines
+// the filter to apply across assets. The expression is a list of zero
+// or more restrictions combined via logical operators `AND` and `OR`.
+// Parentheses are supported, and `OR` has higher precedence than `AND`.
+// Restrictions have the form ` ` and may have a `-` character in front
+// of them to indicate negation. The fields map to those defined in the
+// Asset resource. Examples include: * name *
+// security_center_properties.resource_name *
+// resource_properties.a_property * security_marks.marks.marka The
+// supported operators are: * `=` for all value types. * `>`, `<`, `>=`,
+// `<=` for integer values. * `:`, meaning substring matching, for
+// strings. The supported value types are: * string literals in quotes.
+// * integer literals without quotes. * boolean literals `true` and
+// `false` without quotes. The following are the allowed field and
+// operator combinations: * name: `=` * update_time: `=`, `>`, `<`,
+// `>=`, `<=` Usage: This should be milliseconds since epoch or an
+// RFC3339 string. Examples: `update_time = "2019-06-10T16:07:18-07:00"
+// `update_time = 1560208038000` * create_time: `=`, `>`, `<`, `>=`,
+// `<=` Usage: This should be milliseconds since epoch or an RFC3339
+// string. Examples: `create_time = "2019-06-10T16:07:18-07:00"
+// `create_time = 1560208038000` * iam_policy.policy_blob: `=`, `:` *
+// resource_properties: `=`, `:`, `>`, `<`, `>=`, `<=` *
+// security_marks.marks: `=`, `:` *
+// security_center_properties.resource_name: `=`, `:` *
+// security_center_properties.resource_display_name: `=`, `:` *
+// security_center_properties.resource_type: `=`, `:` *
+// security_center_properties.resource_parent: `=`, `:` *
+// security_center_properties.resource_parent_display_name: `=`, `:` *
+// security_center_properties.resource_project: `=`, `:` *
+// security_center_properties.resource_project_display_name: `=`, `:` *
+// security_center_properties.resource_owners: `=`, `:` For example,
+// `resource_properties.size = 100` is a valid filter string. Use a
+// partial match on the empty string to filter based on a property
+// existing: `resource_properties.my_property : "" Use a negated
+// partial match on the empty string to filter based on a property not
+// existing: `-resource_properties.my_property : ""
+func (c *FoldersAssetsListCall) Filter(filter string) *FoldersAssetsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Expression that
+// defines what fields and order to use for sorting. The string value
+// should follow SQL syntax: comma separated list of fields. For
+// example: "name,resource_properties.a_property". The default sorting
+// order is ascending. To specify descending order for a field, a suffix
+// " desc" should be appended to the field name. For example: "name
+// desc,resource_properties.a_property". Redundant space characters in
+// the syntax are insignificant. "name
+// desc,resource_properties.a_property" and " name desc ,
+// resource_properties.a_property " are equivalent. The following fields
+// are supported: name update_time resource_properties
+// security_marks.marks security_center_properties.resource_name
+// security_center_properties.resource_display_name
+// security_center_properties.resource_parent
+// security_center_properties.resource_parent_display_name
+// security_center_properties.resource_project
+// security_center_properties.resource_project_display_name
+// security_center_properties.resource_type
+func (c *FoldersAssetsListCall) OrderBy(orderBy string) *FoldersAssetsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersAssetsListCall) PageSize(pageSize int64) *FoldersAssetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListAssetsResponse`; indicates that this is a
+// continuation of a prior `ListAssets` call, and that the system should
+// return the next page of data.
+func (c *FoldersAssetsListCall) PageToken(pageToken string) *FoldersAssetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadTime sets the optional parameter "readTime": Time used as a
+// reference point when filtering assets. The filter is limited to
+// assets existing at the supplied time and their values are those at
+// that specific time. Absence of this field will default to the API's
+// version of NOW.
+func (c *FoldersAssetsListCall) ReadTime(readTime string) *FoldersAssetsListCall {
+	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersAssetsListCall) Fields(s ...googleapi.Field) *FoldersAssetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersAssetsListCall) IfNoneMatch(entityTag string) *FoldersAssetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersAssetsListCall) Context(ctx context.Context) *FoldersAssetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersAssetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersAssetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/assets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.assets.list" call.
+// Exactly one of *ListAssetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAssetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists an organization's assets.",
+	//   "flatPath": "v1/folders/{foldersId}/assets",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.assets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "compareDuration": {
+	//       "description": "When compare_duration is set, the ListAssetsResult's \"state_change\" attribute is updated to indicate whether the asset was added, removed, or remained present during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence of the asset at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the asset is removed and re-created again. Possible \"state_change\" values when compare_duration is specified: * \"ADDED\": indicates that the asset was not present at the start of compare_duration, but present at read_time. * \"REMOVED\": indicates that the asset was present at the start of compare_duration, but not present at read_time. * \"ACTIVE\": indicates that the asset was present at both the start and the end of the time period defined by compare_duration and read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all assets present at read_time.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fieldMask": {
+	//       "description": "A field mask to specify the ListAssetsResult fields to be listed in the response. An empty field mask will list all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Expression that defines the filter to apply across assets. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the Asset resource. Examples include: * name * security_center_properties.resource_name * resource_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following are the allowed field and operator combinations: * name: `=` * update_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `update_time = \"2019-06-10T16:07:18-07:00\"` `update_time = 1560208038000` * create_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `create_time = \"2019-06-10T16:07:18-07:00\"` `create_time = 1560208038000` * iam_policy.policy_blob: `=`, `:` * resource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` * security_marks.marks: `=`, `:` * security_center_properties.resource_name: `=`, `:` * security_center_properties.resource_display_name: `=`, `:` * security_center_properties.resource_type: `=`, `:` * security_center_properties.resource_parent: `=`, `:` * security_center_properties.resource_parent_display_name: `=`, `:` * security_center_properties.resource_project: `=`, `:` * security_center_properties.resource_project_display_name: `=`, `:` * security_center_properties.resource_owners: `=`, `:` For example, `resource_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `resource_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-resource_properties.my_property : \"\"`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Expression that defines what fields and order to use for sorting. The string value should follow SQL syntax: comma separated list of fields. For example: \"name,resource_properties.a_property\". The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be appended to the field name. For example: \"name desc,resource_properties.a_property\". Redundant space characters in the syntax are insignificant. \"name desc,resource_properties.a_property\" and \" name desc , resource_properties.a_property \" are equivalent. The following fields are supported: name update_time resource_properties security_marks.marks security_center_properties.resource_name security_center_properties.resource_display_name security_center_properties.resource_parent security_center_properties.resource_parent_display_name security_center_properties.resource_project security_center_properties.resource_project_display_name security_center_properties.resource_type",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListAssetsResponse`; indicates that this is a continuation of a prior `ListAssets` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readTime": {
+	//       "description": "Time used as a reference point when filtering assets. The filter is limited to assets existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/assets",
+	//   "response": {
+	//     "$ref": "ListAssetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersAssetsListCall) Pages(ctx context.Context, f func(*ListAssetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.assets.updateSecurityMarks":
+
+type FoldersAssetsUpdateSecurityMarksCall struct {
+	s             *Service
+	name          string
+	securitymarks *SecurityMarks
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateSecurityMarks: Updates security marks.
+func (r *FoldersAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *FoldersAssetsUpdateSecurityMarksCall {
+	c := &FoldersAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.securitymarks = securitymarks
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": The time at which
+// the updated SecurityMarks take effect. If not set uses current server
+// time. Updates will be applied to the SecurityMarks that are active
+// immediately preceding this time.
+func (c *FoldersAssetsUpdateSecurityMarksCall) StartTime(startTime string) *FoldersAssetsUpdateSecurityMarksCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the security marks resource. The field mask must
+// not contain duplicate fields. If empty or set to "marks", all marks
+// will be replaced. Individual marks can be updated using "marks.".
+func (c *FoldersAssetsUpdateSecurityMarksCall) UpdateMask(updateMask string) *FoldersAssetsUpdateSecurityMarksCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersAssetsUpdateSecurityMarksCall) Fields(s ...googleapi.Field) *FoldersAssetsUpdateSecurityMarksCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersAssetsUpdateSecurityMarksCall) Context(ctx context.Context) *FoldersAssetsUpdateSecurityMarksCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersAssetsUpdateSecurityMarksCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securitymarks)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.assets.updateSecurityMarks" call.
+// Exactly one of *SecurityMarks or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SecurityMarks.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOption) (*SecurityMarks, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SecurityMarks{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates security marks.",
+	//   "flatPath": "v1/folders/{foldersId}/assets/{assetsId}/securityMarks",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.assets.updateSecurityMarks",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of the SecurityMarks. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: \"organizations/{organization_id}/assets/{asset_id}/securityMarks\" \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/assets/[^/]+/securityMarks$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the security marks resource. The field mask must not contain duplicate fields. If empty or set to \"marks\", all marks will be replaced. Individual marks can be updated using \"marks.\".",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "SecurityMarks"
+	//   },
+	//   "response": {
+	//     "$ref": "SecurityMarks"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.sources.list":
+
+type FoldersSourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all sources belonging to an organization.
+func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
+	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersSourcesListCall) PageSize(pageSize int64) *FoldersSourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListSourcesResponse`; indicates that this is a
+// continuation of a prior `ListSources` call, and that the system
+// should return the next page of data.
+func (c *FoldersSourcesListCall) PageToken(pageToken string) *FoldersSourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSourcesListCall) Fields(s ...googleapi.Field) *FoldersSourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSourcesListCall) IfNoneMatch(entityTag string) *FoldersSourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSourcesListCall) Context(ctx context.Context) *FoldersSourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.sources.list" call.
+// Exactly one of *ListSourcesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSourcesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListSourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all sources belonging to an organization.",
+	//   "flatPath": "v1/folders/{foldersId}/sources",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.sources.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListSourcesResponse`; indicates that this is a continuation of a prior `ListSources` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/sources",
+	//   "response": {
+	//     "$ref": "ListSourcesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSourcesListCall) Pages(ctx context.Context, f func(*ListSourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.sources.findings.group":
+
+type FoldersSourcesFindingsGroupCall struct {
+	s                    *Service
+	parent               string
+	groupfindingsrequest *GroupFindingsRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Group: Filters an organization or source's findings and groups them
+// by their specified properties. To group across all sources provide a
+// `-` as the source id. Example:
+// /v1/organizations/{organization_id}/sources/-/findings,
+// /v1/folders/{folder_id}/sources/-/findings,
+// /v1/projects/{project_id}/sources/-/findings
+func (r *FoldersSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *FoldersSourcesFindingsGroupCall {
+	c := &FoldersSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.groupfindingsrequest = groupfindingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSourcesFindingsGroupCall) Fields(s ...googleapi.Field) *FoldersSourcesFindingsGroupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSourcesFindingsGroupCall) Context(ctx context.Context) *FoldersSourcesFindingsGroupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSourcesFindingsGroupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupfindingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/findings:group")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.sources.findings.group" call.
+// Exactly one of *GroupFindingsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GroupFindingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption) (*GroupFindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GroupFindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/{organization_id}/sources/-/findings, /v1/folders/{folder_id}/sources/-/findings, /v1/projects/{project_id}/sources/-/findings",
+	//   "flatPath": "v1/folders/{foldersId}/sources/{sourcesId}/findings:group",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.sources.findings.group",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the source to groupBy. Its format is \"organizations/[organization_id]/sources/[source_id]\", folders/[folder_id]/sources/[source_id], or projects/[project_id]/sources/[source_id]. To groupBy across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-, or projects/{project_id}/sources/-",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/sources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/findings:group",
+	//   "request": {
+	//     "$ref": "GroupFindingsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GroupFindingsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSourcesFindingsGroupCall) Pages(ctx context.Context, f func(*GroupFindingsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.groupfindingsrequest.PageToken = pt }(c.groupfindingsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.groupfindingsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "securitycenter.folders.sources.findings.list":
+
+type FoldersSourcesFindingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists an organization or source's findings. To list across all
+// sources provide a `-` as the source id. Example:
+// /v1/organizations/{organization_id}/sources/-/findings
+func (r *FoldersSourcesFindingsService) List(parent string) *FoldersSourcesFindingsListCall {
+	c := &FoldersSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// CompareDuration sets the optional parameter "compareDuration": When
+// compare_duration is set, the ListFindingsResult's "state_change"
+// attribute is updated to indicate whether the finding had its state
+// changed, the finding's state remained unchanged, or if the finding
+// was added in any state during the compare_duration period of time
+// that precedes the read_time. This is the time between (read_time -
+// compare_duration) and read_time. The state_change value is derived
+// based on the presence and state of the finding at the two points in
+// time. Intermediate state changes between the two times don't affect
+// the result. For example, the results aren't affected if the finding
+// is made inactive and then active again. Possible "state_change"
+// values when compare_duration is specified: * "CHANGED": indicates
+// that the finding was present and matched the given filter at the
+// start of compare_duration, but changed its state at read_time. *
+// "UNCHANGED": indicates that the finding was present and matched the
+// given filter at the start of compare_duration and did not change
+// state at read_time. * "ADDED": indicates that the finding did not
+// match the given filter or was not present at the start of
+// compare_duration, but was present at read_time. * "REMOVED":
+// indicates that the finding was present and matched the filter at the
+// start of compare_duration, but did not match the filter at read_time.
+// If compare_duration is not specified, then the only possible
+// state_change is "UNUSED", which will be the state_change set for all
+// findings present at read_time.
+func (c *FoldersSourcesFindingsListCall) CompareDuration(compareDuration string) *FoldersSourcesFindingsListCall {
+	c.urlParams_.Set("compareDuration", compareDuration)
+	return c
+}
+
+// FieldMask sets the optional parameter "fieldMask": A field mask to
+// specify the Finding fields to be listed in the response. An empty
+// field mask will list all fields.
+func (c *FoldersSourcesFindingsListCall) FieldMask(fieldMask string) *FoldersSourcesFindingsListCall {
+	c.urlParams_.Set("fieldMask", fieldMask)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Expression that defines
+// the filter to apply across findings. The expression is a list of one
+// or more restrictions combined via logical operators `AND` and `OR`.
+// Parentheses are supported, and `OR` has higher precedence than `AND`.
+// Restrictions have the form ` ` and may have a `-` character in front
+// of them to indicate negation. Examples include: * name *
+// source_properties.a_property * security_marks.marks.marka The
+// supported operators are: * `=` for all value types. * `>`, `<`, `>=`,
+// `<=` for integer values. * `:`, meaning substring matching, for
+// strings. The supported value types are: * string literals in quotes.
+// * integer literals without quotes. * boolean literals `true` and
+// `false` without quotes. The following field and operator combinations
+// are supported: name: `=` parent: `=`, `:` resource_name: `=`, `:`
+// state: `=`, `:` category: `=`, `:` external_uri: `=`, `:` event_time:
+// `=`, `>`, `<`, `>=`, `<=` Usage: This should be milliseconds since
+// epoch or an RFC3339 string. Examples: `event_time =
+// "2019-06-10T16:07:18-07:00" `event_time = 1560208038000`
+// security_marks.marks: `=`, `:` source_properties: `=`, `:`, `>`, `<`,
+// `>=`, `<=` For example, `source_properties.size = 100` is a valid
+// filter string. Use a partial match on the empty string to filter
+// based on a property existing: `source_properties.my_property : ""
+// Use a negated partial match on the empty string to filter based on a
+// property not existing: `-source_properties.my_property : ""
+func (c *FoldersSourcesFindingsListCall) Filter(filter string) *FoldersSourcesFindingsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Expression that
+// defines what fields and order to use for sorting. The string value
+// should follow SQL syntax: comma separated list of fields. For
+// example: "name,resource_properties.a_property". The default sorting
+// order is ascending. To specify descending order for a field, a suffix
+// " desc" should be appended to the field name. For example: "name
+// desc,source_properties.a_property". Redundant space characters in the
+// syntax are insignificant. "name desc,source_properties.a_property"
+// and " name desc , source_properties.a_property " are equivalent. The
+// following fields are supported: name parent state category
+// resource_name event_time source_properties security_marks.marks
+func (c *FoldersSourcesFindingsListCall) OrderBy(orderBy string) *FoldersSourcesFindingsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *FoldersSourcesFindingsListCall) PageSize(pageSize int64) *FoldersSourcesFindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListFindingsResponse`; indicates that this is a
+// continuation of a prior `ListFindings` call, and that the system
+// should return the next page of data.
+func (c *FoldersSourcesFindingsListCall) PageToken(pageToken string) *FoldersSourcesFindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadTime sets the optional parameter "readTime": Time used as a
+// reference point when filtering findings. The filter is limited to
+// findings existing at the supplied time and their values are those at
+// that specific time. Absence of this field will default to the API's
+// version of NOW.
+func (c *FoldersSourcesFindingsListCall) ReadTime(readTime string) *FoldersSourcesFindingsListCall {
+	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSourcesFindingsListCall) Fields(s ...googleapi.Field) *FoldersSourcesFindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersSourcesFindingsListCall) IfNoneMatch(entityTag string) *FoldersSourcesFindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSourcesFindingsListCall) Context(ctx context.Context) *FoldersSourcesFindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSourcesFindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/findings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.sources.findings.list" call.
+// Exactly one of *ListFindingsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListFindingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersSourcesFindingsListCall) Do(opts ...googleapi.CallOption) (*ListFindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListFindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/{organization_id}/sources/-/findings",
+	//   "flatPath": "v1/folders/{foldersId}/sources/{sourcesId}/findings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.folders.sources.findings.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "compareDuration": {
+	//       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\" attribute is updated to indicate whether the finding had its state changed, the finding's state remained unchanged, or if the finding was added in any state during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence and state of the finding at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the finding is made inactive and then active again. Possible \"state_change\" values when compare_duration is specified: * \"CHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration, but changed its state at read_time. * \"UNCHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration and did not change state at read_time. * \"ADDED\": indicates that the finding did not match the given filter or was not present at the start of compare_duration, but was present at read_time. * \"REMOVED\": indicates that the finding was present and matched the filter at the start of compare_duration, but did not match the filter at read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all findings present at read_time.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fieldMask": {
+	//       "description": "A field mask to specify the Finding fields to be listed in the response. An empty field mask will list all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: name: `=` parent: `=`, `:` resource_name: `=`, `:` state: `=`, `:` category: `=`, `:` external_uri: `=`, `:` event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Expression that defines what fields and order to use for sorting. The string value should follow SQL syntax: comma separated list of fields. For example: \"name,resource_properties.a_property\". The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be appended to the field name. For example: \"name desc,source_properties.a_property\". Redundant space characters in the syntax are insignificant. \"name desc,source_properties.a_property\" and \" name desc , source_properties.a_property \" are equivalent. The following fields are supported: name parent state category resource_name event_time source_properties security_marks.marks",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListFindingsResponse`; indicates that this is a continuation of a prior `ListFindings` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the source the findings belong to. Its format is \"organizations/[organization_id]/sources/[source_id], folders/[folder_id]/sources/[source_id], or projects/[project_id]/sources/[source_id]\". To list across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-, folders/{folder_id}/sources/- or projects/{projects_id}/sources/-",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/sources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readTime": {
+	//       "description": "Time used as a reference point when filtering findings. The filter is limited to findings existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/findings",
+	//   "response": {
+	//     "$ref": "ListFindingsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersSourcesFindingsListCall) Pages(ctx context.Context, f func(*ListFindingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.folders.sources.findings.patch":
+
+type FoldersSourcesFindingsPatchCall struct {
+	s          *Service
+	name       string
+	finding    *Finding
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Creates or updates a finding. The corresponding source must
+// exist for a finding creation to succeed.
+func (r *FoldersSourcesFindingsService) Patch(name string, finding *Finding) *FoldersSourcesFindingsPatchCall {
+	c := &FoldersSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.finding = finding
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the finding resource. This field should not be
+// specified when creating a finding. When updating a finding, an empty
+// mask is treated as updating all mutable fields and replacing
+// source_properties. Individual source_properties can be added/updated
+// by using "source_properties." in the field mask.
+func (c *FoldersSourcesFindingsPatchCall) UpdateMask(updateMask string) *FoldersSourcesFindingsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSourcesFindingsPatchCall) Fields(s ...googleapi.Field) *FoldersSourcesFindingsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSourcesFindingsPatchCall) Context(ctx context.Context) *FoldersSourcesFindingsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSourcesFindingsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.finding)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.sources.findings.patch" call.
+// Exactly one of *Finding or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Finding.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption) (*Finding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Finding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.",
+	//   "flatPath": "v1/folders/{foldersId}/sources/{sourcesId}/findings/{findingsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.sources.findings.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the finding resource. This field should not be specified when creating a finding. When updating a finding, an empty mask is treated as updating all mutable fields and replacing source_properties. Individual source_properties can be added/updated by using \"source_properties.\" in the field mask.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Finding"
+	//   },
+	//   "response": {
+	//     "$ref": "Finding"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.sources.findings.setState":
+
+type FoldersSourcesFindingsSetStateCall struct {
+	s                      *Service
+	name                   string
+	setfindingstaterequest *SetFindingStateRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetState: Updates the state of a finding.
+func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
+	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.setfindingstaterequest = setfindingstaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSourcesFindingsSetStateCall) Fields(s ...googleapi.Field) *FoldersSourcesFindingsSetStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSourcesFindingsSetStateCall) Context(ctx context.Context) *FoldersSourcesFindingsSetStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSourcesFindingsSetStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setfindingstaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:setState")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.sources.findings.setState" call.
+// Exactly one of *Finding or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Finding.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (*Finding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Finding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the state of a finding.",
+	//   "flatPath": "v1/folders/{foldersId}/sources/{sourcesId}/findings/{findingsId}:setState",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.folders.sources.findings.setState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:setState",
+	//   "request": {
+	//     "$ref": "SetFindingStateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Finding"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.folders.sources.findings.updateSecurityMarks":
+
+type FoldersSourcesFindingsUpdateSecurityMarksCall struct {
+	s             *Service
+	name          string
+	securitymarks *SecurityMarks
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateSecurityMarks: Updates security marks.
+func (r *FoldersSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *FoldersSourcesFindingsUpdateSecurityMarksCall {
+	c := &FoldersSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.securitymarks = securitymarks
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": The time at which
+// the updated SecurityMarks take effect. If not set uses current server
+// time. Updates will be applied to the SecurityMarks that are active
+// immediately preceding this time.
+func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) StartTime(startTime string) *FoldersSourcesFindingsUpdateSecurityMarksCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the security marks resource. The field mask must
+// not contain duplicate fields. If empty or set to "marks", all marks
+// will be replaced. Individual marks can be updated using "marks.".
+func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) UpdateMask(updateMask string) *FoldersSourcesFindingsUpdateSecurityMarksCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) Fields(s ...googleapi.Field) *FoldersSourcesFindingsUpdateSecurityMarksCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) Context(ctx context.Context) *FoldersSourcesFindingsUpdateSecurityMarksCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securitymarks)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.folders.sources.findings.updateSecurityMarks" call.
+// Exactly one of *SecurityMarks or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SecurityMarks.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOption) (*SecurityMarks, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SecurityMarks{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates security marks.",
+	//   "flatPath": "v1/folders/{foldersId}/sources/{sourcesId}/findings/{findingsId}/securityMarks",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.folders.sources.findings.updateSecurityMarks",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of the SecurityMarks. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: \"organizations/{organization_id}/assets/{asset_id}/securityMarks\" \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/sources/[^/]+/findings/[^/]+/securityMarks$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the security marks resource. The field mask must not contain duplicate fields. If empty or set to \"marks\", all marks will be replaced. Individual marks can be updated using \"marks.\".",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "SecurityMarks"
+	//   },
+	//   "response": {
+	//     "$ref": "SecurityMarks"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "securitycenter.organizations.getOrganizationSettings":
 
 type OrganizationsGetOrganizationSettingsCall struct {
@@ -2556,7 +4545,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2699,7 +4688,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2846,7 +4835,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2919,7 +4908,7 @@ func (c *OrganizationsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupA
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id]\".",
+	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -3139,7 +5128,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3243,7 +5232,7 @@ func (c *OrganizationsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAss
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id]\".",
+	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -3337,7 +5326,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3495,7 +5484,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3656,7 +5645,7 @@ func (c *OrganizationsNotificationConfigsCreateCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3799,7 +5788,7 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3940,7 +5929,7 @@ func (c *OrganizationsNotificationConfigsGetCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4101,7 +6090,7 @@ func (c *OrganizationsNotificationConfigsListCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4277,7 +6266,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4430,7 +6419,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4563,7 +6552,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4706,7 +6695,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4880,7 +6869,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5052,7 +7041,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5201,7 +7190,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5336,7 +7325,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5502,7 +7491,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5584,7 +7573,7 @@ func (c *OrganizationsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id]\".",
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -5677,7 +7666,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5823,7 +7812,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5964,7 +7953,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6114,7 +8103,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6227,7 +8216,9 @@ type OrganizationsSourcesFindingsGroupCall struct {
 // Group: Filters an organization or source's findings and groups them
 // by their specified properties. To group across all sources provide a
 // `-` as the source id. Example:
-// /v1/organizations/{organization_id}/sources/-/findings
+// /v1/organizations/{organization_id}/sources/-/findings,
+// /v1/folders/{folder_id}/sources/-/findings,
+// /v1/projects/{project_id}/sources/-/findings
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6262,7 +8253,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6326,7 +8317,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/{organization_id}/sources/-/findings",
+	//   "description": "Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/{organization_id}/sources/-/findings, /v1/folders/{folder_id}/sources/-/findings, /v1/projects/{project_id}/sources/-/findings",
 	//   "flatPath": "v1/organizations/{organizationsId}/sources/{sourcesId}/findings:group",
 	//   "httpMethod": "POST",
 	//   "id": "securitycenter.organizations.sources.findings.group",
@@ -6335,7 +8326,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Name of the source to groupBy. Its format is \"organizations/[organization_id]/sources/[source_id]\". To groupBy across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-",
+	//       "description": "Required. Name of the source to groupBy. Its format is \"organizations/[organization_id]/sources/[source_id]\", folders/[folder_id]/sources/[source_id], or projects/[project_id]/sources/[source_id]. To groupBy across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-, or projects/{project_id}/sources/-",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -6542,7 +8533,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6646,7 +8637,7 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the source the findings belong to. Its format is \"organizations/[organization_id]/sources/[source_id]\". To list across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-",
+	//       "description": "Required. Name of the source the findings belong to. Its format is \"organizations/[organization_id]/sources/[source_id], folders/[folder_id]/sources/[source_id], or projects/[project_id]/sources/[source_id]\". To list across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-, folders/{folder_id}/sources/- or projects/{projects_id}/sources/-",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+$",
 	//       "required": true,
@@ -6749,7 +8740,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6895,7 +8886,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7053,7 +9044,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7129,6 +9120,1806 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googlea
 	//       "description": "The relative resource name of the SecurityMarks. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: \"organizations/{organization_id}/assets/{asset_id}/securityMarks\" \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/sources/[^/]+/findings/[^/]+/securityMarks$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the security marks resource. The field mask must not contain duplicate fields. If empty or set to \"marks\", all marks will be replaced. Individual marks can be updated using \"marks.\".",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "SecurityMarks"
+	//   },
+	//   "response": {
+	//     "$ref": "SecurityMarks"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.assets.group":
+
+type ProjectsAssetsGroupCall struct {
+	s                  *Service
+	parent             string
+	groupassetsrequest *GroupAssetsRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Group: Filters an organization's assets and groups them by their
+// specified properties.
+func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
+	c := &ProjectsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.groupassetsrequest = groupassetsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAssetsGroupCall) Fields(s ...googleapi.Field) *ProjectsAssetsGroupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAssetsGroupCall) Context(ctx context.Context) *ProjectsAssetsGroupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAssetsGroupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupassetsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/assets:group")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.assets.group" call.
+// Exactly one of *GroupAssetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GroupAssetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsAssetsGroupCall) Do(opts ...googleapi.CallOption) (*GroupAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GroupAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Filters an organization's assets and groups them by their specified properties.",
+	//   "flatPath": "v1/projects/{projectsId}/assets:group",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.assets.group",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the organization to groupBy. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/assets:group",
+	//   "request": {
+	//     "$ref": "GroupAssetsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GroupAssetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsAssetsGroupCall) Pages(ctx context.Context, f func(*GroupAssetsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.groupassetsrequest.PageToken = pt }(c.groupassetsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.groupassetsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "securitycenter.projects.assets.list":
+
+type ProjectsAssetsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists an organization's assets.
+func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
+	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// CompareDuration sets the optional parameter "compareDuration": When
+// compare_duration is set, the ListAssetsResult's "state_change"
+// attribute is updated to indicate whether the asset was added,
+// removed, or remained present during the compare_duration period of
+// time that precedes the read_time. This is the time between (read_time
+// - compare_duration) and read_time. The state_change value is derived
+// based on the presence of the asset at the two points in time.
+// Intermediate state changes between the two times don't affect the
+// result. For example, the results aren't affected if the asset is
+// removed and re-created again. Possible "state_change" values when
+// compare_duration is specified: * "ADDED": indicates that the asset
+// was not present at the start of compare_duration, but present at
+// read_time. * "REMOVED": indicates that the asset was present at the
+// start of compare_duration, but not present at read_time. * "ACTIVE":
+// indicates that the asset was present at both the start and the end of
+// the time period defined by compare_duration and read_time. If
+// compare_duration is not specified, then the only possible
+// state_change is "UNUSED", which will be the state_change set for all
+// assets present at read_time.
+func (c *ProjectsAssetsListCall) CompareDuration(compareDuration string) *ProjectsAssetsListCall {
+	c.urlParams_.Set("compareDuration", compareDuration)
+	return c
+}
+
+// FieldMask sets the optional parameter "fieldMask": A field mask to
+// specify the ListAssetsResult fields to be listed in the response. An
+// empty field mask will list all fields.
+func (c *ProjectsAssetsListCall) FieldMask(fieldMask string) *ProjectsAssetsListCall {
+	c.urlParams_.Set("fieldMask", fieldMask)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Expression that defines
+// the filter to apply across assets. The expression is a list of zero
+// or more restrictions combined via logical operators `AND` and `OR`.
+// Parentheses are supported, and `OR` has higher precedence than `AND`.
+// Restrictions have the form ` ` and may have a `-` character in front
+// of them to indicate negation. The fields map to those defined in the
+// Asset resource. Examples include: * name *
+// security_center_properties.resource_name *
+// resource_properties.a_property * security_marks.marks.marka The
+// supported operators are: * `=` for all value types. * `>`, `<`, `>=`,
+// `<=` for integer values. * `:`, meaning substring matching, for
+// strings. The supported value types are: * string literals in quotes.
+// * integer literals without quotes. * boolean literals `true` and
+// `false` without quotes. The following are the allowed field and
+// operator combinations: * name: `=` * update_time: `=`, `>`, `<`,
+// `>=`, `<=` Usage: This should be milliseconds since epoch or an
+// RFC3339 string. Examples: `update_time = "2019-06-10T16:07:18-07:00"
+// `update_time = 1560208038000` * create_time: `=`, `>`, `<`, `>=`,
+// `<=` Usage: This should be milliseconds since epoch or an RFC3339
+// string. Examples: `create_time = "2019-06-10T16:07:18-07:00"
+// `create_time = 1560208038000` * iam_policy.policy_blob: `=`, `:` *
+// resource_properties: `=`, `:`, `>`, `<`, `>=`, `<=` *
+// security_marks.marks: `=`, `:` *
+// security_center_properties.resource_name: `=`, `:` *
+// security_center_properties.resource_display_name: `=`, `:` *
+// security_center_properties.resource_type: `=`, `:` *
+// security_center_properties.resource_parent: `=`, `:` *
+// security_center_properties.resource_parent_display_name: `=`, `:` *
+// security_center_properties.resource_project: `=`, `:` *
+// security_center_properties.resource_project_display_name: `=`, `:` *
+// security_center_properties.resource_owners: `=`, `:` For example,
+// `resource_properties.size = 100` is a valid filter string. Use a
+// partial match on the empty string to filter based on a property
+// existing: `resource_properties.my_property : "" Use a negated
+// partial match on the empty string to filter based on a property not
+// existing: `-resource_properties.my_property : ""
+func (c *ProjectsAssetsListCall) Filter(filter string) *ProjectsAssetsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Expression that
+// defines what fields and order to use for sorting. The string value
+// should follow SQL syntax: comma separated list of fields. For
+// example: "name,resource_properties.a_property". The default sorting
+// order is ascending. To specify descending order for a field, a suffix
+// " desc" should be appended to the field name. For example: "name
+// desc,resource_properties.a_property". Redundant space characters in
+// the syntax are insignificant. "name
+// desc,resource_properties.a_property" and " name desc ,
+// resource_properties.a_property " are equivalent. The following fields
+// are supported: name update_time resource_properties
+// security_marks.marks security_center_properties.resource_name
+// security_center_properties.resource_display_name
+// security_center_properties.resource_parent
+// security_center_properties.resource_parent_display_name
+// security_center_properties.resource_project
+// security_center_properties.resource_project_display_name
+// security_center_properties.resource_type
+func (c *ProjectsAssetsListCall) OrderBy(orderBy string) *ProjectsAssetsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsAssetsListCall) PageSize(pageSize int64) *ProjectsAssetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListAssetsResponse`; indicates that this is a
+// continuation of a prior `ListAssets` call, and that the system should
+// return the next page of data.
+func (c *ProjectsAssetsListCall) PageToken(pageToken string) *ProjectsAssetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadTime sets the optional parameter "readTime": Time used as a
+// reference point when filtering assets. The filter is limited to
+// assets existing at the supplied time and their values are those at
+// that specific time. Absence of this field will default to the API's
+// version of NOW.
+func (c *ProjectsAssetsListCall) ReadTime(readTime string) *ProjectsAssetsListCall {
+	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAssetsListCall) Fields(s ...googleapi.Field) *ProjectsAssetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsAssetsListCall) IfNoneMatch(entityTag string) *ProjectsAssetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAssetsListCall) Context(ctx context.Context) *ProjectsAssetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAssetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAssetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/assets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.assets.list" call.
+// Exactly one of *ListAssetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAssetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsAssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAssetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists an organization's assets.",
+	//   "flatPath": "v1/projects/{projectsId}/assets",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.assets.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "compareDuration": {
+	//       "description": "When compare_duration is set, the ListAssetsResult's \"state_change\" attribute is updated to indicate whether the asset was added, removed, or remained present during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence of the asset at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the asset is removed and re-created again. Possible \"state_change\" values when compare_duration is specified: * \"ADDED\": indicates that the asset was not present at the start of compare_duration, but present at read_time. * \"REMOVED\": indicates that the asset was present at the start of compare_duration, but not present at read_time. * \"ACTIVE\": indicates that the asset was present at both the start and the end of the time period defined by compare_duration and read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all assets present at read_time.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fieldMask": {
+	//       "description": "A field mask to specify the ListAssetsResult fields to be listed in the response. An empty field mask will list all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Expression that defines the filter to apply across assets. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. The fields map to those defined in the Asset resource. Examples include: * name * security_center_properties.resource_name * resource_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following are the allowed field and operator combinations: * name: `=` * update_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `update_time = \"2019-06-10T16:07:18-07:00\"` `update_time = 1560208038000` * create_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `create_time = \"2019-06-10T16:07:18-07:00\"` `create_time = 1560208038000` * iam_policy.policy_blob: `=`, `:` * resource_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` * security_marks.marks: `=`, `:` * security_center_properties.resource_name: `=`, `:` * security_center_properties.resource_display_name: `=`, `:` * security_center_properties.resource_type: `=`, `:` * security_center_properties.resource_parent: `=`, `:` * security_center_properties.resource_parent_display_name: `=`, `:` * security_center_properties.resource_project: `=`, `:` * security_center_properties.resource_project_display_name: `=`, `:` * security_center_properties.resource_owners: `=`, `:` For example, `resource_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `resource_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-resource_properties.my_property : \"\"`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Expression that defines what fields and order to use for sorting. The string value should follow SQL syntax: comma separated list of fields. For example: \"name,resource_properties.a_property\". The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be appended to the field name. For example: \"name desc,resource_properties.a_property\". Redundant space characters in the syntax are insignificant. \"name desc,resource_properties.a_property\" and \" name desc , resource_properties.a_property \" are equivalent. The following fields are supported: name update_time resource_properties security_marks.marks security_center_properties.resource_name security_center_properties.resource_display_name security_center_properties.resource_parent security_center_properties.resource_parent_display_name security_center_properties.resource_project security_center_properties.resource_project_display_name security_center_properties.resource_type",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListAssetsResponse`; indicates that this is a continuation of a prior `ListAssets` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the organization assets should belong to. Its format is \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readTime": {
+	//       "description": "Time used as a reference point when filtering assets. The filter is limited to assets existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/assets",
+	//   "response": {
+	//     "$ref": "ListAssetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsAssetsListCall) Pages(ctx context.Context, f func(*ListAssetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.assets.updateSecurityMarks":
+
+type ProjectsAssetsUpdateSecurityMarksCall struct {
+	s             *Service
+	name          string
+	securitymarks *SecurityMarks
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateSecurityMarks: Updates security marks.
+func (r *ProjectsAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *ProjectsAssetsUpdateSecurityMarksCall {
+	c := &ProjectsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.securitymarks = securitymarks
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": The time at which
+// the updated SecurityMarks take effect. If not set uses current server
+// time. Updates will be applied to the SecurityMarks that are active
+// immediately preceding this time.
+func (c *ProjectsAssetsUpdateSecurityMarksCall) StartTime(startTime string) *ProjectsAssetsUpdateSecurityMarksCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the security marks resource. The field mask must
+// not contain duplicate fields. If empty or set to "marks", all marks
+// will be replaced. Individual marks can be updated using "marks.".
+func (c *ProjectsAssetsUpdateSecurityMarksCall) UpdateMask(updateMask string) *ProjectsAssetsUpdateSecurityMarksCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAssetsUpdateSecurityMarksCall) Fields(s ...googleapi.Field) *ProjectsAssetsUpdateSecurityMarksCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAssetsUpdateSecurityMarksCall) Context(ctx context.Context) *ProjectsAssetsUpdateSecurityMarksCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAssetsUpdateSecurityMarksCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securitymarks)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.assets.updateSecurityMarks" call.
+// Exactly one of *SecurityMarks or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SecurityMarks.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsAssetsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOption) (*SecurityMarks, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SecurityMarks{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates security marks.",
+	//   "flatPath": "v1/projects/{projectsId}/assets/{assetsId}/securityMarks",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.assets.updateSecurityMarks",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of the SecurityMarks. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: \"organizations/{organization_id}/assets/{asset_id}/securityMarks\" \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/assets/[^/]+/securityMarks$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "startTime": {
+	//       "description": "The time at which the updated SecurityMarks take effect. If not set uses current server time. Updates will be applied to the SecurityMarks that are active immediately preceding this time.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the security marks resource. The field mask must not contain duplicate fields. If empty or set to \"marks\", all marks will be replaced. Individual marks can be updated using \"marks.\".",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "SecurityMarks"
+	//   },
+	//   "response": {
+	//     "$ref": "SecurityMarks"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.sources.list":
+
+type ProjectsSourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all sources belonging to an organization.
+func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
+	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsSourcesListCall) PageSize(pageSize int64) *ProjectsSourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListSourcesResponse`; indicates that this is a
+// continuation of a prior `ListSources` call, and that the system
+// should return the next page of data.
+func (c *ProjectsSourcesListCall) PageToken(pageToken string) *ProjectsSourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSourcesListCall) Fields(s ...googleapi.Field) *ProjectsSourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSourcesListCall) IfNoneMatch(entityTag string) *ProjectsSourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSourcesListCall) Context(ctx context.Context) *ProjectsSourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/sources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.sources.list" call.
+// Exactly one of *ListSourcesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSourcesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSourcesListCall) Do(opts ...googleapi.CallOption) (*ListSourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListSourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all sources belonging to an organization.",
+	//   "flatPath": "v1/projects/{projectsId}/sources",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.sources.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListSourcesResponse`; indicates that this is a continuation of a prior `ListSources` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the parent of sources to list. Its format should be \"organizations/[organization_id], folders/[folder_id], or projects/[project_id]\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/sources",
+	//   "response": {
+	//     "$ref": "ListSourcesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSourcesListCall) Pages(ctx context.Context, f func(*ListSourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.sources.findings.group":
+
+type ProjectsSourcesFindingsGroupCall struct {
+	s                    *Service
+	parent               string
+	groupfindingsrequest *GroupFindingsRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Group: Filters an organization or source's findings and groups them
+// by their specified properties. To group across all sources provide a
+// `-` as the source id. Example:
+// /v1/organizations/{organization_id}/sources/-/findings,
+// /v1/folders/{folder_id}/sources/-/findings,
+// /v1/projects/{project_id}/sources/-/findings
+func (r *ProjectsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *ProjectsSourcesFindingsGroupCall {
+	c := &ProjectsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.groupfindingsrequest = groupfindingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSourcesFindingsGroupCall) Fields(s ...googleapi.Field) *ProjectsSourcesFindingsGroupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSourcesFindingsGroupCall) Context(ctx context.Context) *ProjectsSourcesFindingsGroupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSourcesFindingsGroupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupfindingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/findings:group")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.sources.findings.group" call.
+// Exactly one of *GroupFindingsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GroupFindingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSourcesFindingsGroupCall) Do(opts ...googleapi.CallOption) (*GroupFindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GroupFindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Filters an organization or source's findings and groups them by their specified properties. To group across all sources provide a `-` as the source id. Example: /v1/organizations/{organization_id}/sources/-/findings, /v1/folders/{folder_id}/sources/-/findings, /v1/projects/{project_id}/sources/-/findings",
+	//   "flatPath": "v1/projects/{projectsId}/sources/{sourcesId}/findings:group",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.sources.findings.group",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Name of the source to groupBy. Its format is \"organizations/[organization_id]/sources/[source_id]\", folders/[folder_id]/sources/[source_id], or projects/[project_id]/sources/[source_id]. To groupBy across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-, folders/{folder_id}/sources/-, or projects/{project_id}/sources/-",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/findings:group",
+	//   "request": {
+	//     "$ref": "GroupFindingsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GroupFindingsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSourcesFindingsGroupCall) Pages(ctx context.Context, f func(*GroupFindingsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.groupfindingsrequest.PageToken = pt }(c.groupfindingsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.groupfindingsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "securitycenter.projects.sources.findings.list":
+
+type ProjectsSourcesFindingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists an organization or source's findings. To list across all
+// sources provide a `-` as the source id. Example:
+// /v1/organizations/{organization_id}/sources/-/findings
+func (r *ProjectsSourcesFindingsService) List(parent string) *ProjectsSourcesFindingsListCall {
+	c := &ProjectsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// CompareDuration sets the optional parameter "compareDuration": When
+// compare_duration is set, the ListFindingsResult's "state_change"
+// attribute is updated to indicate whether the finding had its state
+// changed, the finding's state remained unchanged, or if the finding
+// was added in any state during the compare_duration period of time
+// that precedes the read_time. This is the time between (read_time -
+// compare_duration) and read_time. The state_change value is derived
+// based on the presence and state of the finding at the two points in
+// time. Intermediate state changes between the two times don't affect
+// the result. For example, the results aren't affected if the finding
+// is made inactive and then active again. Possible "state_change"
+// values when compare_duration is specified: * "CHANGED": indicates
+// that the finding was present and matched the given filter at the
+// start of compare_duration, but changed its state at read_time. *
+// "UNCHANGED": indicates that the finding was present and matched the
+// given filter at the start of compare_duration and did not change
+// state at read_time. * "ADDED": indicates that the finding did not
+// match the given filter or was not present at the start of
+// compare_duration, but was present at read_time. * "REMOVED":
+// indicates that the finding was present and matched the filter at the
+// start of compare_duration, but did not match the filter at read_time.
+// If compare_duration is not specified, then the only possible
+// state_change is "UNUSED", which will be the state_change set for all
+// findings present at read_time.
+func (c *ProjectsSourcesFindingsListCall) CompareDuration(compareDuration string) *ProjectsSourcesFindingsListCall {
+	c.urlParams_.Set("compareDuration", compareDuration)
+	return c
+}
+
+// FieldMask sets the optional parameter "fieldMask": A field mask to
+// specify the Finding fields to be listed in the response. An empty
+// field mask will list all fields.
+func (c *ProjectsSourcesFindingsListCall) FieldMask(fieldMask string) *ProjectsSourcesFindingsListCall {
+	c.urlParams_.Set("fieldMask", fieldMask)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Expression that defines
+// the filter to apply across findings. The expression is a list of one
+// or more restrictions combined via logical operators `AND` and `OR`.
+// Parentheses are supported, and `OR` has higher precedence than `AND`.
+// Restrictions have the form ` ` and may have a `-` character in front
+// of them to indicate negation. Examples include: * name *
+// source_properties.a_property * security_marks.marks.marka The
+// supported operators are: * `=` for all value types. * `>`, `<`, `>=`,
+// `<=` for integer values. * `:`, meaning substring matching, for
+// strings. The supported value types are: * string literals in quotes.
+// * integer literals without quotes. * boolean literals `true` and
+// `false` without quotes. The following field and operator combinations
+// are supported: name: `=` parent: `=`, `:` resource_name: `=`, `:`
+// state: `=`, `:` category: `=`, `:` external_uri: `=`, `:` event_time:
+// `=`, `>`, `<`, `>=`, `<=` Usage: This should be milliseconds since
+// epoch or an RFC3339 string. Examples: `event_time =
+// "2019-06-10T16:07:18-07:00" `event_time = 1560208038000`
+// security_marks.marks: `=`, `:` source_properties: `=`, `:`, `>`, `<`,
+// `>=`, `<=` For example, `source_properties.size = 100` is a valid
+// filter string. Use a partial match on the empty string to filter
+// based on a property existing: `source_properties.my_property : ""
+// Use a negated partial match on the empty string to filter based on a
+// property not existing: `-source_properties.my_property : ""
+func (c *ProjectsSourcesFindingsListCall) Filter(filter string) *ProjectsSourcesFindingsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Expression that
+// defines what fields and order to use for sorting. The string value
+// should follow SQL syntax: comma separated list of fields. For
+// example: "name,resource_properties.a_property". The default sorting
+// order is ascending. To specify descending order for a field, a suffix
+// " desc" should be appended to the field name. For example: "name
+// desc,source_properties.a_property". Redundant space characters in the
+// syntax are insignificant. "name desc,source_properties.a_property"
+// and " name desc , source_properties.a_property " are equivalent. The
+// following fields are supported: name parent state category
+// resource_name event_time source_properties security_marks.marks
+func (c *ProjectsSourcesFindingsListCall) OrderBy(orderBy string) *ProjectsSourcesFindingsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return in a single response. Default is 10, minimum is
+// 1, maximum is 1000.
+func (c *ProjectsSourcesFindingsListCall) PageSize(pageSize int64) *ProjectsSourcesFindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListFindingsResponse`; indicates that this is a
+// continuation of a prior `ListFindings` call, and that the system
+// should return the next page of data.
+func (c *ProjectsSourcesFindingsListCall) PageToken(pageToken string) *ProjectsSourcesFindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadTime sets the optional parameter "readTime": Time used as a
+// reference point when filtering findings. The filter is limited to
+// findings existing at the supplied time and their values are those at
+// that specific time. Absence of this field will default to the API's
+// version of NOW.
+func (c *ProjectsSourcesFindingsListCall) ReadTime(readTime string) *ProjectsSourcesFindingsListCall {
+	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSourcesFindingsListCall) Fields(s ...googleapi.Field) *ProjectsSourcesFindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsSourcesFindingsListCall) IfNoneMatch(entityTag string) *ProjectsSourcesFindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSourcesFindingsListCall) Context(ctx context.Context) *ProjectsSourcesFindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSourcesFindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/findings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.sources.findings.list" call.
+// Exactly one of *ListFindingsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListFindingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) (*ListFindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListFindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists an organization or source's findings. To list across all sources provide a `-` as the source id. Example: /v1/organizations/{organization_id}/sources/-/findings",
+	//   "flatPath": "v1/projects/{projectsId}/sources/{sourcesId}/findings",
+	//   "httpMethod": "GET",
+	//   "id": "securitycenter.projects.sources.findings.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "compareDuration": {
+	//       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\" attribute is updated to indicate whether the finding had its state changed, the finding's state remained unchanged, or if the finding was added in any state during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence and state of the finding at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the finding is made inactive and then active again. Possible \"state_change\" values when compare_duration is specified: * \"CHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration, but changed its state at read_time. * \"UNCHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration and did not change state at read_time. * \"ADDED\": indicates that the finding did not match the given filter or was not present at the start of compare_duration, but was present at read_time. * \"REMOVED\": indicates that the finding was present and matched the filter at the start of compare_duration, but did not match the filter at read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all findings present at read_time.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "fieldMask": {
+	//       "description": "A field mask to specify the Finding fields to be listed in the response. An empty field mask will list all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: name: `=` parent: `=`, `:` resource_name: `=`, `:` state: `=`, `:` category: `=`, `:` external_uri: `=`, `:` event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Expression that defines what fields and order to use for sorting. The string value should follow SQL syntax: comma separated list of fields. For example: \"name,resource_properties.a_property\". The default sorting order is ascending. To specify descending order for a field, a suffix \" desc\" should be appended to the field name. For example: \"name desc,source_properties.a_property\". Redundant space characters in the syntax are insignificant. \"name desc,source_properties.a_property\" and \" name desc , source_properties.a_property \" are equivalent. The following fields are supported: name parent state category resource_name event_time source_properties security_marks.marks",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return in a single response. Default is 10, minimum is 1, maximum is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListFindingsResponse`; indicates that this is a continuation of a prior `ListFindings` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the source the findings belong to. Its format is \"organizations/[organization_id]/sources/[source_id], folders/[folder_id]/sources/[source_id], or projects/[project_id]/sources/[source_id]\". To list across all sources provide a source_id of `-`. For example: organizations/{organization_id}/sources/-, folders/{folder_id}/sources/- or projects/{projects_id}/sources/-",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readTime": {
+	//       "description": "Time used as a reference point when filtering findings. The filter is limited to findings existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/findings",
+	//   "response": {
+	//     "$ref": "ListFindingsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsSourcesFindingsListCall) Pages(ctx context.Context, f func(*ListFindingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "securitycenter.projects.sources.findings.patch":
+
+type ProjectsSourcesFindingsPatchCall struct {
+	s          *Service
+	name       string
+	finding    *Finding
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Creates or updates a finding. The corresponding source must
+// exist for a finding creation to succeed.
+func (r *ProjectsSourcesFindingsService) Patch(name string, finding *Finding) *ProjectsSourcesFindingsPatchCall {
+	c := &ProjectsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.finding = finding
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the finding resource. This field should not be
+// specified when creating a finding. When updating a finding, an empty
+// mask is treated as updating all mutable fields and replacing
+// source_properties. Individual source_properties can be added/updated
+// by using "source_properties." in the field mask.
+func (c *ProjectsSourcesFindingsPatchCall) UpdateMask(updateMask string) *ProjectsSourcesFindingsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSourcesFindingsPatchCall) Fields(s ...googleapi.Field) *ProjectsSourcesFindingsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSourcesFindingsPatchCall) Context(ctx context.Context) *ProjectsSourcesFindingsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSourcesFindingsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.finding)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.sources.findings.patch" call.
+// Exactly one of *Finding or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Finding.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSourcesFindingsPatchCall) Do(opts ...googleapi.CallOption) (*Finding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Finding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates or updates a finding. The corresponding source must exist for a finding creation to succeed.",
+	//   "flatPath": "v1/projects/{projectsId}/sources/{sourcesId}/findings/{findingsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.sources.findings.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of this finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The FieldMask to use when updating the finding resource. This field should not be specified when creating a finding. When updating a finding, an empty mask is treated as updating all mutable fields and replacing source_properties. Individual source_properties can be added/updated by using \"source_properties.\" in the field mask.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Finding"
+	//   },
+	//   "response": {
+	//     "$ref": "Finding"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.sources.findings.setState":
+
+type ProjectsSourcesFindingsSetStateCall struct {
+	s                      *Service
+	name                   string
+	setfindingstaterequest *SetFindingStateRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// SetState: Updates the state of a finding.
+func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
+	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.setfindingstaterequest = setfindingstaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSourcesFindingsSetStateCall) Fields(s ...googleapi.Field) *ProjectsSourcesFindingsSetStateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSourcesFindingsSetStateCall) Context(ctx context.Context) *ProjectsSourcesFindingsSetStateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSourcesFindingsSetStateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setfindingstaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:setState")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.sources.findings.setState" call.
+// Exactly one of *Finding or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Finding.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsSourcesFindingsSetStateCall) Do(opts ...googleapi.CallOption) (*Finding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Finding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the state of a finding.",
+	//   "flatPath": "v1/projects/{projectsId}/sources/{sourcesId}/findings/{findingsId}:setState",
+	//   "httpMethod": "POST",
+	//   "id": "securitycenter.projects.sources.findings.setState",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The relative resource name of the finding. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Example: \"organizations/{organization_id}/sources/{source_id}/finding/{finding_id}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:setState",
+	//   "request": {
+	//     "$ref": "SetFindingStateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Finding"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "securitycenter.projects.sources.findings.updateSecurityMarks":
+
+type ProjectsSourcesFindingsUpdateSecurityMarksCall struct {
+	s             *Service
+	name          string
+	securitymarks *SecurityMarks
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateSecurityMarks: Updates security marks.
+func (r *ProjectsSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
+	c := &ProjectsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.securitymarks = securitymarks
+	return c
+}
+
+// StartTime sets the optional parameter "startTime": The time at which
+// the updated SecurityMarks take effect. If not set uses current server
+// time. Updates will be applied to the SecurityMarks that are active
+// immediately preceding this time.
+func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) StartTime(startTime string) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
+	c.urlParams_.Set("startTime", startTime)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The FieldMask to
+// use when updating the security marks resource. The field mask must
+// not contain duplicate fields. If empty or set to "marks", all marks
+// will be replaced. Individual marks can be updated using "marks.".
+func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) UpdateMask(updateMask string) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) Fields(s ...googleapi.Field) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) Context(ctx context.Context) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.securitymarks)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "securitycenter.projects.sources.findings.updateSecurityMarks" call.
+// Exactly one of *SecurityMarks or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SecurityMarks.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) Do(opts ...googleapi.CallOption) (*SecurityMarks, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SecurityMarks{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates security marks.",
+	//   "flatPath": "v1/projects/{projectsId}/sources/{sourcesId}/findings/{findingsId}/securityMarks",
+	//   "httpMethod": "PATCH",
+	//   "id": "securitycenter.projects.sources.findings.updateSecurityMarks",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The relative resource name of the SecurityMarks. See: https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: \"organizations/{organization_id}/assets/{asset_id}/securityMarks\" \"organizations/{organization_id}/sources/{source_id}/findings/{finding_id}/securityMarks\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/sources/[^/]+/findings/[^/]+/securityMarks$",
 	//       "required": true,
 	//       "type": "string"
 	//     },

@@ -244,6 +244,25 @@ type SignupUrlsService struct {
 // values by default. To maintain the security posture of a device, we
 // don't recommend overriding any of the default values.
 type AdvancedSecurityOverrides struct {
+	// CommonCriteriaMode: Controls Common Criteria Mode—security
+	// standards defined in the Common Criteria for Information Technology
+	// Security Evaluation (https://www.commoncriteriaportal.org/) (CC).
+	// Enabling Common Criteria Mode increases certain security components
+	// on a device, including AES-GCM encryption of Bluetooth Long Term
+	// Keys, and Wi-Fi configuration stores.Warning: Common Criteria Mode
+	// enforces a strict security model typically only required for IT
+	// products used in national security systems and other highly sensitive
+	// organizations. Standard device use may be affected. Only enabled if
+	// required.
+	//
+	// Possible values:
+	//   "COMMON_CRITERIA_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// COMMON_CRITERIA_MODE_DISABLED.
+	//   "COMMON_CRITERIA_MODE_DISABLED" - Default. Disables Common Criteria
+	// Mode.
+	//   "COMMON_CRITERIA_MODE_ENABLED" - Enables Common Criteria Mode.
+	CommonCriteriaMode string `json:"commonCriteriaMode,omitempty"`
+
 	// UntrustedAppsPolicy: The policy for untrusted apps (apps from unknown
 	// sources) enforced on the device. Replaces
 	// install_unknown_sources_allowed (deprecated).
@@ -260,7 +279,7 @@ type AdvancedSecurityOverrides struct {
 	// entire device.
 	UntrustedAppsPolicy string `json:"untrustedAppsPolicy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "UntrustedAppsPolicy")
+	// ForceSendFields is a list of field names (e.g. "CommonCriteriaMode")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -268,7 +287,7 @@ type AdvancedSecurityOverrides struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UntrustedAppsPolicy") to
+	// NullFields is a list of field names (e.g. "CommonCriteriaMode") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -939,6 +958,48 @@ func (s *Command) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CommonCriteriaModeInfo: Information about Common Criteria
+// Mode—security standards defined in the Common Criteria for
+// Information Technology Security Evaluation
+// (https://www.commoncriteriaportal.org/) (CC).This information is only
+// available if statusReportingSettings.commonCriteriaModeEnabled is
+// true in the device's policy.
+type CommonCriteriaModeInfo struct {
+	// CommonCriteriaModeStatus: Whether Common Criteria Mode is enabled.
+	//
+	// Possible values:
+	//   "COMMON_CRITERIA_MODE_STATUS_UNKNOWN" - Unknown status.
+	//   "COMMON_CRITERIA_MODE_DISABLED" - Common Criteria Mode is currently
+	// disabled.
+	//   "COMMON_CRITERIA_MODE_ENABLED" - Common Criteria Mode is currently
+	// enabled.
+	CommonCriteriaModeStatus string `json:"commonCriteriaModeStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CommonCriteriaModeStatus") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonCriteriaModeStatus")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommonCriteriaModeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CommonCriteriaModeInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ComplianceRule: A rule declaring which mitigating actions to take
 // when a device is not compliant with its policy. For every rule, there
 // is always an implicit mitigating action to set policy_compliant to
@@ -1069,6 +1130,14 @@ type Device struct {
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	AppliedState string `json:"appliedState,omitempty"`
+
+	// CommonCriteriaModeInfo: Information about Common Criteria
+	// Mode—security standards defined in the Common Criteria for
+	// Information Technology Security Evaluation
+	// (https://www.commoncriteriaportal.org/) (CC).This information is only
+	// available if statusReportingSettings.commonCriteriaModeEnabled is
+	// true in the device's policy.
+	CommonCriteriaModeInfo *CommonCriteriaModeInfo `json:"commonCriteriaModeInfo,omitempty"`
 
 	// DeviceSettings: Device settings information. This information is only
 	// available if deviceSettingsEnabled is true in the device's policy.
@@ -2837,10 +2906,11 @@ type PersonalApplicationPolicy struct {
 	// InstallType: The type of installation to perform.
 	//
 	// Possible values:
-	//   "INSTALL_TYPE_UNSPECIFIED" - Unspecified. The default behavior is
-	// that all installs are allowed.
+	//   "INSTALL_TYPE_UNSPECIFIED" - Unspecified. Defaults to AVAILABLE.
 	//   "BLOCKED" - The app is blocked and can't be installed in the
 	// personal profile.
+	//   "AVAILABLE" - The app is available to install in the personal
+	// profile.
 	InstallType string `json:"installType,omitempty"`
 
 	// PackageName: The package name of the application.
@@ -2886,14 +2956,20 @@ type PersonalUsagePolicies struct {
 	// profile.
 	PersonalApplications []*PersonalApplicationPolicy `json:"personalApplications,omitempty"`
 
-	// PersonalPlayStoreMode: Used together with personal_applications to
+	// PersonalPlayStoreMode: Used together with personalApplications to
 	// control how apps in the personal profile are allowed or blocked.
 	//
 	// Possible values:
-	//   "PLAY_STORE_MODE_UNSPECIFIED" - Unspecified. Default behavior is to
-	// allow all installs.
-	//   "BLACKLIST" - All Play Store apps are available, except those whose
-	// install_type is BLOCKED in personal_applications.
+	//   "PLAY_STORE_MODE_UNSPECIFIED" - Unspecified. Defaults to BLOCKLIST.
+	//   "BLACKLIST" - All Play Store apps are available for installation in
+	// the personal profile, except those whose installType is BLOCKED in
+	// personalApplications.
+	//   "BLOCKLIST" - All Play Store apps are available for installation in
+	// the personal profile, except those whose installType is BLOCKED in
+	// personalApplications.
+	//   "ALLOWLIST" - Only apps explicitly specified in
+	// personalApplications with installType set to AVAILABLE are allowed to
+	// be installed in the personal profile.
 	PersonalPlayStoreMode string `json:"personalPlayStoreMode,omitempty"`
 
 	// ScreenCaptureDisabled: Whether screen capture is disabled.
@@ -3865,6 +3941,10 @@ type StatusReportingSettings struct {
 	// ApplicationReportsEnabled: Whether app reports are enabled.
 	ApplicationReportsEnabled bool `json:"applicationReportsEnabled,omitempty"`
 
+	// CommonCriteriaModeEnabled: Whether Common Criteria Mode reporting is
+	// enabled.
+	CommonCriteriaModeEnabled bool `json:"commonCriteriaModeEnabled,omitempty"`
+
 	// DeviceSettingsEnabled: Whether device settings reporting is enabled.
 	DeviceSettingsEnabled bool `json:"deviceSettingsEnabled,omitempty"`
 
@@ -4416,7 +4496,7 @@ func (c *EnterprisesCreateCall) Header() http.Header {
 
 func (c *EnterprisesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4568,7 +4648,7 @@ func (c *EnterprisesGetCall) Header() http.Header {
 
 func (c *EnterprisesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4711,7 +4791,7 @@ func (c *EnterprisesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4875,7 +4955,7 @@ func (c *EnterprisesApplicationsGetCall) Header() http.Header {
 
 func (c *EnterprisesApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5036,7 +5116,7 @@ func (c *EnterprisesDevicesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5198,7 +5278,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5335,7 +5415,7 @@ func (c *EnterprisesDevicesIssueCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5498,7 +5578,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5673,7 +5753,7 @@ func (c *EnterprisesDevicesPatchCall) Header() http.Header {
 
 func (c *EnterprisesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5826,7 +5906,7 @@ func (c *EnterprisesDevicesOperationsCancelCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5959,7 +6039,7 @@ func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6102,7 +6182,7 @@ func (c *EnterprisesDevicesOperationsGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6276,7 +6356,7 @@ func (c *EnterprisesDevicesOperationsListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6448,7 +6528,7 @@ func (c *EnterprisesEnrollmentTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6587,7 +6667,7 @@ func (c *EnterprisesEnrollmentTokensDeleteCall) Header() http.Header {
 
 func (c *EnterprisesEnrollmentTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6718,7 +6798,7 @@ func (c *EnterprisesPoliciesDeleteCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6859,7 +6939,7 @@ func (c *EnterprisesPoliciesGetCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7017,7 +7097,7 @@ func (c *EnterprisesPoliciesListCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7192,7 +7272,7 @@ func (c *EnterprisesPoliciesPatchCall) Header() http.Header {
 
 func (c *EnterprisesPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7338,7 +7418,7 @@ func (c *EnterprisesWebAppsCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7476,7 +7556,7 @@ func (c *EnterprisesWebAppsDeleteCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7617,7 +7697,7 @@ func (c *EnterprisesWebAppsGetCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7775,7 +7855,7 @@ func (c *EnterprisesWebAppsListCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7950,7 +8030,7 @@ func (c *EnterprisesWebAppsPatchCall) Header() http.Header {
 
 func (c *EnterprisesWebAppsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8097,7 +8177,7 @@ func (c *EnterprisesWebTokensCreateCall) Header() http.Header {
 
 func (c *EnterprisesWebTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8252,7 +8332,7 @@ func (c *SignupUrlsCreateCall) Header() http.Header {
 
 func (c *SignupUrlsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

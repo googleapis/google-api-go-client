@@ -929,13 +929,27 @@
       }
     }
   },
-  "revision": "20201012",
+  "revision": "20201112",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {
       "description": "Security policies set to the most secure values by default. To maintain the security posture of a device, we don't recommend overriding any of the default values.",
       "id": "AdvancedSecurityOverrides",
       "properties": {
+        "commonCriteriaMode": {
+          "description": "Controls Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common Criteria Mode increases certain security components on a device, including AES-GCM encryption of Bluetooth Long Term Keys, and Wi-Fi configuration stores.Warning: Common Criteria Mode enforces a strict security model typically only required for IT products used in national security systems and other highly sensitive organizations. Standard device use may be affected. Only enabled if required.",
+          "enum": [
+            "COMMON_CRITERIA_MODE_UNSPECIFIED",
+            "COMMON_CRITERIA_MODE_DISABLED",
+            "COMMON_CRITERIA_MODE_ENABLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Defaults to COMMON_CRITERIA_MODE_DISABLED.",
+            "Default. Disables Common Criteria Mode.",
+            "Enables Common Criteria Mode."
+          ],
+          "type": "string"
+        },
         "untrustedAppsPolicy": {
           "description": "The policy for untrusted apps (apps from unknown sources) enforced on the device. Replaces install_unknown_sources_allowed (deprecated).",
           "enum": [
@@ -1441,6 +1455,27 @@
       },
       "type": "object"
     },
+    "CommonCriteriaModeInfo": {
+      "description": "Information about Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC).This information is only available if statusReportingSettings.commonCriteriaModeEnabled is true in the device's policy.",
+      "id": "CommonCriteriaModeInfo",
+      "properties": {
+        "commonCriteriaModeStatus": {
+          "description": "Whether Common Criteria Mode is enabled.",
+          "enum": [
+            "COMMON_CRITERIA_MODE_STATUS_UNKNOWN",
+            "COMMON_CRITERIA_MODE_DISABLED",
+            "COMMON_CRITERIA_MODE_ENABLED"
+          ],
+          "enumDescriptions": [
+            "Unknown status.",
+            "Common Criteria Mode is currently disabled.",
+            "Common Criteria Mode is currently enabled."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ComplianceRule": {
       "description": "A rule declaring which mitigating actions to take when a device is not compliant with its policy. For every rule, there is always an implicit mitigating action to set policy_compliant to false for the Device resource, and display a message on the device indicating that the device is not compliant with its policy. Other mitigating actions may optionally be taken as well, depending on the field values in the rule.",
       "id": "ComplianceRule",
@@ -1531,6 +1566,10 @@
             "The device is being provisioned. Newly enrolled devices are in this state until they have a policy applied."
           ],
           "type": "string"
+        },
+        "commonCriteriaModeInfo": {
+          "$ref": "CommonCriteriaModeInfo",
+          "description": "Information about Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC).This information is only available if statusReportingSettings.commonCriteriaModeEnabled is true in the device's policy."
         },
         "deviceSettings": {
           "$ref": "DeviceSettings",
@@ -2856,11 +2895,13 @@
           "description": "The type of installation to perform.",
           "enum": [
             "INSTALL_TYPE_UNSPECIFIED",
-            "BLOCKED"
+            "BLOCKED",
+            "AVAILABLE"
           ],
           "enumDescriptions": [
-            "Unspecified. The default behavior is that all installs are allowed.",
-            "The app is blocked and can't be installed in the personal profile."
+            "Unspecified. Defaults to AVAILABLE.",
+            "The app is blocked and can't be installed in the personal profile.",
+            "The app is available to install in the personal profile."
           ],
           "type": "string"
         },
@@ -2899,14 +2940,18 @@
           "type": "array"
         },
         "personalPlayStoreMode": {
-          "description": "Used together with personal_applications to control how apps in the personal profile are allowed or blocked.",
+          "description": "Used together with personalApplications to control how apps in the personal profile are allowed or blocked.",
           "enum": [
             "PLAY_STORE_MODE_UNSPECIFIED",
-            "BLACKLIST"
+            "BLACKLIST",
+            "BLOCKLIST",
+            "ALLOWLIST"
           ],
           "enumDescriptions": [
-            "Unspecified. Default behavior is to allow all installs.",
-            "All Play Store apps are available, except those whose install_type is BLOCKED in personal_applications."
+            "Unspecified. Defaults to BLOCKLIST.",
+            "All Play Store apps are available for installation in the personal profile, except those whose installType is BLOCKED in personalApplications.",
+            "All Play Store apps are available for installation in the personal profile, except those whose installType is BLOCKED in personalApplications.",
+            "Only apps explicitly specified in personalApplications with installType set to AVAILABLE are allowed to be installed in the personal profile."
           ],
           "type": "string"
         },
@@ -3704,6 +3749,10 @@
         },
         "applicationReportsEnabled": {
           "description": "Whether app reports are enabled.",
+          "type": "boolean"
+        },
+        "commonCriteriaModeEnabled": {
+          "description": "Whether Common Criteria Mode reporting is enabled.",
           "type": "boolean"
         },
         "deviceSettingsEnabled": {

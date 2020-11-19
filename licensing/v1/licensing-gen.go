@@ -144,12 +144,25 @@ type LicenseAssignmentsService struct {
 	s *Service
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // LicenseAssignment: Representation of a license assignment.
 type LicenseAssignment struct {
 	// Etags: ETag of the resource.
 	Etags string `json:"etags,omitempty"`
 
-	// Kind: Identifies the resource as a LicenseAssignment.
+	// Kind: Identifies the resource as a LicenseAssignment, which is
+	// `licensing#licenseAssignment`.
 	Kind string `json:"kind,omitempty"`
 
 	// ProductId: A product's unique identifier. For more information about
@@ -171,10 +184,10 @@ type LicenseAssignment struct {
 
 	// UserId: The user's current primary email address. If the user's email
 	// address changes, use the new email address in your API requests.
-	// Since a userId is subject to change, do not use a userId value as a
-	// key for persistent data. This key could break if the current user's
-	// email address changes. If the userId is suspended, the license status
-	// changes.
+	// Since a `userId` is subject to change, do not use a `userId` value as
+	// a key for persistent data. This key could break if the current user's
+	// email address changes. If the `userId` is suspended, the license
+	// status changes.
 	UserId string `json:"userId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -244,8 +257,8 @@ type LicenseAssignmentList struct {
 
 	// NextPageToken: The token that you must submit in a subsequent request
 	// to retrieve additional license results matching your query
-	// parameters. The maxResults query string is related to the
-	// nextPageToken since maxResults determines how many entries are
+	// parameters. The `maxResults` query string is related to the
+	// `nextPageToken` since `maxResults` determines how many entries are
 	// returned on each next page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -324,7 +337,7 @@ func (c *LicenseAssignmentsDeleteCall) Header() http.Header {
 
 func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -348,17 +361,42 @@ func (c *LicenseAssignmentsDeleteCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "licensing.licenseAssignments.delete" call.
-func (c *LicenseAssignmentsDeleteCall) Do(opts ...googleapi.CallOption) error {
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *LicenseAssignmentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 	// {
 	//   "description": "Revoke a license.",
 	//   "flatPath": "apps/licensing/v1/product/{productId}/sku/{skuId}/user/{userId}",
@@ -383,13 +421,16 @@ func (c *LicenseAssignmentsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "userId": {
-	//       "description": "The user's current primary email address. If the user's email address changes, use the new email address in your API requests. Since a userId is subject to change, do not use a userId value as a key for persistent data. This key could break if the current user's email address changes. If the userId is suspended, the license status changes.",
+	//       "description": "The user's current primary email address. If the user's email address changes, use the new email address in your API requests. Since a `userId` is subject to change, do not use a `userId` value as a key for persistent data. This key could break if the current user's email address changes. If the `userId` is suspended, the license status changes.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "apps/licensing/v1/product/{productId}/sku/{skuId}/user/{userId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/apps.licensing"
 	//   ]
@@ -456,7 +497,7 @@ func (c *LicenseAssignmentsGetCall) Header() http.Header {
 
 func (c *LicenseAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -543,7 +584,7 @@ func (c *LicenseAssignmentsGetCall) Do(opts ...googleapi.CallOption) (*LicenseAs
 	//       "type": "string"
 	//     },
 	//     "userId": {
-	//       "description": "The user's current primary email address. If the user's email address changes, use the new email address in your API requests. Since a userId is subject to change, do not use a userId value as a key for persistent data. This key could break if the current user's email address changes. If the userId is suspended, the license status changes.",
+	//       "description": "The user's current primary email address. If the user's email address changes, use the new email address in your API requests. Since a `userId` is subject to change, do not use a `userId` value as a key for persistent data. This key could break if the current user's email address changes. If the `userId` is suspended, the license status changes.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -608,7 +649,7 @@ func (c *LicenseAssignmentsInsertCall) Header() http.Header {
 
 func (c *LicenseAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -729,7 +770,7 @@ func (r *LicenseAssignmentsService) ListForProduct(productId string, customerId 
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": The maxResults
+// MaxResults sets the optional parameter "maxResults": The `maxResults`
 // query string determines how many entries are returned on each page of
 // a large response. This is an optional parameter. The value must be a
 // positive number.
@@ -739,10 +780,10 @@ func (c *LicenseAssignmentsListForProductCall) MaxResults(maxResults int64) *Lic
 }
 
 // PageToken sets the optional parameter "pageToken": Token to fetch the
-// next page of data. The maxResults query string is related to the
-// pageToken since maxResults determines how many entries are returned
-// on each page. This is an optional query string. If not specified, the
-// server returns the first page.
+// next page of data. The `maxResults` query string is related to the
+// `pageToken` since `maxResults` determines how many entries are
+// returned on each page. This is an optional query string. If not
+// specified, the server returns the first page.
 func (c *LicenseAssignmentsListForProductCall) PageToken(pageToken string) *LicenseAssignmentsListForProductCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -785,7 +826,7 @@ func (c *LicenseAssignmentsListForProductCall) Header() http.Header {
 
 func (c *LicenseAssignmentsListForProductCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -857,14 +898,14 @@ func (c *LicenseAssignmentsListForProductCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Customer's customerId. A previous version of this API accepted the primary domain name as a value for this field. If the customer is suspended, the server returns an error.",
+	//       "description": "Customer's `customerId`. A previous version of this API accepted the primary domain name as a value for this field. If the customer is suspended, the server returns an error.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "The maxResults query string determines how many entries are returned on each page of a large response. This is an optional parameter. The value must be a positive number.",
+	//       "description": "The `maxResults` query string determines how many entries are returned on each page of a large response. This is an optional parameter. The value must be a positive number.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "1000",
@@ -873,7 +914,7 @@ func (c *LicenseAssignmentsListForProductCall) Do(opts ...googleapi.CallOption) 
 	//     },
 	//     "pageToken": {
 	//       "default": "",
-	//       "description": "Token to fetch the next page of data. The maxResults query string is related to the pageToken since maxResults determines how many entries are returned on each page. This is an optional query string. If not specified, the server returns the first page.",
+	//       "description": "Token to fetch the next page of data. The `maxResults` query string is related to the `pageToken` since `maxResults` determines how many entries are returned on each page. This is an optional query string. If not specified, the server returns the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -938,7 +979,7 @@ func (r *LicenseAssignmentsService) ListForProductAndSku(productId string, skuId
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": The maxResults
+// MaxResults sets the optional parameter "maxResults": The `maxResults`
 // query string determines how many entries are returned on each page of
 // a large response. This is an optional parameter. The value must be a
 // positive number.
@@ -948,10 +989,10 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) MaxResults(maxResults int64
 }
 
 // PageToken sets the optional parameter "pageToken": Token to fetch the
-// next page of data. The maxResults query string is related to the
-// pageToken since maxResults determines how many entries are returned
-// on each page. This is an optional query string. If not specified, the
-// server returns the first page.
+// next page of data. The `maxResults` query string is related to the
+// `pageToken` since `maxResults` determines how many entries are
+// returned on each page. This is an optional query string. If not
+// specified, the server returns the first page.
 func (c *LicenseAssignmentsListForProductAndSkuCall) PageToken(pageToken string) *LicenseAssignmentsListForProductAndSkuCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -994,7 +1035,7 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Header() http.Header {
 
 func (c *LicenseAssignmentsListForProductAndSkuCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1068,14 +1109,14 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Customer's customerId. A previous version of this API accepted the primary domain name as a value for this field. If the customer is suspended, the server returns an error.",
+	//       "description": "Customer's `customerId`. A previous version of this API accepted the primary domain name as a value for this field. If the customer is suspended, the server returns an error.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "The maxResults query string determines how many entries are returned on each page of a large response. This is an optional parameter. The value must be a positive number.",
+	//       "description": "The `maxResults` query string determines how many entries are returned on each page of a large response. This is an optional parameter. The value must be a positive number.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "1000",
@@ -1084,7 +1125,7 @@ func (c *LicenseAssignmentsListForProductAndSkuCall) Do(opts ...googleapi.CallOp
 	//     },
 	//     "pageToken": {
 	//       "default": "",
-	//       "description": "Token to fetch the next page of data. The maxResults query string is related to the pageToken since maxResults determines how many entries are returned on each page. This is an optional query string. If not specified, the server returns the first page.",
+	//       "description": "Token to fetch the next page of data. The `maxResults` query string is related to the `pageToken` since `maxResults` determines how many entries are returned on each page. This is an optional query string. If not specified, the server returns the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1146,7 +1187,8 @@ type LicenseAssignmentsPatchCall struct {
 	header_           http.Header
 }
 
-// Patch: Patch a Licensing info via Apiary Patch Orchestration
+// Patch: Reassign a user's product SKU with a different SKU in the same
+// product. This method supports patch semantics.
 func (r *LicenseAssignmentsService) Patch(productId string, skuId string, userId string, licenseassignment *LicenseAssignment) *LicenseAssignmentsPatchCall {
 	c := &LicenseAssignmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.productId = productId
@@ -1183,7 +1225,7 @@ func (c *LicenseAssignmentsPatchCall) Header() http.Header {
 
 func (c *LicenseAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1249,7 +1291,7 @@ func (c *LicenseAssignmentsPatchCall) Do(opts ...googleapi.CallOption) (*License
 	}
 	return ret, nil
 	// {
-	//   "description": "Patch a Licensing info via Apiary Patch Orchestration",
+	//   "description": "Reassign a user's product SKU with a different SKU in the same product. This method supports patch semantics.",
 	//   "flatPath": "apps/licensing/v1/product/{productId}/sku/{skuId}/user/{userId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "licensing.licenseAssignments.patch",
@@ -1272,7 +1314,7 @@ func (c *LicenseAssignmentsPatchCall) Do(opts ...googleapi.CallOption) (*License
 	//       "type": "string"
 	//     },
 	//     "userId": {
-	//       "description": "The user's current primary email address. If the user's email address changes, use the new email address in your API requests. Since a userId is subject to change, do not use a userId value as a key for persistent data. This key could break if the current user's email address changes. If the userId is suspended, the license status changes.",
+	//       "description": "The user's current primary email address. If the user's email address changes, use the new email address in your API requests. Since a `userId` is subject to change, do not use a `userId` value as a key for persistent data. This key could break if the current user's email address changes. If the `userId` is suspended, the license status changes.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1343,7 +1385,7 @@ func (c *LicenseAssignmentsUpdateCall) Header() http.Header {
 
 func (c *LicenseAssignmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1432,7 +1474,7 @@ func (c *LicenseAssignmentsUpdateCall) Do(opts ...googleapi.CallOption) (*Licens
 	//       "type": "string"
 	//     },
 	//     "userId": {
-	//       "description": "The user's current primary email address. If the user's email address changes, use the new email address in your API requests. Since a userId is subject to change, do not use a userId value as a key for persistent data. This key could break if the current user's email address changes. If the userId is suspended, the license status changes.",
+	//       "description": "The user's current primary email address. If the user's email address changes, use the new email address in your API requests. Since a `userId` is subject to change, do not use a `userId` value as a key for persistent data. This key could break if the current user's email address changes. If the `userId` is suspended, the license status changes.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

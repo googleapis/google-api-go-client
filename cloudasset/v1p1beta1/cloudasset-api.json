@@ -207,7 +207,7 @@
       }
     }
   },
-  "revision": "20200810",
+  "revision": "20201106",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "AuditConfig": {

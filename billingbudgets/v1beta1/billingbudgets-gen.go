@@ -357,6 +357,16 @@ func (s *GoogleCloudBillingBudgetsV1beta1CreateBudgetRequest) MarshalJSON() ([]b
 // GoogleCloudBillingBudgetsV1beta1Filter: A filter for a budget,
 // limiting the scope of the cost to calculate.
 type GoogleCloudBillingBudgetsV1beta1Filter struct {
+	// CreditTypes: Optional. If Filter.credit_types_treatment is
+	// INCLUDE_SPECIFIED_CREDITS, this is a list of credit types to be
+	// subtracted from gross cost to determine the spend for threshold
+	// calculations. If Filter.credit_types_treatment is **not**
+	// INCLUDE_SPECIFIED_CREDITS, this field must be empty. See [a list of
+	// acceptable credit type
+	// values](https://cloud.google.com/billing/docs/how-to/export-data-bigqu
+	// ery-tables#credits-type).
+	CreditTypes []string `json:"creditTypes,omitempty"`
+
 	// CreditTypesTreatment: Optional. If not set, default behavior is
 	// `INCLUDE_ALL_CREDITS`.
 	//
@@ -366,6 +376,9 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// gross cost to determine the spend for threshold calculations.
 	//   "EXCLUDE_ALL_CREDITS" - All types of credit are added to the net
 	// cost to determine the spend for threshold calculations.
+	//   "INCLUDE_SPECIFIED_CREDITS" - Credit types specified in the
+	// credit_types field are subtracted from the gross cost to determine
+	// the spend for threshold calculations.
 	CreditTypesTreatment string `json:"creditTypesTreatment,omitempty"`
 
 	// Labels: Optional. A single label and value pair specifying that usage
@@ -399,22 +412,20 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// from the parent account and all subaccounts, if they exist.
 	Subaccounts []string `json:"subaccounts,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "CreditTypesTreatment") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CreditTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreditTypesTreatment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CreditTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -670,7 +681,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -810,7 +821,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -955,7 +966,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1121,7 +1132,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1294,7 +1305,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -2525,7 +2525,7 @@
       }
     }
   },
-  "revision": "20201017",
+  "revision": "20201112",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3PageInfo": {
@@ -3585,6 +3585,10 @@
       "description": "An intent represents a user's intent to interact with a conversational agent. You can provide information for the Dialogflow API to use to match user input to an intent by adding training phrases (i.e., examples of user input) to your intent.",
       "id": "GoogleCloudDialogflowCxV3beta1Intent",
       "properties": {
+        "description": {
+          "description": "Optional. Human readable description for better understanding an intent like its scope, content, result etc. Maximum character limit: 140 characters.",
+          "type": "string"
+        },
         "displayName": {
           "description": "Required. The human-readable name of the intent, unique within the agent.",
           "type": "string"
@@ -3592,6 +3596,13 @@
         "isFallback": {
           "description": "Indicates whether this is a fallback intent. Currently only default fallback intent is allowed in the agent, which is added upon agent creation. Adding training phrases to fallback intent is useful in the case of requests that are mistakenly matched, since training phrases assigned to fallback intents act as negative examples that triggers no-match event.",
           "type": "boolean"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The key/value metadata to label an intent. Labels can contain lowercase letters, digits and the symbols '-' and '_'. International characters are allowed, including letters from unicase alphabets. Keys must start with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix \"sys-\" is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys-head * sys-contextual The above labels do not require value. \"sys-head\" means the intent is a head intent. \"sys-contextual\" means the intent is a contextual intent.",
+          "type": "object"
         },
         "name": {
           "description": "The unique identifier of the intent. Required for the Intents.UpdateIntent method. Intents.CreateIntent populates the name automatically. Format: `projects//locations//agents//intents/`.",
@@ -3909,6 +3920,10 @@
           "format": "float",
           "type": "number"
         },
+        "event": {
+          "description": "The event that matched the query. Only filled for `EVENT` match type.",
+          "type": "string"
+        },
         "intent": {
           "$ref": "GoogleCloudDialogflowCxV3beta1Intent",
           "description": "The Intent that matched the query. Some, not all fields are filled in this message, including but not limited to: `name` and `display_name`. Only filled for `INTENT` match type."
@@ -3921,7 +3936,8 @@
             "DIRECT_INTENT",
             "PARAMETER_FILLING",
             "NO_MATCH",
-            "NO_INPUT"
+            "NO_INPUT",
+            "EVENT"
           ],
           "enumDescriptions": [
             "Not specified. Should never be used.",
@@ -3929,7 +3945,8 @@
             "The query directly triggered an intent.",
             "The query was used for parameter filling.",
             "No match was found for the query.",
-            "Indicates an empty query."
+            "Indicates an empty query.",
+            "The query directly triggered an event."
           ],
           "type": "string"
         },
@@ -8122,12 +8139,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV3alpha1RunTestCaseMetadata": {
-      "description": "Metadata returned for the TestCases.RunTestCase long running operation.",
-      "id": "GoogleCloudDialogflowV3alpha1RunTestCaseMetadata",
-      "properties": {},
       "type": "object"
     },
     "GoogleLongrunningListOperationsResponse": {

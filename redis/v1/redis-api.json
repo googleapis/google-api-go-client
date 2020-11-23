@@ -318,6 +318,31 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "getAuthString": {
+                  "description": "Gets the AUTH string for a Redis instance. If AUTH is not enabled for the instance the response will be empty. This information is not included in the details returned to GetInstance.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/authString",
+                  "httpMethod": "GET",
+                  "id": "redis.projects.locations.instances.getAuthString",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Redis instance resource name using the form: `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id` refers to a GCP region.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}/authString",
+                  "response": {
+                    "$ref": "InstanceAuthString"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "import": {
                   "description": "Import a Redis RDB snapshot file from Cloud Storage into a Redis instance. Redis may stop serving during this operation. Instance state will be IMPORTING for entire operation. When complete, the instance will contain only data from the imported file. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:import",
@@ -571,7 +596,7 @@
       }
     }
   },
-  "revision": "20200928",
+  "revision": "20201110",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -722,6 +747,10 @@
           "description": "Optional. Only applicable to STANDARD_HA tier which protects the instance against zonal failures by provisioning it across two zones. If provided, it must be a different zone from the one provided in location_id.",
           "type": "string"
         },
+        "authEnabled": {
+          "description": "Optional. Indicates whether OSS Redis AUTH is enabled for the instance. If set to \"true\" AUTH is enabled on the instance. Default value is \"false\" meaning AUTH is disabled.",
+          "type": "boolean"
+        },
         "authorizedNetwork": {
           "description": "Optional. The full name of the Google Compute Engine [network](https://cloud.google.com/vpc/docs/vpc) to which the instance is connected. If left unspecified, the `default` network will be used.",
           "type": "string"
@@ -806,6 +835,14 @@
           "description": "Optional. The CIDR range of internal addresses that are reserved for this instance. If not provided, the service will choose an unused /29 block, for example, 10.0.0.0/29 or 192.168.0.0/29. Ranges must be unique and non-overlapping with existing subnets in an authorized network.",
           "type": "string"
         },
+        "serverCaCerts": {
+          "description": "Output only. List of server CA certificates for the instance.",
+          "items": {
+            "$ref": "TlsCertificate"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "state": {
           "description": "Output only. The current state of this instance.",
           "enum": [
@@ -850,6 +887,31 @@
             "BASIC tier: standalone instance",
             "STANDARD_HA tier: highly available primary/replica instances"
           ],
+          "type": "string"
+        },
+        "transitEncryptionMode": {
+          "description": "Optional. The In-transit encryption mode of Redis instance. If not provided, in-transit encryption is disabled for instance.",
+          "enum": [
+            "TRANSIT_ENCRYPTION_MODE_UNSPECIFIED",
+            "SERVER_AUTHENTICATION",
+            "DISABLED"
+          ],
+          "enumDescriptions": [
+            "Not set.",
+            "In-transit encryption enabled with server authentication",
+            "In-transit encryption is disabled for instance."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InstanceAuthString": {
+      "description": "Instance AUTH string details.",
+      "id": "InstanceAuthString",
+      "properties": {
+        "authString": {
+          "description": "AUTH string set on the instance.",
           "type": "string"
         }
       },
@@ -1018,6 +1080,37 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TlsCertificate": {
+      "description": "TlsCertificate Resource",
+      "id": "TlsCertificate",
+      "properties": {
+        "cert": {
+          "description": "PEM representation.",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. The time when the certificate was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2020-05-18T00:00:00.094Z`.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "expireTime": {
+          "description": "Output only. The time when the certificate expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2020-05-18T00:00:00.094Z`.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "serialNumber": {
+          "description": "Serial number, as extracted from the certificate.",
+          "type": "string"
+        },
+        "sha1Fingerprint": {
+          "description": "Sha1 Fingerprint of the certificate.",
           "type": "string"
         }
       },

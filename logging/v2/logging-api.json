@@ -122,7 +122,7 @@
         "buckets": {
           "methods": {
             "get": {
-              "description": "Gets a bucket (Beta).",
+              "description": "Gets a bucket.",
               "flatPath": "v2/billingAccounts/{billingAccountsId}/buckets/{bucketsId}",
               "httpMethod": "GET",
               "id": "logging.billingAccounts.buckets.get",
@@ -347,6 +347,80 @@
           }
         },
         "locations": {
+          "methods": {
+            "get": {
+              "description": "Gets information about a location.",
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}",
+              "httpMethod": "GET",
+              "id": "logging.billingAccounts.locations.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name for the location.",
+                  "location": "path",
+                  "pattern": "^billingAccounts/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}",
+              "response": {
+                "$ref": "Location"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "list": {
+              "description": "Lists information about the supported locations for this service.",
+              "flatPath": "v2/billingAccounts/{billingAccountsId}/locations",
+              "httpMethod": "GET",
+              "id": "logging.billingAccounts.locations.list",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "The standard list filter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The resource that owns the locations collection, if applicable.",
+                  "location": "path",
+                  "pattern": "^billingAccounts/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "The standard list page size.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "The standard list page token.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}/locations",
+              "response": {
+                "$ref": "ListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            }
+          },
           "resources": {
             "buckets": {
               "methods": {
@@ -411,7 +485,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists buckets (Beta).",
+                  "description": "Lists buckets.",
                   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets",
                   "httpMethod": "GET",
                   "id": "logging.billingAccounts.locations.buckets.list",
@@ -450,7 +524,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created.",
                   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}",
                   "httpMethod": "PATCH",
                   "id": "logging.billingAccounts.locations.buckets.patch",
@@ -578,7 +652,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Lists views on a bucket..",
+                      "description": "Lists views on a bucket.",
                       "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/views",
                       "httpMethod": "GET",
                       "id": "logging.billingAccounts.locations.buckets.views.list",
@@ -710,6 +784,12 @@
                   "location": "path",
                   "pattern": "^billingAccounts/[^/]+$",
                   "required": true,
+                  "type": "string"
+                },
+                "resourceNames": {
+                  "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+                  "location": "query",
+                  "repeated": true,
                   "type": "string"
                 }
               },
@@ -954,6 +1034,27 @@
           },
           "response": {
             "$ref": "ListLogEntriesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        },
+        "tail": {
+          "description": "Streaming read of log entries as they are ingested. Until the stream is terminated, it will continue reading logs.",
+          "flatPath": "v2/entries:tail",
+          "httpMethod": "POST",
+          "id": "logging.entries.tail",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v2/entries:tail",
+          "request": {
+            "$ref": "TailLogEntriesRequest"
+          },
+          "response": {
+            "$ref": "TailLogEntriesResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -1309,6 +1410,80 @@
           }
         },
         "locations": {
+          "methods": {
+            "get": {
+              "description": "Gets information about a location.",
+              "flatPath": "v2/folders/{foldersId}/locations/{locationsId}",
+              "httpMethod": "GET",
+              "id": "logging.folders.locations.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name for the location.",
+                  "location": "path",
+                  "pattern": "^folders/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}",
+              "response": {
+                "$ref": "Location"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "list": {
+              "description": "Lists information about the supported locations for this service.",
+              "flatPath": "v2/folders/{foldersId}/locations",
+              "httpMethod": "GET",
+              "id": "logging.folders.locations.list",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "The standard list filter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The resource that owns the locations collection, if applicable.",
+                  "location": "path",
+                  "pattern": "^folders/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "The standard list page size.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "The standard list page token.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}/locations",
+              "response": {
+                "$ref": "ListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            }
+          },
           "resources": {
             "buckets": {
               "methods": {
@@ -1373,7 +1548,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Gets a bucket (Beta).",
+                  "description": "Gets a bucket.",
                   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}",
                   "httpMethod": "GET",
                   "id": "logging.folders.locations.buckets.get",
@@ -1401,7 +1576,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists buckets (Beta).",
+                  "description": "Lists buckets.",
                   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets",
                   "httpMethod": "GET",
                   "id": "logging.folders.locations.buckets.list",
@@ -1440,7 +1615,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created.",
                   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}",
                   "httpMethod": "PATCH",
                   "id": "logging.folders.locations.buckets.patch",
@@ -1596,7 +1771,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Lists views on a bucket..",
+                      "description": "Lists views on a bucket.",
                       "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views",
                       "httpMethod": "GET",
                       "id": "logging.folders.locations.buckets.views.list",
@@ -1728,6 +1903,12 @@
                   "location": "path",
                   "pattern": "^folders/[^/]+$",
                   "required": true,
+                  "type": "string"
+                },
+                "resourceNames": {
+                  "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+                  "location": "query",
+                  "repeated": true,
                   "type": "string"
                 }
               },
@@ -1958,6 +2139,80 @@
       }
     },
     "locations": {
+      "methods": {
+        "get": {
+          "description": "Gets information about a location.",
+          "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}",
+          "httpMethod": "GET",
+          "id": "logging.locations.get",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Resource name for the location.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/locations/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}",
+          "response": {
+            "$ref": "Location"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        },
+        "list": {
+          "description": "Lists information about the supported locations for this service.",
+          "flatPath": "v2/{v2Id}/{v2Id1}/locations",
+          "httpMethod": "GET",
+          "id": "logging.locations.list",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "The standard list filter.",
+              "location": "query",
+              "type": "string"
+            },
+            "name": {
+              "description": "The resource that owns the locations collection, if applicable.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "pageSize": {
+              "description": "The standard list page size.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "The standard list page token.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v2/{+name}/locations",
+          "response": {
+            "$ref": "ListLocationsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/logging.admin",
+            "https://www.googleapis.com/auth/logging.read"
+          ]
+        }
+      },
       "resources": {
         "buckets": {
           "methods": {
@@ -2022,7 +2277,7 @@
               ]
             },
             "get": {
-              "description": "Gets a bucket (Beta).",
+              "description": "Gets a bucket.",
               "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}",
               "httpMethod": "GET",
               "id": "logging.locations.buckets.get",
@@ -2050,7 +2305,7 @@
               ]
             },
             "list": {
-              "description": "Lists buckets (Beta).",
+              "description": "Lists buckets.",
               "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets",
               "httpMethod": "GET",
               "id": "logging.locations.buckets.list",
@@ -2089,7 +2344,7 @@
               ]
             },
             "patch": {
-              "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+              "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created.",
               "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}",
               "httpMethod": "PATCH",
               "id": "logging.locations.buckets.patch",
@@ -2245,7 +2500,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists views on a bucket..",
+                  "description": "Lists views on a bucket.",
                   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views",
                   "httpMethod": "GET",
                   "id": "logging.locations.buckets.views.list",
@@ -2377,6 +2632,12 @@
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "resourceNames": {
+              "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+              "location": "query",
+              "repeated": true,
               "type": "string"
             }
           },
@@ -2656,6 +2917,80 @@
           }
         },
         "locations": {
+          "methods": {
+            "get": {
+              "description": "Gets information about a location.",
+              "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}",
+              "httpMethod": "GET",
+              "id": "logging.organizations.locations.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name for the location.",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}",
+              "response": {
+                "$ref": "Location"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "list": {
+              "description": "Lists information about the supported locations for this service.",
+              "flatPath": "v2/organizations/{organizationsId}/locations",
+              "httpMethod": "GET",
+              "id": "logging.organizations.locations.list",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "The standard list filter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The resource that owns the locations collection, if applicable.",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "The standard list page size.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "The standard list page token.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}/locations",
+              "response": {
+                "$ref": "ListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            }
+          },
           "resources": {
             "buckets": {
               "methods": {
@@ -2720,7 +3055,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Gets a bucket (Beta).",
+                  "description": "Gets a bucket.",
                   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}",
                   "httpMethod": "GET",
                   "id": "logging.organizations.locations.buckets.get",
@@ -2748,7 +3083,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists buckets (Beta).",
+                  "description": "Lists buckets.",
                   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets",
                   "httpMethod": "GET",
                   "id": "logging.organizations.locations.buckets.list",
@@ -2787,7 +3122,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created.",
                   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}",
                   "httpMethod": "PATCH",
                   "id": "logging.organizations.locations.buckets.patch",
@@ -2943,7 +3278,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Lists views on a bucket..",
+                      "description": "Lists views on a bucket.",
                       "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views",
                       "httpMethod": "GET",
                       "id": "logging.organizations.locations.buckets.views.list",
@@ -3075,6 +3410,12 @@
                   "location": "path",
                   "pattern": "^organizations/[^/]+$",
                   "required": true,
+                  "type": "string"
+                },
+                "resourceNames": {
+                  "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+                  "location": "query",
+                  "repeated": true,
                   "type": "string"
                 }
               },
@@ -3468,6 +3809,80 @@
           }
         },
         "locations": {
+          "methods": {
+            "get": {
+              "description": "Gets information about a location.",
+              "flatPath": "v2/projects/{projectsId}/locations/{locationsId}",
+              "httpMethod": "GET",
+              "id": "logging.projects.locations.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name for the location.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}",
+              "response": {
+                "$ref": "Location"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            },
+            "list": {
+              "description": "Lists information about the supported locations for this service.",
+              "flatPath": "v2/projects/{projectsId}/locations",
+              "httpMethod": "GET",
+              "id": "logging.projects.locations.list",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "The standard list filter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The resource that owns the locations collection, if applicable.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "The standard list page size.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "The standard list page token.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}/locations",
+              "response": {
+                "$ref": "ListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/logging.admin",
+                "https://www.googleapis.com/auth/logging.read"
+              ]
+            }
+          },
           "resources": {
             "buckets": {
               "methods": {
@@ -3532,7 +3947,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Gets a bucket (Beta).",
+                  "description": "Gets a bucket.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}",
                   "httpMethod": "GET",
                   "id": "logging.projects.locations.buckets.get",
@@ -3560,7 +3975,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists buckets (Beta).",
+                  "description": "Lists buckets.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets",
                   "httpMethod": "GET",
                   "id": "logging.projects.locations.buckets.list",
@@ -3599,7 +4014,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created. This method is in Beta.",
+                  "description": "Updates a bucket. This method replaces the following fields in the existing bucket with values from the new bucket: retention_periodIf the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be returned.If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be returned.A buckets region may not be modified after it is created.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}",
                   "httpMethod": "PATCH",
                   "id": "logging.projects.locations.buckets.patch",
@@ -3755,7 +4170,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Lists views on a bucket..",
+                      "description": "Lists views on a bucket.",
                       "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views",
                       "httpMethod": "GET",
                       "id": "logging.projects.locations.buckets.views.list",
@@ -3887,6 +4302,12 @@
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
+                  "type": "string"
+                },
+                "resourceNames": {
+                  "description": "Optional. The resource name that owns the logs: projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_IDTo support legacy queries, it could also be: \"projects/PROJECT_ID\" \"organizations/ORGANIZATION_ID\" \"billingAccounts/BILLING_ACCOUNT_ID\" \"folders/FOLDER_ID\"",
+                  "location": "query",
+                  "repeated": true,
                   "type": "string"
                 }
               },
@@ -4513,7 +4934,7 @@
       }
     }
   },
-  "revision": "20201016",
+  "revision": "20201114",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BigQueryOptions": {
@@ -4650,7 +5071,7 @@
           "type": "string"
         },
         "remoteIp": {
-          "description": "The IP address (IPv4 or IPv6) of the client that issued the HTTP request. Examples: \"192.168.1.1\", \"FE80::0202:B3FF:FE1E:8329\".",
+          "description": "The IP address (IPv4 or IPv6) of the client that issued the HTTP request. This field can include port information. Examples: \"192.168.1.1\", \"10.0.0.1:80\", \"FE80::0202:B3FF:FE1E:8329\".",
           "type": "string"
         },
         "requestMethod": {
@@ -4672,7 +5093,7 @@
           "type": "string"
         },
         "serverIp": {
-          "description": "The IP address (IPv4 or IPv6) of the origin server that the request was sent to.",
+          "description": "The IP address (IPv4 or IPv6) of the origin server that the request was sent to. This field can include port information. Examples: \"192.168.1.1\", \"10.0.0.1:80\", \"FE80::0202:B3FF:FE1E:8329\".",
           "type": "string"
         },
         "status": {
@@ -4739,7 +5160,7 @@
       "type": "object"
     },
     "ListBucketsResponse": {
-      "description": "The response from ListBuckets (Beta).",
+      "description": "The response from ListBuckets.",
       "id": "ListBucketsResponse",
       "properties": {
         "buckets": {
@@ -4769,6 +5190,24 @@
         },
         "nextPageToken": {
           "description": "If there might be more results than appear in this response, then nextPageToken is included. To get the next set of results, call the same method again using the value of nextPageToken as pageToken.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListLocationsResponse": {
+      "description": "The response message for Locations.ListLocations.",
+      "id": "ListLocationsResponse",
+      "properties": {
+        "locations": {
+          "description": "A list of locations that matches the specified filter in the request.",
+          "items": {
+            "$ref": "Location"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
           "type": "string"
         }
       },
@@ -4920,8 +5359,42 @@
       },
       "type": "object"
     },
+    "Location": {
+      "description": "A resource that represents Google Cloud Platform location.",
+      "id": "Location",
+      "properties": {
+        "displayName": {
+          "description": "The friendly name for this location, typically a nearby city name. For example, \"Tokyo\".",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Cross-service attributes for the location. For example {\"cloud.googleapis.com/region\": \"us-east1\"} ",
+          "type": "object"
+        },
+        "locationId": {
+          "description": "The canonical id for this location. For example: \"us-east1\".",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Service-specific metadata. For example the available capacity at the given location.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Resource name for the location, which may vary between implementations. For example: \"projects/example-project/locations/us-east1\"",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "LogBucket": {
-      "description": "Describes a repository of logs (Beta).",
+      "description": "Describes a repository of logs.",
       "id": "LogBucket",
       "properties": {
         "createTime": {
@@ -4954,7 +5427,8 @@
           "type": "boolean"
         },
         "name": {
-          "description": "The resource name of the bucket. For example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id The supported locations are: \"global\"For the location of global it is unspecified where logs are actually stored. Once a bucket has been created, the location can not be changed.",
+          "description": "Output only. The resource name of the bucket. For example: \"projects/my-project-id/locations/my-location/buckets/my-bucket-id The supported locations are: \"global\"For the location of global it is unspecified where logs are actually stored. Once a bucket has been created, the location can not be changed.",
+          "readOnly": true,
           "type": "string"
         },
         "retentionDays": {
@@ -5357,7 +5831,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "Filter that restricts which log entries in a bucket are visible in this view. Filters are restricted to be a logical AND of ==/!= of any of the following: originating project/folder/organization/billing account. resource type log id",
+          "description": "Filter that restricts which log entries in a bucket are visible in this view. Filters are restricted to be a logical AND of ==/!= of any of the following: originating project/folder/organization/billing account. resource type log id Example: SOURCE(\"projects/myproject\") AND resource.type = \"gce_instance\" AND LOG_ID(\"stdout\")",
           "type": "string"
         },
         "name": {
@@ -5800,6 +6274,76 @@
         "revisionId": {
           "description": "The canonical and persistent identifier of the deployed revision. Example (git): \"0035781c50ec7aa23385dc841529ce8a4b70db1b\"",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SuppressionInfo": {
+      "description": "Information about entries that were omitted from the session.",
+      "id": "SuppressionInfo",
+      "properties": {
+        "reason": {
+          "description": "The reason that entries were omitted from the session.",
+          "enum": [
+            "REASON_UNSPECIFIED",
+            "RATE_LIMIT",
+            "NOT_CONSUMED"
+          ],
+          "enumDescriptions": [
+            "Unexpected default.",
+            "Indicates suppression occurred due to relevant entries being received in excess of rate limits. For quotas and limits, see Logging API quotas and limits (https://cloud.google.com/logging/quotas#api-limits).",
+            "Indicates suppression occurred due to the client not consuming responses quickly enough."
+          ],
+          "type": "string"
+        },
+        "suppressedCount": {
+          "description": "A lower bound on the count of entries omitted due to reason.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "TailLogEntriesRequest": {
+      "description": "The parameters to TailLogEntries.",
+      "id": "TailLogEntriesRequest",
+      "properties": {
+        "bufferWindow": {
+          "description": "Optional. The amount of time to buffer log entries at the server before being returned to prevent out of order results due to late arriving log entries. Valid values are between 0-60000 milliseconds. Defaults to 2000 milliseconds.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "filter": {
+          "description": "Optional. A filter that chooses which log entries to return. See Advanced Logs Filters (https://cloud.google.com/logging/docs/view/advanced_filters). Only log entries that match the filter are returned. An empty filter matches all log entries in the resources listed in resource_names. Referencing a parent resource that is not in resource_names will cause the filter to return no results. The maximum length of the filter is 20000 characters.",
+          "type": "string"
+        },
+        "resourceNames": {
+          "description": "Required. Name of a parent resource from which to retrieve log entries: \"projects/[PROJECT_ID]\" \"organizations/[ORGANIZATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]\" \"folders/[FOLDER_ID]\" May alternatively be one or more views: \"projects/PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID\" \"organization/ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID\" \"billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID\" \"folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/views/VIEW_ID\"",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TailLogEntriesResponse": {
+      "description": "Result returned from TailLogEntries.",
+      "id": "TailLogEntriesResponse",
+      "properties": {
+        "entries": {
+          "description": "A list of log entries. Each response in the stream will order entries with increasing values of LogEntry.timestamp. Ordering is not guaranteed between separate responses.",
+          "items": {
+            "$ref": "LogEntry"
+          },
+          "type": "array"
+        },
+        "suppressionInfo": {
+          "description": "If entries that otherwise would have been included in the session were not sent back to the client, counts of relevant entries omitted from the session with the reason that they were not included. There will be at most one of each reason per response. The counts represent the number of suppressed entries since the last streamed response.",
+          "items": {
+            "$ref": "SuppressionInfo"
+          },
+          "type": "array"
         }
       },
       "type": "object"

@@ -170,7 +170,9 @@ type TransferOperationsService struct {
 
 // AwsAccessKey: AWS access key (see [AWS Security
 // Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-securit
-// y-credentials.html)).
+// y-credentials.html)). For information on our data retention policy
+// for user credentials, see [User
+// credentials](data-retention#user-credentials).
 type AwsAccessKey struct {
 	// AccessKeyId: Required. AWS access key ID.
 	AccessKeyId string `json:"accessKeyId,omitempty"`
@@ -208,7 +210,9 @@ func (s *AwsAccessKey) MarshalJSON() ([]byte, error) {
 type AwsS3Data struct {
 	// AwsAccessKey: Required. Input only. AWS access key used to sign the
 	// API requests to the AWS S3 bucket. Permissions on the bucket must be
-	// granted to the access ID of the AWS access key.
+	// granted to the access ID of the AWS access key. For information on
+	// our data retention policy for user credentials, see [User
+	// credentials](data-retention#user-credentials).
 	AwsAccessKey *AwsAccessKey `json:"awsAccessKey,omitempty"`
 
 	// BucketName: Required. S3 Bucket name (see [Creating a
@@ -251,7 +255,9 @@ func (s *AwsS3Data) MarshalJSON() ([]byte, error) {
 // -and-referencing-containers--blobs--and-metadata#blob-names).
 type AzureBlobStorageData struct {
 	// AzureCredentials: Required. Input only. Credentials used to
-	// authenticate API requests to Azure.
+	// authenticate API requests to Azure. For information on our data
+	// retention policy for user credentials, see [User
+	// credentials](data-retention#user-credentials).
 	AzureCredentials *AzureCredentials `json:"azureCredentials,omitempty"`
 
 	// Container: Required. The container to transfer from the Azure Storage
@@ -285,7 +291,9 @@ func (s *AzureBlobStorageData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AzureCredentials: Azure credentials
+// AzureCredentials: Azure credentials For information on our data
+// retention policy for user credentials, see [User
+// credentials](data-retention#user-credentials).
 type AzureCredentials struct {
 	// SasToken: Required. Azure shared access signature. (see [Grant
 	// limited access to Azure Storage resources using shared access
@@ -620,10 +628,10 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 // actual size of the object fetched, the object will not be
 // transferred. * If the specified MD5 does not match the MD5 computed
 // from the transferred bytes, the object transfer will fail. For more
-// information, see [Generating MD5
-// hashes](https://cloud.google.com/storage-transfer/docs/create-url-list
-// #md5) * Ensure that each URL you specify is publicly accessible. For
-// example, in Cloud Storage you can [share an object publicly]
+// information, see [Generating MD5 hashes]
+// (https://cloud.google.com/storage-transfer/docs/create-url-list#md5-ch
+// ecksum) * Ensure that each URL you specify is publicly accessible.
+// For example, in Cloud Storage you can [share an object publicly]
 // (https://cloud.google.com/storage/docs/cloud-console#_sharingdata)
 // and get a link to it. * Storage Transfer Service obeys `robots.txt`
 // rules and requires the source HTTP server to support `Range` requests
@@ -960,6 +968,23 @@ type ResumeTransferOperationRequest struct {
 
 // Schedule: Transfers can be scheduled to recur or to run just once.
 type Schedule struct {
+	// EndTimeOfDay: The time in UTC that no further transfer operations are
+	// scheduled. Combined with schedule_end_date, `end_time_of_day`
+	// specifies the end date and time for starting new transfer operations.
+	// This field must be greater than or equal to the timestamp
+	// corresponding to the combintation of schedule_start_date and
+	// start_time_of_day, and is subject to the following: * If
+	// `end_time_of_day` is not set and `schedule_end_date` is set, then a
+	// default value of `23:59:59` is used for `end_time_of_day`. * If
+	// `end_time_of_day` is set and `schedule_end_date` is not set, then
+	// INVALID_ARGUMENT is returned.
+	EndTimeOfDay *TimeOfDay `json:"endTimeOfDay,omitempty"`
+
+	// RepeatInterval: Interval between the start of each scheduled
+	// TransferOperation. If unspecified, the default value is 24 hours.
+	// This value may not be less than 1 hour.
+	RepeatInterval string `json:"repeatInterval,omitempty"`
+
 	// ScheduleEndDate: The last day a transfer runs. Date boundaries are
 	// determined relative to UTC time. A job will run once per 24 hours
 	// within the following guidelines: * If `schedule_end_date` and
@@ -993,7 +1018,7 @@ type Schedule struct {
 	// specified time each day, through `schedule_end_date`.
 	StartTimeOfDay *TimeOfDay `json:"startTimeOfDay,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ScheduleEndDate") to
+	// ForceSendFields is a list of field names (e.g. "EndTimeOfDay") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1001,13 +1026,12 @@ type Schedule struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ScheduleEndDate") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EndTimeOfDay") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1368,8 +1392,11 @@ type TransferOptions struct {
 	// delete_objects_from_source_after_transfer are mutually exclusive.
 	DeleteObjectsUniqueInSink bool `json:"deleteObjectsUniqueInSink,omitempty"`
 
-	// OverwriteObjectsAlreadyExistingInSink: Whether overwriting objects
-	// that already exist in the sink is allowed.
+	// OverwriteObjectsAlreadyExistingInSink: When to overwrite objects that
+	// already exist in the sink. The default is that only objects that are
+	// different from the source are ovewritten. If true, all objects in the
+	// sink whose name matches an object in the source will be overwritten
+	// with the source object.
 	OverwriteObjectsAlreadyExistingInSink bool `json:"overwriteObjectsAlreadyExistingInSink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1558,7 +1585,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1690,7 +1717,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1827,7 +1854,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1991,7 +2018,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2120,10 +2147,9 @@ type TransferJobsPatchCall struct {
 }
 
 // Patch: Updates a transfer job. Updating a job's transfer spec does
-// not affect transfer operations that are running already. Updating a
-// job's schedule is not allowed. **Note:** The job's status field can
-// be modified using this RPC (for example, to set a job's status to
-// DELETED, DISABLED, or ENABLED).
+// not affect transfer operations that are running already. **Note:**
+// The job's status field can be modified using this RPC (for example,
+// to set a job's status to DELETED, DISABLED, or ENABLED).
 func (r *TransferJobsService) Patch(jobName string, updatetransferjobrequest *UpdateTransferJobRequest) *TransferJobsPatchCall {
 	c := &TransferJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -2158,7 +2184,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2222,7 +2248,7 @@ func (c *TransferJobsPatchCall) Do(opts ...googleapi.CallOption) (*TransferJob, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a transfer job. Updating a job's transfer spec does not affect transfer operations that are running already. Updating a job's schedule is not allowed. **Note:** The job's status field can be modified using this RPC (for example, to set a job's status to DELETED, DISABLED, or ENABLED).",
+	//   "description": "Updates a transfer job. Updating a job's transfer spec does not affect transfer operations that are running already. **Note:** The job's status field can be modified using this RPC (for example, to set a job's status to DELETED, DISABLED, or ENABLED).",
 	//   "flatPath": "v1/transferJobs/{transferJobsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "storagetransfer.transferJobs.patch",
@@ -2316,7 +2342,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2467,7 +2493,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2626,7 +2652,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2800,7 +2826,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2940,7 +2966,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

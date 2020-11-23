@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   admobService, err := admob.NewService(ctx, option.WithScopes(admob.AdmobReportScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   admobService, err := admob.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -80,12 +84,16 @@ const mtlsBasePath = "https://admob.mtls.googleapis.com/"
 // OAuth2 scopes used by this API.
 const (
 	// See your AdMob data
+	AdmobReadonlyScope = "https://www.googleapis.com/auth/admob.readonly"
+
+	// See your AdMob data
 	AdmobReportScope = "https://www.googleapis.com/auth/admob.report"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/admob.readonly",
 		"https://www.googleapis.com/auth/admob.report",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -1473,7 +1481,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1556,8 +1564,10 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*PublisherAccount, e
 	//     "$ref": "PublisherAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly",
 	//     "https://www.googleapis.com/auth/admob.report"
-	//   ]
+	//   ],
+	//   "streamingType": "NONE"
 	// }
 
 }
@@ -1633,7 +1643,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1715,8 +1725,10 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	//     "$ref": "ListPublisherAccountsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly",
 	//     "https://www.googleapis.com/auth/admob.report"
-	//   ]
+	//   ],
+	//   "streamingType": "NONE"
 	// }
 
 }
@@ -1754,7 +1766,8 @@ type AccountsMediationReportGenerateCall struct {
 }
 
 // Generate: Generates an AdMob Mediation report based on the provided
-// report specification.
+// report specification. Returns result of a server-side streaming RPC.
+// The result is returned in a sequence of responses.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1789,7 +1802,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1853,7 +1866,7 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an AdMob Mediation report based on the provided report specification.",
+	//   "description": "Generates an AdMob Mediation report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
 	//   "flatPath": "v1/accounts/{accountsId}/mediationReport:generate",
 	//   "httpMethod": "POST",
 	//   "id": "admob.accounts.mediationReport.generate",
@@ -1877,8 +1890,10 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "GenerateMediationReportResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly",
 	//     "https://www.googleapis.com/auth/admob.report"
-	//   ]
+	//   ],
+	//   "streamingType": "SERVER_SIDE"
 	// }
 
 }
@@ -1895,7 +1910,8 @@ type AccountsNetworkReportGenerateCall struct {
 }
 
 // Generate: Generates an AdMob Network report based on the provided
-// report specification.
+// report specification. Returns result of a server-side streaming RPC.
+// The result is returned in a sequence of responses.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1930,7 +1946,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201027")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1994,7 +2010,7 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an AdMob Network report based on the provided report specification.",
+	//   "description": "Generates an AdMob Network report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
 	//   "flatPath": "v1/accounts/{accountsId}/networkReport:generate",
 	//   "httpMethod": "POST",
 	//   "id": "admob.accounts.networkReport.generate",
@@ -2018,8 +2034,10 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 	//     "$ref": "GenerateNetworkReportResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly",
 	//     "https://www.googleapis.com/auth/admob.report"
-	//   ]
+	//   ],
+	//   "streamingType": "SERVER_SIDE"
 	// }
 
 }

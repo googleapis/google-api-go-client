@@ -10,7 +10,7 @@ import (
 )
 
 func TestGetClientCertificateSuccess(t *testing.T) {
-	defaultSourceCachedCert = nil
+	defaultCert.cachedCert = nil
 	source := secureConnectSource{metadata: secureConnectMetadata{Cmd: []string{"cat", "testdata/testcert.pem"}}}
 	cert, err := source.getClientCertificate(nil)
 	if err != nil {
@@ -25,7 +25,7 @@ func TestGetClientCertificateSuccess(t *testing.T) {
 }
 
 func TestGetClientCertificateFailure(t *testing.T) {
-	defaultSourceCachedCert = nil
+	defaultCert.cachedCert = nil
 	source := secureConnectSource{metadata: secureConnectMetadata{Cmd: []string{"cat"}}}
 	_, err := source.getClientCertificate(nil)
 	if err == nil {
@@ -56,7 +56,7 @@ func TestValidateMetadataFailure(t *testing.T) {
 }
 
 func TestIsCertificateExpiredTrue(t *testing.T) {
-	defaultSourceCachedCert = nil
+	defaultCert.cachedCert = nil
 	source := secureConnectSource{metadata: secureConnectMetadata{Cmd: []string{"cat", "testdata/testcert.pem"}}}
 	cert, err := source.getClientCertificate(nil)
 	if err != nil {
@@ -68,7 +68,7 @@ func TestIsCertificateExpiredTrue(t *testing.T) {
 }
 
 func TestIsCertificateExpiredFalse(t *testing.T) {
-	defaultSourceCachedCert = nil
+	defaultCert.cachedCert = nil
 	source := secureConnectSource{metadata: secureConnectMetadata{Cmd: []string{"cat", "testdata/nonexpiringtestcert.pem"}}}
 	cert, err := source.getClientCertificate(nil)
 	if err != nil {
@@ -80,7 +80,7 @@ func TestIsCertificateExpiredFalse(t *testing.T) {
 }
 
 func TestCertificateCaching(t *testing.T) {
-	defaultSourceCachedCert = nil
+	defaultCert.cachedCert = nil
 	source := secureConnectSource{metadata: secureConnectMetadata{Cmd: []string{"cat", "testdata/nonexpiringtestcert.pem"}}}
 	cert, err := source.getClientCertificate(nil)
 	if err != nil {
@@ -89,7 +89,7 @@ func TestCertificateCaching(t *testing.T) {
 	if cert == nil {
 		t.Error("getClientCertificate: want non-nil cert, got nil")
 	}
-	if defaultSourceCachedCert == nil {
+	if defaultCert.cachedCert == nil {
 		t.Error("getClientCertificate: want non-nil defaultSourceCachedCert, got nil")
 	}
 
@@ -98,10 +98,10 @@ func TestCertificateCaching(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if !bytes.Equal(cert.Certificate[0], defaultSourceCachedCert.Certificate[0]) {
+	if !bytes.Equal(cert.Certificate[0], defaultCert.cachedCert.Certificate[0]) {
 		t.Error("getClientCertificate: want cached Certificate, got different Certificate")
 	}
-	if cert.PrivateKey != defaultSourceCachedCert.PrivateKey {
+	if cert.PrivateKey != defaultCert.cachedCert.PrivateKey {
 		t.Error("getClientCertificate: want cached PrivateKey, got different PrivateKey")
 	}
 }

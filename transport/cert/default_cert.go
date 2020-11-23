@@ -32,12 +32,18 @@ const (
 	metadataFile = "context_aware_metadata.json"
 )
 
+// defaultCertData holds all the variables pertaining to
+// the default certficate source created by DefaultSource.
+type defaultCertData struct {
+	once            sync.Once
+	source          Source
+	err             error
+	cachedCertMutex sync.Mutex
+	cachedCert      *tls.Certificate
+}
+
 var (
-	defaultSourceOnce            sync.Once
-	defaultSource                Source
-	defaultSourceErr             error
-	defaultSourceCachedCertMutex sync.Mutex
-	defaultSourceCachedCert      *tls.Certificate
+	defaultCert defaultCertData
 )
 
 // Source is a function that can be passed into crypto/tls.Config.GetClientCertificate.
@@ -48,10 +54,10 @@ type Source func(*tls.CertificateRequestInfo) (*tls.Certificate, error)
 //
 // If that file does not exist, a nil source is returned.
 func DefaultSource() (Source, error) {
-	defaultSourceOnce.Do(func() {
-		defaultSource, defaultSourceErr = newSecureConnectSource()
+	defaultCert.once.Do(func() {
+		defaultCert.source, defaultCert.err = newSecureConnectSource()
 	})
-	return defaultSource, defaultSourceErr
+	return defaultCert.source, defaultCert.err
 }
 
 type secureConnectSource struct {
@@ -99,10 +105,10 @@ func validateMetadata(metadata secureConnectMetadata) error {
 }
 
 func (s *secureConnectSource) getClientCertificate(info *tls.CertificateRequestInfo) (*tls.Certificate, error) {
-	defaultSourceCachedCertMutex.Lock()
-	defer defaultSourceCachedCertMutex.Unlock()
-	if defaultSourceCachedCert != nil && !isCertificateExpired(defaultSourceCachedCert) {
-		return defaultSourceCachedCert, nil
+	defaultCert.cachedCertMutex.Lock()
+	defer defaultCert.cachedCertMutex.Unlock()
+	if defaultCert.cachedCert != nil && !isCertificateExpired(defaultCert.cachedCert) {
+		return defaultCert.cachedCert, nil
 	}
 	command := s.metadata.Cmd
 	data, err := exec.Command(command[0], command[1:]...).Output()
@@ -114,11 +120,15 @@ func (s *secureConnectSource) getClientCertificate(info *tls.CertificateRequestI
 	if err != nil {
 		return nil, err
 	}
-	defaultSourceCachedCert = &cert
+	defaultCert.cachedCert = &cert
 	return &cert, nil
 }
 
+// isCertificateExpired returns true if the given cert is expired or invalid.
 func isCertificateExpired(cert *tls.Certificate) bool {
+	if len(cert.Certificate) == 0 {
+		return true
+	}
 	parsed, err := x509.ParseCertificate(cert.Certificate[0])
 	if err != nil {
 		return true

@@ -499,6 +499,11 @@ func (a *API) mtlsAPIBaseURL() string {
 	if a.doc.MTLSRootURL != "" {
 		return resolveRelative(a.doc.MTLSRootURL, a.doc.ServicePath)
 	}
+	// TODO(andyrzhao): Remove the workaround below when MTLSRootURL becomes available in
+	// compute discovery doc, after compute migrates to OP discovery doc gen (ETA 2021).
+	if a.doc.MTLSRootURL == "" && a.doc.RootURL == "https://compute.googleapis.com/" {
+		return resolveRelative("https://compute.mtls.googleapis.com/", a.doc.ServicePath)
+	}
 	return ""
 }
 

@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   admobService, err := admob.NewService(ctx, option.WithScopes(admob.AdmobReportScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   admobService, err := admob.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -80,12 +84,16 @@ const mtlsBasePath = "https://admob.mtls.googleapis.com/"
 // OAuth2 scopes used by this API.
 const (
 	// See your AdMob data
+	AdmobReadonlyScope = "https://www.googleapis.com/auth/admob.readonly"
+
+	// See your AdMob data
 	AdmobReportScope = "https://www.googleapis.com/auth/admob.report"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/admob.readonly",
 		"https://www.googleapis.com/auth/admob.report",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -1473,7 +1481,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1556,8 +1564,10 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*PublisherAccount, e
 	//     "$ref": "PublisherAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly",
 	//     "https://www.googleapis.com/auth/admob.report"
-	//   ]
+	//   ],
+	//   "streamingType": "NONE"
 	// }
 
 }
@@ -1633,7 +1643,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1715,8 +1725,10 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	//     "$ref": "ListPublisherAccountsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly",
 	//     "https://www.googleapis.com/auth/admob.report"
-	//   ]
+	//   ],
+	//   "streamingType": "NONE"
 	// }
 
 }
@@ -1790,7 +1802,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1878,8 +1890,10 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "GenerateMediationReportResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly",
 	//     "https://www.googleapis.com/auth/admob.report"
-	//   ]
+	//   ],
+	//   "streamingType": "SERVER_SIDE"
 	// }
 
 }
@@ -1932,7 +1946,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2020,8 +2034,10 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 	//     "$ref": "GenerateNetworkReportResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly",
 	//     "https://www.googleapis.com/auth/admob.report"
-	//   ]
+	//   ],
+	//   "streamingType": "SERVER_SIDE"
 	// }
 
 }

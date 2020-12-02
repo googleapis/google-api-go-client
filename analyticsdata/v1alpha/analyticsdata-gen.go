@@ -6,7 +6,7 @@
 
 // Package analyticsdata provides access to the Google Analytics Data API.
 //
-// For product documentation, see: https://developers.google.com/analytics/trusted-testing/analytics-data/
+// For product documentation, see: https://developers.google.com/analytics/devguides/reporting/data/v1/
 //
 // Creating a client
 //
@@ -616,10 +616,10 @@ type Dimension struct {
 	DimensionExpression *DimensionExpression `json:"dimensionExpression,omitempty"`
 
 	// Name: The name of the dimension. See the [API
-	// Dimensions](https://developers.google.com/analytics/trusted-testing/an
-	// alytics-data/api-schema#dimensions) for the list of dimension names.
-	// If `dimensionExpression` is specified, `name` can be any string that
-	// you would like. For example if a `dimensionExpression` concatenates
+	// Dimensions](https://developers.google.com/analytics/devguides/reportin
+	// g/data/v1/api-schema#dimensions) for the list of dimension names. If
+	// `dimensionExpression` is specified, `name` can be any string that you
+	// would like. For example if a `dimensionExpression` concatenates
 	// `country` and `city`, you could call that dimension `countryAndCity`.
 	// Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`,
 	// `dimensionExpression`, and `pivots`.
@@ -724,6 +724,10 @@ type DimensionMetadata struct {
 	// ApiName: This dimension's name. Useable in [Dimension](#Dimension)'s
 	// `name`. For example, `eventName`.
 	ApiName string `json:"apiName,omitempty"`
+
+	// CustomDefinition: True if the dimension is a custom dimension for
+	// this property.
+	CustomDefinition bool `json:"customDefinition,omitempty"`
 
 	// DeprecatedApiNames: Still usable but deprecated names for this
 	// dimension. If populated, this dimension is available by either
@@ -839,8 +843,8 @@ func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 type Entity struct {
 	// PropertyId: A Google Analytics GA4 property id. To learn more, see
 	// [where to find your Property
-	// ID](https://developers.google.com/analytics/trusted-testing/analytics-
-	// data/property-id).
+	// ID](https://developers.google.com/analytics/devguides/reporting/data/v
+	// 1/property-id).
 	PropertyId string `json:"propertyId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PropertyId") to
@@ -1067,8 +1071,8 @@ type Metric struct {
 	Invisible bool `json:"invisible,omitempty"`
 
 	// Name: The name of the metric. See the [API
-	// Metrics](https://developers.google.com/analytics/trusted-testing/analy
-	// tics-data/api-schema#metrics) for the list of metric names. If
+	// Metrics](https://developers.google.com/analytics/devguides/reporting/d
+	// ata/v1/api-schema#metrics) for the list of metric names. If
 	// `expression` is specified, `name` can be any string that you would
 	// like. For example if `expression` is `screenPageViews/sessions`, you
 	// could call that metric's name = `viewsPerSession`. Metrics are
@@ -1160,6 +1164,10 @@ type MetricMetadata struct {
 	// ApiName: A metric name. Useable in [Metric](#Metric)'s `name`. For
 	// example, `eventCount`.
 	ApiName string `json:"apiName,omitempty"`
+
+	// CustomDefinition: True if the metric is a custom metric for this
+	// property.
+	CustomDefinition bool `json:"customDefinition,omitempty"`
 
 	// DeprecatedApiNames: Still usable but deprecated names for this
 	// metric. If populated, this metric is available by either `apiName` or
@@ -2082,7 +2090,10 @@ type RunReportRequest struct {
 	KeepEmptyRows bool `json:"keepEmptyRows,omitempty"`
 
 	// Limit: The number of rows to return. If unspecified, 10 rows are
-	// returned. If -1, all rows are returned.
+	// returned. If -1, all rows are returned. To learn more about this
+	// pagination parameter, see
+	// [Pagination](https://developers.google.com/analytics/devguides/reporti
+	// ng/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregation of metrics. Aggregated metric values
@@ -2107,7 +2118,9 @@ type RunReportRequest struct {
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// Offset: The row count of the start row. The first row is counted as
-	// row 0.
+	// row 0. To learn more about this pagination parameter, see
+	// [Pagination](https://developers.google.com/analytics/devguides/reporti
+	// ng/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
 
 	// OrderBys: Specifies how rows are ordered in the response.
@@ -2169,7 +2182,10 @@ type RunReportResponse struct {
 	// RowCount: The total number of rows in the query result, regardless of
 	// the number of rows returned in the response. For example if a query
 	// returns 175 rows and includes limit = 50 in the API request, the
-	// response will contain row_count = 175 but only 50 rows.
+	// response will contain row_count = 175 but only 50 rows. To learn more
+	// about this pagination parameter, see
+	// [Pagination](https://developers.google.com/analytics/devguides/reporti
+	// ng/data/v1/basics#pagination).
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// Rows: Rows of dimension value combinations and metric values in the
@@ -2316,7 +2332,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2387,7 +2403,7 @@ func (c *PropertiesGetMetadataCall) Do(opts ...googleapi.CallOption) (*Metadata,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics GA4 Property identifier. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/trusted-testing/analytics-data/property-id). Example: properties/1234/metadata Set the Property ID to 0 for dimensions and metrics common to all properties. In this special mode, this method will not return custom dimensions and metrics.",
+	//       "description": "Required. The resource name of the metadata to retrieve. This name field is specified in the URL path and not URL parameters. Property is a numeric Google Analytics GA4 Property identifier. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). Example: properties/1234/metadata Set the Property ID to 0 for dimensions and metrics common to all properties. In this special mode, this method will not return custom dimensions and metrics.",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+/metadata$",
 	//       "required": true,
@@ -2454,7 +2470,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2527,7 +2543,7 @@ func (c *PropertiesRunRealtimeReportCall) Do(opts ...googleapi.CallOption) (*Run
 	//   ],
 	//   "parameters": {
 	//     "property": {
-	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/trusted-testing/analytics-data/property-id). Example: properties/1234",
+	//       "description": "A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body. To learn more, see [where to find your Property ID](https://developers.google.com/analytics/devguides/reporting/data/v1/property-id). Example: properties/1234",
 	//       "location": "path",
 	//       "pattern": "^properties/[^/]+$",
 	//       "required": true,
@@ -2594,7 +2610,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2721,7 +2737,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2851,7 +2867,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2983,7 +2999,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -2065,7 +2065,7 @@
       }
     }
   },
-  "revision": "20201028",
+  "revision": "20201116",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3PageInfo": {
@@ -4858,6 +4858,13 @@
         "timeZone": {
           "description": "The time zone of this conversational query from the [time zone database](https://www.iana.org/time-zones), e.g., America/New_York, Europe/Paris. If not provided, the time zone specified in agent settings is used.",
           "type": "string"
+        },
+        "webhookHeaders": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "This field can be used to pass HTTP headers for a webhook call. These headers will be sent to webhook along with the headers that have been configured through Dialogflow web console. The headers defined within this field will overwrite the headers configured through Dialogflow console if there is a conflict. Header names are case-insensitive. Google's specified headers are not allowed. Including: \"Host\", \"Content-Length\", \"Connection\", \"From\", \"User-Agent\", \"Accept-Encoding\", \"If-Modified-Since\", \"If-None-Match\", \"X-Forwarded-For\", etc.",
+          "type": "object"
         }
       },
       "type": "object"
@@ -6969,44 +6976,6 @@
         },
         "source": {
           "description": "Optional. A custom field used to identify the webhook source. Arbitrary strings are supported. When provided, Dialogflow uses this field to populate QueryResult.webhook_source sent to the integration or API caller.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudKnowledgeV1alpha1OperationMetadata": {
-      "description": "Metadata in google::longrunning::Operation.",
-      "id": "GoogleCloudKnowledgeV1alpha1OperationMetadata",
-      "properties": {
-        "errorCode": {
-          "description": "The error codes from Manifold endpoints' last failures.",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          },
-          "type": "array"
-        },
-        "message": {
-          "description": "The failure messages from Manifold endpoints' last failures.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "state": {
-          "description": "Required. The current state of this operation.",
-          "enum": [
-            "STATE_UNSPECIFIED",
-            "PENDING",
-            "RUNNING",
-            "DONE"
-          ],
-          "enumDescriptions": [
-            "Unspecified state. Should never be used.",
-            "The operation has been created.",
-            "The operation is currently running.",
-            "The operation is done, either cancelled or completed."
-          ],
           "type": "string"
         }
       },

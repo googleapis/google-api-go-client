@@ -119,7 +119,7 @@ const validServiceAccountJSON = `{
 func TestQuotaProjectFromCreds(t *testing.T) {
 	ctx := context.Background()
 
-	cred, err := credentialsFromJSON(ctx, []byte(validServiceAccountJSON), "foo.googleapis.com", nil, nil)
+	cred, err := credentialsFromJSON(ctx, []byte(validServiceAccountJSON), &DialSettings{Endpoint: "foo.googleapis.com"})
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}
@@ -133,7 +133,7 @@ func TestQuotaProjectFromCreds(t *testing.T) {
 	"quota_project_id": "foobar"
 }`)
 
-	cred, err = credentialsFromJSON(ctx, []byte(quotaProjectJSON), "foo.googleapis.com", nil, nil)
+	cred, err = credentialsFromJSON(ctx, []byte(quotaProjectJSON), &DialSettings{Endpoint: "foo.googleapis.com"})
 	if err != nil {
 		t.Fatalf("got %v, wanted no error", err)
 	}

@@ -1,5 +1,19 @@
 # Changes
 
+## [0.36.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.35.0...v0.36.0) (2020-12-03)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#766](https://www.github.com/googleapis/google-api-go-client/issues/766) [#762](https://www.github.com/googleapis/google-api-go-client/issues/762) [#758](https://www.github.com/googleapis/google-api-go-client/issues/758) [#760](https://www.github.com/googleapis/google-api-go-client/issues/760) [#757](https://www.github.com/googleapis/google-api-go-client/issues/757) [#756](https://www.github.com/googleapis/google-api-go-client/issues/756) [#754](https://www.github.com/googleapis/google-api-go-client/issues/754) [#753](https://www.github.com/googleapis/google-api-go-client/issues/753) [#749](https://www.github.com/googleapis/google-api-go-client/issues/749) [#747](https://www.github.com/googleapis/google-api-go-client/issues/747) [#744](https://www.github.com/googleapis/google-api-go-client/issues/744)
+* **internaloption:** add better support for self-signed JWT ([#738](https://www.github.com/googleapis/google-api-go-client/issues/738)) ([1a7550f](https://www.github.com/googleapis/google-api-go-client/commit/1a7550f9546052997806ff7ea9bcba55326bdb16))
+* **transport:** Add default certificate caching support ([#721](https://www.github.com/googleapis/google-api-go-client/issues/721)) ([caa4d89](https://www.github.com/googleapis/google-api-go-client/commit/caa4d89fd452600f9911cfa0945500566cf9c72e))
+
+
+### Bug Fixes
+
+* **google-api-go-generator:** add patch for compute mtls endpoint ([#761](https://www.github.com/googleapis/google-api-go-client/issues/761)) ([445fe0b](https://www.github.com/googleapis/google-api-go-client/commit/445fe0be627de9769c5b252e77858c78682a6b8c))
+
 ## [0.35.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.34.0...v0.35.0) (2020-11-06)
 
 

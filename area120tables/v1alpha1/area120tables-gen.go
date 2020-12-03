@@ -25,7 +25,7 @@
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   area120tablesService, err := area120tables.NewService(ctx, option.WithScopes(area120tables.SpreadsheetsReadonlyScope))
+//   area120tablesService, err := area120tables.NewService(ctx, option.WithScopes(area120tables.TablesScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
@@ -98,6 +98,9 @@ const (
 
 	// View your Google Spreadsheets
 	SpreadsheetsReadonlyScope = "https://www.googleapis.com/auth/spreadsheets.readonly"
+
+	// See, edit, create, and delete your tables in Tables by Area 120
+	TablesScope = "https://www.googleapis.com/auth/tables"
 )
 
 // NewService creates a new Service.
@@ -108,6 +111,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/drive.readonly",
 		"https://www.googleapis.com/auth/spreadsheets",
 		"https://www.googleapis.com/auth/spreadsheets.readonly",
+		"https://www.googleapis.com/auth/tables",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -837,7 +841,7 @@ func (c *TablesGetCall) Header() http.Header {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -924,7 +928,8 @@ func (c *TablesGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
-	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
+	//     "https://www.googleapis.com/auth/spreadsheets.readonly",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -1001,7 +1006,7 @@ func (c *TablesListCall) Header() http.Header {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1087,7 +1092,8 @@ func (c *TablesListCall) Do(opts ...googleapi.CallOption) (*ListTablesResponse, 
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
-	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
+	//     "https://www.googleapis.com/auth/spreadsheets.readonly",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -1160,7 +1166,7 @@ func (c *TablesRowsBatchCreateCall) Header() http.Header {
 
 func (c *TablesRowsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1250,7 +1256,8 @@ func (c *TablesRowsBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCrea
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/spreadsheets"
+	//     "https://www.googleapis.com/auth/spreadsheets",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -1302,7 +1309,7 @@ func (c *TablesRowsBatchUpdateCall) Header() http.Header {
 
 func (c *TablesRowsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1392,7 +1399,8 @@ func (c *TablesRowsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpda
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/spreadsheets"
+	//     "https://www.googleapis.com/auth/spreadsheets",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -1456,7 +1464,7 @@ func (c *TablesRowsCreateCall) Header() http.Header {
 
 func (c *TablesRowsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1559,7 +1567,8 @@ func (c *TablesRowsCreateCall) Do(opts ...googleapi.CallOption) (*Row, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/spreadsheets"
+	//     "https://www.googleapis.com/auth/spreadsheets",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -1609,7 +1618,7 @@ func (c *TablesRowsDeleteCall) Header() http.Header {
 
 func (c *TablesRowsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1691,7 +1700,8 @@ func (c *TablesRowsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/spreadsheets"
+	//     "https://www.googleapis.com/auth/spreadsheets",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -1765,7 +1775,7 @@ func (c *TablesRowsGetCall) Header() http.Header {
 
 func (c *TablesRowsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1865,7 +1875,8 @@ func (c *TablesRowsGetCall) Do(opts ...googleapi.CallOption) (*Row, error) {
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
-	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
+	//     "https://www.googleapis.com/auth/spreadsheets.readonly",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -1957,7 +1968,7 @@ func (c *TablesRowsListCall) Header() http.Header {
 
 func (c *TablesRowsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2068,7 +2079,8 @@ func (c *TablesRowsListCall) Do(opts ...googleapi.CallOption) (*ListRowsResponse
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
-	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
+	//     "https://www.googleapis.com/auth/spreadsheets.readonly",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -2160,7 +2172,7 @@ func (c *TablesRowsPatchCall) Header() http.Header {
 
 func (c *TablesRowsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2269,7 +2281,8 @@ func (c *TablesRowsPatchCall) Do(opts ...googleapi.CallOption) (*Row, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file",
-	//     "https://www.googleapis.com/auth/spreadsheets"
+	//     "https://www.googleapis.com/auth/spreadsheets",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -2331,7 +2344,7 @@ func (c *WorkspacesGetCall) Header() http.Header {
 
 func (c *WorkspacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2418,7 +2431,8 @@ func (c *WorkspacesGetCall) Do(opts ...googleapi.CallOption) (*Workspace, error)
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
-	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
+	//     "https://www.googleapis.com/auth/spreadsheets.readonly",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 
@@ -2496,7 +2510,7 @@ func (c *WorkspacesListCall) Header() http.Header {
 
 func (c *WorkspacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2582,7 +2596,8 @@ func (c *WorkspacesListCall) Do(opts ...googleapi.CallOption) (*ListWorkspacesRe
 	//     "https://www.googleapis.com/auth/drive.file",
 	//     "https://www.googleapis.com/auth/drive.readonly",
 	//     "https://www.googleapis.com/auth/spreadsheets",
-	//     "https://www.googleapis.com/auth/spreadsheets.readonly"
+	//     "https://www.googleapis.com/auth/spreadsheets.readonly",
+	//     "https://www.googleapis.com/auth/tables"
 	//   ]
 	// }
 

@@ -363,25 +363,29 @@ func (s *CaseExpression) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Cohort: Defines a cohort. A cohort is a group of users who share a
-// common characteristic. For example, all users with the same
-// acquisition date belong to the same cohort.
+// Cohort: Defines a cohort selection criteria. A cohort is a group of
+// users who share a common characteristic. For example, users with the
+// same `firstTouchDate` belong to the same cohort.
 type Cohort struct {
-	// DateRange: The cohort selects users whose first visit date is between
-	// start date and end date defined in the `dateRange`. In a cohort
-	// request, this `dateRange` is required and the `dateRanges` in the
-	// `RunReportRequest` or `RunPivotReportRequest` must be unspecified.
-	// The date range should be aligned with the cohort's granularity. If
-	// CohortsRange uses daily granularity, the date range can be aligned to
-	// any day. If CohortsRange uses weekly granularity, the date range
-	// should be aligned to the week boundary, starting at Sunday and ending
-	// Saturday. If CohortsRange uses monthly granularity, the date range
-	// should be aligned to the month, starting at the first and ending on
-	// the last day of the month.
+	// DateRange: The cohort selects users whose first touch date is between
+	// start date and end date defined in the `dateRange`. This `dateRange`
+	// does not specify the full date range of event data that is present in
+	// a cohort report. In a cohort report, this `dateRange` is extended by
+	// the granularity and offset present in the `cohortsRange`; event data
+	// for the extended reporting date range is present in a cohort report.
+	// In a cohort request, this `dateRange` is required and the
+	// `dateRanges` in the `RunReportRequest` or `RunPivotReportRequest`
+	// must be unspecified. This `dateRange` should generally be aligned
+	// with the cohort's granularity. If `CohortsRange` uses daily
+	// granularity, this `dateRange` can be a single day. If `CohortsRange`
+	// uses weekly granularity, this `dateRange` can be aligned to a week
+	// boundary, starting at Sunday and ending Saturday. If `CohortsRange`
+	// uses monthly granularity, this `dateRange` can be aligned to a month,
+	// starting at the first and ending on the last day of the month.
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
-	// Dimension: The dimension used by cohort. Only supports
-	// `firstTouchDate` for retention report.
+	// Dimension: Dimension used by the cohort. Required and only supports
+	// `firstTouchDate`.
 	Dimension string `json:"dimension,omitempty"`
 
 	// Name: Assigns a name to this cohort. The dimension `cohort` is valued
@@ -413,9 +417,9 @@ func (s *Cohort) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CohortReportSettings: Settings of a cohort report.
+// CohortReportSettings: Optional settings of a cohort report.
 type CohortReportSettings struct {
-	// Accumulate: If true, accumulates the result from first visit day to
+	// Accumulate: If true, accumulates the result from first touch day to
 	// the end day. Not supported in `RunReportRequest`.
 	Accumulate bool `json:"accumulate,omitempty"`
 
@@ -442,15 +446,32 @@ func (s *CohortReportSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CohortSpec: Specification for a cohort report.
+// CohortSpec: Specification of cohorts for a cohort report. Cohort
+// reports can be used for example to create a time series of user
+// retention for the cohort. For example, you could select the cohort of
+// users that were acquired in the first week of September and follow
+// that cohort for the next six weeks. Selecting the users acquired in
+// the first week of September cohort is specified in the `cohort`
+// object. Following that cohort for the next six weeks is specified in
+// the `cohortsRange` object. The report response could show a weekly
+// time series where say your app has retained 60% of this cohort after
+// three weeks and 25% of this cohort after six weeks. These two
+// percentages can be calculated by the metric
+// `cohortActiveUsers/cohortTotalUsers` and will be separate rows in the
+// report.
 type CohortSpec struct {
-	// CohortReportSettings: Settings of a cohort report.
+	// CohortReportSettings: Optional settings for a cohort report.
 	CohortReportSettings *CohortReportSettings `json:"cohortReportSettings,omitempty"`
 
-	// Cohorts: The definition for the cohorts.
+	// Cohorts: Defines the selection criteria to group users into cohorts.
+	// Most cohort reports define only a single cohort. If multiple cohorts
+	// are specified, each cohort can be recognized in the report by their
+	// name.
 	Cohorts []*Cohort `json:"cohorts,omitempty"`
 
-	// CohortsRange: The data ranges of cohorts.
+	// CohortsRange: Cohort reports follow cohorts over an extended
+	// reporting date range. This range specifies an offset duration to
+	// follow the cohorts over.
 	CohortsRange *CohortsRange `json:"cohortsRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -478,24 +499,49 @@ func (s *CohortSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CohortsRange: Describes date range for a cohort report.
+// CohortsRange: Configures the extended reporting date range for a
+// cohort report. Specifies an offset duration to follow the cohorts
+// over.
 type CohortsRange struct {
-	// EndOffset: For daily cohorts, this will be the end day offset. For
-	// weekly cohorts, this will be the week offset.
+	// EndOffset: `endOffset` specifies the end date of the extended
+	// reporting date range for a cohort report. `endOffset` can be any
+	// positive integer but is commonly set to 5 to 10 so that reports
+	// contain data on the cohort for the next several granularity time
+	// periods. If `granularity` is `DAILY`, the `endDate` of the extended
+	// reporting date range is `endDate` of the cohort plus `endOffset`
+	// days. If `granularity` is `WEEKLY`, the `endDate` of the extended
+	// reporting date range is `endDate` of the cohort plus `endOffset * 7`
+	// days. If `granularity` is `MONTHLY`, the `endDate` of the extended
+	// reporting date range is `endDate` of the cohort plus `endOffset * 30`
+	// days.
 	EndOffset int64 `json:"endOffset,omitempty"`
 
-	// Granularity: Reporting date range for each cohort is calculated based
-	// on these three fields.
+	// Granularity: The granularity used to interpret the `startOffset` and
+	// `endOffset` for the extended reporting date range for a cohort
+	// report.
 	//
 	// Possible values:
-	//   "GRANULARITY_UNSPECIFIED" - Unspecified.
-	//   "DAILY" - Daily
-	//   "WEEKLY" - Weekly
-	//   "MONTHLY" - Monthly
+	//   "GRANULARITY_UNSPECIFIED" - Should never be specified.
+	//   "DAILY" - Daily granularity. Commonly used if the cohort's
+	// `dateRange` is a single day and the request contains `cohortNthDay`.
+	//   "WEEKLY" - Weekly granularity. Commonly used if the cohort's
+	// `dateRange` is a week in duration (starting on Sunday and ending on
+	// Saturday) and the request contains `cohortNthWeek`.
+	//   "MONTHLY" - Monthly granularity. Commonly used if the cohort's
+	// `dateRange` is a month in duration and the request contains
+	// `cohortNthMonth`.
 	Granularity string `json:"granularity,omitempty"`
 
-	// StartOffset: For daily cohorts, this will be the start day offset.
-	// For weekly cohorts, this will be the week offset.
+	// StartOffset: `startOffset` specifies the start date of the extended
+	// reporting date range for a cohort report. `startOffset` is commonly
+	// set to 0 so that reports contain data from the acquisition of the
+	// cohort forward. If `granularity` is `DAILY`, the `startDate` of the
+	// extended reporting date range is `startDate` of the cohort plus
+	// `startOffset` days. If `granularity` is `WEEKLY`, the `startDate` of
+	// the extended reporting date range is `startDate` of the cohort plus
+	// `startOffset * 7` days. If `granularity` is `MONTHLY`, the
+	// `startDate` of the extended reporting date range is `startDate` of
+	// the cohort plus `startOffset * 30` days.
 	StartOffset int64 `json:"startOffset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndOffset") to
@@ -2332,7 +2378,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2470,7 +2516,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2610,7 +2656,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2737,7 +2783,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2867,7 +2913,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2999,7 +3045,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

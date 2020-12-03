@@ -160,7 +160,7 @@
       "id": "admin:datatransfer_v1",
       "name": "admin",
       "version": "datatransfer_v1",
-      "title": "Admin SDK",
+      "title": "Admin SDK API",
       "description": "Admin SDK lets administrators of enterprise domains to view and manage resources like user, groups etc. It also provides audit and usage reports of domain.",
       "discoveryRestUrl": "https://admin.googleapis.com/$discovery/rest?version=datatransfer_v1",
       "icons": {
@@ -175,7 +175,7 @@
       "id": "admin:directory_v1",
       "name": "admin",
       "version": "directory_v1",
-      "title": "Admin SDK",
+      "title": "Admin SDK API",
       "description": "Admin SDK lets administrators of enterprise domains to view and manage resources like user, groups etc. It also provides audit and usage reports of domain.",
       "discoveryRestUrl": "https://admin.googleapis.com/$discovery/rest?version=directory_v1",
       "icons": {
@@ -190,7 +190,7 @@
       "id": "admin:reports_v1",
       "name": "admin",
       "version": "reports_v1",
-      "title": "Admin SDK",
+      "title": "Admin SDK API",
       "description": "Admin SDK lets administrators of enterprise domains to view and manage resources like user, groups etc. It also provides audit and usage reports of domain.",
       "discoveryRestUrl": "https://admin.googleapis.com/$discovery/rest?version=reports_v1",
       "icons": {
@@ -2666,12 +2666,12 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "jobs:v2",
+      "id": "jobs:v3",
       "name": "jobs",
-      "version": "v2",
+      "version": "v3",
       "title": "Cloud Talent Solution API",
       "description": "Cloud Talent Solution provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.",
-      "discoveryRestUrl": "https://jobs.googleapis.com/$discovery/rest?version=v2",
+      "discoveryRestUrl": "https://jobs.googleapis.com/$discovery/rest?version=v3",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2681,12 +2681,12 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "jobs:v3",
+      "id": "jobs:v4",
       "name": "jobs",
-      "version": "v3",
+      "version": "v4",
       "title": "Cloud Talent Solution API",
       "description": "Cloud Talent Solution provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.",
-      "discoveryRestUrl": "https://jobs.googleapis.com/$discovery/rest?version=v3",
+      "discoveryRestUrl": "https://jobs.googleapis.com/$discovery/rest?version=v4",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

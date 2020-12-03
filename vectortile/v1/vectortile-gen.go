@@ -146,8 +146,17 @@ type TerraintilesService struct {
 }
 
 // Area: Represents an area. Used to represent regions such as water,
-// parks, etc.
+// parks, etc. Next ID: 10
 type Area struct {
+	// BasemapZOrder: The z-order of this geometry when rendered on a flat
+	// basemap. Geometry with a lower z-order should be rendered beneath
+	// geometry with a higher z-order. This z-ordering does not imply
+	// anything about the altitude of the area relative to the ground, but
+	// it can be used to prevent z-fighting. Unlike Area.z_order this can be
+	// used to compare with Line.basemap_z_order, and in fact may yield more
+	// accurate rendering (where a line may be rendered beneath an area).
+	BasemapZOrder *BasemapZOrder `json:"basemapZOrder,omitempty"`
+
 	// HasExternalEdges: True if the polygon is not entirely internal to the
 	// feature that it belongs to: that is, some of the edges are bordering
 	// another feature.
@@ -218,10 +227,11 @@ type Area struct {
 	// relative to the ground, but it can be used to prevent z-fighting
 	// during rendering on the client. This z-ordering can only be used to
 	// compare areas, and cannot be compared with the z_order field in the
-	// Line message. The z-order may be negative or zero.
+	// Line message. The z-order may be negative or zero. Prefer
+	// Area.basemap_z_order.
 	ZOrder int64 `json:"zOrder,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HasExternalEdges") to
+	// ForceSendFields is a list of field names (e.g. "BasemapZOrder") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -229,18 +239,56 @@ type Area struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HasExternalEdges") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BasemapZOrder") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *Area) MarshalJSON() ([]byte, error) {
 	type NoMethod Area
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BasemapZOrder: Metadata necessary to determine the ordering of a
+// particular basemap element relative to others. To render the basemap
+// correctly, sort by z-plane, then z-grade, then z-within-grade.
+type BasemapZOrder struct {
+	// ZGrade: The second most significant component of the ordering of a
+	// component to be rendered onto the basemap.
+	ZGrade int64 `json:"zGrade,omitempty"`
+
+	// ZPlane: The most significant component of the ordering of a component
+	// to be rendered onto the basemap.
+	ZPlane int64 `json:"zPlane,omitempty"`
+
+	// ZWithinGrade: The least significant component of the ordering of a
+	// component to be rendered onto the basemap.
+	ZWithinGrade int64 `json:"zWithinGrade,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ZGrade") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ZGrade") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BasemapZOrder) MarshalJSON() ([]byte, error) {
+	type NoMethod BasemapZOrder
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -563,6 +611,15 @@ func (s *Geometry) MarshalJSON() ([]byte, error) {
 // Line: Represents a 2D polyline. Used to represent segments such as
 // roads, train tracks, etc.
 type Line struct {
+	// BasemapZOrder: The z-order of this geometry when rendered on a flat
+	// basemap. Geometry with a lower z-order should be rendered beneath
+	// geometry with a higher z-order. This z-ordering does not imply
+	// anything about the altitude of the area relative to the ground, but
+	// it can be used to prevent z-fighting. Unlike Line.z_order this can be
+	// used to compare with Area.basemap_z_order, and in fact may yield more
+	// accurate rendering (where a line may be rendered beneath an area).
+	BasemapZOrder *BasemapZOrder `json:"basemapZOrder,omitempty"`
+
 	// VertexOffsets: The vertices present in the polyline.
 	VertexOffsets *Vertex2DList `json:"vertexOffsets,omitempty"`
 
@@ -574,10 +631,10 @@ type Line struct {
 	// have a higher z-order line associated with them. This z-ordering can
 	// only be used to compare lines, and cannot be compared with the
 	// z_order field in the Area message. The z-order may be negative or
-	// zero.
+	// zero. Prefer Line.basemap_z_order.
 	ZOrder int64 `json:"zOrder,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "VertexOffsets") to
+	// ForceSendFields is a list of field names (e.g. "BasemapZOrder") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -585,7 +642,7 @@ type Line struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "VertexOffsets") to include
+	// NullFields is a list of field names (e.g. "BasemapZOrder") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -1305,7 +1362,7 @@ func (c *FeaturetilesGetCall) Header() http.Header {
 
 func (c *FeaturetilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1668,7 +1725,7 @@ func (c *TerraintilesGetCall) Header() http.Header {
 
 func (c *TerraintilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -345,9 +345,16 @@ func (s *FeedbackLoop) UnmarshalJSON(data []byte) error {
 // IpReputation: IP Reputation information for a set of IPs in a
 // specific reputation category.
 type IpReputation struct {
+	// IpCount: Total number of unique IPs in this reputation category. This
+	// metric only pertains to traffic that passed
+	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
+	IpCount int64 `json:"ipCount,omitempty,string"`
+
 	// NumIps: Total number of unique IPs in this reputation category. This
 	// metric only pertains to traffic that passed
 	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
+	// Deprecated to be complied with ApiLinter for Quantities. Use ip_count
+	// instead.
 	NumIps int64 `json:"numIps,omitempty,string"`
 
 	// Reputation: The reputation category this IP reputation represents.
@@ -373,7 +380,7 @@ type IpReputation struct {
 	// SampleIps: A sample of IPs in this reputation category.
 	SampleIps []string `json:"sampleIps,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NumIps") to
+	// ForceSendFields is a list of field names (e.g. "IpCount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -381,8 +388,8 @@ type IpReputation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NumIps") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "IpCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -654,7 +661,7 @@ func (c *DomainsGetCall) Header() http.Header {
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -816,7 +823,7 @@ func (c *DomainsListCall) Header() http.Header {
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -982,7 +989,7 @@ func (c *DomainsTrafficStatsGetCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1194,7 +1201,7 @@ func (c *DomainsTrafficStatsListCall) Header() http.Header {
 
 func (c *DomainsTrafficStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

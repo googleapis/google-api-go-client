@@ -12,10 +12,10 @@
     }
   },
   "basePath": "",
-  "baseUrl": "https://www.googleapis.com/",
-  "batchPath": "batch/reseller/v1",
+  "baseUrl": "https://reseller.googleapis.com/",
+  "batchPath": "batch",
   "canonicalName": "Reseller",
-  "description": "Perform common functions that are available on the Google Apps Reseller Console at scale like placing orders and viewing customer information",
+  "description": "Perform common functions that are available on the Channel Services console at scale, like placing orders and viewing customer information",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/reseller/",
   "fullyEncodeReservedExpansion": true,
@@ -25,7 +25,7 @@
   },
   "id": "reseller:v1",
   "kind": "discovery#restDescription",
-  "mtlsRootUrl": "https://www.mtls.googleapis.com/",
+  "mtlsRootUrl": "https://reseller.mtls.googleapis.com/",
   "name": "reseller",
   "ownerDomain": "google.com",
   "ownerName": "Google",
@@ -432,9 +432,9 @@
             "deletionType": {
               "description": "The deletionType query string enables the cancellation, downgrade, or suspension of a subscription.",
               "enum": [
-                "deletionTypeUndefined",
+                "deletion_type_undefined",
                 "cancel",
-                "transferToDirect"
+                "transfer_to_direct"
               ],
               "enumDescriptions": [
                 "",
@@ -631,8 +631,8 @@
       }
     }
   },
-  "revision": "20200911",
-  "rootUrl": "https://www.googleapis.com/",
+  "revision": "20201201",
+  "rootUrl": "https://reseller.googleapis.com/",
   "schemas": {
     "Address": {
       "description": "JSON template for address of a customer.",
@@ -980,6 +980,6 @@
     }
   },
   "servicePath": "",
-  "title": "Enterprise Apps Reseller API",
+  "title": "Google Workspace Reseller API",
   "version": "v1"
 }

@@ -262,6 +262,52 @@ func (s *DatabaseConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values * A month and day value,
+// with a zero year, such as an anniversary * A year on its own, with
+// zero month and day values * A year and month value, with a zero day,
+// such as a credit card expiration date Related types are
+// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -272,6 +318,37 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionConfig: The encryption options for the Composer environment
+// and its dependencies.
+type EncryptionConfig struct {
+	// KmsKeyName: Optional. Customer-managed Encryption Key available
+	// through Google's Key Management Service. Cannot be updated. If not
+	// specified, Google-managed key will be used.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Environment: An environment for running orchestration tasks.
@@ -367,6 +444,10 @@ type EnvironmentConfig struct {
 	// DatabaseConfig: Optional. The configuration settings for Cloud SQL
 	// instance used internally by Apache Airflow software.
 	DatabaseConfig *DatabaseConfig `json:"databaseConfig,omitempty"`
+
+	// EncryptionConfig: Optional. The encryption options for the Composer
+	// environment and its dependencies. Cannot be updated.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
 	// this environment.
@@ -490,6 +571,10 @@ func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 
 // ImageVersion: Image Version information
 type ImageVersion struct {
+	// CreationDisabled: Whether it is impossible to create an environment
+	// with the image version.
+	CreationDisabled bool `json:"creationDisabled,omitempty"`
+
 	// ImageVersionId: The string identifier of the ImageVersion, in the
 	// form: "composer-x.y.z-airflow-a.b(.c)"
 	ImageVersionId string `json:"imageVersionId,omitempty"`
@@ -498,10 +583,17 @@ type ImageVersion struct {
 	// during environment creation if no input ImageVersion is specified.
 	IsDefault bool `json:"isDefault,omitempty"`
 
+	// ReleaseDate: The date of the version release.
+	ReleaseDate *Date `json:"releaseDate,omitempty"`
+
 	// SupportedPythonVersions: supported python versions
 	SupportedPythonVersions []string `json:"supportedPythonVersions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ImageVersionId") to
+	// UpgradeDisabled: Whether it is impossible to upgrade an environment
+	// running with the image version.
+	UpgradeDisabled bool `json:"upgradeDisabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationDisabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -509,7 +601,7 @@ type ImageVersion struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ImageVersionId") to
+	// NullFields is a list of field names (e.g. "CreationDisabled") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -964,6 +1056,10 @@ func (s *PrivateEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RestartWebServerRequest: Restart Airflow web server.
+type RestartWebServerRequest struct {
+}
+
 // SoftwareConfig: Specifies the selection and configuration of software
 // inside the environment.
 type SoftwareConfig struct {
@@ -1208,7 +1304,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1346,7 +1442,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1487,7 +1583,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1645,7 +1741,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1899,7 +1995,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1999,6 +2095,146 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "composer.projects.locations.environments.restartWebServer":
+
+type ProjectsLocationsEnvironmentsRestartWebServerCall struct {
+	s                       *Service
+	name                    string
+	restartwebserverrequest *RestartWebServerRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// RestartWebServer: Restart Airflow web server.
+func (r *ProjectsLocationsEnvironmentsService) RestartWebServer(name string, restartwebserverrequest *RestartWebServerRequest) *ProjectsLocationsEnvironmentsRestartWebServerCall {
+	c := &ProjectsLocationsEnvironmentsRestartWebServerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.restartwebserverrequest = restartwebserverrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsRestartWebServerCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsRestartWebServerCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.restartwebserverrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:restartWebServer")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.restartWebServer" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Restart Airflow web server.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}:restartWebServer",
+	//   "httpMethod": "POST",
+	//   "id": "composer.projects.locations.environments.restartWebServer",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the environment to restart the web server for, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:restartWebServer",
+	//   "request": {
+	//     "$ref": "RestartWebServerRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "composer.projects.locations.imageVersions.list":
 
 type ProjectsLocationsImageVersionsListCall struct {
@@ -2014,6 +2250,14 @@ type ProjectsLocationsImageVersionsListCall struct {
 func (r *ProjectsLocationsImageVersionsService) List(parent string) *ProjectsLocationsImageVersionsListCall {
 	c := &ProjectsLocationsImageVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// IncludePastReleases sets the optional parameter
+// "includePastReleases": Whether or not image versions from old
+// releases should be included.
+func (c *ProjectsLocationsImageVersionsListCall) IncludePastReleases(includePastReleases bool) *ProjectsLocationsImageVersionsListCall {
+	c.urlParams_.Set("includePastReleases", fmt.Sprint(includePastReleases))
 	return c
 }
 
@@ -2068,7 +2312,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2138,6 +2382,11 @@ func (c *ProjectsLocationsImageVersionsListCall) Do(opts ...googleapi.CallOption
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "includePastReleases": {
+	//       "description": "Whether or not image versions from old releases should be included.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of image_versions to return.",
 	//       "format": "int32",
@@ -2236,7 +2485,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2379,7 +2628,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2553,7 +2802,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

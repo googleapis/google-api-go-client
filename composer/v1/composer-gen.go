@@ -192,6 +192,90 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AllowedIpRange: Allowed IP range with user-provided description.
+type AllowedIpRange struct {
+	// Description: Optional. User-provided description. It must contain at
+	// most 300 characters.
+	Description string `json:"description,omitempty"`
+
+	// Value: IP address or range, defined using CIDR notation, of requests
+	// that this rule applies to. Examples: `192.168.1.1` or
+	// `192.168.0.0/16` or `2001:db8::/32` or
+	// `2001:0db8:0000:0042:0000:8a2e:0370:7334`. IP range prefixes should
+	// be properly truncated. For example, `1.2.3.4/24` should be truncated
+	// to `1.2.3.0/24`. Similarly, for IPv6, `2001:db8::1/32` should be
+	// truncated to `2001:db8::/32`.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllowedIpRange) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowedIpRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values * A month and day value,
+// with a zero year, such as an anniversary * A year on its own, with
+// zero month and day values * A year and month value, with a zero day,
+// such as a credit card expiration date Related types are
+// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -313,6 +397,11 @@ type EnvironmentConfig struct {
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
 
+	// WebServerNetworkAccessControl: Optional. The network-level access
+	// control policy for the Airflow web server. If unspecified, no
+	// network-level access restrictions will be applied.
+	WebServerNetworkAccessControl *WebServerNetworkAccessControl `json:"webServerNetworkAccessControl,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AirflowUri") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -402,6 +491,10 @@ func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 
 // ImageVersion: ImageVersion information
 type ImageVersion struct {
+	// CreationDisabled: Whether it is impossible to create an environment
+	// with the image version.
+	CreationDisabled bool `json:"creationDisabled,omitempty"`
+
 	// ImageVersionId: The string identifier of the ImageVersion, in the
 	// form: "composer-x.y.z-airflow-a.b(.c)"
 	ImageVersionId string `json:"imageVersionId,omitempty"`
@@ -410,10 +503,17 @@ type ImageVersion struct {
 	// during environment creation if no input ImageVersion is specified.
 	IsDefault bool `json:"isDefault,omitempty"`
 
+	// ReleaseDate: The date of the version release.
+	ReleaseDate *Date `json:"releaseDate,omitempty"`
+
 	// SupportedPythonVersions: supported python versions
 	SupportedPythonVersions []string `json:"supportedPythonVersions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ImageVersionId") to
+	// UpgradeDisabled: Whether it is impossible to upgrade an environment
+	// running with the image version.
+	UpgradeDisabled bool `json:"upgradeDisabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationDisabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -421,7 +521,7 @@ type ImageVersion struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ImageVersionId") to
+	// NullFields is a list of field names (e.g. "CreationDisabled") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1010,6 +1110,36 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WebServerNetworkAccessControl: Network-level access control policy
+// for the Airflow web server.
+type WebServerNetworkAccessControl struct {
+	// AllowedIpRanges: A collection of allowed IP ranges with descriptions.
+	AllowedIpRanges []*AllowedIpRange `json:"allowedIpRanges,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowedIpRanges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedIpRanges") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebServerNetworkAccessControl) MarshalJSON() ([]byte, error) {
+	type NoMethod WebServerNetworkAccessControl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "composer.projects.locations.environments.create":
 
 type ProjectsLocationsEnvironmentsCreateCall struct {
@@ -1056,7 +1186,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1194,7 +1324,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1335,7 +1465,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1493,7 +1623,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1683,11 +1813,13 @@ func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *E
 // both a mask of this form and the "labels" mask. config.nodeCount
 // Horizontally scale the number of nodes in the environment. An integer
 // greater than or equal to 3 must be provided in the `config.nodeCount`
-// field. config.softwareConfig.airflowConfigOverrides Replace all
-// Apache Airflow config overrides. If a replacement config overrides
-// map is not included in `environment`, all config overrides are
-// cleared. It is an error to provide both this mask and a mask
-// specifying one or more individual config overrides.
+// field. config.webServerNetworkAccessControl Replace the environment's
+// current WebServerNetworkAccessControl.
+// config.softwareConfig.airflowConfigOverrides Replace all Apache
+// Airflow config overrides. If a replacement config overrides map is
+// not included in `environment`, all config overrides are cleared. It
+// is an error to provide both this mask and a mask specifying one or
+// more individual config overrides.
 // config.softwareConfig.airflowConfigOverrides.section-name Override
 // the Apache Airflow config property name in the section named section,
 // preserving other properties. To delete the property override, include
@@ -1732,7 +1864,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1812,7 +1944,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of numpy, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.numpy\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and numpy will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } **Note:** Only the following fields can be updated: *Mask* *Purpose* config.softwareConfig.pypiPackages Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. config.softwareConfig.pypiPackages.packagename Update the custom PyPI package packagename, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the \"config.softwareConfig.pypiPackages\" mask. labels Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. labels.labelName Set the label named labelName, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the \"labels\" mask. config.nodeCount Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. config.softwareConfig.airflowConfigOverrides Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. config.softwareConfig.airflowConfigOverrides.section-name Override the Apache Airflow config property name in the section named section, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the \"config.softwareConfig.airflowConfigOverrides\" mask. config.softwareConfig.envVariables Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. ",
+	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of numpy, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.numpy\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and numpy will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } **Note:** Only the following fields can be updated: *Mask* *Purpose* config.softwareConfig.pypiPackages Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. config.softwareConfig.pypiPackages.packagename Update the custom PyPI package packagename, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the \"config.softwareConfig.pypiPackages\" mask. labels Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. labels.labelName Set the label named labelName, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the \"labels\" mask. config.nodeCount Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. config.webServerNetworkAccessControl Replace the environment's current WebServerNetworkAccessControl. config.softwareConfig.airflowConfigOverrides Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. config.softwareConfig.airflowConfigOverrides.section-name Override the Apache Airflow config property name in the section named section, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the \"config.softwareConfig.airflowConfigOverrides\" mask. config.softwareConfig.envVariables Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -1847,6 +1979,14 @@ type ProjectsLocationsImageVersionsListCall struct {
 func (r *ProjectsLocationsImageVersionsService) List(parent string) *ProjectsLocationsImageVersionsListCall {
 	c := &ProjectsLocationsImageVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// IncludePastReleases sets the optional parameter
+// "includePastReleases": Whether or not image versions from old
+// releases should be included.
+func (c *ProjectsLocationsImageVersionsListCall) IncludePastReleases(includePastReleases bool) *ProjectsLocationsImageVersionsListCall {
+	c.urlParams_.Set("includePastReleases", fmt.Sprint(includePastReleases))
 	return c
 }
 
@@ -1901,7 +2041,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1971,6 +2111,11 @@ func (c *ProjectsLocationsImageVersionsListCall) Do(opts ...googleapi.CallOption
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "includePastReleases": {
+	//       "description": "Whether or not image versions from old releases should be included.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of image_versions to return.",
 	//       "format": "int32",
@@ -2069,7 +2214,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2212,7 +2357,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2386,7 +2531,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

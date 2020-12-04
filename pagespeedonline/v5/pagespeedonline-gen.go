@@ -1035,8 +1035,9 @@ type PagespeedapiRunpagespeedCall struct {
 // Runpagespeed: Runs PageSpeed analysis on the page at the specified
 // URL, and returns PageSpeed scores, a list of suggestions to make that
 // page faster, and other information.
-func (r *PagespeedapiService) Runpagespeed() *PagespeedapiRunpagespeedCall {
+func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeedCall {
 	c := &PagespeedapiRunpagespeedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("url", url)
 	return c
 }
 
@@ -1084,13 +1085,6 @@ func (c *PagespeedapiRunpagespeedCall) Locale(locale string) *PagespeedapiRunpag
 //   "MOBILE" - Fetch and analyze the URL for mobile devices.
 func (c *PagespeedapiRunpagespeedCall) Strategy(strategy string) *PagespeedapiRunpagespeedCall {
 	c.urlParams_.Set("strategy", strategy)
-	return c
-}
-
-// Url sets the optional parameter "url": Required. The URL to fetch and
-// analyze
-func (c *PagespeedapiRunpagespeedCall) Url(url string) *PagespeedapiRunpagespeedCall {
-	c.urlParams_.Set("url", url)
 	return c
 }
 
@@ -1145,7 +1139,7 @@ func (c *PagespeedapiRunpagespeedCall) Header() http.Header {
 
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201124")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1208,7 +1202,9 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 	//   "flatPath": "pagespeedonline/v5/runPagespeed",
 	//   "httpMethod": "GET",
 	//   "id": "pagespeedonline.pagespeedapi.runpagespeed",
-	//   "parameterOrder": [],
+	//   "parameterOrder": [
+	//     "url"
+	//   ],
 	//   "parameters": {
 	//     "captchaToken": {
 	//       "description": "The captcha token passed when filling out a captcha.",
@@ -1240,6 +1236,7 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 	//     "locale": {
 	//       "description": "The locale used to localize formatted results",
 	//       "location": "query",
+	//       "pattern": "[a-zA-Z]+((_|-)[a-zA-Z]+)?",
 	//       "type": "string"
 	//     },
 	//     "strategy": {
@@ -1260,6 +1257,8 @@ func (c *PagespeedapiRunpagespeedCall) Do(opts ...googleapi.CallOption) (*Pagesp
 	//     "url": {
 	//       "description": "Required. The URL to fetch and analyze",
 	//       "location": "query",
+	//       "pattern": "(?i)(url:|origin:)?http(s)?://.*",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "utm_campaign": {

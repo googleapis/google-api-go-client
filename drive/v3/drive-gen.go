@@ -6715,7 +6715,7 @@ func (c *FilesExportCall) Download(opts ...googleapi.CallOption) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}
@@ -7049,7 +7049,7 @@ func (c *FilesGetCall) Download(opts ...googleapi.CallOption) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}
@@ -7981,7 +7981,7 @@ func (c *FilesWatchCall) Download(opts ...googleapi.CallOption) (*http.Response,
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}
@@ -10211,7 +10211,7 @@ func (c *RevisionsGetCall) Download(opts ...googleapi.CallOption) (*http.Respons
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}

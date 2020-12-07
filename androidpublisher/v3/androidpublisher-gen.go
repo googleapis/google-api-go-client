@@ -12451,7 +12451,7 @@ func (c *SystemapksVariantsDownloadCall) Download(opts ...googleapi.CallOption) 
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}

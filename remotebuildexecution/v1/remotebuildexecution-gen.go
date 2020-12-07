@@ -3379,7 +3379,7 @@ func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}

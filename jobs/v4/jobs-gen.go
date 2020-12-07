@@ -242,6 +242,130 @@ func (s *ApplicationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchCreateJobsRequest: Request to create a batch of jobs.
+type BatchCreateJobsRequest struct {
+	// Jobs: Required. The jobs to be created. A maximum of 200 jobs can be
+	// created in a batch.
+	Jobs []*Job `json:"jobs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Jobs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Jobs") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateJobsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateJobsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreateJobsResponse: The result of JobService.BatchCreateJobs.
+// It's used to replace google.longrunning.Operation.response in case of
+// success.
+type BatchCreateJobsResponse struct {
+	// JobResults: List of job mutation results from a batch create
+	// operation. It can change until operation status is FINISHED, FAILED
+	// or CANCELLED.
+	JobResults []*JobResult `json:"jobResults,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobResults") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeleteJobsRequest: Request to delete a batch of jobs.
+type BatchDeleteJobsRequest struct {
+	// Names: The names of the jobs to delete. The format is
+	// "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
+	// example, "projects/foo/tenants/bar/jobs/baz". A maximum of 200 jobs
+	// can be deleted in a batch.
+	Names []string `json:"names,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Names") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Names") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeleteJobsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteJobsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeleteJobsResponse: The result of JobService.BatchDeleteJobs.
+// It's used to replace google.longrunning.Operation.response in case of
+// success.
+type BatchDeleteJobsResponse struct {
+	// JobResults: List of job mutation results from a batch delete
+	// operation. It can change until operation status is FINISHED, FAILED
+	// or CANCELLED.
+	JobResults []*JobResult `json:"jobResults,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobResults") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeleteJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchOperationMetadata: Metadata used for long running operations
 // returned by CTS batch APIs. It's used to replace
 // google.longrunning.Operation.metadata.
@@ -307,6 +431,374 @@ type BatchOperationMetadata struct {
 
 func (s *BatchOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateJobsRequest: Request to update a batch of jobs.
+type BatchUpdateJobsRequest struct {
+	// Jobs: Required. The jobs to be updated. A maximum of 200 jobs can be
+	// updated in a batch.
+	Jobs []*Job `json:"jobs,omitempty"`
+
+	// UpdateMask: Strongly recommended for the best service experience. Be
+	// aware that it will also increase latency when checking the status of
+	// a batch operation. If update_mask is provided, only the specified
+	// fields in Job are updated. Otherwise all the fields are updated. A
+	// field mask to restrict the fields that are updated. Only top level
+	// fields of Job are supported. If update_mask is provided, The Job
+	// inside JobResult will only contains fields that is updated, plus the
+	// Id of the Job. Otherwise, Job will include all fields, which can
+	// yield a very large response.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Jobs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Jobs") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateJobsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateJobsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateJobsResponse: The result of JobService.BatchUpdateJobs.
+// It's used to replace google.longrunning.Operation.response in case of
+// success.
+type BatchUpdateJobsResponse struct {
+	// JobResults: List of job mutation results from a batch update
+	// operation. It can change until operation status is FINISHED, FAILED
+	// or CANCELLED.
+	JobResults []*JobResult `json:"jobResults,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobResults") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClientEvent: An event issued when an end user interacts with the
+// application that implements Cloud Talent Solution. Providing this
+// information improves the quality of results for the API clients,
+// enabling the service to perform optimally. The number of events sent
+// must be consistent with other calls, such as job searches, issued to
+// the service by the client.
+type ClientEvent struct {
+	// CreateTime: Required. The timestamp of the event.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EventId: Required. A unique identifier, generated by the client
+	// application.
+	EventId string `json:"eventId,omitempty"`
+
+	// EventNotes: Notes about the event provided by recruiters or other
+	// users, for example, feedback on why a job was bookmarked.
+	EventNotes string `json:"eventNotes,omitempty"`
+
+	// JobEvent: An event issued when a job seeker interacts with the
+	// application that implements Cloud Talent Solution.
+	JobEvent *JobEvent `json:"jobEvent,omitempty"`
+
+	// RequestId: Strongly recommended for the best service experience. A
+	// unique ID generated in the API responses. It can be found in
+	// ResponseMetadata.request_id.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClientEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommuteFilter: Parameters needed for commute search.
+type CommuteFilter struct {
+	// AllowImpreciseAddresses: If `true`, jobs without street level
+	// addresses may also be returned. For city level addresses, the city
+	// center is used. For state and coarser level addresses, text matching
+	// is used. If this field is set to `false` or isn't specified, only
+	// jobs that include street level addresses will be returned by commute
+	// search.
+	AllowImpreciseAddresses bool `json:"allowImpreciseAddresses,omitempty"`
+
+	// CommuteMethod: Required. The method of transportation to calculate
+	// the commute time for.
+	//
+	// Possible values:
+	//   "COMMUTE_METHOD_UNSPECIFIED" - Commute method isn't specified.
+	//   "DRIVING" - Commute time is calculated based on driving time.
+	//   "TRANSIT" - Commute time is calculated based on public transit
+	// including bus, metro, subway, and so on.
+	CommuteMethod string `json:"commuteMethod,omitempty"`
+
+	// DepartureTime: The departure time used to calculate traffic impact,
+	// represented as google.type.TimeOfDay in local time zone. Currently
+	// traffic model is restricted to hour level resolution.
+	DepartureTime *TimeOfDay `json:"departureTime,omitempty"`
+
+	// RoadTraffic: Specifies the traffic density to use when calculating
+	// commute time.
+	//
+	// Possible values:
+	//   "ROAD_TRAFFIC_UNSPECIFIED" - Road traffic situation isn't
+	// specified.
+	//   "TRAFFIC_FREE" - Optimal commute time without considering any
+	// traffic impact.
+	//   "BUSY_HOUR" - Commute time calculation takes in account the peak
+	// traffic impact.
+	RoadTraffic string `json:"roadTraffic,omitempty"`
+
+	// StartCoordinates: Required. The latitude and longitude of the
+	// location to calculate the commute time from.
+	StartCoordinates *LatLng `json:"startCoordinates,omitempty"`
+
+	// TravelDuration: Required. The maximum travel time in seconds. The
+	// maximum allowed value is `3600s` (one hour). Format is `123s`.
+	TravelDuration string `json:"travelDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowImpreciseAddresses") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowImpreciseAddresses")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommuteFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod CommuteFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommuteInfo: Commute details related to this job.
+type CommuteInfo struct {
+	// JobLocation: Location used as the destination in the commute
+	// calculation.
+	JobLocation *Location `json:"jobLocation,omitempty"`
+
+	// TravelDuration: The number of seconds required to travel to the job
+	// location from the query location. A duration of 0 seconds indicates
+	// that the job isn't reachable within the requested duration, but was
+	// returned as part of an expanded query.
+	TravelDuration string `json:"travelDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobLocation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommuteInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CommuteInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Company: A Company resource represents a company in the service. A
+// company is the entity that owns job postings, that is, the hiring
+// entity responsible for employing applicants for the job position.
+type Company struct {
+	// CareerSiteUri: The URI to employer's career site or careers page on
+	// the employer's web site, for example, "https://careers.google.com".
+	CareerSiteUri string `json:"careerSiteUri,omitempty"`
+
+	// DerivedInfo: Output only. Derived details about the company.
+	DerivedInfo *CompanyDerivedInfo `json:"derivedInfo,omitempty"`
+
+	// DisplayName: Required. The display name of the company, for example,
+	// "Google LLC".
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EeoText: Equal Employment Opportunity legal disclaimer text to be
+	// associated with all jobs, and typically to be displayed in all roles.
+	// The maximum number of allowed characters is 500.
+	EeoText string `json:"eeoText,omitempty"`
+
+	// ExternalId: Required. Client side company identifier, used to
+	// uniquely identify the company. The maximum number of allowed
+	// characters is 255.
+	ExternalId string `json:"externalId,omitempty"`
+
+	// HeadquartersAddress: The street address of the company's main
+	// headquarters, which may be different from the job location. The
+	// service attempts to geolocate the provided address, and populates a
+	// more specific location wherever possible in
+	// DerivedInfo.headquarters_location.
+	HeadquartersAddress string `json:"headquartersAddress,omitempty"`
+
+	// HiringAgency: Set to true if it is the hiring agency that post jobs
+	// for other employers. Defaults to false if not provided.
+	HiringAgency bool `json:"hiringAgency,omitempty"`
+
+	// ImageUri: A URI that hosts the employer's company logo.
+	ImageUri string `json:"imageUri,omitempty"`
+
+	// KeywordSearchableJobCustomAttributes: A list of keys of filterable
+	// Job.custom_attributes, whose corresponding `string_values` are used
+	// in keyword searches. Jobs with `string_values` under these specified
+	// field keys are returned if any of the values match the search
+	// keyword. Custom field values with parenthesis, brackets and special
+	// symbols are not searchable as-is, and those keyword queries must be
+	// surrounded by quotes.
+	KeywordSearchableJobCustomAttributes []string `json:"keywordSearchableJobCustomAttributes,omitempty"`
+
+	// Name: Required during company update. The resource name for a
+	// company. This is generated by the service when a company is created.
+	// The format is
+	// "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
+	// for example, "projects/foo/tenants/bar/companies/baz".
+	Name string `json:"name,omitempty"`
+
+	// Size: The employer's company size.
+	//
+	// Possible values:
+	//   "COMPANY_SIZE_UNSPECIFIED" - Default value if the size isn't
+	// specified.
+	//   "MINI" - The company has less than 50 employees.
+	//   "SMALL" - The company has between 50 and 99 employees.
+	//   "SMEDIUM" - The company has between 100 and 499 employees.
+	//   "MEDIUM" - The company has between 500 and 999 employees.
+	//   "BIG" - The company has between 1,000 and 4,999 employees.
+	//   "BIGGER" - The company has between 5,000 and 9,999 employees.
+	//   "GIANT" - The company has 10,000 or more employees.
+	Size string `json:"size,omitempty"`
+
+	// Suspended: Output only. Indicates whether a company is flagged to be
+	// suspended from public availability by the service when job content
+	// appears suspicious, abusive, or spammy.
+	Suspended bool `json:"suspended,omitempty"`
+
+	// WebsiteUri: The URI representing the company's primary web site or
+	// home page, for example, "https://www.google.com". The maximum number
+	// of allowed characters is 255.
+	WebsiteUri string `json:"websiteUri,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CareerSiteUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CareerSiteUri") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Company) MarshalJSON() ([]byte, error) {
+	type NoMethod Company
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CompanyDerivedInfo: Derived details about the company.
+type CompanyDerivedInfo struct {
+	// HeadquartersLocation: A structured headquarters location of the
+	// company, resolved from Company.headquarters_address if provided.
+	HeadquartersLocation *Location `json:"headquartersLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "HeadquartersLocation") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HeadquartersLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CompanyDerivedInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CompanyDerivedInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -403,6 +895,79 @@ func (s *CompensationEntry) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// CompensationFilter: Filter on job compensation type and amount.
+type CompensationFilter struct {
+	// IncludeJobsWithUnspecifiedCompensationRange: If set to true, jobs
+	// with unspecified compensation range fields are included.
+	IncludeJobsWithUnspecifiedCompensationRange bool `json:"includeJobsWithUnspecifiedCompensationRange,omitempty"`
+
+	// Range: Compensation range.
+	Range *CompensationRange `json:"range,omitempty"`
+
+	// Type: Required. Type of filter.
+	//
+	// Possible values:
+	//   "FILTER_TYPE_UNSPECIFIED" - Filter type unspecified. Position
+	// holder, INVALID, should never be used.
+	//   "UNIT_ONLY" - Filter by `base compensation entry's` unit. A job is
+	// a match if and only if the job contains a base CompensationEntry and
+	// the base CompensationEntry's unit matches provided units. Populate
+	// one or more units. See CompensationInfo.CompensationEntry for
+	// definition of base compensation entry.
+	//   "UNIT_AND_AMOUNT" - Filter by `base compensation entry's` unit and
+	// amount / range. A job is a match if and only if the job contains a
+	// base CompensationEntry, and the base entry's unit matches provided
+	// CompensationUnit and amount or range overlaps with provided
+	// CompensationRange. See CompensationInfo.CompensationEntry for
+	// definition of base compensation entry. Set exactly one units and
+	// populate range.
+	//   "ANNUALIZED_BASE_AMOUNT" - Filter by annualized base compensation
+	// amount and `base compensation entry's` unit. Populate range and zero
+	// or more units.
+	//   "ANNUALIZED_TOTAL_AMOUNT" - Filter by annualized total compensation
+	// amount and `base compensation entry's` unit . Populate range and zero
+	// or more units.
+	Type string `json:"type,omitempty"`
+
+	// Units: Required. Specify desired `base compensation entry's`
+	// CompensationInfo.CompensationUnit.
+	//
+	// Possible values:
+	//   "COMPENSATION_UNIT_UNSPECIFIED" - Default value.
+	//   "HOURLY" - Hourly.
+	//   "DAILY" - Daily.
+	//   "WEEKLY" - Weekly
+	//   "MONTHLY" - Monthly.
+	//   "YEARLY" - Yearly.
+	//   "ONE_TIME" - One time.
+	//   "OTHER_COMPENSATION_UNIT" - Other compensation units.
+	Units []string `json:"units,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IncludeJobsWithUnspecifiedCompensationRange") to unconditionally
+	// include in API requests. By default, fields with empty values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "IncludeJobsWithUnspecifiedCompensationRange") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CompensationFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod CompensationFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CompensationInfo: Job compensation details.
 type CompensationInfo struct {
 	// AnnualizedBaseCompensationRange: Output only. Annualized base
@@ -485,6 +1050,90 @@ func (s *CompensationRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CompleteQueryResponse: Response of auto-complete query.
+type CompleteQueryResponse struct {
+	// CompletionResults: Results of the matching job/company candidates.
+	CompletionResults []*CompletionResult `json:"completionResults,omitempty"`
+
+	// Metadata: Additional information for the API invocation, such as the
+	// request tracking id.
+	Metadata *ResponseMetadata `json:"metadata,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CompletionResults")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompletionResults") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CompleteQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CompleteQueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CompletionResult: Resource that represents completion results.
+type CompletionResult struct {
+	// ImageUri: The URI of the company image for COMPANY_NAME.
+	ImageUri string `json:"imageUri,omitempty"`
+
+	// Suggestion: The suggestion for the query.
+	Suggestion string `json:"suggestion,omitempty"`
+
+	// Type: The completion topic.
+	//
+	// Possible values:
+	//   "COMPLETION_TYPE_UNSPECIFIED" - Default value.
+	//   "JOB_TITLE" - Suggest job titles for jobs autocomplete. For
+	// CompletionType.JOB_TITLE type, only open jobs with the same
+	// language_codes are returned.
+	//   "COMPANY_NAME" - Suggest company names for jobs autocomplete. For
+	// CompletionType.COMPANY_NAME type, only companies having open jobs
+	// with the same language_codes are returned.
+	//   "COMBINED" - Suggest both job titles and company names for jobs
+	// autocomplete. For CompletionType.COMBINED type, only open jobs with
+	// the same language_codes or companies having open jobs with the same
+	// language_codes are returned.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CompletionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod CompletionResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CustomAttribute: Custom attribute values that are either filterable
 // or non-filterable.
 type CustomAttribute struct {
@@ -537,191 +1186,53 @@ func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); } The JSON representation for `Empty` is
-// empty JSON object `{}`.
-type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-}
-
-// GoogleCloudTalentV4BatchCreateJobsRequest: Request to create a batch
-// of jobs.
-type GoogleCloudTalentV4BatchCreateJobsRequest struct {
-	// Jobs: Required. The jobs to be created. A maximum of 200 jobs can be
-	// created in a batch.
-	Jobs []*GoogleCloudTalentV4Job `json:"jobs,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Jobs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Jobs") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4BatchCreateJobsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4BatchCreateJobsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4BatchCreateJobsResponse: The result of
-// JobService.BatchCreateJobs. It's used to replace
-// google.longrunning.Operation.response in case of success.
-type GoogleCloudTalentV4BatchCreateJobsResponse struct {
-	// JobResults: List of job mutation results from a batch create
-	// operation. It can change until operation status is FINISHED, FAILED
-	// or CANCELLED.
-	JobResults []*GoogleCloudTalentV4JobResult `json:"jobResults,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "JobResults") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JobResults") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4BatchCreateJobsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4BatchCreateJobsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4BatchDeleteJobsRequest: Request to delete a batch
-// of jobs.
-type GoogleCloudTalentV4BatchDeleteJobsRequest struct {
-	// Names: The names of the jobs to delete. The format is
-	// "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
-	// example, "projects/foo/tenants/bar/jobs/baz". A maximum of 200 jobs
-	// can be deleted in a batch.
-	Names []string `json:"names,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Names") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Names") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4BatchDeleteJobsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4BatchDeleteJobsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4BatchDeleteJobsResponse: The result of
-// JobService.BatchDeleteJobs. It's used to replace
-// google.longrunning.Operation.response in case of success.
-type GoogleCloudTalentV4BatchDeleteJobsResponse struct {
-	// JobResults: List of job mutation results from a batch delete
-	// operation. It can change until operation status is FINISHED, FAILED
-	// or CANCELLED.
-	JobResults []*GoogleCloudTalentV4JobResult `json:"jobResults,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "JobResults") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JobResults") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4BatchDeleteJobsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4BatchDeleteJobsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4BatchOperationMetadata: Metadata used for long
-// running operations returned by CTS batch APIs. It's used to replace
-// google.longrunning.Operation.metadata.
-type GoogleCloudTalentV4BatchOperationMetadata struct {
-	// CreateTime: The time when the batch operation is created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// EndTime: The time when the batch operation is finished and
-	// google.longrunning.Operation.done is set to `true`.
-	EndTime string `json:"endTime,omitempty"`
-
-	// FailureCount: Count of failed item(s) inside an operation.
-	FailureCount int64 `json:"failureCount,omitempty"`
-
-	// State: The state of a long running operation.
+// CustomRankingInfo: Custom ranking information for SearchJobsRequest.
+type CustomRankingInfo struct {
+	// ImportanceLevel: Required. Controls over how important the score of
+	// CustomRankingInfo.ranking_expression gets applied to job's final
+	// ranking position. An error is thrown if not specified.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value.
-	//   "INITIALIZING" - The batch operation is being prepared for
-	// processing.
-	//   "PROCESSING" - The batch operation is actively being processed.
-	//   "SUCCEEDED" - The batch operation is processed, and at least one
-	// item has been successfully processed.
-	//   "FAILED" - The batch operation is done and no item has been
-	// successfully processed.
-	//   "CANCELLING" - The batch operation is in the process of cancelling
-	// after google.longrunning.Operations.CancelOperation is called.
-	//   "CANCELLED" - The batch operation is done after
-	// google.longrunning.Operations.CancelOperation is called. Any items
-	// processed before cancelling are returned in the response.
-	State string `json:"state,omitempty"`
+	//   "IMPORTANCE_LEVEL_UNSPECIFIED" - Default value if the importance
+	// level isn't specified.
+	//   "NONE" - The given ranking expression is of None importance,
+	// existing relevance score (determined by API algorithm) dominates
+	// job's final ranking position.
+	//   "LOW" - The given ranking expression is of Low importance in terms
+	// of job's final ranking position compared to existing relevance score
+	// (determined by API algorithm).
+	//   "MILD" - The given ranking expression is of Mild importance in
+	// terms of job's final ranking position compared to existing relevance
+	// score (determined by API algorithm).
+	//   "MEDIUM" - The given ranking expression is of Medium importance in
+	// terms of job's final ranking position compared to existing relevance
+	// score (determined by API algorithm).
+	//   "HIGH" - The given ranking expression is of High importance in
+	// terms of job's final ranking position compared to existing relevance
+	// score (determined by API algorithm).
+	//   "EXTREME" - The given ranking expression is of Extreme importance,
+	// and dominates job's final ranking position with existing relevance
+	// score (determined by API algorithm) ignored.
+	ImportanceLevel string `json:"importanceLevel,omitempty"`
 
-	// StateDescription: More detailed information about operation state.
-	StateDescription string `json:"stateDescription,omitempty"`
+	// RankingExpression: Required. Controls over how job documents get
+	// ranked on top of existing relevance score (determined by API
+	// algorithm). A combination of the ranking expression and relevance
+	// score is used to determine job's final ranking position. The syntax
+	// for this expression is a subset of Google SQL syntax. Supported
+	// operators are: +, -, *, /, where the left and right side of the
+	// operator is either a numeric Job.custom_attributes key,
+	// integer/double value or an expression that can be evaluated to a
+	// number. Parenthesis are supported to adjust calculation precedence.
+	// The expression must be < 100 characters in length. The expression is
+	// considered invalid for a job if the expression references custom
+	// attributes that are not populated on the job or if the expression
+	// results in a divide by zero. If an expression is invalid for a job,
+	// that job is demoted to the end of the results. Sample ranking
+	// expression (year + 25) * 0.25 - (freshness / 0.5)
+	RankingExpression string `json:"rankingExpression,omitempty"`
 
-	// SuccessCount: Count of successful item(s) inside an operation.
-	SuccessCount int64 `json:"successCount,omitempty"`
-
-	// TotalCount: Count of total item(s) inside an operation.
-	TotalCount int64 `json:"totalCount,omitempty"`
-
-	// UpdateTime: The time when the batch operation status is updated. The
-	// metadata and the update_time is refreshed every minute otherwise
-	// cached data is returned.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ImportanceLevel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -729,343 +1240,7 @@ type GoogleCloudTalentV4BatchOperationMetadata struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4BatchOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4BatchOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4BatchUpdateJobsRequest: Request to update a batch
-// of jobs.
-type GoogleCloudTalentV4BatchUpdateJobsRequest struct {
-	// Jobs: Required. The jobs to be updated. A maximum of 200 jobs can be
-	// updated in a batch.
-	Jobs []*GoogleCloudTalentV4Job `json:"jobs,omitempty"`
-
-	// UpdateMask: Strongly recommended for the best service experience. Be
-	// aware that it will also increase latency when checking the status of
-	// a batch operation. If update_mask is provided, only the specified
-	// fields in Job are updated. Otherwise all the fields are updated. A
-	// field mask to restrict the fields that are updated. Only top level
-	// fields of Job are supported. If update_mask is provided, The Job
-	// inside JobResult will only contains fields that is updated, plus the
-	// Id of the Job. Otherwise, Job will include all fields, which can
-	// yield a very large response.
-	UpdateMask string `json:"updateMask,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Jobs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Jobs") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4BatchUpdateJobsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4BatchUpdateJobsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4BatchUpdateJobsResponse: The result of
-// JobService.BatchUpdateJobs. It's used to replace
-// google.longrunning.Operation.response in case of success.
-type GoogleCloudTalentV4BatchUpdateJobsResponse struct {
-	// JobResults: List of job mutation results from a batch update
-	// operation. It can change until operation status is FINISHED, FAILED
-	// or CANCELLED.
-	JobResults []*GoogleCloudTalentV4JobResult `json:"jobResults,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "JobResults") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JobResults") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4BatchUpdateJobsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4BatchUpdateJobsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4ClientEvent: An event issued when an end user
-// interacts with the application that implements Cloud Talent Solution.
-// Providing this information improves the quality of results for the
-// API clients, enabling the service to perform optimally. The number of
-// events sent must be consistent with other calls, such as job
-// searches, issued to the service by the client.
-type GoogleCloudTalentV4ClientEvent struct {
-	// CreateTime: Required. The timestamp of the event.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// EventId: Required. A unique identifier, generated by the client
-	// application.
-	EventId string `json:"eventId,omitempty"`
-
-	// EventNotes: Notes about the event provided by recruiters or other
-	// users, for example, feedback on why a job was bookmarked.
-	EventNotes string `json:"eventNotes,omitempty"`
-
-	// JobEvent: An event issued when a job seeker interacts with the
-	// application that implements Cloud Talent Solution.
-	JobEvent *GoogleCloudTalentV4JobEvent `json:"jobEvent,omitempty"`
-
-	// RequestId: Strongly recommended for the best service experience. A
-	// unique ID generated in the API responses. It can be found in
-	// ResponseMetadata.request_id.
-	RequestId string `json:"requestId,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4ClientEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4ClientEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4CommuteFilter: Parameters needed for commute
-// search.
-type GoogleCloudTalentV4CommuteFilter struct {
-	// AllowImpreciseAddresses: If `true`, jobs without street level
-	// addresses may also be returned. For city level addresses, the city
-	// center is used. For state and coarser level addresses, text matching
-	// is used. If this field is set to `false` or isn't specified, only
-	// jobs that include street level addresses will be returned by commute
-	// search.
-	AllowImpreciseAddresses bool `json:"allowImpreciseAddresses,omitempty"`
-
-	// CommuteMethod: Required. The method of transportation to calculate
-	// the commute time for.
-	//
-	// Possible values:
-	//   "COMMUTE_METHOD_UNSPECIFIED" - Commute method isn't specified.
-	//   "DRIVING" - Commute time is calculated based on driving time.
-	//   "TRANSIT" - Commute time is calculated based on public transit
-	// including bus, metro, subway, and so on.
-	CommuteMethod string `json:"commuteMethod,omitempty"`
-
-	// DepartureTime: The departure time used to calculate traffic impact,
-	// represented as google.type.TimeOfDay in local time zone. Currently
-	// traffic model is restricted to hour level resolution.
-	DepartureTime *TimeOfDay `json:"departureTime,omitempty"`
-
-	// RoadTraffic: Specifies the traffic density to use when calculating
-	// commute time.
-	//
-	// Possible values:
-	//   "ROAD_TRAFFIC_UNSPECIFIED" - Road traffic situation isn't
-	// specified.
-	//   "TRAFFIC_FREE" - Optimal commute time without considering any
-	// traffic impact.
-	//   "BUSY_HOUR" - Commute time calculation takes in account the peak
-	// traffic impact.
-	RoadTraffic string `json:"roadTraffic,omitempty"`
-
-	// StartCoordinates: Required. The latitude and longitude of the
-	// location to calculate the commute time from.
-	StartCoordinates *LatLng `json:"startCoordinates,omitempty"`
-
-	// TravelDuration: Required. The maximum travel time in seconds. The
-	// maximum allowed value is `3600s` (one hour). Format is `123s`.
-	TravelDuration string `json:"travelDuration,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AllowImpreciseAddresses") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowImpreciseAddresses")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4CommuteFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CommuteFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4Company: A Company resource represents a company
-// in the service. A company is the entity that owns job postings, that
-// is, the hiring entity responsible for employing applicants for the
-// job position.
-type GoogleCloudTalentV4Company struct {
-	// CareerSiteUri: The URI to employer's career site or careers page on
-	// the employer's web site, for example, "https://careers.google.com".
-	CareerSiteUri string `json:"careerSiteUri,omitempty"`
-
-	// DerivedInfo: Output only. Derived details about the company.
-	DerivedInfo *GoogleCloudTalentV4CompanyDerivedInfo `json:"derivedInfo,omitempty"`
-
-	// DisplayName: Required. The display name of the company, for example,
-	// "Google LLC".
-	DisplayName string `json:"displayName,omitempty"`
-
-	// EeoText: Equal Employment Opportunity legal disclaimer text to be
-	// associated with all jobs, and typically to be displayed in all roles.
-	// The maximum number of allowed characters is 500.
-	EeoText string `json:"eeoText,omitempty"`
-
-	// ExternalId: Required. Client side company identifier, used to
-	// uniquely identify the company. The maximum number of allowed
-	// characters is 255.
-	ExternalId string `json:"externalId,omitempty"`
-
-	// HeadquartersAddress: The street address of the company's main
-	// headquarters, which may be different from the job location. The
-	// service attempts to geolocate the provided address, and populates a
-	// more specific location wherever possible in
-	// DerivedInfo.headquarters_location.
-	HeadquartersAddress string `json:"headquartersAddress,omitempty"`
-
-	// HiringAgency: Set to true if it is the hiring agency that post jobs
-	// for other employers. Defaults to false if not provided.
-	HiringAgency bool `json:"hiringAgency,omitempty"`
-
-	// ImageUri: A URI that hosts the employer's company logo.
-	ImageUri string `json:"imageUri,omitempty"`
-
-	// KeywordSearchableJobCustomAttributes: A list of keys of filterable
-	// Job.custom_attributes, whose corresponding `string_values` are used
-	// in keyword searches. Jobs with `string_values` under these specified
-	// field keys are returned if any of the values match the search
-	// keyword. Custom field values with parenthesis, brackets and special
-	// symbols are not searchable as-is, and those keyword queries must be
-	// surrounded by quotes.
-	KeywordSearchableJobCustomAttributes []string `json:"keywordSearchableJobCustomAttributes,omitempty"`
-
-	// Name: Required during company update. The resource name for a
-	// company. This is generated by the service when a company is created.
-	// The format is
-	// "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}",
-	// for example, "projects/foo/tenants/bar/companies/baz".
-	Name string `json:"name,omitempty"`
-
-	// Size: The employer's company size.
-	//
-	// Possible values:
-	//   "COMPANY_SIZE_UNSPECIFIED" - Default value if the size isn't
-	// specified.
-	//   "MINI" - The company has less than 50 employees.
-	//   "SMALL" - The company has between 50 and 99 employees.
-	//   "SMEDIUM" - The company has between 100 and 499 employees.
-	//   "MEDIUM" - The company has between 500 and 999 employees.
-	//   "BIG" - The company has between 1,000 and 4,999 employees.
-	//   "BIGGER" - The company has between 5,000 and 9,999 employees.
-	//   "GIANT" - The company has 10,000 or more employees.
-	Size string `json:"size,omitempty"`
-
-	// Suspended: Output only. Indicates whether a company is flagged to be
-	// suspended from public availability by the service when job content
-	// appears suspicious, abusive, or spammy.
-	Suspended bool `json:"suspended,omitempty"`
-
-	// WebsiteUri: The URI representing the company's primary web site or
-	// home page, for example, "https://www.google.com". The maximum number
-	// of allowed characters is 255.
-	WebsiteUri string `json:"websiteUri,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CareerSiteUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CareerSiteUri") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4Company) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4Company
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4CompanyDerivedInfo: Derived details about the
-// company.
-type GoogleCloudTalentV4CompanyDerivedInfo struct {
-	// HeadquartersLocation: A structured headquarters location of the
-	// company, resolved from Company.headquarters_address if provided.
-	HeadquartersLocation *GoogleCloudTalentV4Location `json:"headquartersLocation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "HeadquartersLocation") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HeadquartersLocation") to
+	// NullFields is a list of field names (e.g. "ImportanceLevel") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1075,405 +1250,17 @@ type GoogleCloudTalentV4CompanyDerivedInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTalentV4CompanyDerivedInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CompanyDerivedInfo
+func (s *CustomRankingInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomRankingInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudTalentV4CompensationFilter: Filter on job compensation
-// type and amount.
-type GoogleCloudTalentV4CompensationFilter struct {
-	// IncludeJobsWithUnspecifiedCompensationRange: If set to true, jobs
-	// with unspecified compensation range fields are included.
-	IncludeJobsWithUnspecifiedCompensationRange bool `json:"includeJobsWithUnspecifiedCompensationRange,omitempty"`
-
-	// Range: Compensation range.
-	Range *GoogleCloudTalentV4CompensationInfoCompensationRange `json:"range,omitempty"`
-
-	// Type: Required. Type of filter.
-	//
-	// Possible values:
-	//   "FILTER_TYPE_UNSPECIFIED" - Filter type unspecified. Position
-	// holder, INVALID, should never be used.
-	//   "UNIT_ONLY" - Filter by `base compensation entry's` unit. A job is
-	// a match if and only if the job contains a base CompensationEntry and
-	// the base CompensationEntry's unit matches provided units. Populate
-	// one or more units. See CompensationInfo.CompensationEntry for
-	// definition of base compensation entry.
-	//   "UNIT_AND_AMOUNT" - Filter by `base compensation entry's` unit and
-	// amount / range. A job is a match if and only if the job contains a
-	// base CompensationEntry, and the base entry's unit matches provided
-	// CompensationUnit and amount or range overlaps with provided
-	// CompensationRange. See CompensationInfo.CompensationEntry for
-	// definition of base compensation entry. Set exactly one units and
-	// populate range.
-	//   "ANNUALIZED_BASE_AMOUNT" - Filter by annualized base compensation
-	// amount and `base compensation entry's` unit. Populate range and zero
-	// or more units.
-	//   "ANNUALIZED_TOTAL_AMOUNT" - Filter by annualized total compensation
-	// amount and `base compensation entry's` unit . Populate range and zero
-	// or more units.
-	Type string `json:"type,omitempty"`
-
-	// Units: Required. Specify desired `base compensation entry's`
-	// CompensationInfo.CompensationUnit.
-	//
-	// Possible values:
-	//   "COMPENSATION_UNIT_UNSPECIFIED" - Default value.
-	//   "HOURLY" - Hourly.
-	//   "DAILY" - Daily.
-	//   "WEEKLY" - Weekly
-	//   "MONTHLY" - Monthly.
-	//   "YEARLY" - Yearly.
-	//   "ONE_TIME" - One time.
-	//   "OTHER_COMPENSATION_UNIT" - Other compensation units.
-	Units []string `json:"units,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "IncludeJobsWithUnspecifiedCompensationRange") to unconditionally
-	// include in API requests. By default, fields with empty values are
-	// omitted from API requests. However, any non-pointer, non-interface
-	// field appearing in ForceSendFields will be sent to the server
-	// regardless of whether the field is empty or not. This may be used to
-	// include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "IncludeJobsWithUnspecifiedCompensationRange") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4CompensationFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CompensationFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4CompensationInfo: Job compensation details.
-type GoogleCloudTalentV4CompensationInfo struct {
-	// AnnualizedBaseCompensationRange: Output only. Annualized base
-	// compensation range. Computed as base compensation entry's
-	// CompensationEntry.amount times
-	// CompensationEntry.expected_units_per_year. See CompensationEntry for
-	// explanation on compensation annualization.
-	AnnualizedBaseCompensationRange *GoogleCloudTalentV4CompensationInfoCompensationRange `json:"annualizedBaseCompensationRange,omitempty"`
-
-	// AnnualizedTotalCompensationRange: Output only. Annualized total
-	// compensation range. Computed as all compensation entries'
-	// CompensationEntry.amount times
-	// CompensationEntry.expected_units_per_year. See CompensationEntry for
-	// explanation on compensation annualization.
-	AnnualizedTotalCompensationRange *GoogleCloudTalentV4CompensationInfoCompensationRange `json:"annualizedTotalCompensationRange,omitempty"`
-
-	// Entries: Job compensation information. At most one entry can be of
-	// type CompensationInfo.CompensationType.BASE, which is referred as
-	// **base compensation entry** for the job.
-	Entries []*GoogleCloudTalentV4CompensationInfoCompensationEntry `json:"entries,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AnnualizedBaseCompensationRange") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AnnualizedBaseCompensationRange") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4CompensationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CompensationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4CompensationInfoCompensationEntry: A compensation
-// entry that represents one component of compensation, such as base
-// pay, bonus, or other compensation type. Annualization: One
-// compensation entry can be annualized if - it contains valid amount or
-// range. - and its expected_units_per_year is set or can be derived.
-// Its annualized range is determined as (amount or range) times
-// expected_units_per_year.
-type GoogleCloudTalentV4CompensationInfoCompensationEntry struct {
-	// Amount: Compensation amount.
-	Amount *Money `json:"amount,omitempty"`
-
-	// Description: Compensation description. For example, could indicate
-	// equity terms or provide additional context to an estimated bonus.
-	Description string `json:"description,omitempty"`
-
-	// ExpectedUnitsPerYear: Expected number of units paid each year. If not
-	// specified, when Job.employment_types is FULLTIME, a default value is
-	// inferred based on unit. Default values: - HOURLY: 2080 - DAILY: 260 -
-	// WEEKLY: 52 - MONTHLY: 12 - ANNUAL: 1
-	ExpectedUnitsPerYear float64 `json:"expectedUnitsPerYear,omitempty"`
-
-	// Range: Compensation range.
-	Range *GoogleCloudTalentV4CompensationInfoCompensationRange `json:"range,omitempty"`
-
-	// Type: Compensation type. Default is
-	// CompensationType.COMPENSATION_TYPE_UNSPECIFIED.
-	//
-	// Possible values:
-	//   "COMPENSATION_TYPE_UNSPECIFIED" - Default value.
-	//   "BASE" - Base compensation: Refers to the fixed amount of money
-	// paid to an employee by an employer in return for work performed. Base
-	// compensation does not include benefits, bonuses or any other
-	// potential compensation from an employer.
-	//   "BONUS" - Bonus.
-	//   "SIGNING_BONUS" - Signing bonus.
-	//   "EQUITY" - Equity.
-	//   "PROFIT_SHARING" - Profit sharing.
-	//   "COMMISSIONS" - Commission.
-	//   "TIPS" - Tips.
-	//   "OTHER_COMPENSATION_TYPE" - Other compensation type.
-	Type string `json:"type,omitempty"`
-
-	// Unit: Frequency of the specified amount. Default is
-	// CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.
-	//
-	// Possible values:
-	//   "COMPENSATION_UNIT_UNSPECIFIED" - Default value.
-	//   "HOURLY" - Hourly.
-	//   "DAILY" - Daily.
-	//   "WEEKLY" - Weekly
-	//   "MONTHLY" - Monthly.
-	//   "YEARLY" - Yearly.
-	//   "ONE_TIME" - One time.
-	//   "OTHER_COMPENSATION_UNIT" - Other compensation units.
-	Unit string `json:"unit,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Amount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Amount") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4CompensationInfoCompensationEntry) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CompensationInfoCompensationEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudTalentV4CompensationInfoCompensationEntry) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudTalentV4CompensationInfoCompensationEntry
-	var s1 struct {
-		ExpectedUnitsPerYear gensupport.JSONFloat64 `json:"expectedUnitsPerYear"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ExpectedUnitsPerYear = float64(s1.ExpectedUnitsPerYear)
-	return nil
-}
-
-// GoogleCloudTalentV4CompensationInfoCompensationRange: Compensation
-// range.
-type GoogleCloudTalentV4CompensationInfoCompensationRange struct {
-	// MaxCompensation: The maximum amount of compensation. If left empty,
-	// the value is set to a maximal compensation value and the currency
-	// code is set to match the currency code of min_compensation.
-	MaxCompensation *Money `json:"maxCompensation,omitempty"`
-
-	// MinCompensation: The minimum amount of compensation. If left empty,
-	// the value is set to zero and the currency code is set to match the
-	// currency code of max_compensation.
-	MinCompensation *Money `json:"minCompensation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MaxCompensation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxCompensation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4CompensationInfoCompensationRange) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CompensationInfoCompensationRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4CompleteQueryResponse: Response of auto-complete
-// query.
-type GoogleCloudTalentV4CompleteQueryResponse struct {
-	// CompletionResults: Results of the matching job/company candidates.
-	CompletionResults []*GoogleCloudTalentV4CompleteQueryResponseCompletionResult `json:"completionResults,omitempty"`
-
-	// Metadata: Additional information for the API invocation, such as the
-	// request tracking id.
-	Metadata *GoogleCloudTalentV4ResponseMetadata `json:"metadata,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CompletionResults")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompletionResults") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4CompleteQueryResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CompleteQueryResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4CompleteQueryResponseCompletionResult: Resource
-// that represents completion results.
-type GoogleCloudTalentV4CompleteQueryResponseCompletionResult struct {
-	// ImageUri: The URI of the company image for COMPANY_NAME.
-	ImageUri string `json:"imageUri,omitempty"`
-
-	// Suggestion: The suggestion for the query.
-	Suggestion string `json:"suggestion,omitempty"`
-
-	// Type: The completion topic.
-	//
-	// Possible values:
-	//   "COMPLETION_TYPE_UNSPECIFIED" - Default value.
-	//   "JOB_TITLE" - Suggest job titles for jobs autocomplete. For
-	// CompletionType.JOB_TITLE type, only open jobs with the same
-	// language_codes are returned.
-	//   "COMPANY_NAME" - Suggest company names for jobs autocomplete. For
-	// CompletionType.COMPANY_NAME type, only companies having open jobs
-	// with the same language_codes are returned.
-	//   "COMBINED" - Suggest both job titles and company names for jobs
-	// autocomplete. For CompletionType.COMBINED type, only open jobs with
-	// the same language_codes or companies having open jobs with the same
-	// language_codes are returned.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImageUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4CompleteQueryResponseCompletionResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CompleteQueryResponseCompletionResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4CustomAttribute: Custom attribute values that are
-// either filterable or non-filterable.
-type GoogleCloudTalentV4CustomAttribute struct {
-	// Filterable: If the `filterable` flag is true, the custom field values
-	// may be used for custom attribute filters
-	// JobQuery.custom_attribute_filter. If false, these values may not be
-	// used for custom attribute filters. Default is false.
-	Filterable bool `json:"filterable,omitempty"`
-
-	// KeywordSearchable: If the `keyword_searchable` flag is true, the
-	// keywords in custom fields are searchable by keyword match. If false,
-	// the values are not searchable by keyword match. Default is false.
-	KeywordSearchable bool `json:"keywordSearchable,omitempty"`
-
-	// LongValues: Exactly one of string_values or long_values must be
-	// specified. This field is used to perform number range search. (`EQ`,
-	// `GT`, `GE`, `LE`, `LT`) over filterable `long_value`. Currently at
-	// most 1 long_values is supported.
-	LongValues googleapi.Int64s `json:"longValues,omitempty"`
-
-	// StringValues: Exactly one of string_values or long_values must be
-	// specified. This field is used to perform a string match
-	// (`CASE_SENSITIVE_MATCH` or `CASE_INSENSITIVE_MATCH`) search. For
-	// filterable `string_value`s, a maximum total number of 200 values is
-	// allowed, with each `string_value` has a byte size of no more than
-	// 500B. For unfilterable `string_values`, the maximum total byte size
-	// of unfilterable `string_values` is 50KB. Empty string isn't allowed.
-	StringValues []string `json:"stringValues,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filterable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Filterable") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4CustomAttribute) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4CustomAttribute
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4DeviceInfo: Device information collected from the
-// job seeker, candidate, or other entity conducting the job search.
-// Providing this information improves the quality of the search results
-// across devices.
-type GoogleCloudTalentV4DeviceInfo struct {
+// DeviceInfo: Device information collected from the job seeker,
+// candidate, or other entity conducting the job search. Providing this
+// information improves the quality of the search results across
+// devices.
+type DeviceInfo struct {
 	// DeviceType: Type of the device.
 	//
 	// Possible values:
@@ -1510,14 +1297,26 @@ type GoogleCloudTalentV4DeviceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTalentV4DeviceInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4DeviceInfo
+func (s *DeviceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudTalentV4HistogramQuery: The histogram request.
-type GoogleCloudTalentV4HistogramQuery struct {
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// HistogramQuery: The histogram request.
+type HistogramQuery struct {
 	// HistogramQuery: An expression specifies a histogram request against
 	// matching jobs for searches. See SearchJobsRequest.histogram_queries
 	// for details about syntax.
@@ -1541,15 +1340,15 @@ type GoogleCloudTalentV4HistogramQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTalentV4HistogramQuery) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4HistogramQuery
+func (s *HistogramQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod HistogramQuery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudTalentV4HistogramQueryResult: Histogram result that
-// matches HistogramQuery specified in searches.
-type GoogleCloudTalentV4HistogramQueryResult struct {
+// HistogramQueryResult: Histogram result that matches HistogramQuery
+// specified in searches.
+type HistogramQueryResult struct {
 	// Histogram: A map from the values of the facet associated with
 	// distinct values to the number of matching entries with corresponding
 	// value. The key format is: * (for string histogram) string values
@@ -1579,16 +1378,16 @@ type GoogleCloudTalentV4HistogramQueryResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTalentV4HistogramQueryResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4HistogramQueryResult
+func (s *HistogramQueryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod HistogramQueryResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudTalentV4Job: A Job resource represents a job posting (also
-// referred to as a "job listing" or "job requisition"). A job belongs
-// to a Company, which is the hiring entity responsible for the job.
-type GoogleCloudTalentV4Job struct {
+// Job: A Job resource represents a job posting (also referred to as a
+// "job listing" or "job requisition"). A job belongs to a Company,
+// which is the hiring entity responsible for the job.
+type Job struct {
 	// Addresses: Strongly recommended for the best service experience.
 	// Location(s) where the employer is looking to hire for this job
 	// posting. Specifying the full street address(es) of the hiring
@@ -1605,7 +1404,7 @@ type GoogleCloudTalentV4Job struct {
 	Addresses []string `json:"addresses,omitempty"`
 
 	// ApplicationInfo: Job application information.
-	ApplicationInfo *GoogleCloudTalentV4JobApplicationInfo `json:"applicationInfo,omitempty"`
+	ApplicationInfo *ApplicationInfo `json:"applicationInfo,omitempty"`
 
 	// Company: Required. The resource name of the company listing the job.
 	// The format is
@@ -1619,7 +1418,7 @@ type GoogleCloudTalentV4Job struct {
 
 	// CompensationInfo: Job compensation information (a.k.a. "pay rate")
 	// i.e., the compensation that will paid to the employee.
-	CompensationInfo *GoogleCloudTalentV4CompensationInfo `json:"compensationInfo,omitempty"`
+	CompensationInfo *CompensationInfo `json:"compensationInfo,omitempty"`
 
 	// CustomAttributes: A map of fields to hold both filterable and
 	// non-filterable custom job attributes that are not covered by the
@@ -1630,7 +1429,7 @@ type GoogleCloudTalentV4Job struct {
 	// across all keys at most 200 values are allowed, with each string no
 	// more than 255 characters. For unfilterable `string_values`, the
 	// maximum total size of `string_values` across all keys is 50KB.
-	CustomAttributes map[string]GoogleCloudTalentV4CustomAttribute `json:"customAttributes,omitempty"`
+	CustomAttributes map[string]CustomAttribute `json:"customAttributes,omitempty"`
 
 	// DegreeTypes: The desired education degrees for the job, such as
 	// Bachelors, Masters.
@@ -1679,7 +1478,7 @@ type GoogleCloudTalentV4Job struct {
 	Department string `json:"department,omitempty"`
 
 	// DerivedInfo: Output only. Derived details about the job posting.
-	DerivedInfo *GoogleCloudTalentV4JobDerivedInfo `json:"derivedInfo,omitempty"`
+	DerivedInfo *JobDerivedInfo `json:"derivedInfo,omitempty"`
 
 	// Description: Required. The description of the job, which typically
 	// includes a multi-paragraph description of the company and related
@@ -1876,7 +1675,7 @@ type GoogleCloudTalentV4Job struct {
 	PostingUpdateTime string `json:"postingUpdateTime,omitempty"`
 
 	// ProcessingOptions: Options for job processing.
-	ProcessingOptions *GoogleCloudTalentV4JobProcessingOptions `json:"processingOptions,omitempty"`
+	ProcessingOptions *ProcessingOptions `json:"processingOptions,omitempty"`
 
 	// PromotionValue: A promotion value of the job, as determined by the
 	// client. The value determines the sort order of the jobs returned when
@@ -1949,58 +1748,14 @@ type GoogleCloudTalentV4Job struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTalentV4Job) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4Job
+func (s *Job) MarshalJSON() ([]byte, error) {
+	type NoMethod Job
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudTalentV4JobApplicationInfo: Application related details of
-// a job posting.
-type GoogleCloudTalentV4JobApplicationInfo struct {
-	// Emails: Use this field to specify email address(es) to which resumes
-	// or applications can be sent. The maximum number of allowed characters
-	// for each entry is 255.
-	Emails []string `json:"emails,omitempty"`
-
-	// Instruction: Use this field to provide instructions, such as "Mail
-	// your application to ...", that a candidate can follow to apply for
-	// the job. This field accepts and sanitizes HTML input, and also
-	// accepts bold, italic, ordered list, and unordered list markup tags.
-	// The maximum number of allowed characters is 3,000.
-	Instruction string `json:"instruction,omitempty"`
-
-	// Uris: Use this URI field to direct an applicant to a website, for
-	// example to link to an online application form. The maximum number of
-	// allowed characters for each entry is 2,000.
-	Uris []string `json:"uris,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Emails") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Emails") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4JobApplicationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4JobApplicationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4JobDerivedInfo: Derived details about the job
-// posting.
-type GoogleCloudTalentV4JobDerivedInfo struct {
+// JobDerivedInfo: Derived details about the job posting.
+type JobDerivedInfo struct {
 	// JobCategories: Job categories derived from Job.title and
 	// Job.description.
 	//
@@ -2065,7 +1820,7 @@ type GoogleCloudTalentV4JobDerivedInfo struct {
 	// Locations: Structured locations of the job, resolved from
 	// Job.addresses. locations are exactly matched to Job.addresses in the
 	// same order.
-	Locations []*GoogleCloudTalentV4Location `json:"locations,omitempty"`
+	Locations []*Location `json:"locations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "JobCategories") to
 	// unconditionally include in API requests. By default, fields with
@@ -2084,15 +1839,15 @@ type GoogleCloudTalentV4JobDerivedInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTalentV4JobDerivedInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4JobDerivedInfo
+func (s *JobDerivedInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod JobDerivedInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudTalentV4JobEvent: An event issued when a job seeker
-// interacts with the application that implements Cloud Talent Solution.
-type GoogleCloudTalentV4JobEvent struct {
+// JobEvent: An event issued when a job seeker interacts with the
+// application that implements Cloud Talent Solution.
+type JobEvent struct {
 	// Jobs: Required. The job name(s) associated with this event. For
 	// example, if this is an impression event, this field contains the
 	// identifiers of all jobs shown to the job seeker. If this was a view
@@ -2190,65 +1945,20 @@ type GoogleCloudTalentV4JobEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTalentV4JobEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4JobEvent
+func (s *JobEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod JobEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudTalentV4JobProcessingOptions: Options for job processing.
-type GoogleCloudTalentV4JobProcessingOptions struct {
-	// DisableStreetAddressResolution: If set to `true`, the service does
-	// not attempt to resolve a more precise address for the job.
-	DisableStreetAddressResolution bool `json:"disableStreetAddressResolution,omitempty"`
-
-	// HtmlSanitization: Option for job HTML content sanitization. Applied
-	// fields are: * description * applicationInfo.instruction * incentives
-	// * qualifications * responsibilities HTML tags in these fields may be
-	// stripped if sanitiazation isn't disabled. Defaults to
-	// HtmlSanitization.SIMPLE_FORMATTING_ONLY.
-	//
-	// Possible values:
-	//   "HTML_SANITIZATION_UNSPECIFIED" - Default value.
-	//   "HTML_SANITIZATION_DISABLED" - Disables sanitization on HTML input.
-	//   "SIMPLE_FORMATTING_ONLY" - Sanitizes HTML input, only accepts bold,
-	// italic, ordered list, and unordered list markup tags.
-	HtmlSanitization string `json:"htmlSanitization,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DisableStreetAddressResolution") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "DisableStreetAddressResolution") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4JobProcessingOptions) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4JobProcessingOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4JobQuery: The query required to perform a search
-// query.
-type GoogleCloudTalentV4JobQuery struct {
+// JobQuery: The query required to perform a search query.
+type JobQuery struct {
 	// CommuteFilter: Allows filtering jobs by commute time with different
 	// travel methods (for example, driving or public transit). Note: This
 	// only works when you specify a CommuteMethod. In this case,
 	// location_filters is ignored. Currently we don't support sorting by
 	// commute time.
-	CommuteFilter *GoogleCloudTalentV4CommuteFilter `json:"commuteFilter,omitempty"`
+	CommuteFilter *CommuteFilter `json:"commuteFilter,omitempty"`
 
 	// Companies: This filter specifies the company entities to search
 	// against. If a value isn't specified, jobs are searched for against
@@ -2272,7 +1982,7 @@ type GoogleCloudTalentV4JobQuery struct {
 	// "Hourly job with per-hour compensation > $15", only jobs meeting
 	// these criteria are searched. If a filter isn't defined, all open jobs
 	// are searched.
-	CompensationFilter *GoogleCloudTalentV4CompensationFilter `json:"compensationFilter,omitempty"`
+	CompensationFilter *CompensationFilter `json:"compensationFilter,omitempty"`
 
 	// CustomAttributeFilter: This filter specifies a structured syntax to
 	// match against the Job.custom_attributes marked as `filterable`. The
@@ -2418,11 +2128,11 @@ type GoogleCloudTalentV4JobQuery struct {
 	// LocationFilter.distance_in_miles parameter, the maximum provided
 	// distance is used for all locations. At most 5 location filters are
 	// allowed.
-	LocationFilters []*GoogleCloudTalentV4LocationFilter `json:"locationFilters,omitempty"`
+	LocationFilters []*LocationFilter `json:"locationFilters,omitempty"`
 
 	// PublishTimeRange: Jobs published within a range specified by this
 	// filter are searched against.
-	PublishTimeRange *GoogleCloudTalentV4TimestampRange `json:"publishTimeRange,omitempty"`
+	PublishTimeRange *TimestampRange `json:"publishTimeRange,omitempty"`
 
 	// Query: The query string that matches against the job title,
 	// description, and location fields. The maximum number of allowed
@@ -2454,1513 +2164,13 @@ type GoogleCloudTalentV4JobQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudTalentV4JobQuery) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4JobQuery
+func (s *JobQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod JobQuery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudTalentV4JobResult: Mutation result of a job from a batch
-// operation.
-type GoogleCloudTalentV4JobResult struct {
-	// Job: Here Job only contains basic information including name,
-	// company, language_code and requisition_id, use getJob method to
-	// retrieve detailed information of the created/updated job.
-	Job *GoogleCloudTalentV4Job `json:"job,omitempty"`
-
-	// Status: The status of the job processed. This field is populated if
-	// the processing of the job fails.
-	Status *Status `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Job") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Job") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4JobResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4JobResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4ListCompaniesResponse: The List companies response
-// object.
-type GoogleCloudTalentV4ListCompaniesResponse struct {
-	// Companies: Companies for the current client.
-	Companies []*GoogleCloudTalentV4Company `json:"companies,omitempty"`
-
-	// Metadata: Additional information for the API invocation, such as the
-	// request tracking id.
-	Metadata *GoogleCloudTalentV4ResponseMetadata `json:"metadata,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Companies") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Companies") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4ListCompaniesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4ListCompaniesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4ListJobsResponse: List jobs response.
-type GoogleCloudTalentV4ListJobsResponse struct {
-	// Jobs: The Jobs for a given company. The maximum number of items
-	// returned is based on the limit field provided in the request.
-	Jobs []*GoogleCloudTalentV4Job `json:"jobs,omitempty"`
-
-	// Metadata: Additional information for the API invocation, such as the
-	// request tracking id.
-	Metadata *GoogleCloudTalentV4ResponseMetadata `json:"metadata,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Jobs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Jobs") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4ListJobsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4ListJobsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4ListTenantsResponse: The List tenants response
-// object.
-type GoogleCloudTalentV4ListTenantsResponse struct {
-	// Metadata: Additional information for the API invocation, such as the
-	// request tracking id.
-	Metadata *GoogleCloudTalentV4ResponseMetadata `json:"metadata,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Tenants: Tenants for the current client.
-	Tenants []*GoogleCloudTalentV4Tenant `json:"tenants,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4ListTenantsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4ListTenantsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4Location: A resource that represents a location
-// with full geographic information.
-type GoogleCloudTalentV4Location struct {
-	// LatLng: An object representing a latitude/longitude pair.
-	LatLng *LatLng `json:"latLng,omitempty"`
-
-	// LocationType: The type of a location, which corresponds to the
-	// address lines field of google.type.PostalAddress. For example,
-	// "Downtown, Atlanta, GA, USA" has a type of LocationType.NEIGHBORHOOD,
-	// and "Kansas City, KS, USA" has a type of LocationType.LOCALITY.
-	//
-	// Possible values:
-	//   "LOCATION_TYPE_UNSPECIFIED" - Default value if the type isn't
-	// specified.
-	//   "COUNTRY" - A country level location.
-	//   "ADMINISTRATIVE_AREA" - A state or equivalent level location.
-	//   "SUB_ADMINISTRATIVE_AREA" - A county or equivalent level location.
-	//   "LOCALITY" - A city or equivalent level location.
-	//   "POSTAL_CODE" - A postal code level location.
-	//   "SUB_LOCALITY" - A sublocality is a subdivision of a locality, for
-	// example a city borough, ward, or arrondissement. Sublocalities are
-	// usually recognized by a local political authority. For example,
-	// Manhattan and Brooklyn are recognized as boroughs by the City of New
-	// York, and are therefore modeled as sublocalities.
-	//   "SUB_LOCALITY_1" - A district or equivalent level location.
-	//   "SUB_LOCALITY_2" - A smaller district or equivalent level display.
-	//   "NEIGHBORHOOD" - A neighborhood level location.
-	//   "STREET_ADDRESS" - A street address level location.
-	LocationType string `json:"locationType,omitempty"`
-
-	// PostalAddress: Postal address of the location that includes human
-	// readable information, such as postal delivery and payments addresses.
-	// Given a postal address, a postal service can deliver items to a
-	// premises, P.O. Box, or other delivery location.
-	PostalAddress *PostalAddress `json:"postalAddress,omitempty"`
-
-	// RadiusMiles: Radius in miles of the job location. This value is
-	// derived from the location bounding box in which a circle with the
-	// specified radius centered from google.type.LatLng covers the area
-	// associated with the job location. For example, currently, "Mountain
-	// View, CA, USA" has a radius of 6.17 miles.
-	RadiusMiles float64 `json:"radiusMiles,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LatLng") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LatLng") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4Location) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudTalentV4Location) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudTalentV4Location
-	var s1 struct {
-		RadiusMiles gensupport.JSONFloat64 `json:"radiusMiles"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.RadiusMiles = float64(s1.RadiusMiles)
-	return nil
-}
-
-// GoogleCloudTalentV4LocationFilter: Geographic region of the search.
-type GoogleCloudTalentV4LocationFilter struct {
-	// Address: The address name, such as "Mountain View" or "Bay Area".
-	Address string `json:"address,omitempty"`
-
-	// DistanceInMiles: The distance_in_miles is applied when the location
-	// being searched for is identified as a city or smaller. This field is
-	// ignored if the location being searched for is a state or larger.
-	DistanceInMiles float64 `json:"distanceInMiles,omitempty"`
-
-	// LatLng: The latitude and longitude of the geographic center to search
-	// from. This field is ignored if `address` is provided.
-	LatLng *LatLng `json:"latLng,omitempty"`
-
-	// RegionCode: CLDR region code of the country/region of the address.
-	// This is used to address ambiguity of the user-input location, for
-	// example, "Liverpool" against "Liverpool, NY, US" or "Liverpool, UK".
-	// Set this field to bias location resolution toward a specific country
-	// or territory. If this field is not set, application behavior is
-	// biased toward the United States by default. See
-	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: "CH" for
-	// Switzerland.
-	RegionCode string `json:"regionCode,omitempty"`
-
-	// TelecommutePreference: Allows the client to return jobs without a set
-	// location, specifically, telecommuting jobs (telecommuting is
-	// considered by the service as a special location. Job.posting_region
-	// indicates if a job permits telecommuting. If this field is set to
-	// TelecommutePreference.TELECOMMUTE_ALLOWED, telecommuting jobs are
-	// searched, and address and lat_lng are ignored. If not set or set to
-	// TelecommutePreference.TELECOMMUTE_EXCLUDED, telecommute job are not
-	// searched. This filter can be used by itself to search exclusively for
-	// telecommuting jobs, or it can be combined with another location
-	// filter to search for a combination of job locations, such as
-	// "Mountain View" or "telecommuting" jobs. However, when used in
-	// combination with other location filters, telecommuting jobs can be
-	// treated as less relevant than other jobs in the search response. This
-	// field is only used for job search requests.
-	//
-	// Possible values:
-	//   "TELECOMMUTE_PREFERENCE_UNSPECIFIED" - Default value if the
-	// telecommute preference isn't specified.
-	//   "TELECOMMUTE_EXCLUDED" - Exclude telecommute jobs.
-	//   "TELECOMMUTE_ALLOWED" - Allow telecommute jobs.
-	TelecommutePreference string `json:"telecommutePreference,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Address") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Address") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4LocationFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4LocationFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudTalentV4LocationFilter) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudTalentV4LocationFilter
-	var s1 struct {
-		DistanceInMiles gensupport.JSONFloat64 `json:"distanceInMiles"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.DistanceInMiles = float64(s1.DistanceInMiles)
-	return nil
-}
-
-// GoogleCloudTalentV4RequestMetadata: Meta information related to the
-// job searcher or entity conducting the job search. This information is
-// used to improve the performance of the service.
-type GoogleCloudTalentV4RequestMetadata struct {
-	// AllowMissingIds: Only set when any of domain, session_id and user_id
-	// isn't available for some reason. It is highly recommended not to set
-	// this field and provide accurate domain, session_id and user_id for
-	// the best service experience.
-	AllowMissingIds bool `json:"allowMissingIds,omitempty"`
-
-	// DeviceInfo: The type of device used by the job seeker at the time of
-	// the call to the service.
-	DeviceInfo *GoogleCloudTalentV4DeviceInfo `json:"deviceInfo,omitempty"`
-
-	// Domain: Required if allow_missing_ids is unset or `false`. The
-	// client-defined scope or source of the service call, which typically
-	// is the domain on which the service has been implemented and is
-	// currently being run. For example, if the service is being run by
-	// client *Foo, Inc.*, on job board www.foo.com and career site
-	// www.bar.com, then this field is set to "foo.com" for use on the job
-	// board, and "bar.com" for use on the career site. Note that any
-	// improvements to the model for a particular tenant site rely on this
-	// field being set correctly to a unique domain. The maximum number of
-	// allowed characters is 255.
-	Domain string `json:"domain,omitempty"`
-
-	// SessionId: Required if allow_missing_ids is unset or `false`. A
-	// unique session identification string. A session is defined as the
-	// duration of an end user's interaction with the service over a certain
-	// period. Obfuscate this field for privacy concerns before providing it
-	// to the service. Note that any improvements to the model for a
-	// particular tenant site rely on this field being set correctly to a
-	// unique session ID. The maximum number of allowed characters is 255.
-	SessionId string `json:"sessionId,omitempty"`
-
-	// UserId: Required if allow_missing_ids is unset or `false`. A unique
-	// user identification string, as determined by the client. To have the
-	// strongest positive impact on search quality make sure the
-	// client-level is unique. Obfuscate this field for privacy concerns
-	// before providing it to the service. Note that any improvements to the
-	// model for a particular tenant site rely on this field being set
-	// correctly to a unique user ID. The maximum number of allowed
-	// characters is 255.
-	UserId string `json:"userId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AllowMissingIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowMissingIds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4RequestMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4RequestMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4ResponseMetadata: Additional information returned
-// to client, such as debugging information.
-type GoogleCloudTalentV4ResponseMetadata struct {
-	// RequestId: A unique id associated with this call. This id is logged
-	// for tracking purposes.
-	RequestId string `json:"requestId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4ResponseMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4ResponseMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4SearchJobsRequest: The Request body of the
-// `SearchJobs` call.
-type GoogleCloudTalentV4SearchJobsRequest struct {
-	// CustomRankingInfo: Controls over how job documents get ranked on top
-	// of existing relevance score (determined by API algorithm).
-	CustomRankingInfo *GoogleCloudTalentV4SearchJobsRequestCustomRankingInfo `json:"customRankingInfo,omitempty"`
-
-	// DisableKeywordMatch: Controls whether to disable exact keyword match
-	// on Job.title, Job.description, Job.company_display_name,
-	// Job.addresses, Job.qualifications. When disable keyword match is
-	// turned off, a keyword match returns jobs that do not match given
-	// category filters when there are matching keywords. For example, for
-	// the query "program manager," a result is returned even if the job
-	// posting has the title "software developer," which doesn't fall into
-	// "program manager" ontology, but does have "program manager" appearing
-	// in its description. For queries like "cloud" that don't contain title
-	// or location specific ontology, jobs with "cloud" keyword matches are
-	// returned regardless of this flag's value. Use
-	// Company.keyword_searchable_job_custom_attributes if company-specific
-	// globally matched custom field/attribute string values are needed.
-	// Enabling keyword match improves recall of subsequent search requests.
-	// Defaults to false.
-	DisableKeywordMatch bool `json:"disableKeywordMatch,omitempty"`
-
-	// DiversificationLevel: Controls whether highly similar jobs are
-	// returned next to each other in the search results. Jobs are
-	// identified as highly similar based on their titles, job categories,
-	// and locations. Highly similar results are clustered so that only one
-	// representative job of the cluster is displayed to the job seeker
-	// higher up in the results, with the other jobs being displayed lower
-	// down in the results. Defaults to DiversificationLevel.SIMPLE if no
-	// value is specified.
-	//
-	// Possible values:
-	//   "DIVERSIFICATION_LEVEL_UNSPECIFIED" - The diversification level
-	// isn't specified.
-	//   "DISABLED" - Disables diversification. Jobs that would normally be
-	// pushed to the last page would not have their positions altered. This
-	// may result in highly similar jobs appearing in sequence in the search
-	// results.
-	//   "SIMPLE" - Default diversifying behavior. The result list is
-	// ordered so that highly similar results are pushed to the end of the
-	// last page of search results. If you are using pageToken to page
-	// through the result set, latency might be lower but we can't guarantee
-	// that all results are returned. If you are using page offset, latency
-	// might be higher but all results are returned.
-	DiversificationLevel string `json:"diversificationLevel,omitempty"`
-
-	// EnableBroadening: Controls whether to broaden the search when it
-	// produces sparse results. Broadened queries append results to the end
-	// of the matching results list. Defaults to false.
-	EnableBroadening bool `json:"enableBroadening,omitempty"`
-
-	// HistogramQueries: An expression specifies a histogram request against
-	// matching jobs. Expression syntax is an aggregation function call with
-	// histogram facets and other options. Available aggregation function
-	// calls are: * `count(string_histogram_facet)`: Count the number of
-	// matching entities, for each distinct attribute value. *
-	// `count(numeric_histogram_facet, list of buckets)`: Count the number
-	// of matching entities within each bucket. Data types: * Histogram
-	// facet: facet names with format a-zA-Z+. * String: string like "any
-	// string with backslash escape for quote(\")." * Number: whole number
-	// and floating point number like 10, -1 and -0.01. * List: list of
-	// elements with comma(,) separator surrounded by square brackets, for
-	// example, [1, 2, 3] and ["one", "two", "three"]. Built-in constants: *
-	// MIN (minimum number similar to java Double.MIN_VALUE) * MAX (maximum
-	// number similar to java Double.MAX_VALUE) Built-in functions: *
-	// bucket(start, end[, label]): bucket built-in function creates a
-	// bucket with range of start, end). Note that the end is exclusive, for
-	// example, bucket(1, MAX, "positive number") or bucket(1, 10). Job
-	// histogram facets: * company_display_name: histogram by
-	// [Job.company_display_name. * employment_type: histogram by
-	// Job.employment_types, for example, "FULL_TIME", "PART_TIME". *
-	// company_size: histogram by CompanySize, for example, "SMALL",
-	// "MEDIUM", "BIG". * publish_time_in_month: histogram by the
-	// Job.posting_publish_time in months. Must specify list of numeric
-	// buckets in spec. * publish_time_in_year: histogram by the
-	// Job.posting_publish_time in years. Must specify list of numeric
-	// buckets in spec. * degree_types: histogram by the Job.degree_types,
-	// for example, "Bachelors", "Masters". * job_level: histogram by the
-	// Job.job_level, for example, "Entry Level". * country: histogram by
-	// the country code of jobs, for example, "US", "FR". * admin1:
-	// histogram by the admin1 code of jobs, which is a global placeholder
-	// referring to the state, province, or the particular term a country
-	// uses to define the geographic structure below the country level, for
-	// example, "CA", "IL". * city: histogram by a combination of the "city
-	// name, admin1 code". For example, "Mountain View, CA", "New York, NY".
-	// * admin1_country: histogram by a combination of the "admin1 code,
-	// country", for example, "CA, US", "IL, US". * city_coordinate:
-	// histogram by the city center's GPS coordinates (latitude and
-	// longitude), for example, 37.4038522,-122.0987765. Since the
-	// coordinates of a city center can change, customers may need to
-	// refresh them periodically. * locale: histogram by the
-	// Job.language_code, for example, "en-US", "fr-FR". * language:
-	// histogram by the language subtag of the Job.language_code, for
-	// example, "en", "fr". * category: histogram by the JobCategory, for
-	// example, "COMPUTER_AND_IT", "HEALTHCARE". * base_compensation_unit:
-	// histogram by the CompensationInfo.CompensationUnit of base salary,
-	// for example, "WEEKLY", "MONTHLY". * base_compensation: histogram by
-	// the base salary. Must specify list of numeric buckets to group
-	// results by. * annualized_base_compensation: histogram by the base
-	// annualized salary. Must specify list of numeric buckets to group
-	// results by. * annualized_total_compensation: histogram by the total
-	// annualized salary. Must specify list of numeric buckets to group
-	// results by. * string_custom_attribute: histogram by string
-	// Job.custom_attributes. Values can be accessed via square bracket
-	// notations like string_custom_attribute["key1"]. *
-	// numeric_custom_attribute: histogram by numeric Job.custom_attributes.
-	// Values can be accessed via square bracket notations like
-	// numeric_custom_attribute["key1"]. Must specify list of numeric
-	// buckets to group results by. Example expressions: * `count(admin1)` *
-	// `count(base_compensation, [bucket(1000, 10000), bucket(10000,
-	// 100000), bucket(100000, MAX)])` *
-	// `count(string_custom_attribute["some-string-custom-attribute"])` *
-	// `count(numeric_custom_attribute["some-numeric-custom-attribute"],
-	// [bucket(MIN, 0, "negative"), bucket(0, MAX, "non-negative"])`
-	HistogramQueries []*GoogleCloudTalentV4HistogramQuery `json:"histogramQueries,omitempty"`
-
-	// JobQuery: Query used to search against jobs, such as keyword,
-	// location filters, etc.
-	JobQuery *GoogleCloudTalentV4JobQuery `json:"jobQuery,omitempty"`
-
-	// JobView: The desired job attributes returned for jobs in the search
-	// response. Defaults to JobView.JOB_VIEW_SMALL if no value is
-	// specified.
-	//
-	// Possible values:
-	//   "JOB_VIEW_UNSPECIFIED" - Default value.
-	//   "JOB_VIEW_ID_ONLY" - A ID only view of job, with following
-	// attributes: Job.name, Job.requisition_id, Job.language_code.
-	//   "JOB_VIEW_MINIMAL" - A minimal view of the job, with the following
-	// attributes: Job.name, Job.requisition_id, Job.title, Job.company,
-	// Job.DerivedInfo.locations, Job.language_code.
-	//   "JOB_VIEW_SMALL" - A small view of the job, with the following
-	// attributes in the search results: Job.name, Job.requisition_id,
-	// Job.title, Job.company, Job.DerivedInfo.locations, Job.visibility,
-	// Job.language_code, Job.description.
-	//   "JOB_VIEW_FULL" - All available attributes are included in the
-	// search results.
-	JobView string `json:"jobView,omitempty"`
-
-	// MaxPageSize: A limit on the number of jobs returned in the search
-	// results. Increasing this value above the default value of 10 can
-	// increase search response time. The value can be between 1 and 100.
-	MaxPageSize int64 `json:"maxPageSize,omitempty"`
-
-	// Offset: An integer that specifies the current offset (that is,
-	// starting result location, amongst the jobs deemed by the API as
-	// relevant) in search results. This field is only considered if
-	// page_token is unset. The maximum allowed value is 5000. Otherwise an
-	// error is thrown. For example, 0 means to return results starting from
-	// the first matching job, and 10 means to return from the 11th job.
-	// This can be used for pagination, (for example, pageSize = 10 and
-	// offset = 10 means to return from the second page).
-	Offset int64 `json:"offset,omitempty"`
-
-	// OrderBy: The criteria determining how search results are sorted.
-	// Default is "relevance desc". Supported options are: * "relevance
-	// desc": By relevance descending, as determined by the API algorithms.
-	// Relevance thresholding of query results is only available with this
-	// ordering. * "posting_publish_time desc": By
-	// Job.posting_publish_time descending. * "posting_update_time desc":
-	// By Job.posting_update_time descending. * "title": By Job.title
-	// ascending. * "title desc": By Job.title descending. *
-	// "annualized_base_compensation": By job's
-	// CompensationInfo.annualized_base_compensation_range ascending. Jobs
-	// whose annualized base compensation is unspecified are put at the end
-	// of search results. * "annualized_base_compensation desc": By job's
-	// CompensationInfo.annualized_base_compensation_range descending. Jobs
-	// whose annualized base compensation is unspecified are put at the end
-	// of search results. * "annualized_total_compensation": By job's
-	// CompensationInfo.annualized_total_compensation_range ascending. Jobs
-	// whose annualized base compensation is unspecified are put at the end
-	// of search results. * "annualized_total_compensation desc": By job's
-	// CompensationInfo.annualized_total_compensation_range descending. Jobs
-	// whose annualized base compensation is unspecified are put at the end
-	// of search results. * "custom_ranking desc": By the relevance score
-	// adjusted to the
-	// SearchJobsRequest.CustomRankingInfo.ranking_expression with weight
-	// factor assigned by
-	// SearchJobsRequest.CustomRankingInfo.importance_level in descending
-	// order. * Location sorting: Use the special syntax to order jobs by
-	// distance: "distance_from('Hawaii')": Order by distance from Hawaii.
-	// "distance_from(19.89, 155.5)": Order by distance from a coordinate.
-	// "distance_from('Hawaii'), distance_from('Puerto Rico')": Order by
-	// multiple locations. See details below. "distance_from('Hawaii'),
-	// distance_from(19.89, 155.5)": Order by multiple locations. See
-	// details below. The string can have a maximum of 256 characters. When
-	// multiple distance centers are provided, a job that is close to any of
-	// the distance centers would have a high rank. When a job has multiple
-	// locations, the job location closest to one of the distance centers
-	// will be used. Jobs that don't have locations will be ranked at the
-	// bottom. Distance is calculated with a precision of 11.3 meters (37.4
-	// feet). Diversification strategy is still applied unless explicitly
-	// disabled in diversification_level.
-	OrderBy string `json:"orderBy,omitempty"`
-
-	// PageToken: The token specifying the current offset within search
-	// results. See SearchJobsResponse.next_page_token for an explanation of
-	// how to obtain the next set of query results.
-	PageToken string `json:"pageToken,omitempty"`
-
-	// RequestMetadata: Required. The meta information collected about the
-	// job searcher, used to improve the search quality of the service. The
-	// identifiers (such as `user_id`) are provided by users, and must be
-	// unique and consistent.
-	RequestMetadata *GoogleCloudTalentV4RequestMetadata `json:"requestMetadata,omitempty"`
-
-	// SearchMode: Mode of a search. Defaults to SearchMode.JOB_SEARCH.
-	//
-	// Possible values:
-	//   "SEARCH_MODE_UNSPECIFIED" - The mode of the search method isn't
-	// specified. The default search behavior is identical to JOB_SEARCH
-	// search behavior.
-	//   "JOB_SEARCH" - The job search matches against all jobs, and
-	// featured jobs (jobs with promotionValue > 0) are not specially
-	// handled.
-	//   "FEATURED_JOB_SEARCH" - The job search matches only against
-	// featured jobs (jobs with a promotionValue > 0). This method doesn't
-	// return any jobs having a promotionValue <= 0. The search results
-	// order is determined by the promotionValue (jobs with a higher
-	// promotionValue are returned higher up in the search results), with
-	// relevance being used as a tiebreaker.
-	SearchMode string `json:"searchMode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomRankingInfo")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomRankingInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4SearchJobsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4SearchJobsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4SearchJobsRequestCustomRankingInfo: Custom ranking
-// information for SearchJobsRequest.
-type GoogleCloudTalentV4SearchJobsRequestCustomRankingInfo struct {
-	// ImportanceLevel: Required. Controls over how important the score of
-	// CustomRankingInfo.ranking_expression gets applied to job's final
-	// ranking position. An error is thrown if not specified.
-	//
-	// Possible values:
-	//   "IMPORTANCE_LEVEL_UNSPECIFIED" - Default value if the importance
-	// level isn't specified.
-	//   "NONE" - The given ranking expression is of None importance,
-	// existing relevance score (determined by API algorithm) dominates
-	// job's final ranking position.
-	//   "LOW" - The given ranking expression is of Low importance in terms
-	// of job's final ranking position compared to existing relevance score
-	// (determined by API algorithm).
-	//   "MILD" - The given ranking expression is of Mild importance in
-	// terms of job's final ranking position compared to existing relevance
-	// score (determined by API algorithm).
-	//   "MEDIUM" - The given ranking expression is of Medium importance in
-	// terms of job's final ranking position compared to existing relevance
-	// score (determined by API algorithm).
-	//   "HIGH" - The given ranking expression is of High importance in
-	// terms of job's final ranking position compared to existing relevance
-	// score (determined by API algorithm).
-	//   "EXTREME" - The given ranking expression is of Extreme importance,
-	// and dominates job's final ranking position with existing relevance
-	// score (determined by API algorithm) ignored.
-	ImportanceLevel string `json:"importanceLevel,omitempty"`
-
-	// RankingExpression: Required. Controls over how job documents get
-	// ranked on top of existing relevance score (determined by API
-	// algorithm). A combination of the ranking expression and relevance
-	// score is used to determine job's final ranking position. The syntax
-	// for this expression is a subset of Google SQL syntax. Supported
-	// operators are: +, -, *, /, where the left and right side of the
-	// operator is either a numeric Job.custom_attributes key,
-	// integer/double value or an expression that can be evaluated to a
-	// number. Parenthesis are supported to adjust calculation precedence.
-	// The expression must be < 100 characters in length. The expression is
-	// considered invalid for a job if the expression references custom
-	// attributes that are not populated on the job or if the expression
-	// results in a divide by zero. If an expression is invalid for a job,
-	// that job is demoted to the end of the results. Sample ranking
-	// expression (year + 25) * 0.25 - (freshness / 0.5)
-	RankingExpression string `json:"rankingExpression,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ImportanceLevel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImportanceLevel") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4SearchJobsRequestCustomRankingInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4SearchJobsRequestCustomRankingInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4SearchJobsResponse: Response for SearchJob method.
-type GoogleCloudTalentV4SearchJobsResponse struct {
-	// BroadenedQueryJobsCount: If query broadening is enabled, we may
-	// append additional results from the broadened query. This number
-	// indicates how many of the jobs returned in the jobs field are from
-	// the broadened query. These results are always at the end of the jobs
-	// list. In particular, a value of 0, or if the field isn't set, all the
-	// jobs in the jobs list are from the original (without broadening)
-	// query. If this field is non-zero, subsequent requests with offset
-	// after this result set should contain all broadened results.
-	BroadenedQueryJobsCount int64 `json:"broadenedQueryJobsCount,omitempty"`
-
-	// HistogramQueryResults: The histogram results that match with
-	// specified SearchJobsRequest.histogram_queries.
-	HistogramQueryResults []*GoogleCloudTalentV4HistogramQueryResult `json:"histogramQueryResults,omitempty"`
-
-	// LocationFilters: The location filters that the service applied to the
-	// specified query. If any filters are lat-lng based, the
-	// Location.location_type is
-	// Location.LocationType.LOCATION_TYPE_UNSPECIFIED.
-	LocationFilters []*GoogleCloudTalentV4Location `json:"locationFilters,omitempty"`
-
-	// MatchingJobs: The Job entities that match the specified
-	// SearchJobsRequest.
-	MatchingJobs []*GoogleCloudTalentV4SearchJobsResponseMatchingJob `json:"matchingJobs,omitempty"`
-
-	// Metadata: Additional information for the API invocation, such as the
-	// request tracking id.
-	Metadata *GoogleCloudTalentV4ResponseMetadata `json:"metadata,omitempty"`
-
-	// NextPageToken: The token that specifies the starting position of the
-	// next page of results. This field is empty if there are no more
-	// results.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// SpellCorrection: The spell checking result, and correction.
-	SpellCorrection *GoogleCloudTalentV4SpellingCorrection `json:"spellCorrection,omitempty"`
-
-	// TotalSize: Number of jobs that match the specified query. Note: This
-	// size is precise only if the total is less than 100,000.
-	TotalSize int64 `json:"totalSize,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BroadenedQueryJobsCount") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BroadenedQueryJobsCount")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4SearchJobsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4SearchJobsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4SearchJobsResponseCommuteInfo: Commute details
-// related to this job.
-type GoogleCloudTalentV4SearchJobsResponseCommuteInfo struct {
-	// JobLocation: Location used as the destination in the commute
-	// calculation.
-	JobLocation *GoogleCloudTalentV4Location `json:"jobLocation,omitempty"`
-
-	// TravelDuration: The number of seconds required to travel to the job
-	// location from the query location. A duration of 0 seconds indicates
-	// that the job isn't reachable within the requested duration, but was
-	// returned as part of an expanded query.
-	TravelDuration string `json:"travelDuration,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "JobLocation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JobLocation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4SearchJobsResponseCommuteInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4SearchJobsResponseCommuteInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4SearchJobsResponseMatchingJob: Job entry with
-// metadata inside SearchJobsResponse.
-type GoogleCloudTalentV4SearchJobsResponseMatchingJob struct {
-	// CommuteInfo: Commute information which is generated based on
-	// specified CommuteFilter.
-	CommuteInfo *GoogleCloudTalentV4SearchJobsResponseCommuteInfo `json:"commuteInfo,omitempty"`
-
-	// Job: Job resource that matches the specified SearchJobsRequest.
-	Job *GoogleCloudTalentV4Job `json:"job,omitempty"`
-
-	// JobSummary: A summary of the job with core information that's
-	// displayed on the search results listing page.
-	JobSummary string `json:"jobSummary,omitempty"`
-
-	// JobTitleSnippet: Contains snippets of text from the Job.title field
-	// most closely matching a search query's keywords, if available. The
-	// matching query keywords are enclosed in HTML bold tags.
-	JobTitleSnippet string `json:"jobTitleSnippet,omitempty"`
-
-	// SearchTextSnippet: Contains snippets of text from the Job.description
-	// and similar fields that most closely match a search query's keywords,
-	// if available. All HTML tags in the original fields are stripped when
-	// returned in this field, and matching query keywords are enclosed in
-	// HTML bold tags.
-	SearchTextSnippet string `json:"searchTextSnippet,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CommuteInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CommuteInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4SearchJobsResponseMatchingJob) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4SearchJobsResponseMatchingJob
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4SpellingCorrection: Spell check result.
-type GoogleCloudTalentV4SpellingCorrection struct {
-	// Corrected: Indicates if the query was corrected by the spell checker.
-	Corrected bool `json:"corrected,omitempty"`
-
-	// CorrectedHtml: Corrected output with html tags to highlight the
-	// corrected words. Corrected words are called out with the "*...*" html
-	// tags. For example, the user input query is "software enginear", where
-	// the second word, "enginear," is incorrect. It should be "engineer".
-	// When spelling correction is enabled, this value is "software
-	// *engineer*".
-	CorrectedHtml string `json:"correctedHtml,omitempty"`
-
-	// CorrectedText: Correction output consisting of the corrected keyword
-	// string.
-	CorrectedText string `json:"correctedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Corrected") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Corrected") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4SpellingCorrection) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4SpellingCorrection
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4Tenant: A Tenant resource represents a tenant in
-// the service. A tenant is a group or entity that shares common access
-// with specific privileges for resources like jobs. Customer may create
-// multiple tenants to provide data isolation for different groups.
-type GoogleCloudTalentV4Tenant struct {
-	// ExternalId: Required. Client side tenant identifier, used to uniquely
-	// identify the tenant. The maximum number of allowed characters is 255.
-	ExternalId string `json:"externalId,omitempty"`
-
-	// Name: Required during tenant update. The resource name for a tenant.
-	// This is generated by the service when a tenant is created. The format
-	// is "projects/{project_id}/tenants/{tenant_id}", for example,
-	// "projects/foo/tenants/bar".
-	Name string `json:"name,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ExternalId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExternalId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4Tenant) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4Tenant
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudTalentV4TimestampRange: Message representing a period of
-// time between two timestamps.
-type GoogleCloudTalentV4TimestampRange struct {
-	// EndTime: End of the period (exclusive).
-	EndTime string `json:"endTime,omitempty"`
-
-	// StartTime: Begin of the period (inclusive).
-	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudTalentV4TimestampRange) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudTalentV4TimestampRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Job: A Job resource represents a job posting (also referred to as a
-// "job listing" or "job requisition"). A job belongs to a Company,
-// which is the hiring entity responsible for the job.
-type Job struct {
-	// Addresses: Strongly recommended for the best service experience.
-	// Location(s) where the employer is looking to hire for this job
-	// posting. Specifying the full street address(es) of the hiring
-	// location enables better API results, especially job searches by
-	// commute time. At most 50 locations are allowed for best search
-	// performance. If a job has more locations, it is suggested to split it
-	// into multiple jobs with unique requisition_ids (e.g. 'ReqA' becomes
-	// 'ReqA-1', 'ReqA-2', and so on.) as multiple jobs with the same
-	// company, language_code and requisition_id are not allowed. If the
-	// original requisition_id must be preserved, a custom field should be
-	// used for storage. It is also suggested to group the locations that
-	// close to each other in the same job for better search experience. The
-	// maximum number of allowed characters is 500.
-	Addresses []string `json:"addresses,omitempty"`
-
-	// ApplicationInfo: Job application information.
-	ApplicationInfo *ApplicationInfo `json:"applicationInfo,omitempty"`
-
-	// Company: Required. The resource name of the company listing the job.
-	// The format is
-	// "projects/{project_id}/tenants/{tenant_id}/companies/{company_id}".
-	// For example, "projects/foo/tenants/bar/companies/baz". If tenant id
-	// is unspecified, the default tenant is used. For example,
-	// "projects/foo/companies/bar".
-	Company string `json:"company,omitempty"`
-
-	// CompanyDisplayName: Output only. Display name of the company listing
-	// the job.
-	CompanyDisplayName string `json:"companyDisplayName,omitempty"`
-
-	// CompensationInfo: Job compensation information (a.k.a. "pay rate")
-	// i.e., the compensation that will paid to the employee.
-	CompensationInfo *CompensationInfo `json:"compensationInfo,omitempty"`
-
-	// CustomAttributes: A map of fields to hold both filterable and
-	// non-filterable custom job attributes that are not covered by the
-	// provided structured fields. The keys of the map are strings up to 64
-	// bytes and must match the pattern: a-zA-Z*. For example, key0LikeThis
-	// or KEY_1_LIKE_THIS. At most 100 filterable and at most 100
-	// unfilterable keys are supported. For filterable `string_values`,
-	// across all keys at most 200 values are allowed, with each string no
-	// more than 255 characters. For unfilterable `string_values`, the
-	// maximum total size of `string_values` across all keys is 50KB.
-	CustomAttributes map[string]CustomAttribute `json:"customAttributes,omitempty"`
-
-	// DegreeTypes: The desired education degrees for the job, such as
-	// Bachelors, Masters.
-	//
-	// Possible values:
-	//   "DEGREE_TYPE_UNSPECIFIED" - Default value. Represents no degree, or
-	// early childhood education. Maps to ISCED code 0. Ex) Kindergarten
-	//   "PRIMARY_EDUCATION" - Primary education which is typically the
-	// first stage of compulsory education. ISCED code 1. Ex) Elementary
-	// school
-	//   "LOWER_SECONDARY_EDUCATION" - Lower secondary education; First
-	// stage of secondary education building on primary education, typically
-	// with a more subject-oriented curriculum. ISCED code 2. Ex) Middle
-	// school
-	//   "UPPER_SECONDARY_EDUCATION" - Middle education; Second/final stage
-	// of secondary education preparing for tertiary education and/or
-	// providing skills relevant to employment. Usually with an increased
-	// range of subject options and streams. ISCED code 3. Ex) High school
-	//   "ADULT_REMEDIAL_EDUCATION" - Adult Remedial Education; Programmes
-	// providing learning experiences that build on secondary education and
-	// prepare for labour market entry and/or tertiary education. The
-	// content is broader than secondary but not as complex as tertiary
-	// education. ISCED code 4.
-	//   "ASSOCIATES_OR_EQUIVALENT" - Associate's or equivalent; Short first
-	// tertiary programmes that are typically practically-based,
-	// occupationally-specific and prepare for labour market entry. These
-	// programmes may also provide a pathway to other tertiary programmes.
-	// ISCED code 5.
-	//   "BACHELORS_OR_EQUIVALENT" - Bachelor's or equivalent; Programmes
-	// designed to provide intermediate academic and/or professional
-	// knowledge, skills and competencies leading to a first tertiary degree
-	// or equivalent qualification. ISCED code 6.
-	//   "MASTERS_OR_EQUIVALENT" - Master's or equivalent; Programmes
-	// designed to provide advanced academic and/or professional knowledge,
-	// skills and competencies leading to a second tertiary degree or
-	// equivalent qualification. ISCED code 7.
-	//   "DOCTORAL_OR_EQUIVALENT" - Doctoral or equivalent; Programmes
-	// designed primarily to lead to an advanced research qualification,
-	// usually concluding with the submission and defense of a substantive
-	// dissertation of publishable quality based on original research. ISCED
-	// code 8.
-	DegreeTypes []string `json:"degreeTypes,omitempty"`
-
-	// Department: The department or functional area within the company with
-	// the open position. The maximum number of allowed characters is 255.
-	Department string `json:"department,omitempty"`
-
-	// DerivedInfo: Output only. Derived details about the job posting.
-	DerivedInfo *JobDerivedInfo `json:"derivedInfo,omitempty"`
-
-	// Description: Required. The description of the job, which typically
-	// includes a multi-paragraph description of the company and related
-	// information. Separate fields are provided on the job object for
-	// responsibilities, qualifications, and other job characteristics. Use
-	// of these separate job fields is recommended. This field accepts and
-	// sanitizes HTML input, and also accepts bold, italic, ordered list,
-	// and unordered list markup tags. The maximum number of allowed
-	// characters is 100,000.
-	Description string `json:"description,omitempty"`
-
-	// EmploymentTypes: The employment type(s) of a job, for example, full
-	// time or part time.
-	//
-	// Possible values:
-	//   "EMPLOYMENT_TYPE_UNSPECIFIED" - The default value if the employment
-	// type isn't specified.
-	//   "FULL_TIME" - The job requires working a number of hours that
-	// constitute full time employment, typically 40 or more hours per week.
-	//   "PART_TIME" - The job entails working fewer hours than a full time
-	// job, typically less than 40 hours a week.
-	//   "CONTRACTOR" - The job is offered as a contracted, as opposed to a
-	// salaried employee, position.
-	//   "CONTRACT_TO_HIRE" - The job is offered as a contracted position
-	// with the understanding that it's converted into a full-time position
-	// at the end of the contract. Jobs of this type are also returned by a
-	// search for EmploymentType.CONTRACTOR jobs.
-	//   "TEMPORARY" - The job is offered as a temporary employment
-	// opportunity, usually a short-term engagement.
-	//   "INTERN" - The job is a fixed-term opportunity for students or
-	// entry-level job seekers to obtain on-the-job training, typically
-	// offered as a summer position.
-	//   "VOLUNTEER" - The is an opportunity for an individual to volunteer,
-	// where there's no expectation of compensation for the provided
-	// services.
-	//   "PER_DIEM" - The job requires an employee to work on an as-needed
-	// basis with a flexible schedule.
-	//   "FLY_IN_FLY_OUT" - The job involves employing people in remote
-	// areas and flying them temporarily to the work site instead of
-	// relocating employees and their families permanently.
-	//   "OTHER_EMPLOYMENT_TYPE" - The job does not fit any of the other
-	// listed types.
-	EmploymentTypes []string `json:"employmentTypes,omitempty"`
-
-	// Incentives: A description of bonus, commission, and other
-	// compensation incentives associated with the job not including salary
-	// or pay. The maximum number of allowed characters is 10,000.
-	Incentives string `json:"incentives,omitempty"`
-
-	// JobBenefits: The benefits included with the job.
-	//
-	// Possible values:
-	//   "JOB_BENEFIT_UNSPECIFIED" - Default value if the type isn't
-	// specified.
-	//   "CHILD_CARE" - The job includes access to programs that support
-	// child care, such as daycare.
-	//   "DENTAL" - The job includes dental services covered by a dental
-	// insurance plan.
-	//   "DOMESTIC_PARTNER" - The job offers specific benefits to domestic
-	// partners.
-	//   "FLEXIBLE_HOURS" - The job allows for a flexible work schedule.
-	//   "MEDICAL" - The job includes health services covered by a medical
-	// insurance plan.
-	//   "LIFE_INSURANCE" - The job includes a life insurance plan provided
-	// by the employer or available for purchase by the employee.
-	//   "PARENTAL_LEAVE" - The job allows for a leave of absence to a
-	// parent to care for a newborn child.
-	//   "RETIREMENT_PLAN" - The job includes a workplace retirement plan
-	// provided by the employer or available for purchase by the employee.
-	//   "SICK_DAYS" - The job allows for paid time off due to illness.
-	//   "VACATION" - The job includes paid time off for vacation.
-	//   "VISION" - The job includes vision services covered by a vision
-	// insurance plan.
-	JobBenefits []string `json:"jobBenefits,omitempty"`
-
-	// JobEndTime: The end timestamp of the job. Typically this field is
-	// used for contracting engagements. Invalid timestamps are ignored.
-	JobEndTime string `json:"jobEndTime,omitempty"`
-
-	// JobLevel: The experience level associated with the job, such as
-	// "Entry Level".
-	//
-	// Possible values:
-	//   "JOB_LEVEL_UNSPECIFIED" - The default value if the level isn't
-	// specified.
-	//   "ENTRY_LEVEL" - Entry-level individual contributors, typically with
-	// less than 2 years of experience in a similar role. Includes interns.
-	//   "EXPERIENCED" - Experienced individual contributors, typically with
-	// 2+ years of experience in a similar role.
-	//   "MANAGER" - Entry- to mid-level managers responsible for managing a
-	// team of people.
-	//   "DIRECTOR" - Senior-level managers responsible for managing teams
-	// of managers.
-	//   "EXECUTIVE" - Executive-level managers and above, including C-level
-	// positions.
-	JobLevel string `json:"jobLevel,omitempty"`
-
-	// JobStartTime: The start timestamp of the job in UTC time zone.
-	// Typically this field is used for contracting engagements. Invalid
-	// timestamps are ignored.
-	JobStartTime string `json:"jobStartTime,omitempty"`
-
-	// LanguageCode: The language of the posting. This field is distinct
-	// from any requirements for fluency that are associated with the job.
-	// Language codes must be in BCP-47 format, such as "en-US" or
-	// "sr-Latn". For more information, see [Tags for Identifying
-	// Languages](https://tools.ietf.org/html/bcp47){: class="external"
-	// target="_blank" }. If this field is unspecified and Job.description
-	// is present, detected language code based on Job.description is
-	// assigned, otherwise defaults to 'en_US'.
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	// Name: Required during job update. The resource name for the job. This
-	// is generated by the service when a job is created. The format is
-	// "projects/{project_id}/tenants/{tenant_id}/jobs/{job_id}". For
-	// example, "projects/foo/tenants/bar/jobs/baz". If tenant id is
-	// unspecified, the default tenant is used. For example,
-	// "projects/foo/jobs/bar". Use of this field in job queries and API
-	// calls is preferred over the use of requisition_id since this value is
-	// unique.
-	Name string `json:"name,omitempty"`
-
-	// PostingCreateTime: Output only. The timestamp when this job posting
-	// was created.
-	PostingCreateTime string `json:"postingCreateTime,omitempty"`
-
-	// PostingExpireTime: Strongly recommended for the best service
-	// experience. The expiration timestamp of the job. After this
-	// timestamp, the job is marked as expired, and it no longer appears in
-	// search results. The expired job can't be listed by the ListJobs API,
-	// but it can be retrieved with the GetJob API or updated with the
-	// UpdateJob API or deleted with the DeleteJob API. An expired job can
-	// be updated and opened again by using a future expiration timestamp.
-	// Updating an expired job fails if there is another existing open job
-	// with same company, language_code and requisition_id. The expired jobs
-	// are retained in our system for 90 days. However, the overall expired
-	// job count cannot exceed 3 times the maximum number of open jobs over
-	// previous 7 days. If this threshold is exceeded, expired jobs are
-	// cleaned out in order of earliest expire time. Expired jobs are no
-	// longer accessible after they are cleaned out. Invalid timestamps are
-	// ignored, and treated as expire time not provided. If the timestamp is
-	// before the instant request is made, the job is treated as expired
-	// immediately on creation. This kind of job can not be updated. And
-	// when creating a job with past timestamp, the posting_publish_time
-	// must be set before posting_expire_time. The purpose of this feature
-	// is to allow other objects, such as Application, to refer a job that
-	// didn't exist in the system prior to becoming expired. If you want to
-	// modify a job that was expired on creation, delete it and create a new
-	// one. If this value isn't provided at the time of job creation or is
-	// invalid, the job posting expires after 30 days from the job's
-	// creation time. For example, if the job was created on 2017/01/01
-	// 13:00AM UTC with an unspecified expiration date, the job expires
-	// after 2017/01/31 13:00AM UTC. If this value isn't provided on job
-	// update, it depends on the field masks set by
-	// UpdateJobRequest.update_mask. If the field masks include
-	// job_end_time, or the masks are empty meaning that every field is
-	// updated, the job posting expires after 30 days from the job's last
-	// update time. Otherwise the expiration date isn't updated.
-	PostingExpireTime string `json:"postingExpireTime,omitempty"`
-
-	// PostingPublishTime: The timestamp this job posting was most recently
-	// published. The default value is the time the request arrives at the
-	// server. Invalid timestamps are ignored.
-	PostingPublishTime string `json:"postingPublishTime,omitempty"`
-
-	// PostingRegion: The job PostingRegion (for example, state, country)
-	// throughout which the job is available. If this field is set, a
-	// LocationFilter in a search query within the job region finds this job
-	// posting if an exact location match isn't specified. If this field is
-	// set to PostingRegion.NATION or PostingRegion.ADMINISTRATIVE_AREA,
-	// setting job Job.addresses to the same location level as this field is
-	// strongly recommended.
-	//
-	// Possible values:
-	//   "POSTING_REGION_UNSPECIFIED" - If the region is unspecified, the
-	// job is only returned if it matches the LocationFilter.
-	//   "ADMINISTRATIVE_AREA" - In addition to exact location matching, job
-	// posting is returned when the LocationFilter in the search query is in
-	// the same administrative area as the returned job posting. For
-	// example, if a `ADMINISTRATIVE_AREA` job is posted in "CA, USA", it's
-	// returned if LocationFilter has "Mountain View". Administrative area
-	// refers to top-level administrative subdivision of this country. For
-	// example, US state, IT region, UK constituent nation and JP
-	// prefecture.
-	//   "NATION" - In addition to exact location matching, job is returned
-	// when LocationFilter in search query is in the same country as this
-	// job. For example, if a `NATION_WIDE` job is posted in "USA", it's
-	// returned if LocationFilter has 'Mountain View'.
-	//   "TELECOMMUTE" - Job allows employees to work remotely
-	// (telecommute). If locations are provided with this value, the job is
-	// considered as having a location, but telecommuting is allowed.
-	PostingRegion string `json:"postingRegion,omitempty"`
-
-	// PostingUpdateTime: Output only. The timestamp when this job posting
-	// was last updated.
-	PostingUpdateTime string `json:"postingUpdateTime,omitempty"`
-
-	// ProcessingOptions: Options for job processing.
-	ProcessingOptions *ProcessingOptions `json:"processingOptions,omitempty"`
-
-	// PromotionValue: A promotion value of the job, as determined by the
-	// client. The value determines the sort order of the jobs returned when
-	// searching for jobs using the featured jobs search call, with higher
-	// promotional values being returned first and ties being resolved by
-	// relevance sort. Only the jobs with a promotionValue >0 are returned
-	// in a FEATURED_JOB_SEARCH. Default value is 0, and negative values are
-	// treated as 0.
-	PromotionValue int64 `json:"promotionValue,omitempty"`
-
-	// Qualifications: A description of the qualifications required to
-	// perform the job. The use of this field is recommended as an
-	// alternative to using the more general description field. This field
-	// accepts and sanitizes HTML input, and also accepts bold, italic,
-	// ordered list, and unordered list markup tags. The maximum number of
-	// allowed characters is 10,000.
-	Qualifications string `json:"qualifications,omitempty"`
-
-	// RequisitionId: Required. The requisition ID, also referred to as the
-	// posting ID, is assigned by the client to identify a job. This field
-	// is intended to be used by clients for client identification and
-	// tracking of postings. A job isn't allowed to be created if there is
-	// another job with the same company, language_code and requisition_id.
-	// The maximum number of allowed characters is 255.
-	RequisitionId string `json:"requisitionId,omitempty"`
-
-	// Responsibilities: A description of job responsibilities. The use of
-	// this field is recommended as an alternative to using the more general
-	// description field. This field accepts and sanitizes HTML input, and
-	// also accepts bold, italic, ordered list, and unordered list markup
-	// tags. The maximum number of allowed characters is 10,000.
-	Responsibilities string `json:"responsibilities,omitempty"`
-
-	// Title: Required. The title of the job, such as "Software Engineer"
-	// The maximum number of allowed characters is 500.
-	Title string `json:"title,omitempty"`
-
-	// Visibility: Deprecated. The job is only visible to the owner. The
-	// visibility of the job. Defaults to Visibility.ACCOUNT_ONLY if not
-	// specified.
-	//
-	// Possible values:
-	//   "VISIBILITY_UNSPECIFIED" - Default value.
-	//   "ACCOUNT_ONLY" - The resource is only visible to the GCP account
-	// who owns it.
-	//   "SHARED_WITH_GOOGLE" - The resource is visible to the owner and may
-	// be visible to other applications and processes at Google.
-	//   "SHARED_WITH_PUBLIC" - The resource is visible to the owner and may
-	// be visible to all other API clients.
-	Visibility string `json:"visibility,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Addresses") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Addresses") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Job) MarshalJSON() ([]byte, error) {
-	type NoMethod Job
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// JobDerivedInfo: Derived details about the job posting.
-type JobDerivedInfo struct {
-	// JobCategories: Job categories derived from Job.title and
-	// Job.description.
-	//
-	// Possible values:
-	//   "JOB_CATEGORY_UNSPECIFIED" - The default value if the category
-	// isn't specified.
-	//   "ACCOUNTING_AND_FINANCE" - An accounting and finance job, such as
-	// an Accountant.
-	//   "ADMINISTRATIVE_AND_OFFICE" - An administrative and office job,
-	// such as an Administrative Assistant.
-	//   "ADVERTISING_AND_MARKETING" - An advertising and marketing job,
-	// such as Marketing Manager.
-	//   "ANIMAL_CARE" - An animal care job, such as Veterinarian.
-	//   "ART_FASHION_AND_DESIGN" - An art, fashion, or design job, such as
-	// Designer.
-	//   "BUSINESS_OPERATIONS" - A business operations job, such as Business
-	// Operations Manager.
-	//   "CLEANING_AND_FACILITIES" - A cleaning and facilities job, such as
-	// Custodial Staff.
-	//   "COMPUTER_AND_IT" - A computer and IT job, such as Systems
-	// Administrator.
-	//   "CONSTRUCTION" - A construction job, such as General Laborer.
-	//   "CUSTOMER_SERVICE" - A customer service job, such s Cashier.
-	//   "EDUCATION" - An education job, such as School Teacher.
-	//   "ENTERTAINMENT_AND_TRAVEL" - An entertainment and travel job, such
-	// as Flight Attendant.
-	//   "FARMING_AND_OUTDOORS" - A farming or outdoor job, such as Park
-	// Ranger.
-	//   "HEALTHCARE" - A healthcare job, such as Registered Nurse.
-	//   "HUMAN_RESOURCES" - A human resources job, such as Human Resources
-	// Director.
-	//   "INSTALLATION_MAINTENANCE_AND_REPAIR" - An installation,
-	// maintenance, or repair job, such as Electrician.
-	//   "LEGAL" - A legal job, such as Law Clerk.
-	//   "MANAGEMENT" - A management job, often used in conjunction with
-	// another category, such as Store Manager.
-	//   "MANUFACTURING_AND_WAREHOUSE" - A manufacturing or warehouse job,
-	// such as Assembly Technician.
-	//   "MEDIA_COMMUNICATIONS_AND_WRITING" - A media, communications, or
-	// writing job, such as Media Relations.
-	//   "OIL_GAS_AND_MINING" - An oil, gas or mining job, such as Offshore
-	// Driller.
-	//   "PERSONAL_CARE_AND_SERVICES" - A personal care and services job,
-	// such as Hair Stylist.
-	//   "PROTECTIVE_SERVICES" - A protective services job, such as Security
-	// Guard.
-	//   "REAL_ESTATE" - A real estate job, such as Buyer's Agent.
-	//   "RESTAURANT_AND_HOSPITALITY" - A restaurant and hospitality job,
-	// such as Restaurant Server.
-	//   "SALES_AND_RETAIL" - A sales and/or retail job, such Sales
-	// Associate.
-	//   "SCIENCE_AND_ENGINEERING" - A science and engineering job, such as
-	// Lab Technician.
-	//   "SOCIAL_SERVICES_AND_NON_PROFIT" - A social services or non-profit
-	// job, such as Case Worker.
-	//   "SPORTS_FITNESS_AND_RECREATION" - A sports, fitness, or recreation
-	// job, such as Personal Trainer.
-	//   "TRANSPORTATION_AND_LOGISTICS" - A transportation or logistics job,
-	// such as Truck Driver.
-	JobCategories []string `json:"jobCategories,omitempty"`
-
-	// Locations: Structured locations of the job, resolved from
-	// Job.addresses. locations are exactly matched to Job.addresses in the
-	// same order.
-	Locations []*Location `json:"locations,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "JobCategories") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JobCategories") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *JobDerivedInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod JobDerivedInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// JobOperationResult: The result of JobService.BatchCreateJobs or
-// JobService.BatchUpdateJobs APIs. It's used to replace
-// google.longrunning.Operation.response in case of success.
-type JobOperationResult struct {
-	// JobResults: List of job mutation results from a batch mutate
-	// operation. It can change until operation status is FINISHED, FAILED
-	// or CANCELLED.
-	JobResults []*JobResult `json:"jobResults,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "JobResults") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JobResults") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *JobOperationResult) MarshalJSON() ([]byte, error) {
-	type NoMethod JobOperationResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// JobResult: Mutation result of a job.
+// JobResult: Mutation result of a job from a batch operation.
 type JobResult struct {
 	// Job: Here Job only contains basic information including name,
 	// company, language_code and requisition_id, use getJob method to
@@ -3994,8 +2204,8 @@ func (s *JobResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LatLng: An object representing a latitude/longitude pair. This is
-// expressed as a pair of doubles representing degrees latitude and
+// LatLng: An object that represents a latitude/longitude pair. This is
+// expressed as a pair of doubles to represent degrees latitude and
 // degrees longitude. Unless specified otherwise, this must conform to
 // the WGS84 standard. Values must be within normalized ranges.
 type LatLng struct {
@@ -4044,6 +2254,124 @@ func (s *LatLng) UnmarshalJSON(data []byte) error {
 	s.Latitude = float64(s1.Latitude)
 	s.Longitude = float64(s1.Longitude)
 	return nil
+}
+
+// ListCompaniesResponse: The List companies response object.
+type ListCompaniesResponse struct {
+	// Companies: Companies for the current client.
+	Companies []*Company `json:"companies,omitempty"`
+
+	// Metadata: Additional information for the API invocation, such as the
+	// request tracking id.
+	Metadata *ResponseMetadata `json:"metadata,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Companies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Companies") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCompaniesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCompaniesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListJobsResponse: List jobs response.
+type ListJobsResponse struct {
+	// Jobs: The Jobs for a given company. The maximum number of items
+	// returned is based on the limit field provided in the request.
+	Jobs []*Job `json:"jobs,omitempty"`
+
+	// Metadata: Additional information for the API invocation, such as the
+	// request tracking id.
+	Metadata *ResponseMetadata `json:"metadata,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Jobs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Jobs") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListTenantsResponse: The List tenants response object.
+type ListTenantsResponse struct {
+	// Metadata: Additional information for the API invocation, such as the
+	// request tracking id.
+	Metadata *ResponseMetadata `json:"metadata,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Tenants: Tenants for the current client.
+	Tenants []*Tenant `json:"tenants,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListTenantsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTenantsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a location with full geographic
@@ -4126,6 +2454,137 @@ func (s *Location) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// LocationFilter: Geographic region of the search.
+type LocationFilter struct {
+	// Address: The address name, such as "Mountain View" or "Bay Area".
+	Address string `json:"address,omitempty"`
+
+	// DistanceInMiles: The distance_in_miles is applied when the location
+	// being searched for is identified as a city or smaller. This field is
+	// ignored if the location being searched for is a state or larger.
+	DistanceInMiles float64 `json:"distanceInMiles,omitempty"`
+
+	// LatLng: The latitude and longitude of the geographic center to search
+	// from. This field is ignored if `address` is provided.
+	LatLng *LatLng `json:"latLng,omitempty"`
+
+	// RegionCode: CLDR region code of the country/region of the address.
+	// This is used to address ambiguity of the user-input location, for
+	// example, "Liverpool" against "Liverpool, NY, US" or "Liverpool, UK".
+	// Set this field to bias location resolution toward a specific country
+	// or territory. If this field is not set, application behavior is
+	// biased toward the United States by default. See
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: "CH" for
+	// Switzerland.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// TelecommutePreference: Allows the client to return jobs without a set
+	// location, specifically, telecommuting jobs (telecommuting is
+	// considered by the service as a special location. Job.posting_region
+	// indicates if a job permits telecommuting. If this field is set to
+	// TelecommutePreference.TELECOMMUTE_ALLOWED, telecommuting jobs are
+	// searched, and address and lat_lng are ignored. If not set or set to
+	// TelecommutePreference.TELECOMMUTE_EXCLUDED, telecommute job are not
+	// searched. This filter can be used by itself to search exclusively for
+	// telecommuting jobs, or it can be combined with another location
+	// filter to search for a combination of job locations, such as
+	// "Mountain View" or "telecommuting" jobs. However, when used in
+	// combination with other location filters, telecommuting jobs can be
+	// treated as less relevant than other jobs in the search response. This
+	// field is only used for job search requests.
+	//
+	// Possible values:
+	//   "TELECOMMUTE_PREFERENCE_UNSPECIFIED" - Default value if the
+	// telecommute preference isn't specified.
+	//   "TELECOMMUTE_EXCLUDED" - Exclude telecommute jobs.
+	//   "TELECOMMUTE_ALLOWED" - Allow telecommute jobs.
+	TelecommutePreference string `json:"telecommutePreference,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Address") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Address") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocationFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod LocationFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *LocationFilter) UnmarshalJSON(data []byte) error {
+	type NoMethod LocationFilter
+	var s1 struct {
+		DistanceInMiles gensupport.JSONFloat64 `json:"distanceInMiles"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DistanceInMiles = float64(s1.DistanceInMiles)
+	return nil
+}
+
+// MatchingJob: Job entry with metadata inside SearchJobsResponse.
+type MatchingJob struct {
+	// CommuteInfo: Commute information which is generated based on
+	// specified CommuteFilter.
+	CommuteInfo *CommuteInfo `json:"commuteInfo,omitempty"`
+
+	// Job: Job resource that matches the specified SearchJobsRequest.
+	Job *Job `json:"job,omitempty"`
+
+	// JobSummary: A summary of the job with core information that's
+	// displayed on the search results listing page.
+	JobSummary string `json:"jobSummary,omitempty"`
+
+	// JobTitleSnippet: Contains snippets of text from the Job.title field
+	// most closely matching a search query's keywords, if available. The
+	// matching query keywords are enclosed in HTML bold tags.
+	JobTitleSnippet string `json:"jobTitleSnippet,omitempty"`
+
+	// SearchTextSnippet: Contains snippets of text from the Job.description
+	// and similar fields that most closely match a search query's keywords,
+	// if available. All HTML tags in the original fields are stripped when
+	// returned in this field, and matching query keywords are enclosed in
+	// HTML bold tags.
+	SearchTextSnippet string `json:"searchTextSnippet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommuteInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommuteInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MatchingJob) MarshalJSON() ([]byte, error) {
+	type NoMethod MatchingJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MendelDebugInput: Message representing input to a Mendel server for
 // debug forcing. See go/mendel-debug-forcing for more details. Next ID:
 // 2
@@ -4168,7 +2627,7 @@ func (s *MendelDebugInput) MarshalJSON() ([]byte, error) {
 
 // Money: Represents an amount of money with its currency type.
 type Money struct {
-	// CurrencyCode: The 3-letter currency code defined in ISO 4217.
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// Nanos: Number of nano (10^-9) units of the amount. The value must be
@@ -4547,6 +3006,464 @@ func (s *ProcessingOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RequestMetadata: Meta information related to the job searcher or
+// entity conducting the job search. This information is used to improve
+// the performance of the service.
+type RequestMetadata struct {
+	// AllowMissingIds: Only set when any of domain, session_id and user_id
+	// isn't available for some reason. It is highly recommended not to set
+	// this field and provide accurate domain, session_id and user_id for
+	// the best service experience.
+	AllowMissingIds bool `json:"allowMissingIds,omitempty"`
+
+	// DeviceInfo: The type of device used by the job seeker at the time of
+	// the call to the service.
+	DeviceInfo *DeviceInfo `json:"deviceInfo,omitempty"`
+
+	// Domain: Required if allow_missing_ids is unset or `false`. The
+	// client-defined scope or source of the service call, which typically
+	// is the domain on which the service has been implemented and is
+	// currently being run. For example, if the service is being run by
+	// client *Foo, Inc.*, on job board www.foo.com and career site
+	// www.bar.com, then this field is set to "foo.com" for use on the job
+	// board, and "bar.com" for use on the career site. Note that any
+	// improvements to the model for a particular tenant site rely on this
+	// field being set correctly to a unique domain. The maximum number of
+	// allowed characters is 255.
+	Domain string `json:"domain,omitempty"`
+
+	// SessionId: Required if allow_missing_ids is unset or `false`. A
+	// unique session identification string. A session is defined as the
+	// duration of an end user's interaction with the service over a certain
+	// period. Obfuscate this field for privacy concerns before providing it
+	// to the service. Note that any improvements to the model for a
+	// particular tenant site rely on this field being set correctly to a
+	// unique session ID. The maximum number of allowed characters is 255.
+	SessionId string `json:"sessionId,omitempty"`
+
+	// UserId: Required if allow_missing_ids is unset or `false`. A unique
+	// user identification string, as determined by the client. To have the
+	// strongest positive impact on search quality make sure the
+	// client-level is unique. Obfuscate this field for privacy concerns
+	// before providing it to the service. Note that any improvements to the
+	// model for a particular tenant site rely on this field being set
+	// correctly to a unique user ID. The maximum number of allowed
+	// characters is 255.
+	UserId string `json:"userId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowMissingIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowMissingIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RequestMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResponseMetadata: Additional information returned to client, such as
+// debugging information.
+type ResponseMetadata struct {
+	// RequestId: A unique id associated with this call. This id is logged
+	// for tracking purposes.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResponseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ResponseMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SearchJobsRequest: The Request body of the `SearchJobs` call.
+type SearchJobsRequest struct {
+	// CustomRankingInfo: Controls over how job documents get ranked on top
+	// of existing relevance score (determined by API algorithm).
+	CustomRankingInfo *CustomRankingInfo `json:"customRankingInfo,omitempty"`
+
+	// DisableKeywordMatch: Controls whether to disable exact keyword match
+	// on Job.title, Job.description, Job.company_display_name,
+	// Job.addresses, Job.qualifications. When disable keyword match is
+	// turned off, a keyword match returns jobs that do not match given
+	// category filters when there are matching keywords. For example, for
+	// the query "program manager," a result is returned even if the job
+	// posting has the title "software developer," which doesn't fall into
+	// "program manager" ontology, but does have "program manager" appearing
+	// in its description. For queries like "cloud" that don't contain title
+	// or location specific ontology, jobs with "cloud" keyword matches are
+	// returned regardless of this flag's value. Use
+	// Company.keyword_searchable_job_custom_attributes if company-specific
+	// globally matched custom field/attribute string values are needed.
+	// Enabling keyword match improves recall of subsequent search requests.
+	// Defaults to false.
+	DisableKeywordMatch bool `json:"disableKeywordMatch,omitempty"`
+
+	// DiversificationLevel: Controls whether highly similar jobs are
+	// returned next to each other in the search results. Jobs are
+	// identified as highly similar based on their titles, job categories,
+	// and locations. Highly similar results are clustered so that only one
+	// representative job of the cluster is displayed to the job seeker
+	// higher up in the results, with the other jobs being displayed lower
+	// down in the results. Defaults to DiversificationLevel.SIMPLE if no
+	// value is specified.
+	//
+	// Possible values:
+	//   "DIVERSIFICATION_LEVEL_UNSPECIFIED" - The diversification level
+	// isn't specified.
+	//   "DISABLED" - Disables diversification. Jobs that would normally be
+	// pushed to the last page would not have their positions altered. This
+	// may result in highly similar jobs appearing in sequence in the search
+	// results.
+	//   "SIMPLE" - Default diversifying behavior. The result list is
+	// ordered so that highly similar results are pushed to the end of the
+	// last page of search results. If you are using pageToken to page
+	// through the result set, latency might be lower but we can't guarantee
+	// that all results are returned. If you are using page offset, latency
+	// might be higher but all results are returned.
+	DiversificationLevel string `json:"diversificationLevel,omitempty"`
+
+	// EnableBroadening: Controls whether to broaden the search when it
+	// produces sparse results. Broadened queries append results to the end
+	// of the matching results list. Defaults to false.
+	EnableBroadening bool `json:"enableBroadening,omitempty"`
+
+	// HistogramQueries: An expression specifies a histogram request against
+	// matching jobs. Expression syntax is an aggregation function call with
+	// histogram facets and other options. Available aggregation function
+	// calls are: * `count(string_histogram_facet)`: Count the number of
+	// matching entities, for each distinct attribute value. *
+	// `count(numeric_histogram_facet, list of buckets)`: Count the number
+	// of matching entities within each bucket. Data types: * Histogram
+	// facet: facet names with format a-zA-Z+. * String: string like "any
+	// string with backslash escape for quote(\")." * Number: whole number
+	// and floating point number like 10, -1 and -0.01. * List: list of
+	// elements with comma(,) separator surrounded by square brackets, for
+	// example, [1, 2, 3] and ["one", "two", "three"]. Built-in constants: *
+	// MIN (minimum number similar to java Double.MIN_VALUE) * MAX (maximum
+	// number similar to java Double.MAX_VALUE) Built-in functions: *
+	// bucket(start, end[, label]): bucket built-in function creates a
+	// bucket with range of start, end). Note that the end is exclusive, for
+	// example, bucket(1, MAX, "positive number") or bucket(1, 10). Job
+	// histogram facets: * company_display_name: histogram by
+	// [Job.company_display_name. * employment_type: histogram by
+	// Job.employment_types, for example, "FULL_TIME", "PART_TIME". *
+	// company_size: histogram by CompanySize, for example, "SMALL",
+	// "MEDIUM", "BIG". * publish_time_in_month: histogram by the
+	// Job.posting_publish_time in months. Must specify list of numeric
+	// buckets in spec. * publish_time_in_year: histogram by the
+	// Job.posting_publish_time in years. Must specify list of numeric
+	// buckets in spec. * degree_types: histogram by the Job.degree_types,
+	// for example, "Bachelors", "Masters". * job_level: histogram by the
+	// Job.job_level, for example, "Entry Level". * country: histogram by
+	// the country code of jobs, for example, "US", "FR". * admin1:
+	// histogram by the admin1 code of jobs, which is a global placeholder
+	// referring to the state, province, or the particular term a country
+	// uses to define the geographic structure below the country level, for
+	// example, "CA", "IL". * city: histogram by a combination of the "city
+	// name, admin1 code". For example, "Mountain View, CA", "New York, NY".
+	// * admin1_country: histogram by a combination of the "admin1 code,
+	// country", for example, "CA, US", "IL, US". * city_coordinate:
+	// histogram by the city center's GPS coordinates (latitude and
+	// longitude), for example, 37.4038522,-122.0987765. Since the
+	// coordinates of a city center can change, customers may need to
+	// refresh them periodically. * locale: histogram by the
+	// Job.language_code, for example, "en-US", "fr-FR". * language:
+	// histogram by the language subtag of the Job.language_code, for
+	// example, "en", "fr". * category: histogram by the JobCategory, for
+	// example, "COMPUTER_AND_IT", "HEALTHCARE". * base_compensation_unit:
+	// histogram by the CompensationInfo.CompensationUnit of base salary,
+	// for example, "WEEKLY", "MONTHLY". * base_compensation: histogram by
+	// the base salary. Must specify list of numeric buckets to group
+	// results by. * annualized_base_compensation: histogram by the base
+	// annualized salary. Must specify list of numeric buckets to group
+	// results by. * annualized_total_compensation: histogram by the total
+	// annualized salary. Must specify list of numeric buckets to group
+	// results by. * string_custom_attribute: histogram by string
+	// Job.custom_attributes. Values can be accessed via square bracket
+	// notations like string_custom_attribute["key1"]. *
+	// numeric_custom_attribute: histogram by numeric Job.custom_attributes.
+	// Values can be accessed via square bracket notations like
+	// numeric_custom_attribute["key1"]. Must specify list of numeric
+	// buckets to group results by. Example expressions: * `count(admin1)` *
+	// `count(base_compensation, [bucket(1000, 10000), bucket(10000,
+	// 100000), bucket(100000, MAX)])` *
+	// `count(string_custom_attribute["some-string-custom-attribute"])` *
+	// `count(numeric_custom_attribute["some-numeric-custom-attribute"],
+	// [bucket(MIN, 0, "negative"), bucket(0, MAX, "non-negative"])`
+	HistogramQueries []*HistogramQuery `json:"histogramQueries,omitempty"`
+
+	// JobQuery: Query used to search against jobs, such as keyword,
+	// location filters, etc.
+	JobQuery *JobQuery `json:"jobQuery,omitempty"`
+
+	// JobView: The desired job attributes returned for jobs in the search
+	// response. Defaults to JobView.JOB_VIEW_SMALL if no value is
+	// specified.
+	//
+	// Possible values:
+	//   "JOB_VIEW_UNSPECIFIED" - Default value.
+	//   "JOB_VIEW_ID_ONLY" - A ID only view of job, with following
+	// attributes: Job.name, Job.requisition_id, Job.language_code.
+	//   "JOB_VIEW_MINIMAL" - A minimal view of the job, with the following
+	// attributes: Job.name, Job.requisition_id, Job.title, Job.company,
+	// Job.DerivedInfo.locations, Job.language_code.
+	//   "JOB_VIEW_SMALL" - A small view of the job, with the following
+	// attributes in the search results: Job.name, Job.requisition_id,
+	// Job.title, Job.company, Job.DerivedInfo.locations, Job.visibility,
+	// Job.language_code, Job.description.
+	//   "JOB_VIEW_FULL" - All available attributes are included in the
+	// search results.
+	JobView string `json:"jobView,omitempty"`
+
+	// MaxPageSize: A limit on the number of jobs returned in the search
+	// results. Increasing this value above the default value of 10 can
+	// increase search response time. The value can be between 1 and 100.
+	MaxPageSize int64 `json:"maxPageSize,omitempty"`
+
+	// Offset: An integer that specifies the current offset (that is,
+	// starting result location, amongst the jobs deemed by the API as
+	// relevant) in search results. This field is only considered if
+	// page_token is unset. The maximum allowed value is 5000. Otherwise an
+	// error is thrown. For example, 0 means to return results starting from
+	// the first matching job, and 10 means to return from the 11th job.
+	// This can be used for pagination, (for example, pageSize = 10 and
+	// offset = 10 means to return from the second page).
+	Offset int64 `json:"offset,omitempty"`
+
+	// OrderBy: The criteria determining how search results are sorted.
+	// Default is "relevance desc". Supported options are: * "relevance
+	// desc": By relevance descending, as determined by the API algorithms.
+	// Relevance thresholding of query results is only available with this
+	// ordering. * "posting_publish_time desc": By
+	// Job.posting_publish_time descending. * "posting_update_time desc":
+	// By Job.posting_update_time descending. * "title": By Job.title
+	// ascending. * "title desc": By Job.title descending. *
+	// "annualized_base_compensation": By job's
+	// CompensationInfo.annualized_base_compensation_range ascending. Jobs
+	// whose annualized base compensation is unspecified are put at the end
+	// of search results. * "annualized_base_compensation desc": By job's
+	// CompensationInfo.annualized_base_compensation_range descending. Jobs
+	// whose annualized base compensation is unspecified are put at the end
+	// of search results. * "annualized_total_compensation": By job's
+	// CompensationInfo.annualized_total_compensation_range ascending. Jobs
+	// whose annualized base compensation is unspecified are put at the end
+	// of search results. * "annualized_total_compensation desc": By job's
+	// CompensationInfo.annualized_total_compensation_range descending. Jobs
+	// whose annualized base compensation is unspecified are put at the end
+	// of search results. * "custom_ranking desc": By the relevance score
+	// adjusted to the
+	// SearchJobsRequest.CustomRankingInfo.ranking_expression with weight
+	// factor assigned by
+	// SearchJobsRequest.CustomRankingInfo.importance_level in descending
+	// order. * Location sorting: Use the special syntax to order jobs by
+	// distance: "distance_from('Hawaii')": Order by distance from Hawaii.
+	// "distance_from(19.89, 155.5)": Order by distance from a coordinate.
+	// "distance_from('Hawaii'), distance_from('Puerto Rico')": Order by
+	// multiple locations. See details below. "distance_from('Hawaii'),
+	// distance_from(19.89, 155.5)": Order by multiple locations. See
+	// details below. The string can have a maximum of 256 characters. When
+	// multiple distance centers are provided, a job that is close to any of
+	// the distance centers would have a high rank. When a job has multiple
+	// locations, the job location closest to one of the distance centers
+	// will be used. Jobs that don't have locations will be ranked at the
+	// bottom. Distance is calculated with a precision of 11.3 meters (37.4
+	// feet). Diversification strategy is still applied unless explicitly
+	// disabled in diversification_level.
+	OrderBy string `json:"orderBy,omitempty"`
+
+	// PageToken: The token specifying the current offset within search
+	// results. See SearchJobsResponse.next_page_token for an explanation of
+	// how to obtain the next set of query results.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// RequestMetadata: Required. The meta information collected about the
+	// job searcher, used to improve the search quality of the service. The
+	// identifiers (such as `user_id`) are provided by users, and must be
+	// unique and consistent.
+	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
+
+	// SearchMode: Mode of a search. Defaults to SearchMode.JOB_SEARCH.
+	//
+	// Possible values:
+	//   "SEARCH_MODE_UNSPECIFIED" - The mode of the search method isn't
+	// specified. The default search behavior is identical to JOB_SEARCH
+	// search behavior.
+	//   "JOB_SEARCH" - The job search matches against all jobs, and
+	// featured jobs (jobs with promotionValue > 0) are not specially
+	// handled.
+	//   "FEATURED_JOB_SEARCH" - The job search matches only against
+	// featured jobs (jobs with a promotionValue > 0). This method doesn't
+	// return any jobs having a promotionValue <= 0. The search results
+	// order is determined by the promotionValue (jobs with a higher
+	// promotionValue are returned higher up in the search results), with
+	// relevance being used as a tiebreaker.
+	SearchMode string `json:"searchMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomRankingInfo")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomRankingInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchJobsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchJobsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SearchJobsResponse: Response for SearchJob method.
+type SearchJobsResponse struct {
+	// BroadenedQueryJobsCount: If query broadening is enabled, we may
+	// append additional results from the broadened query. This number
+	// indicates how many of the jobs returned in the jobs field are from
+	// the broadened query. These results are always at the end of the jobs
+	// list. In particular, a value of 0, or if the field isn't set, all the
+	// jobs in the jobs list are from the original (without broadening)
+	// query. If this field is non-zero, subsequent requests with offset
+	// after this result set should contain all broadened results.
+	BroadenedQueryJobsCount int64 `json:"broadenedQueryJobsCount,omitempty"`
+
+	// HistogramQueryResults: The histogram results that match with
+	// specified SearchJobsRequest.histogram_queries.
+	HistogramQueryResults []*HistogramQueryResult `json:"histogramQueryResults,omitempty"`
+
+	// LocationFilters: The location filters that the service applied to the
+	// specified query. If any filters are lat-lng based, the
+	// Location.location_type is
+	// Location.LocationType.LOCATION_TYPE_UNSPECIFIED.
+	LocationFilters []*Location `json:"locationFilters,omitempty"`
+
+	// MatchingJobs: The Job entities that match the specified
+	// SearchJobsRequest.
+	MatchingJobs []*MatchingJob `json:"matchingJobs,omitempty"`
+
+	// Metadata: Additional information for the API invocation, such as the
+	// request tracking id.
+	Metadata *ResponseMetadata `json:"metadata,omitempty"`
+
+	// NextPageToken: The token that specifies the starting position of the
+	// next page of results. This field is empty if there are no more
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SpellCorrection: The spell checking result, and correction.
+	SpellCorrection *SpellingCorrection `json:"spellCorrection,omitempty"`
+
+	// TotalSize: Number of jobs that match the specified query. Note: This
+	// size is precise only if the total is less than 100,000.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BroadenedQueryJobsCount") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BroadenedQueryJobsCount")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpellingCorrection: Spell check result.
+type SpellingCorrection struct {
+	// Corrected: Indicates if the query was corrected by the spell checker.
+	Corrected bool `json:"corrected,omitempty"`
+
+	// CorrectedHtml: Corrected output with html tags to highlight the
+	// corrected words. Corrected words are called out with the "*...*" html
+	// tags. For example, the user input query is "software enginear", where
+	// the second word, "enginear," is incorrect. It should be "engineer".
+	// When spelling correction is enabled, this value is "software
+	// *engineer*".
+	CorrectedHtml string `json:"correctedHtml,omitempty"`
+
+	// CorrectedText: Correction output consisting of the corrected keyword
+	// string.
+	CorrectedText string `json:"correctedText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Corrected") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Corrected") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpellingCorrection) MarshalJSON() ([]byte, error) {
+	type NoMethod SpellingCorrection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
@@ -4591,6 +3508,48 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Tenant: A Tenant resource represents a tenant in the service. A
+// tenant is a group or entity that shares common access with specific
+// privileges for resources like jobs. Customer may create multiple
+// tenants to provide data isolation for different groups.
+type Tenant struct {
+	// ExternalId: Required. Client side tenant identifier, used to uniquely
+	// identify the tenant. The maximum number of allowed characters is 255.
+	ExternalId string `json:"externalId,omitempty"`
+
+	// Name: Required during tenant update. The resource name for a tenant.
+	// This is generated by the service when a tenant is created. The format
+	// is "projects/{project_id}/tenants/{tenant_id}", for example,
+	// "projects/foo/tenants/bar".
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Tenant) MarshalJSON() ([]byte, error) {
+	type NoMethod Tenant
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TimeOfDay: Represents a time of day. The date and time zone are
 // either not significant or are specified elsewhere. An API may choose
 // to allow leap seconds. Related types are google.type.Date and
@@ -4631,6 +3590,38 @@ type TimeOfDay struct {
 
 func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimestampRange: Message representing a period of time between two
+// timestamps.
+type TimestampRange struct {
+	// EndTime: End of the period (exclusive).
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Begin of the period (inclusive).
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimestampRange) MarshalJSON() ([]byte, error) {
+	type NoMethod TimestampRange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4760,7 +3751,7 @@ func (c *ProjectsTenantsCompleteQueryCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4785,15 +3776,13 @@ func (c *ProjectsTenantsCompleteQueryCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "jobs.projects.tenants.completeQuery" call.
-// Exactly one of *GoogleCloudTalentV4CompleteQueryResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudTalentV4CompleteQueryResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsTenantsCompleteQueryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4CompleteQueryResponse, error) {
+// Exactly one of *CompleteQueryResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CompleteQueryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsTenantsCompleteQueryCall) Do(opts ...googleapi.CallOption) (*CompleteQueryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4812,7 +3801,7 @@ func (c *ProjectsTenantsCompleteQueryCall) Do(opts ...googleapi.CallOption) (*Go
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4CompleteQueryResponse{
+	ret := &CompleteQueryResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4896,7 +3885,7 @@ func (c *ProjectsTenantsCompleteQueryCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "path": "v4/{+tenant}:completeQuery",
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4CompleteQueryResponse"
+	//     "$ref": "CompleteQueryResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -4909,19 +3898,19 @@ func (c *ProjectsTenantsCompleteQueryCall) Do(opts ...googleapi.CallOption) (*Go
 // method id "jobs.projects.tenants.create":
 
 type ProjectsTenantsCreateCall struct {
-	s                         *Service
-	parent                    string
-	googlecloudtalentv4tenant *GoogleCloudTalentV4Tenant
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
+	s          *Service
+	parent     string
+	tenant     *Tenant
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a new tenant entity.
-func (r *ProjectsTenantsService) Create(parent string, googlecloudtalentv4tenant *GoogleCloudTalentV4Tenant) *ProjectsTenantsCreateCall {
+func (r *ProjectsTenantsService) Create(parent string, tenant *Tenant) *ProjectsTenantsCreateCall {
 	c := &ProjectsTenantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4tenant = googlecloudtalentv4tenant
+	c.tenant = tenant
 	return c
 }
 
@@ -4952,13 +3941,13 @@ func (c *ProjectsTenantsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4tenant)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -4979,13 +3968,13 @@ func (c *ProjectsTenantsCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "jobs.projects.tenants.create" call.
-// Exactly one of *GoogleCloudTalentV4Tenant or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Tenant.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Tenant, error) {
+// Exactly one of *Tenant or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Tenant.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsTenantsCreateCall) Do(opts ...googleapi.CallOption) (*Tenant, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5004,7 +3993,7 @@ func (c *ProjectsTenantsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Tenant{
+	ret := &Tenant{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5034,10 +4023,10 @@ func (c *ProjectsTenantsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   },
 	//   "path": "v4/{+parent}/tenants",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4Tenant"
+	//     "$ref": "Tenant"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Tenant"
+	//     "$ref": "Tenant"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5091,7 +4080,7 @@ func (c *ProjectsTenantsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5233,7 +4222,7 @@ func (c *ProjectsTenantsGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5258,13 +4247,13 @@ func (c *ProjectsTenantsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "jobs.projects.tenants.get" call.
-// Exactly one of *GoogleCloudTalentV4Tenant or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Tenant.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Tenant, error) {
+// Exactly one of *Tenant or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Tenant.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsTenantsGetCall) Do(opts ...googleapi.CallOption) (*Tenant, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5283,7 +4272,7 @@ func (c *ProjectsTenantsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudT
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Tenant{
+	ret := &Tenant{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5313,7 +4302,7 @@ func (c *ProjectsTenantsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudT
 	//   },
 	//   "path": "v4/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Tenant"
+	//     "$ref": "Tenant"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5393,7 +4382,7 @@ func (c *ProjectsTenantsListCall) Header() http.Header {
 
 func (c *ProjectsTenantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5418,14 +4407,13 @@ func (c *ProjectsTenantsListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "jobs.projects.tenants.list" call.
-// Exactly one of *GoogleCloudTalentV4ListTenantsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudTalentV4ListTenantsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
+// Exactly one of *ListTenantsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListTenantsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4ListTenantsResponse, error) {
+func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*ListTenantsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5444,7 +4432,7 @@ func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4ListTenantsResponse{
+	ret := &ListTenantsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5485,7 +4473,7 @@ func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	//   },
 	//   "path": "v4/{+parent}/tenants",
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4ListTenantsResponse"
+	//     "$ref": "ListTenantsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5498,7 +4486,7 @@ func (c *ProjectsTenantsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsTenantsListCall) Pages(ctx context.Context, f func(*GoogleCloudTalentV4ListTenantsResponse) error) error {
+func (c *ProjectsTenantsListCall) Pages(ctx context.Context, f func(*ListTenantsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -5519,19 +4507,19 @@ func (c *ProjectsTenantsListCall) Pages(ctx context.Context, f func(*GoogleCloud
 // method id "jobs.projects.tenants.patch":
 
 type ProjectsTenantsPatchCall struct {
-	s                         *Service
-	name                      string
-	googlecloudtalentv4tenant *GoogleCloudTalentV4Tenant
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
+	s          *Service
+	name       string
+	tenant     *Tenant
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates specified tenant.
-func (r *ProjectsTenantsService) Patch(name string, googlecloudtalentv4tenant *GoogleCloudTalentV4Tenant) *ProjectsTenantsPatchCall {
+func (r *ProjectsTenantsService) Patch(name string, tenant *Tenant) *ProjectsTenantsPatchCall {
 	c := &ProjectsTenantsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudtalentv4tenant = googlecloudtalentv4tenant
+	c.tenant = tenant
 	return c
 }
 
@@ -5572,13 +4560,13 @@ func (c *ProjectsTenantsPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4tenant)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tenant)
 	if err != nil {
 		return nil, err
 	}
@@ -5599,13 +4587,13 @@ func (c *ProjectsTenantsPatchCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "jobs.projects.tenants.patch" call.
-// Exactly one of *GoogleCloudTalentV4Tenant or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Tenant.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Tenant, error) {
+// Exactly one of *Tenant or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Tenant.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*Tenant, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5624,7 +4612,7 @@ func (c *ProjectsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Tenant{
+	ret := &Tenant{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5660,10 +4648,10 @@ func (c *ProjectsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   },
 	//   "path": "v4/{+name}",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4Tenant"
+	//     "$ref": "Tenant"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Tenant"
+	//     "$ref": "Tenant"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5676,12 +4664,12 @@ func (c *ProjectsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 // method id "jobs.projects.tenants.clientEvents.create":
 
 type ProjectsTenantsClientEventsCreateCall struct {
-	s                              *Service
-	parent                         string
-	googlecloudtalentv4clientevent *GoogleCloudTalentV4ClientEvent
-	urlParams_                     gensupport.URLParams
-	ctx_                           context.Context
-	header_                        http.Header
+	s           *Service
+	parent      string
+	clientevent *ClientEvent
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
 }
 
 // Create: Report events issued when end user interacts with customer's
@@ -5691,10 +4679,10 @@ type ProjectsTenantsClientEventsCreateCall struct {
 // [Learn
 // more](https://cloud.google.com/talent-solution/docs/management-tools)
 // about self service tools.
-func (r *ProjectsTenantsClientEventsService) Create(parent string, googlecloudtalentv4clientevent *GoogleCloudTalentV4ClientEvent) *ProjectsTenantsClientEventsCreateCall {
+func (r *ProjectsTenantsClientEventsService) Create(parent string, clientevent *ClientEvent) *ProjectsTenantsClientEventsCreateCall {
 	c := &ProjectsTenantsClientEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4clientevent = googlecloudtalentv4clientevent
+	c.clientevent = clientevent
 	return c
 }
 
@@ -5725,13 +4713,13 @@ func (c *ProjectsTenantsClientEventsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsClientEventsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4clientevent)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.clientevent)
 	if err != nil {
 		return nil, err
 	}
@@ -5752,13 +4740,13 @@ func (c *ProjectsTenantsClientEventsCreateCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "jobs.projects.tenants.clientEvents.create" call.
-// Exactly one of *GoogleCloudTalentV4ClientEvent or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudTalentV4ClientEvent.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsClientEventsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4ClientEvent, error) {
+// Exactly one of *ClientEvent or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ClientEvent.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsTenantsClientEventsCreateCall) Do(opts ...googleapi.CallOption) (*ClientEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5777,7 +4765,7 @@ func (c *ProjectsTenantsClientEventsCreateCall) Do(opts ...googleapi.CallOption)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4ClientEvent{
+	ret := &ClientEvent{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5807,10 +4795,10 @@ func (c *ProjectsTenantsClientEventsCreateCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "path": "v4/{+parent}/clientEvents",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4ClientEvent"
+	//     "$ref": "ClientEvent"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4ClientEvent"
+	//     "$ref": "ClientEvent"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5823,19 +4811,19 @@ func (c *ProjectsTenantsClientEventsCreateCall) Do(opts ...googleapi.CallOption)
 // method id "jobs.projects.tenants.companies.create":
 
 type ProjectsTenantsCompaniesCreateCall struct {
-	s                          *Service
-	parent                     string
-	googlecloudtalentv4company *GoogleCloudTalentV4Company
-	urlParams_                 gensupport.URLParams
-	ctx_                       context.Context
-	header_                    http.Header
+	s          *Service
+	parent     string
+	company    *Company
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a new company entity.
-func (r *ProjectsTenantsCompaniesService) Create(parent string, googlecloudtalentv4company *GoogleCloudTalentV4Company) *ProjectsTenantsCompaniesCreateCall {
+func (r *ProjectsTenantsCompaniesService) Create(parent string, company *Company) *ProjectsTenantsCompaniesCreateCall {
 	c := &ProjectsTenantsCompaniesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4company = googlecloudtalentv4company
+	c.company = company
 	return c
 }
 
@@ -5866,13 +4854,13 @@ func (c *ProjectsTenantsCompaniesCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4company)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.company)
 	if err != nil {
 		return nil, err
 	}
@@ -5893,13 +4881,13 @@ func (c *ProjectsTenantsCompaniesCreateCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "jobs.projects.tenants.companies.create" call.
-// Exactly one of *GoogleCloudTalentV4Company or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Company.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsCompaniesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Company, error) {
+// Exactly one of *Company or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Company.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsTenantsCompaniesCreateCall) Do(opts ...googleapi.CallOption) (*Company, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5918,7 +4906,7 @@ func (c *ProjectsTenantsCompaniesCreateCall) Do(opts ...googleapi.CallOption) (*
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Company{
+	ret := &Company{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5948,10 +4936,10 @@ func (c *ProjectsTenantsCompaniesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "path": "v4/{+parent}/companies",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4Company"
+	//     "$ref": "Company"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Company"
+	//     "$ref": "Company"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -6006,7 +4994,7 @@ func (c *ProjectsTenantsCompaniesDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6148,7 +5136,7 @@ func (c *ProjectsTenantsCompaniesGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6173,13 +5161,13 @@ func (c *ProjectsTenantsCompaniesGetCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "jobs.projects.tenants.companies.get" call.
-// Exactly one of *GoogleCloudTalentV4Company or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Company.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsCompaniesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Company, error) {
+// Exactly one of *Company or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Company.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsTenantsCompaniesGetCall) Do(opts ...googleapi.CallOption) (*Company, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6198,7 +5186,7 @@ func (c *ProjectsTenantsCompaniesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Company{
+	ret := &Company{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6228,7 +5216,7 @@ func (c *ProjectsTenantsCompaniesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "path": "v4/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Company"
+	//     "$ref": "Company"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -6317,7 +5305,7 @@ func (c *ProjectsTenantsCompaniesListCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6342,15 +5330,13 @@ func (c *ProjectsTenantsCompaniesListCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "jobs.projects.tenants.companies.list" call.
-// Exactly one of *GoogleCloudTalentV4ListCompaniesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudTalentV4ListCompaniesResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsTenantsCompaniesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4ListCompaniesResponse, error) {
+// Exactly one of *ListCompaniesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListCompaniesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsTenantsCompaniesListCall) Do(opts ...googleapi.CallOption) (*ListCompaniesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6369,7 +5355,7 @@ func (c *ProjectsTenantsCompaniesListCall) Do(opts ...googleapi.CallOption) (*Go
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4ListCompaniesResponse{
+	ret := &ListCompaniesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6415,7 +5401,7 @@ func (c *ProjectsTenantsCompaniesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "path": "v4/{+parent}/companies",
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4ListCompaniesResponse"
+	//     "$ref": "ListCompaniesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -6428,7 +5414,7 @@ func (c *ProjectsTenantsCompaniesListCall) Do(opts ...googleapi.CallOption) (*Go
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsTenantsCompaniesListCall) Pages(ctx context.Context, f func(*GoogleCloudTalentV4ListCompaniesResponse) error) error {
+func (c *ProjectsTenantsCompaniesListCall) Pages(ctx context.Context, f func(*ListCompaniesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -6449,19 +5435,19 @@ func (c *ProjectsTenantsCompaniesListCall) Pages(ctx context.Context, f func(*Go
 // method id "jobs.projects.tenants.companies.patch":
 
 type ProjectsTenantsCompaniesPatchCall struct {
-	s                          *Service
-	name                       string
-	googlecloudtalentv4company *GoogleCloudTalentV4Company
-	urlParams_                 gensupport.URLParams
-	ctx_                       context.Context
-	header_                    http.Header
+	s          *Service
+	name       string
+	company    *Company
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates specified company.
-func (r *ProjectsTenantsCompaniesService) Patch(name string, googlecloudtalentv4company *GoogleCloudTalentV4Company) *ProjectsTenantsCompaniesPatchCall {
+func (r *ProjectsTenantsCompaniesService) Patch(name string, company *Company) *ProjectsTenantsCompaniesPatchCall {
 	c := &ProjectsTenantsCompaniesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudtalentv4company = googlecloudtalentv4company
+	c.company = company
 	return c
 }
 
@@ -6502,13 +5488,13 @@ func (c *ProjectsTenantsCompaniesPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4company)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.company)
 	if err != nil {
 		return nil, err
 	}
@@ -6529,13 +5515,13 @@ func (c *ProjectsTenantsCompaniesPatchCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "jobs.projects.tenants.companies.patch" call.
-// Exactly one of *GoogleCloudTalentV4Company or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Company.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsCompaniesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Company, error) {
+// Exactly one of *Company or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Company.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsTenantsCompaniesPatchCall) Do(opts ...googleapi.CallOption) (*Company, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6554,7 +5540,7 @@ func (c *ProjectsTenantsCompaniesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Company{
+	ret := &Company{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6590,10 +5576,10 @@ func (c *ProjectsTenantsCompaniesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "path": "v4/{+name}",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4Company"
+	//     "$ref": "Company"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Company"
+	//     "$ref": "Company"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -6606,19 +5592,19 @@ func (c *ProjectsTenantsCompaniesPatchCall) Do(opts ...googleapi.CallOption) (*G
 // method id "jobs.projects.tenants.jobs.batchCreate":
 
 type ProjectsTenantsJobsBatchCreateCall struct {
-	s                                         *Service
-	parent                                    string
-	googlecloudtalentv4batchcreatejobsrequest *GoogleCloudTalentV4BatchCreateJobsRequest
-	urlParams_                                gensupport.URLParams
-	ctx_                                      context.Context
-	header_                                   http.Header
+	s                      *Service
+	parent                 string
+	batchcreatejobsrequest *BatchCreateJobsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
 }
 
 // BatchCreate: Begins executing a batch create jobs operation.
-func (r *ProjectsTenantsJobsService) BatchCreate(parent string, googlecloudtalentv4batchcreatejobsrequest *GoogleCloudTalentV4BatchCreateJobsRequest) *ProjectsTenantsJobsBatchCreateCall {
+func (r *ProjectsTenantsJobsService) BatchCreate(parent string, batchcreatejobsrequest *BatchCreateJobsRequest) *ProjectsTenantsJobsBatchCreateCall {
 	c := &ProjectsTenantsJobsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4batchcreatejobsrequest = googlecloudtalentv4batchcreatejobsrequest
+	c.batchcreatejobsrequest = batchcreatejobsrequest
 	return c
 }
 
@@ -6649,13 +5635,13 @@ func (c *ProjectsTenantsJobsBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4batchcreatejobsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreatejobsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6731,7 +5717,7 @@ func (c *ProjectsTenantsJobsBatchCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "path": "v4/{+parent}/jobs:batchCreate",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4BatchCreateJobsRequest"
+	//     "$ref": "BatchCreateJobsRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -6747,19 +5733,19 @@ func (c *ProjectsTenantsJobsBatchCreateCall) Do(opts ...googleapi.CallOption) (*
 // method id "jobs.projects.tenants.jobs.batchDelete":
 
 type ProjectsTenantsJobsBatchDeleteCall struct {
-	s                                         *Service
-	parent                                    string
-	googlecloudtalentv4batchdeletejobsrequest *GoogleCloudTalentV4BatchDeleteJobsRequest
-	urlParams_                                gensupport.URLParams
-	ctx_                                      context.Context
-	header_                                   http.Header
+	s                      *Service
+	parent                 string
+	batchdeletejobsrequest *BatchDeleteJobsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
 }
 
 // BatchDelete: Begins executing a batch delete jobs operation.
-func (r *ProjectsTenantsJobsService) BatchDelete(parent string, googlecloudtalentv4batchdeletejobsrequest *GoogleCloudTalentV4BatchDeleteJobsRequest) *ProjectsTenantsJobsBatchDeleteCall {
+func (r *ProjectsTenantsJobsService) BatchDelete(parent string, batchdeletejobsrequest *BatchDeleteJobsRequest) *ProjectsTenantsJobsBatchDeleteCall {
 	c := &ProjectsTenantsJobsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4batchdeletejobsrequest = googlecloudtalentv4batchdeletejobsrequest
+	c.batchdeletejobsrequest = batchdeletejobsrequest
 	return c
 }
 
@@ -6790,13 +5776,13 @@ func (c *ProjectsTenantsJobsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4batchdeletejobsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeletejobsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -6872,7 +5858,7 @@ func (c *ProjectsTenantsJobsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "path": "v4/{+parent}/jobs:batchDelete",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4BatchDeleteJobsRequest"
+	//     "$ref": "BatchDeleteJobsRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -6888,19 +5874,19 @@ func (c *ProjectsTenantsJobsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*
 // method id "jobs.projects.tenants.jobs.batchUpdate":
 
 type ProjectsTenantsJobsBatchUpdateCall struct {
-	s                                         *Service
-	parent                                    string
-	googlecloudtalentv4batchupdatejobsrequest *GoogleCloudTalentV4BatchUpdateJobsRequest
-	urlParams_                                gensupport.URLParams
-	ctx_                                      context.Context
-	header_                                   http.Header
+	s                      *Service
+	parent                 string
+	batchupdatejobsrequest *BatchUpdateJobsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
 }
 
 // BatchUpdate: Begins executing a batch update jobs operation.
-func (r *ProjectsTenantsJobsService) BatchUpdate(parent string, googlecloudtalentv4batchupdatejobsrequest *GoogleCloudTalentV4BatchUpdateJobsRequest) *ProjectsTenantsJobsBatchUpdateCall {
+func (r *ProjectsTenantsJobsService) BatchUpdate(parent string, batchupdatejobsrequest *BatchUpdateJobsRequest) *ProjectsTenantsJobsBatchUpdateCall {
 	c := &ProjectsTenantsJobsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4batchupdatejobsrequest = googlecloudtalentv4batchupdatejobsrequest
+	c.batchupdatejobsrequest = batchupdatejobsrequest
 	return c
 }
 
@@ -6931,13 +5917,13 @@ func (c *ProjectsTenantsJobsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4batchupdatejobsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatejobsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7013,7 +5999,7 @@ func (c *ProjectsTenantsJobsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "path": "v4/{+parent}/jobs:batchUpdate",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4BatchUpdateJobsRequest"
+	//     "$ref": "BatchUpdateJobsRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -7029,20 +6015,20 @@ func (c *ProjectsTenantsJobsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*
 // method id "jobs.projects.tenants.jobs.create":
 
 type ProjectsTenantsJobsCreateCall struct {
-	s                      *Service
-	parent                 string
-	googlecloudtalentv4job *GoogleCloudTalentV4Job
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
+	s          *Service
+	parent     string
+	job        *Job
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Create: Creates a new job. Typically, the job becomes searchable
 // within 10 seconds, but it may take up to 5 minutes.
-func (r *ProjectsTenantsJobsService) Create(parent string, googlecloudtalentv4job *GoogleCloudTalentV4Job) *ProjectsTenantsJobsCreateCall {
+func (r *ProjectsTenantsJobsService) Create(parent string, job *Job) *ProjectsTenantsJobsCreateCall {
 	c := &ProjectsTenantsJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4job = googlecloudtalentv4job
+	c.job = job
 	return c
 }
 
@@ -7073,13 +6059,13 @@ func (c *ProjectsTenantsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4job)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
 	if err != nil {
 		return nil, err
 	}
@@ -7100,13 +6086,13 @@ func (c *ProjectsTenantsJobsCreateCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "jobs.projects.tenants.jobs.create" call.
-// Exactly one of *GoogleCloudTalentV4Job or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Job.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsJobsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Job, error) {
+// Exactly one of *Job or error will be non-nil. Any non-2xx status code
+// is an error. Response headers are in either
+// *Job.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTenantsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7125,7 +6111,7 @@ func (c *ProjectsTenantsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Job{
+	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7155,10 +6141,10 @@ func (c *ProjectsTenantsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   },
 	//   "path": "v4/{+parent}/jobs",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4Job"
+	//     "$ref": "Job"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Job"
+	//     "$ref": "Job"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -7213,7 +6199,7 @@ func (c *ProjectsTenantsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7356,7 +6342,7 @@ func (c *ProjectsTenantsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7381,13 +6367,13 @@ func (c *ProjectsTenantsJobsGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "jobs.projects.tenants.jobs.get" call.
-// Exactly one of *GoogleCloudTalentV4Job or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Job.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Job, error) {
+// Exactly one of *Job or error will be non-nil. Any non-2xx status code
+// is an error. Response headers are in either
+// *Job.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTenantsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7406,7 +6392,7 @@ func (c *ProjectsTenantsJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Job{
+	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7436,7 +6422,7 @@ func (c *ProjectsTenantsJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   },
 	//   "path": "v4/{+name}",
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Job"
+	//     "$ref": "Job"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -7554,7 +6540,7 @@ func (c *ProjectsTenantsJobsListCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7579,14 +6565,13 @@ func (c *ProjectsTenantsJobsListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "jobs.projects.tenants.jobs.list" call.
-// Exactly one of *GoogleCloudTalentV4ListJobsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudTalentV4ListJobsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsTenantsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4ListJobsResponse, error) {
+// Exactly one of *ListJobsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListJobsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsTenantsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7605,7 +6590,7 @@ func (c *ProjectsTenantsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4ListJobsResponse{
+	ret := &ListJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7670,7 +6655,7 @@ func (c *ProjectsTenantsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//   },
 	//   "path": "v4/{+parent}/jobs",
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4ListJobsResponse"
+	//     "$ref": "ListJobsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -7683,7 +6668,7 @@ func (c *ProjectsTenantsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleC
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsTenantsJobsListCall) Pages(ctx context.Context, f func(*GoogleCloudTalentV4ListJobsResponse) error) error {
+func (c *ProjectsTenantsJobsListCall) Pages(ctx context.Context, f func(*ListJobsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -7704,21 +6689,21 @@ func (c *ProjectsTenantsJobsListCall) Pages(ctx context.Context, f func(*GoogleC
 // method id "jobs.projects.tenants.jobs.patch":
 
 type ProjectsTenantsJobsPatchCall struct {
-	s                      *Service
-	name                   string
-	googlecloudtalentv4job *GoogleCloudTalentV4Job
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
+	s          *Service
+	name       string
+	job        *Job
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Patch: Updates specified job. Typically, updated contents become
 // visible in search results within 10 seconds, but it may take up to 5
 // minutes.
-func (r *ProjectsTenantsJobsService) Patch(name string, googlecloudtalentv4job *GoogleCloudTalentV4Job) *ProjectsTenantsJobsPatchCall {
+func (r *ProjectsTenantsJobsService) Patch(name string, job *Job) *ProjectsTenantsJobsPatchCall {
 	c := &ProjectsTenantsJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlecloudtalentv4job = googlecloudtalentv4job
+	c.job = job
 	return c
 }
 
@@ -7759,13 +6744,13 @@ func (c *ProjectsTenantsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4job)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.job)
 	if err != nil {
 		return nil, err
 	}
@@ -7786,13 +6771,13 @@ func (c *ProjectsTenantsJobsPatchCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "jobs.projects.tenants.jobs.patch" call.
-// Exactly one of *GoogleCloudTalentV4Job or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleCloudTalentV4Job.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsTenantsJobsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4Job, error) {
+// Exactly one of *Job or error will be non-nil. Any non-2xx status code
+// is an error. Response headers are in either
+// *Job.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsTenantsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7811,7 +6796,7 @@ func (c *ProjectsTenantsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Google
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4Job{
+	ret := &Job{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7847,10 +6832,10 @@ func (c *ProjectsTenantsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Google
 	//   },
 	//   "path": "v4/{+name}",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4Job"
+	//     "$ref": "Job"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4Job"
+	//     "$ref": "Job"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -7863,21 +6848,21 @@ func (c *ProjectsTenantsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Google
 // method id "jobs.projects.tenants.jobs.search":
 
 type ProjectsTenantsJobsSearchCall struct {
-	s                                    *Service
-	parent                               string
-	googlecloudtalentv4searchjobsrequest *GoogleCloudTalentV4SearchJobsRequest
-	urlParams_                           gensupport.URLParams
-	ctx_                                 context.Context
-	header_                              http.Header
+	s                 *Service
+	parent            string
+	searchjobsrequest *SearchJobsRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
 }
 
 // Search: Searches for jobs using the provided SearchJobsRequest. This
 // call constrains the visibility of jobs present in the database, and
 // only returns jobs that the caller has permission to search against.
-func (r *ProjectsTenantsJobsService) Search(parent string, googlecloudtalentv4searchjobsrequest *GoogleCloudTalentV4SearchJobsRequest) *ProjectsTenantsJobsSearchCall {
+func (r *ProjectsTenantsJobsService) Search(parent string, searchjobsrequest *SearchJobsRequest) *ProjectsTenantsJobsSearchCall {
 	c := &ProjectsTenantsJobsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4searchjobsrequest = googlecloudtalentv4searchjobsrequest
+	c.searchjobsrequest = searchjobsrequest
 	return c
 }
 
@@ -7908,13 +6893,13 @@ func (c *ProjectsTenantsJobsSearchCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4searchjobsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchjobsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -7935,14 +6920,13 @@ func (c *ProjectsTenantsJobsSearchCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "jobs.projects.tenants.jobs.search" call.
-// Exactly one of *GoogleCloudTalentV4SearchJobsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudTalentV4SearchJobsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
+// Exactly one of *SearchJobsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SearchJobsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsTenantsJobsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4SearchJobsResponse, error) {
+func (c *ProjectsTenantsJobsSearchCall) Do(opts ...googleapi.CallOption) (*SearchJobsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -7961,7 +6945,7 @@ func (c *ProjectsTenantsJobsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4SearchJobsResponse{
+	ret := &SearchJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7991,10 +6975,10 @@ func (c *ProjectsTenantsJobsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   },
 	//   "path": "v4/{+parent}/jobs:search",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4SearchJobsRequest"
+	//     "$ref": "SearchJobsRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4SearchJobsResponse"
+	//     "$ref": "SearchJobsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -8007,9 +6991,9 @@ func (c *ProjectsTenantsJobsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsTenantsJobsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudTalentV4SearchJobsResponse) error) error {
+func (c *ProjectsTenantsJobsSearchCall) Pages(ctx context.Context, f func(*SearchJobsResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googlecloudtalentv4searchjobsrequest.PageToken = pt }(c.googlecloudtalentv4searchjobsrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.searchjobsrequest.PageToken = pt }(c.searchjobsrequest.PageToken) // reset paging to original point
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8021,19 +7005,19 @@ func (c *ProjectsTenantsJobsSearchCall) Pages(ctx context.Context, f func(*Googl
 		if x.NextPageToken == "" {
 			return nil
 		}
-		c.googlecloudtalentv4searchjobsrequest.PageToken = x.NextPageToken
+		c.searchjobsrequest.PageToken = x.NextPageToken
 	}
 }
 
 // method id "jobs.projects.tenants.jobs.searchForAlert":
 
 type ProjectsTenantsJobsSearchForAlertCall struct {
-	s                                    *Service
-	parent                               string
-	googlecloudtalentv4searchjobsrequest *GoogleCloudTalentV4SearchJobsRequest
-	urlParams_                           gensupport.URLParams
-	ctx_                                 context.Context
-	header_                              http.Header
+	s                 *Service
+	parent            string
+	searchjobsrequest *SearchJobsRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
 }
 
 // SearchForAlert: Searches for jobs using the provided
@@ -8044,10 +7028,10 @@ type ProjectsTenantsJobsSearchForAlertCall struct {
 // specifically target passive job seekers. This call constrains the
 // visibility of jobs present in the database, and only returns jobs the
 // caller has permission to search against.
-func (r *ProjectsTenantsJobsService) SearchForAlert(parent string, googlecloudtalentv4searchjobsrequest *GoogleCloudTalentV4SearchJobsRequest) *ProjectsTenantsJobsSearchForAlertCall {
+func (r *ProjectsTenantsJobsService) SearchForAlert(parent string, searchjobsrequest *SearchJobsRequest) *ProjectsTenantsJobsSearchForAlertCall {
 	c := &ProjectsTenantsJobsSearchForAlertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.googlecloudtalentv4searchjobsrequest = googlecloudtalentv4searchjobsrequest
+	c.searchjobsrequest = searchjobsrequest
 	return c
 }
 
@@ -8078,13 +7062,13 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsSearchForAlertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudtalentv4searchjobsrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchjobsrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -8105,14 +7089,13 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "jobs.projects.tenants.jobs.searchForAlert" call.
-// Exactly one of *GoogleCloudTalentV4SearchJobsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudTalentV4SearchJobsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
+// Exactly one of *SearchJobsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *SearchJobsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsTenantsJobsSearchForAlertCall) Do(opts ...googleapi.CallOption) (*GoogleCloudTalentV4SearchJobsResponse, error) {
+func (c *ProjectsTenantsJobsSearchForAlertCall) Do(opts ...googleapi.CallOption) (*SearchJobsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -8131,7 +7114,7 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) Do(opts ...googleapi.CallOption)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudTalentV4SearchJobsResponse{
+	ret := &SearchJobsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -8161,10 +7144,10 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) Do(opts ...googleapi.CallOption)
 	//   },
 	//   "path": "v4/{+parent}/jobs:searchForAlert",
 	//   "request": {
-	//     "$ref": "GoogleCloudTalentV4SearchJobsRequest"
+	//     "$ref": "SearchJobsRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudTalentV4SearchJobsResponse"
+	//     "$ref": "SearchJobsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -8177,9 +7160,9 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) Do(opts ...googleapi.CallOption)
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsTenantsJobsSearchForAlertCall) Pages(ctx context.Context, f func(*GoogleCloudTalentV4SearchJobsResponse) error) error {
+func (c *ProjectsTenantsJobsSearchForAlertCall) Pages(ctx context.Context, f func(*SearchJobsResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googlecloudtalentv4searchjobsrequest.PageToken = pt }(c.googlecloudtalentv4searchjobsrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.searchjobsrequest.PageToken = pt }(c.searchjobsrequest.PageToken) // reset paging to original point
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8191,6 +7174,6 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) Pages(ctx context.Context, f fun
 		if x.NextPageToken == "" {
 			return nil
 		}
-		c.googlecloudtalentv4searchjobsrequest.PageToken = x.NextPageToken
+		c.searchjobsrequest.PageToken = x.NextPageToken
 	}
 }

@@ -307,6 +307,7 @@ func TestClientWrite_WriteFails(t *testing.T) {
 }
 
 func TestClientWrite_CloseAndRecvFails(t *testing.T) {
+	t.Skip("https://github.com/googleapis/google-api-go-client/issues/775")
 	setup := newTestSetup("")
 	w, err := setup.client.NewWriter(setup.ctx, "CloseAndRecvFails")
 	if err != nil {

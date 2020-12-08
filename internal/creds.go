@@ -119,6 +119,17 @@ func impersonateCredentials(ctx context.Context, creds *google.Credentials, ds *
 	if len(ds.ImpersonationConfig.Scopes) == 0 {
 		ds.ImpersonationConfig.Scopes = ds.GetScopes()
 	}
+
+	if ds.ImpersonationConfig.Audience == "" {
+		// TODO: should this fallback on the default audience?
+		if len(ds.Audiences) != 1 {
+			return nil, fmt.Errorf("internal: %d audiences specified, need exactly 1", len(ds.Audiences))
+		}
+		ds.ImpersonationConfig.Audience = ds.Audiences[0]
+	}
+
+	ds.ImpersonationConfig.IncludeEmail = ds.IncludeEmail
+
 	ts, err := impersonate.TokenSource(ctx, creds.TokenSource, ds.ImpersonationConfig)
 	if err != nil {
 		return nil, err

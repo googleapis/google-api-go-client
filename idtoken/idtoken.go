@@ -78,9 +78,6 @@ func NewTokenSource(ctx context.Context, audience string, opts ...ClientOption) 
 	if ds.TokenSource != nil {
 		return nil, fmt.Errorf("idtoken: option.WithTokenSource not supported")
 	}
-	if ds.ImpersonationConfig != nil {
-		return nil, fmt.Errorf("idtoken: option.WithImpersonatedCredentials not supported")
-	}
 	return newTokenSource(ctx, audience, &ds)
 }
 
@@ -88,6 +85,9 @@ func newTokenSource(ctx context.Context, audience string, ds *internal.DialSetti
 	creds, err := internal.Creds(ctx, ds)
 	if err != nil {
 		return nil, err
+	}
+	if ds.ImpersonationConfig != nil {
+		return creds.TokenSource, nil
 	}
 	if len(creds.JSON) > 0 {
 		return tokenSourceFromBytes(ctx, creds.JSON, audience, ds)

@@ -324,3 +324,16 @@ func (i impersonateServiceAccount) Apply(o *internal.DialSettings) {
 	o.ImpersonationConfig.Delegates = make([]string, len(i.delegates))
 	copy(o.ImpersonationConfig.Delegates, i.delegates)
 }
+
+type withIncludeEmail struct{}
+
+// WithIncludeEmail controls inclusion of email in generated JWTs.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
+func WithIncludeEmail() ClientOption {
+	return withIncludeEmail{}
+}
+
+func (_ withIncludeEmail) Apply(o *internal.DialSettings) {
+	o.IncludeEmail = true
+}

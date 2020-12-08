@@ -22,8 +22,12 @@ import (
 type Config struct {
 	// Target is the service account to impersonate. Required.
 	Target string
-	// Scopes the impersonated credential should have. Required.
+	// Scopes the impersonated credential should have. Required for access tokens.
 	Scopes []string
+	// Audience for the token. Required for ID tokens.
+	Audience string
+	// IncludeEmail in the generated ID token. Optional.
+	IncludeEmail bool
 	// Delegates are the service accounts in a delegation chain. Each service
 	// account must be granted roles/iam.serviceAccountTokenCreator on the next
 	// service account in the chain. Optional.
@@ -33,10 +37,17 @@ type Config struct {
 // TokenSource returns an impersonated TokenSource configured with the provided
 // config using ts as the base credential provider for making requests.
 func TokenSource(ctx context.Context, ts oauth2.TokenSource, config *Config) (oauth2.TokenSource, error) {
-	if len(config.Scopes) == 0 {
-		return nil, fmt.Errorf("impersonate: scopes must be provided")
+	if len(config.Scopes) > 0 {
+		return accessTokenSource(ctx, ts, config)
+	} else if config.Audience != "" {
+		return idTokenSource(ctx, ts, config)
 	}
-	its := impersonatedTokenSource{
+
+	return nil, fmt.Errorf("impersonate: scopes or audience must be provided")
+}
+
+func accessTokenSource(ctx context.Context, ts oauth2.TokenSource, config *Config) (oauth2.TokenSource, error) {
+	its := impersonatedAccessTokenSource{
 		ctx:  ctx,
 		ts:   ts,
 		name: formatIAMServiceAccountName(config.Target),
@@ -51,6 +62,23 @@ func TokenSource(ctx context.Context, ts oauth2.TokenSource, config *Config) (oa
 	}
 	its.scopes = make([]string, len(config.Scopes))
 	copy(its.scopes, config.Scopes)
+
+	return oauth2.ReuseTokenSource(nil, its), nil
+}
+
+func idTokenSource(ctx context.Context, ts oauth2.TokenSource, config *Config) (oauth2.TokenSource, error) {
+	its := impersonatedIdTokenSource{
+		ctx:          ctx,
+		ts:           ts,
+		name:         formatIAMServiceAccountName(config.Target),
+		audience:     config.Audience,
+		includeEmail: config.IncludeEmail,
+	}
+
+	its.delegates = make([]string, len(config.Delegates))
+	for i, v := range config.Delegates {
+		its.delegates[i] = formatIAMServiceAccountName(v)
+	}
 
 	return oauth2.ReuseTokenSource(nil, its), nil
 }
@@ -70,7 +98,7 @@ type generateAccessTokenResp struct {
 	ExpireTime  string `json:"expireTime"`
 }
 
-type impersonatedTokenSource struct {
+type impersonatedAccessTokenSource struct {
 	ctx context.Context
 	ts  oauth2.TokenSource
 
@@ -81,48 +109,98 @@ type impersonatedTokenSource struct {
 }
 
 // Token returns an impersonated Token.
-func (i impersonatedTokenSource) Token() (*oauth2.Token, error) {
-	hc := oauth2.NewClient(i.ctx, i.ts)
-	reqBody := generateAccessTokenReq{
+func (i impersonatedAccessTokenSource) Token() (*oauth2.Token, error) {
+	req := generateAccessTokenReq{
 		Delegates: i.delegates,
 		Lifetime:  i.lifetime,
 		Scope:     i.scopes,
 	}
-	b, err := json.Marshal(reqBody)
-	if err != nil {
-		return nil, fmt.Errorf("impersonate: unable to marshal request: %v", err)
-	}
+	resp := generateAccessTokenResp{}
+
+	hc := oauth2.NewClient(i.ctx, i.ts)
 	url := fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateAccessToken", i.name)
+	if err := getToken(i.ctx, hc, url, &req, &resp); err != nil {
+		return nil, err
+	}
+
+	expiry, err := time.Parse(time.RFC3339, resp.ExpireTime)
+	if err != nil {
+		return nil, fmt.Errorf("impersonate: unable to parse expiry: %v", err)
+	}
+
+	return &oauth2.Token{
+		AccessToken: resp.AccessToken,
+		Expiry:      expiry,
+	}, nil
+}
+
+type impersonatedIdTokenSource struct {
+	ctx context.Context
+	ts  oauth2.TokenSource
+
+	name         string
+	audience     string
+	delegates    []string
+	includeEmail bool
+}
+
+type generateIdTokenReq struct {
+	Audience     string   `json:"audience,omitempty"`
+	Delegates    []string `json:"delegates,omitempty"`
+	IncludeEmail bool     `json:"includeEmail,omitempty"`
+}
+
+type generateIdTokenResp struct {
+	Token string `json:"token"`
+}
+
+// Token returns an impersonated Token.
+func (i impersonatedIdTokenSource) Token() (*oauth2.Token, error) {
+	req := generateIdTokenReq{
+		Audience:     i.audience,
+		Delegates:    i.delegates,
+		IncludeEmail: i.includeEmail,
+	}
+	resp := generateIdTokenResp{}
+
+	hc := oauth2.NewClient(i.ctx, i.ts)
+	url := fmt.Sprintf("https://iamcredentials.googleapis.com/v1/%s:generateIdToken", i.name)
+	if err := getToken(i.ctx, hc, url, &req, &resp); err != nil {
+		return nil, err
+	}
+
+	return &oauth2.Token{
+		AccessToken: resp.Token,
+		// ID tokens are valid for one hour, leave a little buffer
+		Expiry: time.Now().Add(55 * time.Minute),
+	}, nil
+}
+
+func getToken(ctx context.Context, hc *http.Client, url string, in interface{}, out interface{}) error {
+	b, err := json.Marshal(in)
+	if err != nil {
+		return fmt.Errorf("impersonate: unable to marshal request: %v", err)
+	}
 	req, err := http.NewRequest("POST", url, bytes.NewReader(b))
 	if err != nil {
-		return nil, fmt.Errorf("impersonate: unable to create request: %v", err)
+		return fmt.Errorf("impersonate: unable to create request: %v", err)
 	}
-	req = req.WithContext(i.ctx)
+	req = req.WithContext(ctx)
 	req.Header.Set("Content-Type", "application/json")
-
 	resp, err := hc.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("impersonate: unable to generate access token: %v", err)
+		return fmt.Errorf("impersonate: unable to generate token: %v", err)
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(io.LimitReader(resp.Body, 1<<20))
 	if err != nil {
-		return nil, fmt.Errorf("impersonate: unable to read body: %v", err)
+		return fmt.Errorf("impersonate: unable to read body: %v", err)
 	}
 	if c := resp.StatusCode; c < 200 || c > 299 {
-		return nil, fmt.Errorf("impersonate: status code %d: %s", c, body)
+		return fmt.Errorf("impersonate: status code %d: %s", c, body)
 	}
-
-	var accessTokenResp generateAccessTokenResp
-	if err := json.Unmarshal(body, &accessTokenResp); err != nil {
-		return nil, fmt.Errorf("impersonate: unable to parse response: %v", err)
+	if err := json.Unmarshal(body, out); err != nil {
+		return fmt.Errorf("impersonate: unable to parse response: %v", err)
 	}
-	expiry, err := time.Parse(time.RFC3339, accessTokenResp.ExpireTime)
-	if err != nil {
-		return nil, fmt.Errorf("impersonate: unable to parse expiry: %v", err)
-	}
-	return &oauth2.Token{
-		AccessToken: accessTokenResp.AccessToken,
-		Expiry:      expiry,
-	}, nil
+	return nil
 }

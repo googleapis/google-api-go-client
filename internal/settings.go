@@ -44,6 +44,7 @@ type DialSettings struct {
 	SkipValidation      bool
 	ImpersonationConfig *impersonate.Config
 	EnableDirectPath    bool
+	IncludeEmail        bool
 
 	// Google API system parameters. For more information please read:
 	// https://cloud.google.com/apis/docs/system-parameters
@@ -119,8 +120,13 @@ func (ds *DialSettings) Validate() error {
 	if ds.ClientCertSource != nil && (ds.GRPCConn != nil || ds.GRPCConnPool != nil || ds.GRPCConnPoolSize != 0 || ds.GRPCDialOpts != nil) {
 		return errors.New("WithClientCertSource is currently only supported for HTTP. gRPC settings are incompatible")
 	}
-	if ds.ImpersonationConfig != nil && len(ds.ImpersonationConfig.Scopes) == 0 && len(ds.Scopes) == 0 {
-		return errors.New("WithImpersonatedCredentials requires scopes being provided")
+	if ds.ImpersonationConfig != nil {
+		validScopes := len(ds.ImpersonationConfig.Scopes) != 0 || len(ds.Scopes) != 0
+		// TODO: should this fallback on the default audience?
+		validAudience := ds.ImpersonationConfig.Audience != "" || len(ds.Audiences) == 1
+		if !validScopes && !validAudience {
+			return errors.New("WithImpersonatedCredentials requires scopes or a single audience to be provided")
+		}
 	}
 	return nil
 }

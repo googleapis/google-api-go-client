@@ -6,7 +6,7 @@
 
 // Package trafficdirector provides access to the Traffic Director API.
 //
-// For product documentation, see: https://www.envoyproxy.io/docs/envoy/latest/configuration/overview/v2_overview#management-server
+// For product documentation, see: https://cloud.google.com/traffic-director
 //
 // Creating a client
 //
@@ -1659,7 +1659,7 @@ func (c *DiscoveryClientStatusCall) Header() http.Header {
 
 func (c *DiscoveryClientStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

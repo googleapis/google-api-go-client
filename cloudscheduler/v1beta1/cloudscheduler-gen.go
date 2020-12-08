@@ -462,6 +462,13 @@ type Job struct {
 	// LastAttemptTime: Output only. The time the last job attempt started.
 	LastAttemptTime string `json:"lastAttemptTime,omitempty"`
 
+	// LegacyAppEngineCron: Immutable. This field is used to manage the
+	// legacy App Engine Cron jobs using the Cloud Scheduler API. If the
+	// field is set to true, the job will be considered a legacy job. Note
+	// that App Engine Cron jobs have fewer features than Cloud Scheduler
+	// jobs, e.g., are only limited to App Engine targets.
+	LegacyAppEngineCron bool `json:"legacyAppEngineCron,omitempty"`
+
 	// Name: Optionally caller-specified in CreateJob, after which it
 	// becomes output only. The job name. For example:
 	// `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`. *
@@ -960,6 +967,34 @@ func (s *RetryConfig) MarshalJSON() ([]byte, error) {
 // RunJobRequest: Request message for forcing a job to run now using
 // RunJob.
 type RunJobRequest struct {
+	// LegacyAppEngineCron: This field is used to manage the legacy App
+	// Engine Cron jobs using the Cloud Scheduler API. If the field is set
+	// to true, the job in the __cron queue with the corresponding name will
+	// be forced to run instead.
+	LegacyAppEngineCron bool `json:"legacyAppEngineCron,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LegacyAppEngineCron")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LegacyAppEngineCron") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RunJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -1061,7 +1096,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1227,7 +1262,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1399,7 +1434,7 @@ func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1510,6 +1545,16 @@ func (r *ProjectsLocationsJobsService) Delete(name string) *ProjectsLocationsJob
 	return c
 }
 
+// LegacyAppEngineCron sets the optional parameter
+// "legacyAppEngineCron": This field is used to manage the legacy App
+// Engine Cron jobs using the Cloud Scheduler API. If the field is set
+// to true, the job in the __cron queue with the corresponding name will
+// be deleted instead.
+func (c *ProjectsLocationsJobsDeleteCall) LegacyAppEngineCron(legacyAppEngineCron bool) *ProjectsLocationsJobsDeleteCall {
+	c.urlParams_.Set("legacyAppEngineCron", fmt.Sprint(legacyAppEngineCron))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1537,7 +1582,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1604,6 +1649,11 @@ func (c *ProjectsLocationsJobsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "legacyAppEngineCron": {
+	//       "description": "This field is used to manage the legacy App Engine Cron jobs using the Cloud Scheduler API. If the field is set to true, the job in the __cron queue with the corresponding name will be deleted instead.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. The job name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`.",
 	//       "location": "path",
@@ -1678,7 +1728,7 @@ func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1785,6 +1835,15 @@ func (r *ProjectsLocationsJobsService) List(parent string) *ProjectsLocationsJob
 	return c
 }
 
+// LegacyAppEngineCron sets the optional parameter
+// "legacyAppEngineCron": This field is used to manage the legacy App
+// Engine Cron jobs using the Cloud Scheduler API. If the field is set
+// to true, the jobs in the __cron queue will be listed instead.
+func (c *ProjectsLocationsJobsListCall) LegacyAppEngineCron(legacyAppEngineCron bool) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("legacyAppEngineCron", fmt.Sprint(legacyAppEngineCron))
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The maximum page size is 500. If unspecified, the page size will be
 // the maximum. Fewer jobs than requested might be returned, even if
@@ -1842,7 +1901,7 @@ func (c *ProjectsLocationsJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1912,6 +1971,11 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "legacyAppEngineCron": {
+	//       "description": "This field is used to manage the legacy App Engine Cron jobs using the Cloud Scheduler API. If the field is set to true, the jobs in the __cron queue will be listed instead.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "pageSize": {
 	//       "description": "Requested page size. The maximum page size is 500. If unspecified, the page size will be the maximum. Fewer jobs than requested might be returned, even if more jobs exist; use next_page_token to determine if more jobs exist.",
 	//       "format": "int32",
@@ -2021,7 +2085,7 @@ func (c *ProjectsLocationsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2170,7 +2234,7 @@ func (c *ProjectsLocationsJobsPauseCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2313,7 +2377,7 @@ func (c *ProjectsLocationsJobsResumeCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2454,7 +2518,7 @@ func (c *ProjectsLocationsJobsRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

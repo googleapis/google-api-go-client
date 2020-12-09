@@ -977,43 +977,6 @@ func (s *CategoryListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ContentHash: Hash-like weak identifier of uploaded content bytes
-// (saved game data blob, or cover image). Consistent per player per
-// application per hash version. Within the context of a single
-// player/application, it's guaranteed that two identical blobs coming
-// from two different uploads will have the same content hash. It's
-// extremely likely, though not guaranteed, that if two content hashes
-// are equal, the blobs are identical.
-type ContentHash struct {
-	// Digest: Hash-like digest of the content.
-	Digest string `json:"digest,omitempty"`
-
-	// Version: Version of the Hash encoding algorithm to hash the content.
-	Version int64 `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Digest") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Digest") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ContentHash) MarshalJSON() ([]byte, error) {
-	type NoMethod ContentHash
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // EndPoint: Container for a URL end point of the requested type.
 type EndPoint struct {
 	// Url: A URL suitable for loading in a web browser for the requested
@@ -3070,14 +3033,12 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 // resource. The image is provided by the game.
 type SnapshotCoverImageResource struct {
 	// ContentHash: Output only. Hash-like weak identifier of the uploaded
-	// image bytes, consistent per player per application per hash version.
-	// Within the context of a single player/application, it's guaranteed
-	// that two identical images coming from two different uploads will have
-	// the same content hash for the same hash algorithm version. It's
-	// extremely likely, though not guaranteed, that if two content hashes
-	// are equal, the images are identical. More than one content hash can
-	// be returned if more than one hash versions are supported.
-	ContentHash []*ContentHash `json:"contentHash,omitempty"`
+	// image bytes, consistent per player per application. The content hash
+	// for a given resource will not change if the binary data hasn't
+	// changed. Except in very rare circumstances, the content_hash for
+	// matching binary data will be the same within a given player and
+	// application.
+	ContentHash string `json:"contentHash,omitempty"`
 
 	// DownloadUrl: Output only. A URL the client can use to download the
 	// image. May vary across requests, and only guaranteed to be valid for
@@ -3130,14 +3091,12 @@ func (s *SnapshotCoverImageResource) MarshalJSON() ([]byte, error) {
 // is provided by the game.
 type SnapshotDataResource struct {
 	// ContentHash: Output only. Hash-like weak identifier of the uploaded
-	// blob, consistent per player per application per hash version. Within
-	// the context of a single player/application, it's guaranteed that two
-	// identical blobs coming from two different uploads will have the same
-	// content hash for the same hash algorithm version. It's extremely
-	// likely, though not guaranteed, that if two content hashes are equal,
-	// the blobs are identical. More than one content hash can be returned
-	// if more than one hash versions are supported.
-	ContentHash []*ContentHash `json:"contentHash,omitempty"`
+	// blob bytes, consistent per player per application. The content hash
+	// for a given resource will not change if the binary data hasn't
+	// changed. Except in very rare circumstances, the content_hash for
+	// matching binary data will be the same within a given player and
+	// application.
+	ContentHash string `json:"contentHash,omitempty"`
 
 	// DownloadUrl: Output only. A URL that the client can use to download
 	// the blob. May vary across requests, and only guaranteed to be valid
@@ -3181,14 +3140,14 @@ func (s *SnapshotDataResource) MarshalJSON() ([]byte, error) {
 }
 
 // SnapshotExtended: A snapshot represents a saved game state referred
-// to using the developer-provided snapshot_id (think of it as a file's
-// path). The set of attributes and binary data for a specific state is
-// called a revision. Each revision is itself immutable, and referred to
-// by a snapshot_revision_id. At any time, a snapshot has a "head"
-// revision, and updates are made against that revision. If a snapshot
-// update is received that isn't against the current head revision, then
-// instead of changing the head revision it will result in a conflicting
-// revision that must be specifically resolved.
+// to using the developer-provided snapshot_name. The set of attributes
+// and binary data for a specific state is called a revision. Each
+// revision is itself immutable, and referred to by a snapshot revision
+// id. At any time, a snapshot has a "head" revision, and updates are
+// made against that revision. If a snapshot update is received that
+// isn't against the current head revision, then instead of changing the
+// head revision it will result in a conflicting revision that must be
+// specifically resolved.
 type SnapshotExtended struct {
 	// ConflictingRevisions: A list of conflicting revisions. Only set if
 	// explicitly requested (e.g. using a field mask or a request flag), or
@@ -3208,8 +3167,9 @@ type SnapshotExtended struct {
 	// understood by the server).
 	HeadRevision *SnapshotRevision `json:"headRevision,omitempty"`
 
-	// Name: An identifier of the snapshot,developer-specified.
-	Name string `json:"name,omitempty"`
+	// SnapshotName: An identifier of the snapshot, developer-specified. It
+	// must match the pattern [0-9a-zA-Z-._~]{1,100}.
+	SnapshotName string `json:"snapshotName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ConflictingRevisions") to unconditionally include in API requests.
@@ -3328,22 +3288,19 @@ type SnapshotMetadata struct {
 	// DeviceName: The device that created the current revision.
 	DeviceName string `json:"deviceName,omitempty"`
 
-	// Duration: The duration associated with this snapshot. Values with
-	// sub-millisecond precision can be rounded or trimmed to the closest
-	// millisecond.
-	Duration string `json:"duration,omitempty"`
+	// GameplayDuration: The duration associated with this snapshot. Values
+	// with sub-millisecond precision can be rounded or trimmed to the
+	// closest millisecond.
+	GameplayDuration string `json:"gameplayDuration,omitempty"`
 
 	// LastModifyTime: The timestamp of the last modification to this
-	// snapshot. Values with sub-millisecond precision can be rounded or
-	// trimmed to the closest millisecond.
+	// snapshot as provided by the client. Values with sub-millisecond
+	// precision can be rounded or trimmed to the closest millisecond.
 	LastModifyTime string `json:"lastModifyTime,omitempty"`
 
 	// ProgressValue: The progress value (64-bit integer set by developer)
 	// associated with this snapshot.
 	ProgressValue int64 `json:"progressValue,omitempty,string"`
-
-	// Title: The title of this snapshot.
-	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
@@ -3597,7 +3554,7 @@ func (c *AchievementDefinitionsListCall) Header() http.Header {
 
 func (c *AchievementDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3767,7 +3724,7 @@ func (c *AchievementsIncrementCall) Header() http.Header {
 
 func (c *AchievementsIncrementCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3959,7 +3916,7 @@ func (c *AchievementsListCall) Header() http.Header {
 
 func (c *AchievementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4146,7 +4103,7 @@ func (c *AchievementsRevealCall) Header() http.Header {
 
 func (c *AchievementsRevealCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4279,7 +4236,7 @@ func (c *AchievementsSetStepsAtLeastCall) Header() http.Header {
 
 func (c *AchievementsSetStepsAtLeastCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4418,7 +4375,7 @@ func (c *AchievementsUnlockCall) Header() http.Header {
 
 func (c *AchievementsUnlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4548,7 +4505,7 @@ func (c *AchievementsUpdateMultipleCall) Header() http.Header {
 
 func (c *AchievementsUpdateMultipleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4709,7 +4666,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4880,7 +4837,7 @@ func (c *ApplicationsGetEndPointCall) Header() http.Header {
 
 func (c *ApplicationsGetEndPointCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5017,7 +4974,7 @@ func (c *ApplicationsPlayedCall) Header() http.Header {
 
 func (c *ApplicationsPlayedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5119,7 +5076,7 @@ func (c *ApplicationsVerifyCall) Header() http.Header {
 
 func (c *ApplicationsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5284,7 +5241,7 @@ func (c *EventsListByPlayerCall) Header() http.Header {
 
 func (c *EventsListByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5475,7 +5432,7 @@ func (c *EventsListDefinitionsCall) Header() http.Header {
 
 func (c *EventsListDefinitionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5641,7 +5598,7 @@ func (c *EventsRecordCall) Header() http.Header {
 
 func (c *EventsRecordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5790,7 +5747,7 @@ func (c *LeaderboardsGetCall) Header() http.Header {
 
 func (c *LeaderboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5959,7 +5916,7 @@ func (c *LeaderboardsListCall) Header() http.Header {
 
 func (c *LeaderboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6127,7 +6084,7 @@ func (c *MetagameGetMetagameConfigCall) Header() http.Header {
 
 func (c *MetagameGetMetagameConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6284,7 +6241,7 @@ func (c *MetagameListCategoriesByPlayerCall) Header() http.Header {
 
 func (c *MetagameListCategoriesByPlayerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6488,7 +6445,7 @@ func (c *PlayersGetCall) Header() http.Header {
 
 func (c *PlayersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6660,7 +6617,7 @@ func (c *PlayersListCall) Header() http.Header {
 
 func (c *PlayersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6849,7 +6806,7 @@ func (c *RevisionsCheckCall) Header() http.Header {
 
 func (c *RevisionsCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7038,7 +6995,7 @@ func (c *ScoresGetCall) Header() http.Header {
 
 func (c *ScoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7294,7 +7251,7 @@ func (c *ScoresListCall) Header() http.Header {
 
 func (c *ScoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7558,7 +7515,7 @@ func (c *ScoresListWindowCall) Header() http.Header {
 
 func (c *ScoresListWindowCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7794,7 +7751,7 @@ func (c *ScoresSubmitCall) Header() http.Header {
 
 func (c *ScoresSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7949,7 +7906,7 @@ func (c *ScoresSubmitMultipleCall) Header() http.Header {
 
 func (c *ScoresSubmitMultipleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8098,7 +8055,7 @@ func (c *SnapshotsGetCall) Header() http.Header {
 
 func (c *SnapshotsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8271,7 +8228,7 @@ func (c *SnapshotsListCall) Header() http.Header {
 
 func (c *SnapshotsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8445,7 +8402,7 @@ func (c *SnapshotsExtendedResolveSnapshotHeadCall) Header() http.Header {
 
 func (c *SnapshotsExtendedResolveSnapshotHeadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8593,7 +8550,7 @@ func (c *StatsGetCall) Header() http.Header {
 
 func (c *StatsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

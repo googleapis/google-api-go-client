@@ -218,7 +218,9 @@ type OrganizationsInspectTemplatesService struct {
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
 	rs.DeidentifyTemplates = NewOrganizationsLocationsDeidentifyTemplatesService(s)
+	rs.DlpJobs = NewOrganizationsLocationsDlpJobsService(s)
 	rs.InspectTemplates = NewOrganizationsLocationsInspectTemplatesService(s)
+	rs.JobTriggers = NewOrganizationsLocationsJobTriggersService(s)
 	rs.StoredInfoTypes = NewOrganizationsLocationsStoredInfoTypesService(s)
 	return rs
 }
@@ -228,7 +230,11 @@ type OrganizationsLocationsService struct {
 
 	DeidentifyTemplates *OrganizationsLocationsDeidentifyTemplatesService
 
+	DlpJobs *OrganizationsLocationsDlpJobsService
+
 	InspectTemplates *OrganizationsLocationsInspectTemplatesService
+
+	JobTriggers *OrganizationsLocationsJobTriggersService
 
 	StoredInfoTypes *OrganizationsLocationsStoredInfoTypesService
 }
@@ -242,12 +248,30 @@ type OrganizationsLocationsDeidentifyTemplatesService struct {
 	s *Service
 }
 
+func NewOrganizationsLocationsDlpJobsService(s *Service) *OrganizationsLocationsDlpJobsService {
+	rs := &OrganizationsLocationsDlpJobsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsDlpJobsService struct {
+	s *Service
+}
+
 func NewOrganizationsLocationsInspectTemplatesService(s *Service) *OrganizationsLocationsInspectTemplatesService {
 	rs := &OrganizationsLocationsInspectTemplatesService{s: s}
 	return rs
 }
 
 type OrganizationsLocationsInspectTemplatesService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsJobTriggersService(s *Service) *OrganizationsLocationsJobTriggersService {
+	rs := &OrganizationsLocationsJobTriggersService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsJobTriggersService struct {
 	s *Service
 }
 
@@ -1717,7 +1741,8 @@ func (s *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) MarshalJSON() ([]byt
 // CreateDlpJobRequest. Used to initiate long running jobs such as
 // calculating risk metrics or inspecting Google Cloud Storage.
 type GooglePrivacyDlpV2CreateDlpJobRequest struct {
-	// InspectJob: Set to control what and how to inspect.
+	// InspectJob: An inspection job scans a storage repository for
+	// InfoTypes.
 	InspectJob *GooglePrivacyDlpV2InspectJobConfig `json:"inspectJob,omitempty"`
 
 	// JobId: The job id can contain uppercase and lowercase letters,
@@ -1729,7 +1754,8 @@ type GooglePrivacyDlpV2CreateDlpJobRequest struct {
 	// LocationId: Deprecated. This field has no effect.
 	LocationId string `json:"locationId,omitempty"`
 
-	// RiskJob: Set to choose what metric to calculate.
+	// RiskJob: A risk analysis job calculates re-identification risk
+	// metrics for a BigQuery table.
 	RiskJob *GooglePrivacyDlpV2RiskAnalysisJobConfig `json:"riskJob,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InspectJob") to
@@ -4214,7 +4240,7 @@ type GooglePrivacyDlpV2InspectDataSourceDetails struct {
 	// RequestedOptions: The configuration used for this job.
 	RequestedOptions *GooglePrivacyDlpV2RequestedOptions `json:"requestedOptions,omitempty"`
 
-	// Result: A summary of the outcome of this inspect job.
+	// Result: A summary of the outcome of this inspection job.
 	Result *GooglePrivacyDlpV2Result `json:"result,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RequestedOptions") to
@@ -8197,7 +8223,7 @@ func (c *InfoTypesListCall) Header() http.Header {
 
 func (c *InfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8376,7 +8402,7 @@ func (c *LocationsInfoTypesListCall) Header() http.Header {
 
 func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8530,7 +8556,7 @@ func (c *OrganizationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8671,7 +8697,7 @@ func (c *OrganizationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8814,7 +8840,7 @@ func (c *OrganizationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8998,7 +9024,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9179,7 +9205,7 @@ func (c *OrganizationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9322,7 +9348,7 @@ func (c *OrganizationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9462,7 +9488,7 @@ func (c *OrganizationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9604,7 +9630,7 @@ func (c *OrganizationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9787,7 +9813,7 @@ func (c *OrganizationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9967,7 +9993,7 @@ func (c *OrganizationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10111,7 +10137,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10252,7 +10278,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Header() http.Head
 
 func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10395,7 +10421,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Header() http.Header 
 
 func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10579,7 +10605,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Header() http.Header
 
 func (c *OrganizationsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10760,7 +10786,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Header() http.Heade
 
 func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10855,6 +10881,286 @@ func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Do(opts ...googleap
 
 }
 
+// method id "dlp.organizations.locations.dlpJobs.list":
+
+type OrganizationsLocationsDlpJobsListCall struct {
+	s            *Service
+	parentid     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists DlpJobs that match the specified filter in the request.
+// See https://cloud.google.com/dlp/docs/inspecting-storage and
+// https://cloud.google.com/dlp/docs/compute-risk-analysis to learn
+// more.
+func (r *OrganizationsLocationsDlpJobsService) List(parentid string) *OrganizationsLocationsDlpJobsListCall {
+	c := &OrganizationsLocationsDlpJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parentid = parentid
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering.
+// Supported syntax: * Filter expressions are made up of one or more
+// restrictions. * Restrictions can be combined by `AND` or `OR` logical
+// operators. A sequence of restrictions implicitly uses `AND`. * A
+// restriction has the form of `{field} {operator} {value}`. * Supported
+// fields/values for inspect jobs: - `state` -
+// PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` -
+// DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The resource name
+// of the trigger that created job. - 'end_time` - Corresponds to time
+// the job finished. - 'start_time` - Corresponds to time the job
+// finished. * Supported fields for risk analysis jobs: - `state` -
+// RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to time
+// the job finished. - 'start_time` - Corresponds to time the job
+// finished. * The operator must be `=` or `!=`. Examples: *
+// inspected_storage = cloud_storage AND state = done *
+// inspected_storage = cloud_storage OR inspected_storage = bigquery *
+// inspected_storage = cloud_storage AND (state = done OR state =
+// canceled) * end_time > \"2017-12-12T00:00:00+00:00\" The length of
+// this field should be no more than 500 characters.
+func (c *OrganizationsLocationsDlpJobsListCall) Filter(filter string) *OrganizationsLocationsDlpJobsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *OrganizationsLocationsDlpJobsListCall) LocationId(locationId string) *OrganizationsLocationsDlpJobsListCall {
+	c.urlParams_.Set("locationId", locationId)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Comma separated list
+// of fields to order by, followed by `asc` or `desc` postfix. This list
+// is case-insensitive, default sorting order is ascending, redundant
+// space characters are insignificant. Example: `name asc, end_time asc,
+// create_time desc` Supported fields are: - `create_time`: corresponds
+// to time the job was created. - `end_time`: corresponds to time the
+// job ended. - `name`: corresponds to job's name. - `state`:
+// corresponds to `state`
+func (c *OrganizationsLocationsDlpJobsListCall) OrderBy(orderBy string) *OrganizationsLocationsDlpJobsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *OrganizationsLocationsDlpJobsListCall) PageSize(pageSize int64) *OrganizationsLocationsDlpJobsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *OrganizationsLocationsDlpJobsListCall) PageToken(pageToken string) *OrganizationsLocationsDlpJobsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Type sets the optional parameter "type": The type of job. Defaults to
+// `DlpJobType.INSPECT`
+//
+// Possible values:
+//   "DLP_JOB_TYPE_UNSPECIFIED" - Unused
+//   "INSPECT_JOB" - The job inspected Google Cloud for sensitive data.
+//   "RISK_ANALYSIS_JOB" - The job executed a Risk Analysis computation.
+func (c *OrganizationsLocationsDlpJobsListCall) Type(type_ string) *OrganizationsLocationsDlpJobsListCall {
+	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsDlpJobsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDlpJobsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsDlpJobsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsDlpJobsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsDlpJobsListCall) Context(ctx context.Context) *OrganizationsLocationsDlpJobsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsDlpJobsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/dlpJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parentid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.dlpJobs.list" call.
+// Exactly one of *GooglePrivacyDlpV2ListDlpJobsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GooglePrivacyDlpV2ListDlpJobsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListDlpJobsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2ListDlpJobsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists DlpJobs that match the specified filter in the request. See https://cloud.google.com/dlp/docs/inspecting-storage and https://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/dlpJobs",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.organizations.locations.dlpJobs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect jobs: - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - `trigger_name` - The resource name of the trigger that created job. - 'end_time` - Corresponds to time the job finished. - 'start_time` - Corresponds to time the job finished. * Supported fields for risk analysis jobs: - `state` - RUNNING|CANCELED|FINISHED|FAILED - 'end_time` - Corresponds to time the job finished. - 'start_time` - Corresponds to time the job finished. * The operator must be `=` or `!=`. Examples: * inspected_storage = cloud_storage AND state = done * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = done OR state = canceled) * end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\" The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "locationId": {
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, end_time asc, create_time desc` Supported fields are: - `create_time`: corresponds to time the job was created. - `end_time`: corresponds to time the job ended. - `name`: corresponds to job's name. - `state`: corresponds to `state`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource name. The format of this value varies depending on whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "type": {
+	//       "description": "The type of job. Defaults to `DlpJobType.INSPECT`",
+	//       "enum": [
+	//         "DLP_JOB_TYPE_UNSPECIFIED",
+	//         "INSPECT_JOB",
+	//         "RISK_ANALYSIS_JOB"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unused",
+	//         "The job inspected Google Cloud for sensitive data.",
+	//         "The job executed a Risk Analysis computation."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/dlpJobs",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2ListDlpJobsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsDlpJobsListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListDlpJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "dlp.organizations.locations.inspectTemplates.create":
 
 type OrganizationsLocationsInspectTemplatesCreateCall struct {
@@ -10903,7 +11209,7 @@ func (c *OrganizationsLocationsInspectTemplatesCreateCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11043,7 +11349,7 @@ func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Header() http.Header 
 
 func (c *OrganizationsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11185,7 +11491,7 @@ func (c *OrganizationsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11368,7 +11674,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11548,7 +11854,7 @@ func (c *OrganizationsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11643,6 +11949,823 @@ func (c *OrganizationsLocationsInspectTemplatesPatchCall) Do(opts ...googleapi.C
 
 }
 
+// method id "dlp.organizations.locations.jobTriggers.create":
+
+type OrganizationsLocationsJobTriggersCreateCall struct {
+	s                                         *Service
+	parentid                                  string
+	googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Creates a job trigger to run DLP actions such as scanning
+// storage for sensitive information on a set schedule. See
+// https://cloud.google.com/dlp/docs/creating-job-triggers to learn
+// more.
+func (r *OrganizationsLocationsJobTriggersService) Create(parentid string, googleprivacydlpv2createjobtriggerrequest *GooglePrivacyDlpV2CreateJobTriggerRequest) *OrganizationsLocationsJobTriggersCreateCall {
+	c := &OrganizationsLocationsJobTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parentid = parentid
+	c.googleprivacydlpv2createjobtriggerrequest = googleprivacydlpv2createjobtriggerrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsJobTriggersCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsJobTriggersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsJobTriggersCreateCall) Context(ctx context.Context) *OrganizationsLocationsJobTriggersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsJobTriggersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createjobtriggerrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/jobTriggers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parentid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.jobTriggers.create" call.
+// Exactly one of *GooglePrivacyDlpV2JobTrigger or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2JobTrigger.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsJobTriggersCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2JobTrigger, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2JobTrigger{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/jobTriggers",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.organizations.locations.jobTriggers.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent resource name. The format of this value varies depending on whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/jobTriggers",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2CreateJobTriggerRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2JobTrigger"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.organizations.locations.jobTriggers.delete":
+
+type OrganizationsLocationsJobTriggersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a job trigger. See
+// https://cloud.google.com/dlp/docs/creating-job-triggers to learn
+// more.
+func (r *OrganizationsLocationsJobTriggersService) Delete(name string) *OrganizationsLocationsJobTriggersDeleteCall {
+	c := &OrganizationsLocationsJobTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsJobTriggersDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsJobTriggersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsJobTriggersDeleteCall) Context(ctx context.Context) *OrganizationsLocationsJobTriggersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsJobTriggersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.jobTriggers.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsJobTriggersDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a job trigger. See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/jobTriggers/{jobTriggersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dlp.organizations.locations.jobTriggers.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the project and the triggeredJob, for example `projects/dlp-test-project/jobTriggers/53234423`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/jobTriggers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.organizations.locations.jobTriggers.get":
+
+type OrganizationsLocationsJobTriggersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a job trigger. See
+// https://cloud.google.com/dlp/docs/creating-job-triggers to learn
+// more.
+func (r *OrganizationsLocationsJobTriggersService) Get(name string) *OrganizationsLocationsJobTriggersGetCall {
+	c := &OrganizationsLocationsJobTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsJobTriggersGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsJobTriggersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsJobTriggersGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsJobTriggersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsJobTriggersGetCall) Context(ctx context.Context) *OrganizationsLocationsJobTriggersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsJobTriggersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.jobTriggers.get" call.
+// Exactly one of *GooglePrivacyDlpV2JobTrigger or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2JobTrigger.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsJobTriggersGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2JobTrigger, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2JobTrigger{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a job trigger. See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/jobTriggers/{jobTriggersId}",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.organizations.locations.jobTriggers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the project and the triggeredJob, for example `projects/dlp-test-project/jobTriggers/53234423`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/jobTriggers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2JobTrigger"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.organizations.locations.jobTriggers.list":
+
+type OrganizationsLocationsJobTriggersListCall struct {
+	s            *Service
+	parentid     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists job triggers. See
+// https://cloud.google.com/dlp/docs/creating-job-triggers to learn
+// more.
+func (r *OrganizationsLocationsJobTriggersService) List(parentid string) *OrganizationsLocationsJobTriggersListCall {
+	c := &OrganizationsLocationsJobTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parentid = parentid
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering.
+// Supported syntax: * Filter expressions are made up of one or more
+// restrictions. * Restrictions can be combined by `AND` or `OR` logical
+// operators. A sequence of restrictions implicitly uses `AND`. * A
+// restriction has the form of `{field} {operator} {value}`. * Supported
+// fields/values for inspect jobs: - `status` - HEALTHY|PAUSED|CANCELLED
+// - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY -
+// 'last_run_time` - RFC 3339 formatted timestamp, surrounded by
+// quotation marks. Nanoseconds are ignored. - 'error_count' - Number of
+// errors that have occurred while running. * The operator must be `=`
+// or `!=` for status and inspected_storage. Examples: *
+// inspected_storage = cloud_storage AND status = HEALTHY *
+// inspected_storage = cloud_storage OR inspected_storage = bigquery *
+// inspected_storage = cloud_storage AND (state = PAUSED OR state =
+// HEALTHY) * last_run_time > \"2017-12-12T00:00:00+00:00\" The length
+// of this field should be no more than 500 characters.
+func (c *OrganizationsLocationsJobTriggersListCall) Filter(filter string) *OrganizationsLocationsJobTriggersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// LocationId sets the optional parameter "locationId": Deprecated. This
+// field has no effect.
+func (c *OrganizationsLocationsJobTriggersListCall) LocationId(locationId string) *OrganizationsLocationsJobTriggersListCall {
+	c.urlParams_.Set("locationId", locationId)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Comma separated list
+// of triggeredJob fields to order by, followed by `asc` or `desc`
+// postfix. This list is case-insensitive, default sorting order is
+// ascending, redundant space characters are insignificant. Example:
+// `name asc,update_time, create_time desc` Supported fields are: -
+// `create_time`: corresponds to time the JobTrigger was created. -
+// `update_time`: corresponds to time the JobTrigger was last updated. -
+// `last_run_time`: corresponds to the last time the JobTrigger ran. -
+// `name`: corresponds to JobTrigger's name. - `display_name`:
+// corresponds to JobTrigger's display name. - `status`: corresponds to
+// JobTrigger's status.
+func (c *OrganizationsLocationsJobTriggersListCall) OrderBy(orderBy string) *OrganizationsLocationsJobTriggersListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Size of the page,
+// can be limited by a server.
+func (c *OrganizationsLocationsJobTriggersListCall) PageSize(pageSize int64) *OrganizationsLocationsJobTriggersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token to
+// continue retrieval. Comes from previous call to ListJobTriggers.
+// `order_by` field must not change for subsequent calls.
+func (c *OrganizationsLocationsJobTriggersListCall) PageToken(pageToken string) *OrganizationsLocationsJobTriggersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsJobTriggersListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsJobTriggersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsJobTriggersListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsJobTriggersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsJobTriggersListCall) Context(ctx context.Context) *OrganizationsLocationsJobTriggersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsJobTriggersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/jobTriggers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parentid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.jobTriggers.list" call.
+// Exactly one of *GooglePrivacyDlpV2ListJobTriggersResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePrivacyDlpV2ListJobTriggersResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListJobTriggersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2ListJobTriggersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists job triggers. See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/jobTriggers",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.organizations.locations.jobTriggers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect jobs: - `status` - HEALTHY|PAUSED|CANCELLED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by quotation marks. Nanoseconds are ignored. - 'error_count' - Number of errors that have occurred while running. * The operator must be `=` or `!=` for status and inspected_storage. Examples: * inspected_storage = cloud_storage AND status = HEALTHY * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY) * last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\" The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "locationId": {
+	//       "description": "Deprecated. This field has no effect.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Comma separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the JobTrigger was created. - `update_time`: corresponds to time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to JobTrigger's name. - `display_name`: corresponds to JobTrigger's display name. - `status`: corresponds to JobTrigger's status.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Size of the page, can be limited by a server.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token to continue retrieval. Comes from previous call to ListJobTriggers. `order_by` field must not change for subsequent calls.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource name. The format of this value varies depending on whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/jobTriggers",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2ListJobTriggersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsJobTriggersListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListJobTriggersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dlp.organizations.locations.jobTriggers.patch":
+
+type OrganizationsLocationsJobTriggersPatchCall struct {
+	s                                         *Service
+	name                                      string
+	googleprivacydlpv2updatejobtriggerrequest *GooglePrivacyDlpV2UpdateJobTriggerRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Patch: Updates a job trigger. See
+// https://cloud.google.com/dlp/docs/creating-job-triggers to learn
+// more.
+func (r *OrganizationsLocationsJobTriggersService) Patch(name string, googleprivacydlpv2updatejobtriggerrequest *GooglePrivacyDlpV2UpdateJobTriggerRequest) *OrganizationsLocationsJobTriggersPatchCall {
+	c := &OrganizationsLocationsJobTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2updatejobtriggerrequest = googleprivacydlpv2updatejobtriggerrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsJobTriggersPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsJobTriggersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsJobTriggersPatchCall) Context(ctx context.Context) *OrganizationsLocationsJobTriggersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsJobTriggersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updatejobtriggerrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.jobTriggers.patch" call.
+// Exactly one of *GooglePrivacyDlpV2JobTrigger or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2JobTrigger.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsJobTriggersPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2JobTrigger, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2JobTrigger{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a job trigger. See https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/jobTriggers/{jobTriggersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dlp.organizations.locations.jobTriggers.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the project and the triggeredJob, for example `projects/dlp-test-project/jobTriggers/53234423`.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/jobTriggers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2UpdateJobTriggerRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2JobTrigger"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "dlp.organizations.locations.storedInfoTypes.create":
 
 type OrganizationsLocationsStoredInfoTypesCreateCall struct {
@@ -11692,7 +12815,7 @@ func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11832,7 +12955,7 @@ func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11975,7 +13098,7 @@ func (c *OrganizationsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12158,7 +13281,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12341,7 +13464,7 @@ func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12484,7 +13607,7 @@ func (c *OrganizationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12624,7 +13747,7 @@ func (c *OrganizationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12767,7 +13890,7 @@ func (c *OrganizationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12950,7 +14073,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13133,7 +14256,7 @@ func (c *OrganizationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *OrganizationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13279,7 +14402,7 @@ func (c *ProjectsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13428,7 +14551,7 @@ func (c *ProjectsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13572,7 +14695,7 @@ func (c *ProjectsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13717,7 +14840,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13858,7 +14981,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14001,7 +15124,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14185,7 +15308,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14366,7 +15489,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14512,7 +15635,7 @@ func (c *ProjectsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14658,7 +15781,7 @@ func (c *ProjectsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14801,7 +15924,7 @@ func (c *ProjectsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14945,7 +16068,7 @@ func (c *ProjectsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15162,7 +16285,7 @@ func (c *ProjectsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15366,7 +16489,7 @@ func (c *ProjectsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15509,7 +16632,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15649,7 +16772,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15791,7 +16914,7 @@ func (c *ProjectsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15974,7 +17097,7 @@ func (c *ProjectsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16154,7 +17277,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16296,7 +17419,7 @@ func (c *ProjectsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16439,7 +17562,7 @@ func (c *ProjectsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16579,7 +17702,7 @@ func (c *ProjectsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16722,7 +17845,7 @@ func (c *ProjectsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16927,7 +18050,7 @@ func (c *ProjectsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17113,7 +18236,7 @@ func (c *ProjectsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17259,7 +18382,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17408,7 +18531,7 @@ func (c *ProjectsLocationsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17552,7 +18675,7 @@ func (c *ProjectsLocationsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17697,7 +18820,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17838,7 +18961,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17981,7 +19104,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18165,7 +19288,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18346,7 +19469,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18492,7 +19615,7 @@ func (c *ProjectsLocationsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18638,7 +19761,7 @@ func (c *ProjectsLocationsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18781,7 +19904,7 @@ func (c *ProjectsLocationsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18917,7 +20040,7 @@ func (c *ProjectsLocationsDlpJobsFinishCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsFinishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19069,7 +20192,7 @@ func (c *ProjectsLocationsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19170,7 +20293,7 @@ type ProjectsLocationsDlpJobsHybridInspectCall struct {
 }
 
 // HybridInspect: Inspect hybrid content and store findings to a job. To
-// review the findings inspect the job. Inspection will occur
+// review the findings, inspect the job. Inspection will occur
 // asynchronously. Early access feature is in a pre-release state and
 // might change or have limited support. For more information, see
 // https://cloud.google.com/products#product-launch-stages.
@@ -19208,7 +20331,7 @@ func (c *ProjectsLocationsDlpJobsHybridInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsHybridInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19273,7 +20396,7 @@ func (c *ProjectsLocationsDlpJobsHybridInspectCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Inspect hybrid content and store findings to a job. To review the findings inspect the job. Inspection will occur asynchronously. Early access feature is in a pre-release state and might change or have limited support. For more information, see https://cloud.google.com/products#product-launch-stages.",
+	//   "description": "Inspect hybrid content and store findings to a job. To review the findings, inspect the job. Inspection will occur asynchronously. Early access feature is in a pre-release state and might change or have limited support. For more information, see https://cloud.google.com/products#product-launch-stages.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/dlpJobs/{dlpJobsId}:hybridInspect",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.locations.dlpJobs.hybridInspect",
@@ -19431,7 +20554,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19635,7 +20758,7 @@ func (c *ProjectsLocationsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19778,7 +20901,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19918,7 +21041,7 @@ func (c *ProjectsLocationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20060,7 +21183,7 @@ func (c *ProjectsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20243,7 +21366,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20423,7 +21546,7 @@ func (c *ProjectsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20565,7 +21688,7 @@ func (c *ProjectsLocationsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20708,7 +21831,7 @@ func (c *ProjectsLocationsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20848,7 +21971,7 @@ func (c *ProjectsLocationsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20991,7 +22114,7 @@ func (c *ProjectsLocationsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21131,7 +22254,7 @@ func (c *ProjectsLocationsJobTriggersHybridInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersHybridInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21342,7 +22465,7 @@ func (c *ProjectsLocationsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21528,7 +22651,7 @@ func (c *ProjectsLocationsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21671,7 +22794,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21811,7 +22934,7 @@ func (c *ProjectsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21954,7 +23077,7 @@ func (c *ProjectsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22137,7 +23260,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22320,7 +23443,7 @@ func (c *ProjectsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22463,7 +23586,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22603,7 +23726,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22746,7 +23869,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22929,7 +24052,7 @@ func (c *ProjectsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23112,7 +24235,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

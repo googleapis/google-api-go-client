@@ -4841,7 +4841,9 @@ func (s *ShapeBackgroundFill) MarshalJSON() ([]byte, error) {
 // placeholder shape as determined by the placeholder field, then these
 // properties may be inherited from a parent placeholder shape.
 // Determining the rendered value of the property depends on the
-// corresponding property_state field value.
+// corresponding property_state field value. Any text autofit settings
+// on the shape are automatically deactivated by requests that can
+// impact how text fits in the shape.
 type ShapeProperties struct {
 	// ContentAlignment: The alignment of the content in the shape. If
 	// unspecified, the alignment is inherited from a parent placeholder if
@@ -7088,7 +7090,7 @@ func (c *PresentationsBatchUpdateCall) Header() http.Header {
 
 func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7234,7 +7236,7 @@ func (c *PresentationsCreateCall) Header() http.Header {
 
 func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7372,7 +7374,7 @@ func (c *PresentationsGetCall) Header() http.Header {
 
 func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7523,7 +7525,7 @@ func (c *PresentationsPagesGetCall) Header() http.Header {
 
 func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7712,7 +7714,7 @@ func (c *PresentationsPagesGetThumbnailCall) Header() http.Header {
 
 func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201204")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

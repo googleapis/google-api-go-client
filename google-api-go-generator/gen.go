@@ -1381,7 +1381,12 @@ func (s *Schema) writeSchemaStruct(api *API) {
 		p.assignedGoName = pname
 		des := p.Description()
 		if des != "" {
-			s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
+			if pname == "Deprecated" {
+				// Workaround to not trip up linters on fields named Deprecated.
+				s.api.p("%s", asComment("\t", fmt.Sprintf("%s -- %s", pname, des)))
+			} else {
+				s.api.p("%s", asComment("\t", fmt.Sprintf("%s: %s", pname, des)))
+			}
 		}
 		addFieldValueComments(s.api.p, p, "\t", des != "")
 

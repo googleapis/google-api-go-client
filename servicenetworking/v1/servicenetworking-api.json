@@ -831,7 +831,7 @@
       }
     }
   },
-  "revision": "20201201",
+  "revision": "20201207",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -2775,7 +2775,7 @@
           "description": "Billing configuration."
         },
         "configVersion": {
-          "description": "This field is obsolete. Its value must be set to `3`.",
+          "description": "Deprecated. The service config compiler always sets this field to `3`.",
           "format": "uint32",
           "type": "integer"
         },

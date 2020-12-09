@@ -11,7 +11,9 @@ import (
 	"context"
 	"crypto/tls"
 	"errors"
+	"io/ioutil"
 	"log"
+	"runtime"
 	"strings"
 
 	"go.opencensus.io/plugin/ocgrpc"
@@ -26,6 +28,11 @@ import (
 
 	// Install grpclb, which is required for direct path.
 	_ "google.golang.org/grpc/balancer/grpclb"
+)
+
+const (
+	GCEProductionNamePrior2016 = "Google"
+	GCEProductionNameAfter2016 = "Google Compute Engine"
 )
 
 // Set at init time by dial_appengine.go. If nil, we're not on App Engine.
@@ -137,7 +144,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 		// * The endpoint is a host:port (or dns:///host:port).
 		// * Credentials are obtained via GCE metadata server, using the default
 		//   service account.
-		if o.EnableDirectPath && checkDirectPathEndPoint(endpoint) && isTokenSourceDirectPathCompatible(creds.TokenSource) {
+		if o.EnableDirectPath && checkDirectPathEndPoint(endpoint) && isTokenSourceDirectPathCompatible(creds.TokenSource) && isOnComputeEngine() {
 			if !strings.HasPrefix(endpoint, "dns:///") {
 				endpoint = "dns:///" + endpoint
 			}
@@ -186,7 +193,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 	// point when isDirectPathEnabled will default to true, we guard it by
 	// the Directpath env var for now once we can introspect user defined
 	// dialer (https://github.com/grpc/grpc-go/issues/2795).
-	if timeoutDialerOption != nil && o.EnableDirectPath && checkDirectPathEndPoint(endpoint) {
+	if timeoutDialerOption != nil && o.EnableDirectPath && checkDirectPathEndPoint(endpoint) && isOnComputeEngine() {
 		grpcOpts = append(grpcOpts, timeoutDialerOption)
 	}
 
@@ -245,6 +252,20 @@ func isTokenSourceDirectPathCompatible(ts oauth2.TokenSource) bool {
 		return false
 	}
 	return true
+}
+
+func isOnComputeEngine() bool {
+	// DirectPath should only be used on Compute Engine.
+	// Notice Windows is not supported for now.
+	if runtime.GOOS == "linux" {
+		file, err := ioutil.ReadFile("/sys/class/dmi/id/product_name")
+		if err != nil {
+			log.Print("Fail to check Compute Engine, and DirectPath will not be used.")
+			return false
+		}
+		return strings.Contains(string(file), GCEProductionNamePrior2016) || strings.Contains(string(file), GCEProductionNameAfter2016)
+	}
+	return false
 }
 
 func checkDirectPathEndPoint(endpoint string) bool {

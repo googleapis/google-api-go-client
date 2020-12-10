@@ -164,6 +164,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Agents = NewProjectsLocationsAgentsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.SecuritySettings = NewProjectsLocationsSecuritySettingsService(s)
 	return rs
 }
 
@@ -173,6 +174,8 @@ type ProjectsLocationsService struct {
 	Agents *ProjectsLocationsAgentsService
 
 	Operations *ProjectsLocationsOperationsService
+
+	SecuritySettings *ProjectsLocationsSecuritySettingsService
 }
 
 func NewProjectsLocationsAgentsService(s *Service) *ProjectsLocationsAgentsService {
@@ -337,6 +340,15 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsSecuritySettingsService(s *Service) *ProjectsLocationsSecuritySettingsService {
+	rs := &ProjectsLocationsSecuritySettingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSecuritySettingsService struct {
+	s *Service
+}
+
 func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 	rs := &ProjectsOperationsService{s: s}
 	return rs
@@ -344,6 +356,835 @@ func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
 
 type ProjectsOperationsService struct {
 	s *Service
+}
+
+// GoogleCloudDialogflowCxV3CreateVersionOperationMetadata: Metadata
+// associated with the long running operation for
+// Versions.CreateVersion.
+type GoogleCloudDialogflowCxV3CreateVersionOperationMetadata struct {
+	// Version: Name of the created version. Format:
+	// `projects//locations//agents//flows//versions/`.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Version") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Version") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3CreateVersionOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3CreateVersionOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ExportAgentResponse: The response message
+// for Agents.ExportAgent.
+type GoogleCloudDialogflowCxV3ExportAgentResponse struct {
+	// AgentContent: Uncompressed raw byte content for agent.
+	AgentContent string `json:"agentContent,omitempty"`
+
+	// AgentUri: The URI to a file containing the exported agent. This field
+	// is populated only if `agent_uri` is specified in ExportAgentRequest.
+	AgentUri string `json:"agentUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AgentContent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AgentContent") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ExportAgentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ExportAgentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3PageInfo: Represents page information
+// communicated to and from the webhook.
+type GoogleCloudDialogflowCxV3PageInfo struct {
+	// CurrentPage: Always present for WebhookRequest. Ignored for
+	// WebhookResponse. The unique identifier of the current page. Format:
+	// `projects//locations//agents//flows//pages/`.
+	CurrentPage string `json:"currentPage,omitempty"`
+
+	// FormInfo: Optional for both WebhookRequest and WebhookResponse.
+	// Information about the form.
+	FormInfo *GoogleCloudDialogflowCxV3PageInfoFormInfo `json:"formInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentPage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentPage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3PageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3PageInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3PageInfoFormInfo: Represents form
+// information.
+type GoogleCloudDialogflowCxV3PageInfoFormInfo struct {
+	// ParameterInfo: Optional for both WebhookRequest and WebhookResponse.
+	// The parameters contained in the form. Note that the webhook cannot
+	// add or remove any form parameter.
+	ParameterInfo []*GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo `json:"parameterInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ParameterInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ParameterInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3PageInfoFormInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3PageInfoFormInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo: Represents
+// parameter information.
+type GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo struct {
+	// DisplayName: Always present for WebhookRequest. Required for
+	// WebhookResponse. The human-readable name of the parameter, unique
+	// within the form. This field cannot be modified by the webhook.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// JustCollected: Optional for WebhookRequest. Ignored for
+	// WebhookResponse. Indicates if the parameter value was just collected
+	// on the last conversation turn.
+	JustCollected bool `json:"justCollected,omitempty"`
+
+	// Required: Optional for both WebhookRequest and WebhookResponse.
+	// Indicates whether the parameter is required. Optional parameters will
+	// not trigger prompts; however, they are filled if the user specifies
+	// them. Required parameters must be filled before form filling
+	// concludes.
+	Required bool `json:"required,omitempty"`
+
+	// State: Always present for WebhookRequest. Required for
+	// WebhookResponse. The state of the parameter. This field can be set to
+	// INVALID by the webhook to invalidate the parameter; other values set
+	// by the webhook will be ignored.
+	//
+	// Possible values:
+	//   "PARAMETER_STATE_UNSPECIFIED" - Not specified. This value should be
+	// never used.
+	//   "EMPTY" - Indicates that the parameter does not have a value.
+	//   "INVALID" - Indicates that the parameter value is invalid. This
+	// field can be used by the webhook to invalidate the parameter and ask
+	// the server to collect it from the user again.
+	//   "FILLED" - Indicates that the parameter has a value.
+	State string `json:"state,omitempty"`
+
+	// Value: Optional for both WebhookRequest and WebhookResponse. The
+	// value of the parameter. This field can be set by the webhook to
+	// change the parameter value.
+	Value interface{} `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessage: Represents a response
+// message that can be returned by a conversational agent. Response
+// messages are also used for output audio synthesis. The approach is as
+// follows: * If at least one OutputAudioText response is present, then
+// all OutputAudioText responses are linearly concatenated, and the
+// result is used for output audio synthesis. * If the OutputAudioText
+// responses are a mixture of text and SSML, then the concatenated
+// result is treated as SSML; otherwise, the result is treated as either
+// text or SSML as appropriate. The agent designer should ideally use
+// either text or SSML consistently throughout the bot design. *
+// Otherwise, all Text responses are linearly concatenated, and the
+// result is used for output audio synthesis. This approach allows for
+// more sophisticated user experience scenarios, where the text
+// displayed to the user may differ from what is heard.
+type GoogleCloudDialogflowCxV3ResponseMessage struct {
+	// ConversationSuccess: Indicates that the conversation succeeded.
+	ConversationSuccess *GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess `json:"conversationSuccess,omitempty"`
+
+	// EndInteraction: Output only. A signal that indicates the interaction
+	// with the Dialogflow agent has ended. This message is generated by
+	// Dialogflow only when the conversation reaches `END_SESSION` or
+	// `END_PAGE` page. It is not supposed to be defined by the user. It's
+	// guaranteed that there is at most one such message in each response.
+	EndInteraction *GoogleCloudDialogflowCxV3ResponseMessageEndInteraction `json:"endInteraction,omitempty"`
+
+	// LiveAgentHandoff: Hands off conversation to a human agent.
+	LiveAgentHandoff *GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff `json:"liveAgentHandoff,omitempty"`
+
+	// MixedAudio: Output only. An audio response message composed of both
+	// the synthesized Dialogflow agent responses and responses defined via
+	// play_audio. This message is generated by Dialogflow only and not
+	// supposed to be defined by the user.
+	MixedAudio *GoogleCloudDialogflowCxV3ResponseMessageMixedAudio `json:"mixedAudio,omitempty"`
+
+	// OutputAudioText: A text or ssml response that is preferentially used
+	// for TTS output audio synthesis, as described in the comment on the
+	// ResponseMessage message.
+	OutputAudioText *GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText `json:"outputAudioText,omitempty"`
+
+	// Payload: Returns a response containing a custom, platform-specific
+	// payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// PlayAudio: Signal that the client should play an audio clip hosted at
+	// a client-specific URI. Dialogflow uses this to construct mixed_audio.
+	// However, Dialogflow itself does not try to read or process the URI in
+	// any way.
+	PlayAudio *GoogleCloudDialogflowCxV3ResponseMessagePlayAudio `json:"playAudio,omitempty"`
+
+	// Text: Returns a text response.
+	Text *GoogleCloudDialogflowCxV3ResponseMessageText `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversationSuccess")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversationSuccess") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess:
+// Indicates that the conversation succeeded, i.e., the bot handled the
+// issue that the customer talked to it about. Dialogflow only uses this
+// to determine which conversations should be counted as successful and
+// doesn't process the metadata in this message in any way. Note that
+// Dialogflow also considers conversations that get to the conversation
+// end page as successful even if they don't return ConversationSuccess.
+// You may set this, for example: * In the entry_fulfillment of a Page
+// if entering the page indicates that the conversation succeeded. * In
+// a webhook response when you determine that you handled the customer
+// issue.
+type GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess struct {
+	// Metadata: Custom metadata. Dialogflow doesn't impose any structure on
+	// this.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageEndInteraction: Indicates
+// that interaction with the Dialogflow agent has ended. This message is
+// generated by Dialogflow only and not supposed to be defined by the
+// user.
+type GoogleCloudDialogflowCxV3ResponseMessageEndInteraction struct {
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff: Indicates
+// that the conversation should be handed off to a live agent.
+// Dialogflow only uses this to determine which conversations were
+// handed off to a human agent for measurement purposes. What else to do
+// with this signal is up to you and your handoff procedures. You may
+// set this, for example: * In the entry_fulfillment of a Page if
+// entering the page indicates something went extremely wrong in the
+// conversation. * In a webhook response when you determine that the
+// customer issue can only be handled by a human.
+type GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff struct {
+	// Metadata: Custom metadata for your handoff procedure. Dialogflow
+	// doesn't impose any structure on this.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageMixedAudio: Represents an
+// audio message that is composed of both segments synthesized from the
+// Dialogflow agent prompts and ones hosted externally at the specified
+// URIs. The external URIs are specified via play_audio. This message is
+// generated by Dialogflow only and not supposed to be defined by the
+// user.
+type GoogleCloudDialogflowCxV3ResponseMessageMixedAudio struct {
+	// Segments: Segments this audio response is composed of.
+	Segments []*GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment `json:"segments,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Segments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Segments") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageMixedAudio
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment: Represents
+// one segment of audio.
+type GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// segment can be interrupted by the end user's speech and the client
+	// should then start the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// Audio: Raw audio synthesized from the Dialogflow agent's response
+	// using the output config specified in the request.
+	Audio string `json:"audio,omitempty"`
+
+	// Uri: Client-specific URI that points to an audio clip accessible to
+	// the client. Dialogflow does not impose any validation on it.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText: A text or
+// ssml response that is preferentially used for TTS output audio
+// synthesis, as described in the comment on the ResponseMessage
+// message.
+type GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// message can be interrupted by the end user's speech and the client
+	// can then starts the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// Ssml: The SSML text to be synthesized. For more information, see
+	// [SSML](/speech/text-to-speech/docs/ssml).
+	Ssml string `json:"ssml,omitempty"`
+
+	// Text: The raw text to be synthesized.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessagePlayAudio: Specifies an audio
+// clip to be played by the client as part of the response.
+type GoogleCloudDialogflowCxV3ResponseMessagePlayAudio struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// message can be interrupted by the end user's speech and the client
+	// can then starts the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// AudioUri: Required. URI of the audio clip. Dialogflow does not impose
+	// any validation on this value. It is specific to the client that reads
+	// it.
+	AudioUri string `json:"audioUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessagePlayAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessagePlayAudio
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ResponseMessageText: The text response
+// message.
+type GoogleCloudDialogflowCxV3ResponseMessageText struct {
+	// AllowPlaybackInterruption: Output only. Whether the playback of this
+	// message can be interrupted by the end user's speech and the client
+	// can then starts the next Dialogflow request.
+	AllowPlaybackInterruption bool `json:"allowPlaybackInterruption,omitempty"`
+
+	// Text: Required. A collection of text responses.
+	Text []string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowPlaybackInterruption") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ResponseMessageText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ResponseMessageText
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3SessionInfo: Represents session information
+// communicated to and from the webhook.
+type GoogleCloudDialogflowCxV3SessionInfo struct {
+	// Parameters: Optional for WebhookRequest. Optional for
+	// WebhookResponse. All parameters collected from forms and intents
+	// during the session. Parameters can be created, updated, or removed by
+	// the webhook. To remove a parameter from the session, the webhook
+	// should explicitly set the parameter value to null in WebhookResponse.
+	// The map is keyed by parameters' display names.
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
+
+	// Session: Always present for WebhookRequest. Ignored for
+	// WebhookResponse. The unique identifier of the session. This field can
+	// be used by the webhook to identify a user. Format:
+	// `projects//locations//agents//sessions/`.
+	Session string `json:"session,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parameters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parameters") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3SessionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3SessionInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookRequest: The request message for a
+// webhook call.
+type GoogleCloudDialogflowCxV3WebhookRequest struct {
+	// DetectIntentResponseId: Always present. The unique identifier of the
+	// DetectIntentResponse that will be returned to the API caller.
+	DetectIntentResponseId string `json:"detectIntentResponseId,omitempty"`
+
+	// FulfillmentInfo: Always present. Information about the fulfillment
+	// that triggered this webhook call.
+	FulfillmentInfo *GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo `json:"fulfillmentInfo,omitempty"`
+
+	// IntentInfo: Information about the last matched intent.
+	IntentInfo *GoogleCloudDialogflowCxV3WebhookRequestIntentInfo `json:"intentInfo,omitempty"`
+
+	// Messages: The list of rich message responses to present to the user.
+	// Webhook can choose to append or replace this list in
+	// WebhookResponse.fulfillment_response;
+	Messages []*GoogleCloudDialogflowCxV3ResponseMessage `json:"messages,omitempty"`
+
+	// PageInfo: Information about page status.
+	PageInfo *GoogleCloudDialogflowCxV3PageInfo `json:"pageInfo,omitempty"`
+
+	// Payload: Custom data set in QueryParameters.payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// SessionInfo: Information about session status.
+	SessionInfo *GoogleCloudDialogflowCxV3SessionInfo `json:"sessionInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DetectIntentResponseId") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectIntentResponseId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo: Represents
+// fulfillment information communicated to the webhook.
+type GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo struct {
+	// Tag: Always present. The tag used to identify which fulfillment is
+	// being called.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookRequestIntentInfo: Represents intent
+// information communicated to the webhook.
+type GoogleCloudDialogflowCxV3WebhookRequestIntentInfo struct {
+	// LastMatchedIntent: Always present. The unique identifier of the last
+	// matched intent. Format: `projects//locations//agents//intents/`.
+	LastMatchedIntent string `json:"lastMatchedIntent,omitempty"`
+
+	// Parameters: Parameters identified as a result of intent matching.
+	// This is a map of the name of the identified parameter to the value of
+	// the parameter identified from the user's utterance. All parameters
+	// defined in the matched intent that are identified will be surfaced
+	// here.
+	Parameters map[string]GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastMatchedIntent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LastMatchedIntent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookRequestIntentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestIntentInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue:
+//  Represents a value for an intent parameter.
+type GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue struct {
+	// OriginalValue: Always present. Original text value extracted from
+	// user utterance.
+	OriginalValue string `json:"originalValue,omitempty"`
+
+	// ResolvedValue: Always present. Structured value for the parameter
+	// extracted from user utterance.
+	ResolvedValue interface{} `json:"resolvedValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OriginalValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OriginalValue") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookResponse: The response message for a
+// webhook call.
+type GoogleCloudDialogflowCxV3WebhookResponse struct {
+	// FulfillmentResponse: The fulfillment response to send to the user.
+	// This field can be omitted by the webhook if it does not intend to
+	// send any response to the user.
+	FulfillmentResponse *GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse `json:"fulfillmentResponse,omitempty"`
+
+	// PageInfo: Information about page status. This field can be omitted by
+	// the webhook if it does not intend to modify page status.
+	PageInfo *GoogleCloudDialogflowCxV3PageInfo `json:"pageInfo,omitempty"`
+
+	// Payload: Value to append directly to QueryResult.webhook_payloads.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// SessionInfo: Information about session status. This field can be
+	// omitted by the webhook if it does not intend to modify session
+	// status.
+	SessionInfo *GoogleCloudDialogflowCxV3SessionInfo `json:"sessionInfo,omitempty"`
+
+	// TargetFlow: The target flow to transition to. Format:
+	// `projects//locations//agents//flows/`.
+	TargetFlow string `json:"targetFlow,omitempty"`
+
+	// TargetPage: The target page to transition to. Format:
+	// `projects//locations//agents//flows//pages/`.
+	TargetPage string `json:"targetPage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FulfillmentResponse")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FulfillmentResponse") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse:
+// Represents a fulfillment response to the user.
+type GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse struct {
+	// MergeBehavior: Merge behavior for `messages`.
+	//
+	// Possible values:
+	//   "MERGE_BEHAVIOR_UNSPECIFIED" - Not specified. `APPEND` will be
+	// used.
+	//   "APPEND" - `messages` will be appended to the list of messages
+	// waiting to be sent to the user.
+	//   "REPLACE" - `messages` will replace the list of messages waiting to
+	// be sent to the user.
+	MergeBehavior string `json:"mergeBehavior,omitempty"`
+
+	// Messages: The list of rich message responses to present to the user.
+	Messages []*GoogleCloudDialogflowCxV3ResponseMessage `json:"messages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MergeBehavior") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MergeBehavior") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowCxV3beta1Agent: Agents are best described as
@@ -2130,6 +2971,43 @@ func (s *GoogleCloudDialogflowCxV3beta1ListPagesResponse) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse: The
+// response message for SecuritySettings.ListSecuritySettings.
+type GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecuritySettings: The list of security settings.
+	SecuritySettings []*GoogleCloudDialogflowCxV3beta1SecuritySettings `json:"securitySettings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ListSessionEntityTypesResponse: The
 // response message for SessionEntityTypes.ListSessionEntityTypes.
 type GoogleCloudDialogflowCxV3beta1ListSessionEntityTypesResponse struct {
@@ -3497,6 +4375,87 @@ type GoogleCloudDialogflowCxV3beta1RestoreAgentRequest struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1RestoreAgentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1RestoreAgentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1SecuritySettings: Represents the
+// settings related to security issues, such as data redaction and data
+// retention. It may take hours for updates on the settings to propagate
+// to all the related components and take effect.
+type GoogleCloudDialogflowCxV3beta1SecuritySettings struct {
+	// DisplayName: Required. The human-readable name of the security
+	// settings, unique within the location.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// InspectTemplate: DLP inspect template name. Use this template to
+	// define inspect base settings. If empty, we use the default DLP
+	// inspect config. The template name will have one of the following
+	// formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR
+	// `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`
+	InspectTemplate string `json:"inspectTemplate,omitempty"`
+
+	// Name: Required. Resource name of the settings. Format:
+	// `projects//locations//securitySettings/`.
+	Name string `json:"name,omitempty"`
+
+	// PurgeDataTypes: List of types of data to remove when retention
+	// settings triggers purge.
+	//
+	// Possible values:
+	//   "PURGE_DATA_TYPE_UNSPECIFIED" - Unspecified. Do not use.
+	//   "DIALOGFLOW_HISTORY" - Dialogflow history. This does not include
+	// Stackdriver log, which is owned by the user not Dialogflow.
+	PurgeDataTypes []string `json:"purgeDataTypes,omitempty"`
+
+	// RedactionScope: Defines on what data we apply redaction. Note that we
+	// don't redact data to which we don't have access, e.g., Stackdriver
+	// logs.
+	//
+	// Possible values:
+	//   "REDACTION_SCOPE_UNSPECIFIED" - Don't redact any kind of data.
+	//   "REDACT_DISK_STORAGE" - On data to be written to disk or similar
+	// devices that are capable of holding data even if power is
+	// disconnected. This includes data that are temporarily saved on disk.
+	RedactionScope string `json:"redactionScope,omitempty"`
+
+	// RedactionStrategy: Strategy that defines how we do redaction.
+	//
+	// Possible values:
+	//   "REDACTION_STRATEGY_UNSPECIFIED" - Do not redact.
+	//   "REDACT_WITH_SERVICE" - Call redaction service to clean up the data
+	// to be persisted.
+	RedactionStrategy string `json:"redactionStrategy,omitempty"`
+
+	// RetentionWindowDays: Retains the data for the specified number of
+	// days. User must Set a value lower than Dialogflow's default 30d TTL.
+	// Setting a value higher than that has no effect. A missing value or
+	// setting to 0 also means we use Dialogflow's default TTL.
+	RetentionWindowDays int64 `json:"retentionWindowDays,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1SecuritySettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1SecuritySettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9947,7 +10906,7 @@ func (c *ProjectsLocationsAgentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10087,7 +11046,7 @@ func (c *ProjectsLocationsAgentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10220,7 +11179,7 @@ func (c *ProjectsLocationsAgentsExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10370,7 +11329,7 @@ func (c *ProjectsLocationsAgentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10530,7 +11489,7 @@ func (c *ProjectsLocationsAgentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10708,7 +11667,7 @@ func (c *ProjectsLocationsAgentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10858,7 +11817,7 @@ func (c *ProjectsLocationsAgentsRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11012,7 +11971,7 @@ func (c *ProjectsLocationsAgentsEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11171,7 +12130,7 @@ func (c *ProjectsLocationsAgentsEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11331,7 +12290,7 @@ func (c *ProjectsLocationsAgentsEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11510,7 +12469,7 @@ func (c *ProjectsLocationsAgentsEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11705,7 +12664,7 @@ func (c *ProjectsLocationsAgentsEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11859,7 +12818,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11998,7 +12957,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12140,7 +13099,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12301,7 +13260,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12496,7 +13455,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsLookupEnvironmentHistoryCall) Header
 
 func (c *ProjectsLocationsAgentsEnvironmentsLookupEnvironmentHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12674,7 +13633,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12827,7 +13786,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsDetectIntentCall) Header() h
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12972,7 +13931,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsFulfillIntentCall) Header() 
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsFulfillIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13116,7 +14075,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsMatchIntentCall) Header() ht
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsMatchIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13260,7 +14219,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesCreateCall) Heade
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13401,7 +14360,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesDeleteCall) Heade
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13543,7 +14502,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesGetCall) Header()
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13705,7 +14664,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesListCall) Header(
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13883,7 +14842,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesPatchCall) Header
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14045,7 +15004,7 @@ func (c *ProjectsLocationsAgentsFlowsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14202,7 +15161,7 @@ func (c *ProjectsLocationsAgentsFlowsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14362,7 +15321,7 @@ func (c *ProjectsLocationsAgentsFlowsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14540,7 +15499,7 @@ func (c *ProjectsLocationsAgentsFlowsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14736,7 +15695,7 @@ func (c *ProjectsLocationsAgentsFlowsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14890,7 +15849,7 @@ func (c *ProjectsLocationsAgentsFlowsTrainCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15048,7 +16007,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15205,7 +16164,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15369,7 +16328,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15551,7 +16510,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15751,7 +16710,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15916,7 +16875,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall) Header() h
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16074,7 +17033,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall) Header() h
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16233,7 +17192,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall) Header() http
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16412,7 +17371,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall) Header() htt
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16607,7 +17566,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall) Header() ht
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16761,7 +17720,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16900,7 +17859,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17042,7 +18001,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17202,7 +18161,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17372,7 +18331,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsLoadCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsLoadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17521,7 +18480,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17681,7 +18640,7 @@ func (c *ProjectsLocationsAgentsIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17826,7 +18785,7 @@ func (c *ProjectsLocationsAgentsIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17980,7 +18939,7 @@ func (c *ProjectsLocationsAgentsIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18171,7 +19130,7 @@ func (c *ProjectsLocationsAgentsIntentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18381,7 +19340,7 @@ func (c *ProjectsLocationsAgentsIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18540,7 +19499,7 @@ func (c *ProjectsLocationsAgentsSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18685,7 +19644,7 @@ func (c *ProjectsLocationsAgentsSessionsFulfillIntentCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentsSessionsFulfillIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18829,7 +19788,7 @@ func (c *ProjectsLocationsAgentsSessionsMatchIntentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsSessionsMatchIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18973,7 +19932,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesCreateCall) Header() http.Hea
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19114,7 +20073,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesDeleteCall) Header() http.Hea
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19256,7 +20215,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesGetCall) Header() http.Header
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19418,7 +20377,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesListCall) Header() http.Heade
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19596,7 +20555,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesPatchCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19745,7 +20704,7 @@ func (c *ProjectsLocationsAgentsWebhooksCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19897,7 +20856,7 @@ func (c *ProjectsLocationsAgentsWebhooksDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20044,7 +21003,7 @@ func (c *ProjectsLocationsAgentsWebhooksGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20204,7 +21163,7 @@ func (c *ProjectsLocationsAgentsWebhooksListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20382,7 +21341,7 @@ func (c *ProjectsLocationsAgentsWebhooksPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20537,7 +21496,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20681,7 +21640,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20856,7 +21815,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20984,6 +21943,780 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+// method id "dialogflow.projects.locations.securitySettings.create":
+
+type ProjectsLocationsSecuritySettingsCreateCall struct {
+	s                                              *Service
+	parent                                         string
+	googleclouddialogflowcxv3beta1securitysettings *GoogleCloudDialogflowCxV3beta1SecuritySettings
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Create: Create security settings in the specified location.
+func (r *ProjectsLocationsSecuritySettingsService) Create(parent string, googleclouddialogflowcxv3beta1securitysettings *GoogleCloudDialogflowCxV3beta1SecuritySettings) *ProjectsLocationsSecuritySettingsCreateCall {
+	c := &ProjectsLocationsSecuritySettingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowcxv3beta1securitysettings = googleclouddialogflowcxv3beta1securitysettings
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSecuritySettingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecuritySettingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSecuritySettingsCreateCall) Context(ctx context.Context) *ProjectsLocationsSecuritySettingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSecuritySettingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecuritySettingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1securitysettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}/securitySettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.securitySettings.create" call.
+// Exactly one of *GoogleCloudDialogflowCxV3beta1SecuritySettings or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3beta1SecuritySettings.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSecuritySettingsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1SecuritySettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowCxV3beta1SecuritySettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create security settings in the specified location.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.locations.securitySettings.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The location to create an SecuritySettings for. Format: `projects//locations/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+parent}/securitySettings",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.securitySettings.delete":
+
+type ProjectsLocationsSecuritySettingsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified SecuritySettings.
+func (r *ProjectsLocationsSecuritySettingsService) Delete(name string) *ProjectsLocationsSecuritySettingsDeleteCall {
+	c := &ProjectsLocationsSecuritySettingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSecuritySettingsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecuritySettingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSecuritySettingsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSecuritySettingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSecuritySettingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecuritySettingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.securitySettings.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecuritySettingsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified SecuritySettings.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings/{securitySettingsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dialogflow.projects.locations.securitySettings.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the SecuritySettings to delete. Format: `projects//locations//securitySettings/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/securitySettings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.securitySettings.get":
+
+type ProjectsLocationsSecuritySettingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified SecuritySettings. The returned settings
+// may be stale by up to 1 minute.
+func (r *ProjectsLocationsSecuritySettingsService) Get(name string) *ProjectsLocationsSecuritySettingsGetCall {
+	c := &ProjectsLocationsSecuritySettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSecuritySettingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecuritySettingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSecuritySettingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSecuritySettingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSecuritySettingsGetCall) Context(ctx context.Context) *ProjectsLocationsSecuritySettingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSecuritySettingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecuritySettingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.securitySettings.get" call.
+// Exactly one of *GoogleCloudDialogflowCxV3beta1SecuritySettings or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3beta1SecuritySettings.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSecuritySettingsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1SecuritySettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowCxV3beta1SecuritySettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the specified SecuritySettings. The returned settings may be stale by up to 1 minute.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings/{securitySettingsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.securitySettings.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the settings. Format: `projects//locations//securitySettings/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/securitySettings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.locations.securitySettings.list":
+
+type ProjectsLocationsSecuritySettingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the list of all security settings in the specified
+// location.
+func (r *ProjectsLocationsSecuritySettingsService) List(parent string) *ProjectsLocationsSecuritySettingsListCall {
+	c := &ProjectsLocationsSecuritySettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return in a single page. By default 20 and at most 100.
+func (c *ProjectsLocationsSecuritySettingsListCall) PageSize(pageSize int64) *ProjectsLocationsSecuritySettingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous list request.
+func (c *ProjectsLocationsSecuritySettingsListCall) PageToken(pageToken string) *ProjectsLocationsSecuritySettingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSecuritySettingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecuritySettingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSecuritySettingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSecuritySettingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSecuritySettingsListCall) Context(ctx context.Context) *ProjectsLocationsSecuritySettingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSecuritySettingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecuritySettingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}/securitySettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.securitySettings.list" call.
+// Exactly one of
+// *GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse.ServerResp
+// onse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSecuritySettingsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the list of all security settings in the specified location.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings",
+	//   "httpMethod": "GET",
+	//   "id": "dialogflow.projects.locations.securitySettings.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of items to return in a single page. By default 20 and at most 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The next_page_token value returned from a previous list request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The location to list all security settings for. Format: `projects//locations/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+parent}/securitySettings",
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSecuritySettingsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dialogflow.projects.locations.securitySettings.patch":
+
+type ProjectsLocationsSecuritySettingsPatchCall struct {
+	s                                              *Service
+	name                                           string
+	googleclouddialogflowcxv3beta1securitysettings *GoogleCloudDialogflowCxV3beta1SecuritySettings
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Patch: Updates the specified SecuritySettings.
+func (r *ProjectsLocationsSecuritySettingsService) Patch(name string, googleclouddialogflowcxv3beta1securitysettings *GoogleCloudDialogflowCxV3beta1SecuritySettings) *ProjectsLocationsSecuritySettingsPatchCall {
+	c := &ProjectsLocationsSecuritySettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddialogflowcxv3beta1securitysettings = googleclouddialogflowcxv3beta1securitysettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// mask to control which fields get updated. If the mask is not present,
+// all fields will be updated.
+func (c *ProjectsLocationsSecuritySettingsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSecuritySettingsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSecuritySettingsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecuritySettingsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSecuritySettingsPatchCall) Context(ctx context.Context) *ProjectsLocationsSecuritySettingsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSecuritySettingsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecuritySettingsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1securitysettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.securitySettings.patch" call.
+// Exactly one of *GoogleCloudDialogflowCxV3beta1SecuritySettings or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDialogflowCxV3beta1SecuritySettings.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSecuritySettingsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1SecuritySettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowCxV3beta1SecuritySettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the specified SecuritySettings.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings/{securitySettingsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dialogflow.projects.locations.securitySettings.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the settings. Format: `projects//locations//securitySettings/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/securitySettings/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The mask to control which fields get updated. If the mask is not present, all fields will be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
 // method id "dialogflow.projects.operations.cancel":
 
 type ProjectsOperationsCancelCall struct {
@@ -21037,7 +22770,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21181,7 +22914,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21356,7 +23089,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

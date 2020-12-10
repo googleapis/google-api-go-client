@@ -1827,7 +1827,7 @@
       }
     }
   },
-  "revision": "20201202",
+  "revision": "20201208",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {
@@ -1835,7 +1835,7 @@
       "id": "GoogleAnalyticsAdminV1alphaAccount",
       "properties": {
         "countryCode": {
-          "description": "Country of business. Must be a non-deprecated code for a UN M.49 region. https: //unicode.org/cldr/charts/latest/supplem // ental/territory_containment_un_m_49.html",
+          "description": "Country of business. Must be a non-deprecated code for a UN M.49 region. https://unicode.org/cldr/charts/latest/supplemental/territory_containment_un_m_49.html",
           "type": "string"
         },
         "createTime": {

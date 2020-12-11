@@ -345,7 +345,7 @@ type Action struct {
 	// Name: An optional name for the container. The container hostname will
 	// be set to this name, making it useful for inter-container
 	// communication. The name must contain only upper and lowercase
-	// alphanumeric characters and hypens and cannot start with a hyphen.
+	// alphanumeric characters and hyphens and cannot start with a hyphen.
 	Name string `json:"name,omitempty"`
 
 	// PidNamespace: An optional identifier for a PID namespace to run the
@@ -671,10 +671,11 @@ func (s *DelayedEvent) MarshalJSON() ([]byte, error) {
 // Disk: Carries information about a disk that can be attached to a VM.
 // See https://cloud.google.com/compute/docs/disks/performance for more
 // information about disk type, size, and performance considerations.
+// Specify either `Volume` or `Disk`, but not both.
 type Disk struct {
 	// Name: A user-supplied name for the disk. Used when mounting the disk
 	// into actions. The name must contain only upper and lowercase
-	// alphanumeric characters and hypens and cannot start with a hyphen.
+	// alphanumeric characters and hyphens and cannot start with a hyphen.
 	Name string `json:"name,omitempty"`
 
 	// SizeGb: The size, in GB, of the disk to attach. If the size is not
@@ -1778,7 +1779,8 @@ type VirtualMachine struct {
 	// https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform.
 	CpuPlatform string `json:"cpuPlatform,omitempty"`
 
-	// Disks: The list of disks to create and attach to the VM.
+	// Disks: The list of disks to create and attach to the VM. Specify
+	// either the `volumes[]` field or the `disks[]` field, but not both.
 	Disks []*Disk `json:"disks,omitempty"`
 
 	// DockerCacheImages: The Compute Engine Disk Images to use as a Docker
@@ -1833,7 +1835,8 @@ type VirtualMachine struct {
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 
 	// Volumes: The list of disks and other storage to create or attach to
-	// the VM.
+	// the VM. Specify either the `volumes[]` field or the `disks[]` field,
+	// but not both.
 	Volumes []*Volume `json:"volumes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
@@ -1860,7 +1863,7 @@ func (s *VirtualMachine) MarshalJSON() ([]byte, error) {
 }
 
 // Volume: Carries information about storage that can be attached to a
-// VM.
+// VM. Specify either `Volume` or `Disk`, but not both.
 type Volume struct {
 	// ExistingDisk: Configuration for a existing disk.
 	ExistingDisk *ExistingDisk `json:"existingDisk,omitempty"`
@@ -2062,7 +2065,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2196,7 +2199,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2350,7 +2353,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2538,7 +2541,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2712,7 +2715,7 @@ func (c *ProjectsWorkersCheckInCall) Header() http.Header {
 
 func (c *ProjectsWorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2854,7 +2857,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

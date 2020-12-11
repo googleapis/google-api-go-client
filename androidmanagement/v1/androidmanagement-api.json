@@ -929,7 +929,7 @@
       }
     }
   },
-  "revision": "20201123",
+  "revision": "20201209",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {

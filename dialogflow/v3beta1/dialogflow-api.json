@@ -2421,6 +2421,163 @@
                   ]
                 }
               }
+            },
+            "securitySettings": {
+              "methods": {
+                "create": {
+                  "description": "Create security settings in the specified location.",
+                  "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings",
+                  "httpMethod": "POST",
+                  "id": "dialogflow.projects.locations.securitySettings.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The location to create an SecuritySettings for. Format: `projects//locations/`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v3beta1/{+parent}/securitySettings",
+                  "request": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes the specified SecuritySettings.",
+                  "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings/{securitySettingsId}",
+                  "httpMethod": "DELETE",
+                  "id": "dialogflow.projects.locations.securitySettings.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the SecuritySettings to delete. Format: `projects//locations//securitySettings/`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/securitySettings/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v3beta1/{+name}",
+                  "response": {
+                    "$ref": "GoogleProtobufEmpty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
+                "get": {
+                  "description": "Retrieves the specified SecuritySettings. The returned settings may be stale by up to 1 minute.",
+                  "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings/{securitySettingsId}",
+                  "httpMethod": "GET",
+                  "id": "dialogflow.projects.locations.securitySettings.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the settings. Format: `projects//locations//securitySettings/`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/securitySettings/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v3beta1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
+                "list": {
+                  "description": "Returns the list of all security settings in the specified location.",
+                  "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings",
+                  "httpMethod": "GET",
+                  "id": "dialogflow.projects.locations.securitySettings.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of items to return in a single page. By default 20 and at most 100.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The next_page_token value returned from a previous list request.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The location to list all security settings for. Format: `projects//locations/`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v3beta1/{+parent}/securitySettings",
+                  "response": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates the specified SecuritySettings.",
+                  "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/securitySettings/{securitySettingsId}",
+                  "httpMethod": "PATCH",
+                  "id": "dialogflow.projects.locations.securitySettings.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the settings. Format: `projects//locations//securitySettings/`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/securitySettings/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. The mask to control which fields get updated. If the mask is not present, all fields will be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v3beta1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                }
+              }
             }
           }
         },
@@ -2525,9 +2682,442 @@
       }
     }
   },
-  "revision": "20201201",
+  "revision": "20201207",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
+    "GoogleCloudDialogflowCxV3CreateVersionOperationMetadata": {
+      "description": "Metadata associated with the long running operation for Versions.CreateVersion.",
+      "id": "GoogleCloudDialogflowCxV3CreateVersionOperationMetadata",
+      "properties": {
+        "version": {
+          "description": "Name of the created version. Format: `projects//locations//agents//flows//versions/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ExportAgentResponse": {
+      "description": "The response message for Agents.ExportAgent.",
+      "id": "GoogleCloudDialogflowCxV3ExportAgentResponse",
+      "properties": {
+        "agentContent": {
+          "description": "Uncompressed raw byte content for agent.",
+          "format": "byte",
+          "type": "string"
+        },
+        "agentUri": {
+          "description": "The URI to a file containing the exported agent. This field is populated only if `agent_uri` is specified in ExportAgentRequest.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3PageInfo": {
+      "description": "Represents page information communicated to and from the webhook.",
+      "id": "GoogleCloudDialogflowCxV3PageInfo",
+      "properties": {
+        "currentPage": {
+          "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The unique identifier of the current page. Format: `projects//locations//agents//flows//pages/`.",
+          "type": "string"
+        },
+        "formInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3PageInfoFormInfo",
+          "description": "Optional for both WebhookRequest and WebhookResponse. Information about the form."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3PageInfoFormInfo": {
+      "description": "Represents form information.",
+      "id": "GoogleCloudDialogflowCxV3PageInfoFormInfo",
+      "properties": {
+        "parameterInfo": {
+          "description": "Optional for both WebhookRequest and WebhookResponse. The parameters contained in the form. Note that the webhook cannot add or remove any form parameter.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo": {
+      "description": "Represents parameter information.",
+      "id": "GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo",
+      "properties": {
+        "displayName": {
+          "description": "Always present for WebhookRequest. Required for WebhookResponse. The human-readable name of the parameter, unique within the form. This field cannot be modified by the webhook.",
+          "type": "string"
+        },
+        "justCollected": {
+          "description": "Optional for WebhookRequest. Ignored for WebhookResponse. Indicates if the parameter value was just collected on the last conversation turn.",
+          "type": "boolean"
+        },
+        "required": {
+          "description": "Optional for both WebhookRequest and WebhookResponse. Indicates whether the parameter is required. Optional parameters will not trigger prompts; however, they are filled if the user specifies them. Required parameters must be filled before form filling concludes.",
+          "type": "boolean"
+        },
+        "state": {
+          "description": "Always present for WebhookRequest. Required for WebhookResponse. The state of the parameter. This field can be set to INVALID by the webhook to invalidate the parameter; other values set by the webhook will be ignored.",
+          "enum": [
+            "PARAMETER_STATE_UNSPECIFIED",
+            "EMPTY",
+            "INVALID",
+            "FILLED"
+          ],
+          "enumDescriptions": [
+            "Not specified. This value should be never used.",
+            "Indicates that the parameter does not have a value.",
+            "Indicates that the parameter value is invalid. This field can be used by the webhook to invalidate the parameter and ask the server to collect it from the user again.",
+            "Indicates that the parameter has a value."
+          ],
+          "type": "string"
+        },
+        "value": {
+          "description": "Optional for both WebhookRequest and WebhookResponse. The value of the parameter. This field can be set by the webhook to change the parameter value.",
+          "type": "any"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessage": {
+      "description": "Represents a response message that can be returned by a conversational agent. Response messages are also used for output audio synthesis. The approach is as follows: * If at least one OutputAudioText response is present, then all OutputAudioText responses are linearly concatenated, and the result is used for output audio synthesis. * If the OutputAudioText responses are a mixture of text and SSML, then the concatenated result is treated as SSML; otherwise, the result is treated as either text or SSML as appropriate. The agent designer should ideally use either text or SSML consistently throughout the bot design. * Otherwise, all Text responses are linearly concatenated, and the result is used for output audio synthesis. This approach allows for more sophisticated user experience scenarios, where the text displayed to the user may differ from what is heard.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessage",
+      "properties": {
+        "conversationSuccess": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess",
+          "description": "Indicates that the conversation succeeded."
+        },
+        "endInteraction": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageEndInteraction",
+          "description": "Output only. A signal that indicates the interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only when the conversation reaches `END_SESSION` or `END_PAGE` page. It is not supposed to be defined by the user. It's guaranteed that there is at most one such message in each response.",
+          "readOnly": true
+        },
+        "liveAgentHandoff": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff",
+          "description": "Hands off conversation to a human agent."
+        },
+        "mixedAudio": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageMixedAudio",
+          "description": "Output only. An audio response message composed of both the synthesized Dialogflow agent responses and responses defined via play_audio. This message is generated by Dialogflow only and not supposed to be defined by the user.",
+          "readOnly": true
+        },
+        "outputAudioText": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText",
+          "description": "A text or ssml response that is preferentially used for TTS output audio synthesis, as described in the comment on the ResponseMessage message."
+        },
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Returns a response containing a custom, platform-specific payload.",
+          "type": "object"
+        },
+        "playAudio": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio",
+          "description": "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way."
+        },
+        "text": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageText",
+          "description": "Returns a text response."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess": {
+      "description": "Indicates that the conversation succeeded, i.e., the bot handled the issue that the customer talked to it about. Dialogflow only uses this to determine which conversations should be counted as successful and doesn't process the metadata in this message in any way. Note that Dialogflow also considers conversations that get to the conversation end page as successful even if they don't return ConversationSuccess. You may set this, for example: * In the entry_fulfillment of a Page if entering the page indicates that the conversation succeeded. * In a webhook response when you determine that you handled the customer issue.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageConversationSuccess",
+      "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Custom metadata. Dialogflow doesn't impose any structure on this.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageEndInteraction": {
+      "description": "Indicates that interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only and not supposed to be defined by the user.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageEndInteraction",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff": {
+      "description": "Indicates that the conversation should be handed off to a live agent. Dialogflow only uses this to determine which conversations were handed off to a human agent for measurement purposes. What else to do with this signal is up to you and your handoff procedures. You may set this, for example: * In the entry_fulfillment of a Page if entering the page indicates something went extremely wrong in the conversation. * In a webhook response when you determine that the customer issue can only be handled by a human.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageLiveAgentHandoff",
+      "properties": {
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Custom metadata for your handoff procedure. Dialogflow doesn't impose any structure on this.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageMixedAudio": {
+      "description": "Represents an audio message that is composed of both segments synthesized from the Dialogflow agent prompts and ones hosted externally at the specified URIs. The external URIs are specified via play_audio. This message is generated by Dialogflow only and not supposed to be defined by the user.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageMixedAudio",
+      "properties": {
+        "segments": {
+          "description": "Segments this audio response is composed of.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment": {
+      "description": "Represents one segment of audio.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageMixedAudioSegment",
+      "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this segment can be interrupted by the end user's speech and the client should then start the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "audio": {
+          "description": "Raw audio synthesized from the Dialogflow agent's response using the output config specified in the request.",
+          "format": "byte",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Client-specific URI that points to an audio clip accessible to the client. Dialogflow does not impose any validation on it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText": {
+      "description": "A text or ssml response that is preferentially used for TTS output audio synthesis, as described in the comment on the ResponseMessage message.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageOutputAudioText",
+      "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "ssml": {
+          "description": "The SSML text to be synthesized. For more information, see [SSML](/speech/text-to-speech/docs/ssml).",
+          "type": "string"
+        },
+        "text": {
+          "description": "The raw text to be synthesized.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio": {
+      "description": "Specifies an audio clip to be played by the client as part of the response.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio",
+      "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "audioUri": {
+          "description": "Required. URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageText": {
+      "description": "The text response message.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageText",
+      "properties": {
+        "allowPlaybackInterruption": {
+          "description": "Output only. Whether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "text": {
+          "description": "Required. A collection of text responses.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3SessionInfo": {
+      "description": "Represents session information communicated to and from the webhook.",
+      "id": "GoogleCloudDialogflowCxV3SessionInfo",
+      "properties": {
+        "parameters": {
+          "additionalProperties": {
+            "type": "any"
+          },
+          "description": "Optional for WebhookRequest. Optional for WebhookResponse. All parameters collected from forms and intents during the session. Parameters can be created, updated, or removed by the webhook. To remove a parameter from the session, the webhook should explicitly set the parameter value to null in WebhookResponse. The map is keyed by parameters' display names.",
+          "type": "object"
+        },
+        "session": {
+          "description": "Always present for WebhookRequest. Ignored for WebhookResponse. The unique identifier of the session. This field can be used by the webhook to identify a user. Format: `projects//locations//agents//sessions/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequest": {
+      "description": "The request message for a webhook call.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequest",
+      "properties": {
+        "detectIntentResponseId": {
+          "description": "Always present. The unique identifier of the DetectIntentResponse that will be returned to the API caller.",
+          "type": "string"
+        },
+        "fulfillmentInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo",
+          "description": "Always present. Information about the fulfillment that triggered this webhook call."
+        },
+        "intentInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfo",
+          "description": "Information about the last matched intent."
+        },
+        "messages": {
+          "description": "The list of rich message responses to present to the user. Webhook can choose to append or replace this list in WebhookResponse.fulfillment_response;",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3ResponseMessage"
+          },
+          "type": "array"
+        },
+        "pageInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3PageInfo",
+          "description": "Information about page status."
+        },
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Custom data set in QueryParameters.payload.",
+          "type": "object"
+        },
+        "sessionInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3SessionInfo",
+          "description": "Information about session status."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo": {
+      "description": "Represents fulfillment information communicated to the webhook.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequestFulfillmentInfo",
+      "properties": {
+        "tag": {
+          "description": "Always present. The tag used to identify which fulfillment is being called.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequestIntentInfo": {
+      "description": "Represents intent information communicated to the webhook.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfo",
+      "properties": {
+        "lastMatchedIntent": {
+          "description": "Always present. The unique identifier of the last matched intent. Format: `projects//locations//agents//intents/`.",
+          "type": "string"
+        },
+        "parameters": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue"
+          },
+          "description": "Parameters identified as a result of intent matching. This is a map of the name of the identified parameter to the value of the parameter identified from the user's utterance. All parameters defined in the matched intent that are identified will be surfaced here.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue": {
+      "description": "Represents a value for an intent parameter.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfoIntentParameterValue",
+      "properties": {
+        "originalValue": {
+          "description": "Always present. Original text value extracted from user utterance.",
+          "type": "string"
+        },
+        "resolvedValue": {
+          "description": "Always present. Structured value for the parameter extracted from user utterance.",
+          "type": "any"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookResponse": {
+      "description": "The response message for a webhook call.",
+      "id": "GoogleCloudDialogflowCxV3WebhookResponse",
+      "properties": {
+        "fulfillmentResponse": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse",
+          "description": "The fulfillment response to send to the user. This field can be omitted by the webhook if it does not intend to send any response to the user."
+        },
+        "pageInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3PageInfo",
+          "description": "Information about page status. This field can be omitted by the webhook if it does not intend to modify page status."
+        },
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Value to append directly to QueryResult.webhook_payloads.",
+          "type": "object"
+        },
+        "sessionInfo": {
+          "$ref": "GoogleCloudDialogflowCxV3SessionInfo",
+          "description": "Information about session status. This field can be omitted by the webhook if it does not intend to modify session status."
+        },
+        "targetFlow": {
+          "description": "The target flow to transition to. Format: `projects//locations//agents//flows/`.",
+          "type": "string"
+        },
+        "targetPage": {
+          "description": "The target page to transition to. Format: `projects//locations//agents//flows//pages/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse": {
+      "description": "Represents a fulfillment response to the user.",
+      "id": "GoogleCloudDialogflowCxV3WebhookResponseFulfillmentResponse",
+      "properties": {
+        "mergeBehavior": {
+          "description": "Merge behavior for `messages`.",
+          "enum": [
+            "MERGE_BEHAVIOR_UNSPECIFIED",
+            "APPEND",
+            "REPLACE"
+          ],
+          "enumDescriptions": [
+            "Not specified. `APPEND` will be used.",
+            "`messages` will be appended to the list of messages waiting to be sent to the user.",
+            "`messages` will replace the list of messages waiting to be sent to the user."
+          ],
+          "type": "string"
+        },
+        "messages": {
+          "description": "The list of rich message responses to present to the user.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3ResponseMessage"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1Agent": {
       "description": "Agents are best described as Natural Language Understanding (NLU) modules that transform user requests into actionable data. You can include agents in your app, product, or service to determine user intent and respond to the user in a natural way. After you create an agent, you can add Intents, Entity Types, Flows, Fulfillments, Webhooks, and so on to manage the conversation flows..",
       "id": "GoogleCloudDialogflowCxV3beta1Agent",
@@ -3404,6 +3994,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse": {
+      "description": "The response message for SecuritySettings.ListSecuritySettings.",
+      "id": "GoogleCloudDialogflowCxV3beta1ListSecuritySettingsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no more results in the list.",
+          "type": "string"
+        },
+        "securitySettings": {
+          "description": "The list of security settings.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettings"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1ListSessionEntityTypesResponse": {
       "description": "The response message for SessionEntityTypes.ListSessionEntityTypes.",
       "id": "GoogleCloudDialogflowCxV3beta1ListSessionEntityTypesResponse",
@@ -4148,6 +4756,69 @@
         "agentUri": {
           "description": "The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI to restore agent from. The format of this URI must be `gs:///`.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1SecuritySettings": {
+      "description": "Represents the settings related to security issues, such as data redaction and data retention. It may take hours for updates on the settings to propagate to all the related components and take effect.",
+      "id": "GoogleCloudDialogflowCxV3beta1SecuritySettings",
+      "properties": {
+        "displayName": {
+          "description": "Required. The human-readable name of the security settings, unique within the location.",
+          "type": "string"
+        },
+        "inspectTemplate": {
+          "description": "DLP inspect template name. Use this template to define inspect base settings. If empty, we use the default DLP inspect config. The template name will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`",
+          "type": "string"
+        },
+        "name": {
+          "description": "Required. Resource name of the settings. Format: `projects//locations//securitySettings/`.",
+          "type": "string"
+        },
+        "purgeDataTypes": {
+          "description": "List of types of data to remove when retention settings triggers purge.",
+          "items": {
+            "enum": [
+              "PURGE_DATA_TYPE_UNSPECIFIED",
+              "DIALOGFLOW_HISTORY"
+            ],
+            "enumDescriptions": [
+              "Unspecified. Do not use.",
+              "Dialogflow history. This does not include Stackdriver log, which is owned by the user not Dialogflow."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "redactionScope": {
+          "description": "Defines on what data we apply redaction. Note that we don't redact data to which we don't have access, e.g., Stackdriver logs.",
+          "enum": [
+            "REDACTION_SCOPE_UNSPECIFIED",
+            "REDACT_DISK_STORAGE"
+          ],
+          "enumDescriptions": [
+            "Don't redact any kind of data.",
+            "On data to be written to disk or similar devices that are capable of holding data even if power is disconnected. This includes data that are temporarily saved on disk."
+          ],
+          "type": "string"
+        },
+        "redactionStrategy": {
+          "description": "Strategy that defines how we do redaction.",
+          "enum": [
+            "REDACTION_STRATEGY_UNSPECIFIED",
+            "REDACT_WITH_SERVICE"
+          ],
+          "enumDescriptions": [
+            "Do not redact.",
+            "Call redaction service to clean up the data to be persisted."
+          ],
+          "type": "string"
+        },
+        "retentionWindowDays": {
+          "description": "Retains the data for the specified number of days. User must Set a value lower than Dialogflow's default 30d TTL. Setting a value higher than that has no effect. A missing value or setting to 0 also means we use Dialogflow's default TTL.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

@@ -719,23 +719,6 @@ type RecognitionConfig struct {
 	// diarization_config instead.
 	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
 
-	// EnableSpokenEmojis: The spoken emoji behavior for the call If not
-	// set, uses default behavior based on model of choice If 'true', adds
-	// spoken emoji formatting for the request. This will replace spoken
-	// emojis with the corresponding Unicode symbols in the final
-	// transcript. If 'false', spoken emojis are not replaced.
-	EnableSpokenEmojis bool `json:"enableSpokenEmojis,omitempty"`
-
-	// EnableSpokenPunctuation: The spoken punctuation behavior for the call
-	// If not set, uses default behavior based on model of choice e.g.
-	// command_and_search will enable spoken punctuation by default If
-	// 'true', replaces spoken punctuation with the corresponding symbols in
-	// the request. For example, "how are you question mark" becomes "how
-	// are you?". See
-	// https://cloud.google.com/speech-to-text/docs/spoken-punctuation for
-	// support. If 'false', spoken punctuation is not replaced.
-	EnableSpokenPunctuation bool `json:"enableSpokenPunctuation,omitempty"`
-
 	// EnableWordConfidence: If `true`, the top result includes a list of
 	// words and the confidence for those words. If `false`, no word-level
 	// confidence information is returned. The default is `false`.
@@ -788,10 +771,6 @@ type RecognitionConfig struct {
 	// range from 32-320 kbps). When using this encoding,
 	// `sample_rate_hertz` has to match the sample rate of the file being
 	// used.
-	//   "WEBM_OPUS" - Opus encoded audio frames in WebM container
-	// ([OggOpus](https://wiki.xiph.org/OggOpus)). This is a Beta features
-	// and only available in v1p1beta1. `sample_rate_hertz` must be one of
-	// 8000, 12000, 16000, 24000, or 48000.
 	Encoding string `json:"encoding,omitempty"`
 
 	// LanguageCode: Required. The language of the supplied audio as a
@@ -1482,7 +1461,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1661,7 +1640,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1837,7 +1816,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2011,7 +1990,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2187,7 +2166,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2313,7 +2292,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

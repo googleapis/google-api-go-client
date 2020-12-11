@@ -1709,16 +1709,16 @@ type Operation struct {
 	// Importance: DO NOT USE. This is an experimental field.
 	//
 	// Possible values:
-	//   "LOW" - The API implementation may cache and aggregate the data.
-	// The data may be lost when rare and unexpected system failures occur.
-	//   "HIGH" - The API implementation doesn't cache and aggregate the
-	// data. If the method returns successfully, it's guaranteed that the
-	// data has been persisted in durable storage.
-	//   "DEBUG" - In addition to the behavior described in HIGH, DEBUG
-	// enables additional validation logic that is only useful during the
-	// onboarding process. This is only available to Google internal
-	// services and the service must be allowlisted by
-	// chemist-dev@google.com in order to use this level.
+	//   "LOW" - Allows data caching, batching, and aggregation. It provides
+	// higher performance with higher data loss risk.
+	//   "HIGH" - Disables data aggregation to minimize data loss. It is for
+	// operations that contains significant monetary value or audit trail.
+	// This feature only applies to the client libraries.
+	//   "DEBUG" - Deprecated. Do not use. Disables data aggregation and
+	// enables additional validation logic. It should only be used during
+	// the onboarding process. It is only available to Google internal
+	// services, and the service must be approved by chemist-dev@google.com
+	// in order to use this level.
 	Importance string `json:"importance,omitempty"`
 
 	// Labels: Labels describing the operation. Only the following labels
@@ -2947,7 +2947,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3099,7 +3099,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3249,7 +3249,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

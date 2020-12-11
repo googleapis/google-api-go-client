@@ -4379,7 +4379,7 @@ func (c *AccountsReportsGenerateCall) Download(opts ...googleapi.CallOption) (*h
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}
@@ -7719,7 +7719,7 @@ func (c *ReportsGenerateCall) Download(opts ...googleapi.CallOption) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}

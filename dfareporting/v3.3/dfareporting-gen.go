@@ -31408,7 +31408,7 @@ func (c *FilesGetCall) Download(opts ...googleapi.CallOption) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}
@@ -45011,7 +45011,7 @@ func (c *ReportsFilesGetCall) Download(opts ...googleapi.CallOption) (*http.Resp
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}

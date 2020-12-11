@@ -2059,7 +2059,7 @@ func (c *ReportsGetFileCall) Download(opts ...googleapi.CallOption) (*http.Respo
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}

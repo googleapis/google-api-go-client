@@ -661,14 +661,13 @@ type Dimension struct {
 	// concatenate(country, ", ", city).
 	DimensionExpression *DimensionExpression `json:"dimensionExpression,omitempty"`
 
-	// Name: The name of the dimension. See the [API
-	// Dimensions](https://developers.google.com/analytics/devguides/reportin
-	// g/data/v1/api-schema#dimensions) for the list of dimension names. If
-	// `dimensionExpression` is specified, `name` can be any string that you
-	// would like. For example if a `dimensionExpression` concatenates
-	// `country` and `city`, you could call that dimension `countryAndCity`.
-	// Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`,
-	// `dimensionExpression`, and `pivots`.
+	// Name: The name of the dimension. See the API Dimensions for the list
+	// of dimension names. If `dimensionExpression` is specified, `name` can
+	// be any string that you would like. For example if a
+	// `dimensionExpression` concatenates `country` and `city`, you could
+	// call that dimension `countryAndCity`. Dimensions are referenced by
+	// `name` in `dimensionFilter`, `orderBys`, `dimensionExpression`, and
+	// `pivots`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionExpression")
@@ -767,8 +766,8 @@ func (s *DimensionHeader) MarshalJSON() ([]byte, error) {
 
 // DimensionMetadata: Explains a dimension.
 type DimensionMetadata struct {
-	// ApiName: This dimension's name. Useable in [Dimension](#Dimension)'s
-	// `name`. For example, `eventName`.
+	// ApiName: This dimension's name. Useable in Dimension's `name`. For
+	// example, `eventName`.
 	ApiName string `json:"apiName,omitempty"`
 
 	// CustomDefinition: True if the dimension is a custom dimension for
@@ -888,9 +887,7 @@ func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 // tracked.
 type Entity struct {
 	// PropertyId: A Google Analytics GA4 property id. To learn more, see
-	// [where to find your Property
-	// ID](https://developers.google.com/analytics/devguides/reporting/data/v
-	// 1/property-id).
+	// where to find your Property ID.
 	PropertyId string `json:"propertyId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PropertyId") to
@@ -1116,14 +1113,12 @@ type Metric struct {
 	// `expression`.
 	Invisible bool `json:"invisible,omitempty"`
 
-	// Name: The name of the metric. See the [API
-	// Metrics](https://developers.google.com/analytics/devguides/reporting/d
-	// ata/v1/api-schema#metrics) for the list of metric names. If
-	// `expression` is specified, `name` can be any string that you would
-	// like. For example if `expression` is `screenPageViews/sessions`, you
-	// could call that metric's name = `viewsPerSession`. Metrics are
-	// referenced by `name` in `metricFilter`, `orderBys`, and metric
-	// `expression`.
+	// Name: The name of the metric. See the API Metrics for the list of
+	// metric names. If `expression` is specified, `name` can be any string
+	// that you would like. For example if `expression` is
+	// `screenPageViews/sessions`, you could call that metric's name =
+	// `viewsPerSession`. Metrics are referenced by `name` in
+	// `metricFilter`, `orderBys`, and metric `expression`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Expression") to
@@ -1207,8 +1202,8 @@ func (s *MetricHeader) MarshalJSON() ([]byte, error) {
 
 // MetricMetadata: Explains a metric.
 type MetricMetadata struct {
-	// ApiName: A metric name. Useable in [Metric](#Metric)'s `name`. For
-	// example, `eventCount`.
+	// ApiName: A metric name. Useable in Metric's `name`. For example,
+	// `eventCount`.
 	ApiName string `json:"apiName,omitempty"`
 
 	// CustomDefinition: True if the metric is a custom metric for this
@@ -1225,9 +1220,9 @@ type MetricMetadata struct {
 	Description string `json:"description,omitempty"`
 
 	// Expression: The mathematical expression for this derived metric. Can
-	// be used in [Metric](#Metric)'s `expression` field for equivalent
-	// reports. Most metrics are not expressions, and for non-expressions,
-	// this field is empty.
+	// be used in Metric's `expression` field for equivalent reports. Most
+	// metrics are not expressions, and for non-expressions, this field is
+	// empty.
 	Expression string `json:"expression,omitempty"`
 
 	// Type: The type of this metric.
@@ -1873,8 +1868,7 @@ type RunPivotReportRequest struct {
 	Pivots []*Pivot `json:"pivots,omitempty"`
 
 	// ReturnPropertyQuota: Toggles whether to return the current state of
-	// this Analytics Property's quota. Quota is returned in
-	// [PropertyQuota](#PropertyQuota).
+	// this Analytics Property's quota. Quota is returned in PropertyQuota.
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CohortSpec") to
@@ -2009,7 +2003,7 @@ type RunRealtimeReportRequest struct {
 
 	// ReturnPropertyQuota: Toggles whether to return the current state of
 	// this Analytics Property's Realtime quota. Quota is returned in
-	// [PropertyQuota](#PropertyQuota).
+	// PropertyQuota.
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
@@ -2137,9 +2131,7 @@ type RunReportRequest struct {
 
 	// Limit: The number of rows to return. If unspecified, 10 rows are
 	// returned. If -1, all rows are returned. To learn more about this
-	// pagination parameter, see
-	// [Pagination](https://developers.google.com/analytics/devguides/reporti
-	// ng/data/v1/basics#pagination).
+	// pagination parameter, see Pagination.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregation of metrics. Aggregated metric values
@@ -2164,17 +2156,14 @@ type RunReportRequest struct {
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// Offset: The row count of the start row. The first row is counted as
-	// row 0. To learn more about this pagination parameter, see
-	// [Pagination](https://developers.google.com/analytics/devguides/reporti
-	// ng/data/v1/basics#pagination).
+	// row 0. To learn more about this pagination parameter, see Pagination.
 	Offset int64 `json:"offset,omitempty,string"`
 
 	// OrderBys: Specifies how rows are ordered in the response.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
 
 	// ReturnPropertyQuota: Toggles whether to return the current state of
-	// this Analytics Property's quota. Quota is returned in
-	// [PropertyQuota](#PropertyQuota).
+	// this Analytics Property's quota. Quota is returned in PropertyQuota.
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CohortSpec") to
@@ -2229,9 +2218,7 @@ type RunReportResponse struct {
 	// the number of rows returned in the response. For example if a query
 	// returns 175 rows and includes limit = 50 in the API request, the
 	// response will contain row_count = 175 but only 50 rows. To learn more
-	// about this pagination parameter, see
-	// [Pagination](https://developers.google.com/analytics/devguides/reporti
-	// ng/data/v1/basics#pagination).
+	// about this pagination parameter, see Pagination.
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// Rows: Rows of dimension value combinations and metric values in the

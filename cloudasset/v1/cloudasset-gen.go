@@ -281,38 +281,28 @@ func (s *AnalyzeIamPolicyResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Asset: An asset in Google Cloud. An asset can be any resource in the
-// Google Cloud [resource
-// hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platfo
-// rm-resource-hierarchy), a resource outside the Google Cloud resource
-// hierarchy (such as Google Kubernetes Engine clusters and objects), or
-// a policy (e.g. Cloud IAM policy). See [Supported asset
-// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-// ypes) for more information.
+// Google Cloud resource hierarchy, a resource outside the Google Cloud
+// resource hierarchy (such as Google Kubernetes Engine clusters and
+// objects), or a policy (e.g. Cloud IAM policy). See Supported asset
+// types for more information.
 type Asset struct {
-	// AccessLevel: Please also refer to the [access level user
-	// guide](https://cloud.google.com/access-context-manager/docs/overview#a
-	// ccess-levels).
+	// AccessLevel: Please also refer to the access level user guide.
 	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
 
-	// AccessPolicy: Please also refer to the [access policy user
-	// guide](https://cloud.google.com/access-context-manager/docs/overview#a
-	// ccess-policies).
+	// AccessPolicy: Please also refer to the access policy user guide.
 	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
 
-	// Ancestors: The ancestry path of an asset in Google Cloud [resource
-	// hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platfo
-	// rm-resource-hierarchy), represented as a list of relative resource
-	// names. An ancestry path starts with the closest ancestor in the
-	// hierarchy and ends at root. If the asset is a project, folder, or
-	// organization, the ancestry path starts from the asset itself.
-	// Example: `["projects/123456789", "folders/5432",
-	// "organizations/1234"]`
+	// Ancestors: The ancestry path of an asset in Google Cloud resource
+	// hierarchy, represented as a list of relative resource names. An
+	// ancestry path starts with the closest ancestor in the hierarchy and
+	// ends at root. If the asset is a project, folder, or organization, the
+	// ancestry path starts from the asset itself. Example:
+	// `["projects/123456789", "folders/5432", "organizations/1234"]`
 	Ancestors []string `json:"ancestors,omitempty"`
 
 	// AssetType: The type of the asset. Example:
-	// `compute.googleapis.com/Disk` See [Supported asset
-	// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-	// ypes) for more information.
+	// `compute.googleapis.com/Disk` See Supported asset types for more
+	// information.
 	AssetType string `json:"assetType,omitempty"`
 
 	// IamPolicy: A representation of the Cloud IAM policy set on a Google
@@ -321,36 +311,29 @@ type Asset struct {
 	// granted access scope from any policies set on parent resources in the
 	// resource hierarchy. Therefore, the effectively policy is the union of
 	// both the policy set on this resource and each policy set on all of
-	// the resource's ancestry resource levels in the hierarchy. See [this
-	// topic](https://cloud.google.com/iam/docs/policies#inheritance) for
-	// more information.
+	// the resource's ancestry resource levels in the hierarchy. See this
+	// topic for more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1` See [Resource
-	// names](https://cloud.google.com/apis/design/resource_names#full_resour
-	// ce_name) for more information.
+	// s/instance1` See Resource names for more information.
 	Name string `json:"name,omitempty"`
 
-	// OrgPolicy: A representation of an [organization
-	// policy](https://cloud.google.com/resource-manager/docs/organization-po
-	// licy/overview#organization_policy). There can be more than one
-	// organization policy with different constraints set on a given
-	// resource.
+	// OrgPolicy: A representation of an organization policy. There can be
+	// more than one organization policy with different constraints set on a
+	// given resource.
 	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
 
 	// OsInventory: A representation of runtime OS Inventory information.
-	// See [this
-	// topic](https://cloud.google.com/compute/docs/instances/os-inventory-ma
-	// nagement) for more information.
+	// See this topic for more information.
 	OsInventory *Inventory `json:"osInventory,omitempty"`
 
 	// Resource: A representation of the resource.
 	Resource *Resource `json:"resource,omitempty"`
 
-	// ServicePerimeter: Please also refer to the [service perimeter user
-	// guide](https://cloud.google.com/vpc-service-controls/docs/overview).
+	// ServicePerimeter: Please also refer to the service perimeter user
+	// guide.
 	ServicePerimeter *GoogleIdentityAccesscontextmanagerV1ServicePerimeter `json:"servicePerimeter,omitempty"`
 
 	// UpdateTime: The last update timestamp of an asset. update_time is
@@ -603,9 +586,7 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -762,14 +743,12 @@ type ExportAssetsRequest struct {
 	// resources whose asset type starts with "compute.googleapis.com". *
 	// ".*Instance" snapshots resources whose asset type ends with
 	// "Instance". * ".*Instance.*" snapshots resources whose asset type
-	// contains "Instance". See
-	// [RE2](https://github.com/google/re2/wiki/Syntax) for all supported
-	// regular expression syntax. If the regular expression does not match
-	// any supported asset type, an INVALID_ARGUMENT error will be returned.
-	// If specified, only matching assets will be returned, otherwise, it
-	// will snapshot all asset types. See [Introduction to Cloud Asset
-	// Inventory](https://cloud.google.com/asset-inventory/docs/overview)
-	// for all supported asset types.
+	// contains "Instance". See RE2 for all supported regular expression
+	// syntax. If the regular expression does not match any supported asset
+	// type, an INVALID_ARGUMENT error will be returned. If specified, only
+	// matching assets will be returned, otherwise, it will snapshot all
+	// asset types. See Introduction to Cloud Asset Inventory for all
+	// supported asset types.
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
 	// ContentType: Asset content type. If not specified, no content but the
@@ -890,18 +869,14 @@ type Feed struct {
 	// asset_types. Only asset updates matching specified asset_names or
 	// asset_types are exported to the feed. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1`. See [Resource
-	// Names](https://cloud.google.com/apis/design/resource_names#full_resour
-	// ce_name) for more info.
+	// s/instance1`. See Resource Names for more info.
 	AssetNames []string `json:"assetNames,omitempty"`
 
 	// AssetTypes: A list of types of the assets to receive updates. You
 	// must specify either or both of asset_names and asset_types. Only
 	// asset updates matching specified asset_names or asset_types are
 	// exported to the feed. Example: "compute.googleapis.com/Disk" See
-	// [this
-	// topic](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-	// ypes) for a list of all supported asset types.
+	// this topic for a list of all supported asset types.
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
 	// Condition: A condition which determines whether an asset update
@@ -911,9 +886,8 @@ type Feed struct {
 	// (https://github.com/google/cel-spec) on a TemporalAsset with name
 	// `temporal_asset`. Example: a Feed with expression
 	// ("temporal_asset.deleted == true") will only publish Asset deletions.
-	// Other fields of `Expr` are optional. See our [user
-	// guide](https://cloud.google.com/asset-inventory/docs/monitoring-asset-
-	// changes#feed_with_condition) for detailed instructions.
+	// Other fields of `Expr` are optional. See our user guide for detailed
+	// instructions.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// ContentType: Asset content type. If not specified, no content but the
@@ -1000,10 +974,8 @@ func (s *FeedOutputConfig) MarshalJSON() ([]byte, error) {
 // GcsDestination: A Cloud Storage location.
 type GcsDestination struct {
 	// Uri: The uri of the Cloud Storage object. It's the same uri that is
-	// used by gsutil. Example: "gs://bucket_name/object_name". See [Viewing
-	// and Editing Object
-	// Metadata](https://cloud.google.com/storage/docs/viewing-editing-metada
-	// ta) for more information.
+	// used by gsutil. Example: "gs://bucket_name/object_name". See Viewing
+	// and Editing Object Metadata for more information.
 	Uri string `json:"uri,omitempty"`
 
 	// UriPrefix: The uri prefix of all generated Cloud Storage objects.
@@ -1260,9 +1232,8 @@ type GoogleCloudAssetV1Identity struct {
 	// AnalysisState: The analysis state of this identity.
 	AnalysisState *IamPolicyAnalysisState `json:"analysisState,omitempty"`
 
-	// Name: The identity name in any form of members appear in [IAM policy
-	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding),
-	// such as: - user:foo@google.com - group:group1@google.com -
+	// Name: The identity name in any form of members appear in IAM policy
+	// binding, such as: - user:foo@google.com - group:group1@google.com -
 	// serviceAccount:s1@prj1.iam.gserviceaccount.com -
 	// projectOwner:some_project_id - domain:google.com - allUsers - etc.
 	Name string `json:"name,omitempty"`
@@ -1334,9 +1305,7 @@ type GoogleCloudAssetV1Resource struct {
 	// AnalysisState: The analysis state of this resource.
 	AnalysisState *IamPolicyAnalysisState `json:"analysisState,omitempty"`
 
-	// FullResourceName: The [full resource
-	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
-	// at)
+	// FullResourceName: The full resource name
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
@@ -1560,9 +1529,8 @@ type GoogleCloudOrgpolicyV1Policy struct {
 	BooleanPolicy *GoogleCloudOrgpolicyV1BooleanPolicy `json:"booleanPolicy,omitempty"`
 
 	// Constraint: The name of the `Constraint` the `Policy` is configuring,
-	// for example, `constraints/serviceuser.services`. A [list of available
-	// constraints](/resource-manager/docs/organization-policy/org-policy-con
-	// straints) is available. Immutable after creation.
+	// for example, `constraints/serviceuser.services`. A list of available
+	// constraints is available. Immutable after creation.
 	Constraint string `json:"constraint,omitempty"`
 
 	// Etag: An opaque tag indicating the current version of the `Policy`,
@@ -2275,12 +2243,8 @@ type IamPolicyAnalysisQuery struct {
 	// an organization number (such as "organizations/123"), a folder number
 	// (such as "folders/123"), a project ID (such as
 	// "projects/my-project-id"), or a project number (such as
-	// "projects/12345"). To know how to get organization id, visit [here
-	// ](https://cloud.google.com/resource-manager/docs/creating-managing-org
-	// anization#retrieving_your_organization_id). To know how to get folder
-	// or project id, visit [here
-	// ](https://cloud.google.com/resource-manager/docs/creating-managing-fol
-	// ders#viewing_or_listing_folders_and_projects).
+	// "projects/12345"). To know how to get organization id, visit here .
+	// To know how to get folder or project id, visit here .
 	Scope string `json:"scope,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessSelector") to
@@ -2315,9 +2279,8 @@ type IamPolicyAnalysisResult struct {
 	// selectors specified in the request.
 	AccessControlLists []*GoogleCloudAssetV1AccessControlList `json:"accessControlLists,omitempty"`
 
-	// AttachedResourceFullName: The [full resource
-	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
-	// at) of the resource to which the iam_binding policy attaches.
+	// AttachedResourceFullName: The full resource name of the resource to
+	// which the iam_binding policy attaches.
 	AttachedResourceFullName string `json:"attachedResourceFullName,omitempty"`
 
 	// FullyExplored: Represents whether all analyses on the iam_binding
@@ -2513,10 +2476,9 @@ type IamPolicySearchResult struct {
 	// Resource: The full resource name of the resource associated with this
 	// IAM policy. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1`. See [Cloud Asset Inventory Resource Name
-	// Format](https://cloud.google.com/asset-inventory/docs/resource-name-fo
-	// rmat) for more information. To search against the `resource`: * use a
-	// field query. Example: `resource:organizations/123`
+	// s/instance1`. See Cloud Asset Inventory Resource Name Format for more
+	// information. To search against the `resource`: * use a field query.
+	// Example: `resource:organizations/123`
 	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Explanation") to
@@ -2546,11 +2508,10 @@ func (s *IamPolicySearchResult) MarshalJSON() ([]byte, error) {
 // resource access, based on roles assigned either directly to them or
 // to the groups they belong to, directly or indirectly.
 type IdentitySelector struct {
-	// Identity: Required. The identity appear in the form of members in
-	// [IAM policy
-	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The
-	// examples of supported forms are: "user:mike@example.com",
-	// "group:admins@example.com", "domain:google.com",
+	// Identity: Required. The identity appear in the form of members in IAM
+	// policy binding. The examples of supported forms are:
+	// "user:mike@example.com", "group:admins@example.com",
+	// "domain:google.com",
 	// "serviceAccount:my-project-id@appspot.gserviceaccount.com". Notice
 	// that wildcard characters (such as * and ?) are not supported. You
 	// must give a specific identity.
@@ -3028,9 +2989,8 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation. **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -3048,8 +3008,8 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation.
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -3088,9 +3048,8 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation.
 	Version int64 `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
@@ -3170,12 +3129,9 @@ type Resource struct {
 	Location string `json:"location,omitempty"`
 
 	// Parent: The full name of the immediate parent of this resource. See
-	// [Resource
-	// Names](https://cloud.google.com/apis/design/resource_names#full_resour
-	// ce_name) for more information. For Google Cloud assets, this value is
-	// the parent resource defined in the [Cloud IAM policy
-	// hierarchy](https://cloud.google.com/iam/docs/overview#policy_hierarchy
-	// ). Example:
+	// Resource Names for more information. For Google Cloud assets, this
+	// value is the parent resource defined in the Cloud IAM policy
+	// hierarchy. Example:
 	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
 	// third-party assets, this field may be set differently.
 	Parent string `json:"parent,omitempty"`
@@ -3220,15 +3176,13 @@ type ResourceSearchResult struct {
 	// Examples: `projectId` for Project, `dnsName` for DNS ManagedZone.
 	// This field contains a subset of the resource metadata fields that are
 	// returned by the List or Get APIs provided by the corresponding GCP
-	// service (e.g., Compute Engine). see [API references and supported
-	// searchable
-	// attributes](https://cloud.google.com/asset-inventory/docs/supported-as
-	// set-types#searchable_asset_types) for more information. You can
-	// search values of these fields through free text search. However, you
-	// should not consume the field programically as the field names and
-	// values may change as the GCP service updates to a new incompatible
-	// API version. To search against the `additional_attributes`: * use a
-	// free text query to match the attributes values. Example: to search
+	// service (e.g., Compute Engine). see API references and supported
+	// searchable attributes for more information. You can search values of
+	// these fields through free text search. However, you should not
+	// consume the field programically as the field names and values may
+	// change as the GCP service updates to a new incompatible API version.
+	// To search against the `additional_attributes`: * use a free text
+	// query to match the attributes values. Example: to search
 	// `additional_attributes = { dnsName: "foobar" }`, you can issue a
 	// query `foobar`.
 	AdditionalAttributes googleapi.RawMessage `json:"additionalAttributes,omitempty"`
@@ -3250,15 +3204,12 @@ type ResourceSearchResult struct {
 	// Instance" * use a free text query. Example: "My Instance"
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Labels: Labels associated with this resource. See [Labelling and
-	// grouping GCP
-	// resources](https://cloud.google.com/blog/products/gcp/labelling-and-gr
-	// ouping-your-google-cloud-platform-resources) for more information. To
-	// search against the `labels`: * use a field query: - query on any
-	// label's key or value. Example: `labels:prod` - query by a given
-	// label. Example: `labels.env:prod` - query by a given label's
-	// existence. Example: `labels.env:*` * use a free text query. Example:
-	// `prod`
+	// Labels: Labels associated with this resource. See Labelling and
+	// grouping GCP resources for more information. To search against the
+	// `labels`: * use a field query: - query on any label's key or value.
+	// Example: `labels:prod` - query by a given label. Example:
+	// `labels.env:prod` - query by a given label's existence. Example:
+	// `labels.env:*` * use a free text query. Example: `prod`
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Location: Location can be `global`, regional like `us-east1`, or
@@ -3269,19 +3220,16 @@ type ResourceSearchResult struct {
 
 	// Name: The full resource name of this resource. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1`. See [Cloud Asset Inventory Resource Name
-	// Format](https://cloud.google.com/asset-inventory/docs/resource-name-fo
-	// rmat) for more information. To search against the `name`: * use a
-	// field query. Example: `name:instance1` * use a free text query.
-	// Example: `instance1`
+	// s/instance1`. See Cloud Asset Inventory Resource Name Format for more
+	// information. To search against the `name`: * use a field query.
+	// Example: `name:instance1` * use a free text query. Example:
+	// `instance1`
 	Name string `json:"name,omitempty"`
 
 	// NetworkTags: Network tags associated with this resource. Like labels,
 	// network tags are a type of annotations used to group GCP resources.
-	// See [Labelling GCP
-	// resources](https://cloud.google.com/blog/products/gcp/labelling-and-gr
-	// ouping-your-google-cloud-platform-resources) for more information. To
-	// search against the `network_tags`: * use a field query. Example:
+	// See Labelling GCP resources for more information. To search against
+	// the `network_tags`: * use a field query. Example:
 	// `networkTags:internal` * use a free text query. Example: `internal`
 	NetworkTags []string `json:"networkTags,omitempty"`
 
@@ -3321,9 +3269,7 @@ func (s *ResourceSearchResult) MarshalJSON() ([]byte, error) {
 type ResourceSelector struct {
 	// FullResourceName: Required. The [full resource name]
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
-	// of a resource of [supported resource
-	// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-	// ypes#analyzable_asset_types).
+	// of a resource of supported resource types.
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
@@ -3491,11 +3437,10 @@ func (s *SoftwarePackage) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -4743,9 +4688,8 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorRoles(analysisQueryA
 
 // AnalysisQueryIdentitySelectorIdentity sets the optional parameter
 // "analysisQuery.identitySelector.identity": Required. The identity
-// appear in the form of members in [IAM policy
-// binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The
-// examples of supported forms are: "user:mike@example.com",
+// appear in the form of members in IAM policy binding. The examples of
+// supported forms are: "user:mike@example.com",
 // "group:admins@example.com", "domain:google.com",
 // "serviceAccount:my-project-id@appspot.gserviceaccount.com". Notice
 // that wildcard characters (such as * and ?) are not supported. You
@@ -4849,9 +4793,7 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputResourceEdges(analysi
 // parameter "analysisQuery.resourceSelector.fullResourceName":
 // Required. The [full resource name]
 // (https://cloud.google.com/asset-inventory/docs/resource-name-format)
-// of a resource of [supported resource
-// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-// ypes#analyzable_asset_types).
+// of a resource of supported resource types.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(analysisQueryResourceSelectorFullResourceName string) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.resourceSelector.fullResourceName", analysisQueryResourceSelectorFullResourceName)
 	return c
@@ -4859,11 +4801,10 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(a
 
 // ExecutionTimeout sets the optional parameter "executionTimeout":
 // Amount of time executable has to complete. See JSON representation of
-// [Duration](https://developers.google.com/protocol-buffers/docs/proto3#
-// json). If this field is set with a value less than the RPC deadline,
-// and the execution of your query hasn't finished in the specified
-// execution timeout, you will get a response with partial result.
-// Otherwise, your query's execution will continue until the RPC
+// Duration. If this field is set with a value less than the RPC
+// deadline, and the execution of your query hasn't finished in the
+// specified execution timeout, you will get a response with partial
+// result. Otherwise, your query's execution will continue until the RPC
 // deadline. If it's not finished until then, you will get a
 // DEADLINE_EXCEEDED error. Default is empty.
 func (c *V1AnalyzeIamPolicyCall) ExecutionTimeout(executionTimeout string) *V1AnalyzeIamPolicyCall {
@@ -5630,12 +5571,10 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 }
 
 // Query sets the optional parameter "query": The query statement. See
-// [how to construct a
-// query](https://cloud.google.com/asset-inventory/docs/searching-iam-pol
-// icies#how_to_construct_a_query) for more information. If not
-// specified or empty, it will search all the IAM policies within the
-// specified `scope`. Examples: * `policy:amy@gmail.com` to find IAM
-// policy bindings that specify user "amy@gmail.com". *
+// how to construct a query for more information. If not specified or
+// empty, it will search all the IAM policies within the specified
+// `scope`. Examples: * `policy:amy@gmail.com` to find IAM policy
+// bindings that specify user "amy@gmail.com". *
 // `policy:roles/compute.admin` to find IAM policy bindings that specify
 // the Compute Admin role. *
 // `policy.role.permissions:storage.buckets.update` to find IAM policy
@@ -5843,9 +5782,7 @@ func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
 
 // AssetTypes sets the optional parameter "assetTypes": A list of asset
 // types that this request searches for. If empty, it will search all
-// the [searchable asset
-// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-// ypes#searchable_asset_types).
+// the searchable asset types.
 func (c *V1SearchAllResourcesCall) AssetTypes(assetTypes ...string) *V1SearchAllResourcesCall {
 	c.urlParams_.SetMulti("assetTypes", append([]string{}, assetTypes...))
 	return c
@@ -5887,19 +5824,16 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 }
 
 // Query sets the optional parameter "query": The query statement. See
-// [how to construct a
-// query](http://cloud.google.com/asset-inventory/docs/searching-resource
-// s#how_to_construct_a_query) for more information. If not specified or
+// how to construct a query for more information. If not specified or
 // empty, it will search all the resources within the specified `scope`.
 // Note that the query string is compared against each Cloud IAM policy
 // binding, including its members, roles, and Cloud IAM conditions. The
 // returned Cloud IAM policies will only contain the bindings that match
-// your query. To learn more about the IAM policy structure, see [IAM
-// policy doc](https://cloud.google.com/iam/docs/policies#structure).
-// Examples: * `name:Important` to find Cloud resources whose name
-// contains "Important" as a word. * `displayName:Impor*` to find Cloud
-// resources whose display name contains "Impor" as a prefix. *
-// `description:*por*` to find Cloud resources whose description
+// your query. To learn more about the IAM policy structure, see IAM
+// policy doc. Examples: * `name:Important` to find Cloud resources
+// whose name contains "Important" as a word. * `displayName:Impor*` to
+// find Cloud resources whose display name contains "Impor" as a prefix.
+// * `description:*por*` to find Cloud resources whose description
 // contains "por" as a substring. * `location:us-west*` to find Cloud
 // resources whose location is prefixed with "us-west". * `labels:prod`
 // to find Cloud resources whose labels contain "prod" as a key or

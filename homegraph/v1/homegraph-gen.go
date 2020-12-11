@@ -221,11 +221,7 @@ type Device struct {
 	Attributes googleapi.RawMessage `json:"attributes,omitempty"`
 
 	// CustomData: Custom device attributes stored in Home Graph and
-	// provided to your smart home Action in each
-	// [QUERY](https://developers.google.com/assistant/smarthome/reference/in
-	// tent/query) and
-	// [EXECUTE](https://developers.google.com/assistant/smarthome/reference/
-	// intent/execute) intent.
+	// provided to your smart home Action in each QUERY and EXECUTE intent.
 	CustomData googleapi.RawMessage `json:"customData,omitempty"`
 
 	// DeviceInfo: Device manufacturer, model, hardware version, and
@@ -246,9 +242,7 @@ type Device struct {
 	NotificationSupportedByAgent bool `json:"notificationSupportedByAgent,omitempty"`
 
 	// OtherDeviceIds: Alternate IDs associated with this device. This is
-	// used to identify cloud synced devices enabled for [local
-	// fulfillment](https://developers.google.com/assistant/smarthome/concept
-	// s/local).
+	// used to identify cloud synced devices enabled for local fulfillment.
 	OtherDeviceIds []*AgentOtherDeviceId `json:"otherDeviceIds,omitempty"`
 
 	// RoomHint: Suggested name for the room where this device is installed.
@@ -259,12 +253,10 @@ type Device struct {
 	// installed. Google attempts to use this value during user setup.
 	StructureHint string `json:"structureHint,omitempty"`
 
-	// Traits: Traits supported by the device. See [device
-	// traits](https://developers.google.com/assistant/smarthome/traits).
+	// Traits: Traits supported by the device. See device traits.
 	Traits []string `json:"traits,omitempty"`
 
-	// Type: Hardware type of the device. See [device
-	// types](https://developers.google.com/assistant/smarthome/guides).
+	// Type: Hardware type of the device. See device types.
 	Type string `json:"type,omitempty"`
 
 	// WillReportState: Indicates whether your smart home Action will report
@@ -378,8 +370,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// QueryRequest: Request type for the
-// [`Query`](#google.home.graph.v1.HomeGraphApiService.Query) call.
+// QueryRequest: Request type for the `Query` call.
 type QueryRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
@@ -470,12 +461,9 @@ func (s *QueryRequestPayload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// QueryResponse: Response type for the
-// [`Query`](#google.home.graph.v1.HomeGraphApiService.Query) call. This
-// should follow the same format as the Google smart home
-// `action.devices.QUERY`
-// [response](https://developers.google.com/assistant/smarthome/reference
-// /intent/query). # Example ```json { "requestId":
+// QueryResponse: Response type for the `Query` call. This should follow
+// the same format as the Google smart home `action.devices.QUERY`
+// response. # Example ```json { "requestId":
 // "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "payload": { "devices": {
 // "123": { "on": true, "online": true }, "456": { "on": true, "online":
 // true, "brightness": 80, "color": { "name": "cerulean", "spectrumRGB":
@@ -547,13 +535,11 @@ func (s *QueryResponsePayload) MarshalJSON() ([]byte, error) {
 // specific to a device.
 type ReportStateAndNotificationDevice struct {
 	// Notifications: Notifications metadata for devices. See the **Device
-	// NOTIFICATIONS** section of the individual trait [reference
-	// guides](https://developers.google.com/assistant/smarthome/traits).
+	// NOTIFICATIONS** section of the individual trait reference guides.
 	Notifications googleapi.RawMessage `json:"notifications,omitempty"`
 
 	// States: States of devices to update. See the **Device STATES**
-	// section of the individual trait [reference
-	// guides](https://developers.google.com/assistant/smarthome/traits).
+	// section of the individual trait reference guides.
 	States googleapi.RawMessage `json:"states,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Notifications") to
@@ -580,8 +566,7 @@ func (s *ReportStateAndNotificationDevice) MarshalJSON() ([]byte, error) {
 }
 
 // ReportStateAndNotificationRequest: Request type for the
-// [`ReportStateAndNotification`](#google.home.graph.v1.HomeGraphApiServi
-// ce.ReportStateAndNotification) call. It may include states,
+// `ReportStateAndNotification` call. It may include states,
 // notifications, or both. States and notifications are defined per
 // `device_id` (for example, "123" and "456" in the following example).
 // # Example ```json { "requestId":
@@ -596,9 +581,8 @@ type ReportStateAndNotificationRequest struct {
 	EventId string `json:"eventId,omitempty"`
 
 	// FollowUpToken: Token to maintain state in the follow up notification
-	// response. Deprecated. See the [notifications
-	// guide](https://developers.google.com/assistant/smarthome/develop/notif
-	// ications) for details on implementing follow up notifications.
+	// response. Deprecated. See the notifications guide for details on
+	// implementing follow up notifications.
 	FollowUpToken string `json:"followUpToken,omitempty"`
 
 	// Payload: Required. State of devices to update and notification
@@ -632,8 +616,7 @@ func (s *ReportStateAndNotificationRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ReportStateAndNotificationResponse: Response type for the
-// [`ReportStateAndNotification`](#google.home.graph.v1.HomeGraphApiServi
-// ce.ReportStateAndNotification) call.
+// `ReportStateAndNotification` call.
 type ReportStateAndNotificationResponse struct {
 	// RequestId: Request ID copied from ReportStateAndNotificationRequest.
 	RequestId string `json:"requestId,omitempty"`
@@ -665,9 +648,8 @@ func (s *ReportStateAndNotificationResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RequestSyncDevicesRequest: Request type for the
-// [`RequestSyncDevices`](#google.home.graph.v1.HomeGraphApiService.Reque
-// stSyncDevices) call.
+// RequestSyncDevicesRequest: Request type for the `RequestSyncDevices`
+// call.
 type RequestSyncDevicesRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
@@ -702,8 +684,7 @@ func (s *RequestSyncDevicesRequest) MarshalJSON() ([]byte, error) {
 }
 
 // RequestSyncDevicesResponse: Response type for the
-// [`RequestSyncDevices`](#google.home.graph.v1.HomeGraphApiService.Reque
-// stSyncDevices) call. Intentionally empty upon success. An HTTP
+// `RequestSyncDevices` call. Intentionally empty upon success. An HTTP
 // response code is returned with more details upon failure.
 type RequestSyncDevicesResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
@@ -740,8 +721,7 @@ func (s *StateAndNotificationPayload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SyncRequest: Request type for the
-// [`Sync`](#google.home.graph.v1.HomeGraphApiService.Sync) call.
+// SyncRequest: Request type for the `Sync` call.
 type SyncRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
@@ -772,12 +752,9 @@ func (s *SyncRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SyncResponse: Response type for the
-// [`Sync`](#google.home.graph.v1.HomeGraphApiService.Sync) call. This
-// should follow the same format as the Google smart home
-// `action.devices.SYNC`
-// [response](https://developers.google.com/assistant/smarthome/reference
-// /intent/sync). # Example ```json { "requestId":
+// SyncResponse: Response type for the `Sync` call. This should follow
+// the same format as the Google smart home `action.devices.SYNC`
+// response. # Example ```json { "requestId":
 // "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "payload": { "agentUserId":
 // "1836.15267389", "devices": [{ "id": "123", "type":
 // "action.devices.types.OUTLET", "traits": [
@@ -864,12 +841,11 @@ type AgentUsersDeleteCall struct {
 
 // Delete: Unlinks the given third-party user from your smart home
 // Action. All data related to this user will be deleted. For more
-// details on how users link their accounts, see [fulfillment and
-// authentication](https://developers.google.com/assistant/smarthome/conc
-// epts/fulfillment-authentication). The third-party user's identity is
-// passed in via the `agent_user_id` (see DeleteAgentUserRequest). This
-// request must be authorized using service account credentials from
-// your Actions console project.
+// details on how users link their accounts, see fulfillment and
+// authentication. The third-party user's identity is passed in via the
+// `agent_user_id` (see DeleteAgentUserRequest). This request must be
+// authorized using service account credentials from your Actions
+// console project.
 func (r *AgentUsersService) Delete(agentUserId string) *AgentUsersDeleteCall {
 	c := &AgentUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.agentUserId = agentUserId
@@ -1143,13 +1119,10 @@ type DevicesReportStateAndNotificationCall struct {
 // ReportStateAndNotification: Reports device state and optionally sends
 // device notifications. Called by your smart home Action when the state
 // of a third-party device changes or you need to send a notification
-// about the device. See [Implement Report
-// State](https://developers.google.com/assistant/smarthome/develop/repor
-// t-state) for more information. This method updates the device state
-// according to its declared
-// [traits](https://developers.google.com/assistant/smarthome/concepts/de
-// vices-traits). Publishing a new state value outside of these traits
-// will result in an `INVALID_ARGUMENT` error response. The third-party
+// about the device. See Implement Report State for more information.
+// This method updates the device state according to its declared
+// traits. Publishing a new state value outside of these traits will
+// result in an `INVALID_ARGUMENT` error response. The third-party
 // user's identity is passed in via the `agent_user_id` (see
 // ReportStateAndNotificationRequest). This request must be authorized
 // using service account credentials from your Actions console project.
@@ -1278,10 +1251,9 @@ type DevicesRequestSyncCall struct {
 	header_                   http.Header
 }
 
-// RequestSync: Requests Google to send an `action.devices.SYNC`
-// [intent](https://developers.google.com/assistant/smarthome/reference/i
-// ntent/sync) to your smart home Action to update device metadata for
-// the given user. The third-party user's identity is passed via the
+// RequestSync: Requests Google to send an `action.devices.SYNC` intent
+// to your smart home Action to update device metadata for the given
+// user. The third-party user's identity is passed via the
 // `agent_user_id` (see RequestSyncDevicesRequest). This request must be
 // authorized using service account credentials from your Actions
 // console project.

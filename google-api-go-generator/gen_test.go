@@ -242,3 +242,30 @@ func TestIsNewerRevision(t *testing.T) {
 		t.Fatalf("got %v, want %v", err, errOldRevision)
 	}
 }
+
+func TestIt(t *testing.T) {
+	tests := []struct {
+		name  string
+		input string
+		want  string
+	}{
+		{name: "basic", input: "[name](link)", want: "name"},
+		{name: "no link", input: "name", want: "name"},
+		{name: "empty string", input: "", want: ""},
+		{name: "sentence", input: "This [is](link) a test.", want: "This is a test."},
+		{name: "two links", input: "This [is](link) a [test](link).", want: "This is a test."},
+		{name: "first incomplete link", input: "This [is] a [test](link).", want: "This [is] a test."},
+		{name: "second incomplete link", input: "This [is](link) a (test).", want: "This is a (test)."},
+		{name: "seperated", input: "This [is] (a) test.", want: "This [is] (a) test."},
+		{name: "don't process code blocks", input: "This is `[a](link)` test.", want: "This is `[a](link)` test."},
+		{name: "At start", input: "[This](link) is a test.", want: "This is a test."},
+		{name: "At end ", input: "This is a [test.](link)", want: "This is a test."},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := removeMarkdownLinks(tc.input); got != tc.want {
+				t.Errorf("removeMarkdownLinks(%q) = %q, want %q", tc.input, got, tc.want)
+			}
+		})
+	}
+}

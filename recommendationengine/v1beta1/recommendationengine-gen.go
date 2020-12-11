@@ -547,8 +547,7 @@ type GoogleCloudRecommendationengineV1beta1CatalogItem struct {
 
 	// ItemGroupId: Optional. Variant group identifier for prediction
 	// results. UTF-8 encoded string with a length limit of 128 bytes. This
-	// field must be enabled before it can be used. [Learn
-	// more](/recommendations-ai/docs/catalog#item-group-id).
+	// field must be enabled before it can be used. Learn more.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
 
 	// LanguageCode: Optional. Deprecated. The model automatically detects
@@ -895,9 +894,8 @@ type GoogleCloudRecommendationengineV1beta1GcsSource struct {
 	// path (for example, gs://bucket/directory/object.json) or a pattern
 	// matching one or more files, such as gs://bucket/directory/*.json. A
 	// request can contain at most 100 files, and each file can be up to 2
-	// GB. See [Importing catalog
-	// information](/recommendations-ai/docs/upload-catalog) for the
-	// expected file format and setup instructions.
+	// GB. See Importing catalog information for the expected file format
+	// and setup instructions.
 	InputUris []string `json:"inputUris,omitempty"`
 
 	// JsonSchema: Optional. The schema to use when parsing the data from
@@ -2531,11 +2529,10 @@ type GoogleProtobufEmpty struct {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -4222,8 +4219,7 @@ type ProjectsLocationsCatalogsEventStoresPlacementsPredictCall struct {
 
 // Predict: Makes a recommendation prediction. If using API Key based
 // authentication, the API Key must be registered using the
-// PredictionApiKeyRegistry service. [Learn
-// more](/recommendations-ai/docs/setting-up#register-key).
+// PredictionApiKeyRegistry service. Learn more.
 func (r *ProjectsLocationsCatalogsEventStoresPlacementsService) Predict(name string, googlecloudrecommendationenginev1beta1predictrequest *GoogleCloudRecommendationengineV1beta1PredictRequest) *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsEventStoresPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

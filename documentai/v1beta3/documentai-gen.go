@@ -811,9 +811,7 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 
 	// Uri: Currently supports Google Cloud Storage URI of the form
 	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See [Google Cloud Storage Request
-	// URIs](https://cloud.google.com/storage/docs/reference-uris) for more
-	// info.
+	// See Google Cloud Storage Request URIs for more info.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -2663,9 +2661,7 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 
 	// Uri: Currently supports Google Cloud Storage URI of the form
 	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See [Google Cloud Storage Request
-	// URIs](https://cloud.google.com/storage/docs/reference-uris) for more
-	// info.
+	// See Google Cloud Storage Request URIs for more info.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -4750,9 +4746,7 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 
 	// Uri: Currently supports Google Cloud Storage URI of the form
 	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See [Google Cloud Storage Request
-	// URIs](https://cloud.google.com/storage/docs/reference-uris) for more
-	// info.
+	// See Google Cloud Storage Request URIs for more info.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -6605,11 +6599,10 @@ type GoogleProtobufEmpty struct {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -7052,8 +7045,8 @@ func (s *GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeTimeZone: Represents a time zone from the [IANA Time Zone
-// Database](https://www.iana.org/time-zones).
+// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone
+// Database.
 type GoogleTypeTimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`
@@ -7140,7 +7133,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7306,7 +7299,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7491,7 +7484,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7627,7 +7620,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7767,7 +7760,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7910,7 +7903,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8051,7 +8044,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8191,7 +8184,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -184,10 +184,9 @@ type ProjectsWorkerPoolsService struct {
 // upon successful completion of all build steps.
 type ArtifactObjects struct {
 	// Location: Cloud Storage bucket and optional object path, in the form
-	// "gs://bucket/path/to/somewhere/". (see [Bucket Name
-	// Requirements](https://cloud.google.com/storage/docs/bucket-naming#requ
-	// irements)). Files in the workspace matching any path pattern will be
-	// uploaded to Cloud Storage with this location as a prefix.
+	// "gs://bucket/path/to/somewhere/". (see Bucket Name Requirements).
+	// Files in the workspace matching any path pattern will be uploaded to
+	// Cloud Storage with this location as a prefix.
 	Location string `json:"location,omitempty"`
 
 	// Paths: Path globs used to match files in the build's workspace.
@@ -341,9 +340,7 @@ type Build struct {
 	LogUrl string `json:"logUrl,omitempty"`
 
 	// LogsBucket: Google Cloud Storage bucket where logs should be written
-	// (see [Bucket Name
-	// Requirements](https://cloud.google.com/storage/docs/bucket-naming#requ
-	// irements)). Logs file names will be of the format
+	// (see Bucket Name Requirements). Logs file names will be of the format
 	// `${logs_bucket}/log-${build_id}.txt`.
 	LogsBucket string `json:"logsBucket,omitempty"`
 
@@ -651,13 +648,12 @@ type BuildStep struct {
 	// attempt to pull the image first, using the builder service account's
 	// credentials if necessary. The Docker daemon's cache will already have
 	// the latest versions of all of the officially supported build steps
-	// ([https://github.com/GoogleCloudPlatform/cloud-builders](https://githu
-	// b.com/GoogleCloudPlatform/cloud-builders)). The Docker daemon will
-	// also have cached many of the layers for some popular images, like
-	// "ubuntu", "debian", but they will be refreshed at the time you
-	// attempt to use them. If you built an image in a previous build step,
-	// it will be stored in the host's Docker daemon's cache and is
-	// available to use as the name for a later build step.
+	// (https://github.com/GoogleCloudPlatform/cloud-builders). The Docker
+	// daemon will also have cached many of the layers for some popular
+	// images, like "ubuntu", "debian", but they will be refreshed at the
+	// time you attempt to use them. If you built an image in a previous
+	// build step, it will be stored in the host's Docker daemon's cache and
+	// is available to use as the name for a later build step.
 	Name string `json:"name,omitempty"`
 
 	// PullTiming: Output only. Stores timing information for pulling this
@@ -1306,10 +1302,9 @@ type Results struct {
 	BuildStepImages []string `json:"buildStepImages,omitempty"`
 
 	// BuildStepOutputs: List of build step outputs, produced by builder
-	// images, in the order corresponding to build step indices. [Cloud
-	// Builders](https://cloud.google.com/cloud-build/docs/cloud-builders)
-	// can produce this output by writing to `$BUILDER_OUTPUT/output`. Only
-	// the first 4KB of data is stored.
+	// images, in the order corresponding to build step indices. Cloud
+	// Builders can produce this output by writing to
+	// `$BUILDER_OUTPUT/output`. Only the first 4KB of data is stored.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
 
 	// Images: Container images that were built as a part of the build.
@@ -1536,11 +1531,10 @@ func (s *SourceProvenance) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1581,10 +1575,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // StorageSource: Location of the source in an archive file in Google
 // Cloud Storage.
 type StorageSource struct {
-	// Bucket: Google Cloud Storage bucket containing the source (see
-	// [Bucket Name
-	// Requirements](https://cloud.google.com/storage/docs/bucket-naming#requ
-	// irements)).
+	// Bucket: Google Cloud Storage bucket containing the source (see Bucket
+	// Name Requirements).
 	Bucket string `json:"bucket,omitempty"`
 
 	// Generation: Google Cloud Storage generation for the object. If the

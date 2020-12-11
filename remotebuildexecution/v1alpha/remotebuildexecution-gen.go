@@ -2364,9 +2364,8 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// See https://cloud.google.com/compute/docs/disks/
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
-	// DiskType: Required. Disk Type to use for the worker. See [Storage
-	// options](https://cloud.google.com/compute/docs/disks/#introduction).
-	// Currently only `pd-standard` and `pd-ssd` are supported.
+	// DiskType: Required. Disk Type to use for the worker. See Storage
+	// options. Currently only `pd-standard` and `pd-ssd` are supported.
 	DiskType string `json:"diskType,omitempty"`
 
 	// Labels: Labels associated with the workers. Label keys and values can
@@ -2388,8 +2387,7 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	MaxConcurrentActions int64 `json:"maxConcurrentActions,omitempty,string"`
 
 	// MinCpuPlatform: Minimum CPU platform to use when creating the worker.
-	// See [CPU
-	// Platforms](https://cloud.google.com/compute/docs/cpu-platforms).
+	// See CPU Platforms.
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// NetworkAccess: Determines the type of network access granted to
@@ -2402,8 +2400,7 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 
 	// Reserved: Determines whether the worker is reserved (equivalent to a
 	// Compute Engine on-demand VM and therefore won't be preempted). See
-	// [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for more
-	// details.
+	// Preemptible VMs for more details.
 	Reserved bool `json:"reserved,omitempty"`
 
 	// SoleTenantNodeType: The node type name to be used for sole-tenant
@@ -3178,11 +3175,10 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

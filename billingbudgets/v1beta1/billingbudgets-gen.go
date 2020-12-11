@@ -361,10 +361,8 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// INCLUDE_SPECIFIED_CREDITS, this is a list of credit types to be
 	// subtracted from gross cost to determine the spend for threshold
 	// calculations. If Filter.credit_types_treatment is **not**
-	// INCLUDE_SPECIFIED_CREDITS, this field must be empty. See [a list of
-	// acceptable credit type
-	// values](https://cloud.google.com/billing/docs/how-to/export-data-bigqu
-	// ery-tables#credits-type).
+	// INCLUDE_SPECIFIED_CREDITS, this field must be empty. See a list of
+	// acceptable credit type values.
 	CreditTypes []string `json:"creditTypes,omitempty"`
 
 	// CreditTypesTreatment: Optional. If not set, default behavior is

@@ -798,14 +798,11 @@ type Device struct {
 	DeviceId int64 `json:"deviceId,omitempty,string"`
 
 	// DeviceIdentifier: The hardware IDs that identify a manufactured
-	// device. To learn more, read
-	// [Identifiers](https://developers.google.com/zero-touch/guides/identifi
-	// ers).
+	// device. To learn more, read Identifiers.
 	DeviceIdentifier *DeviceIdentifier `json:"deviceIdentifier,omitempty"`
 
 	// DeviceMetadata: The metadata attached to the device. Structured as
-	// key-value pairs. To learn more, read [Device
-	// metadata](https://developers.google.com/zero-touch/guides/metadata).
+	// key-value pairs. To learn more, read Device metadata.
 	DeviceMetadata *DeviceMetadata `json:"deviceMetadata,omitempty"`
 
 	// Name: Output only. The API resource name in the format
@@ -841,8 +838,8 @@ func (s *Device) MarshalJSON() ([]byte, error) {
 
 // DeviceClaim: A record of a device claimed by a reseller for a
 // customer. Devices claimed for zero-touch enrollment have a claim with
-// the type `SECTION_TYPE_ZERO_TOUCH`. To learn more, read [Claim
-// devices for customers](/zero-touch/guides/how-it-works#claim).
+// the type `SECTION_TYPE_ZERO_TOUCH`. To learn more, read Claim devices
+// for customers.
 type DeviceClaim struct {
 	// OwnerCompanyId: The ID of the Customer that purchased the device.
 	OwnerCompanyId int64 `json:"ownerCompanyId,omitempty,string"`
@@ -894,18 +891,14 @@ func (s *DeviceClaim) MarshalJSON() ([]byte, error) {
 
 // DeviceIdentifier: Encapsulates hardware and product IDs to identify a
 // manufactured device. To understand requirements on identifier sets,
-// read
-// [Identifiers](https://developers.google.com/zero-touch/guides/identifi
-// ers).
+// read Identifiers.
 type DeviceIdentifier struct {
 	// Imei: The device’s IMEI number. Validated on input.
 	Imei string `json:"imei,omitempty"`
 
 	// Manufacturer: The device manufacturer’s name. Matches the device's
 	// built-in value returned from `android.os.Build.MANUFACTURER`. Allowed
-	// values are listed in
-	// [manufacturers](/zero-touch/resources/manufacturer-names#manufacturers
-	// -names).
+	// values are listed in manufacturers.
 	Manufacturer string `json:"manufacturer,omitempty"`
 
 	// Meid: The device’s MEID number.
@@ -913,7 +906,7 @@ type DeviceIdentifier struct {
 
 	// Model: The device model's name. Matches the device's built-in value
 	// returned from `android.os.Build.MODEL`. Allowed values are listed in
-	// [models](/zero-touch/resources/manufacturer-names#model-names).
+	// models.
 	Model string `json:"model,omitempty"`
 
 	// SerialNumber: The manufacturer's serial number for the device. This
@@ -944,8 +937,7 @@ func (s *DeviceIdentifier) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceMetadata: Metadata entries that can be attached to a `Device`.
-// To learn more, read [Device
-// metadata](https://developers.google.com/zero-touch/guides/metadata).
+// To learn more, read Device metadata.
 type DeviceMetadata struct {
 	// Entries: Metadata entries recorded as key-value pairs.
 	Entries map[string]string `json:"entries,omitempty"`
@@ -983,9 +975,7 @@ func (s *DeviceMetadata) MarshalJSON() ([]byte, error) {
 // IDs, such as IMEI number, belonging to the manufactured device.
 // Methods that operate on devices take a `DeviceReference` as a
 // parameter type because it's more flexible for the caller. To learn
-// more about device identifiers, read
-// [Identifiers](https://developers.google.com/zero-touch/guides/identifi
-// ers).
+// more about device identifiers, read Identifiers.
 type DeviceReference struct {
 	// DeviceId: The ID of the device.
 	DeviceId int64 `json:"deviceId,omitempty,string"`
@@ -1018,8 +1008,8 @@ func (s *DeviceReference) MarshalJSON() ([]byte, error) {
 
 // DevicesLongRunningOperationMetadata: Tracks the status of a
 // long-running operation to asynchronously update a batch of reseller
-// metadata attached to devices. To learn more, read [Long‑running
-// batch operations](/zero-touch/guides/how-it-works#operations).
+// metadata attached to devices. To learn more, read Long‑running
+// batch operations.
 type DevicesLongRunningOperationMetadata struct {
 	// DevicesCount: The number of metadata updates in the operation. This
 	// might be different from the number of updates in the request if the
@@ -1068,8 +1058,7 @@ func (s *DevicesLongRunningOperationMetadata) MarshalJSON() ([]byte, error) {
 
 // DevicesLongRunningOperationResponse: Tracks the status of a
 // long-running operation to claim, unclaim, or attach metadata to
-// devices. To learn more, read [Long‑running batch
-// operations](/zero-touch/guides/how-it-works#operations).
+// devices. To learn more, read Long‑running batch operations.
 type DevicesLongRunningOperationResponse struct {
 	// PerDeviceStatus: The processing status for each device in the
 	// operation. One `PerDeviceStatus` per device. The list order matches
@@ -1104,12 +1093,10 @@ func (s *DevicesLongRunningOperationResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Dpc: An EMM's DPC ([device policy
-// controller](http://developer.android.com/work/dpc/build-dpc.html)).
-// Zero-touch enrollment installs a DPC (listed in the `Configuration`)
-// on a device to maintain the customer's mobile policies. All the DPCs
-// listed by the API support zero-touch enrollment and are available in
-// Google Play.
+// Dpc: An EMM's DPC (device policy controller). Zero-touch enrollment
+// installs a DPC (listed in the `Configuration`) on a device to
+// maintain the customer's mobile policies. All the DPCs listed by the
+// API support zero-touch enrollment and are available in Google Play.
 type Dpc struct {
 	// DpcName: Output only. The title of the DPC app in Google Play. For
 	// example, _Google Apps Device Policy_. Useful in an application's user
@@ -1696,11 +1683,10 @@ func (s *PerDeviceStatusInBatch) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2651,9 +2637,8 @@ func (r *CustomersConfigurationsService) Patch(name string, configuration *Confi
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
 // field mask applied to the target `Configuration` before updating the
-// fields. To learn more about using field masks, read
-// [FieldMask](/protocol-buffers/docs/reference/google.protobuf#fieldmask
-// ) in the Protocol Buffers documentation.
+// fields. To learn more about using field masks, read FieldMask in the
+// Protocol Buffers documentation.
 func (c *CustomersConfigurationsPatchCall) UpdateMask(updateMask string) *CustomersConfigurationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4300,8 +4285,7 @@ type PartnersDevicesClaimAsyncCall struct {
 
 // ClaimAsync: Claims a batch of devices for a customer asynchronously.
 // Adds the devices to zero-touch enrollment. To learn more, read
-// [Long‑running batch
-// operations](/zero-touch/guides/how-it-works#operations).
+// Long‑running batch operations.
 func (r *PartnersDevicesService) ClaimAsync(partnerId int64, claimdevicesrequest *ClaimDevicesRequest) *PartnersDevicesClaimAsyncCall {
 	c := &PartnersDevicesClaimAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -5194,8 +5178,7 @@ type PartnersDevicesUnclaimAsyncCall struct {
 
 // UnclaimAsync: Unclaims a batch of devices for a customer
 // asynchronously. Removes the devices from zero-touch enrollment. To
-// learn more, read [Long‑running batch
-// operations](/zero-touch/guides/how-it-works#operations).
+// learn more, read Long‑running batch operations.
 func (r *PartnersDevicesService) UnclaimAsync(partnerId int64, unclaimdevicesrequest *UnclaimDevicesRequest) *PartnersDevicesUnclaimAsyncCall {
 	c := &PartnersDevicesUnclaimAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -5336,8 +5319,7 @@ type PartnersDevicesUpdateMetadataAsyncCall struct {
 // UpdateMetadataAsync: Updates the reseller metadata attached to a
 // batch of devices. This method updates devices asynchronously and
 // returns an `Operation` that can be used to track progress. Read
-// [Long‑running batch
-// operations](/zero-touch/guides/how-it-works#operations).
+// Long‑running batch operations.
 func (r *PartnersDevicesService) UpdateMetadataAsync(partnerId int64, updatedevicemetadatainbatchrequest *UpdateDeviceMetadataInBatchRequest) *PartnersDevicesUpdateMetadataAsyncCall {
 	c := &PartnersDevicesUpdateMetadataAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId

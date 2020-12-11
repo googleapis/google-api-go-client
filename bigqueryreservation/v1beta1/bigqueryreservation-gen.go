@@ -803,11 +803,10 @@ func (s *SplitCapacityCommitmentResponse) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2892,8 +2891,7 @@ func (r *ProjectsLocationsReservationsService) List(parent string) *ProjectsLoca
 // Filter sets the optional parameter "filter": Can be used to filter
 // out reservations based on names, capacity, etc, e.g.:
 // filter="reservation.slot_capacity > 200" filter="reservation.name =
-// \"*dev/*\"" Advanced filtering syntax can be
-// [here](https://cloud.google.com/logging/docs/view/advanced-filters).
+// \"*dev/*\"" Advanced filtering syntax can be here.
 func (c *ProjectsLocationsReservationsListCall) Filter(filter string) *ProjectsLocationsReservationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

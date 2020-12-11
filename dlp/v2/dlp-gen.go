@@ -1359,9 +1359,8 @@ type GooglePrivacyDlpV2CloudStorageRegexFileSet struct {
 	// ExcludeRegex: A list of regular expressions matching file paths to
 	// exclude. All files in the bucket that match at least one of these
 	// regular expressions will be excluded from the scan. Regular
-	// expressions use RE2
-	// [syntax](https://github.com/google/re2/wiki/Syntax); a guide can be
-	// found under the google/re2 repository on GitHub.
+	// expressions use RE2 syntax; a guide can be found under the google/re2
+	// repository on GitHub.
 	ExcludeRegex []string `json:"excludeRegex,omitempty"`
 
 	// IncludeRegex: A list of regular expressions matching file paths to
@@ -1369,9 +1368,8 @@ type GooglePrivacyDlpV2CloudStorageRegexFileSet struct {
 	// regular expressions will be included in the set of files, except for
 	// those that also match an item in `exclude_regex`. Leaving this field
 	// empty will match all files by default (this is equivalent to
-	// including `.*` in the list). Regular expressions use RE2
-	// [syntax](https://github.com/google/re2/wiki/Syntax); a guide can be
-	// found under the google/re2 repository on GitHub.
+	// including `.*` in the list). Regular expressions use RE2 syntax; a
+	// guide can be found under the google/re2 repository on GitHub.
 	IncludeRegex []string `json:"includeRegex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketName") to
@@ -2105,20 +2103,18 @@ type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// example, if the name of custom infoType is 'MY_TOKEN_INFO_TYPE' and
 	// the surrogate is 'abc', the full replacement value will be:
 	// 'MY_TOKEN_INFO_TYPE(3):abc' This annotation identifies the surrogate
-	// when inspecting content using the custom infoType
-	// [`SurrogateType`](https://cloud.google.com/dlp/docs/reference/rest/v2/
-	// InspectConfig#surrogatetype). This facilitates reversal of the
-	// surrogate when it occurs in free text. In order for inspection to
-	// work properly, the name of this infoType must not occur naturally
-	// anywhere in your data; otherwise, inspection may find a surrogate
-	// that does not correspond to an actual identifier. Therefore, choose
-	// your custom infoType name carefully after considering what your data
-	// looks like. One way to select a name that has a high chance of
-	// yielding reliable detection is to include one or more unicode
-	// characters that are highly improbable to exist in your data. For
-	// example, assuming your data is entered from a regular ASCII keyboard,
-	// the symbol with the hex code point 29DD might be used like so:
-	// ⧝MY_TOKEN_TYPE
+	// when inspecting content using the custom infoType `SurrogateType`.
+	// This facilitates reversal of the surrogate when it occurs in free
+	// text. In order for inspection to work properly, the name of this
+	// infoType must not occur naturally anywhere in your data; otherwise,
+	// inspection may find a surrogate that does not correspond to an actual
+	// identifier. Therefore, choose your custom infoType name carefully
+	// after considering what your data looks like. One way to select a name
+	// that has a high chance of yielding reliable detection is to include
+	// one or more unicode characters that are highly improbable to exist in
+	// your data. For example, assuming your data is entered from a regular
+	// ASCII keyboard, the symbol with the hex code point 29DD might be used
+	// like so: ⧝MY_TOKEN_TYPE
 	SurrogateInfoType *GooglePrivacyDlpV2InfoType `json:"surrogateInfoType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonAlphabet") to
@@ -2816,23 +2812,21 @@ func (s *GooglePrivacyDlpV2DetectionRule) MarshalJSON() ([]byte, error) {
 // dictionary of words or phrases. This can be used to match sensitive
 // information specific to the data, such as a list of employee IDs or
 // job titles. Dictionary words are case-insensitive and all characters
-// other than letters and digits in the unicode [Basic Multilingual
-// Plane](https://en.wikipedia.org/wiki/Plane_%28Unicode%29#Basic_Multili
-// ngual_Plane) will be replaced with whitespace when scanning for
-// matches, so the dictionary phrase "Sam Johnson" will match all three
-// phrases "sam johnson", "Sam, Johnson", and "Sam (Johnson)".
-// Additionally, the characters surrounding any match must be of a
-// different type than the adjacent characters within the word, so
-// letters must be next to non-letters and digits next to non-digits.
-// For example, the dictionary word "jen" will match the first three
-// letters of the text "jen123" but will return no matches for
-// "jennifer". Dictionary words containing a large number of characters
-// that are not letters or digits may result in unexpected findings
-// because such characters are treated as whitespace. The
-// [limits](https://cloud.google.com/dlp/limits) page contains details
-// about the size limits of dictionaries. For dictionaries that do not
-// fit within these constraints, consider using
-// `LargeCustomDictionaryConfig` in the `StoredInfoType` API.
+// other than letters and digits in the unicode Basic Multilingual Plane
+// will be replaced with whitespace when scanning for matches, so the
+// dictionary phrase "Sam Johnson" will match all three phrases "sam
+// johnson", "Sam, Johnson", and "Sam (Johnson)". Additionally, the
+// characters surrounding any match must be of a different type than the
+// adjacent characters within the word, so letters must be next to
+// non-letters and digits next to non-digits. For example, the
+// dictionary word "jen" will match the first three letters of the text
+// "jen123" but will return no matches for "jennifer". Dictionary words
+// containing a large number of characters that are not letters or
+// digits may result in unexpected findings because such characters are
+// treated as whitespace. The limits page contains details about the
+// size limits of dictionaries. For dictionaries that do not fit within
+// these constraints, consider using `LargeCustomDictionaryConfig` in
+// the `StoredInfoType` API.
 type GooglePrivacyDlpV2Dictionary struct {
 	// CloudStoragePath: Newline-delimited file of words in Cloud Storage.
 	// Only a single file is accepted.
@@ -3305,10 +3299,10 @@ type GooglePrivacyDlpV2Finding struct {
 
 	// Labels: The labels associated with this `Finding`. Label keys must be
 	// between 1 and 63 characters long and must conform to the following
-	// regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`. Label values must
-	// be between 0 and 63 characters long and must conform to the regular
-	// expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`. No more than 10 labels
-	// can be associated with a given finding. Examples: * "environment" :
+	// regular expression: `a-z?`. Label values must be between 0 and 63
+	// characters long and must conform to the regular expression
+	// `([a-z]([-a-z0-9]*[a-z0-9])?)?`. No more than 10 labels can be
+	// associated with a given finding. Examples: * "environment" :
 	// "production" * "pipeline" : "etl"
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -3585,12 +3579,11 @@ type GooglePrivacyDlpV2HybridFindingDetails struct {
 	// being inspected. If configured by the job, some key values may be
 	// required. The labels associated with `Finding`'s produced by hybrid
 	// inspection. Label keys must be between 1 and 63 characters long and
-	// must conform to the following regular expression:
-	// `[a-z]([-a-z0-9]*[a-z0-9])?`. Label values must be between 0 and 63
-	// characters long and must conform to the regular expression
-	// `([a-z]([-a-z0-9]*[a-z0-9])?)?`. No more than 10 labels can be
-	// associated with a given finding. Examples: * "environment" :
-	// "production" * "pipeline" : "etl"
+	// must conform to the following regular expression: `a-z?`. Label
+	// values must be between 0 and 63 characters long and must conform to
+	// the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`. No more than
+	// 10 labels can be associated with a given finding. Examples: *
+	// "environment" : "production" * "pipeline" : "etl"
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// RowOffset: Offset of the row for tables. Populate if the row(s) being
@@ -3747,12 +3740,11 @@ type GooglePrivacyDlpV2HybridOptions struct {
 
 	// Labels: To organize findings, these labels will be added to each
 	// finding. Label keys must be between 1 and 63 characters long and must
-	// conform to the following regular expression:
-	// `[a-z]([-a-z0-9]*[a-z0-9])?`. Label values must be between 0 and 63
-	// characters long and must conform to the regular expression
-	// `([a-z]([-a-z0-9]*[a-z0-9])?)?`. No more than 10 labels can be
-	// associated with a given finding. Examples: * "environment" :
-	// "production" * "pipeline" : "etl"
+	// conform to the following regular expression: `a-z?`. Label values
+	// must be between 0 and 63 characters long and must conform to the
+	// regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`. No more than 10
+	// labels can be associated with a given finding. Examples: *
+	// "environment" : "production" * "pipeline" : "etl"
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// RequiredFindingLabelKeys: These are labels that each inspection
@@ -5137,11 +5129,10 @@ func (s *GooglePrivacyDlpV2LDiversityResult) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2LargeCustomDictionaryConfig: Configuration for a
 // custom dictionary created from a data source of any size up to the
-// maximum size defined in the
-// [limits](https://cloud.google.com/dlp/limits) page. The artifacts of
-// dictionary creation are stored in the specified Google Cloud Storage
-// location. Consider using `CustomInfoType.Dictionary` for smaller
-// dictionaries that satisfy the size requirements.
+// maximum size defined in the limits page. The artifacts of dictionary
+// creation are stored in the specified Google Cloud Storage location.
+// Consider using `CustomInfoType.Dictionary` for smaller dictionaries
+// that satisfy the size requirements.
 type GooglePrivacyDlpV2LargeCustomDictionaryConfig struct {
 	// BigQueryField: Field in a BigQuery table where each cell represents a
 	// dictionary phrase.
@@ -5950,8 +5941,7 @@ type GooglePrivacyDlpV2PublishSummaryToCscc struct {
 // GooglePrivacyDlpV2PublishToPubSub: Publish a message into given
 // Pub/Sub topic when DlpJob has completed. The message contains a
 // single field, `DlpJobName`, which is equal to the finished job's
-// [`DlpJob.name`](https://cloud.google.com/dlp/docs/reference/rest/v2/pr
-// ojects.dlpJobs#DlpJob). Compatible with: Inspect, Risk
+// `DlpJob.name`. Compatible with: Inspect, Risk
 type GooglePrivacyDlpV2PublishToPubSub struct {
 	// Topic: Cloud Pub/Sub topic to send notifications to. The topic must
 	// have given publishing access rights to the DLP API service account
@@ -7202,10 +7192,8 @@ func (s *GooglePrivacyDlpV2SummaryResult) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2SurrogateType: Message for detecting output from
-// deidentification transformations such as
-// [`CryptoReplaceFfxFpeConfig`](https://cloud.google.com/dlp/docs/refere
-// nce/rest/v2/organizations.deidentifyTemplates#cryptoreplaceffxfpeconfi
-// g). These types of transformations are those that perform
+// deidentification transformations such as `CryptoReplaceFfxFpeConfig`.
+// These types of transformations are those that perform
 // pseudonymization, thereby producing a "surrogate" as output. This
 // should be used in conjunction with a field on the transformation such
 // as `surrogate_info_type`. This CustomInfoType does not support the
@@ -8005,11 +7993,10 @@ type GoogleProtobufEmpty struct {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

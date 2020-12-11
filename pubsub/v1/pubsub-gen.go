@@ -252,9 +252,7 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -817,10 +815,8 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OidcToken: Contains information needed for generating an [OpenID
-// Connect
-// token](https://developers.google.com/identity/protocols/OpenIDConnect)
-// .
+// OidcToken: Contains information needed for generating an OpenID
+// Connect token.
 type OidcToken struct {
 	// Audience: Audience to be used when generating OIDC token. The
 	// audience claim identifies the recipients that the JWT is intended
@@ -831,9 +827,8 @@ type OidcToken struct {
 	// specified, the Push endpoint URL will be used.
 	Audience string `json:"audience,omitempty"`
 
-	// ServiceAccountEmail: [Service account
-	// email](https://cloud.google.com/iam/docs/service-accounts) to be used
-	// for generating the OIDC token. The caller (for CreateSubscription,
+	// ServiceAccountEmail: Service account email to be used for generating
+	// the OIDC token. The caller (for CreateSubscription,
 	// UpdateSubscription, and ModifyPushConfig RPCs) must have the
 	// iam.serviceAccounts.actAs permission for the service account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
@@ -872,9 +867,8 @@ func (s *OidcToken) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation. **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -892,8 +886,8 @@ func (s *OidcToken) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation.
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
 	// specify a `condition` that determines how and when the `bindings` are
@@ -928,9 +922,8 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1026,11 +1019,9 @@ func (s *PublishResponse) MarshalJSON() ([]byte, error) {
 // by subscribers. The message must contain either a non-empty data
 // field or at least one attribute. Note that client libraries represent
 // this object differently depending on the language. See the
-// corresponding [client library
-// documentation](https://cloud.google.com/pubsub/docs/reference/librarie
-// s) for more information. See [quotas and limits]
-// (https://cloud.google.com/pubsub/quotas) for more information about
-// message limits.
+// corresponding client library documentation for more information. See
+// [quotas and limits] (https://cloud.google.com/pubsub/quotas) for more
+// information about message limits.
 type PubsubMessage struct {
 	// Attributes: Attributes for this message. If this field is empty, the
 	// message must contain non-empty data. This can be used to filter
@@ -1383,11 +1374,10 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Snapshot: A snapshot resource. Snapshots are used in
-// [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
-// operations, which allow you to manage message acknowledgments in
-// bulk. That is, you can set the acknowledgment state of messages in an
-// existing subscription to the state captured by a snapshot.
+// Snapshot: A snapshot resource. Snapshots are used in Seek operations,
+// which allow you to manage message acknowledgments in bulk. That is,
+// you can set the acknowledgment state of messages in an existing
+// subscription to the state captured by a snapshot.
 type Snapshot struct {
 	// ExpireTime: The snapshot is guaranteed to exist up until this time. A
 	// newly-created snapshot expires no later than 7 days from the time of
@@ -1490,8 +1480,7 @@ type Subscription struct {
 	// `expiration_policy.ttl` is 1 day.
 	ExpirationPolicy *ExpirationPolicy `json:"expirationPolicy,omitempty"`
 
-	// Filter: An expression written in the Pub/Sub [filter
-	// language](https://cloud.google.com/pubsub/docs/filtering). If
+	// Filter: An expression written in the Pub/Sub filter language. If
 	// non-empty, then only `PubsubMessage`s whose `attributes` field
 	// matches the filter are delivered on this subscription. If empty, then
 	// no messages are filtered out.
@@ -1576,8 +1565,7 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// allowed. For more information see IAM Overview.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -1805,19 +1793,18 @@ type ProjectsSnapshotsCreateCall struct {
 }
 
 // Create: Creates a snapshot from the requested subscription. Snapshots
-// are used in
-// [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
-// operations, which allow you to manage message acknowledgments in
-// bulk. That is, you can set the acknowledgment state of messages in an
-// existing subscription to the state captured by a snapshot. If the
-// snapshot already exists, returns `ALREADY_EXISTS`. If the requested
-// subscription doesn't exist, returns `NOT_FOUND`. If the backlog in
-// the subscription is too old -- and the resulting snapshot would
-// expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.
-// See also the `Snapshot.expire_time` field. If the name is not
-// provided in the request, the server will assign a random name for
-// this snapshot on the same project as the subscription, conforming to
-// the [resource name format]
+// are used in Seek operations, which allow you to manage message
+// acknowledgments in bulk. That is, you can set the acknowledgment
+// state of messages in an existing subscription to the state captured
+// by a snapshot. If the snapshot already exists, returns
+// `ALREADY_EXISTS`. If the requested subscription doesn't exist,
+// returns `NOT_FOUND`. If the backlog in the subscription is too old --
+// and the resulting snapshot would expire in less than 1 hour -- then
+// `FAILED_PRECONDITION` is returned. See also the
+// `Snapshot.expire_time` field. If the name is not provided in the
+// request, the server will assign a random name for this snapshot on
+// the same project as the subscription, conforming to the [resource
+// name format]
 // (https://cloud.google.com/pubsub/docs/admin#resource_names). The
 // generated name is populated in the returned Snapshot object. Note
 // that for REST API requests, you must specify a name in the request.
@@ -2265,9 +2252,7 @@ func (r *ProjectsSnapshotsService) GetIamPolicy(resource string) *ProjectsSnapsh
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
+// policies, see the IAM documentation.
 func (c *ProjectsSnapshotsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsSnapshotsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -2417,11 +2402,10 @@ type ProjectsSnapshotsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the existing snapshots. Snapshots are used in [Seek](
-// https://cloud.google.com/pubsub/docs/replay-overview) operations,
-// which allow you to manage message acknowledgments in bulk. That is,
-// you can set the acknowledgment state of messages in an existing
-// subscription to the state captured by a snapshot.
+// List: Lists the existing snapshots. Snapshots are used in Seek
+// operations, which allow you to manage message acknowledgments in
+// bulk. That is, you can set the acknowledgment state of messages in an
+// existing subscription to the state captured by a snapshot.
 func (r *ProjectsSnapshotsService) List(project string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3776,9 +3760,7 @@ func (r *ProjectsSubscriptionsService) GetIamPolicy(resource string) *ProjectsSu
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
+// policies, see the IAM documentation.
 func (c *ProjectsSubscriptionsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsSubscriptionsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -5574,9 +5556,7 @@ func (r *ProjectsTopicsService) GetIamPolicy(resource string) *ProjectsTopicsGet
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
+// policies, see the IAM documentation.
 func (c *ProjectsTopicsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsTopicsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -6493,10 +6473,10 @@ type ProjectsTopicsSnapshotsListCall struct {
 }
 
 // List: Lists the names of the snapshots on this topic. Snapshots are
-// used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview)
-// operations, which allow you to manage message acknowledgments in
-// bulk. That is, you can set the acknowledgment state of messages in an
-// existing subscription to the state captured by a snapshot.
+// used in Seek operations, which allow you to manage message
+// acknowledgments in bulk. That is, you can set the acknowledgment
+// state of messages in an existing subscription to the state captured
+// by a snapshot.
 func (r *ProjectsTopicsSnapshotsService) List(topic string) *ProjectsTopicsSnapshotsListCall {
 	c := &ProjectsTopicsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic

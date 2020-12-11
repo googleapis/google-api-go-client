@@ -2164,10 +2164,9 @@ type FlexTemplateRuntimeEnvironment struct {
 
 	// AdditionalUserLabels: Additional user labels to be specified for the
 	// job. Keys and values must follow the restrictions specified in the
-	// [labeling
-	// restrictions](https://cloud.google.com/compute/docs/labeling-resources
-	// #restrictions) page. An object containing a list of "key": value
-	// pairs. Example: { "name": "wrench", "mass": "1kg", "count": "3" }.
+	// labeling restrictions page. An object containing a list of "key":
+	// value pairs. Example: { "name": "wrench", "mass": "1kg", "count": "3"
+	// }.
 	AdditionalUserLabels map[string]string `json:"additionalUserLabels,omitempty"`
 
 	// EnableStreamingEngine: Whether to enable Streaming Engine for the
@@ -2236,10 +2235,9 @@ type FlexTemplateRuntimeEnvironment struct {
 	// are set, `worker_zone` takes precedence.
 	WorkerZone string `json:"workerZone,omitempty"`
 
-	// Zone: The Compute Engine [availability
-	// zone](https://cloud.google.com/compute/docs/regions-zones/regions-zone
-	// s) for launching worker instances to run your pipeline. In the
-	// future, worker_zone will take precedence.
+	// Zone: The Compute Engine availability zone for launching worker
+	// instances to run your pipeline. In the future, worker_zone will take
+	// precedence.
 	Zone string `json:"zone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -5107,10 +5105,9 @@ type RuntimeEnvironment struct {
 
 	// AdditionalUserLabels: Additional user labels to be specified for the
 	// job. Keys and values should follow the restrictions specified in the
-	// [labeling
-	// restrictions](https://cloud.google.com/compute/docs/labeling-resources
-	// #restrictions) page. An object containing a list of "key": value
-	// pairs. Example: { "name": "wrench", "mass": "1kg", "count": "3" }.
+	// labeling restrictions page. An object containing a list of "key":
+	// value pairs. Example: { "name": "wrench", "mass": "1kg", "count": "3"
+	// }.
 	AdditionalUserLabels map[string]string `json:"additionalUserLabels,omitempty"`
 
 	// BypassTempDirValidation: Whether to bypass the safety checks for the
@@ -5183,10 +5180,9 @@ type RuntimeEnvironment struct {
 	// are set, `worker_zone` takes precedence.
 	WorkerZone string `json:"workerZone,omitempty"`
 
-	// Zone: The Compute Engine [availability
-	// zone](https://cloud.google.com/compute/docs/regions-zones/regions-zone
-	// s) for launching worker instances to run your pipeline. In the
-	// future, worker_zone will take precedence.
+	// Zone: The Compute Engine availability zone for launching worker
+	// instances to run your pipeline. In the future, worker_zone will take
+	// precedence.
 	Zone string `json:"zone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -6449,11 +6445,10 @@ func (s *StateFamilyConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

@@ -871,9 +871,8 @@ func (s *GoogleCloudMlV1TrialParameter) UnmarshalJSON(data []byte) error {
 
 // GoogleCloudMlV1__AcceleratorConfig: Represents a hardware accelerator
 // request config. Note that the AcceleratorConfig can be used in both
-// Jobs and Versions. Learn more about [accelerators for
-// training](/ml-engine/docs/using-gpus) and [accelerators for online
-// prediction](/ml-engine/docs/machine-types-online-prediction#gpus).
+// Jobs and Versions. Learn more about accelerators for training and
+// accelerators for online prediction.
 type GoogleCloudMlV1__AcceleratorConfig struct {
 	// Count: The number of accelerators to attach to each machine running
 	// the job.
@@ -962,28 +961,24 @@ type GoogleCloudMlV1__AutoScaling struct {
 	// deployed. Therefore, the cost of operating this model will be at
 	// least `rate` * `min_nodes` * number of hours since last billing
 	// cycle, where `rate` is the cost per node-hour as documented in the
-	// [pricing guide](/ml-engine/docs/pricing), even if no predictions are
-	// performed. There is additional cost for each prediction performed.
-	// Unlike manual scaling, if the load gets too heavy for the nodes that
-	// are up, the service will automatically add nodes to handle the
-	// increased load as well as scale back as traffic drops, always
-	// maintaining at least `min_nodes`. You will be charged for the time in
-	// which additional nodes are used. If `min_nodes` is not specified and
-	// AutoScaling is used with a [legacy (MLS1) machine
-	// type](/ml-engine/docs/machine-types-online-prediction), `min_nodes`
-	// defaults to 0, in which case, when traffic to a model stops (and
-	// after a cool-down period), nodes will be shut down and no charges
-	// will be incurred until traffic to the model resumes. If `min_nodes`
-	// is not specified and AutoScaling is used with a [Compute Engine (N1)
-	// machine type](/ml-engine/docs/machine-types-online-prediction),
-	// `min_nodes` defaults to 1. `min_nodes` must be at least 1 for use
-	// with a Compute Engine machine type. Note that you cannot use
-	// AutoScaling if your version uses
-	// [GPUs](#Version.FIELDS.accelerator_config). Instead, you must use
-	// ManualScaling. You can set `min_nodes` when creating the model
-	// version, and you can also update `min_nodes` for an existing version:
-	// update_body.json: { 'autoScaling': { 'minNodes': 5 } } HTTP request:
-	// PATCH
+	// pricing guide, even if no predictions are performed. There is
+	// additional cost for each prediction performed. Unlike manual scaling,
+	// if the load gets too heavy for the nodes that are up, the service
+	// will automatically add nodes to handle the increased load as well as
+	// scale back as traffic drops, always maintaining at least `min_nodes`.
+	// You will be charged for the time in which additional nodes are used.
+	// If `min_nodes` is not specified and AutoScaling is used with a legacy
+	// (MLS1) machine type, `min_nodes` defaults to 0, in which case, when
+	// traffic to a model stops (and after a cool-down period), nodes will
+	// be shut down and no charges will be incurred until traffic to the
+	// model resumes. If `min_nodes` is not specified and AutoScaling is
+	// used with a Compute Engine (N1) machine type, `min_nodes` defaults to
+	// 1. `min_nodes` must be at least 1 for use with a Compute Engine
+	// machine type. Note that you cannot use AutoScaling if your version
+	// uses GPUs. Instead, you must use ManualScaling. You can set
+	// `min_nodes` when creating the model version, and you can also update
+	// `min_nodes` for an existing version: update_body.json: {
+	// 'autoScaling': { 'minNodes': 5 } } HTTP request: PATCH
 	// https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes -d @./update_body.json
 	MinNodes int64 `json:"minNodes,omitempty"`
 
@@ -1289,10 +1284,8 @@ func (s *GoogleCloudMlV1__Config) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__ContainerPort: Represents a network port in a single
-// container. This message is a subset of the [Kubernetes ContainerPort
-// v1 core
-// specification](https://kubernetes.io/docs/reference/generated/kubernet
-// es-api/v1.18/#containerport-v1-core).
+// container. This message is a subset of the Kubernetes ContainerPort
+// v1 core specification.
 type GoogleCloudMlV1__ContainerPort struct {
 	// ContainerPort: Number of the port to expose on the container. This
 	// must be a valid port number: 0 < PORT_NUMBER < 65536.
@@ -1322,77 +1315,57 @@ func (s *GoogleCloudMlV1__ContainerPort) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__ContainerSpec: Specification of a custom container
-// for serving predictions. This message is a subset of the [Kubernetes
-// Container v1 core
-// specification](https://kubernetes.io/docs/reference/generated/kubernet
-// es-api/v1.18/#container-v1-core).
+// for serving predictions. This message is a subset of the Kubernetes
+// Container v1 core specification.
 type GoogleCloudMlV1__ContainerSpec struct {
 	// Args: Immutable. Specifies arguments for the command that runs when
-	// the container starts. This overrides the container's
-	// [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd).
-	// Specify this field as an array of executable and arguments, similar
-	// to a Docker `CMD`'s "default parameters" form. If you don't specify
-	// this field but do specify the command field, then the command from
-	// the `command` field runs without any additional arguments. See the
-	// [Kubernetes documentation about how the `command` and `args` fields
-	// interact with a container's `ENTRYPOINT` and
-	// `CMD`](https://kubernetes.io/docs/tasks/inject-data-application/define
-	// -command-argument-container/#notes). If you don't specify this field
-	// and don't specify the `commmand` field, then the container's
-	// [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#cmd)
-	// and `CMD` determine what runs based on their default behavior. See
-	// the [Docker documentation about how `CMD` and `ENTRYPOINT`
-	// interact](https://docs.docker.com/engine/reference/builder/#understand
-	// -how-cmd-and-entrypoint-interact). In this field, you can reference
-	// [environment variables set by AI Platform
-	// Prediction](/ai-platform/prediction/docs/custom-container-requirements
-	// #aip-variables) and environment variables set in the env field. You
-	// cannot reference environment variables set in the Docker image. In
-	// order for environment variables to be expanded, reference them by
-	// using the following syntax: $( VARIABLE_NAME) Note that this differs
-	// from Bash variable expansion, which does not use parentheses. If a
-	// variable cannot be resolved, the reference in the input string is
-	// used unchanged. To avoid variable expansion, you can escape this
-	// syntax with `$$`; for example: $$(VARIABLE_NAME) This field
-	// corresponds to the `args` field of the [Kubernetes Containers v1 core
-	// API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.
-	// 18/#container-v1-core).
+	// the container starts. This overrides the container's `CMD`. Specify
+	// this field as an array of executable and arguments, similar to a
+	// Docker `CMD`'s "default parameters" form. If you don't specify this
+	// field but do specify the command field, then the command from the
+	// `command` field runs without any additional arguments. See the
+	// Kubernetes documentation about how the `command` and `args` fields
+	// interact with a container's `ENTRYPOINT` and `CMD`. If you don't
+	// specify this field and don't specify the `commmand` field, then the
+	// container's `ENTRYPOINT` and `CMD` determine what runs based on their
+	// default behavior. See the Docker documentation about how `CMD` and
+	// `ENTRYPOINT` interact. In this field, you can reference environment
+	// variables set by AI Platform Prediction and environment variables set
+	// in the env field. You cannot reference environment variables set in
+	// the Docker image. In order for environment variables to be expanded,
+	// reference them by using the following syntax: $( VARIABLE_NAME) Note
+	// that this differs from Bash variable expansion, which does not use
+	// parentheses. If a variable cannot be resolved, the reference in the
+	// input string is used unchanged. To avoid variable expansion, you can
+	// escape this syntax with `$$`; for example: $$(VARIABLE_NAME) This
+	// field corresponds to the `args` field of the Kubernetes Containers v1
+	// core API.
 	Args []string `json:"args,omitempty"`
 
 	// Command: Immutable. Specifies the command that runs when the
-	// container starts. This overrides the container's
-	// [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entry
-	// point). Specify this field as an array of executable and arguments,
-	// similar to a Docker `ENTRYPOINT`'s "exec" form, not its "shell" form.
-	// If you do not specify this field, then the container's `ENTRYPOINT`
-	// runs, in conjunction with the args field or the container's
-	// [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd), if
-	// either exists. If this field is not specified and the container does
-	// not have an `ENTRYPOINT`, then refer to the [Docker documentation
-	// about how `CMD` and `ENTRYPOINT`
-	// interact](https://docs.docker.com/engine/reference/builder/#understand
-	// -how-cmd-and-entrypoint-interact). If you specify this field, then
+	// container starts. This overrides the container's `ENTRYPOINT`.
+	// Specify this field as an array of executable and arguments, similar
+	// to a Docker `ENTRYPOINT`'s "exec" form, not its "shell" form. If you
+	// do not specify this field, then the container's `ENTRYPOINT` runs, in
+	// conjunction with the args field or the container's `CMD`, if either
+	// exists. If this field is not specified and the container does not
+	// have an `ENTRYPOINT`, then refer to the Docker documentation about
+	// how `CMD` and `ENTRYPOINT` interact. If you specify this field, then
 	// you can also specify the `args` field to provide additional arguments
 	// for this command. However, if you specify this field, then the
-	// container's `CMD` is ignored. See the [Kubernetes documentation about
+	// container's `CMD` is ignored. See the Kubernetes documentation about
 	// how the `command` and `args` fields interact with a container's
-	// `ENTRYPOINT` and
-	// `CMD`](https://kubernetes.io/docs/tasks/inject-data-application/define
-	// -command-argument-container/#notes). In this field, you can reference
-	// [environment variables set by AI Platform
-	// Prediction](/ai-platform/prediction/docs/custom-container-requirements
-	// #aip-variables) and environment variables set in the env field. You
-	// cannot reference environment variables set in the Docker image. In
-	// order for environment variables to be expanded, reference them by
-	// using the following syntax: $( VARIABLE_NAME) Note that this differs
-	// from Bash variable expansion, which does not use parentheses. If a
-	// variable cannot be resolved, the reference in the input string is
-	// used unchanged. To avoid variable expansion, you can escape this
-	// syntax with `$$`; for example: $$(VARIABLE_NAME) This field
-	// corresponds to the `command` field of the [Kubernetes Containers v1
-	// core
-	// API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.
-	// 18/#container-v1-core).
+	// `ENTRYPOINT` and `CMD`. In this field, you can reference environment
+	// variables set by AI Platform Prediction and environment variables set
+	// in the env field. You cannot reference environment variables set in
+	// the Docker image. In order for environment variables to be expanded,
+	// reference them by using the following syntax: $( VARIABLE_NAME) Note
+	// that this differs from Bash variable expansion, which does not use
+	// parentheses. If a variable cannot be resolved, the reference in the
+	// input string is used unchanged. To avoid variable expansion, you can
+	// escape this syntax with `$$`; for example: $$(VARIABLE_NAME) This
+	// field corresponds to the `command` field of the Kubernetes Containers
+	// v1 core API.
 	Command []string `json:"command,omitempty"`
 
 	// Env: Immutable. List of environment variables to set in the
@@ -1404,53 +1377,41 @@ type GoogleCloudMlV1__ContainerSpec struct {
 	// bar`: ```json [ { "name": "VAR_1", "value": "foo" }, { "name":
 	// "VAR_2", "value": "$(VAR_1) bar" } ] ``` If you switch the order of
 	// the variables in the example, then the expansion does not occur. This
-	// field corresponds to the `env` field of the [Kubernetes Containers v1
-	// core
-	// API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.
-	// 18/#container-v1-core).
+	// field corresponds to the `env` field of the Kubernetes Containers v1
+	// core API.
 	Env []*GoogleCloudMlV1__EnvVar `json:"env,omitempty"`
 
 	// Image: URI of the Docker image to be used as the custom container for
-	// serving predictions. This URI must identify [an image in Artifact
-	// Registry](/artifact-registry/docs/overview) and begin with the
-	// hostname `{REGION}-docker.pkg.dev`, where `{REGION}` is replaced by
-	// the region that matches AI Platform Prediction [regional
-	// endpoint](/ai-platform/prediction/docs/regional-endpoints) that you
-	// are using. For example, if you are using the
-	// `us-central1-ml.googleapis.com` endpoint, then this URI must begin
-	// with `us-central1-docker.pkg.dev`. To use a custom container, the [AI
-	// Platform Google-managed service
-	// account](/ai-platform/prediction/docs/custom-service-account#default)
-	// must have permission to pull (read) the Docker image at this URI. The
-	// AI Platform Google-managed service account has the following format:
+	// serving predictions. This URI must identify an image in Artifact
+	// Registry and begin with the hostname `{REGION}-docker.pkg.dev`, where
+	// `{REGION}` is replaced by the region that matches AI Platform
+	// Prediction regional endpoint that you are using. For example, if you
+	// are using the `us-central1-ml.googleapis.com` endpoint, then this URI
+	// must begin with `us-central1-docker.pkg.dev`. To use a custom
+	// container, the AI Platform Google-managed service account must have
+	// permission to pull (read) the Docker image at this URI. The AI
+	// Platform Google-managed service account has the following format:
 	// `service-{PROJECT_NUMBER}@cloud-ml.google.com.iam.gserviceaccount.com`
 	//  {PROJECT_NUMBER} is replaced by your Google Cloud project number. By
 	// default, this service account has necessary permissions to pull an
 	// Artifact Registry image in the same Google Cloud project where you
 	// are using AI Platform Prediction. In this case, no configuration is
 	// necessary. If you want to use an image from a different Google Cloud
-	// project, learn how to [grant the Artifact Registry Reader
-	// (roles/artifactregistry.reader) role for a
-	// repository](/artifact-registry/docs/access-control#grant-repo) to
-	// your projet's AI Platform Google-managed service account. To learn
-	// about the requirements for the Docker image itself, read [Custom
-	// container
-	// requirements](/ai-platform/prediction/docs/custom-container-requiremen
-	// ts).
+	// project, learn how to grant the Artifact Registry Reader
+	// (roles/artifactregistry.reader) role for a repository to your
+	// projet's AI Platform Google-managed service account. To learn about
+	// the requirements for the Docker image itself, read Custom container
+	// requirements.
 	Image string `json:"image,omitempty"`
 
 	// Ports: Immutable. List of ports to expose from the container. AI
 	// Platform Prediction sends any prediction requests that it receives to
 	// the first port on this list. AI Platform Prediction also sends
-	// [liveness and health
-	// checks](/ai-platform/prediction/docs/custom-container-requirements#hea
-	// lth) to this port. If you do not specify this field, it defaults to
-	// following value: ```json [ { "containerPort": 8080 } ] ``` AI
-	// Platform Prediction does not use ports other than the first one
-	// listed. This field corresponds to the `ports` field of the
-	// [Kubernetes Containers v1 core
-	// API](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.
-	// 18/#container-v1-core).
+	// liveness and health checks to this port. If you do not specify this
+	// field, it defaults to following value: ```json [ { "containerPort":
+	// 8080 } ] ``` AI Platform Prediction does not use ports other than the
+	// first one listed. This field corresponds to the `ports` field of the
+	// Kubernetes Containers v1 core API.
 	Ports []*GoogleCloudMlV1__ContainerPort `json:"ports,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -1545,29 +1506,23 @@ func (s *GoogleCloudMlV1__EncryptionConfig) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudMlV1__EnvVar: Represents an environment variable to be
 // made available in a container. This message is a subset of the
-// [Kubernetes EnvVar v1 core
-// specification](https://kubernetes.io/docs/reference/generated/kubernet
-// es-api/v1.18/#envvar-v1-core).
+// Kubernetes EnvVar v1 core specification.
 type GoogleCloudMlV1__EnvVar struct {
-	// Name: Name of the environment variable. Must be a [valid C
-	// identifier](https://github.com/kubernetes/kubernetes/blob/v1.18.8/stag
-	// ing/src/k8s.io/apimachinery/pkg/util/validation/validation.go#L258)
+	// Name: Name of the environment variable. Must be a valid C identifier
 	// and must not begin with the prefix `AIP_`.
 	Name string `json:"name,omitempty"`
 
 	// Value: Value of the environment variable. Defaults to an empty
-	// string. In this field, you can reference [environment variables set
-	// by AI Platform
-	// Prediction](/ai-platform/prediction/docs/custom-container-requirements
-	// #aip-variables) and environment variables set earlier in the same env
-	// field as where this message occurs. You cannot reference environment
-	// variables set in the Docker image. In order for environment variables
-	// to be expanded, reference them by using the following syntax:
-	// $(VARIABLE_NAME) Note that this differs from Bash variable expansion,
-	// which does not use parentheses. If a variable cannot be resolved, the
-	// reference in the input string is used unchanged. To avoid variable
-	// expansion, you can escape this syntax with `$$`; for example:
-	// $$(VARIABLE_NAME)
+	// string. In this field, you can reference environment variables set by
+	// AI Platform Prediction and environment variables set earlier in the
+	// same env field as where this message occurs. You cannot reference
+	// environment variables set in the Docker image. In order for
+	// environment variables to be expanded, reference them by using the
+	// following syntax: $(VARIABLE_NAME) Note that this differs from Bash
+	// variable expansion, which does not use parentheses. If a variable
+	// cannot be resolved, the reference in the input string is used
+	// unchanged. To avoid variable expansion, you can escape this syntax
+	// with `$$`; for example: $$(VARIABLE_NAME)
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1625,8 +1580,8 @@ func (s *GoogleCloudMlV1__ExplainRequest) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__ExplanationConfig: Message holding configuration
 // options for explaining model predictions. There are three feature
 // attribution methods supported for TensorFlow models: integrated
-// gradients, sampled Shapley, and XRAI. [Learn more about feature
-// attributions.](/ai-platform/prediction/docs/ai-explanations/overview)
+// gradients, sampled Shapley, and XRAI. Learn more about feature
+// attributions.
 type GoogleCloudMlV1__ExplanationConfig struct {
 	// IntegratedGradientsAttribution: Attributes credit by computing the
 	// Aumann-Shapley value taking advantage of the model's fully
@@ -2429,19 +2384,19 @@ type GoogleCloudMlV1__Model struct {
 	// nodes send `stderr` and `stdout` streams to Cloud Logging. These can
 	// be more verbose than the standard access logs (see
 	// `onlinePredictionLogging`) and can incur higher cost. However, they
-	// are helpful for debugging. Note that [logs may incur a
-	// cost](/stackdriver/pricing), especially if your project receives
-	// prediction requests at a high QPS. Estimate your costs before
-	// enabling this option. Default is false.
+	// are helpful for debugging. Note that logs may incur a cost,
+	// especially if your project receives prediction requests at a high
+	// QPS. Estimate your costs before enabling this option. Default is
+	// false.
 	OnlinePredictionConsoleLogging bool `json:"onlinePredictionConsoleLogging,omitempty"`
 
 	// OnlinePredictionLogging: Optional. If true, online prediction access
 	// logs are sent to Cloud Logging. These logs are like standard server
 	// access logs, containing information like timestamp and latency for
-	// each request. Note that [logs may incur a
-	// cost](/stackdriver/pricing), especially if your project receives
-	// prediction requests at a high queries per second rate (QPS). Estimate
-	// your costs before enabling this option. Default is false.
+	// each request. Note that logs may incur a cost, especially if your
+	// project receives prediction requests at a high queries per second
+	// rate (QPS). Estimate your costs before enabling this option. Default
+	// is false.
 	OnlinePredictionLogging bool `json:"onlinePredictionLogging,omitempty"`
 
 	// Regions: Optional. The list of regions where the model is going to be
@@ -2650,8 +2605,8 @@ func (s *GoogleCloudMlV1__ParameterSpec) UnmarshalJSON(data []byte) error {
 // against a trained model.
 type GoogleCloudMlV1__PredictRequest struct {
 	// HttpBody:  Required. The prediction request body. Refer to the
-	// [request body details section](#request-body-details) for more
-	// information on how to structure your request.
+	// request body details section for more information on how to structure
+	// your request.
 	HttpBody *GoogleApi__HttpBody `json:"httpBody,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HttpBody") to
@@ -2747,12 +2702,9 @@ type GoogleCloudMlV1__PredictionInput struct {
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// SignatureName: Optional. The name of the signature defined in the
-	// SavedModel to use for this job. Please refer to
-	// [SavedModel](https://tensorflow.github.io/serving/serving_basic.html)
-	// for information about how to use signatures. Defaults to
-	// [DEFAULT_SERVING_SIGNATURE_DEF_KEY](https://www.tensorflow.org/api_doc
-	// s/python/tf/saved_model/signature_constants) , which is
-	// "serving_default".
+	// SavedModel to use for this job. Please refer to SavedModel for
+	// information about how to use signatures. Defaults to
+	// DEFAULT_SERVING_SIGNATURE_DEF_KEY , which is "serving_default".
 	SignatureName string `json:"signatureName,omitempty"`
 
 	// Uri: Use this field if you want to specify a Google Cloud Storage
@@ -2845,10 +2797,8 @@ func (s *GoogleCloudMlV1__PredictionOutput) UnmarshalJSON(data []byte) error {
 // replica in a cluster.
 type GoogleCloudMlV1__ReplicaConfig struct {
 	// AcceleratorConfig: Represents the type and number of accelerators
-	// used by the replica. [Learn about restrictions on accelerator
-	// configurations for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
-	// e-types-with-gpu)
+	// used by the replica. Learn about restrictions on accelerator
+	// configurations for training.
 	AcceleratorConfig *GoogleCloudMlV1__AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
 	// ContainerArgs: Arguments to the entrypoint command. The following
@@ -2878,24 +2828,20 @@ type GoogleCloudMlV1__ReplicaConfig struct {
 	DiskConfig *GoogleCloudMlV1__DiskConfig `json:"diskConfig,omitempty"`
 
 	// ImageUri: The Docker image to run on the replica. This image must be
-	// in Container Registry. Learn more about [configuring custom
-	// containers](/ai-platform/training/docs/distributed-training-containers
-	// ).
+	// in Container Registry. Learn more about configuring custom
+	// containers.
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// TpuTfVersion: The AI Platform runtime version that includes a
 	// TensorFlow version matching the one used in the custom container.
 	// This field is required if the replica is a TPU worker that uses a
 	// custom container. Otherwise, do not specify this field. This must be
-	// a [runtime version that currently supports training with
-	// TPUs](/ml-engine/docs/tensorflow/runtime-version-list#tpu-support).
-	// Note that the version of TensorFlow included in a runtime version may
+	// a runtime version that currently supports training with TPUs. Note
+	// that the version of TensorFlow included in a runtime version may
 	// differ from the numbering of the runtime version itself, because it
-	// may have a different [patch
-	// version](https://www.tensorflow.org/guide/version_compat#semantic_vers
-	// ioning_20). In this field, you must specify the runtime version
-	// (TensorFlow minor version). For example, if your custom container
-	// runs TensorFlow `1.x.y`, specify `1.x`.
+	// may have a different patch version. In this field, you must specify
+	// the runtime version (TensorFlow minor version). For example, if your
+	// custom container runs TensorFlow `1.x.y`, specify `1.x`.
 	TpuTfVersion string `json:"tpuTfVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorConfig")
@@ -2926,22 +2872,20 @@ func (s *GoogleCloudMlV1__ReplicaConfig) MarshalJSON() ([]byte, error) {
 // request-response pairs to a BigQuery table. Online prediction
 // requests to a model version and the responses to these requests are
 // converted to raw strings and saved to the specified BigQuery table.
-// Logging is constrained by [BigQuery quotas and
-// limits](/bigquery/quotas). If your project exceeds BigQuery quotas or
-// limits, AI Platform Prediction does not log request-response pairs,
-// but it continues to serve predictions. If you are using [continuous
-// evaluation](/ml-engine/docs/continuous-evaluation/), you do not need
-// to specify this configuration manually. Setting up continuous
-// evaluation automatically enables logging of request-response pairs.
+// Logging is constrained by BigQuery quotas and limits. If your project
+// exceeds BigQuery quotas or limits, AI Platform Prediction does not
+// log request-response pairs, but it continues to serve predictions. If
+// you are using continuous evaluation, you do not need to specify this
+// configuration manually. Setting up continuous evaluation
+// automatically enables logging of request-response pairs.
 type GoogleCloudMlV1__RequestLoggingConfig struct {
 	// BigqueryTableName: Required. Fully qualified BigQuery table name in
 	// the following format: " project_id.dataset_name.table_name" The
 	// specified table must already exist, and the "Cloud ML Service Agent"
 	// for your project must have permission to write to it. The table must
-	// have the following [schema](/bigquery/docs/schemas): Field nameType
-	// Mode model STRING REQUIRED model_version STRING REQUIRED time
-	// TIMESTAMP REQUIRED raw_data STRING REQUIRED raw_prediction STRING
-	// NULLABLE groundtruth STRING NULLABLE
+	// have the following schema: Field nameType Mode model STRING REQUIRED
+	// model_version STRING REQUIRED time TIMESTAMP REQUIRED raw_data STRING
+	// REQUIRED raw_prediction STRING NULLABLE groundtruth STRING NULLABLE
 	BigqueryTableName string `json:"bigqueryTableName,omitempty"`
 
 	// SamplingPercentage: Percentage of requests to be logged, expressed as
@@ -2991,29 +2935,26 @@ func (s *GoogleCloudMlV1__RequestLoggingConfig) UnmarshalJSON(data []byte) error
 // GoogleCloudMlV1__RouteMap: Specifies HTTP paths served by a custom
 // container. AI Platform Prediction sends requests to these paths on
 // the container; the custom container must run an HTTP server that
-// responds to these requests with appropriate responses. Read [Custom
-// container
-// requirements](/ai-platform/prediction/docs/custom-container-requiremen
-// ts) for details on how to create your container image to meet these
-// requirements.
+// responds to these requests with appropriate responses. Read Custom
+// container requirements for details on how to create your container
+// image to meet these requirements.
 type GoogleCloudMlV1__RouteMap struct {
 	// Health: HTTP path on the container to send health checkss to. AI
 	// Platform Prediction intermittently sends GET requests to this path on
 	// the container's IP address and port to check that the container is
-	// healthy. Read more about [health
-	// checks](/ai-platform/prediction/docs/custom-container-requirements#che
-	// cks). For example, if you set this field to `/bar`, then AI Platform
-	// Prediction intermittently sends a GET request to the `/bar` path on
-	// the port of your container specified by the first value of
-	// Version.container.ports. If you don't specify this field, it defaults
-	// to the following value: /v1/models/ MODEL/versions/VERSION The
-	// placeholders in this value are replaced as follows: * MODEL: The name
-	// of the parent Model. This does not include the
-	// "projects/PROJECT_ID/models/" prefix that the API returns in output;
-	// it is the bare model name, as provided to projects.models.create. *
-	// VERSION: The name of the model version. This does not include the
-	// "projects/PROJECT_ID /models/MODEL/versions/" prefix that the API
-	// returns in output; it is the bare version name, as provided to
+	// healthy. Read more about health checks. For example, if you set this
+	// field to `/bar`, then AI Platform Prediction intermittently sends a
+	// GET request to the `/bar` path on the port of your container
+	// specified by the first value of Version.container.ports. If you don't
+	// specify this field, it defaults to the following value: /v1/models/
+	// MODEL/versions/VERSION The placeholders in this value are replaced as
+	// follows: * MODEL: The name of the parent Model. This does not include
+	// the "projects/PROJECT_ID/models/" prefix that the API returns in
+	// output; it is the bare model name, as provided to
+	// projects.models.create. * VERSION: The name of the model version.
+	// This does not include the "projects/PROJECT_ID
+	// /models/MODEL/versions/" prefix that the API returns in output; it is
+	// the bare version name, as provided to
 	// projects.models.versions.create.
 	Health string `json:"health,omitempty"`
 
@@ -3105,10 +3046,8 @@ type GoogleCloudMlV1__Scheduling struct {
 	// example, if you want to ensure your job runs for no more than 2
 	// hours, set this field to `7200s` (2 hours * 60 minutes / hour * 60
 	// seconds / minute). If you submit your training job using the `gcloud`
-	// tool, you can [specify this field in a `config.yaml`
-	// file](/ai-platform/training/docs/training-jobs#formatting_your_configu
-	// ration_parameters). For example: ```yaml trainingInput: scheduling:
-	// maxRunningTime: 7200s ```
+	// tool, you can specify this field in a `config.yaml` file. For
+	// example: ```yaml trainingInput: scheduling: maxRunningTime: 7200s ```
 	MaxRunningTime string `json:"maxRunningTime,omitempty"`
 
 	// MaxWaitTime: Optional. The maximum job wait time, expressed in
@@ -3120,21 +3059,18 @@ type GoogleCloudMlV1__Scheduling struct {
 	// no longer be cancelled due to the maximum wait time. Therefore the
 	// duration limited by this field does not overlap with the duration
 	// limited by Scheduling.max_running_time. For example, if the job
-	// temporarily stops running and retries due to a [VM
-	// restart](/ai-platform/training/docs/overview#restarts), this cannot
-	// lead to a maximum wait time cancellation. However, independently of
-	// this constraint, AI Platform Training might stop a job if there are
-	// too many retries due to exhausted resources in a region. The
-	// following example describes how you might use this field: To cancel
-	// your job if it doesn't start running within 1 hour, set this field to
-	// `3600s` (1 hour * 60 minutes / hour * 60 seconds / minute). If the
-	// job is still in the `QUEUED` or `PREPARING` state after an hour of
-	// waiting, AI Platform Training cancels the job. If you submit your
-	// training job using the `gcloud` tool, you can [specify this field in
-	// a `config.yaml`
-	// file](/ai-platform/training/docs/training-jobs#formatting_your_configu
-	// ration_parameters). For example: ```yaml trainingInput: scheduling:
-	// maxWaitTime: 3600s ```
+	// temporarily stops running and retries due to a VM restart, this
+	// cannot lead to a maximum wait time cancellation. However,
+	// independently of this constraint, AI Platform Training might stop a
+	// job if there are too many retries due to exhausted resources in a
+	// region. The following example describes how you might use this field:
+	// To cancel your job if it doesn't start running within 1 hour, set
+	// this field to `3600s` (1 hour * 60 minutes / hour * 60 seconds /
+	// minute). If the job is still in the `QUEUED` or `PREPARING` state
+	// after an hour of waiting, AI Platform Training cancels the job. If
+	// you submit your training job using the `gcloud` tool, you can specify
+	// this field in a `config.yaml` file. For example: ```yaml
+	// trainingInput: scheduling: maxWaitTime: 3600s ```
 	MaxWaitTime string `json:"maxWaitTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxRunningTime") to
@@ -3393,8 +3329,8 @@ func (s *GoogleCloudMlV1__SuggestTrialsResponse) MarshalJSON() ([]byte, error) {
 // training job. When using the gcloud command to submit your training
 // job, you can specify the input parameters as command-line arguments
 // and/or in a YAML configuration file referenced from the --config
-// command-line argument. For details, see the guide to [submitting a
-// training job](/ai-platform/training/docs/training-jobs).
+// command-line argument. For details, see the guide to submitting a
+// training job.
 type GoogleCloudMlV1__TrainingInput struct {
 	// Args: Optional. Command-line arguments passed to the training
 	// application when it starts. If your job uses a custom container, then
@@ -3405,22 +3341,18 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// encryption keys (CMEK) to protect resources created by a training
 	// job, instead of using Google's default encryption. If this is set,
 	// then all resources created by the training job will be encrypted with
-	// the customer-managed encryption key that you specify. [Learn how and
-	// when to use CMEK with AI Platform
-	// Training](/ai-platform/training/docs/cmek).
+	// the customer-managed encryption key that you specify. Learn how and
+	// when to use CMEK with AI Platform Training.
 	EncryptionConfig *GoogleCloudMlV1__EncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	// EvaluatorConfig: Optional. The configuration for evaluators. You
 	// should only set `evaluatorConfig.acceleratorConfig` if
-	// `evaluatorType` is set to a Compute Engine machine type. [Learn about
-	// restrictions on accelerator configurations for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
-	// e-types-with-gpu) Set `evaluatorConfig.imageUri` only if you build a
-	// custom image for your evaluator. If `evaluatorConfig.imageUri` has
-	// not been set, AI Platform uses the value of `masterConfig.imageUri`.
-	// Learn more about [configuring custom
-	// containers](/ai-platform/training/docs/distributed-training-containers
-	// ).
+	// `evaluatorType` is set to a Compute Engine machine type. Learn about
+	// restrictions on accelerator configurations for training. Set
+	// `evaluatorConfig.imageUri` only if you build a custom image for your
+	// evaluator. If `evaluatorConfig.imageUri` has not been set, AI
+	// Platform uses the value of `masterConfig.imageUri`. Learn more about
+	// configuring custom containers.
 	EvaluatorConfig *GoogleCloudMlV1__ReplicaConfig `json:"evaluatorConfig,omitempty"`
 
 	// EvaluatorCount: Optional. The number of evaluator replicas to use for
@@ -3452,14 +3384,11 @@ type GoogleCloudMlV1__TrainingInput struct {
 
 	// MasterConfig: Optional. The configuration for your master worker. You
 	// should only set `masterConfig.acceleratorConfig` if `masterType` is
-	// set to a Compute Engine machine type. Learn about [restrictions on
-	// accelerator configurations for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
-	// e-types-with-gpu) Set `masterConfig.imageUri` only if you build a
-	// custom image. Only one of `masterConfig.imageUri` and
-	// `runtimeVersion` should be set. Learn more about [configuring custom
-	// containers](/ai-platform/training/docs/distributed-training-containers
-	// ).
+	// set to a Compute Engine machine type. Learn about restrictions on
+	// accelerator configurations for training. Set `masterConfig.imageUri`
+	// only if you build a custom image. Only one of `masterConfig.imageUri`
+	// and `runtimeVersion` should be set. Learn more about configuring
+	// custom containers.
 	MasterConfig *GoogleCloudMlV1__ReplicaConfig `json:"masterConfig,omitempty"`
 
 	// MasterType: Optional. Specifies the type of virtual machine to use
@@ -3471,30 +3400,25 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// `n1-highmem-2` - `n1-highmem-4` - `n1-highmem-8` - `n1-highmem-16` -
 	// `n1-highmem-32` - `n1-highmem-64` - `n1-highmem-96` - `n1-highcpu-16`
 	// - `n1-highcpu-32` - `n1-highcpu-64` - `n1-highcpu-96` Learn more
-	// about [using Compute Engine machine
-	// types](/ml-engine/docs/machine-types#compute-engine-machine-types).
-	// Alternatively, you can use the following legacy machine types: -
-	// `standard` - `large_model` - `complex_model_s` - `complex_model_m` -
-	// `complex_model_l` - `standard_gpu` - `complex_model_m_gpu` -
-	// `complex_model_l_gpu` - `standard_p100` - `complex_model_m_p100` -
-	// `standard_v100` - `large_model_v100` - `complex_model_m_v100` -
-	// `complex_model_l_v100` Learn more about [using legacy machine
-	// types](/ml-engine/docs/machine-types#legacy-machine-types). Finally,
-	// if you want to use a TPU for training, specify `cloud_tpu` in this
-	// field. Learn more about the [special configuration options for
-	// training with
-	// TPUs](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tpu_m
-	// achine).
+	// about using Compute Engine machine types. Alternatively, you can use
+	// the following legacy machine types: - `standard` - `large_model` -
+	// `complex_model_s` - `complex_model_m` - `complex_model_l` -
+	// `standard_gpu` - `complex_model_m_gpu` - `complex_model_l_gpu` -
+	// `standard_p100` - `complex_model_m_p100` - `standard_v100` -
+	// `large_model_v100` - `complex_model_m_v100` - `complex_model_l_v100`
+	// Learn more about using legacy machine types. Finally, if you want to
+	// use a TPU for training, specify `cloud_tpu` in this field. Learn more
+	// about the special configuration options for training with TPUs.
 	MasterType string `json:"masterType,omitempty"`
 
-	// Network: Optional. The full name of the [Compute Engine
-	// network](/vpc/docs/vpc) to which the Job is peered. For example,
+	// Network: Optional. The full name of the Compute Engine network to
+	// which the Job is peered. For example,
 	// `projects/12345/global/networks/myVPC`. The format of this field is
 	// `projects/{project}/global/networks/{network}`, where {project} is a
 	// project number (like `12345`) and {network} is network name. Private
 	// services access must already be configured for the network. If left
-	// unspecified, the Job is not peered with any network. [Learn about
-	// using VPC Network Peering.](/ai-platform/training/docs/vpc-peering).
+	// unspecified, the Job is not peered with any network. Learn about
+	// using VPC Network Peering..
 	Network string `json:"network,omitempty"`
 
 	// PackageUris: Required. The Google Cloud Storage location of the
@@ -3505,16 +3429,12 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// ParameterServerConfig: Optional. The configuration for parameter
 	// servers. You should only set
 	// `parameterServerConfig.acceleratorConfig` if `parameterServerType` is
-	// set to a Compute Engine machine type. [Learn about restrictions on
-	// accelerator configurations for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
-	// e-types-with-gpu) Set `parameterServerConfig.imageUri` only if you
-	// build a custom image for your parameter server. If
-	// `parameterServerConfig.imageUri` has not been set, AI Platform uses
-	// the value of `masterConfig.imageUri`. Learn more about [configuring
-	// custom
-	// containers](/ai-platform/training/docs/distributed-training-containers
-	// ).
+	// set to a Compute Engine machine type. Learn about restrictions on
+	// accelerator configurations for training. Set
+	// `parameterServerConfig.imageUri` only if you build a custom image for
+	// your parameter server. If `parameterServerConfig.imageUri` has not
+	// been set, AI Platform uses the value of `masterConfig.imageUri`.
+	// Learn more about configuring custom containers.
 	ParameterServerConfig *GoogleCloudMlV1__ReplicaConfig `json:"parameterServerConfig,omitempty"`
 
 	// ParameterServerCount: Optional. The number of parameter server
@@ -3546,21 +3466,17 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// '3.5' is available when `runtime_version` is set to a version from
 	// '1.4' to '1.14'. * Python '2.7' is available when `runtime_version`
 	// is set to '1.15' or earlier. Read more about the Python versions
-	// available for [each runtime
-	// version](/ml-engine/docs/runtime-version-list).
+	// available for each runtime version.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// Region: Required. The region to run the training job in. See the
-	// [available regions](/ai-platform/training/docs/regions) for AI
-	// Platform Training.
+	// available regions for AI Platform Training.
 	Region string `json:"region,omitempty"`
 
 	// RuntimeVersion: Optional. The AI Platform runtime version to use for
 	// training. You must either specify this field or specify
-	// `masterConfig.imageUri`. For more information, see the [runtime
-	// version list](/ai-platform/training/docs/runtime-version-list) and
-	// learn [how to manage runtime
-	// versions](/ai-platform/training/docs/versioning).
+	// `masterConfig.imageUri`. For more information, see the runtime
+	// version list and learn how to manage runtime versions.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ScaleTier: Required. Specifies the machine types, the number of
@@ -3604,31 +3520,25 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// `iam.serviceAccounts.actAs` permission for the specified service
 	// account. In addition, the AI Platform Training Google-managed service
 	// account must have the `roles/iam.serviceAccountAdmin` role for the
-	// specified service account. [Learn more about configuring a service
-	// account.](/ai-platform/training/docs/custom-service-account) If not
-	// specified, the AI Platform Training Google-managed service account is
-	// used by default.
+	// specified service account. Learn more about configuring a service
+	// account. If not specified, the AI Platform Training Google-managed
+	// service account is used by default.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// UseChiefInTfConfig: Optional. Use `chief` instead of `master` in the
 	// `TF_CONFIG` environment variable when training with a custom
-	// container. Defaults to `false`. [Learn more about this
-	// field.](/ai-platform/training/docs/distributed-training-details#chief-
-	// versus-master) This field has no effect for training jobs that don't
-	// use a custom container.
+	// container. Defaults to `false`. Learn more about this field. This
+	// field has no effect for training jobs that don't use a custom
+	// container.
 	UseChiefInTfConfig bool `json:"useChiefInTfConfig,omitempty"`
 
 	// WorkerConfig: Optional. The configuration for workers. You should
 	// only set `workerConfig.acceleratorConfig` if `workerType` is set to a
-	// Compute Engine machine type. [Learn about restrictions on accelerator
-	// configurations for
-	// training.](/ai-platform/training/docs/using-gpus#compute-engine-machin
-	// e-types-with-gpu) Set `workerConfig.imageUri` only if you build a
-	// custom image for your worker. If `workerConfig.imageUri` has not been
-	// set, AI Platform uses the value of `masterConfig.imageUri`. Learn
-	// more about [configuring custom
-	// containers](/ai-platform/training/docs/distributed-training-containers
-	// ).
+	// Compute Engine machine type. Learn about restrictions on accelerator
+	// configurations for training. Set `workerConfig.imageUri` only if you
+	// build a custom image for your worker. If `workerConfig.imageUri` has
+	// not been set, AI Platform uses the value of `masterConfig.imageUri`.
+	// Learn more about configuring custom containers.
 	WorkerConfig *GoogleCloudMlV1__ReplicaConfig `json:"workerConfig,omitempty"`
 
 	// WorkerCount: Optional. The number of worker replicas to use for the
@@ -3644,11 +3554,9 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// must be consistent with the category of machine type that
 	// `masterType` uses. In other words, both must be Compute Engine
 	// machine types or both must be legacy machine types. If you use
-	// `cloud_tpu` for this value, see special instructions for [configuring
-	// a custom TPU
-	// machine](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tp
-	// u_machine). This value must be present when `scaleTier` is set to
-	// `CUSTOM` and `workerCount` is greater than zero.
+	// `cloud_tpu` for this value, see special instructions for configuring
+	// a custom TPU machine. This value must be present when `scaleTier` is
+	// set to `CUSTOM` and `workerCount` is greater than zero.
 	WorkerType string `json:"workerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -3690,9 +3598,8 @@ type GoogleCloudMlV1__TrainingOutput struct {
 
 	// HyperparameterMetricTag: The TensorFlow summary tag name used for
 	// optimizing hyperparameter tuning trials. See
-	// [`HyperparameterSpec.hyperparameterMetricTag`](#HyperparameterSpec.FIE
-	// LDS.hyperparameter_metric_tag) for more information. Only set for
-	// hyperparameter tuning jobs.
+	// `HyperparameterSpec.hyperparameterMetricTag` for more information.
+	// Only set for hyperparameter tuning jobs.
 	HyperparameterMetricTag string `json:"hyperparameterMetricTag,omitempty"`
 
 	// IsBuiltInAlgorithmJob: Whether this job is a built-in Algorithm job.
@@ -3831,8 +3738,7 @@ type GoogleCloudMlV1__Version struct {
 	// AcceleratorConfig: Optional. Accelerator config for using GPUs for
 	// online prediction (beta). Only specify this field if you have
 	// specified a Compute Engine (N1) machine type in the `machineType`
-	// field. Learn more about [using GPUs for online
-	// prediction](/ml-engine/docs/machine-types-online-prediction#gpus).
+	// field. Learn more about using GPUs for online prediction.
 	AcceleratorConfig *GoogleCloudMlV1__AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
 	// AutoScaling: Automatically scale the number of nodes used to serve
@@ -3840,8 +3746,7 @@ type GoogleCloudMlV1__Version struct {
 	// should be taken to ramp up traffic according to the model's ability
 	// to scale or you will start seeing increases in latency and 429
 	// response codes. Note that you cannot use AutoScaling if your version
-	// uses [GPUs](#Version.FIELDS.accelerator_config). Instead, you must
-	// use specify `manual_scaling`.
+	// uses GPUs. Instead, you must use specify `manual_scaling`.
 	AutoScaling *GoogleCloudMlV1__AutoScaling `json:"autoScaling,omitempty"`
 
 	// Container: Optional. Specifies a custom container to use for serving
@@ -3857,19 +3762,16 @@ type GoogleCloudMlV1__Version struct {
 
 	// DeploymentUri: The Cloud Storage URI of a directory containing
 	// trained model artifacts to be used to create the model version. See
-	// the [guide to deploying
-	// models](/ai-platform/prediction/docs/deploying-models) for more
-	// information. The total number of files under this directory must not
-	// exceed 1000. During projects.models.versions.create, AI Platform
-	// Prediction copies all files from the specified directory to a
-	// location managed by the service. From then on, AI Platform Prediction
-	// uses these copies of the model artifacts to serve predictions, not
-	// the original files in Cloud Storage, so this location is useful only
-	// as a historical record. If you specify container, then this field is
-	// optional. Otherwise, it is required. Learn [how to use this field
-	// with a custom
-	// container](/ai-platform/prediction/docs/custom-container-requirements#
-	// artifacts).
+	// the guide to deploying models for more information. The total number
+	// of files under this directory must not exceed 1000. During
+	// projects.models.versions.create, AI Platform Prediction copies all
+	// files from the specified directory to a location managed by the
+	// service. From then on, AI Platform Prediction uses these copies of
+	// the model artifacts to serve predictions, not the original files in
+	// Cloud Storage, so this location is useful only as a historical
+	// record. If you specify container, then this field is optional.
+	// Otherwise, it is required. Learn how to use this field with a custom
+	// container.
 	DeploymentUri string `json:"deploymentUri,omitempty"`
 
 	// Description: Optional. The description specified for the version when
@@ -3901,10 +3803,8 @@ type GoogleCloudMlV1__Version struct {
 	// Platform will analyze files in the deployment_uri to determine a
 	// framework. If you choose `SCIKIT_LEARN` or `XGBOOST`, you must also
 	// set the runtime version of the model to 1.4 or greater. Do **not**
-	// specify a framework if you're deploying a [custom prediction
-	// routine](/ai-platform/prediction/docs/custom-prediction-routines) or
-	// if you're using a [custom
-	// container](/ai-platform/prediction/docs/use-custom-container).
+	// specify a framework if you're deploying a custom prediction routine
+	// or if you're using a custom container.
 	//
 	// Possible values:
 	//   "FRAMEWORK_UNSPECIFIED" - Unspecified framework. Assigns a value
@@ -3938,8 +3838,7 @@ type GoogleCloudMlV1__Version struct {
 	// * `n1-highmem-8` * `n1-highmem-16` * `n1-highmem-32` * `n1-highcpu-2`
 	// * `n1-highcpu-4` * `n1-highcpu-8` * `n1-highcpu-16` * `n1-highcpu-32`
 	// `mls1-c4-m2` is in beta. All other machine types are generally
-	// available. Learn more about the [differences between machine
-	// types](/ml-engine/docs/machine-types-online-prediction).
+	// available. Learn more about the differences between machine types.
 	MachineType string `json:"machineType,omitempty"`
 
 	// ManualScaling: Manually select the number of nodes to use for serving
@@ -3956,49 +3855,39 @@ type GoogleCloudMlV1__Version struct {
 	Name string `json:"name,omitempty"`
 
 	// PackageUris: Optional. Cloud Storage paths (`gs://…`) of packages
-	// for [custom prediction
-	// routines](/ml-engine/docs/tensorflow/custom-prediction-routines) or
-	// [scikit-learn pipelines with custom
-	// code](/ml-engine/docs/scikit/exporting-for-prediction#custom-pipeline-
-	// code). For a custom prediction routine, one of these packages must
-	// contain your Predictor class (see
-	// [`predictionClass`](#Version.FIELDS.prediction_class)). Additionally,
+	// for custom prediction routines or scikit-learn pipelines with custom
+	// code. For a custom prediction routine, one of these packages must
+	// contain your Predictor class (see `predictionClass`). Additionally,
 	// include any dependencies used by your Predictor or scikit-learn
-	// pipeline uses that are not already included in your selected [runtime
-	// version](/ml-engine/docs/tensorflow/runtime-version-list). If you
-	// specify this field, you must also set
-	// [`runtimeVersion`](#Version.FIELDS.runtime_version) to 1.4 or
-	// greater.
+	// pipeline uses that are not already included in your selected runtime
+	// version. If you specify this field, you must also set
+	// `runtimeVersion` to 1.4 or greater.
 	PackageUris []string `json:"packageUris,omitempty"`
 
 	// PredictionClass: Optional. The fully qualified name
 	// (module_name.class_name) of a class that implements the Predictor
 	// interface described in this reference field. The module containing
 	// this class should be included in a package provided to the
-	// [`packageUris` field](#Version.FIELDS.package_uris). Specify this
-	// field if and only if you are deploying a [custom prediction routine
-	// (beta)](/ml-engine/docs/tensorflow/custom-prediction-routines). If
-	// you specify this field, you must set
-	// [`runtimeVersion`](#Version.FIELDS.runtime_version) to 1.4 or greater
-	// and you must set `machineType` to a [legacy (MLS1) machine
-	// type](/ml-engine/docs/machine-types-online-prediction). The following
-	// code sample provides the Predictor interface: class
-	// Predictor(object): """Interface for constructing custom
-	// predictors.""" def predict(self, instances, **kwargs): """Performs
-	// custom prediction. Instances are the decoded values from the request.
-	// They have already been deserialized from JSON. Args: instances: A
-	// list of prediction input instances. **kwargs: A dictionary of keyword
-	// args provided as additional fields on the predict request body.
-	// Returns: A list of outputs containing the prediction results. This
-	// list must be JSON serializable. """ raise NotImplementedError()
-	// @classmethod def from_path(cls, model_dir): """Creates an instance of
-	// Predictor using the given path. Loading of the predictor should be
-	// done in this method. Args: model_dir: The local directory that
-	// contains the exported model file along with any additional files
-	// uploaded when creating the version resource. Returns: An instance
-	// implementing this Predictor class. """ raise NotImplementedError()
-	// Learn more about [the Predictor interface and custom prediction
-	// routines](/ml-engine/docs/tensorflow/custom-prediction-routines).
+	// `packageUris` field. Specify this field if and only if you are
+	// deploying a custom prediction routine (beta). If you specify this
+	// field, you must set `runtimeVersion` to 1.4 or greater and you must
+	// set `machineType` to a legacy (MLS1) machine type. The following code
+	// sample provides the Predictor interface: class Predictor(object):
+	// """Interface for constructing custom predictors.""" def predict(self,
+	// instances, **kwargs): """Performs custom prediction. Instances are
+	// the decoded values from the request. They have already been
+	// deserialized from JSON. Args: instances: A list of prediction input
+	// instances. **kwargs: A dictionary of keyword args provided as
+	// additional fields on the predict request body. Returns: A list of
+	// outputs containing the prediction results. This list must be JSON
+	// serializable. """ raise NotImplementedError() @classmethod def
+	// from_path(cls, model_dir): """Creates an instance of Predictor using
+	// the given path. Loading of the predictor should be done in this
+	// method. Args: model_dir: The local directory that contains the
+	// exported model file along with any additional files uploaded when
+	// creating the version resource. Returns: An instance implementing this
+	// Predictor class. """ raise NotImplementedError() Learn more about the
+	// Predictor interface and custom prediction routines.
 	PredictionClass string `json:"predictionClass,omitempty"`
 
 	// PythonVersion: Required. The version of Python used in prediction.
@@ -4007,8 +3896,7 @@ type GoogleCloudMlV1__Version struct {
 	// '3.5' is available when `runtime_version` is set to a version from
 	// '1.4' to '1.14'. * Python '2.7' is available when `runtime_version`
 	// is set to '1.15' or earlier. Read more about the Python versions
-	// available for [each runtime
-	// version](/ml-engine/docs/runtime-version-list).
+	// available for each runtime version.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// RequestLoggingConfig: Optional. *Only* specify this field in a
@@ -4028,16 +3916,14 @@ type GoogleCloudMlV1__Version struct {
 	Routes *GoogleCloudMlV1__RouteMap `json:"routes,omitempty"`
 
 	// RuntimeVersion: Required. The AI Platform runtime version to use for
-	// this deployment. For more information, see the [runtime version
-	// list](/ml-engine/docs/runtime-version-list) and [how to manage
-	// runtime versions](/ml-engine/docs/versioning).
+	// this deployment. For more information, see the runtime version list
+	// and how to manage runtime versions.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ServiceAccount: Optional. Specifies the service account for resource
 	// access control. If you specify this field, then you must also specify
 	// either the `containerSpec` or the `predictionClass` field. Learn more
-	// about [using a custom service
-	// account](/ai-platform/prediction/docs/custom-service-account).
+	// about using a custom service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// State: Output only. The state of a version.
@@ -4226,9 +4112,7 @@ type GoogleIamV1__Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation.
 	Condition *GoogleType__Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -4303,9 +4187,8 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 // logical expression that allows access to a resource only if the
 // expression evaluates to `true`. A condition can add constraints based
 // on attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation. **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -4323,8 +4206,8 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation.
 type GoogleIamV1__Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -4363,9 +4246,8 @@ type GoogleIamV1__Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4438,8 +4320,7 @@ func (s *GoogleIamV1__SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 type GoogleIamV1__TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// allowed. For more information see IAM Overview.
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -4612,11 +4493,10 @@ type GoogleProtobuf__Empty struct {
 
 // GoogleRpc__Status: The `Status` type defines a logical error model
 // that is suitable for different programming environments, including
-// REST APIs and RPC APIs. It is used by
-// [gRPC](https://github.com/grpc). Each `Status` message contains three
-// pieces of data: error code, error message, and error details. You can
-// find out more about this error model and how to work with it in the
-// [API Design Guide](https://cloud.google.com/apis/design/errors).
+// REST APIs and RPC APIs. It is used by gRPC. Each `Status` message
+// contains three pieces of data: error code, error message, and error
+// details. You can find out more about this error model and how to work
+// with it in the API Design Guide.
 type GoogleRpc__Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -5602,9 +5482,7 @@ func (r *ProjectsJobsService) GetIamPolicy(resource string) *ProjectsJobsGetIamP
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
+// policies, see the IAM documentation.
 func (c *ProjectsJobsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsJobsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -9469,9 +9347,7 @@ func (r *ProjectsModelsService) GetIamPolicy(resource string) *ProjectsModelsGet
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
+// policies, see the IAM documentation.
 func (c *ProjectsModelsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsModelsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -10940,8 +10816,8 @@ func (r *ProjectsModelsVersionsService) Patch(name string, googlecloudmlv1__vers
 // only supported update mask fields are `description`,
 // `requestLoggingConfig`, `autoScaling.minNodes`, and
 // `manualScaling.nodes`. However, you can only update
-// `manualScaling.nodes` if the version uses a [Compute Engine (N1)
-// machine type](/ml-engine/docs/machine-types-online-prediction).
+// `manualScaling.nodes` if the version uses a Compute Engine (N1)
+// machine type.
 func (c *ProjectsModelsVersionsPatchCall) UpdateMask(updateMask string) *ProjectsModelsVersionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

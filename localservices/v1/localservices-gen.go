@@ -552,8 +552,8 @@ func (s *GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeTimeZone: Represents a time zone from the [IANA Time Zone
-// Database](https://www.iana.org/time-zones).
+// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone
+// Database.
 type GoogleTypeTimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`

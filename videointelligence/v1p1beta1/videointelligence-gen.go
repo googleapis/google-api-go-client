@@ -323,9 +323,8 @@ type GoogleCloudVideointelligenceV1Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API.
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -1088,10 +1087,9 @@ type GoogleCloudVideointelligenceV1SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47 language tag of the language in
+	// this result. This language code was detected to have the most
+	// likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -1356,8 +1354,7 @@ type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -1418,8 +1415,7 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -1782,9 +1778,8 @@ type GoogleCloudVideointelligenceV1beta2Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API.
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -2549,10 +2544,9 @@ type GoogleCloudVideointelligenceV1beta2SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47 language tag of the language in
+	// this result. This language code was detected to have the most
+	// likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -2818,8 +2812,7 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -2880,8 +2873,7 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -3123,17 +3115,15 @@ type GoogleCloudVideointelligenceV1p1beta1AnnotateVideoRequest struct {
 	// unset.
 	InputContent string `json:"inputContent,omitempty"`
 
-	// InputUri: Input video location. Currently, only [Cloud
-	// Storage](https://cloud.google.com/storage/) URIs are supported. URIs
-	// must be specified in the following format: `gs://bucket-id/object-id`
-	// (other URI formats return google.rpc.Code.INVALID_ARGUMENT). For more
-	// information, see [Request
-	// URIs](https://cloud.google.com/storage/docs/request-endpoints). To
-	// identify multiple videos, a video URI may include wildcards in the
-	// `object-id`. Supported wildcards: '*' to match 0 or more characters;
-	// '?' to match 1 character. If unset, the input video should be
-	// embedded in the request as `input_content`. If set, `input_content`
-	// must be unset.
+	// InputUri: Input video location. Currently, only Cloud Storage URIs
+	// are supported. URIs must be specified in the following format:
+	// `gs://bucket-id/object-id` (other URI formats return
+	// google.rpc.Code.INVALID_ARGUMENT). For more information, see Request
+	// URIs. To identify multiple videos, a video URI may include wildcards
+	// in the `object-id`. Supported wildcards: '*' to match 0 or more
+	// characters; '?' to match 1 character. If unset, the input video
+	// should be embedded in the request as `input_content`. If set,
+	// `input_content` must be unset.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LocationId: Optional. Cloud region where annotation should take
@@ -3143,12 +3133,11 @@ type GoogleCloudVideointelligenceV1p1beta1AnnotateVideoRequest struct {
 	LocationId string `json:"locationId,omitempty"`
 
 	// OutputUri: Optional. Location where the output (in JSON format)
-	// should be stored. Currently, only [Cloud
-	// Storage](https://cloud.google.com/storage/) URIs are supported. These
-	// must be specified in the following format: `gs://bucket-id/object-id`
-	// (other URI formats return google.rpc.Code.INVALID_ARGUMENT). For more
-	// information, see [Request
-	// URIs](https://cloud.google.com/storage/docs/request-endpoints).
+	// should be stored. Currently, only Cloud Storage URIs are supported.
+	// These must be specified in the following format:
+	// `gs://bucket-id/object-id` (other URI formats return
+	// google.rpc.Code.INVALID_ARGUMENT). For more information, see Request
+	// URIs.
 	OutputUri string `json:"outputUri,omitempty"`
 
 	// VideoContext: Additional video context and/or feature-specific
@@ -3323,9 +3312,8 @@ type GoogleCloudVideointelligenceV1p1beta1Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API.
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -4289,8 +4277,7 @@ type GoogleCloudVideointelligenceV1p1beta1SpeechContext struct {
 	// them. This can be used to improve the accuracy for specific words and
 	// phrases, for example, if specific commands are typically spoken by
 	// the user. This can also be used to add additional words to the
-	// vocabulary of the recognizer. See [usage
-	// limits](https://cloud.google.com/speech/limits#content).
+	// vocabulary of the recognizer. See usage limits.
 	Phrases []string `json:"phrases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Phrases") to
@@ -4382,10 +4369,9 @@ type GoogleCloudVideointelligenceV1p1beta1SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p1beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47 language tag of the language in
+	// this result. This language code was detected to have the most
+	// likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -4455,10 +4441,8 @@ type GoogleCloudVideointelligenceV1p1beta1SpeechTranscriptionConfig struct {
 	FilterProfanity bool `json:"filterProfanity,omitempty"`
 
 	// LanguageCode: Required. *Required* The language of the supplied audio
-	// as a [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
-	// tag. Example: "en-US". See [Language
-	// Support](https://cloud.google.com/speech/docs/languages) for a list
-	// of the currently supported language codes.
+	// as a BCP-47 language tag. Example: "en-US". See Language Support for
+	// a list of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// MaxAlternatives: Optional. Maximum number of recognition hypotheses
@@ -4773,8 +4757,7 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -4835,8 +4818,7 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p1beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -5257,9 +5239,8 @@ type GoogleCloudVideointelligenceV1p2beta1Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API.
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -6026,10 +6007,9 @@ type GoogleCloudVideointelligenceV1p2beta1SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47 language tag of the language in
+	// this result. This language code was detected to have the most
+	// likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -6295,8 +6275,7 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -6357,8 +6336,7 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p2beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -6827,9 +6805,8 @@ type GoogleCloudVideointelligenceV1p3beta1Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API.
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -7642,10 +7619,9 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p3beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47 language tag of the language in
+	// this result. This language code was detected to have the most
+	// likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -8000,8 +7976,7 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -8065,8 +8040,7 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p3beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage.
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -8317,11 +8291,10 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

@@ -351,27 +351,22 @@ type CohortGroup struct {
 
 	// LifetimeValue: Enable Life Time Value (LTV). LTV measures lifetime
 	// value for users acquired through different channels. Please see:
-	// [Cohort
-	// Analysis](https://support.google.com/analytics/answer/6074676) and
-	// [Lifetime Value](https://support.google.com/analytics/answer/6182550)
-	// If the value of lifetimeValue is false: - The metric values are
-	// similar to the values in the web interface cohort report. - The
-	// cohort definition date ranges must be aligned to the calendar week
-	// and month. i.e. while requesting `ga:cohortNthWeek` the `startDate`
-	// in the cohort definition should be a Sunday and the `endDate` should
-	// be the following Saturday, and for `ga:cohortNthMonth`, the
-	// `startDate` should be the 1st of the month and `endDate` should be
-	// the last day of the month. When the lifetimeValue is true: - The
-	// metric values will correspond to the values in the web interface
-	// LifeTime value report. - The Lifetime Value report shows you how user
-	// value (Revenue) and engagement (Appviews, Goal Completions, Sessions,
-	// and Session Duration) grow during the 90 days after a user is
-	// acquired. - The metrics are calculated as a cumulative average per
-	// user per the time increment. - The cohort definition date ranges need
-	// not be aligned to the calendar week and month boundaries. - The
-	// `viewId` must be an [app view
-	// ID](https://support.google.com/analytics/answer/2649553#WebVersusAppVi
-	// ews)
+	// Cohort Analysis and Lifetime Value If the value of lifetimeValue is
+	// false: - The metric values are similar to the values in the web
+	// interface cohort report. - The cohort definition date ranges must be
+	// aligned to the calendar week and month. i.e. while requesting
+	// `ga:cohortNthWeek` the `startDate` in the cohort definition should be
+	// a Sunday and the `endDate` should be the following Saturday, and for
+	// `ga:cohortNthMonth`, the `startDate` should be the 1st of the month
+	// and `endDate` should be the last day of the month. When the
+	// lifetimeValue is true: - The metric values will correspond to the
+	// values in the web interface LifeTime value report. - The Lifetime
+	// Value report shows you how user value (Revenue) and engagement
+	// (Appviews, Goal Completions, Sessions, and Session Duration) grow
+	// during the 90 days after a user is acquired. - The metrics are
+	// calculated as a cumulative average per user per the time increment. -
+	// The cohort definition date ranges need not be aligned to the calendar
+	// week and month boundaries. - The `viewId` must be an app view ID
 	LifetimeValue bool `json:"lifetimeValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cohorts") to
@@ -462,9 +457,8 @@ func (s *CustomDimension) MarshalJSON() ([]byte, error) {
 }
 
 // DateRange: A contiguous set of days: startDate, startDate + 1 day,
-// ..., endDate. The start and end dates are specified in
-// [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) date format
-// `YYYY-MM-DD`.
+// ..., endDate. The start and end dates are specified in ISO8601 date
+// format `YYYY-MM-DD`.
 type DateRange struct {
 	// EndDate: The end date for the query in the format `YYYY-MM-DD`.
 	EndDate string `json:"endDate,omitempty"`
@@ -528,11 +522,9 @@ func (s *DateRangeValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Dimension:
-// [Dimensions](https://support.google.com/analytics/answer/1033861) are
-// attributes of your data. For example, the dimension `ga:city`
-// indicates the city, for example, "Paris" or "New York", from which a
-// session originates.
+// Dimension: Dimensions are attributes of your data. For example, the
+// dimension `ga:city` indicates the city, for example, "Paris" or "New
+// York", from which a session originates.
 type Dimension struct {
 	// HistogramBuckets: If non-empty, we place dimension values into
 	// buckets after string to int64. Dimension values that are not the
@@ -845,15 +837,12 @@ type GetReportsRequest struct {
 	// `cohortGroup`.
 	ReportRequests []*ReportRequest `json:"reportRequests,omitempty"`
 
-	// UseResourceQuotas: Enables [resource based
-	// quotas](/analytics/devguides/reporting/core/v4/limits-quotas#analytics
-	// _reporting_api_v4), (defaults to `False`). If this field is set to
-	// `True` the per view (profile) quotas are governed by the
-	// computational cost of the request. Note that using cost based quotas
-	// will higher enable sampling rates. (10 Million for `SMALL`, 100M for
-	// `LARGE`. See the [limits and quotas
-	// documentation](/analytics/devguides/reporting/core/v4/limits-quotas#an
-	// alytics_reporting_api_v4) for details.
+	// UseResourceQuotas: Enables resource based quotas, (defaults to
+	// `False`). If this field is set to `True` the per view (profile)
+	// quotas are governed by the computational cost of the request. Note
+	// that using cost based quotas will higher enable sampling rates. (10
+	// Million for `SMALL`, 100M for `LARGE`. See the limits and quotas
+	// documentation for details.
 	UseResourceQuotas bool `json:"useResourceQuotas,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReportRequests") to
@@ -1019,10 +1008,9 @@ func (s *GoalSetData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Metric:
-// [Metrics](https://support.google.com/analytics/answer/1033861) are
-// the quantitative measurements. For example, the metric `ga:users`
-// indicates the total number of users for the requested time period.
+// Metric: Metrics are the quantitative measurements. For example, the
+// metric `ga:users` indicates the total number of users for the
+// requested time period.
 type Metric struct {
 	// Alias: An alias for the metric expression is an alternate name for
 	// the expression. The alias can be used for filtering and sorting. This
@@ -1652,22 +1640,16 @@ type ReportData struct {
 	// dimensions.
 	Rows []*ReportRow `json:"rows,omitempty"`
 
-	// SamplesReadCounts: If the results are
-	// [sampled](https://support.google.com/analytics/answer/2637192), this
-	// returns the total number of samples read, one entry per date range.
-	// If the results are not sampled this field will not be defined. See
-	// [developer
-	// guide](/analytics/devguides/reporting/core/v4/basics#sampling) for
+	// SamplesReadCounts: If the results are sampled, this returns the total
+	// number of samples read, one entry per date range. If the results are
+	// not sampled this field will not be defined. See developer guide for
 	// details.
 	SamplesReadCounts googleapi.Int64s `json:"samplesReadCounts,omitempty"`
 
-	// SamplingSpaceSizes: If the results are
-	// [sampled](https://support.google.com/analytics/answer/2637192), this
-	// returns the total number of samples present, one entry per date
-	// range. If the results are not sampled this field will not be defined.
-	// See [developer
-	// guide](/analytics/devguides/reporting/core/v4/basics#sampling) for
-	// details.
+	// SamplingSpaceSizes: If the results are sampled, this returns the
+	// total number of samples present, one entry per date range. If the
+	// results are not sampled this field will not be defined. See developer
+	// guide for details.
 	SamplingSpaceSizes googleapi.Int64s `json:"samplingSpaceSizes,omitempty"`
 
 	// Totals: For each requested date range, for the set of all rows that
@@ -1708,8 +1690,8 @@ func (s *ReportData) MarshalJSON() ([]byte, error) {
 type ReportRequest struct {
 	// CohortGroup: Cohort group associated with this request. If there is a
 	// cohort group in the request the `ga:cohort` dimension must be
-	// present. Every [ReportRequest](#ReportRequest) within a `batchGet`
-	// method must contain the same `cohortGroup` definition.
+	// present. Every ReportRequest within a `batchGet` method must contain
+	// the same `cohortGroup` definition.
 	CohortGroup *CohortGroup `json:"cohortGroup,omitempty"`
 
 	// DateRanges: Date ranges in the request. The request can have a
@@ -1720,9 +1702,8 @@ type ReportRequest struct {
 	// second date range. The `reportRequest.dateRanges` field should not be
 	// specified for cohorts or Lifetime value requests. If a date range is
 	// not provided, the default date range is (startDate: current date - 7
-	// days, endDate: current date - 1 day). Every
-	// [ReportRequest](#ReportRequest) within a `batchGet` method must
-	// contain the same `dateRanges` definition.
+	// days, endDate: current date - 1 day). Every ReportRequest within a
+	// `batchGet` method must contain the same `dateRanges` definition.
 	DateRanges []*DateRange `json:"dateRanges,omitempty"`
 
 	// DimensionFilterClauses: The dimension filter clauses for filtering
@@ -1742,9 +1723,7 @@ type ReportRequest struct {
 	// expression. For example, the following expression selects
 	// `ga:browser` dimension which starts with Firefox;
 	// `ga:browser=~^Firefox`. For more information on dimensions and metric
-	// filters, see [Filters
-	// reference](https://developers.google.com/analytics/devguides/reporting
-	// /core/v3/reference#filters).
+	// filters, see Filters reference.
 	FiltersExpression string `json:"filtersExpression,omitempty"`
 
 	// HideTotals: If set to true, hides the total of all metrics for all
@@ -1798,14 +1777,10 @@ type ReportRequest struct {
 	// pivots.
 	Pivots []*Pivot `json:"pivots,omitempty"`
 
-	// SamplingLevel: The desired report
-	// [sample](https://support.google.com/analytics/answer/2637192) size.
-	// If the the `samplingLevel` field is unspecified the `DEFAULT`
-	// sampling level is used. Every [ReportRequest](#ReportRequest) within
-	// a `batchGet` method must contain the same `samplingLevel` definition.
-	// See [developer
-	// guide](/analytics/devguides/reporting/core/v4/basics#sampling) for
-	// details.
+	// SamplingLevel: The desired report sample size. If the the
+	// `samplingLevel` field is unspecified the `DEFAULT` sampling level is
+	// used. Every ReportRequest within a `batchGet` method must contain the
+	// same `samplingLevel` definition. See developer guide for details.
 	//
 	// Possible values:
 	//   "SAMPLING_UNSPECIFIED" - If the `samplingLevel` field is
@@ -1819,16 +1794,14 @@ type ReportRequest struct {
 
 	// Segments: Segment the data returned for the request. A segment
 	// definition helps look at a subset of the segment request. A request
-	// can contain up to four segments. Every
-	// [ReportRequest](#ReportRequest) within a `batchGet` method must
-	// contain the same `segments` definition. Requests with segments must
-	// have the `ga:segment` dimension.
+	// can contain up to four segments. Every ReportRequest within a
+	// `batchGet` method must contain the same `segments` definition.
+	// Requests with segments must have the `ga:segment` dimension.
 	Segments []*Segment `json:"segments,omitempty"`
 
-	// ViewId: The Analytics [view
-	// ID](https://support.google.com/analytics/answer/1009618) from which
-	// to retrieve data. Every [ReportRequest](#ReportRequest) within a
-	// `batchGet` method must contain the same `viewId`.
+	// ViewId: The Analytics view ID from which to retrieve data. Every
+	// ReportRequest within a `batchGet` method must contain the same
+	// `viewId`.
 	ViewId string `json:"viewId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CohortGroup") to
@@ -1991,20 +1964,15 @@ type SearchUserActivityRequest struct {
 	// PageToken: A continuation token to get the next page of the results.
 	// Adding this to the request will return the rows after the pageToken.
 	// The pageToken should be the value returned in the nextPageToken
-	// parameter in the response to the
-	// [SearchUserActivityRequest](#SearchUserActivityRequest) request.
+	// parameter in the response to the SearchUserActivityRequest request.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// User: Required. Unique user Id to query for. Every
-	// [SearchUserActivityRequest](#SearchUserActivityRequest) must contain
-	// this field.
+	// SearchUserActivityRequest must contain this field.
 	User *User `json:"user,omitempty"`
 
-	// ViewId: Required. The Analytics [view
-	// ID](https://support.google.com/analytics/answer/1009618) from which
-	// to retrieve data. Every
-	// [SearchUserActivityRequest](#SearchUserActivityRequest) must contain
-	// the `viewId`.
+	// ViewId: Required. The Analytics view ID from which to retrieve data.
+	// Every SearchUserActivityRequest must contain the `viewId`.
 	ViewId string `json:"viewId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActivityTypes") to
@@ -2034,14 +2002,11 @@ func (s *SearchUserActivityRequest) MarshalJSON() ([]byte, error) {
 // call.
 type SearchUserActivityResponse struct {
 	// NextPageToken: This token should be passed to
-	// [SearchUserActivityRequest](#SearchUserActivityRequest) to retrieve
-	// the next page.
+	// SearchUserActivityRequest to retrieve the next page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SampleRate: This field represents the [sampling
-	// rate](https://support.google.com/analytics/answer/2637192) for the
-	// given request and is a number between 0.0 to 1.0. See [developer
-	// guide](/analytics/devguides/reporting/core/v4/basics#sampling) for
+	// SampleRate: This field represents the sampling rate for the given
+	// request and is a number between 0.0 to 1.0. See developer guide for
 	// details.
 	SampleRate float64 `json:"sampleRate,omitempty"`
 

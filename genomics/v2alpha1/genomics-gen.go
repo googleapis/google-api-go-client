@@ -1638,11 +1638,10 @@ func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1798,22 +1797,19 @@ type VirtualMachine struct {
 	EnableStackdriverMonitoring bool `json:"enableStackdriverMonitoring,omitempty"`
 
 	// Labels: Optional set of labels to apply to the VM and any attached
-	// disk resources. These labels must adhere to the [name and value
-	// restrictions](https://cloud.google.com/compute/docs/labeling-resources
-	// ) on VM labels imposed by Compute Engine. Labels keys with the prefix
-	// 'google-' are reserved for use by Google. Labels applied at creation
-	// time to the VM. Applied on a best-effort basis to attached disk
-	// resources shortly after VM creation.
+	// disk resources. These labels must adhere to the name and value
+	// restrictions on VM labels imposed by Compute Engine. Labels keys with
+	// the prefix 'google-' are reserved for use by Google. Labels applied
+	// at creation time to the VM. Applied on a best-effort basis to
+	// attached disk resources shortly after VM creation.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Required. The machine type of the virtual machine to
 	// create. Must be the short name of a standard machine type (such as
 	// "n1-standard-1") or a custom machine type (such as "custom-1-4096",
 	// where "1" indicates the number of vCPUs and "4096" indicates the
-	// memory in MB). See [Creating an instance with a custom machine
-	// type](https://cloud.google.com/compute/docs/instances/creating-instanc
-	// e-with-custom-machine-type#create) for more specifications on
-	// creating a custom machine type.
+	// memory in MB). See Creating an instance with a custom machine type
+	// for more specifications on creating a custom machine type.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Network: The VM network configuration.
@@ -2029,8 +2025,7 @@ type PipelinesRunCall struct {
 // you delete this permission, or if you enabled the Cloud Genomics API
 // before the v2alpha1 API launch, you must disable and re-enable the
 // API to grant the Genomics Service Agent the required permissions.
-// Authorization requires the following [Google
-// IAM](https://cloud.google.com/iam/) permission: *
+// Authorization requires the following Google IAM permission: *
 // `genomics.operations.create` [1]: /genomics/gsa
 func (r *PipelinesService) Run(runpipelinerequest *RunPipelineRequest) *PipelinesRunCall {
 	c := &PipelinesRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2163,8 +2158,8 @@ type ProjectsOperationsCancelCall struct {
 // is not guaranteed. Clients may use Operations.GetOperation or
 // Operations.ListOperations to check whether the cancellation succeeded
 // or the operation completed despite cancellation. Authorization
-// requires the following [Google IAM](https://cloud.google.com/iam)
-// permission: * `genomics.operations.cancel`
+// requires the following Google IAM permission: *
+// `genomics.operations.cancel`
 func (r *ProjectsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2308,8 +2303,7 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service. Authorization requires the following
-// [Google IAM](https://cloud.google.com/iam) permission: *
-// `genomics.operations.get`
+// Google IAM permission: * `genomics.operations.get`
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2455,9 +2449,8 @@ type ProjectsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. Authorization requires the following [Google
-// IAM](https://cloud.google.com/iam) permission: *
-// `genomics.operations.list`
+// request. Authorization requires the following Google IAM permission:
+// * `genomics.operations.list`
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2476,9 +2469,8 @@ func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCal
 // the value is true. In v1 and v1alpha2, the following filter fields
 // are supported: * projectId: Required. Corresponds to
 // OperationMetadata.projectId. * createTime: The time this job was
-// created, in seconds from the
-// [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `>=` and/or
-// `<=` operators. * status: Can be `RUNNING`, `SUCCESS`, `FAILURE`, or
+// created, in seconds from the epoch. Can use `>=` and/or `<=`
+// operators. * status: Can be `RUNNING`, `SUCCESS`, `FAILURE`, or
 // `CANCELED`. Only one status may be specified. * labels.key where key
 // is a label key. Examples: * `projectId = my-project AND createTime >=
 // 1432140000` * `projectId = my-project AND createTime >= 1432140000

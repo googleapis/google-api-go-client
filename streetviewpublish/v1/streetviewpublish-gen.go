@@ -841,11 +841,10 @@ func (s *Pose) UnmarshalJSON(data []byte) error {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -973,9 +972,8 @@ type PhotoCreateCall struct {
 // Create: After the client finishes uploading the photo with the
 // returned UploadRef, CreatePhoto publishes the uploaded Photo to
 // Street View on Google Maps. Currently, the only way to set heading,
-// pitch, and roll in CreatePhoto is through the [Photo Sphere XMP
-// metadata](https://developers.google.com/streetview/spherical-metadata)
-//  in the photo bytes. CreatePhoto ignores the `pose.heading`,
+// pitch, and roll in CreatePhoto is through the Photo Sphere XMP
+// metadata in the photo bytes. CreatePhoto ignores the `pose.heading`,
 // `pose.pitch`, `pose.roll`, `pose.altitude`, and `pose.level` fields
 // in Pose. This method returns the following error codes: *
 // google.rpc.Code.INVALID_ARGUMENT if the request is malformed or if

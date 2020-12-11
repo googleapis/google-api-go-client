@@ -610,8 +610,7 @@ type ClassificationCategory struct {
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Name: The name of the category representing the document, from the
-	// [predefined
-	// taxonomy](https://cloud.google.com/natural-language/docs/categories).
+	// predefined taxonomy.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -865,12 +864,10 @@ type Document struct {
 
 	// Language: The language of the document (if not specified, the
 	// language is automatically detected). Both ISO and BCP-47 language
-	// codes are accepted. [Language
-	// Support](https://cloud.google.com/natural-language/docs/languages)
-	// lists currently supported languages for each API method. If the
-	// language (either specified by the caller or automatically detected)
-	// is not supported by the called API method, an `INVALID_ARGUMENT`
-	// error is returned.
+	// codes are accepted. Language Support lists currently supported
+	// languages for each API method. If the language (either specified by
+	// the caller or automatically detected) is not supported by the called
+	// API method, an `INVALID_ARGUMENT` error is returned.
 	Language string `json:"language,omitempty"`
 
 	// ReferenceWebUri: The web URI where the document comes from. This URI
@@ -1061,8 +1058,7 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 type Features struct {
 	// ClassifyText: Classify the full document into categories. If this is
 	// true, the API will use the default model which classifies into a
-	// [predefined
-	// taxonomy](https://cloud.google.com/natural-language/docs/categories).
+	// predefined taxonomy.
 	ClassifyText bool `json:"classifyText,omitempty"`
 
 	// ExtractDocumentSentiment: Extract document-level sentiment.
@@ -1365,11 +1361,10 @@ func (s *Sentiment) UnmarshalJSON(data []byte) error {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// and RPC APIs. It is used by gRPC. Each `Status` message contains
+// three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it
+// in the API Design Guide.
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1445,8 +1440,7 @@ type Token struct {
 	// DependencyEdge: Dependency tree parse for this token.
 	DependencyEdge *DependencyEdge `json:"dependencyEdge,omitempty"`
 
-	// Lemma: [Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29)
-	// of the token.
+	// Lemma: Lemma of the token.
 	Lemma string `json:"lemma,omitempty"`
 
 	// PartOfSpeech: Parts of speech tag for this token.

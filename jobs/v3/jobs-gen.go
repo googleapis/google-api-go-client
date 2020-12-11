@@ -1753,11 +1753,10 @@ type Job struct {
 	// LanguageCode: Optional. The language of the posting. This field is
 	// distinct from any requirements for fluency that are associated with
 	// the job. Language codes must be in BCP-47 format, such as "en-US" or
-	// "sr-Latn". For more information, see [Tags for Identifying
-	// Languages](https://tools.ietf.org/html/bcp47){: class="external"
-	// target="_blank" }. If this field is unspecified and Job.description
-	// is present, detected language code based on Job.description is
-	// assigned, otherwise defaults to 'en_US'.
+	// "sr-Latn". For more information, see Tags for Identifying Languages{:
+	// class="external" target="_blank" }. If this field is unspecified and
+	// Job.description is present, detected language code based on
+	// Job.description is assigned, otherwise defaults to 'en_US'.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Name: Required during job update. The resource name for the job. This
@@ -2274,8 +2273,7 @@ type JobQuery struct {
 	// search against, for example, "en-US". If a value isn't specified, the
 	// search results can contain jobs in any locale. Language codes should
 	// be in BCP-47 format, such as "en-US" or "sr-Latn". For more
-	// information, see [Tags for Identifying
-	// Languages](https://tools.ietf.org/html/bcp47). At most 10 language
+	// information, see Tags for Identifying Languages. At most 10 language
 	// code filters are allowed.
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 
@@ -2303,8 +2301,8 @@ type JobQuery struct {
 	// This field helps to better interpret the query. If a value isn't
 	// specified, the query language code is automatically detected, which
 	// may not be accurate. Language code should be in BCP-47 format, such
-	// as "en-US" or "sr-Latn". For more information, see [Tags for
-	// Identifying Languages](https://tools.ietf.org/html/bcp47).
+	// as "en-US" or "sr-Latn". For more information, see Tags for
+	// Identifying Languages.
 	QueryLanguageCode string `json:"queryLanguageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommuteFilter") to
@@ -3675,8 +3673,7 @@ func (c *ProjectsCompleteCall) CompanyName(companyName string) *ProjectsComplete
 // LanguageCode sets the optional parameter "languageCode": Deprecated.
 // Use language_codes instead.  The language of the query. This is the
 // BCP-47 language code, such as "en-US" or "sr-Latn". For more
-// information, see [Tags for Identifying
-// Languages](https://tools.ietf.org/html/bcp47). For
+// information, see Tags for Identifying Languages. For
 // CompletionType.JOB_TITLE type, only open jobs with the same
 // language_code are returned. For CompletionType.COMPANY_NAME type,
 // only companies having open jobs with the same language_code are
@@ -3691,13 +3688,12 @@ func (c *ProjectsCompleteCall) LanguageCode(languageCode string) *ProjectsComple
 
 // LanguageCodes sets the optional parameter "languageCodes": The list
 // of languages of the query. This is the BCP-47 language code, such as
-// "en-US" or "sr-Latn". For more information, see [Tags for Identifying
-// Languages](https://tools.ietf.org/html/bcp47). For
-// CompletionType.JOB_TITLE type, only open jobs with the same
-// language_codes are returned. For CompletionType.COMPANY_NAME type,
-// only companies having open jobs with the same language_codes are
-// returned. For CompletionType.COMBINED type, only open jobs with the
-// same language_codes or companies having open jobs with the same
+// "en-US" or "sr-Latn". For more information, see Tags for Identifying
+// Languages. For CompletionType.JOB_TITLE type, only open jobs with the
+// same language_codes are returned. For CompletionType.COMPANY_NAME
+// type, only companies having open jobs with the same language_codes
+// are returned. For CompletionType.COMBINED type, only open jobs with
+// the same language_codes or companies having open jobs with the same
 // language_codes are returned. The maximum number of allowed characters
 // is 255.
 func (c *ProjectsCompleteCall) LanguageCodes(languageCodes ...string) *ProjectsCompleteCall {
@@ -3946,11 +3942,8 @@ type ProjectsClientEventsCreateCall struct {
 
 // Create: Report events issued when end user interacts with customer's
 // application that uses Cloud Talent Solution. You may inspect the
-// created events in [self service
-// tools](https://console.cloud.google.com/talent-solution/overview).
-// [Learn
-// more](https://cloud.google.com/talent-solution/docs/management-tools)
-// about self service tools.
+// created events in self service tools. Learn more about self service
+// tools.
 func (r *ProjectsClientEventsService) Create(parent string, createclienteventrequest *CreateClientEventRequest) *ProjectsClientEventsCreateCall {
 	c := &ProjectsClientEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

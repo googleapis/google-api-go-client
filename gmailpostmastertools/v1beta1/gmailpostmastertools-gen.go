@@ -293,9 +293,7 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FeedbackLoop: [Feedback
-// loop](https://support.google.com/mail/answer/6254652) identifier
-// information.
+// FeedbackLoop: Feedback loop identifier information.
 type FeedbackLoop struct {
 	// Id: Feedback loop identifier that uniquely identifies individual
 	// campaigns.
@@ -346,15 +344,12 @@ func (s *FeedbackLoop) UnmarshalJSON(data []byte) error {
 // specific reputation category.
 type IpReputation struct {
 	// IpCount: Total number of unique IPs in this reputation category. This
-	// metric only pertains to traffic that passed
-	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
+	// metric only pertains to traffic that passed SPF or DKIM.
 	IpCount int64 `json:"ipCount,omitempty,string"`
 
 	// NumIps: Total number of unique IPs in this reputation category. This
-	// metric only pertains to traffic that passed
-	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
-	// Deprecated to be complied with ApiLinter for Quantities. Use ip_count
-	// instead.
+	// metric only pertains to traffic that passed SPF or DKIM. Deprecated
+	// to be complied with ApiLinter for Quantities. Use ip_count instead.
 	NumIps int64 `json:"numIps,omitempty,string"`
 
 	// Reputation: The reputation category this IP reputation represents.
@@ -478,19 +473,17 @@ func (s *ListTrafficStatsResponse) MarshalJSON() ([]byte, error) {
 // TrafficStats: Email traffic statistics pertaining to a specific date.
 type TrafficStats struct {
 	// DeliveryErrors: Delivery errors for the domain. This metric only
-	// pertains to traffic that passed [SPF](http://www.openspf.org/) or
-	// [DKIM](http://www.dkim.org/).
+	// pertains to traffic that passed SPF or DKIM.
 	DeliveryErrors []*DeliveryError `json:"deliveryErrors,omitempty"`
 
 	// DkimSuccessRatio: The ratio of mail that successfully authenticated
-	// with DKIM vs. all mail that attempted to authenticate with
-	// [DKIM](http://www.dkim.org/). Spoofed mail is excluded.
+	// with DKIM vs. all mail that attempted to authenticate with DKIM.
+	// Spoofed mail is excluded.
 	DkimSuccessRatio float64 `json:"dkimSuccessRatio,omitempty"`
 
-	// DmarcSuccessRatio: The ratio of mail that passed
-	// [DMARC](https://dmarc.org/) alignment checks vs all mail received
-	// from the domain that successfully authenticated with either of
-	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
+	// DmarcSuccessRatio: The ratio of mail that passed DMARC alignment
+	// checks vs all mail received from the domain that successfully
+	// authenticated with either of SPF or DKIM.
 	DmarcSuccessRatio float64 `json:"dmarcSuccessRatio,omitempty"`
 
 	// DomainReputation: Reputation of the domain.
@@ -515,8 +508,7 @@ type TrafficStats struct {
 
 	// InboundEncryptionRatio: The ratio of incoming mail (to Gmail), that
 	// passed secure transport (TLS) vs all mail received from that domain.
-	// This metric only pertains to traffic that passed
-	// [SPF](http://www.openspf.org/) or [DKIM](http://www.dkim.org/).
+	// This metric only pertains to traffic that passed SPF or DKIM.
 	InboundEncryptionRatio float64 `json:"inboundEncryptionRatio,omitempty"`
 
 	// IpReputations: Reputation information pertaining to the IP addresses
@@ -540,17 +532,17 @@ type TrafficStats struct {
 	// SpammyFeedbackLoops: Spammy [Feedback loop identifiers]
 	// (https://support.google.com/mail/answer/6254652) with their
 	// individual spam rates. This metric only pertains to traffic that is
-	// authenticated by [DKIM](http://www.dkim.org/).
+	// authenticated by DKIM.
 	SpammyFeedbackLoops []*FeedbackLoop `json:"spammyFeedbackLoops,omitempty"`
 
 	// SpfSuccessRatio: The ratio of mail that successfully authenticated
-	// with SPF vs. all mail that attempted to authenticate with
-	// [SPF](http://www.openspf.org/). Spoofed mail is excluded.
+	// with SPF vs. all mail that attempted to authenticate with SPF.
+	// Spoofed mail is excluded.
 	SpfSuccessRatio float64 `json:"spfSuccessRatio,omitempty"`
 
 	// UserReportedSpamRatio: The ratio of user-report spam vs. email that
 	// was sent to the inbox. This metric only pertains to emails
-	// authenticated by [DKIM](http://www.dkim.org/).
+	// authenticated by DKIM.
 	UserReportedSpamRatio float64 `json:"userReportedSpamRatio,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

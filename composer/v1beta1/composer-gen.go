@@ -453,6 +453,18 @@ type EnvironmentConfig struct {
 	// this environment.
 	GkeCluster string `json:"gkeCluster,omitempty"`
 
+	// MaintenanceWindow: Optional. The maintenance window is the period
+	// when Cloud Composer components may undergo maintenance. It is defined
+	// so that maintenance is not executed during peak hours or critical
+	// time periods. The system will not be under maintenance for every
+	// occurrence of this window, but when maintenance is planned, it will
+	// be scheduled during the window. The maintenance window period must
+	// encompass at least 12 hours per week. This may be split into multiple
+	// chunks, each with a size of at least 4 hours. If this value is
+	// omitted, Cloud Composer components may be subject to maintenance at
+	// any time.
+	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
+
 	// NodeConfig: The configuration used for the Kubernetes Engine cluster.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 
@@ -728,6 +740,51 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MaintenanceWindow: The configuration settings for Cloud Composer
+// maintenance window. The following example: {
+// "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-01T07:00:00Z"
+// "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" } would define a maintenance
+// window between 01 and 07 hours UTC during each Tuesday and Wednesday.
+type MaintenanceWindow struct {
+	// EndTime: Required. Maintenance window end time. It is used only to
+	// calculate the duration of the maintenance window. The value for
+	// end_time must be in the future, relative to `start_time`.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Recurrence: Required. Maintenance window recurrence. Format is a
+	// subset of [RFC-5545](https://tools.ietf.org/html/rfc5545) `RRULE`.
+	// The only allowed values for `FREQ` field are `FREQ=DAILY` and
+	// `FREQ=WEEKLY;BYDAY=...` Example values: `FREQ=WEEKLY;BYDAY=TU,WE`,
+	// `FREQ=DAILY`.
+	Recurrence string `json:"recurrence,omitempty"`
+
+	// StartTime: Required. Start time of the first recurrence of the
+	// maintenance window.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeConfig: The configuration information for the Kubernetes Engine
 // nodes running the Apache Airflow software.
 type NodeConfig struct {
@@ -772,6 +829,19 @@ type NodeConfig struct {
 	// machine type](/compute/docs/machine-types#sharedcore). If this field
 	// is unspecified, the `machineTypeId` defaults to "n1-standard-1".
 	MachineType string `json:"machineType,omitempty"`
+
+	// MaxPodsPerNode: Optional. The maximum number of pods per node in the
+	// Cloud Composer GKE cluster. The value must be between 8 and 110 and
+	// it can be set only if the environment is VPC-native. The default
+	// value is 32. Values of this field will be propagated both to the
+	// `default-pool` node pool of the newly created GKE cluster, and to the
+	// default "Maximum Pods per Node" value which is used for newly created
+	// node pools if their value is not explicitly set during node pool
+	// creation. For more information, see [Optimizing IP address
+	// allocation]
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-c
+	// idr). Cannot be updated.
+	MaxPodsPerNode int64 `json:"maxPodsPerNode,omitempty"`
 
 	// Network: Optional. The Compute Engine network to be used for machine
 	// communications, specified as a [relative resource
@@ -1304,7 +1374,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1442,7 +1512,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1583,7 +1653,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1741,7 +1811,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1995,7 +2065,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2141,7 +2211,7 @@ func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Header() http.Header
 
 func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2312,7 +2382,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2485,7 +2555,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2628,7 +2698,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2802,7 +2872,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -2097,7 +2097,7 @@
       }
     }
   },
-  "revision": "20201210",
+  "revision": "20201211",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -2139,22 +2139,6 @@
             "$ref": "SasPortalDevice"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "SasPortalChannelWithScore": {
-      "description": "The channel with score.",
-      "id": "SasPortalChannelWithScore",
-      "properties": {
-        "frequencyRange": {
-          "$ref": "SasPortalFrequencyRange",
-          "description": "The frequency range of the channel."
-        },
-        "score": {
-          "description": "The channel score, normalized to be in [0,1].",
-          "format": "double",
-          "type": "number"
         }
       },
       "type": "object"
@@ -2230,20 +2214,6 @@
         "preloadedConfig": {
           "$ref": "SasPortalDeviceConfig",
           "description": "Configuration of the device, as specified via SAS Portal API."
-        },
-        "recommendedChannels": {
-          "description": "Output only. Recommended channels.",
-          "items": {
-            "$ref": "SasPortalChannelWithScore"
-          },
-          "readOnly": true,
-          "type": "array"
-        },
-        "recommendedPowerDbmPerMhz": {
-          "description": "Output only. Recommended power for the device.",
-          "format": "double",
-          "readOnly": true,
-          "type": "number"
         },
         "serialNumber": {
           "description": "A serial number assigned to the device by the device manufacturer.",

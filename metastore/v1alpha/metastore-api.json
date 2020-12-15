@@ -728,7 +728,7 @@
       }
     }
   },
-  "revision": "20201202",
+  "revision": "20201212",
   "rootUrl": "https://metastore.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -929,7 +929,7 @@
         },
         "kerberosConfig": {
           "$ref": "KerberosConfig",
-          "description": "Information used to configure the Hive metastore service as a service principal in a Kerberos realm."
+          "description": "Information used to configure the Hive metastore service as a service principal in a Kerberos realm. To disable Kerberos, use the UpdateService method and specify this field's path (\"hive_metastore_config.kerberos_config\") in the request's update_mask while omitting this field from the request's service."
         },
         "version": {
           "description": "Immutable. The Hive metastore schema version.",

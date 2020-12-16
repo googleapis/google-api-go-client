@@ -345,16 +345,18 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BillingAccount: A billing account in the Google Cloud Console. You
-// can assign a billing account to one or more projects.
+// BillingAccount: A billing account in the Google Cloud Console
+// (https://console.cloud.google.com/). You can assign a billing account
+// to one or more projects.
 type BillingAccount struct {
 	// DisplayName: The display name given to the billing account, such as
 	// `My Billing Account`. This name is displayed in the Google Cloud
 	// Console.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// MasterBillingAccount: If this account is a subaccount, then this will
-	// be the resource name of the master billing account that it is being
+	// MasterBillingAccount: If this account is a subaccount
+	// (https://cloud.google.com/billing/docs/concepts), then this will be
+	// the resource name of the master billing account that it is being
 	// resold through. Otherwise this will be empty.
 	MasterBillingAccount string `json:"masterBillingAccount,omitempty"`
 
@@ -405,7 +407,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation.
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -820,7 +823,9 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
 // resources support conditions in their IAM policies, see the IAM
-// documentation. **JSON example:** { "bindings": [ { "role":
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -839,7 +844,7 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
 // 3 For a description of IAM and its features, see the IAM
-// documentation.
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -879,7 +884,8 @@ type Policy struct {
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
 	// resources support conditions in their IAM policies, see the IAM
-	// documentation.
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1257,7 +1263,8 @@ func (s *Sku) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see IAM Overview.
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -1378,12 +1385,14 @@ type BillingAccountsCreateCall struct {
 }
 
 // Create: Creates a billing account. This method can only be used to
-// create billing subaccounts by Google Cloud resellers. When creating a
-// subaccount, the current authenticated user must have the
-// `billing.accounts.update` IAM permission on the master account, which
-// is typically given to billing account administrators. This method
-// will return an error if the master account has not been provisioned
-// as a reseller account.
+// create billing subaccounts
+// (https://cloud.google.com/billing/docs/concepts) by Google Cloud
+// resellers. When creating a subaccount, the current authenticated user
+// must have the `billing.accounts.update` IAM permission on the master
+// account, which is typically given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access). This
+// method will return an error if the master account has not been
+// provisioned as a reseller account.
 func (r *BillingAccountsService) Create(billingaccount *BillingAccount) *BillingAccountsCreateCall {
 	c := &BillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.billingaccount = billingaccount
@@ -1511,7 +1520,8 @@ type BillingAccountsGetCall struct {
 }
 
 // Get: Gets information about a billing account. The current
-// authenticated user must be a viewer of the billing account.
+// authenticated user must be a viewer of the billing account
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
 func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
 	c := &BillingAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1659,7 +1669,8 @@ type BillingAccountsGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the access control policy for a billing account.
 // The caller must have the `billing.accounts.getIamPolicy` permission
-// on the account, which is often given to billing account viewers.
+// on the account, which is often given to billing account viewers
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
 func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsGetIamPolicyCall {
 	c := &BillingAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1673,7 +1684,8 @@ func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsG
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation.
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *BillingAccountsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *BillingAccountsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -1824,7 +1836,8 @@ type BillingAccountsListCall struct {
 }
 
 // List: Lists the billing accounts that the current authenticated user
-// has permission to view.
+// has permission to view
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
 func (r *BillingAccountsService) List() *BillingAccountsListCall {
 	c := &BillingAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1832,8 +1845,9 @@ func (r *BillingAccountsService) List() *BillingAccountsListCall {
 
 // Filter sets the optional parameter "filter": Options for how to
 // filter the returned billing accounts. Currently this only supports
-// filtering for subaccounts under a single provided reseller billing
-// account. (e.g.
+// filtering for subaccounts
+// (https://cloud.google.com/billing/docs/concepts) under a single
+// provided reseller billing account. (e.g.
 // "master_billing_account=billingAccounts/012345-678901-ABCDEF").
 // Boolean algebra and other fields are not currently supported.
 func (c *BillingAccountsListCall) Filter(filter string) *BillingAccountsListCall {
@@ -2025,7 +2039,9 @@ type BillingAccountsPatchCall struct {
 // Patch: Updates a billing account's fields. Currently the only field
 // that can be edited is `display_name`. The current authenticated user
 // must have the `billing.accounts.update` IAM permission, which is
-// typically given to the administrator of the billing account.
+// typically given to the administrator
+// (https://cloud.google.com/billing/docs/how-to/billing-access) of the
+// billing account.
 func (r *BillingAccountsService) Patch(name string, billingaccount *BillingAccount) *BillingAccountsPatchCall {
 	c := &BillingAccountsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2182,7 +2198,8 @@ type BillingAccountsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy for a billing account.
 // Replaces any existing policy. The caller must have the
 // `billing.accounts.setIamPolicy` permission on the account, which is
-// often given to billing account administrators.
+// often given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
 func (r *BillingAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *BillingAccountsSetIamPolicyCall {
 	c := &BillingAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2471,7 +2488,8 @@ type BillingAccountsProjectsListCall struct {
 // List: Lists the projects associated with a billing account. The
 // current authenticated user must have the
 // `billing.resourceAssociations.list` IAM permission, which is often
-// given to billing account viewers.
+// given to billing account viewers
+// (https://cloud.google.com/billing/docs/how-to/billing-access).
 func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProjectsListCall {
 	c := &BillingAccountsProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2667,7 +2685,8 @@ type ProjectsGetBillingInfoCall struct {
 }
 
 // GetBillingInfo: Gets the billing information for a project. The
-// current authenticated user must have permission to view the project.
+// current authenticated user must have permission to view the project
+// (https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo ).
 func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCall {
 	c := &ProjectsGetBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2825,19 +2844,22 @@ type ProjectsUpdateBillingInfoCall struct {
 // be billed to the new billing account, even if the charge occurred
 // before the new billing account was assigned to the project. The
 // current authenticated user must have ownership privileges for both
-// the project and the billing account. You can disable billing on the
-// project by setting the `billing_account_name` field to empty. This
-// action disassociates the current billing account from the project.
-// Any billable activity of your in-use services will stop, and your
-// application could stop functioning as expected. Any unbilled charges
-// to date will be billed to the previously associated account. The
-// current authenticated user must be either an owner of the project or
-// an owner of the billing account for the project. Note that
-// associating a project with a *closed* billing account will have much
-// the same effect as disabling billing on the project: any paid
-// resources used by the project will be shut down. Thus, unless you
-// wish to disable billing, you should always call this method with the
-// name of an *open* billing account.
+// the project
+// (https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo )
+// and the billing account
+// (https://cloud.google.com/billing/docs/how-to/billing-access). You
+// can disable billing on the project by setting the
+// `billing_account_name` field to empty. This action disassociates the
+// current billing account from the project. Any billable activity of
+// your in-use services will stop, and your application could stop
+// functioning as expected. Any unbilled charges to date will be billed
+// to the previously associated account. The current authenticated user
+// must be either an owner of the project or an owner of the billing
+// account for the project. Note that associating a project with a
+// *closed* billing account will have much the same effect as disabling
+// billing on the project: any paid resources used by the project will
+// be shut down. Thus, unless you wish to disable billing, you should
+// always call this method with the name of an *open* billing account.
 func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *ProjectBillingInfo) *ProjectsUpdateBillingInfoCall {
 	c := &ProjectsUpdateBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

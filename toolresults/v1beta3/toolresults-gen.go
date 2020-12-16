@@ -3313,10 +3313,11 @@ func (s *StartActivityNotFound) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -4172,9 +4173,10 @@ func (s *Thumbnail) MarshalJSON() ([]byte, error) {
 // Gregorian calendar which extends the Gregorian calendar backwards to
 // year one. All minutes are 60 seconds long. Leap seconds are "smeared"
 // so that no leap second table is needed for interpretation, using a
-// 24-hour linear smear. The range is from 0001-01-01T00:00:00Z to
-// 9999-12-31T23:59:59.999999999Z. By restricting to that range, we
-// ensure that we can convert to and from RFC 3339 date strings.
+// 24-hour linear smear (https://developers.google.com/time/smear). The
+// range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.
+// By restricting to that range, we ensure that we can convert to and
+// from RFC 3339 (https://www.ietf.org/rfc/rfc3339.txt) date strings.
 type Timestamp struct {
 	// Nanos: Non-negative fractions of a second at nanosecond resolution.
 	// Negative second values with fractions must still have non-negative

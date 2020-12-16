@@ -6631,7 +6631,7 @@ type OrderTrackingSignal struct {
 	// This value is optional. If left unset, the caller's merchant ID is
 	// used. You must request access in order to provide data on behalf of
 	// another merchant. For more information, see Submitting Order Tracking
-	// Signals.
+	// Signals (/shopping-content/guides/order-tracking-signals).
 	MerchantId int64 `json:"merchantId,omitempty,string"`
 
 	// OrderCreatedTime: Required. The time when the order was created on
@@ -11517,8 +11517,9 @@ func (s *Region) MarshalJSON() ([]byte, error) {
 // RegionGeoTargetArea: A list of geotargets that defines the region
 // area.
 type RegionGeoTargetArea struct {
-	// GeotargetCriteriaIds: Required. A non-empty list of location IDs.
-	// They must all be of the same location type (e.g., state).
+	// GeotargetCriteriaIds: Required. A non-empty list of location IDs
+	// (https://developers.google.com/adwords/api/docs/appendix/geotargeting)
+	// . They must all be of the same location type (e.g., state).
 	GeotargetCriteriaIds googleapi.Int64s `json:"geotargetCriteriaIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -14463,7 +14464,8 @@ func (s *TestOrderPickupDetailsPickupPerson) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeZone: Represents a time zone from the IANA Time Zone Database.
+// TimeZone: Represents a time zone from the IANA Time Zone Database
+// (https://www.iana.org/time-zones).
 type TimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`

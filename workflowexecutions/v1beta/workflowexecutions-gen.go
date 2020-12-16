@@ -217,7 +217,8 @@ func (s *Error) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Execution: A running instance of a Workflow.
+// Execution: A running instance of a Workflow
+// (/workflows/docs/reference/rest/v1beta/projects.locations.workflows).
 type Execution struct {
 	// Argument: Input parameters of the execution represented as a JSON
 	// string. The size limit is 32KB.

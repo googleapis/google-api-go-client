@@ -155,11 +155,13 @@ type SiteSummaryResponse struct {
 	//   "FAILING" - Failing.
 	AbusiveStatus string `json:"abusiveStatus,omitempty"`
 
-	// EnforcementTime: The time at which enforcement against the site began
-	// or will begin. Not set when the filter_status is OFF.
+	// EnforcementTime: The time at which enforcement
+	// (https://support.google.com/webtools/answer/7538608) against the site
+	// began or will begin. Not set when the filter_status is OFF.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
-	// FilterStatus: The site's enforcement status.
+	// FilterStatus: The site's enforcement status
+	// (https://support.google.com/webtools/answer/7538608).
 	//
 	// Possible values:
 	//   "UNKNOWN" - N/A.
@@ -174,8 +176,9 @@ type SiteSummaryResponse struct {
 
 	// ReportUrl: A link to the full Abusive Experience Report for the site.
 	// Not set in ViolatingSitesResponse. Note that you must complete the
-	// Search Console verification process for the site before you can
-	// access the full report.
+	// Search Console verification process
+	// (https://support.google.com/webmasters/answer/9008080) for the site
+	// before you can access the full report.
 	ReportUrl string `json:"reportUrl,omitempty"`
 
 	// ReviewedSite: The name of the reviewed site, e.g. `google.com`.

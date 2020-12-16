@@ -531,7 +531,8 @@ type AuthenticationInfo struct {
 	// request. For third party identity callers, the `principal_subject`
 	// field is populated instead of this field. For privacy reasons, the
 	// principal email address is sometimes redacted. For more information,
-	// see Caller identities in audit logs.
+	// see Caller identities in audit logs
+	// (https://cloud.google.com/logging/docs/audit#user-id).
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
 	// PrincipalSubject: String representation of identity of requesting
@@ -886,7 +887,7 @@ type ConsumerInfo struct {
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
 	// Type: The type of the consumer which should have been defined in
-	// Google Resource Manager.
+	// Google Resource Manager (https://cloud.google.com/resource-manager/).
 	//
 	// Possible values:
 	//   "CONSUMER_TYPE_UNSPECIFIED" - This is never used.
@@ -970,9 +971,9 @@ type Distribution struct {
 	Minimum float64 `json:"minimum,omitempty"`
 
 	// SumOfSquaredDeviation: The sum of squared deviations from the mean:
-	// Sumi=1..count^2) where each x_i is a sample values. If `count` is
-	// zero then this field must be zero, otherwise validation of the
-	// request fails.
+	// Sumi=1..count ((x_i - mean)^2) where each x_i is a sample values. If
+	// `count` is zero then this field must be zero, otherwise validation of
+	// the request fails.
 	SumOfSquaredDeviation float64 `json:"sumOfSquaredDeviation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketCounts") to
@@ -1236,7 +1237,8 @@ type HttpRequest struct {
 	Protocol string `json:"protocol,omitempty"`
 
 	// Referer: The referer URL of the request, as defined in HTTP/1.1
-	// Header Field Definitions.
+	// Header Field Definitions
+	// (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
 	Referer string `json:"referer,omitempty"`
 
 	// RemoteIp: The IP address (IPv4 or IPv6) of the client that issued the
@@ -2672,10 +2674,11 @@ func (s *SpanContext) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2903,8 +2906,9 @@ type ServicesAllocateQuotaCall struct {
 // AllocateQuota: Attempts to allocate quota for the specified consumer.
 // It should be called before the operation is executed. This method
 // requires the `servicemanagement.services.quota` permission on the
-// specified service. For more information, see Cloud IAM. **NOTE:** The
-// client **must** fail-open on server errors `INTERNAL`, `UNKNOWN`,
+// specified service. For more information, see Cloud IAM
+// (https://cloud.google.com/iam). **NOTE:** The client **must**
+// fail-open on server errors `INTERNAL`, `UNKNOWN`,
 // `DEADLINE_EXCEEDED`, and `UNAVAILABLE`. To ensure system reliability,
 // the server may inject these errors to prohibit any hard dependency on
 // the quota functionality.
@@ -3058,7 +3062,8 @@ type ServicesCheckCall struct {
 // having the latest policy information. NOTE: the CheckRequest has the
 // size limit of 64KB. This method requires the
 // `servicemanagement.services.check` permission on the specified
-// service. For more information, see Cloud IAM.
+// service. For more information, see Cloud IAM
+// (https://cloud.google.com/iam).
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3207,7 +3212,8 @@ type ServicesReportCall struct {
 // more than 0.01% for business and compliance reasons. NOTE: the
 // ReportRequest has the size limit (wire-format byte size) of 1MB. This
 // method requires the `servicemanagement.services.report` permission on
-// the specified service. For more information, see Google Cloud IAM.
+// the specified service. For more information, see Google Cloud IAM
+// (https://cloud.google.com/iam).
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName

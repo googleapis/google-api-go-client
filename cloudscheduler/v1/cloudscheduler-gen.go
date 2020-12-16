@@ -255,14 +255,22 @@ func (s *AppEngineHttpTarget) MarshalJSON() ([]byte, error) {
 }
 
 // AppEngineRouting: App Engine Routing. For more information about
-// services, versions, and instances see An Overview of App Engine,
-// Microservices Architecture on Google App Engine, App Engine Standard
-// request routing, and App Engine Flex request routing.
+// services, versions, and instances see An Overview of App Engine
+// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-eng
+// ine), Microservices Architecture on Google App Engine
+// (https://cloud.google.com/appengine/docs/python/microservices-on-app-e
+// ngine), App Engine Standard request routing
+// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
+// are-routed), and App Engine Flex request routing
+// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-
+// are-routed).
 type AppEngineRouting struct {
 	// Host: Output only. The host that the job is sent to. For more
-	// information about how App Engine requests are routed, see here. The
-	// host is constructed as: * `host = [application_domain_name]` `|
-	// [service] + '.' + [application_domain_name]` `| [version] + '.' +
+	// information about how App Engine requests are routed, see here
+	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
+	// are-routed). The host is constructed as: * `host =
+	// [application_domain_name]` `| [service] + '.' +
+	// [application_domain_name]` `| [version] + '.' +
 	// [application_domain_name]` `| [version_dot_service]+ '.' +
 	// [application_domain_name]` `| [instance] + '.' +
 	// [application_domain_name]` `| [instance_dot_service] + '.' +
@@ -288,9 +296,15 @@ type AppEngineRouting struct {
 	// Instance: App instance. By default, the job is sent to an instance
 	// which is available when the job is attempted. Requests can only be
 	// sent to a specific instance if manual scaling is used in App Engine
-	// Standard. App Engine Flex does not support instances. For more
-	// information, see App Engine Standard request routing and App Engine
-	// Flex request routing.
+	// Standard
+	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-eng
+	// ine?hl=en_US#scaling_types_and_instance_classes). App Engine Flex
+	// does not support instances. For more information, see App Engine
+	// Standard request routing
+	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
+	// are-routed) and App Engine Flex request routing
+	// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-
+	// are-routed).
 	Instance string `json:"instance,omitempty"`
 
 	// Service: App service. By default, the job is sent to the service
@@ -376,16 +390,19 @@ type HttpTarget struct {
 	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
 
-	// OauthToken: If specified, an OAuth token will be generated and
-	// attached as an `Authorization` header in the HTTP request. This type
-	// of authorization should generally only be used when calling Google
-	// APIs hosted on *.googleapis.com.
+	// OauthToken: If specified, an OAuth token
+	// (https://developers.google.com/identity/protocols/OAuth2) will be
+	// generated and attached as an `Authorization` header in the HTTP
+	// request. This type of authorization should generally only be used
+	// when calling Google APIs hosted on *.googleapis.com.
 	OauthToken *OAuthToken `json:"oauthToken,omitempty"`
 
-	// OidcToken: If specified, an OIDC token will be generated and attached
-	// as an `Authorization` header in the HTTP request. This type of
-	// authorization can be used for many scenarios, including calling Cloud
-	// Run, or endpoints where you intend to validate the token yourself.
+	// OidcToken: If specified, an OIDC
+	// (https://developers.google.com/identity/protocols/OpenIDConnect)
+	// token will be generated and attached as an `Authorization` header in
+	// the HTTP request. This type of authorization can be used for many
+	// scenarios, including calling Cloud Run, or endpoints where you intend
+	// to validate the token yourself.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
 	// Uri: Required. The full URI path that the request will be sent to.
@@ -451,9 +468,11 @@ type Job struct {
 	// `projects/PROJECT_ID/locations/LOCATION_ID/jobs/JOB_ID`. *
 	// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens
 	// (-), colons (:), or periods (.). For more information, see
-	// Identifying projects * `LOCATION_ID` is the canonical ID for the
-	// job's location. The list of available locations can be obtained by
-	// calling ListLocations. For more information, see
+	// Identifying projects
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-proj
+	// ects#identifying_projects) * `LOCATION_ID` is the canonical ID for
+	// the job's location. The list of available locations can be obtained
+	// by calling ListLocations. For more information, see
 	// https://cloud.google.com/about/locations/. * `JOB_ID` can contain
 	// only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or underscores
 	// (_). The maximum length is 500 characters.
@@ -467,8 +486,10 @@ type Job struct {
 
 	// Schedule: Required, except when used with UpdateJob. Describes the
 	// schedule on which the job will be executed. The schedule can be
-	// either of the following types: * Crontab * English-like schedule As a
-	// general rule, execution `n + 1` of a job will not begin until
+	// either of the following types: * Crontab
+	// (http://en.wikipedia.org/wiki/Cron#Overview) * English-like schedule
+	// (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedule
+	// s) As a general rule, execution `n + 1` of a job will not begin until
 	// execution `n` has finished. Cloud Scheduler will never allow two
 	// simultaneously outstanding executions. For example, this implies that
 	// if the `n+1`th execution is scheduled to run at 16:00 but the `n`th
@@ -506,11 +527,11 @@ type Job struct {
 
 	// TimeZone: Specifies the time zone to be used in interpreting
 	// schedule. The value of this field must be a time zone name from the
-	// tz database. Note that some time zones include a provision for
-	// daylight savings time. The rules for daylight saving time are
-	// determined by the chosen tz. For UTC use the string "utc". If a time
-	// zone is not specified, the default will be in UTC (also known as
-	// GMT).
+	// tz database (http://en.wikipedia.org/wiki/Tz_database). Note that
+	// some time zones include a provision for daylight savings time. The
+	// rules for daylight saving time are determined by the chosen tz. For
+	// UTC use the string "utc". If a time zone is not specified, the
+	// default will be in UTC (also known as GMT).
 	TimeZone string `json:"timeZone,omitempty"`
 
 	// UserUpdateTime: Output only. The creation time of the job.
@@ -670,19 +691,21 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OAuthToken: Contains information needed for generating an OAuth
-// token. This type of authorization should generally only be used when
-// calling Google APIs hosted on *.googleapis.com.
+// OAuthToken: Contains information needed for generating an OAuth token
+// (https://developers.google.com/identity/protocols/OAuth2). This type
+// of authorization should generally only be used when calling Google
+// APIs hosted on *.googleapis.com.
 type OAuthToken struct {
 	// Scope: OAuth scope to be used for generating OAuth access token. If
 	// not specified, "https://www.googleapis.com/auth/cloud-platform" will
 	// be used.
 	Scope string `json:"scope,omitempty"`
 
-	// ServiceAccountEmail: Service account email to be used for generating
-	// OAuth token. The service account must be within the same project as
-	// the job. The caller must have iam.serviceAccounts.actAs permission
-	// for the service account.
+	// ServiceAccountEmail: Service account email
+	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
+	// generating OAuth token. The service account must be within the same
+	// project as the job. The caller must have iam.serviceAccounts.actAs
+	// permission for the service account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Scope") to
@@ -709,18 +732,21 @@ func (s *OAuthToken) MarshalJSON() ([]byte, error) {
 }
 
 // OidcToken: Contains information needed for generating an OpenID
-// Connect token. This type of authorization can be used for many
-// scenarios, including calling Cloud Run, or endpoints where you intend
-// to validate the token yourself.
+// Connect token
+// (https://developers.google.com/identity/protocols/OpenIDConnect).
+// This type of authorization can be used for many scenarios, including
+// calling Cloud Run, or endpoints where you intend to validate the
+// token yourself.
 type OidcToken struct {
 	// Audience: Audience to be used when generating OIDC token. If not
 	// specified, the URI specified in target will be used.
 	Audience string `json:"audience,omitempty"`
 
-	// ServiceAccountEmail: Service account email to be used for generating
-	// OIDC token. The service account must be within the same project as
-	// the job. The caller must have iam.serviceAccounts.actAs permission
-	// for the service account.
+	// ServiceAccountEmail: Service account email
+	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
+	// generating OIDC token. The service account must be within the same
+	// project as the job. The caller must have iam.serviceAccounts.actAs
+	// permission for the service account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to
@@ -754,9 +780,11 @@ type PauseJobRequest struct {
 // by subscribers. The message must contain either a non-empty data
 // field or at least one attribute. Note that client libraries represent
 // this object differently depending on the language. See the
-// corresponding client library documentation for more information. See
-// [quotas and limits] (https://cloud.google.com/pubsub/quotas) for more
-// information about message limits.
+// corresponding client library documentation
+// (https://cloud.google.com/pubsub/docs/reference/libraries) for more
+// information. See [quotas and limits]
+// (https://cloud.google.com/pubsub/quotas) for more information about
+// message limits.
 type PubsubMessage struct {
 	// Attributes: Attributes for this message. If this field is empty, the
 	// message must contain non-empty data. This can be used to filter
@@ -825,9 +853,10 @@ type PubsubTarget struct {
 	// TopicName: Required. The name of the Cloud Pub/Sub topic to which
 	// messages will be published when a job is delivered. The topic name
 	// must be in the same format as required by PubSub's
-	// PublishRequest.name, for example
-	// `projects/PROJECT_ID/topics/TOPIC_ID`. The topic must be in the same
-	// project as the Cloud Scheduler job.
+	// PublishRequest.name
+	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#p
+	// ublishrequest), for example `projects/PROJECT_ID/topics/TOPIC_ID`.
+	// The topic must be in the same project as the Cloud Scheduler job.
 	TopicName string `json:"topicName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -936,10 +965,11 @@ type RunJobRequest struct {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

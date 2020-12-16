@@ -249,17 +249,17 @@ func TestIt(t *testing.T) {
 		input string
 		want  string
 	}{
-		{name: "basic", input: "[name](link)", want: "name"},
+		{name: "basic", input: "[name](link)", want: "name (link)"},
 		{name: "no link", input: "name", want: "name"},
 		{name: "empty string", input: "", want: ""},
-		{name: "sentence", input: "This [is](link) a test.", want: "This is a test."},
-		{name: "two links", input: "This [is](link) a [test](link).", want: "This is a test."},
-		{name: "first incomplete link", input: "This [is] a [test](link).", want: "This [is] a test."},
-		{name: "second incomplete link", input: "This [is](link) a (test).", want: "This is a (test)."},
+		{name: "sentence", input: "This [is](link) a test.", want: "This is (link) a test."},
+		{name: "two links", input: "This [is](link) a [test](link).", want: "This is (link) a test (link)."},
+		{name: "first incomplete link", input: "This [is] a [test](link).", want: "This [is] a test (link)."},
+		{name: "second incomplete link", input: "This [is](link) a (test).", want: "This is (link) a (test)."},
 		{name: "seperated", input: "This [is] (a) test.", want: "This [is] (a) test."},
 		{name: "don't process code blocks", input: "This is `[a](link)` test.", want: "This is `[a](link)` test."},
-		{name: "At start", input: "[This](link) is a test.", want: "This is a test."},
-		{name: "At end ", input: "This is a [test.](link)", want: "This is a test."},
+		{name: "At start", input: "[This](link) is a test.", want: "This (link) is a test."},
+		{name: "At end ", input: "This is a [test.](link)", want: "This is a test. (link)"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {

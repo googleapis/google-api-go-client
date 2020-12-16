@@ -601,7 +601,9 @@ func (s *Attachment) MarshalJSON() ([]byte, error) {
 // `classroom-notifications@system.gserviceaccount.com` the
 // `projects.topics.publish` permission.
 type CloudPubsubTopic struct {
-	// TopicName: The `name` field of a Cloud Pub/Sub Topic.
+	// TopicName: The `name` field of a Cloud Pub/Sub Topic
+	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topic
+	// s#Topic).
 	TopicName string `json:"topicName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TopicName") to
@@ -4745,7 +4747,8 @@ type CoursesAnnouncementsDeleteCall struct {
 }
 
 // Delete: Deletes an announcement. This request must be made by the
-// Developer Console project of the OAuth client ID used to create the
+// Developer Console project of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the
 // corresponding announcement item. This method returns the following
 // error codes: * `PERMISSION_DENIED` if the requesting developer
 // project did not create the corresponding announcement, if the
@@ -5636,16 +5639,17 @@ type CoursesCourseWorkCreateCall struct {
 
 // Create: Creates course work. The resulting course work (and
 // corresponding student submissions) are associated with the Developer
-// Console project of the OAuth client ID used to make the request.
-// Classroom API requests to modify course work and student submissions
-// must be made with an OAuth client ID from the associated Developer
-// Console project. This method returns the following error codes: *
-// `PERMISSION_DENIED` if the requesting user is not permitted to access
-// the requested course, create course work in the requested course,
-// share a Drive attachment, or for access errors. * `INVALID_ARGUMENT`
-// if the request is malformed. * `NOT_FOUND` if the requested course
-// does not exist. * `FAILED_PRECONDITION` for the following request
-// error: * AttachmentNotVisible
+// Console project of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to make the
+// request. Classroom API requests to modify course work and student
+// submissions must be made with an OAuth client ID from the associated
+// Developer Console project. This method returns the following error
+// codes: * `PERMISSION_DENIED` if the requesting user is not permitted
+// to access the requested course, create course work in the requested
+// course, share a Drive attachment, or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course does not exist. * `FAILED_PRECONDITION` for the
+// following request error: * AttachmentNotVisible
 func (r *CoursesCourseWorkService) Create(courseId string, coursework *CourseWork) *CoursesCourseWorkCreateCall {
 	c := &CoursesCourseWorkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5785,7 +5789,8 @@ type CoursesCourseWorkDeleteCall struct {
 }
 
 // Delete: Deletes a course work. This request must be made by the
-// Developer Console project of the OAuth client ID used to create the
+// Developer Console project of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the
 // corresponding course work item. This method returns the following
 // error codes: * `PERMISSION_DENIED` if the requesting developer
 // project did not create the corresponding course work, if the
@@ -6506,7 +6511,8 @@ type CoursesCourseWorkPatchCall struct {
 // Patch: Updates one or more fields of a course work. See
 // google.classroom.v1.CourseWork for details of which fields may be
 // updated and who may change them. This request must be made by the
-// Developer Console project of the OAuth client ID used to create the
+// Developer Console project of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the
 // corresponding course work item. This method returns the following
 // error codes: * `PERMISSION_DENIED` if the requesting developer
 // project did not create the corresponding course work, if the user is
@@ -7165,13 +7171,14 @@ type CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall struct {
 // Attachments may only be added to student submissions belonging to
 // course work objects with a `workType` of `ASSIGNMENT`. This request
 // must be made by the Developer Console project of the OAuth client ID
-// used to create the corresponding course work item. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting user is not permitted to access the requested course or
-// course work, if the user is not permitted to modify attachments on
-// the requested student submission, or for access errors. *
-// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
-// requested course, course work, or student submission does not exist.
+// (https://support.google.com/cloud/answer/6158849) used to create the
+// corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to access the requested course or course work, if the user
+// is not permitted to modify attachments on the requested student
+// submission, or for access errors. * `INVALID_ARGUMENT` if the request
+// is malformed. * `NOT_FOUND` if the requested course, course work, or
+// student submission does not exist.
 func (r *CoursesCourseWorkStudentSubmissionsService) ModifyAttachments(courseId string, courseWorkId string, id string, modifyattachmentsrequest *ModifyAttachmentsRequest) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
 	c := &CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7334,7 +7341,8 @@ type CoursesCourseWorkStudentSubmissionsPatchCall struct {
 // Patch: Updates one or more fields of a student submission. See
 // google.classroom.v1.StudentSubmission for details of which fields may
 // be updated and who may change them. This request must be made by the
-// Developer Console project of the OAuth client ID used to create the
+// Developer Console project of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the
 // corresponding course work item. This method returns the following
 // error codes: * `PERMISSION_DENIED` if the requesting developer
 // project did not create the corresponding course work, if the user is
@@ -7523,14 +7531,15 @@ type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
 // Only the student that owns the requested student submission may call
 // this method, and only for a student submission that has been turned
 // in. This request must be made by the Developer Console project of the
-// OAuth client ID used to create the corresponding course work item.
-// This method returns the following error codes: * `PERMISSION_DENIED`
-// if the requesting user is not permitted to access the requested
-// course or course work, unsubmit the requested student submission, or
-// for access errors. * `FAILED_PRECONDITION` if the student submission
-// has not been turned in. * `INVALID_ARGUMENT` if the request is
-// malformed. * `NOT_FOUND` if the requested course, course work, or
-// student submission does not exist.
+// OAuth client ID (https://support.google.com/cloud/answer/6158849)
+// used to create the corresponding course work item. This method
+// returns the following error codes: * `PERMISSION_DENIED` if the
+// requesting user is not permitted to access the requested course or
+// course work, unsubmit the requested student submission, or for access
+// errors. * `FAILED_PRECONDITION` if the student submission has not
+// been turned in. * `INVALID_ARGUMENT` if the request is malformed. *
+// `NOT_FOUND` if the requested course, course work, or student
+// submission does not exist.
 func (r *CoursesCourseWorkStudentSubmissionsService) Reclaim(courseId string, courseWorkId string, id string, reclaimstudentsubmissionrequest *ReclaimStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReclaimCall {
 	c := &CoursesCourseWorkStudentSubmissionsReclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7695,11 +7704,12 @@ type CoursesCourseWorkStudentSubmissionsReturnCall struct {
 // returning a student submission does not set assignedGrade to the
 // draftGrade value. Only a teacher of the course that contains the
 // requested student submission may call this method. This request must
-// be made by the Developer Console project of the OAuth client ID used
-// to create the corresponding course work item. This method returns the
-// following error codes: * `PERMISSION_DENIED` if the requesting user
-// is not permitted to access the requested course or course work,
-// return the requested student submission, or for access errors. *
+// be made by the Developer Console project of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the
+// corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to access the requested course or course work, return the
+// requested student submission, or for access errors. *
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course, course work, or student submission does not exist.
 func (r *CoursesCourseWorkStudentSubmissionsService) Return(courseId string, courseWorkId string, id string, returnstudentsubmissionrequest *ReturnStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReturnCall {
@@ -7865,13 +7875,13 @@ type CoursesCourseWorkStudentSubmissionsTurnInCall struct {
 // and may also update the submission state. This may only be called by
 // the student that owns the specified student submission. This request
 // must be made by the Developer Console project of the OAuth client ID
-// used to create the corresponding course work item. This method
-// returns the following error codes: * `PERMISSION_DENIED` if the
-// requesting user is not permitted to access the requested course or
-// course work, turn in the requested student submission, or for access
-// errors. * `INVALID_ARGUMENT` if the request is malformed. *
-// `NOT_FOUND` if the requested course, course work, or student
-// submission does not exist.
+// (https://support.google.com/cloud/answer/6158849) used to create the
+// corresponding course work item. This method returns the following
+// error codes: * `PERMISSION_DENIED` if the requesting user is not
+// permitted to access the requested course or course work, turn in the
+// requested student submission, or for access errors. *
+// `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
+// requested course, course work, or student submission does not exist.
 func (r *CoursesCourseWorkStudentSubmissionsService) TurnIn(courseId string, courseWorkId string, id string, turninstudentsubmissionrequest *TurnInStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsTurnInCall {
 	c := &CoursesCourseWorkStudentSubmissionsTurnInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8175,8 +8185,9 @@ type CoursesCourseWorkMaterialsDeleteCall struct {
 }
 
 // Delete: Deletes a course work material. This request must be made by
-// the Developer Console project of the OAuth client ID used to create
-// the corresponding course work material item. This method returns the
+// the Developer Console project of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the
+// corresponding course work material item. This method returns the
 // following error codes: * `PERMISSION_DENIED` if the requesting
 // developer project did not create the corresponding course work
 // material, if the requesting user is not permitted to delete the

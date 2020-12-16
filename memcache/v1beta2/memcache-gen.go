@@ -864,8 +864,8 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON
 
 type Instance struct {
 	// AuthorizedNetwork: The full name of the Google Compute Engine network
-	// to which the instance is connected. If left unspecified, the
-	// `default` network will be used.
+	// (https://cloud.google.com/vpc/docs/vpc) to which the instance is
+	// connected. If left unspecified, the `default` network will be used.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
 
 	// CreateTime: Output only. The time the instance was created.
@@ -1497,10 +1497,11 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

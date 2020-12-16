@@ -3403,8 +3403,9 @@ func (s *Channel) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_CHANNEL`.
 type ChannelAssignedTargetingOptionDetails struct {
 	// ChannelId: Required. ID of the channel. Should refer to the channel
-	// ID field on a Partner-owned channel or advertiser-owned channel
-	// resource.
+	// ID field on a Partner-owned channel
+	// (partners.channels#Channel.FIELDS.channel_id) or advertiser-owned
+	// channel (advertisers.channels#Channel.FIELDS.channel_id) resource.
 	ChannelId int64 `json:"channelId,omitempty,string"`
 
 	// Negative: Indicates if this option is being negatively targeted. For
@@ -8438,9 +8439,10 @@ type LineItem struct {
 	// the line item.
 	PartnerRevenueModel *PartnerRevenueModel `json:"partnerRevenueModel,omitempty"`
 
-	// TargetingExpansion: The targeting expansion settings of the line
-	// item. This config is only applicable when eligible audience list
-	// targeting is assigned to the line item.
+	// TargetingExpansion: The targeting expansion
+	// (https://support.google.com/displayvideo/answer/10191558) settings of
+	// the line item. This config is only applicable when eligible audience
+	// list targeting is assigned to the line item.
 	TargetingExpansion *TargetingExpansionConfig `json:"targetingExpansion,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the line item was last
@@ -11789,10 +11791,11 @@ func (s *Site) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

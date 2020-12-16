@@ -420,9 +420,10 @@ type SpeechRecognitionResult struct {
 	// from `1` to `N`.
 	ChannelTag int64 `json:"channelTag,omitempty"`
 
-	// LanguageCode: Output only. The BCP-47 language tag of the language in
-	// this result. This language code was detected to have the most
-	// likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -450,10 +451,11 @@ func (s *SpeechRecognitionResult) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

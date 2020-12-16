@@ -671,7 +671,8 @@ type UsageReport struct {
 
 	// Parameters: Output only. Parameter value pairs for various
 	// applications. For the Entity Usage Report parameters and values, see
-	// the Entity Usage parameters reference.
+	// the Entity Usage parameters reference
+	// (/admin-sdk/reports/v1/reference/usage-ref-appendix-a/entities).
 	Parameters []*UsageReportParameters `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to

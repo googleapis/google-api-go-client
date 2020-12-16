@@ -138,8 +138,9 @@ type AmpUrl struct {
 	// AmpUrl: The AMP URL pointing to the publisher's web server.
 	AmpUrl string `json:"ampUrl,omitempty"`
 
-	// CdnAmpUrl: The AMP Cache URL pointing to the cached document in the
-	// Google AMP Cache.
+	// CdnAmpUrl: The AMP Cache URL
+	// (/amp/cache/overview#amp-cache-url-format) pointing to the cached
+	// document in the Google AMP Cache.
 	CdnAmpUrl string `json:"cdnAmpUrl,omitempty"`
 
 	// OriginalUrl: The original non-AMP URL.
@@ -237,7 +238,8 @@ type BatchGetAmpUrlsRequest struct {
 	LookupStrategy string `json:"lookupStrategy,omitempty"`
 
 	// Urls: List of URLs to look up for the paired AMP URLs. The URLs are
-	// case-sensitive. Up to 50 URLs per lookup (see Usage Limits).
+	// case-sensitive. Up to 50 URLs per lookup (see Usage Limits
+	// (/amp/cache/reference/limits)).
 	Urls []string `json:"urls,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LookupStrategy") to
@@ -312,7 +314,8 @@ type AmpUrlsBatchGetCall struct {
 	header_                http.Header
 }
 
-// BatchGet: Returns AMP URL(s) and equivalent AMP Cache URL(s).
+// BatchGet: Returns AMP URL(s) and equivalent AMP Cache URL(s)
+// (/amp/cache/overview#amp-cache-url-format).
 func (r *AmpUrlsService) BatchGet(batchgetampurlsrequest *BatchGetAmpUrlsRequest) *AmpUrlsBatchGetCall {
 	c := &AmpUrlsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchgetampurlsrequest = batchgetampurlsrequest

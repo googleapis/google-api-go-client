@@ -2644,7 +2644,7 @@ func addFieldValueComments(p func(format string, args ...interface{}), field Fie
 
 // markdownLinkRe is a non-greedy regex meant to find markdown style links. It
 // also captures the name of the link.
-var markdownLinkRe = regexp.MustCompile("([^`]|\\A)(\\[([^\\[]*?)]\\(.*?\\))([^`]|\\z)")
+var markdownLinkRe = regexp.MustCompile("([^`]|\\A)(\\[([^\\[]*?)]\\((.*?)\\))([^`]|\\z)")
 
 func removeMarkdownLinks(input string) string {
 	out := input
@@ -2653,7 +2653,7 @@ func removeMarkdownLinks(input string) string {
 		return out
 	}
 	for _, match := range sm {
-		out = strings.Replace(out, match[2], match[3], 1)
+		out = strings.Replace(out, match[2], fmt.Sprintf("%s (%s)", match[3], match[4]), 1)
 	}
 	return out
 }

@@ -261,7 +261,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation.
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -441,8 +442,9 @@ type IamPolicySearchResult struct {
 	// empty.
 	Project string `json:"project,omitempty"`
 
-	// Resource: The full resource name of the resource associated with this
-	// IAM policy.
+	// Resource: The full resource name
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
+	// e) of the resource associated with this IAM policy.
 	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Explanation") to
@@ -509,7 +511,9 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
 // resources support conditions in their IAM policies, see the IAM
-// documentation. **JSON example:** { "bindings": [ { "role":
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -528,7 +532,7 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
 // 3 For a description of IAM and its features, see the IAM
-// documentation.
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -568,7 +572,8 @@ type Policy struct {
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
 	// resources support conditions in their IAM policies, see the IAM
-	// documentation.
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
@@ -690,7 +695,9 @@ type StandardResourceMetadata struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Labels: Labels associated with this resource. See Labelling and
-	// grouping GCP resources for more information.
+	// grouping GCP resources
+	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-you
+	// r-google-cloud-platform-resources) for more information.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Location: Location can be "global", regional like "us-east1", or
@@ -699,12 +706,16 @@ type StandardResourceMetadata struct {
 
 	// Name: The full resource name. For example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1`. See Resource Names for more information.
+	// s/instance1`. See Resource Names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
+	// e) for more information.
 	Name string `json:"name,omitempty"`
 
 	// NetworkTags: Network tags associated with this resource. Like labels,
 	// network tags are a type of annotations used to group GCP resources.
-	// See Labelling GCP resources for more information.
+	// See Labelling GCP resources
+	// (lhttps://cloud.google.com/blog/products/gcp/labelling-and-grouping-yo
+	// ur-google-cloud-platform-resources) for more information.
 	NetworkTags []string `json:"networkTags,omitempty"`
 
 	// Project: The project that this resource belongs to, in the form of

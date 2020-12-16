@@ -1539,7 +1539,7 @@ type EntityAnnotation struct {
 	Locations []*LocationInfo `json:"locations,omitempty"`
 
 	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
-	// Graph Search API.
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
@@ -2383,7 +2383,7 @@ type GoogleCloudVisionV1p1beta1EntityAnnotation struct {
 	Locations []*GoogleCloudVisionV1p1beta1LocationInfo `json:"locations,omitempty"`
 
 	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
-	// Graph Search API.
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
@@ -4683,7 +4683,7 @@ type GoogleCloudVisionV1p2beta1EntityAnnotation struct {
 	Locations []*GoogleCloudVisionV1p2beta1LocationInfo `json:"locations,omitempty"`
 
 	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
-	// Graph Search API.
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
@@ -7034,7 +7034,7 @@ type GoogleCloudVisionV1p3beta1EntityAnnotation struct {
 	Locations []*GoogleCloudVisionV1p3beta1LocationInfo `json:"locations,omitempty"`
 
 	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
-	// Graph Search API.
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
@@ -9567,7 +9567,7 @@ type GoogleCloudVisionV1p4beta1EntityAnnotation struct {
 	Locations []*GoogleCloudVisionV1p4beta1LocationInfo `json:"locations,omitempty"`
 
 	// Mid: Opaque entity ID. Some IDs may be available in Google Knowledge
-	// Graph Search API.
+	// Graph Search API (https://developers.google.com/knowledge-graph/).
 	Mid string `json:"mid,omitempty"`
 
 	// Properties: Some entities may have optional user-supplied `Property`
@@ -11642,7 +11642,8 @@ type ImageContext struct {
 	// the language of the text in the image is known, setting a hint will
 	// help get better results (although it will be a significant hindrance
 	// if the hint is wrong). Text detection returns an error if one or more
-	// of the specified languages is not one of the supported languages.
+	// of the specified languages is not one of the supported languages
+	// (https://cloud.google.com/vision/docs/languages).
 	LanguageHints []string `json:"languageHints,omitempty"`
 
 	// LatLongRect: Not used.
@@ -11712,20 +11713,22 @@ func (s *ImageProperties) MarshalJSON() ([]byte, error) {
 type ImageSource struct {
 	// GcsImageUri: **Use `image_uri` instead.** The Google Cloud Storage
 	// URI of the form `gs://bucket_name/object_name`. Object versioning is
-	// not supported. See Google Cloud Storage Request URIs for more info.
+	// not supported. See Google Cloud Storage Request URIs
+	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	GcsImageUri string `json:"gcsImageUri,omitempty"`
 
 	// ImageUri: The URI of the source image. Can be either: 1. A Google
 	// Cloud Storage URI of the form `gs://bucket_name/object_name`. Object
 	// versioning is not supported. See Google Cloud Storage Request URIs
-	// for more info. 2. A publicly-accessible image HTTP/HTTPS URL. When
-	// fetching images from HTTP/HTTPS URLs, Google cannot guarantee that
-	// the request will be completed. Your request may fail if the specified
-	// host denies the request (e.g. due to request throttling or DOS
-	// prevention), or if Google throttles requests to the site for abuse
-	// prevention. You should not depend on externally-hosted images for
-	// production applications. When both `gcs_image_uri` and `image_uri`
-	// are specified, `image_uri` takes precedence.
+	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
+	// 2. A publicly-accessible image HTTP/HTTPS URL. When fetching images
+	// from HTTP/HTTPS URLs, Google cannot guarantee that the request will
+	// be completed. Your request may fail if the specified host denies the
+	// request (e.g. due to request throttling or DOS prevention), or if
+	// Google throttles requests to the site for abuse prevention. You
+	// should not depend on externally-hosted images for production
+	// applications. When both `gcs_image_uri` and `image_uri` are
+	// specified, `image_uri` takes precedence.
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsImageUri") to
@@ -13363,10 +13366,11 @@ func (s *SafeSearchAnnotation) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

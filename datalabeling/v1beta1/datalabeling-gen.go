@@ -567,9 +567,10 @@ type GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig struct {
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
 
-	// LanguageCode: Optional. The Language of this question, as a BCP-47.
-	// Default value is en-US. Only need to set this when task is language
-	// related. For example, French text classification.
+	// LanguageCode: Optional. The Language of this question, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US. Only need to set this when task is language related. For
+	// example, French text classification.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// QuestionDuration: Optional. Maximum duration for contributors to
@@ -1696,9 +1697,11 @@ type GoogleCloudDatalabelingV1beta1BigQuerySource struct {
 	// long. If you specify the URI of a table that does not exist, Data
 	// Labeling Service creates a table at the URI with the correct schema
 	// when you create your EvaluationJob. If you specify the URI of a table
-	// that already exists, it must have the correct schema. Provide the
-	// table URI in the following format: "bq://{your_project_id}/
-	// {your_dataset_name}/{your_table_name}" Learn more.
+	// that already exists, it must have the correct schema
+	// (/ml-engine/docs/continuous-evaluation/create-job#table-schema).
+	// Provide the table URI in the following format:
+	// "bq://{your_project_id}/ {your_dataset_name}/{your_table_name}" Learn
+	// more (/ml-engine/docs/continuous-evaluation/create-job#table-schema).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
@@ -1727,9 +1730,10 @@ func (s *GoogleCloudDatalabelingV1beta1BigQuerySource) MarshalJSON() ([]byte, er
 // GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions: Options
 // regarding evaluation between bounding boxes.
 type GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions struct {
-	// IouThreshold: Minimum intersection-over-union (IOU) required for 2
-	// bounding boxes to be considered a match. This must be a number
-	// between 0 and 1.
+	// IouThreshold: Minimum intersection-over-union (IOU)
+	// (/vision/automl/object-detection/docs/evaluate#intersection-over-union
+	// ) required for 2 bounding boxes to be considered a match. This must
+	// be a number between 0 and 1.
 	IouThreshold float64 `json:"iouThreshold,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IouThreshold") to
@@ -1902,8 +1906,9 @@ type GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry struct {
 	// label is categorized as positive or negative (in the context of this
 	// point on the PR curve) based on whether the label's score meets this
 	// threshold. For image object detection (bounding box) tasks, this is
-	// the intersection-over-union (IOU) threshold for the context of this
-	// point on the PR curve.
+	// the intersection-over-union (IOU)
+	// (/vision/automl/object-detection/docs/evaluate#intersection-over-union
+	// ) threshold for the context of this point on the PR curve.
 	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
 
 	// F1Score: Harmonic mean of recall and precision.
@@ -2480,7 +2485,8 @@ func (s *GoogleCloudDatalabelingV1beta1EvaluationConfig) MarshalJSON() ([]byte, 
 
 // GoogleCloudDatalabelingV1beta1EvaluationJob: Defines an evaluation
 // job that runs periodically to generate Evaluations. Creating an
-// evaluation job is the starting point for using continuous evaluation.
+// evaluation job (/ml-engine/docs/continuous-evaluation/create-job) is
+// the starting point for using continuous evaluation.
 type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
 	// AnnotationSpecSet: Required. Name of the AnnotationSpecSet describing
 	// all the labels that your machine learning model outputs. You must
@@ -2512,10 +2518,10 @@ type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
 	// in the evaluation job's BigQuery table, set this to `false`.
 	LabelMissingGroundTruth bool `json:"labelMissingGroundTruth,omitempty"`
 
-	// ModelVersion: Required. The AI Platform Prediction model version to
-	// be evaluated. Prediction input and output is sampled from this model
-	// version. When creating an evaluation job, specify the model version
-	// in the following format:
+	// ModelVersion: Required. The AI Platform Prediction model version
+	// (/ml-engine/docs/prediction-overview) to be evaluated. Prediction
+	// input and output is sampled from this model version. When creating an
+	// evaluation job, specify the model version in the following format:
 	// "projects/{project_id}/models/{model_name}/versions/{version_name}"
 	// There can only be one evaluation job per model version.
 	ModelVersion string `json:"modelVersion,omitempty"`
@@ -2528,10 +2534,13 @@ type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
 	// Schedule: Required. Describes the interval at which the job runs.
 	// This interval must be at least 1 day, and it is rounded to the
 	// nearest day. For example, if you specify a 50-hour interval, the job
-	// runs every 2 days. You can provide the schedule in crontab format or
-	// in an English-like format. Regardless of what you specify, the job
-	// will run at 10:00 AM UTC. Only the interval from this schedule is
-	// used, not the specific time of day.
+	// runs every 2 days. You can provide the schedule in crontab format
+	// (/scheduler/docs/configuring/cron-job-schedules) or in an
+	// English-like format
+	// (/appengine/docs/standard/python/config/cronref#schedule_format).
+	// Regardless of what you specify, the job will run at 10:00 AM UTC.
+	// Only the interval from this schedule is used, not the specific time
+	// of day.
 	Schedule string `json:"schedule,omitempty"`
 
 	// State: Output only. Describes the current state of the job.
@@ -2666,7 +2675,8 @@ type GoogleCloudDatalabelingV1beta1EvaluationJobConfig struct {
 	// `label_score_json_key`: the score key for prediction output.
 	// Required. * `bounding_box_json_key`: the bounding box key for
 	// prediction output. Required if your model version perform image
-	// object detection. Learn how to configure prediction keys.
+	// object detection. Learn how to configure prediction keys
+	// (/ml-engine/docs/continuous-evaluation/create-job#prediction-keys).
 	BigqueryImportKeys map[string]string `json:"bigqueryImportKeys,omitempty"`
 
 	// BoundingPolyConfig: Specify this field if your model version performs
@@ -3316,9 +3326,10 @@ type GoogleCloudDatalabelingV1beta1HumanAnnotationConfig struct {
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
 
-	// LanguageCode: Optional. The Language of this question, as a BCP-47.
-	// Default value is en-US. Only need to set this when task is language
-	// related. For example, French text classification.
+	// LanguageCode: Optional. The Language of this question, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US. Only need to set this when task is language related. For
+	// example, French text classification.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// QuestionDuration: Optional. Maximum duration for contributors to
@@ -5730,8 +5741,9 @@ func (s *GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig) MarshalJSON()
 
 // GoogleCloudDatalabelingV1beta1TextMetadata: Metadata for the text.
 type GoogleCloudDatalabelingV1beta1TextMetadata struct {
-	// LanguageCode: The language of this text, as a BCP-47. Default value
-	// is en-US.
+	// LanguageCode: The language of this text, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -6343,9 +6355,10 @@ type GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig struct {
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
 
-	// LanguageCode: Optional. The Language of this question, as a BCP-47.
-	// Default value is en-US. Only need to set this when task is language
-	// related. For example, French text classification.
+	// LanguageCode: Optional. The Language of this question, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US. Only need to set this when task is language related. For
+	// example, French text classification.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// QuestionDuration: Optional. Maximum duration for contributors to
@@ -7191,9 +7204,10 @@ type GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig struct {
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
 
-	// LanguageCode: Optional. The Language of this question, as a BCP-47.
-	// Default value is en-US. Only need to set this when task is language
-	// related. For example, French text classification.
+	// LanguageCode: Optional. The Language of this question, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US. Only need to set this when task is language related. For
+	// example, French text classification.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// QuestionDuration: Optional. Maximum duration for contributors to
@@ -7933,10 +7947,11 @@ type GoogleProtobufEmpty struct {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

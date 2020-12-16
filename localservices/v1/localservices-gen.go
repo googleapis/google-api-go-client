@@ -564,7 +564,7 @@ func (s *GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse) 
 }
 
 // GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone
-// Database.
+// Database (https://www.iana.org/time-zones).
 type GoogleTypeTimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`

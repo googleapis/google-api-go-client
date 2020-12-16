@@ -6939,10 +6939,11 @@ type WeightedFontFamily struct {
 	// Weight: The rendered weight of the text. This field can have any
 	// value that is a multiple of `100` between `100` and `900`, inclusive.
 	// This range corresponds to the numerical values described in the CSS
-	// 2.1 Specification, section 15.6, with non-numerical values
-	// disallowed. Weights greater than or equal to `700` are considered
-	// bold, and weights less than `700`are not bold. The default value is
-	// `400` ("normal").
+	// 2.1 Specification, section 15.6
+	// (https://www.w3.org/TR/CSS21/fonts.html#font-boldness), with
+	// non-numerical values disallowed. Weights greater than or equal to
+	// `700` are considered bold, and weights less than `700`are not bold.
+	// The default value is `400` ("normal").
 	Weight int64 `json:"weight,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FontFamily") to
@@ -7638,8 +7639,8 @@ type PresentationsPagesGetThumbnailCall struct {
 
 // GetThumbnail: Generates a thumbnail of the latest version of the
 // specified page in the presentation and returns a URL to the thumbnail
-// image. This request counts as an expensive read request for quota
-// purposes.
+// image. This request counts as an expensive read request
+// (/slides/limits) for quota purposes.
 func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObjectId string) *PresentationsPagesGetThumbnailCall {
 	c := &PresentationsPagesGetThumbnailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId

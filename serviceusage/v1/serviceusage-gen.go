@@ -269,15 +269,15 @@ type Api struct {
 	// is empty, the major version is derived from the package name, as
 	// outlined below. If the field is not empty, the version in the package
 	// name will be verified to be consistent with what is provided here.
-	// The versioning schema uses semantic versioning where the major
-	// version number indicates a breaking change and the minor version an
-	// additive, non-breaking change. Both version numbers are signals to
-	// users what to expect from different versions, and should be carefully
-	// chosen based on the product plan. The major version is also reflected
-	// in the package name of the interface, which must end in `v`, as in
-	// `google.feature.v1`. For major versions 0 and 1, the suffix can be
-	// omitted. Zero major versions must only be used for experimental,
-	// non-GA interfaces.
+	// The versioning schema uses semantic versioning (http://semver.org)
+	// where the major version number indicates a breaking change and the
+	// minor version an additive, non-breaking change. Both version numbers
+	// are signals to users what to expect from different versions, and
+	// should be carefully chosen based on the product plan. The major
+	// version is also reflected in the package name of the interface, which
+	// must end in `v`, as in `google.feature.v1`. For major versions 0 and
+	// 1, the suffix can be omitted. Zero major versions must only be used
+	// for experimental, non-GA interfaces.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Methods") to
@@ -304,12 +304,14 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 }
 
 // AuthProvider: Configuration for an authentication provider, including
-// support for JSON Web Token (JWT).
+// support for JSON Web Token (JWT)
+// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 type AuthProvider struct {
-	// Audiences: The list of JWT audiences. that are allowed to access. A
-	// JWT containing any of these audiences will be accepted. When this
-	// setting is absent, JWTs with audiences: -
-	// "https://[service.name]/[google.protobuf.Api.name]" -
+	// Audiences: The list of JWT audiences
+	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#sectio
+	// n-4.1.3). that are allowed to access. A JWT containing any of these
+	// audiences will be accepted. When this setting is absent, JWTs with
+	// audiences: - "https://[service.name]/[google.protobuf.Api.name]" -
 	// "https://[service.name]/" will be accepted. For example, if no
 	// audiences are in the setting, LibraryService API will accept JWTs
 	// with the following audiences: -
@@ -332,10 +334,14 @@ type AuthProvider struct {
 	Issuer string `json:"issuer,omitempty"`
 
 	// JwksUri: URL of the provider's public key set to validate signature
-	// of the JWT. See OpenID Discovery. Optional if the key set document: -
-	// can be retrieved from OpenID Discovery of the issuer. - can be
-	// inferred from the email domain of the issuer (e.g. a Google service
-	// account). Example: https://www.googleapis.com/oauth2/v1/certs
+	// of the JWT. See OpenID Discovery
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMe
+	// tadata). Optional if the key set document: - can be retrieved from
+	// OpenID Discovery
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html) of the
+	// issuer. - can be inferred from the email domain of the issuer (e.g. a
+	// Google service account). Example:
+	// https://www.googleapis.com/oauth2/v1/certs
 	JwksUri string `json:"jwksUri,omitempty"`
 
 	// JwtLocations: Defines the locations to extract the JWT. JWT locations
@@ -373,16 +379,18 @@ func (s *AuthProvider) MarshalJSON() ([]byte, error) {
 }
 
 // AuthRequirement: User-defined authentication requirements, including
-// support for JSON Web Token (JWT).
+// support for JSON Web Token (JWT)
+// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 type AuthRequirement struct {
 	// Audiences: NOTE: This will be deprecated soon, once
 	// AuthProvider.audiences is implemented and accepted in all the runtime
-	// components. The list of JWT audiences. that are allowed to access. A
-	// JWT containing any of these audiences will be accepted. When this
-	// setting is absent, only JWTs with audience
-	// "https://Service_name/API_name" will be accepted. For example, if no
-	// audiences are in the setting, LibraryService API will only accept
-	// JWTs with the following audience
+	// components. The list of JWT audiences
+	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#sectio
+	// n-4.1.3). that are allowed to access. A JWT containing any of these
+	// audiences will be accepted. When this setting is absent, only JWTs
+	// with audience "https://Service_name/API_name" will be accepted. For
+	// example, if no audiences are in the setting, LibraryService API will
+	// only accept JWTs with the following audience
 	// "https://library-example.googleapis.com/google.example.library.v1.Libr
 	// aryService". Example: audiences:
 	// bookstore_android.apps.googleusercontent.com,
@@ -1433,20 +1441,22 @@ type Endpoint struct {
 	// hosted on.
 	Aliases []string `json:"aliases,omitempty"`
 
-	// AllowCors: Allowing CORS, aka cross-domain traffic, would allow the
-	// backends served from this endpoint to receive and respond to HTTP
-	// OPTIONS requests. The response will be used by the browser to
-	// determine whether the subsequent cross-origin request is allowed to
-	// proceed.
+	// AllowCors: Allowing CORS
+	// (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), aka
+	// cross-domain traffic, would allow the backends served from this
+	// endpoint to receive and respond to HTTP OPTIONS requests. The
+	// response will be used by the browser to determine whether the
+	// subsequent cross-origin request is allowed to proceed.
 	AllowCors bool `json:"allowCors,omitempty"`
 
 	// Name: The canonical name of this endpoint.
 	Name string `json:"name,omitempty"`
 
 	// Target: The specification of an Internet routable address of API
-	// frontend that will handle requests to this API Endpoint. It should be
-	// either a valid IPv4 address or a fully-qualified domain name. For
-	// example, "8.8.8.8" or "myservice.appspot.com".
+	// frontend that will handle requests to this API Endpoint
+	// (https://cloud.google.com/apis/design/glossary). It should be either
+	// a valid IPv4 address or a fully-qualified domain name. For example,
+	// "8.8.8.8" or "myservice.appspot.com".
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aliases") to
@@ -2095,10 +2105,13 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HttpRule: # gRPC Transcoding gRPC Transcoding is a feature for
 // mapping between a gRPC method and one or more HTTP REST endpoints. It
 // allows developers to build a single API service that supports both
-// gRPC APIs and REST APIs. Many systems, including Google APIs, Cloud
-// Endpoints, gRPC Gateway, and Envoy proxy support this feature and use
-// it for large scale production services. `HttpRule` defines the schema
-// of the gRPC/REST mapping. The mapping specifies how different
+// gRPC APIs and REST APIs. Many systems, including Google APIs
+// (https://github.com/googleapis/googleapis), Cloud Endpoints
+// (https://cloud.google.com/endpoints), gRPC Gateway
+// (https://github.com/grpc-ecosystem/grpc-gateway), and Envoy
+// (https://github.com/envoyproxy/envoy) proxy support this feature and
+// use it for large scale production services. `HttpRule` defines the
+// schema of the gRPC/REST mapping. The mapping specifies how different
 // portions of the gRPC request message are mapped to the URL path, URL
 // query parameters, and HTTP request body. It also controls how the
 // gRPC response message is mapped to the HTTP response body. `HttpRule`
@@ -2197,12 +2210,15 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // variable is expanded into a URL path on the client side, all
 // characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The server
 // side does the reverse decoding. Such variables show up in the
-// Discovery Document as `{var}`. If a variable contains multiple path
-// segments, such as "{var=foo/*}" or "{var=**}", when such a
-// variable is expanded into a URL path on the client side, all
-// characters except `[-_.~/0-9a-zA-Z]` are percent-encoded. The server
-// side does the reverse decoding, except "%2F" and "%2f" are left
-// unchanged. Such variables show up in the Discovery Document as
+// Discovery Document
+// (https://developers.google.com/discovery/v1/reference/apis) as
+// `{var}`. If a variable contains multiple path segments, such as
+// "{var=foo/*}" or "{var=**}", when such a variable is expanded
+// into a URL path on the client side, all characters except
+// `[-_.~/0-9a-zA-Z]` are percent-encoded. The server side does the
+// reverse decoding, except "%2F" and "%2f" are left unchanged. Such
+// variables show up in the Discovery Document
+// (https://developers.google.com/discovery/v1/reference/apis) as
 // `{+var}`. ## Using gRPC API Service Configuration gRPC API Service
 // Configuration (service config) is a configuration language for
 // configuring a gRPC service to become a user-facing product. The
@@ -2219,24 +2235,26 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // example.v1.Messaging.GetMessage get:
 // /v1/messages/{message_id}/{sub.subfield} ## Special notes When gRPC
 // Transcoding is used to map a gRPC to JSON REST endpoints, the proto
-// to JSON conversion must follow the proto3 specification. While the
-// single segment variable follows the semantics of RFC 6570 Section
-// 3.2.2 Simple String Expansion, the multi segment variable **does
-// not** follow RFC 6570 Section 3.2.3 Reserved Expansion. The reason is
-// that the Reserved Expansion does not expand special characters like
-// `?` and `#`, which would lead to invalid URLs. As the result, gRPC
-// Transcoding uses a custom encoding for multi segment variables. The
-// path variables **must not** refer to any repeated or mapped field,
-// because client libraries are not capable of handling such variable
-// expansion. The path variables **must not** capture the leading "/"
-// character. The reason is that the most common use case "{var}" does
-// not capture the leading "/" character. For consistency, all path
-// variables must share the same behavior. Repeated message fields must
-// not be mapped to URL query parameters, because no client library can
-// support such complicated mapping. If an API needs to use a JSON array
-// for request or response body, it can map the request or response body
-// to a repeated field. However, some gRPC Transcoding implementations
-// may not support this feature.
+// to JSON conversion must follow the proto3 specification
+// (https://developers.google.com/protocol-buffers/docs/proto3#json).
+// While the single segment variable follows the semantics of RFC 6570
+// (https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String
+// Expansion, the multi segment variable **does not** follow RFC 6570
+// Section 3.2.3 Reserved Expansion. The reason is that the Reserved
+// Expansion does not expand special characters like `?` and `#`, which
+// would lead to invalid URLs. As the result, gRPC Transcoding uses a
+// custom encoding for multi segment variables. The path variables
+// **must not** refer to any repeated or mapped field, because client
+// libraries are not capable of handling such variable expansion. The
+// path variables **must not** capture the leading "/" character. The
+// reason is that the most common use case "{var}" does not capture the
+// leading "/" character. For consistency, all path variables must share
+// the same behavior. Repeated message fields must not be mapped to URL
+// query parameters, because no client library can support such
+// complicated mapping. If an API needs to use a JSON array for request
+// or response body, it can map the request or response body to a
+// repeated field. However, some gRPC Transcoding implementations may
+// not support this feature.
 type HttpRule struct {
 	// AdditionalBindings: Additional HTTP bindings for the selector. Nested
 	// bindings must not contain an `additional_bindings` field themselves
@@ -2845,37 +2863,39 @@ type MetricDescriptor struct {
 	// `unit` is `ks{CPU}`, and then write the value `12.005` (which is
 	// `12005/1000`), or use `Kis{CPU}` and write `11.723` (which is
 	// `12005/1024`). The supported units are a subset of The Unified Code
-	// for Units of Measure standard: **Basic units (UNIT)** * `bit` bit *
-	// `By` byte * `s` second * `min` minute * `h` hour * `d` day * `1`
-	// dimensionless **Prefixes (PREFIX)** * `k` kilo (10^3) * `M` mega
-	// (10^6) * `G` giga (10^9) * `T` tera (10^12) * `P` peta (10^15) * `E`
-	// exa (10^18) * `Z` zetta (10^21) * `Y` yotta (10^24) * `m` milli
-	// (10^-3) * `u` micro (10^-6) * `n` nano (10^-9) * `p` pico (10^-12) *
-	// `f` femto (10^-15) * `a` atto (10^-18) * `z` zepto (10^-21) * `y`
-	// yocto (10^-24) * `Ki` kibi (2^10) * `Mi` mebi (2^20) * `Gi` gibi
-	// (2^30) * `Ti` tebi (2^40) * `Pi` pebi (2^50) **Grammar** The grammar
-	// also includes these connectors: * `/` division or ratio (as an infix
-	// operator). For examples, `kBy/{email}` or `MiBy/10ms` (although you
-	// should almost never have `/s` in a metric `unit`; rates should always
-	// be computed at query time from the underlying cumulative or delta
-	// value). * `.` multiplication or composition (as an infix operator).
-	// For examples, `GBy.d` or `k{watt}.h`. The grammar for a unit is as
-	// follows: Expression = Component { "." Component } { "/" Component } ;
-	// Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ] | Annotation |
-	// "1" ; Annotation = "{" NAME "}" ; Notes: * `Annotation` is just a
-	// comment if it follows a `UNIT`. If the annotation is used alone, then
-	// the unit is equivalent to `1`. For examples, `{request}/s == 1/s`,
+	// for Units of Measure (http://unitsofmeasure.org/ucum.html) standard:
+	// **Basic units (UNIT)** * `bit` bit * `By` byte * `s` second * `min`
+	// minute * `h` hour * `d` day * `1` dimensionless **Prefixes (PREFIX)**
+	// * `k` kilo (10^3) * `M` mega (10^6) * `G` giga (10^9) * `T` tera
+	// (10^12) * `P` peta (10^15) * `E` exa (10^18) * `Z` zetta (10^21) *
+	// `Y` yotta (10^24) * `m` milli (10^-3) * `u` micro (10^-6) * `n` nano
+	// (10^-9) * `p` pico (10^-12) * `f` femto (10^-15) * `a` atto (10^-18)
+	// * `z` zepto (10^-21) * `y` yocto (10^-24) * `Ki` kibi (2^10) * `Mi`
+	// mebi (2^20) * `Gi` gibi (2^30) * `Ti` tebi (2^40) * `Pi` pebi (2^50)
+	// **Grammar** The grammar also includes these connectors: * `/`
+	// division or ratio (as an infix operator). For examples, `kBy/{email}`
+	// or `MiBy/10ms` (although you should almost never have `/s` in a
+	// metric `unit`; rates should always be computed at query time from the
+	// underlying cumulative or delta value). * `.` multiplication or
+	// composition (as an infix operator). For examples, `GBy.d` or
+	// `k{watt}.h`. The grammar for a unit is as follows: Expression =
+	// Component { "." Component } { "/" Component } ; Component = ( [
+	// PREFIX ] UNIT | "%" ) [ Annotation ] | Annotation | "1" ; Annotation
+	// = "{" NAME "}" ; Notes: * `Annotation` is just a comment if it
+	// follows a `UNIT`. If the annotation is used alone, then the unit is
+	// equivalent to `1`. For examples, `{request}/s == 1/s`,
 	// `By{transmitted}/s == By/s`. * `NAME` is a sequence of non-blank
 	// printable ASCII characters not containing `{` or `}`. * `1`
-	// represents a unitary dimensionless unit of 1, such as in `1/s`. It is
-	// typically used when none of the basic units are appropriate. For
-	// example, "new users per day" can be represented as `1/d` or
-	// `{new-users}/d` (and a metric value `5` would mean "5 new users).
-	// Alternatively, "thousands of page views per day" would be represented
-	// as `1000/d` or `k1/d` or `k{page_views}/d` (and a metric value of
-	// `5.3` would mean "5300 page views per day"). * `%` represents
-	// dimensionless value of 1/100, and annotates values giving a
-	// percentage (so the metric values are typically in the range of
+	// represents a unitary dimensionless unit
+	// (https://en.wikipedia.org/wiki/Dimensionless_quantity) of 1, such as
+	// in `1/s`. It is typically used when none of the basic units are
+	// appropriate. For example, "new users per day" can be represented as
+	// `1/d` or `{new-users}/d` (and a metric value `5` would mean "5 new
+	// users). Alternatively, "thousands of page views per day" would be
+	// represented as `1000/d` or `k1/d` or `k{page_views}/d` (and a metric
+	// value of `5.3` would mean "5300 page views per day"). * `%`
+	// represents dimensionless value of 1/100, and annotates values giving
+	// a percentage (so the metric values are typically in the range of
 	// 0..100, and a metric value `3` means "3 percent"). * `10^2.%`
 	// indicates a metric contains a ratio, typically in the range 0..1,
 	// that will be multiplied by 100 and displayed as a percentage (so a
@@ -3843,10 +3863,11 @@ func (s *SourceInfo) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -4056,11 +4077,11 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 type Usage struct {
 	// ProducerNotificationChannel: The full resource name of a channel used
 	// for sending notifications to the service producer. Google Service
-	// Management currently only supports Google Cloud Pub/Sub as a
-	// notification channel. To use Google Cloud Pub/Sub as the channel,
-	// this must be the name of a Cloud Pub/Sub topic that uses the Cloud
-	// Pub/Sub topic name format documented in
-	// https://cloud.google.com/pubsub/docs/overview.
+	// Management currently only supports Google Cloud Pub/Sub
+	// (https://cloud.google.com/pubsub) as a notification channel. To use
+	// Google Cloud Pub/Sub as the channel, this must be the name of a Cloud
+	// Pub/Sub topic that uses the Cloud Pub/Sub topic name format
+	// documented in https://cloud.google.com/pubsub/docs/overview.
 	ProducerNotificationChannel string `json:"producerNotificationChannel,omitempty"`
 
 	// Requirements: Requirements that must be satisfied before a consumer
@@ -5552,8 +5573,9 @@ type ServicesListCall struct {
 // be filtered to only include services in a specific state, for example
 // to only include services enabled on the project. WARNING: If you need
 // to query enabled services frequently or across an organization, you
-// should use Cloud Asset Inventory API, which provides higher
-// throughput and richer filtering capability.
+// should use Cloud Asset Inventory API
+// (https://cloud.google.com/asset-inventory/docs/apis), which provides
+// higher throughput and richer filtering capability.
 func (r *ServicesService) List(parent string) *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

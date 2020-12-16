@@ -798,10 +798,11 @@ func (s *RuntimeMetadata) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -956,8 +957,8 @@ type OperationsCancelCall struct {
 // is not guaranteed. Clients may use Operations.GetOperation or
 // Operations.ListOperations to check whether the cancellation succeeded
 // or the operation completed despite cancellation. Authorization
-// requires the following Google IAM permission: *
-// `genomics.operations.cancel`
+// requires the following Google IAM (https://cloud.google.com/iam)
+// permission: * `genomics.operations.cancel`
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1101,7 +1102,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service. Authorization requires the following
-// Google IAM permission: * `genomics.operations.get`
+// Google IAM (https://cloud.google.com/iam) permission: *
+// `genomics.operations.get`
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1247,8 +1249,9 @@ type OperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. Authorization requires the following Google IAM permission:
-// * `genomics.operations.list`
+// request. Authorization requires the following Google IAM
+// (https://cloud.google.com/iam) permission: *
+// `genomics.operations.list`
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1267,7 +1270,8 @@ func (r *OperationsService) List(name string) *OperationsListCall {
 // the value is true. In v1 and v1alpha2, the following filter fields
 // are supported: * projectId: Required. Corresponds to
 // OperationMetadata.projectId. * createTime: The time this job was
-// created, in seconds from the epoch. Can use `>=` and/or `<=`
+// created, in seconds from the epoch
+// (http://en.wikipedia.org/wiki/Unix_time). Can use `>=` and/or `<=`
 // operators. * status: Can be `RUNNING`, `SUCCESS`, `FAILURE`, or
 // `CANCELED`. Only one status may be specified. * labels.key where key
 // is a label key. Examples: * `projectId = my-project AND createTime >=

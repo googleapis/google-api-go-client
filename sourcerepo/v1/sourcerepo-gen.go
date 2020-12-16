@@ -277,7 +277,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation.
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -565,7 +566,9 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
 // resources support conditions in their IAM policies, see the IAM
-// documentation. **JSON example:** { "bindings": [ { "role":
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -584,7 +587,7 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
 // 3 For a description of IAM and its features, see the IAM
-// documentation.
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -624,7 +627,8 @@ type Policy struct {
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
 	// resources support conditions in their IAM policies, see the IAM
-	// documentation.
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -832,10 +836,11 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -921,7 +926,8 @@ type SyncRepoRequest struct {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see IAM Overview.
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -1781,7 +1787,8 @@ func (r *ProjectsReposService) GetIamPolicy(resource string) *ProjectsReposGetIa
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation.
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsReposGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsReposGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c

@@ -268,9 +268,13 @@ type TraceSink struct {
 	// data. This field is set by sinks.create and sinks.update. The service
 	// account will need to be granted write access to the destination
 	// specified in the output configuration, see Granting access for a
-	// resource. To create tables and write data this account will need the
-	// dataEditor role. Read more about roles in the BigQuery documentation.
-	// E.g.: "service-00000001@00000002.iam.gserviceaccount.com"
+	// resource
+	// (/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_ser
+	// vice_account_for_a_resource). To create tables and write data this
+	// account will need the dataEditor role. Read more about roles in the
+	// BigQuery documentation
+	// (https://cloud.google.com/bigquery/docs/access-control). E.g.:
+	// "service-00000001@00000002.iam.gserviceaccount.com"
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

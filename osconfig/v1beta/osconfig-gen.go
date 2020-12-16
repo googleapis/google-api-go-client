@@ -857,7 +857,9 @@ type GuestPolicy struct {
 	// same level in the resource hierarchy (that is within a project), the
 	// service prevents the creation of multiple policies that conflict with
 	// each other. For more information, see how the service handles
-	// assignment conflicts.
+	// assignment conflicts
+	// (/compute/docs/os-config-management/create-guest-policy#handle-conflic
+	// ts).
 	Assignment *Assignment `json:"assignment,omitempty"`
 
 	// CreateTime: Output only. Time this guest policy was created.
@@ -1562,7 +1564,8 @@ func (s *MonthlySchedule) MarshalJSON() ([]byte, error) {
 }
 
 // OneTimeSchedule: Sets the time for a one time patch deployment.
-// Timestamp is in RFC3339 text format.
+// Timestamp is in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text
+// format.
 type OneTimeSchedule struct {
 	// ExecuteTime: Required. The desired patch job execution time.
 	ExecuteTime string `json:"executeTime,omitempty"`
@@ -1771,10 +1774,13 @@ func (s *PatchConfig) MarshalJSON() ([]byte, error) {
 // patch jobs use to complete a patch. These configurations include
 // instance filter, package repository settings, and a schedule. For
 // more information about creating and managing patch deployments, see
-// Scheduling patch jobs.
+// Scheduling patch jobs
+// (https://cloud.google.com/compute/docs/os-patch-management/schedule-pa
+// tch-jobs).
 type PatchDeployment struct {
 	// CreateTime: Output only. Time the patch deployment was created.
-	// Timestamp is in RFC3339 text format.
+	// Timestamp is in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text
+	// format.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Optional. Description of the patch deployment. Length of
@@ -1789,7 +1795,8 @@ type PatchDeployment struct {
 	InstanceFilter *PatchInstanceFilter `json:"instanceFilter,omitempty"`
 
 	// LastExecuteTime: Output only. The last time a patch job was started
-	// by this deployment. Timestamp is in RFC3339 text format.
+	// by this deployment. Timestamp is in RFC3339
+	// (https://www.ietf.org/rfc/rfc3339.txt) text format.
 	LastExecuteTime string `json:"lastExecuteTime,omitempty"`
 
 	// Name: Unique name for the patch deployment resource in a project. The
@@ -1811,7 +1818,8 @@ type PatchDeployment struct {
 	Rollout *PatchRollout `json:"rollout,omitempty"`
 
 	// UpdateTime: Output only. Time the patch deployment was last updated.
-	// Timestamp is in RFC3339 text format.
+	// Timestamp is in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text
+	// format.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1930,7 +1938,9 @@ func (s *PatchInstanceFilterGroupLabel) MarshalJSON() ([]byte, error) {
 // in progress or has completed. Instance details are not included in
 // the job. To paginate through instance details, use
 // `ListPatchJobInstanceDetails`. For more information about patch jobs,
-// see Creating patch jobs.
+// see Creating patch jobs
+// (https://cloud.google.com/compute/docs/os-patch-management/create-patc
+// h-job).
 type PatchJob struct {
 	// CreateTime: Time this patch job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2040,7 +2050,9 @@ func (s *PatchJob) UnmarshalJSON(data []byte) error {
 
 // PatchJobInstanceDetails: Patch details for a VM instance. For more
 // information about reviewing VM instance details, see Listing all VM
-// instance details for a specific patch job.
+// instance details for a specific patch job
+// (https://cloud.google.com/compute/docs/os-patch-management/manage-patc
+// h-jobs#list-instance-details).
 type PatchJobInstanceDetails struct {
 	// AttemptCount: The number of times the agent that the agent attempts
 	// to apply the patch.
@@ -2817,7 +2829,8 @@ type SoftwareRecipeStepRunScript struct {
 
 	// Interpreter: The script interpreter to use to run the script. If no
 	// interpreter is specified the script is executed directly, which
-	// likely only succeed for scripts with shebang lines).
+	// likely only succeed for scripts with shebang lines
+	// (https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
 	//
 	// Possible values:
 	//   "INTERPRETER_UNSPECIFIED" - Default value for ScriptType.
@@ -2897,7 +2910,8 @@ func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeZone: Represents a time zone from the IANA Time Zone Database.
+// TimeZone: Represents a time zone from the IANA Time Zone Database
+// (https://www.iana.org/time-zones).
 type TimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`

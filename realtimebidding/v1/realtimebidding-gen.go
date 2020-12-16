@@ -497,9 +497,11 @@ type Creative struct {
 	// DeclaredAttributes: All declared attributes for the ads that may be
 	// shown from this creative. Can be used to filter the response of the
 	// creatives.list method. If the `excluded_attribute` field of a bid
-	// request contains one of the attributes that were declared or detected
-	// for a given creative, and a bid is submitted with that creative, the
-	// bid will be filtered before the auction.
+	// request
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/realtim
+	// e-bidding-proto") contains one of the attributes that were declared
+	// or detected for a given creative, and a bid is submitted with that
+	// creative, the bid will be filtered before the auction.
 	//
 	// Possible values:
 	//   "ATTRIBUTE_UNSPECIFIED" - Do not use. This is a placeholder value
@@ -695,9 +697,11 @@ type CreativeServingDecision struct {
 	// DetectedAttributes: Publisher-excludable attributes that were
 	// detected for this creative. Can be used to filter the response of the
 	// creatives.list method. If the `excluded_attribute` field of a bid
-	// request contains one of the attributes that were declared or detected
-	// for a given creative, and a bid is submitted with that creative, the
-	// bid will be filtered before the auction.
+	// request
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/realtim
+	// e-bidding-proto) contains one of the attributes that were declared or
+	// detected for a given creative, and a bid is submitted with that
+	// creative, the bid will be filtered before the auction.
 	//
 	// Possible values:
 	//   "ATTRIBUTE_UNSPECIFIED" - Do not use. This is a placeholder value
@@ -793,9 +797,12 @@ type CreativeServingDecision struct {
 	// https://storage.googleapis.com/adx-rtb-dictionaries/vendors.txt for
 	// possible values. Can be used to filter the response of the
 	// creatives.list method. If the `allowed_vendor_type` field of a bid
-	// request does not contain one of the vendor type IDs that were
-	// declared or detected for a given creative, and a bid is submitted
-	// with that creative, the bid will be filtered before the auction.
+	// request
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/realtim
+	// e-bidding-proto) does not contain one of the vendor type IDs that
+	// were declared or detected for a given creative, and a bid is
+	// submitted with that creative, the bid will be filtered before the
+	// auction.
 	DetectedVendorIds []int64 `json:"detectedVendorIds,omitempty"`
 
 	// LastStatusUpdate: The last time the creative status was updated. Can
@@ -1170,7 +1177,8 @@ type Empty struct {
 type GetRemarketingTagResponse struct {
 	// Snippet: A HTML tag that can be placed on the advertiser's page to
 	// add users to a user list. For more information and code samples on
-	// using snippet on your website refer to Tag your site for remarketing.
+	// using snippet on your website refer to Tag your site for remarketing
+	// ( https://support.google.com/google-ads/answer/2476688).
 	Snippet string `json:"snippet,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1930,10 +1938,15 @@ type PretargetingConfig struct {
 	// sent only if the publisher is listed in the targeting dimension) or
 	// negatively (bid requests will be sent only if the publisher is not
 	// listed in the targeting dimension). A maximum of 10,000 publisher IDs
-	// can be targeted. Publisher IDs are found in ads.txt / app-ads.txt and
-	// in bid requests in the `BidRequest.publisher_id` field on the Google
-	// RTB protocol or the `BidRequest.site.publisher.id` /
-	// `BidRequest.app.publisher.id` field on the OpenRTB protocol.
+	// can be targeted. Publisher IDs are found in ads.txt
+	// (https://iabtechlab.com/ads-txt/) / app-ads.txt
+	// (https://iabtechlab.com/app-ads-txt/) and in bid requests in the
+	// `BidRequest.publisher_id` field on the Google RTB protocol
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/realtim
+	// e-bidding-proto) or the `BidRequest.site.publisher.id` /
+	// `BidRequest.app.publisher.id` field on the OpenRTB protocol
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/openrtb
+	// -adx-proto).
 	PublisherTargeting *StringTargetingDimension `json:"publisherTargeting,omitempty"`
 
 	// State: Output only. The state of this pretargeting configuration.

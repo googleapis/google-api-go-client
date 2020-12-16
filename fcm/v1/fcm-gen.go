@@ -157,7 +157,7 @@ type ProjectsMessagesService struct {
 }
 
 // AndroidConfig: Android specific options for messages sent through FCM
-// connection server.
+// connection server (https://goo.gl/4GLdUl).
 type AndroidConfig struct {
 	// CollapseKey: An identifier of a group of messages that can be
 	// collapsed, so that only the last message gets sent when delivery can
@@ -171,7 +171,8 @@ type AndroidConfig struct {
 
 	// DirectBootOk: If set to true, messages will be allowed to be
 	// delivered to the app while the device is in direct boot mode. See
-	// Support Direct Boot mode.
+	// Support Direct Boot mode
+	// (https://developer.android.com/training/articles/direct-boot).
 	DirectBootOk bool `json:"directBootOk,omitempty"`
 
 	// FcmOptions: Options for features provided by the FCM SDK for Android.
@@ -181,7 +182,8 @@ type AndroidConfig struct {
 	Notification *AndroidNotification `json:"notification,omitempty"`
 
 	// Priority: Message priority. Can take "normal" and "high" values. For
-	// more information, see Setting the priority of a message.
+	// more information, see Setting the priority of a message
+	// (https://goo.gl/GjONJv).
 	//
 	// Possible values:
 	//   "NORMAL" - Default priority for data messages. Normal priority
@@ -279,21 +281,22 @@ type AndroidNotification struct {
 
 	// BodyLocArgs: Variable string values to be used in place of the format
 	// specifiers in body_loc_key to use to localize the body text to the
-	// user's current localization. See Formatting and Styling for more
-	// information.
+	// user's current localization. See Formatting and Styling
+	// (https://goo.gl/MalYE3) for more information.
 	BodyLocArgs []string `json:"bodyLocArgs,omitempty"`
 
 	// BodyLocKey: The key to the body string in the app's string resources
 	// to use to localize the body text to the user's current localization.
-	// See String Resources for more information.
+	// See String Resources (https://goo.gl/NdFZGI) for more information.
 	BodyLocKey string `json:"bodyLocKey,omitempty"`
 
-	// ChannelId: The notification's channel id (new in Android O). The app
-	// must create a channel with this channel ID before any notification
-	// with this channel ID is received. If you don't send this channel ID
-	// in the request, or if the channel ID provided has not yet been
-	// created by the app, FCM uses the channel ID specified in the app
-	// manifest.
+	// ChannelId: The notification's channel id
+	// (https://developer.android.com/guide/topics/ui/notifiers/notifications
+	// #ManageChannels) (new in Android O). The app must create a channel
+	// with this channel ID before any notification with this channel ID is
+	// received. If you don't send this channel ID in the request, or if the
+	// channel ID provided has not yet been created by the app, FCM uses the
+	// channel ID specified in the app manifest.
 	ChannelId string `json:"channelId,omitempty"`
 
 	// ClickAction: The action associated with a user click on the
@@ -306,26 +309,34 @@ type AndroidNotification struct {
 
 	// DefaultLightSettings: If set to true, use the Android framework's
 	// default LED light settings for the notification. Default values are
-	// specified in config.xml. If `default_light_settings` is set to true
-	// and `light_settings` is also set, the user-specified `light_settings`
-	// is used instead of the default value.
+	// specified in config.xml
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/co
+	// re/res/res/values/config.xml). If `default_light_settings` is set to
+	// true and `light_settings` is also set, the user-specified
+	// `light_settings` is used instead of the default value.
 	DefaultLightSettings bool `json:"defaultLightSettings,omitempty"`
 
 	// DefaultSound: If set to true, use the Android framework's default
 	// sound for the notification. Default values are specified in
-	// config.xml.
+	// config.xml
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/co
+	// re/res/res/values/config.xml).
 	DefaultSound bool `json:"defaultSound,omitempty"`
 
 	// DefaultVibrateTimings: If set to true, use the Android framework's
 	// default vibrate pattern for the notification. Default values are
-	// specified in config.xml. If `default_vibrate_timings` is set to true
-	// and `vibrate_timings` is also set, the default value is used instead
-	// of the user-specified `vibrate_timings`.
+	// specified in config.xml
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/co
+	// re/res/res/values/config.xml). If `default_vibrate_timings` is set to
+	// true and `vibrate_timings` is also set, the default value is used
+	// instead of the user-specified `vibrate_timings`.
 	DefaultVibrateTimings bool `json:"defaultVibrateTimings,omitempty"`
 
 	// EventTime: Set the time that the event in the notification occurred.
 	// Notifications in the panel are sorted by this time. A point in time
-	// is represented using protobuf.Timestamp.
+	// is represented using protobuf.Timestamp
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/co
+	// m/google/protobuf/Timestamp).
 	EventTime string `json:"eventTime,omitempty"`
 
 	// Icon: The notification's icon. Sets the notification icon to myicon
@@ -348,16 +359,20 @@ type AndroidNotification struct {
 	// the current device. Some notifications can be bridged to other
 	// devices for remote display, such as a Wear OS watch. This hint can be
 	// set to recommend this notification not be bridged. See Wear OS guides
+	// (https://developer.android.com/training/wearables/notifications/bridge
+	// r#existing-method-of-preventing-bridging)
 	LocalOnly bool `json:"localOnly,omitempty"`
 
 	// NotificationCount: Sets the number of items this notification
 	// represents. May be displayed as a badge count for launchers that
-	// support badging.See Notification Badge. For example, this might be
-	// useful if you're using just one notification to represent multiple
-	// new messages but you want the count here to represent the number of
-	// total new messages. If zero or unspecified, systems that support
-	// badging use the default, which is to increment a number displayed on
-	// the long-press menu each time a new notification arrives.
+	// support badging.See Notification Badge
+	// (https://developer.android.com/training/notify-user/badges). For
+	// example, this might be useful if you're using just one notification
+	// to represent multiple new messages but you want the count here to
+	// represent the number of total new messages. If zero or unspecified,
+	// systems that support badging use the default, which is to increment a
+	// number displayed on the long-press menu each time a new notification
+	// arrives.
 	NotificationCount int64 `json:"notificationCount,omitempty"`
 
 	// NotificationPriority: Set the relative priority for this
@@ -369,7 +384,9 @@ type AndroidNotification struct {
 	// slightly on different platforms. Note this priority differs from
 	// `AndroidMessagePriority`. This priority is processed by the client
 	// after the message has been delivered, whereas AndroidMessagePriority
-	// is an FCM concept that controls when the message is delivered.
+	// (https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messa
+	// ges#androidmessagepriority) is an FCM concept that controls when the
+	// message is delivered.
 	//
 	// Possible values:
 	//   "PRIORITY_UNSPECIFIED" - If priority is unspecified, notification
@@ -420,26 +437,31 @@ type AndroidNotification struct {
 
 	// TitleLocArgs: Variable string values to be used in place of the
 	// format specifiers in title_loc_key to use to localize the title text
-	// to the user's current localization. See Formatting and Styling for
-	// more information.
+	// to the user's current localization. See Formatting and Styling
+	// (https://goo.gl/MalYE3) for more information.
 	TitleLocArgs []string `json:"titleLocArgs,omitempty"`
 
 	// TitleLocKey: The key to the title string in the app's string
 	// resources to use to localize the title text to the user's current
-	// localization. See String Resources for more information.
+	// localization. See String Resources (https://goo.gl/NdFZGI) for more
+	// information.
 	TitleLocKey string `json:"titleLocKey,omitempty"`
 
 	// VibrateTimings: Set the vibration pattern to use. Pass in an array of
-	// protobuf.Duration to turn on or off the vibrator. The first value
-	// indicates the `Duration` to wait before turning the vibrator on. The
-	// next value indicates the `Duration` to keep the vibrator on.
-	// Subsequent values alternate between `Duration` to turn the vibrator
-	// off and to turn the vibrator on. If `vibrate_timings` is set and
-	// `default_vibrate_timings` is set to `true`, the default value is used
-	// instead of the user-specified `vibrate_timings`.
+	// protobuf.Duration
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.
+	// protobuf#google.protobuf.Duration) to turn on or off the vibrator.
+	// The first value indicates the `Duration` to wait before turning the
+	// vibrator on. The next value indicates the `Duration` to keep the
+	// vibrator on. Subsequent values alternate between `Duration` to turn
+	// the vibrator off and to turn the vibrator on. If `vibrate_timings` is
+	// set and `default_vibrate_timings` is set to `true`, the default value
+	// is used instead of the user-specified `vibrate_timings`.
 	VibrateTimings []string `json:"vibrateTimings,omitempty"`
 
-	// Visibility: Set the Notification.visibility of the notification.
+	// Visibility: Set the Notification.visibility
+	// (https://developer.android.com/reference/android/app/Notification.html
+	// #visibility) of the notification.
 	//
 	// Possible values:
 	//   "VISIBILITY_UNSPECIFIED" - If unspecified, default to
@@ -475,19 +497,24 @@ func (s *AndroidNotification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ApnsConfig: Apple Push Notification Service specific options.
+// ApnsConfig: Apple Push Notification Service (https://goo.gl/MXRTPa)
+// specific options.
 type ApnsConfig struct {
 	// FcmOptions: Options for features provided by the FCM SDK for iOS.
 	FcmOptions *ApnsFcmOptions `json:"fcmOptions,omitempty"`
 
 	// Headers: HTTP request headers defined in Apple Push Notification
-	// Service. Refer to APNs request headers for supported headers, e.g.
-	// "apns-priority": "10".
+	// Service. Refer to APNs request headers
+	// (https://developer.apple.com/documentation/usernotifications/setting_u
+	// p_a_remote_notification_server/sending_notification_requests_to_apns)
+	// for supported headers, e.g. "apns-priority": "10".
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Payload: APNs payload as a JSON object, including both `aps`
-	// dictionary and custom payload. See Payload Key Reference. If present,
-	// it overrides google.firebase.fcm.v1.Notification.title and
+	// dictionary and custom payload. See Payload Key Reference
+	// (https://developer.apple.com/documentation/usernotifications/setting_u
+	// p_a_remote_notification_server/generating_a_remote_notification). If
+	// present, it overrides google.firebase.fcm.v1.Notification.title and
 	// google.firebase.fcm.v1.Notification.body.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
@@ -701,15 +728,21 @@ func (s *FcmOptions) MarshalJSON() ([]byte, error) {
 
 // LightSettings: Settings to control notification LED.
 type LightSettings struct {
-	// Color: Required. Set `color` of the LED with google.type.Color.
+	// Color: Required. Set `color` of the LED with google.type.Color
+	// (https://github.com/googleapis/googleapis/blob/master/google/type/colo
+	// r.proto).
 	Color *Color `json:"color,omitempty"`
 
 	// LightOffDuration: Required. Along with `light_on_duration `, define
 	// the blink rate of LED flashes. Resolution defined by proto.Duration
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.
+	// protobuf#google.protobuf.Duration)
 	LightOffDuration string `json:"lightOffDuration,omitempty"`
 
 	// LightOnDuration: Required. Along with `light_off_duration`, define
 	// the blink rate of LED flashes. Resolution defined by proto.Duration
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.
+	// protobuf#google.protobuf.Duration)
 	LightOnDuration string `json:"lightOnDuration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
@@ -738,10 +771,11 @@ func (s *LightSettings) MarshalJSON() ([]byte, error) {
 // Message: Message to send by Firebase Cloud Messaging Service.
 type Message struct {
 	// Android: Input only. Android specific options for messages sent
-	// through FCM connection server.
+	// through FCM connection server (https://goo.gl/4GLdUl).
 	Android *AndroidConfig `json:"android,omitempty"`
 
-	// Apns: Input only. Apple Push Notification Service specific options.
+	// Apns: Input only. Apple Push Notification Service
+	// (https://goo.gl/MXRTPa) specific options.
 	Apns *ApnsConfig `json:"apns,omitempty"`
 
 	// Condition: Condition to send a message to, e.g. "'foo' in topics &&
@@ -772,7 +806,8 @@ type Message struct {
 	// "/topics/" prefix should not be provided.
 	Topic string `json:"topic,omitempty"`
 
-	// Webpush: Input only. Webpush protocol options.
+	// Webpush: Input only. Webpush protocol
+	// (https://tools.ietf.org/html/rfc8030) options.
 	Webpush *WebpushConfig `json:"webpush,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -875,7 +910,8 @@ func (s *SendMessageRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WebpushConfig: Webpush protocol options.
+// WebpushConfig: Webpush protocol (https://tools.ietf.org/html/rfc8030)
+// options.
 type WebpushConfig struct {
 	// Data: Arbitrary key/value payload. If present, it will override
 	// google.firebase.fcm.v1.Message.data.
@@ -885,12 +921,14 @@ type WebpushConfig struct {
 	FcmOptions *WebpushFcmOptions `json:"fcmOptions,omitempty"`
 
 	// Headers: HTTP headers defined in webpush protocol. Refer to Webpush
-	// protocol for supported headers, e.g. "TTL": "15".
+	// protocol (https://tools.ietf.org/html/rfc8030#section-5) for
+	// supported headers, e.g. "TTL": "15".
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Notification: Web Notification options as a JSON object. Supports
-	// Notification instance properties as defined in Web Notification API.
-	// If present, "title" and "body" fields override
+	// Notification instance properties as defined in Web Notification API
+	// (https://developer.mozilla.org/en-US/docs/Web/API/Notification). If
+	// present, "title" and "body" fields override
 	// [google.firebase.fcm.v1.Notification.title] and
 	// [google.firebase.fcm.v1.Notification.body].
 	Notification googleapi.RawMessage `json:"notification,omitempty"`

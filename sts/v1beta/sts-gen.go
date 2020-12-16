@@ -167,40 +167,50 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// SubjectToken: Required. The input token. This token is a either an
 	// external credential issued by a workload identity pool provider, or a
 	// short-lived access token issued by Google. If the token is an OIDC
-	// JWT, it must use the JWT format defined in RFC 7523, and the
-	// `subject_token_type` must be `urn:ietf:params:oauth:token-type:jwt`.
-	// The following headers are required: - `kid`: The identifier of the
-	// signing key securing the JWT. - `alg`: The cryptographic algorithm
-	// securing the JWT. Must be `RS256`. The following payload fields are
-	// required. For more information, see RFC 7523, Section 3: - `iss`: The
-	// issuer of the token. The issuer must provide a discovery document at
-	// the URL `/.well-known/openid-configuration`, where `` is the value of
-	// this field. The document must be formatted according to section 4.2
-	// of the OIDC 1.0 Discovery specification. - `iat`: The issue time, in
-	// seconds, since the Unix epoch. Must be in the past. - `exp`: The
-	// expiration time, in seconds, since the Unix epoch. Must be less than
-	// 48 hours after `iat`. Shorter expiration times are more secure. If
-	// possible, we recommend setting an expiration time less than 6 hours.
-	// - `sub`: The identity asserted in the JWT. - `aud`: Configured by the
-	// mapper policy. The default value is the service account's unique ID.
-	// Example header: ``` { "alg": "RS256", "kid": "us-east-11" } ```
-	// Example payload: ``` { "iss": "https://accounts.google.com", "iat":
+	// JWT, it must use the JWT format defined in RFC 7523
+	// (https://tools.ietf.org/html/rfc7523), and the `subject_token_type`
+	// must be `urn:ietf:params:oauth:token-type:jwt`. The following headers
+	// are required: - `kid`: The identifier of the signing key securing the
+	// JWT. - `alg`: The cryptographic algorithm securing the JWT. Must be
+	// `RS256`. The following payload fields are required. For more
+	// information, see RFC 7523, Section 3
+	// (https://tools.ietf.org/html/rfc7523#section-3): - `iss`: The issuer
+	// of the token. The issuer must provide a discovery document at the URL
+	// `/.well-known/openid-configuration`, where `` is the value of this
+	// field. The document must be formatted according to section 4.2 of the
+	// OIDC 1.0 Discovery specification
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderCo
+	// nfigurationResponse). - `iat`: The issue time, in seconds, since the
+	// Unix epoch. Must be in the past. - `exp`: The expiration time, in
+	// seconds, since the Unix epoch. Must be less than 48 hours after
+	// `iat`. Shorter expiration times are more secure. If possible, we
+	// recommend setting an expiration time less than 6 hours. - `sub`: The
+	// identity asserted in the JWT. - `aud`: Configured by the mapper
+	// policy. The default value is the service account's unique ID. Example
+	// header: ``` { "alg": "RS256", "kid": "us-east-11" } ``` Example
+	// payload: ``` { "iss": "https://accounts.google.com", "iat":
 	// 1517963104, "exp": 1517966704, "aud": "113475438248934895348", "sub":
 	// "113475438248934895348", "my_claims": { "additional_claim": "value" }
 	// } ``` If `subject_token` is an AWS token, it must be a serialized,
-	// signed request to the AWS `GetCallerIdentity()` method. Format the
-	// request as URL-encoded JSON, and set the `subject_token_type`
-	// parameter to `urn:ietf:params:aws:token-type:aws4_request`. The
-	// following parameters are required: - `url`: The URL of the AWS STS
-	// endpoint for `GetCallerIdentity()`, such as
+	// signed
+	// (https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_request
+	// s.html) request to the AWS `GetCallerIdentity()`
+	// (https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIden
+	// tity) method. Format the request as URL-encoded JSON, and set the
+	// `subject_token_type` parameter to
+	// `urn:ietf:params:aws:token-type:aws4_request`. The following
+	// parameters are required: - `url`: The URL of the AWS STS endpoint for
+	// `GetCallerIdentity()`, such as
 	// `https://sts.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15
 	// `. Regional endpoints are also supported. - `method`: The HTTP
 	// request method: `POST`. - `headers`: The HTTP request headers, which
 	// must include: - `Authorization`: The request signature. -
 	// `x-amz-date`: The time you will send the request, formatted as an
-	// ISO8601 Basic string. This is typically set to the current time and
-	// used to prevent replay attacks. - `host`: The hostname of the `url`
-	// field; for example, `sts.amazonaws.com`. -
+	// ISO8601 Basic
+	// (https://docs.aws.amazon.com/general/latest/gr/sigv4_elements.html#sig
+	// v4_elements_date) string. This is typically set to the current time
+	// and used to prevent replay attacks. - `host`: The hostname of the
+	// `url` field; for example, `sts.amazonaws.com`. -
 	// `x-goog-cloud-target-resource`: The full, canonical resource name of
 	// the workload identity pool provider, with or without an `https:`
 	// prefix. To help ensure data integrity, we recommend including this

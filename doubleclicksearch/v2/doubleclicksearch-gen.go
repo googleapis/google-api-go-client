@@ -712,7 +712,8 @@ type ReportRequest struct {
 	// ReportType: Determines the type of rows that are returned in the
 	// report. For example, if you specify `reportType: keyword`, each row
 	// in the report will contain data about a keyword. See the Types of
-	// Reports reference for the columns that are available for each type.
+	// Reports (/search-ads/v2/report-types/) reference for the columns that
+	// are available for each type.
 	ReportType string `json:"reportType,omitempty"`
 
 	// RowCount: Synchronous report only. The maximum number of rows to

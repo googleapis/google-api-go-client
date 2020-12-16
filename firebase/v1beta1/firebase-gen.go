@@ -259,21 +259,25 @@ type ProjectsWebAppsService struct {
 // AddFirebaseRequest: All fields are required.
 type AddFirebaseRequest struct {
 	// LocationId: Deprecated. Instead, to set a Project's default GCP
-	// resource location, call `FinalizeDefaultLocation` after you add
-	// Firebase resources to the GCP `Project`. The ID of the Project's
-	// default GCP resource location. The location must be one of the
-	// available GCP resource locations.
+	// resource location, call `FinalizeDefaultLocation`
+	// (../projects.defaultLocation/finalize) after you add Firebase
+	// resources to the GCP `Project`. The ID of the Project's default GCP
+	// resource location. The location must be one of the available GCP
+	// resource locations
+	// (https://firebase.google.com/docs/projects/locations).
 	LocationId string `json:"locationId,omitempty"`
 
 	// RegionCode: Deprecated. Instead, to link a Project with a Google
-	// Analytics account, call `AddGoogleAnalytics` after you add Firebase
+	// Analytics account, call `AddGoogleAnalytics`
+	// (../../v1beta1/projects/addGoogleAnalytics) after you add Firebase
 	// resources to the GCP `Project`. The region code (CLDR) that the
 	// account will use for Google Analytics data For example: US, GB, or DE
 	// In Java, use `com.google.i18n.identifiers.RegionCode`.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// TimeZone: Deprecated. Instead, to link a Project with a Google
-	// Analytics account, call `AddGoogleAnalytics` after you add Firebase
+	// Analytics account, call `AddGoogleAnalytics`
+	// (../../v1beta1/projects/addGoogleAnalytics) after you add Firebase
 	// resources to the GCP `Project`. The time zone that the account will
 	// use for Google Analytics data. For example: America/Los_Angeles or
 	// Africa/Abidjan
@@ -304,10 +308,10 @@ func (s *AddFirebaseRequest) MarshalJSON() ([]byte, error) {
 
 type AddGoogleAnalyticsRequest struct {
 	// AnalyticsAccountId: The ID for the existing Google Analytics account
-	// that you want to link with the `FirebaseProject`. Specifying this
-	// field will provision a new Google Analytics property in your Google
-	// Analytics account and associate the new property with the
-	// `FirebaseProject`.
+	// (http://www.google.com/analytics/) that you want to link with the
+	// `FirebaseProject`. Specifying this field will provision a new Google
+	// Analytics property in your Google Analytics account and associate the
+	// new property with the `FirebaseProject`.
 	AnalyticsAccountId string `json:"analyticsAccountId,omitempty"`
 
 	// AnalyticsPropertyId: The ID for the existing Google Analytics
@@ -343,11 +347,12 @@ type AdminSdkConfig struct {
 	DatabaseURL string `json:"databaseURL,omitempty"`
 
 	// LocationId: The ID of the Project's default GCP resource location.
-	// The location is one of the available GCP resource locations. This
-	// field is omitted if the default GCP resource location has not been
-	// finalized yet. To set a Project's default GCP resource location, call
-	// `FinalizeDefaultLocation` after you add Firebase resources to the
-	// Project.
+	// The location is one of the available GCP resource locations
+	// (https://firebase.google.com/docs/projects/locations). This field is
+	// omitted if the default GCP resource location has not been finalized
+	// yet. To set a Project's default GCP resource location, call
+	// `FinalizeDefaultLocation` (../projects.defaultLocation/finalize)
+	// after you add Firebase resources to the Project.
 	LocationId string `json:"locationId,omitempty"`
 
 	// ProjectId: Immutable. A user-assigned unique identifier for the
@@ -437,10 +442,11 @@ type AnalyticsProperty struct {
 
 	// Id: The globally unique, Google-assigned identifier of the Google
 	// Analytics property associated with the specified `FirebaseProject`.
-	// If you called `AddGoogleAnalytics` to link the `FirebaseProject` with
-	// a Google Analytics account, the value in this `id` field is the same
-	// as the ID of the property either specified or provisioned with that
-	// call to `AddGoogleAnalytics`.
+	// If you called `AddGoogleAnalytics`
+	// (../../v1beta1/projects/addGoogleAnalytics) to link the
+	// `FirebaseProject` with a Google Analytics account, the value in this
+	// `id` field is the same as the ID of the property either specified or
+	// provisioned with that call to `AddGoogleAnalytics`.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -478,11 +484,15 @@ type AndroidApp struct {
 
 	// Name: The resource name of the AndroidApp, in the format: projects/
 	// PROJECT_IDENTIFIER/androidApps/APP_ID * PROJECT_IDENTIFIER: the
-	// parent Project's `ProjectNumber` ***(recommended)*** or its
-	// `ProjectId`. Learn more about using project identifiers in Google's
-	// AIP 2510 standard. Note that the value for PROJECT_IDENTIFIER in any
-	// response body will be the `ProjectId`. * APP_ID: the globally unique,
-	// Firebase-assigned identifier for the App (see `appId`).
+	// parent Project's `ProjectNumber`
+	// (../projects#FirebaseProject.FIELDS.project_number)
+	// ***(recommended)*** or its `ProjectId`
+	// (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+	// using project identifiers in Google's AIP 2510 standard
+	// (https://google.aip.dev/cloud/2510). Note that the value for
+	// PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+	// APP_ID: the globally unique, Firebase-assigned identifier for the App
+	// (see `appId` (../projects.androidApps#AndroidApp.FIELDS.app_id)).
 	Name string `json:"name,omitempty"`
 
 	// PackageName: Immutable. The canonical package name of the Android app
@@ -564,30 +574,33 @@ type DefaultResources struct {
 	// HostingSite: The default Firebase Hosting site name, in the format:
 	// PROJECT_ID Though rare, your `projectId` might already be used as the
 	// name for an existing Hosting site in another project (learn more
-	// about creating non-default, additional sites). In these cases, your
-	// `projectId` is appended with a hyphen then five alphanumeric
-	// characters to create your default Hosting site name. For example, if
-	// your `projectId` is `myproject123`, your default Hosting site name
-	// might be: `myproject123-a5c16`
+	// about creating non-default, additional sites
+	// (https://firebase.google.com/docs/hosting/multisites)). In these
+	// cases, your `projectId` is appended with a hyphen then five
+	// alphanumeric characters to create your default Hosting site name. For
+	// example, if your `projectId` is `myproject123`, your default Hosting
+	// site name might be: `myproject123-a5c16`
 	HostingSite string `json:"hostingSite,omitempty"`
 
 	// LocationId: The ID of the Project's default GCP resource location.
-	// The location is one of the available GCP resource locations. This
-	// field is omitted if the default GCP resource location has not been
-	// finalized yet. To set a Project's default GCP resource location, call
-	// `FinalizeDefaultLocation` after you add Firebase resources to the
-	// Project.
+	// The location is one of the available GCP resource locations
+	// (https://firebase.google.com/docs/projects/locations). This field is
+	// omitted if the default GCP resource location has not been finalized
+	// yet. To set a Project's default GCP resource location, call
+	// `FinalizeDefaultLocation` (../projects.defaultLocation/finalize)
+	// after you add Firebase resources to the Project.
 	LocationId string `json:"locationId,omitempty"`
 
 	// RealtimeDatabaseInstance: The default Firebase Realtime Database
 	// instance name, in the format: PROJECT_ID Though rare, your
 	// `projectId` might already be used as the name for an existing
 	// Realtime Database instance in another project (learn more about
-	// database sharding). In these cases, your `projectId` is appended with
-	// a hyphen then five alphanumeric characters to create your default
-	// Realtime Database instance name. For example, if your `projectId` is
-	// `myproject123`, your default database instance name might be:
-	// `myproject123-a5c16`
+	// database sharding
+	// (https://firebase.google.com/docs/database/usage/sharding)). In these
+	// cases, your `projectId` is appended with a hyphen then five
+	// alphanumeric characters to create your default Realtime Database
+	// instance name. For example, if your `projectId` is `myproject123`,
+	// your default database instance name might be: `myproject123-a5c16`
 	RealtimeDatabaseInstance string `json:"realtimeDatabaseInstance,omitempty"`
 
 	// StorageBucket: The default Cloud Storage for Firebase storage bucket,
@@ -631,7 +644,8 @@ type Empty struct {
 
 type FinalizeDefaultLocationRequest struct {
 	// LocationId: The ID of the Project's default GCP resource location.
-	// The location must be one of the available GCP resource locations.
+	// The location must be one of the available GCP resource locations
+	// (https://firebase.google.com/docs/projects/locations).
 	LocationId string `json:"locationId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LocationId") to
@@ -722,8 +736,9 @@ func (s *FirebaseAppInfo) MarshalJSON() ([]byte, error) {
 // sites, storage systems (Firebase Realtime Database, Cloud Firestore,
 // Cloud Storage buckets), and other Firebase and Google Cloud Platform
 // (GCP) resources. You create a `FirebaseProject` by calling
-// AddFirebase and specifying an *existing* GCP `Project`. This adds
-// Firebase resources to the existing GCP `Project`. Since a
+// AddFirebase and specifying an *existing* GCP `Project`
+// (https://cloud.google.com/resource-manager/reference/rest/v1/projects)
+// . This adds Firebase resources to the existing GCP `Project`. Since a
 // FirebaseProject is actually also a GCP `Project`, a `FirebaseProject`
 // has the same underlying GCP identifiers (`projectNumber` and
 // `projectId`). This allows for easy interop with Google APIs.
@@ -733,10 +748,12 @@ type FirebaseProject struct {
 
 	// Name: The resource name of the Project, in the format:
 	// projects/PROJECT_IDENTIFIER PROJECT_IDENTIFIER: the Project's
-	// `ProjectNumber` ***(recommended)*** or its `ProjectId`. Learn more
-	// about using project identifiers in Google's AIP 2510 standard. Note
-	// that the value for PROJECT_IDENTIFIER in any response body will be
-	// the `ProjectId`.
+	// `ProjectNumber` (../projects#FirebaseProject.FIELDS.project_number)
+	// ***(recommended)*** or its `ProjectId`
+	// (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+	// using project identifiers in Google's AIP 2510 standard
+	// (https://google.aip.dev/cloud/2510). Note that the value for
+	// PROJECT_IDENTIFIER in any response body will be the `ProjectId`.
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: Immutable. A user-assigned unique identifier for the
@@ -813,11 +830,15 @@ type IosApp struct {
 
 	// Name: The resource name of the IosApp, in the format:
 	// projects/PROJECT_IDENTIFIER /iosApps/APP_ID * PROJECT_IDENTIFIER: the
-	// parent Project's `ProjectNumber` ***(recommended)*** or its
-	// `ProjectId`. Learn more about using project identifiers in Google's
-	// AIP 2510 standard. Note that the value for PROJECT_IDENTIFIER in any
-	// response body will be the `ProjectId`. * APP_ID: the globally unique,
-	// Firebase-assigned identifier for the App (see `appId`).
+	// parent Project's `ProjectNumber`
+	// (../projects#FirebaseProject.FIELDS.project_number)
+	// ***(recommended)*** or its `ProjectId`
+	// (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+	// using project identifiers in Google's AIP 2510 standard
+	// (https://google.aip.dev/cloud/2510). Note that the value for
+	// PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+	// APP_ID: the globally unique, Firebase-assigned identifier for the App
+	// (see `appId` (../projects.iosApps#IosApp.FIELDS.app_id)).
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: Immutable. A user-assigned unique identifier of the parent
@@ -1181,11 +1202,14 @@ type Location struct {
 	Features []string `json:"features,omitempty"`
 
 	// LocationId: The ID of the GCP resource location. It will be one of
-	// the available GCP resource locations.
+	// the available GCP resource locations
+	// (https://firebase.google.com/docs/projects/locations#types).
 	LocationId string `json:"locationId,omitempty"`
 
 	// Type: Indicates whether the GCP resource location is a regional or
-	// multi-regional location for data replication.
+	// multi-regional location
+	// (https://firebase.google.com/docs/projects/locations#types) for data
+	// replication.
 	//
 	// Possible values:
 	//   "LOCATION_TYPE_UNSPECIFIED" - Used internally for distinguishing
@@ -1293,17 +1317,19 @@ type ProjectInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LocationId: The ID of the Project's default GCP resource location.
-	// The location is one of the available GCP resource locations. Not all
+	// The location is one of the available GCP resource locations
+	// (https://firebase.google.com/docs/projects/locations). Not all
 	// Projects will have this field populated. If it is not populated, it
 	// means that the Project does not yet have a default GCP resource
 	// location. To set a Project's default GCP resource location, call
-	// `FinalizeDefaultLocation` after you add Firebase resources to the
-	// Project.
+	// `FinalizeDefaultLocation` (../projects.defaultLocation/finalize)
+	// after you add Firebase resources to the Project.
 	LocationId string `json:"locationId,omitempty"`
 
 	// Project: The resource name of the GCP `Project` to which Firebase
 	// resources can be added, in the format: projects/PROJECT_IDENTIFIER
-	// Refer to the `FirebaseProject` `name` field for details about
+	// Refer to the `FirebaseProject` `name`
+	// (../projects#FirebaseProject.FIELDS.name) field for details about
 	// PROJECT_IDENTIFIER values.
 	Project string `json:"project,omitempty"`
 
@@ -1417,12 +1443,16 @@ type ShaCertificate struct {
 	// the format:
 	// projects/PROJECT_IDENTIFIER/androidApps/APP_ID/sha/SHA_HASH *
 	// PROJECT_IDENTIFIER: the parent Project's `ProjectNumber`
-	// ***(recommended)*** or its `ProjectId`. Learn more about using
-	// project identifiers in Google's AIP 2510 standard. Note that the
-	// value for PROJECT_IDENTIFIER in any response body will be the
-	// `ProjectId`. * APP_ID: the globally unique, Firebase-assigned
-	// identifier for the App (see `appId`). * SHA_HASH: the certificate
-	// hash for the App (see `shaHash`).
+	// (../projects#FirebaseProject.FIELDS.project_number)
+	// ***(recommended)*** or its `ProjectId`
+	// (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+	// using project identifiers in Google's AIP 2510 standard
+	// (https://google.aip.dev/cloud/2510). Note that the value for
+	// PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+	// APP_ID: the globally unique, Firebase-assigned identifier for the App
+	// (see `appId` (../projects.androidApps#AndroidApp.FIELDS.app_id)). *
+	// SHA_HASH: the certificate hash for the App (see `shaHash`
+	// (../projects.androidApps.sha#ShaCertificate.FIELDS.sha_hash)).
 	Name string `json:"name,omitempty"`
 
 	// ShaHash: The certificate hash for the `AndroidApp`.
@@ -1457,10 +1487,11 @@ func (s *ShaCertificate) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1551,20 +1582,22 @@ type StreamMapping struct {
 	// projects/PROJECT_IDENTIFIER/androidApps/APP_ID or
 	// projects/PROJECT_IDENTIFIER/iosApps/APP_ID or
 	// projects/PROJECT_IDENTIFIER /webApps/APP_ID Refer to the
-	// `FirebaseProject` `name` field for details about PROJECT_IDENTIFIER
-	// values.
+	// `FirebaseProject` `name` (../projects#FirebaseProject.FIELDS.name)
+	// field for details about PROJECT_IDENTIFIER values.
 	App string `json:"app,omitempty"`
 
 	// MeasurementId: Applicable for Firebase Web Apps only. The unique
 	// Google-assigned identifier of the Google Analytics web stream
 	// associated with the Firebase Web App. Firebase SDKs use this ID to
 	// interact with Google Analytics APIs. Learn more about this ID and
-	// Google Analytics web streams in the Analytics documentation.
+	// Google Analytics web streams in the Analytics documentation
+	// (https://support.google.com/analytics/topic/9303475).
 	MeasurementId string `json:"measurementId,omitempty"`
 
 	// StreamId: The unique Google-assigned identifier of the Google
 	// Analytics data stream associated with the Firebase App. Learn more
-	// about Google Analytics data streams in the Analytics documentation.
+	// about Google Analytics data streams in the Analytics documentation
+	// (https://support.google.com/analytics/answer/9303323).
 	StreamId int64 `json:"streamId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "App") to
@@ -1605,11 +1638,15 @@ type WebApp struct {
 
 	// Name: The resource name of the WebApp, in the format:
 	// projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER: the
-	// parent Project's `ProjectNumber` ***(recommended)*** or its
-	// `ProjectId`. Learn more about using project identifiers in Google's
-	// AIP 2510 standard. Note that the value for PROJECT_IDENTIFIER in any
-	// response body will be the `ProjectId`. * APP_ID: the globally unique,
-	// Firebase-assigned identifier for the App (see `appId`).
+	// parent Project's `ProjectNumber`
+	// (../projects#FirebaseProject.FIELDS.project_number)
+	// ***(recommended)*** or its `ProjectId`
+	// (../projects#FirebaseProject.FIELDS.project_id). Learn more about
+	// using project identifiers in Google's AIP 2510 standard
+	// (https://google.aip.dev/cloud/2510). Note that the value for
+	// PROJECT_IDENTIFIER in any response body will be the `ProjectId`. *
+	// APP_ID: the globally unique, Firebase-assigned identifier for the App
+	// (see `appId` (../projects.webApps#WebApp.FIELDS.app_id)).
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: Immutable. A user-assigned unique identifier of the parent
@@ -1668,11 +1705,12 @@ type WebAppConfig struct {
 	DatabaseURL string `json:"databaseURL,omitempty"`
 
 	// LocationId: The ID of the Project's default GCP resource location.
-	// The location is one of the available GCP resource locations. This
-	// field is omitted if the default GCP resource location has not been
-	// finalized yet. To set a Project's default GCP resource location, call
-	// `FinalizeDefaultLocation` after you add Firebase resources to the
-	// Project.
+	// The location is one of the available GCP resource locations
+	// (https://firebase.google.com/docs/projects/locations). This field is
+	// omitted if the default GCP resource location has not been finalized
+	// yet. To set a Project's default GCP resource location, call
+	// `FinalizeDefaultLocation` (../projects.defaultLocation/finalize)
+	// after you add Firebase resources to the Project.
 	LocationId string `json:"locationId,omitempty"`
 
 	// MeasurementId: The unique Google-assigned identifier of the Google
@@ -1680,13 +1718,15 @@ type WebAppConfig struct {
 	// this ID to interact with Google Analytics APIs. This field is only
 	// present if the `WebApp` is linked to a web stream in a Google
 	// Analytics App + Web property. Learn more about this ID and Google
-	// Analytics web streams in the Analytics documentation. To generate a
+	// Analytics web streams in the Analytics documentation
+	// (https://support.google.com/analytics/topic/9303475). To generate a
 	// `measurementId` and link the `WebApp` with a Google Analytics web
-	// stream, call `AddGoogleAnalytics`. For apps using the Firebase
-	// JavaScript SDK v7.20.0 and later, Firebase dynamically fetches the
-	// `measurementId` when your app initializes Analytics. Having this ID
-	// in your config object is optional, but it does serve as a fallback in
-	// the rare case that the dynamic fetch fails.
+	// stream, call `AddGoogleAnalytics`
+	// (../../v1beta1/projects/addGoogleAnalytics). For apps using the
+	// Firebase JavaScript SDK v7.20.0 and later, Firebase dynamically
+	// fetches the `measurementId` when your app initializes Analytics.
+	// Having this ID in your config object is optional, but it does serve
+	// as a fallback in the rare case that the dynamic fetch fails.
 	MeasurementId string `json:"measurementId,omitempty"`
 
 	// MessagingSenderId: The sender ID for use with Firebase Cloud
@@ -1741,10 +1781,11 @@ type AvailableProjectsListCall struct {
 // List: Lists each [Google Cloud Platform (GCP) `Project`]
 // (https://cloud.google.com/resource-manager/reference/rest/v1/projects)
 //  that can have Firebase resources added to it. A Project will only be
-// listed if: - The caller has sufficient Google IAM permissions to call
-// AddFirebase. - The Project is not already a FirebaseProject. - The
-// Project is not in an Organization which has policies that prevent
-// Firebase resources from being added.
+// listed if: - The caller has sufficient Google IAM
+// (https://cloud.google.com/iam) permissions to call AddFirebase. - The
+// Project is not already a FirebaseProject. - The Project is not in an
+// Organization which has policies that prevent Firebase resources from
+// being added.
 func (r *AvailableProjectsService) List() *AvailableProjectsListCall {
 	c := &AvailableProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2083,19 +2124,23 @@ type ProjectsAddFirebaseCall struct {
 // . Since a FirebaseProject is actually also a GCP `Project`, a
 // `FirebaseProject` has the same underlying GCP identifiers
 // (`projectNumber` and `projectId`). This allows for easy interop with
-// Google APIs. The result of this call is an `Operation`. Poll the
-// `Operation` to track the provisioning process by calling GetOperation
-// until `done` is `true`. When `done` is `true`, the `Operation` has
-// either succeeded or failed. If the `Operation` succeeded, its
-// `response` is set to a FirebaseProject; if the `Operation` failed,
-// its `error` is set to a google.rpc.Status. The `Operation` is
-// automatically deleted after completion, so there is no need to call
-// DeleteOperation. This method does not modify any billing account
-// information on the underlying GCP `Project`. To call `AddFirebase`, a
-// project member or service account must have the following permissions
-// (the IAM roles of Editor and Owner contain these permissions):
-// `firebase.projects.update`, `resourcemanager.projects.get`,
-// `serviceusage.services.enable`, and `serviceusage.services.get`.
+// Google APIs. The result of this call is an `Operation`
+// (../../v1beta1/operations). Poll the `Operation` to track the
+// provisioning process by calling GetOperation until `done`
+// (../../v1beta1/operations#Operation.FIELDS.done) is `true`. When
+// `done` is `true`, the `Operation` has either succeeded or failed. If
+// the `Operation` succeeded, its `response`
+// (../../v1beta1/operations#Operation.FIELDS.response) is set to a
+// FirebaseProject; if the `Operation` failed, its `error`
+// (../../v1beta1/operations#Operation.FIELDS.error) is set to a
+// google.rpc.Status. The `Operation` is automatically deleted after
+// completion, so there is no need to call DeleteOperation. This method
+// does not modify any billing account information on the underlying GCP
+// `Project`. To call `AddFirebase`, a project member or service account
+// must have the following permissions (the IAM roles of Editor and
+// Owner contain these permissions): `firebase.projects.update`,
+// `resourcemanager.projects.get`, `serviceusage.services.enable`, and
+// `serviceusage.services.get`.
 func (r *ProjectsService) AddFirebase(projectid string, addfirebaserequest *AddFirebaseRequest) *ProjectsAddFirebaseCall {
 	c := &ProjectsAddFirebaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectid = projectid
@@ -2237,37 +2282,44 @@ type ProjectsAddGoogleAnalyticsCall struct {
 }
 
 // AddGoogleAnalytics: Links the specified FirebaseProject with an
-// existing Google Analytics account. Using this call, you can either: -
-// Specify an `analyticsAccountId` to provision a new Google Analytics
-// property within the specified account and associate the new property
-// with the `FirebaseProject`. - Specify an existing
-// `analyticsPropertyId` to associate the property with the
-// `FirebaseProject`. Note that when you call `AddGoogleAnalytics`: 1.
-// The first check determines if any existing data streams in the Google
-// Analytics property correspond to any existing Firebase Apps in the
-// `FirebaseProject` (based on the `packageName` or `bundleId`
-// associated with the data stream). Then, as applicable, the data
-// streams and apps are linked. Note that this auto-linking only applies
-// to `AndroidApps` and `IosApps`. 2. If no corresponding data streams
-// are found for the Firebase Apps, new data streams are provisioned in
-// the Google Analytics property for each of the Firebase Apps. Note
-// that a new data stream is always provisioned for a Web App even if it
-// was previously associated with a data stream in the Analytics
-// property. Learn more about the hierarchy and structure of Google
-// Analytics accounts in the Analytics documentation. The result of this
-// call is an `Operation`. Poll the `Operation` to track the
-// provisioning process by calling GetOperation until `done` is `true`.
-// When `done` is `true`, the `Operation` has either succeeded or
-// failed. If the `Operation` succeeded, its `response` is set to an
-// AnalyticsDetails; if the `Operation` failed, its `error` is set to a
+// existing Google Analytics account (http://www.google.com/analytics/).
+// Using this call, you can either: - Specify an `analyticsAccountId` to
+// provision a new Google Analytics property within the specified
+// account and associate the new property with the `FirebaseProject`. -
+// Specify an existing `analyticsPropertyId` to associate the property
+// with the `FirebaseProject`. Note that when you call
+// `AddGoogleAnalytics`: 1. The first check determines if any existing
+// data streams in the Google Analytics property correspond to any
+// existing Firebase Apps in the `FirebaseProject` (based on the
+// `packageName` or `bundleId` associated with the data stream). Then,
+// as applicable, the data streams and apps are linked. Note that this
+// auto-linking only applies to `AndroidApps` and `IosApps`. 2. If no
+// corresponding data streams are found for the Firebase Apps, new data
+// streams are provisioned in the Google Analytics property for each of
+// the Firebase Apps. Note that a new data stream is always provisioned
+// for a Web App even if it was previously associated with a data stream
+// in the Analytics property. Learn more about the hierarchy and
+// structure of Google Analytics accounts in the Analytics documentation
+// (https://support.google.com/analytics/answer/9303323). The result of
+// this call is an `Operation` (../../v1beta1/operations). Poll the
+// `Operation` to track the provisioning process by calling GetOperation
+// until `done` (../../v1beta1/operations#Operation.FIELDS.done) is
+// `true`. When `done` is `true`, the `Operation` has either succeeded
+// or failed. If the `Operation` succeeded, its `response`
+// (../../v1beta1/operations#Operation.FIELDS.response) is set to an
+// AnalyticsDetails; if the `Operation` failed, its `error`
+// (../../v1beta1/operations#Operation.FIELDS.error) is set to a
 // google.rpc.Status. To call `AddGoogleAnalytics`, a project member
 // must be an Owner for the existing `FirebaseProject` and have the
-// `Edit` permission for the Google Analytics account. If the
-// `FirebaseProject` already has Google Analytics enabled, and you call
-// `AddGoogleAnalytics` using an `analyticsPropertyId` that's different
-// from the currently associated property, then the call will fail.
-// Analytics may have already been enabled in the Firebase console or by
-// specifying `timeZone` and `regionCode` in the call to `AddFirebase`.
+// `Edit` permission
+// (https://support.google.com/analytics/answer/2884495) for the Google
+// Analytics account. If the `FirebaseProject` already has Google
+// Analytics enabled, and you call `AddGoogleAnalytics` using an
+// `analyticsPropertyId` that's different from the currently associated
+// property, then the call will fail. Analytics may have already been
+// enabled in the Firebase console or by specifying `timeZone` and
+// `regionCode` in the call to `AddFirebase`
+// (../../v1beta1/projects/addFirebase).
 func (r *ProjectsService) AddGoogleAnalytics(parent string, addgoogleanalyticsrequest *AddGoogleAnalyticsRequest) *ProjectsAddGoogleAnalyticsCall {
 	c := &ProjectsAddGoogleAnalyticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2558,7 +2610,9 @@ type ProjectsGetAdminSdkConfigCall struct {
 // GetAdminSdkConfig: Gets the configuration artifact associated with
 // the specified FirebaseProject, which can be used by servers to
 // simplify initialization. Typically, this configuration is used with
-// the Firebase Admin SDK initializeApp command.
+// the Firebase Admin SDK initializeApp
+// (https://firebase.google.com/docs/admin/setup#initialize_the_sdk)
+// command.
 func (r *ProjectsService) GetAdminSdkConfig(name string) *ProjectsGetAdminSdkConfigCall {
 	c := &ProjectsGetAdminSdkConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3047,7 +3101,7 @@ type ProjectsPatchCall struct {
 }
 
 // Patch: Updates the attributes of the specified FirebaseProject. All
-// query parameters are required.
+// query parameters (#query-parameters) are required.
 func (r *ProjectsService) Patch(nameid string, firebaseproject *FirebaseProject) *ProjectsPatchCall {
 	c := &ProjectsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -3209,7 +3263,8 @@ type ProjectsRemoveAnalyticsCall struct {
 // property. However, this call does not delete the Google Analytics
 // resources, such as the Google Analytics property or any data streams.
 // These resources may be re-associated later to the `FirebaseProject`
-// by calling `AddGoogleAnalytics` and specifying the same
+// by calling `AddGoogleAnalytics`
+// (../../v1beta1/projects/addGoogleAnalytics) and specifying the same
 // `analyticsPropertyId`. For Android Apps and iOS Apps, this call
 // re-links data streams with their corresponding apps. However, for Web
 // Apps, this call provisions a *new* data stream for each Web App. To
@@ -3367,11 +3422,14 @@ func (r *ProjectsService) SearchApps(parent string) *ProjectsSearchAppsCall {
 }
 
 // Filter sets the optional parameter "filter": A query string
-// compatible with Google's AIP-160 standard. Use any of the following
-// fields in a query: * `app_id` * `namespace` * `platform` We also
-// support the following "virtual" fields (fields which are not actually
-// part of the returned resource object, but can be queried as if they
-// are pre-populated with specific values): * `sha1_hash`: This field is
+// compatible with Google's AIP-160 (https://google.aip.dev/160)
+// standard. Use any of the following fields in a query: * `app_id`
+// (../projects.apps#FirebaseAppInfo.FIELDS.app_id) * `namespace`
+// (../projects.apps#FirebaseAppInfo.FIELDS.namespace) * `platform`
+// (../projects.apps#FirebaseAppInfo.FIELDS.platform) We also support
+// the following "virtual" fields (fields which are not actually part of
+// the returned resource object, but can be queried as if they are
+// pre-populated with specific values): * `sha1_hash`: This field is
 // considered to be a repeated `string` field, populated with the list
 // of all SHA-1 certificate fingerprints registered with the app. This
 // list is empty if the app is not an Android app. * `sha256_hash`: This
@@ -4801,15 +4859,17 @@ type ProjectsAvailableLocationsListCall struct {
 // List: Lists the valid Google Cloud Platform (GCP) resource locations
 // for the specified Project (including a FirebaseProject). One of these
 // locations can be selected as the Project's _default_ GCP resource
-// location, which is the geographical location where the Project's
-// resources, such as Cloud Firestore, will be provisioned by default.
-// However, if the default GCP resource location has already been set
-// for the Project, then this setting cannot be changed. This call
-// checks for any possible location restrictions for the specified
-// Project and, thus, might return a subset of all possible GCP resource
-// locations. To list all GCP resource locations (regardless of any
-// restrictions), call the endpoint without specifying a unique project
-// identifier (that is,
+// location (https://firebase.google.com/docs/projects/locations), which
+// is the geographical location where the Project's resources, such as
+// Cloud Firestore, will be provisioned by default. However, if the
+// default GCP resource location has already been set for the Project,
+// then this setting cannot be changed. This call checks for any
+// possible location restrictions
+// (https://cloud.google.com/resource-manager/docs/organization-policy/de
+// fining-locations) for the specified Project and, thus, might return a
+// subset of all possible GCP resource locations. To list all GCP
+// resource locations (regardless of any restrictions), call the
+// endpoint without specifying a unique project identifier (that is,
 // `/v1beta1/{parent=projects/-}/listAvailableLocations`). To call
 // `ListAvailableLocations` with a specified project, a member must be
 // at minimum a Viewer of the Project. Calls without a specified project
@@ -5012,27 +5072,34 @@ type ProjectsDefaultLocationFinalizeCall struct {
 
 // Finalize: Sets the default Google Cloud Platform (GCP) resource
 // location for the specified FirebaseProject. This method creates an
-// App Engine application with a default Cloud Storage bucket, located
-// in the specified `locationId`. This location must be one of the
-// available GCP resource locations. After the default GCP resource
-// location is finalized, or if it was already set, it cannot be
-// changed. The default GCP resource location for the specified
-// `FirebaseProject` might already be set because either the underlying
-// GCP `Project` already has an App Engine application or
+// App Engine application with a default Cloud Storage bucket
+// (https://cloud.google.com/appengine/docs/standard/python/googlecloudst
+// orageclient/setting-up-cloud-storage#activating_a_cloud_storage_bucket
+// ), located in the specified `locationId`
+// (#body.request_body.FIELDS.location_id). This location must be one of
+// the available GCP resource locations
+// (https://firebase.google.com/docs/projects/locations). After the
+// default GCP resource location is finalized, or if it was already set,
+// it cannot be changed. The default GCP resource location for the
+// specified `FirebaseProject` might already be set because either the
+// underlying GCP `Project` already has an App Engine application or
 // `FinalizeDefaultLocation` was previously called with a specified
 // `locationId`. Any new calls to `FinalizeDefaultLocation` with a
 // *different* specified `locationId` will return a 409 error. The
-// result of this call is an `Operation`, which can be used to track the
-// provisioning process. The `response` type of the `Operation` is
-// google.protobuf.Empty. The `Operation` can be polled by its `name`
-// using GetOperation until `done` is true. When `done` is true, the
-// `Operation` has either succeeded or failed. If the `Operation` has
-// succeeded, its `response` will be set to a google.protobuf.Empty; if
-// the `Operation` has failed, its `error` will be set to a
-// google.rpc.Status. The `Operation` is automatically deleted after
-// completion, so there is no need to call DeleteOperation. All fields
-// listed in the request body are required. To call
-// `FinalizeDefaultLocation`, a member must be an Owner of the Project.
+// result of this call is an `Operation` (../../v1beta1/operations),
+// which can be used to track the provisioning process. The `response`
+// (../../v1beta1/operations#Operation.FIELDS.response) type of the
+// `Operation` is google.protobuf.Empty. The `Operation` can be polled
+// by its `name` using GetOperation until `done` is true. When `done` is
+// true, the `Operation` has either succeeded or failed. If the
+// `Operation` has succeeded, its `response`
+// (../../v1beta1/operations#Operation.FIELDS.response) will be set to a
+// google.protobuf.Empty; if the `Operation` has failed, its `error`
+// will be set to a google.rpc.Status. The `Operation` is automatically
+// deleted after completion, so there is no need to call
+// DeleteOperation. All fields listed in the request body
+// (#request-body) are required. To call `FinalizeDefaultLocation`, a
+// member must be an Owner of the Project.
 func (r *ProjectsDefaultLocationService) Finalize(parent string, finalizedefaultlocationrequest *FinalizeDefaultLocationRequest) *ProjectsDefaultLocationFinalizeCall {
 	c := &ProjectsDefaultLocationFinalizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

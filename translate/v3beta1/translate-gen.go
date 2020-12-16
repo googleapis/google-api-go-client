@@ -533,7 +533,8 @@ type GlossaryInputConfig struct {
 	// source/target term pairs. For equivalent term sets glossaries: - CSV
 	// (`.csv`): Multi-column CSV file defining equivalent glossary terms in
 	// multiple languages. The format is defined for Google Translation
-	// Toolkit and documented in Use a glossary.
+	// Toolkit and documented in Use a glossary
+	// (https://support.google.com/translatortoolkit/answer/6306379?hl=en).
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
@@ -979,10 +980,11 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

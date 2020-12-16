@@ -205,20 +205,28 @@ type ProjectsOperationsService struct {
 }
 
 // Asset: An asset in Google Cloud. An asset can be any resource in the
-// Google Cloud resource hierarchy, a resource outside the Google Cloud
-// resource hierarchy (such as Google Kubernetes Engine clusters and
-// objects), or a policy (e.g. Cloud IAM policy). See Supported asset
-// types for more information.
+// Google Cloud resource hierarchy
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resourc
+// e-hierarchy), a resource outside the Google Cloud resource hierarchy
+// (such as Google Kubernetes Engine clusters and objects), or a policy
+// (e.g. Cloud IAM policy). See Supported asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+// for more information.
 type Asset struct {
-	// AccessLevel: Please also refer to the access level user guide.
+	// AccessLevel: Please also refer to the access level user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-
+	// levels).
 	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
 
-	// AccessPolicy: Please also refer to the access policy user guide.
+	// AccessPolicy: Please also refer to the access policy user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-
+	// policies).
 	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
 
 	// AssetType: The type of the asset. Example:
-	// `compute.googleapis.com/Disk` See Supported asset types for more
-	// information.
+	// `compute.googleapis.com/Disk` See Supported asset types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
 	// IamPolicy: A representation of the Cloud IAM policy set on a Google
@@ -228,24 +236,28 @@ type Asset struct {
 	// resource hierarchy. Therefore, the effectively policy is the union of
 	// both the policy set on this resource and each policy set on all of
 	// the resource's ancestry resource levels in the hierarchy. See this
-	// topic for more information.
+	// topic (https://cloud.google.com/iam/docs/policies#inheritance) for
+	// more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1` See Resource names for more information.
+	// s/instance1` See Resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
+	// e) for more information.
 	Name string `json:"name,omitempty"`
 
-	// OrgPolicy: A representation of an organization policy. There can be
-	// more than one organization policy with different constraints set on a
-	// given resource.
+	// OrgPolicy: A representation of an organization policy
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/ov
+	// erview#organization_policy). There can be more than one organization
+	// policy with different constraints set on a given resource.
 	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
 
 	// Resource: A representation of the resource.
 	Resource *Resource `json:"resource,omitempty"`
 
 	// ServicePerimeter: Please also refer to the service perimeter user
-	// guide.
+	// guide (https://cloud.google.com/vpc-service-controls/docs/overview).
 	ServicePerimeter *GoogleIdentityAccesscontextmanagerV1ServicePerimeter `json:"servicePerimeter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
@@ -408,7 +420,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation.
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -477,7 +490,8 @@ type ExportAssetsRequest struct {
 	// AssetTypes: A list of asset types of which to take a snapshot for.
 	// For example: "google.compute.Disk". If specified, only matching
 	// assets will be returned. See Introduction to Cloud Asset Inventory
-	// for all supported asset types.
+	// (https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/
+	// overview) for all supported asset types.
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
 	// ContentType: Asset content type. If not specified, no content but the
@@ -588,7 +602,9 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 type GcsDestination struct {
 	// Uri: The uri of the Cloud Storage object. It's the same uri that is
 	// used by gsutil. For example: "gs://bucket_name/object_name". See
-	// Viewing and Editing Object Metadata for more information.
+	// Viewing and Editing Object Metadata
+	// (https://cloud.google.com/storage/docs/viewing-editing-metadata) for
+	// more information.
 	Uri string `json:"uri,omitempty"`
 
 	// UriPrefix: The uri prefix of all generated Cloud Storage objects. For
@@ -823,7 +839,9 @@ type GoogleCloudOrgpolicyV1Policy struct {
 
 	// Constraint: The name of the `Constraint` the `Policy` is configuring,
 	// for example, `constraints/serviceuser.services`. A list of available
-	// constraints is available. Immutable after creation.
+	// constraints
+	// (/resource-manager/docs/organization-policy/org-policy-constraints)
+	// is available. Immutable after creation.
 	Constraint string `json:"constraint,omitempty"`
 
 	// Etag: An opaque tag indicating the current version of the `Policy`,
@@ -1543,7 +1561,9 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
 // resources support conditions in their IAM policies, see the IAM
-// documentation. **JSON example:** { "bindings": [ { "role":
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1562,7 +1582,7 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
 // 3 For a description of IAM and its features, see the IAM
-// documentation.
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1602,7 +1622,8 @@ type Policy struct {
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
 	// resources support conditions in their IAM policies, see the IAM
-	// documentation.
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
@@ -1648,9 +1669,12 @@ type Resource struct {
 	DiscoveryName string `json:"discoveryName,omitempty"`
 
 	// Parent: The full name of the immediate parent of this resource. See
-	// Resource Names for more information. For Google Cloud assets, this
-	// value is the parent resource defined in the Cloud IAM policy
-	// hierarchy. Example:
+	// Resource Names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
+	// e) for more information. For Google Cloud assets, this value is the
+	// parent resource defined in the Cloud IAM policy hierarchy
+	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
+	// Example:
 	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
 	// third-party assets, this field may be set differently.
 	Parent string `json:"parent,omitempty"`
@@ -1689,10 +1713,11 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2118,9 +2143,11 @@ func (r *OrganizationsService) BatchGetAssetsHistory(parent string) *Organizatio
 // AssetNames sets the optional parameter "assetNames": A list of the
 // full names of the assets. For example:
 // `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-// s/instance1`. See Resource Names for more info. The request becomes a
-// no-op if the asset name list is empty, and the max size of the asset
-// name list is 100 in one request.
+// s/instance1`. See Resource Names
+// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
+// e) for more info. The request becomes a no-op if the asset name list
+// is empty, and the max size of the asset name list is 100 in one
+// request.
 func (c *OrganizationsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *OrganizationsBatchGetAssetsHistoryCall {
 	c.urlParams_.SetMulti("assetNames", append([]string{}, assetNames...))
 	return c
@@ -2632,9 +2659,11 @@ func (r *ProjectsService) BatchGetAssetsHistory(parent string) *ProjectsBatchGet
 // AssetNames sets the optional parameter "assetNames": A list of the
 // full names of the assets. For example:
 // `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-// s/instance1`. See Resource Names for more info. The request becomes a
-// no-op if the asset name list is empty, and the max size of the asset
-// name list is 100 in one request.
+// s/instance1`. See Resource Names
+// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
+// e) for more info. The request becomes a no-op if the asset name list
+// is empty, and the max size of the asset name list is 100 in one
+// request.
 func (c *ProjectsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *ProjectsBatchGetAssetsHistoryCall {
 	c.urlParams_.SetMulti("assetNames", append([]string{}, assetNames...))
 	return c

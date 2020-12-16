@@ -405,7 +405,8 @@ func (s *ListResponse) MarshalJSON() ([]byte, error) {
 // Statements are always made by the source asset, either directly or by
 // delegating to a statement list that is stored elsewhere. For more
 // detailed definitions of statements and assets, please refer to our
-// API documentation landing page.
+// API documentation landing page
+// (/digital-asset-links/v1/getting-started).
 type Statement struct {
 	// Relation: The relation identifies the use of the statement as
 	// intended by the source asset's owner (that is, the person or entity
@@ -413,8 +414,9 @@ type Statement struct {
 	// We identify relations with strings of the format `/`, where `` must
 	// be one of a set of pre-defined purpose categories, and `` is a
 	// free-form lowercase alphanumeric string that describes the specific
-	// use case of the statement. Refer to our API documentation for the
-	// current list of supported relations. Example:
+	// use case of the statement. Refer to our API documentation
+	// (/digital-asset-links/v1/relation-strings) for the current list of
+	// supported relations. Example:
 	// `delegate_permission/common.handle_all_urls` REQUIRED
 	Relation string `json:"relation,omitempty"`
 
@@ -519,7 +521,9 @@ type AssetlinksCheckCall struct {
 // verify its statements securely, and it is not possible to ensure that
 // the website's statements have not been altered by a third party. For
 // more information, see the Digital Asset Links technical design
-// specification.
+// specification
+// (https://github.com/google/digitalassetlinks/blob/master/well-known/de
+// tails.md).
 func (r *AssetlinksService) Check() *AssetlinksCheckCall {
 	c := &AssetlinksCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -529,10 +533,11 @@ func (r *AssetlinksService) Check() *AssetlinksCheckCall {
 // relation. We identify relations with strings of the format `/`, where
 // `` must be one of a set of pre-defined purpose categories, and `` is
 // a free-form lowercase alphanumeric string that describes the specific
-// use case of the statement. Refer to our API documentation for the
-// current list of supported relations. For a query to match an asset
-// link, both the query's and the asset link's relation strings must
-// match exactly. Example: A query with relation
+// use case of the statement. Refer to our API documentation
+// (/digital-asset-links/v1/relation-strings) for the current list of
+// supported relations. For a query to match an asset link, both the
+// query's and the asset link's relation strings must match exactly.
+// Example: A query with relation
 // `delegate_permission/common.handle_all_urls` matches an asset link
 // with relation `delegate_permission/common.handle_all_urls`.
 func (c *AssetlinksCheckCall) Relation(relation string) *AssetlinksCheckCall {
@@ -809,7 +814,9 @@ type StatementsListCall struct {
 // that all statements with secure source assets, such as HTTPS websites
 // or Android apps, have been made in a secure way by the owner of those
 // assets, as described in the Digital Asset Links technical design
-// specification. Specifically, you should consider that for insecure
+// specification
+// (https://github.com/google/digitalassetlinks/blob/master/well-known/de
+// tails.md). Specifically, you should consider that for insecure
 // websites (that is, where the URL starts with `http://` instead of
 // `https://`), this guarantee cannot be made. The `List` command is
 // most useful in cases where the API client wants to know all the ways
@@ -825,13 +832,13 @@ func (r *StatementsService) List() *StatementsListCall {
 
 // Relation sets the optional parameter "relation": Use only
 // associations that match the specified relation. See the `Statement`
-// message for a detailed definition of relation strings. For a query to
-// match a statement, one of the following must be true: * both the
-// query's and the statement's relation strings match exactly, or * the
-// query's relation string is empty or missing. Example: A query with
-// relation `delegate_permission/common.handle_all_urls` matches an
-// asset link with relation
-// `delegate_permission/common.handle_all_urls`.
+// (#Statement) message for a detailed definition of relation strings.
+// For a query to match a statement, one of the following must be true:
+// * both the query's and the statement's relation strings match
+// exactly, or * the query's relation string is empty or missing.
+// Example: A query with relation
+// `delegate_permission/common.handle_all_urls` matches an asset link
+// with relation `delegate_permission/common.handle_all_urls`.
 func (c *StatementsListCall) Relation(relation string) *StatementsListCall {
 	c.urlParams_.Set("relation", relation)
 	return c

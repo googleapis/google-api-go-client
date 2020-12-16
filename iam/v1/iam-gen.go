@@ -497,7 +497,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation.
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -1269,7 +1270,9 @@ func (s *PermissionDelta) MarshalJSON() ([]byte, error) {
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
 // resources support conditions in their IAM policies, see the IAM
-// documentation. **JSON example:** { "bindings": [ { "role":
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1288,7 +1291,7 @@ func (s *PermissionDelta) MarshalJSON() ([]byte, error) {
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
 // 3 For a description of IAM and its features, see the IAM
-// documentation.
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1328,7 +1331,8 @@ type Policy struct {
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
 	// resources support conditions in their IAM policies, see the IAM
-	// documentation.
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1692,11 +1696,12 @@ func (s *Role) MarshalJSON() ([]byte, error) {
 // ServiceAccount: An IAM service account. A service account is an
 // account for an application or a virtual machine (VM) instance, not a
 // person. You can use a service account to call Google APIs. To learn
-// more, read the overview of service accounts. When you create a
-// service account, you specify the project ID that owns the service
-// account, as well as a name that must be unique within the project.
-// IAM uses these values to create an email address that identifies the
-// service account.
+// more, read the overview of service accounts
+// (https://cloud.google.com/iam/help/service-accounts/overview). When
+// you create a service account, you specify the project ID that owns
+// the service account, as well as a name that must be unique within the
+// project. IAM uses these values to create an email address that
+// identifies the service account.
 type ServiceAccount struct {
 	// Description: Optional. A user-specified, human-readable description
 	// of the service account. The maximum length is 256 UTF-8 bytes.
@@ -1923,10 +1928,13 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SignBlobRequest: Deprecated. Migrate to Service Account Credentials
-// API. The service account sign blob request.
+// API (https://cloud.google.com/iam/help/credentials/migrate-api). The
+// service account sign blob request.
 type SignBlobRequest struct {
 	// BytesToSign: Required. Deprecated. Migrate to Service Account
-	// Credentials API. The bytes to sign.
+	// Credentials API
+	// (https://cloud.google.com/iam/help/credentials/migrate-api). The
+	// bytes to sign.
 	BytesToSign string `json:"bytesToSign,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BytesToSign") to
@@ -1953,14 +1961,17 @@ func (s *SignBlobRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SignBlobResponse: Deprecated. Migrate to Service Account Credentials
-// API. The service account sign blob response.
+// API (https://cloud.google.com/iam/help/credentials/migrate-api). The
+// service account sign blob response.
 type SignBlobResponse struct {
-	// KeyId: Deprecated. Migrate to Service Account Credentials API. The id
+	// KeyId: Deprecated. Migrate to Service Account Credentials API
+	// (https://cloud.google.com/iam/help/credentials/migrate-api). The id
 	// of the key used to sign the blob.
 	KeyId string `json:"keyId,omitempty"`
 
-	// Signature: Deprecated. Migrate to Service Account Credentials API.
-	// The signed blob.
+	// Signature: Deprecated. Migrate to Service Account Credentials API
+	// (https://cloud.google.com/iam/help/credentials/migrate-api). The
+	// signed blob.
 	Signature string `json:"signature,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1991,16 +2002,18 @@ func (s *SignBlobResponse) MarshalJSON() ([]byte, error) {
 }
 
 // SignJwtRequest: Deprecated. Migrate to Service Account Credentials
-// API. The service account sign JWT request.
+// API (https://cloud.google.com/iam/help/credentials/migrate-api). The
+// service account sign JWT request.
 type SignJwtRequest struct {
 	// Payload: Required. Deprecated. Migrate to Service Account Credentials
-	// API. The JWT payload to sign. Must be a serialized JSON object that
-	// contains a JWT Claims Set. For example: `{"sub": "user@example.com",
-	// "iat": 313435}` If the JWT Claims Set contains an expiration time
-	// (`exp`) claim, it must be an integer timestamp that is not in the
-	// past and no more than 1 hour in the future. If the JWT Claims Set
-	// does not contain an expiration time (`exp`) claim, this claim is
-	// added automatically, with a timestamp that is 1 hour in the future.
+	// API (https://cloud.google.com/iam/help/credentials/migrate-api). The
+	// JWT payload to sign. Must be a serialized JSON object that contains a
+	// JWT Claims Set. For example: `{"sub": "user@example.com", "iat":
+	// 313435}` If the JWT Claims Set contains an expiration time (`exp`)
+	// claim, it must be an integer timestamp that is not in the past and no
+	// more than 1 hour in the future. If the JWT Claims Set does not
+	// contain an expiration time (`exp`) claim, this claim is added
+	// automatically, with a timestamp that is 1 hour in the future.
 	Payload string `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Payload") to
@@ -2027,14 +2040,17 @@ func (s *SignJwtRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SignJwtResponse: Deprecated. Migrate to Service Account Credentials
-// API. The service account sign JWT response.
+// API (https://cloud.google.com/iam/help/credentials/migrate-api). The
+// service account sign JWT response.
 type SignJwtResponse struct {
-	// KeyId: Deprecated. Migrate to Service Account Credentials API. The id
+	// KeyId: Deprecated. Migrate to Service Account Credentials API
+	// (https://cloud.google.com/iam/help/credentials/migrate-api). The id
 	// of the key used to sign the JWT.
 	KeyId string `json:"keyId,omitempty"`
 
-	// SignedJwt: Deprecated. Migrate to Service Account Credentials API.
-	// The signed JWT.
+	// SignedJwt: Deprecated. Migrate to Service Account Credentials API
+	// (https://cloud.google.com/iam/help/credentials/migrate-api). The
+	// signed JWT.
 	SignedJwt string `json:"signedJwt,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2066,10 +2082,11 @@ func (s *SignJwtResponse) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2112,7 +2129,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see IAM Overview.
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -2409,7 +2427,8 @@ type IamPoliciesQueryAuditableServicesCall struct {
 
 // QueryAuditableServices: Returns a list of services that allow you to
 // opt into audit logs that are not generated by default. To learn more
-// about audit logs, see the Logging documentation.
+// about audit logs, see the Logging documentation
+// (https://cloud.google.com/logging/docs/audit).
 func (r *IamPoliciesService) QueryAuditableServices(queryauditableservicesrequest *QueryAuditableServicesRequest) *IamPoliciesQueryAuditableServicesCall {
 	c := &IamPoliciesQueryAuditableServicesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryauditableservicesrequest = queryauditableservicesrequest
@@ -5622,7 +5641,9 @@ type ProjectsServiceAccountsGetIamPolicyCall struct {
 // check whether a service account has role grants on a resource, use
 // the `getIamPolicy` method for that resource. For example, to view the
 // role grants for a project, call the Resource Manager API's
-// `projects.getIamPolicy` method.
+// `projects.getIamPolicy`
+// (https://cloud.google.com/resource-manager/reference/rest/v1/projects/
+// getIamPolicy) method.
 func (r *ProjectsServiceAccountsService) GetIamPolicy(resource string) *ProjectsServiceAccountsGetIamPolicyCall {
 	c := &ProjectsServiceAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5636,7 +5657,8 @@ func (r *ProjectsServiceAccountsService) GetIamPolicy(resource string) *Projects
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation.
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsServiceAccountsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsServiceAccountsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -6116,7 +6138,9 @@ type ProjectsServiceAccountsSetIamPolicyCall struct {
 // Edit the policy so that it binds the service account to an IAM role
 // for the resource. 3. Call the resource's `setIamPolicy` method to
 // update its IAM policy. For detailed instructions, see Granting roles
-// to a service account for specific resources.
+// to a service account for specific resources
+// (https://cloud.google.com/iam/help/service-accounts/granting-access-to
+// -service-accounts).
 func (r *ProjectsServiceAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsServiceAccountsSetIamPolicyCall {
 	c := &ProjectsServiceAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6257,10 +6281,13 @@ type ProjectsServiceAccountsSignBlobCall struct {
 }
 
 // SignBlob: **Note:** This method is deprecated and will stop working
-// on July 1, 2021. Use the `signBlob` method in the IAM Service Account
-// Credentials API instead. If you currently use this method, see the
-// migration guide for instructions. Signs a blob using the
-// system-managed private key for a ServiceAccount.
+// on July 1, 2021. Use the `signBlob`
+// (https://cloud.google.com/iam/help/rest-credentials/v1/projects.servic
+// eAccounts/signBlob) method in the IAM Service Account Credentials API
+// instead. If you currently use this method, see the migration guide
+// (https://cloud.google.com/iam/help/credentials/migrate-api) for
+// instructions. Signs a blob using the system-managed private key for a
+// ServiceAccount.
 func (r *ProjectsServiceAccountsService) SignBlob(name string, signblobrequest *SignBlobRequest) *ProjectsServiceAccountsSignBlobCall {
 	c := &ProjectsServiceAccountsSignBlobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6401,10 +6428,13 @@ type ProjectsServiceAccountsSignJwtCall struct {
 }
 
 // SignJwt: **Note:** This method is deprecated and will stop working on
-// July 1, 2021. Use the `signJwt` method in the IAM Service Account
-// Credentials API instead. If you currently use this method, see the
-// migration guide for instructions. Signs a JSON Web Token (JWT) using
-// the system-managed private key for a ServiceAccount.
+// July 1, 2021. Use the `signJwt`
+// (https://cloud.google.com/iam/help/rest-credentials/v1/projects.servic
+// eAccounts/signJwt) method in the IAM Service Account Credentials API
+// instead. If you currently use this method, see the migration guide
+// (https://cloud.google.com/iam/help/credentials/migrate-api) for
+// instructions. Signs a JSON Web Token (JWT) using the system-managed
+// private key for a ServiceAccount.
 func (r *ProjectsServiceAccountsService) SignJwt(name string, signjwtrequest *SignJwtRequest) *ProjectsServiceAccountsSignJwtCall {
 	c := &ProjectsServiceAccountsSignJwtCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7900,18 +7930,24 @@ func (c *RolesListCall) PageToken(pageToken string) *RolesListCall {
 }
 
 // Parent sets the optional parameter "parent": The `parent` parameter's
-// value depends on the target resource for the request, namely `roles`,
-// `projects`, or `organizations`. Each resource type's `parent` value
-// format is described below: * `roles.list()`: An empty string. This
-// method doesn't require a resource; it simply returns all predefined
-// roles in Cloud IAM. Example request URL:
-// `https://iam.googleapis.com/v1/roles` * `projects.roles.list()`:
+// value depends on the target resource for the request, namely `roles`
+// (/iam/reference/rest/v1/roles), `projects`
+// (/iam/reference/rest/v1/projects.roles), or `organizations`
+// (/iam/reference/rest/v1/organizations.roles). Each resource type's
+// `parent` value format is described below: * `roles.list()`
+// (/iam/reference/rest/v1/roles/list): An empty string. This method
+// doesn't require a resource; it simply returns all predefined roles
+// (/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
+// Example request URL: `https://iam.googleapis.com/v1/roles` *
+// `projects.roles.list()` (/iam/reference/rest/v1/projects.roles/list):
 // `projects/{PROJECT_ID}`. This method lists all project-level custom
-// roles. Example request URL:
+// roles (/iam/docs/understanding-custom-roles). Example request URL:
 // `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` *
-// `organizations.roles.list()`: `organizations/{ORGANIZATION_ID}`. This
-// method lists all organization-level custom roles. Example request
-// URL:
+// `organizations.roles.list()`
+// (/iam/reference/rest/v1/organizations.roles/list):
+// `organizations/{ORGANIZATION_ID}`. This method lists all
+// organization-level custom roles
+// (/iam/docs/understanding-custom-roles). Example request URL:
 // `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles`
 // Note: Wildcard (*) values are invalid; you must specify a complete
 // project ID or organization ID.

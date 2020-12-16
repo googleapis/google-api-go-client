@@ -346,7 +346,11 @@ type GoogleMapsPlayablelocationsV3SampleAreaFilter struct {
 	// between cell level 11 and 14 (inclusive). S2 cells are 64-bit
 	// integers that identify areas on the Earth. They are hierarchical, and
 	// can therefore be used for spatial indexing. The S2 geometry library
-	// is available in a number of languages: * C++ * Java * Go * Python
+	// is available in a number of languages: * C++
+	// (https://github.com/google/s2geometry) * Java
+	// (https://github.com/google/s2-geometry-library-java) * Go
+	// (https://github.com/golang/geo) * Python
+	// (https://github.com/google/s2geometry/tree/master/src/python)
 	S2CellId uint64 `json:"s2CellId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "S2CellId") to
@@ -424,7 +428,7 @@ func (s *GoogleMapsPlayablelocationsV3SampleCriterion) MarshalJSON() ([]byte, er
 // use when searching for playable locations.
 type GoogleMapsPlayablelocationsV3SampleFilter struct {
 	// IncludedTypes: Restricts the set of playable locations to just the
-	// types that you want.
+	// types (/maps/documentation/gaming/tt/types) that you want.
 	IncludedTypes []string `json:"includedTypes,omitempty"`
 
 	// MaxLocationCount: Specifies the maximum number of playable locations
@@ -481,9 +485,10 @@ type GoogleMapsPlayablelocationsV3SamplePlayableLocation struct {
 	// sidewalk of the nearest road, if a nearby road exists.
 	SnappedPoint *GoogleTypeLatLng `json:"snappedPoint,omitempty"`
 
-	// Types: A collection of Playable Location Types for this playable
-	// location. The first type in the collection is the primary type. Type
-	// information might not be available for all playable locations.
+	// Types: A collection of Playable Location Types
+	// (/maps/documentation/gaming/tt/types) for this playable location. The
+	// first type in the collection is the primary type. Type information
+	// might not be available for all playable locations.
 	Types []string `json:"types,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CenterPoint") to

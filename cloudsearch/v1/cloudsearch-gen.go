@@ -916,8 +916,9 @@ func (s *DataSourceRestriction) MarshalJSON() ([]byte, error) {
 // Date: Represents a whole calendar date, for example a date of birth.
 // The time of day and time zone are either specified elsewhere or are
 // not significant. The date is relative to the Proleptic Gregorian
-// Calendar. The date must be a valid calendar date between the year 1
-// and 9999.
+// Calendar
+// (https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar). The
+// date must be a valid calendar date between the year 1 and 9999.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
 	// month.
@@ -2670,7 +2671,7 @@ func (s *Item) MarshalJSON() ([]byte, error) {
 }
 
 // ItemAcl: Access control list information for the item. For more
-// information see Map ACLs.
+// information see Map ACLs (/cloud-search/docs/guides/acls).
 type ItemAcl struct {
 	// AclInheritanceType: Sets the type of access rules to apply when an
 	// item inherits its ACL from a parent. This should always be set in
@@ -4586,15 +4587,17 @@ type RequestOptions struct {
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// SearchApplicationId: The ID generated when you create a search
-	// application using the admin console.
+	// application using the admin console
+	// (https://support.google.com/a/answer/9043922).
 	SearchApplicationId string `json:"searchApplicationId,omitempty"`
 
 	// TimeZone: Current user's time zone id, such as "America/Los_Angeles"
 	// or "Australia/Sydney". These IDs are defined by Unicode Common Locale
-	// Data Repository (CLDR) project, and currently available in the file
-	// timezone.xml. This field is used to correctly interpret date and time
-	// queries. If this field is not specified, the default time zone (UTC)
-	// is used.
+	// Data Repository (CLDR) (http://cldr.unicode.org/) project, and
+	// currently available in the file timezone.xml
+	// (http://unicode.org/repos/cldr/trunk/common/bcp47/timezone.xml). This
+	// field is used to correctly interpret date and time queries. If this
+	// field is not specified, the default time zone (UTC) is used.
 	TimeZone string `json:"timeZone,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DebugOptions") to
@@ -5278,6 +5281,7 @@ type SearchRequest struct {
 
 	// Query: The raw query string. See supported search operators in the
 	// Cloud search Cheat Sheet
+	// (https://support.google.com/a/users/answer/9299929)
 	Query string `json:"query,omitempty"`
 
 	// QueryInterpretationOptions: Options to interpret the user query.
@@ -5759,10 +5763,11 @@ func (s *StartUploadItemRequest) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC. Each `Status` message contains
-// three pieces of data: error code, error message, and error details.
-// You can find out more about this error model and how to work with it
-// in the API Design Guide.
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -9430,15 +9435,20 @@ type MediaUploadCall struct {
 
 // Upload: Uploads media for indexing. The upload endpoint supports
 // direct and resumable upload protocols and is intended for large items
-// that can not be inlined during index requests. To index large
-// content: 1. Call indexing.datasources.items.upload with the item name
-// to begin an upload session and retrieve the UploadItemRef. 1. Call
-// media.upload to upload the content, as a streaming request, using the
-// same resource name from the UploadItemRef from step 1. 1. Call
+// that can not be inlined during index requests
+// (https://developers.google.com/cloud-search/docs/reference/rest/v1/ind
+// exing.datasources.items#itemcontent). To index large content: 1. Call
+// indexing.datasources.items.upload with the item name to begin an
+// upload session and retrieve the UploadItemRef. 1. Call media.upload
+// to upload the content, as a streaming request, using the same
+// resource name from the UploadItemRef from step 1. 1. Call
 // indexing.datasources.items.index to index the item. Populate the
-// ItemContent with the UploadItemRef from step 1. For additional
-// information, see Create a content connector using the REST API.
-// **Note:** This API requires a service account to execute.
+// ItemContent
+// (/cloud-search/docs/reference/rest/v1/indexing.datasources.items#ItemC
+// ontent) with the UploadItemRef from step 1. For additional
+// information, see Create a content connector using the REST API
+// (https://developers.google.com/cloud-search/docs/guides/content-connec
+// tor#rest). **Note:** This API requires a service account to execute.
 func (r *MediaService) Upload(resourceName string, media *Media) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -10031,7 +10041,8 @@ type QuerySearchCall struct {
 // This API requires a standard end user account to execute. A service
 // account can't perform Query API requests directly; to use a service
 // account to perform queries, set up G Suite domain-wide delegation of
-// authority.
+// authority
+// (https://developers.google.com/cloud-search/docs/guides/delegation/).
 func (r *QueryService) Search(searchrequest *SearchRequest) *QuerySearchCall {
 	c := &QuerySearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.searchrequest = searchrequest
@@ -10161,7 +10172,8 @@ type QuerySuggestCall struct {
 // This API requires a standard end user account to execute. A service
 // account can't perform Query API requests directly; to use a service
 // account to perform queries, set up G Suite domain-wide delegation of
-// authority.
+// authority
+// (https://developers.google.com/cloud-search/docs/guides/delegation/).
 func (r *QueryService) Suggest(suggestrequest *SuggestRequest) *QuerySuggestCall {
 	c := &QuerySuggestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.suggestrequest = suggestrequest
@@ -10291,7 +10303,8 @@ type QuerySourcesListCall struct {
 // Suggest APIs. **Note:** This API requires a standard end user account
 // to execute. A service account can't perform Query API requests
 // directly; to use a service account to perform queries, set up G Suite
-// domain-wide delegation of authority.
+// domain-wide delegation of authority
+// (https://developers.google.com/cloud-search/docs/guides/delegation/).
 func (r *QuerySourcesService) List() *QuerySourcesListCall {
 	c := &QuerySourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -10330,7 +10343,8 @@ func (c *QuerySourcesListCall) RequestOptionsLanguageCode(requestOptionsLanguage
 
 // RequestOptionsSearchApplicationId sets the optional parameter
 // "requestOptions.searchApplicationId": The ID generated when you
-// create a search application using the admin console.
+// create a search application using the admin console
+// (https://support.google.com/a/answer/9043922).
 func (c *QuerySourcesListCall) RequestOptionsSearchApplicationId(requestOptionsSearchApplicationId string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.searchApplicationId", requestOptionsSearchApplicationId)
 	return c
@@ -10339,10 +10353,12 @@ func (c *QuerySourcesListCall) RequestOptionsSearchApplicationId(requestOptionsS
 // RequestOptionsTimeZone sets the optional parameter
 // "requestOptions.timeZone": Current user's time zone id, such as
 // "America/Los_Angeles" or "Australia/Sydney". These IDs are defined by
-// Unicode Common Locale Data Repository (CLDR) project, and currently
-// available in the file timezone.xml. This field is used to correctly
-// interpret date and time queries. If this field is not specified, the
-// default time zone (UTC) is used.
+// Unicode Common Locale Data Repository (CLDR)
+// (http://cldr.unicode.org/) project, and currently available in the
+// file timezone.xml
+// (http://unicode.org/repos/cldr/trunk/common/bcp47/timezone.xml). This
+// field is used to correctly interpret date and time queries. If this
+// field is not specified, the default time zone (UTC) is used.
 func (c *QuerySourcesListCall) RequestOptionsTimeZone(requestOptionsTimeZone string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.timeZone", requestOptionsTimeZone)
 	return c

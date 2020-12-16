@@ -719,7 +719,7 @@ func (s *SearchAnalyticsQueryResponse) MarshalJSON() ([]byte, error) {
 // SitemapsListResponse: List of sitemaps.
 type SitemapsListResponse struct {
 	// Sitemap: Contains detailed information about a specific URL submitted
-	// as a sitemap.
+	// as a sitemap (https://support.google.com/webmasters/answer/156184).
 	Sitemap []*WmxSitemap `json:"sitemap,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -752,8 +752,8 @@ func (s *SitemapsListResponse) MarshalJSON() ([]byte, error) {
 // SitesListResponse: List of sites with access level information.
 type SitesListResponse struct {
 	// SiteEntry: Contains permission level information about a Search
-	// Console site. For more information, see Permissions in Search
-	// Console.
+	// Console site. For more information, see Permissions in Search Console
+	// (https://support.google.com/webmasters/answer/2451999).
 	SiteEntry []*WmxSite `json:"siteEntry,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -828,7 +828,8 @@ func (s *TestStatus) MarshalJSON() ([]byte, error) {
 }
 
 // WmxSite: Contains permission level information about a Search Console
-// site. For more information, see Permissions in Search Console.
+// site. For more information, see Permissions in Search Console
+// (https://support.google.com/webmasters/answer/2451999).
 type WmxSite struct {
 	// PermissionLevel: The user's permission level for the site.
 	//
@@ -875,7 +876,8 @@ func (s *WmxSite) MarshalJSON() ([]byte, error) {
 }
 
 // WmxSitemap: Contains detailed information about a specific URL
-// submitted as a sitemap.
+// submitted as a sitemap
+// (https://support.google.com/webmasters/answer/156184).
 type WmxSitemap struct {
 	// Contents: The various content types in the sitemap.
 	Contents []*WmxSitemapContent `json:"contents,omitempty"`
@@ -1415,9 +1417,9 @@ type SitemapsListCall struct {
 	header_      http.Header
 }
 
-// List:  Lists the sitemaps-entries submitted for this site, or
-// included in the sitemap index file (if `sitemapIndex` is specified in
-// the request).
+// List:  Lists the sitemaps-entries (/webmaster-tools/v3/sitemaps)
+// submitted for this site, or included in the sitemap index file (if
+// `sitemapIndex` is specified in the request).
 func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 	c := &SitemapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl

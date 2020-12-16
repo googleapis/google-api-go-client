@@ -77,8 +77,19 @@ const apiVersion = "v1"
 const basePath = "https://localservices.googleapis.com/"
 const mtlsBasePath = "https://localservices.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Manage your AdWords campaigns
+	AdwordsScope = "https://www.googleapis.com/auth/adwords"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/adwords",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -719,7 +730,7 @@ func (c *AccountReportsSearchCall) Header() http.Header {
 
 func (c *AccountReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -843,7 +854,10 @@ func (c *AccountReportsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleAdsH
 	//   "path": "v1/accountReports:search",
 	//   "response": {
 	//     "$ref": "GoogleAdsHomeservicesLocalservicesV1SearchAccountReportsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adwords"
+	//   ]
 	// }
 
 }
@@ -1004,7 +1018,7 @@ func (c *DetailedLeadReportsSearchCall) Header() http.Header {
 
 func (c *DetailedLeadReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1128,7 +1142,10 @@ func (c *DetailedLeadReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   "path": "v1/detailedLeadReports:search",
 	//   "response": {
 	//     "$ref": "GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adwords"
+	//   ]
 	// }
 
 }

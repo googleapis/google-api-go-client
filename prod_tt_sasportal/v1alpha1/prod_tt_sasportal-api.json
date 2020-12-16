@@ -2097,7 +2097,7 @@
       }
     }
   },
-  "revision": "20201013",
+  "revision": "20201211",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {

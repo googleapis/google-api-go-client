@@ -2099,7 +2099,11 @@ func (meth *Method) generateCode() {
 		pn(`gensupport.SetOptions(c.urlParams_, opts...)`)
 		pn(`res, err := c.doRequest("media")`)
 		pn("if err != nil { return nil, err }")
-		pn("if err := googleapi.CheckMediaResponse(res); err != nil {")
+		if meth.api.Name == "storage" {
+			pn("if err := googleapi.CheckMediaResponse(res); err != nil {")
+		} else {
+			pn("if err := googleapi.CheckResponse(res); err != nil {")
+		}
 		pn("res.Body.Close()")
 		pn("return nil, err")
 		pn("}")

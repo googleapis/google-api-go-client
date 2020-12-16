@@ -2548,7 +2548,7 @@ func (c *BiddersCreativesListCall) Header() http.Header {
 
 func (c *BiddersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2741,7 +2741,7 @@ func (c *BiddersCreativesWatchCall) Header() http.Header {
 
 func (c *BiddersCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2881,7 +2881,7 @@ func (c *BiddersPretargetingConfigsActivateCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3022,7 +3022,7 @@ func (c *BiddersPretargetingConfigsAddTargetedAppsCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsAddTargetedAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3163,7 +3163,7 @@ func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) Header() http.Head
 
 func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3304,7 +3304,7 @@ func (c *BiddersPretargetingConfigsAddTargetedSitesCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsAddTargetedSitesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3448,7 +3448,7 @@ func (c *BiddersPretargetingConfigsCreateCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3586,7 +3586,7 @@ func (c *BiddersPretargetingConfigsDeleteCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3727,7 +3727,7 @@ func (c *BiddersPretargetingConfigsGetCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3889,7 +3889,7 @@ func (c *BiddersPretargetingConfigsListCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4063,7 +4063,7 @@ func (c *BiddersPretargetingConfigsPatchCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4210,7 +4210,7 @@ func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) Header() http.Header 
 
 func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4351,7 +4351,7 @@ func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) Header() http.H
 
 func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4492,7 +4492,7 @@ func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) Header() http.Header
 
 func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4632,7 +4632,7 @@ func (c *BiddersPretargetingConfigsSuspendCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4784,7 +4784,7 @@ func (c *BuyersGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4919,7 +4919,7 @@ func (c *BuyersCreativesCreateCall) Header() http.Header {
 
 func (c *BuyersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5086,7 +5086,7 @@ func (c *BuyersCreativesGetCall) Header() http.Header {
 
 func (c *BuyersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5292,7 +5292,7 @@ func (c *BuyersCreativesListCall) Header() http.Header {
 
 func (c *BuyersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5486,7 +5486,7 @@ func (c *BuyersCreativesPatchCall) Header() http.Header {
 
 func (c *BuyersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5633,7 +5633,7 @@ func (c *BuyersUserListsCloseCall) Header() http.Header {
 
 func (c *BuyersUserListsCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5773,7 +5773,7 @@ func (c *BuyersUserListsCreateCall) Header() http.Header {
 
 func (c *BuyersUserListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5922,7 +5922,7 @@ func (c *BuyersUserListsGetCall) Header() http.Header {
 
 func (c *BuyersUserListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6069,7 +6069,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersUserListsGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6227,7 +6227,7 @@ func (c *BuyersUserListsListCall) Header() http.Header {
 
 func (c *BuyersUserListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6395,7 +6395,7 @@ func (c *BuyersUserListsOpenCall) Header() http.Header {
 
 func (c *BuyersUserListsOpenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6536,7 +6536,7 @@ func (c *BuyersUserListsUpdateCall) Header() http.Header {
 
 func (c *BuyersUserListsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

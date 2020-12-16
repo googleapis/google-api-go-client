@@ -397,7 +397,7 @@ func (s *CloudRunService) MarshalJSON() ([]byte, error) {
 // Destination: Represents a target of an invocation over HTTP.
 type Destination struct {
 	// CloudRunService: Cloud Run fully-managed service that receives the
-	// events. The service should be running in the same project of the
+	// events. The service should be running in the same project as the
 	// trigger.
 	CloudRunService *CloudRunService `json:"cloudRunService,omitempty"`
 
@@ -666,13 +666,12 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MatchingCriteria: Matches events based on exact matches on the
 // CloudEvents attributes.
 type MatchingCriteria struct {
-	// Attribute: Required. The name of a CloudEvents atrribute. Currently,
+	// Attribute: Required. The name of a CloudEvents attribute. Currently,
 	// only a subset of attributes can be specified. All triggers MUST
-	// provide a matching criteria for attribute 'type'. Event types specify
-	// what event type has attributes are allowed based on
+	// provide a matching criteria for the 'type' attribute.
 	Attribute string `json:"attribute,omitempty"`
 
-	// Value: Required. The value for the attribute
+	// Value: Required. The value for the attribute.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attribute") to
@@ -918,12 +917,12 @@ type Pubsub struct {
 	// Subscription: The name of the Pub/Sub subscription created and
 	// managed by Eventarc system as a transport for the event delivery. The
 	// value must be in the form of
-	// `projects/{PROJECT_ID}/subscriptions/{SUBSCRIPTION_NAME}
+	// `projects/{PROJECT_ID}/subscriptions/{SUBSCRIPTION_NAME}`.
 	Subscription string `json:"subscription,omitempty"`
 
 	// Topic: The name of the Pub/Sub topic created and managed by Eventarc
 	// system as a transport for the event delivery. The value must be in
-	// the form of `projects/{PROJECT_ID}/topics/{TOPIC_NAME}
+	// the form of `projects/{PROJECT_ID}/topics/{TOPIC_NAME}`.
 	Topic string `json:"topic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
@@ -1129,8 +1128,8 @@ type Trigger struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Destination: Required. Destinations specify where the events will be
-	// sent to. Exactly one destination is supported at this time.
+	// Destination: Required. Destination specifies where the events should
+	// be sent to.
 	Destination *Destination `json:"destination,omitempty"`
 
 	// Etag: Output only. This checksum is computed by the server based on
@@ -1139,13 +1138,13 @@ type Trigger struct {
 	Etag string `json:"etag,omitempty"`
 
 	// MatchingCriteria: Required. The criteria by which events are
-	// filtered. Only events that match with this critera will be sent to
-	// the destinations.
+	// filtered. Only events that match with this criteria will be sent to
+	// the destination.
 	MatchingCriteria []*MatchingCriteria `json:"matchingCriteria,omitempty"`
 
 	// Name: Required. The resource name of the trigger. Must be unique
-	// within the location on the project. Format:
-	// projects/{project}/locations/{location}/triggers/{trigger}
+	// within the location on the project and must in
+	// `projects/{project}/locations/{location}/triggers/{trigger}` format.
 	Name string `json:"name,omitempty"`
 
 	// ServiceAccount: Optional. The IAM service account email associated
@@ -1247,7 +1246,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1413,7 +1412,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1594,7 +1593,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1735,7 +1734,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1878,7 +1877,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2052,7 +2051,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2204,6 +2203,14 @@ func (c *ProjectsLocationsTriggersCreateCall) TriggerId(triggerId string) *Proje
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": Required. If
+// set, validate the request and preview the review, but do not actually
+// post it.
+func (c *ProjectsLocationsTriggersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2231,7 +2238,7 @@ func (c *ProjectsLocationsTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2314,6 +2321,11 @@ func (c *ProjectsLocationsTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "Required. The user-provided ID to be assigned to the trigger.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}/triggers",
@@ -2347,11 +2359,27 @@ func (r *ProjectsLocationsTriggersService) Delete(name string) *ProjectsLocation
 	return c
 }
 
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the trigger is not found, the request will succeed but no
+// action will be taken on the server.
+func (c *ProjectsLocationsTriggersDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsTriggersDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
 // Etag sets the optional parameter "etag": If provided, the trigger
 // will only be deleted if the etag matches the current etag on the
 // resource.
 func (c *ProjectsLocationsTriggersDeleteCall) Etag(etag string) *ProjectsLocationsTriggersDeleteCall {
 	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Required. If
+// set, validate the request and preview the review, but do not actually
+// post it.
+func (c *ProjectsLocationsTriggersDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -2382,7 +2410,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2449,6 +2477,11 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and the trigger is not found, the request will succeed but no action will be taken on the server.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "etag": {
 	//       "description": "If provided, the trigger will only be deleted if the etag matches the current etag on the resource.",
 	//       "location": "query",
@@ -2460,6 +2493,11 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+name}",
@@ -2528,7 +2566,7 @@ func (c *ProjectsLocationsTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2687,7 +2725,7 @@ func (c *ProjectsLocationsTriggersGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2864,7 +2902,7 @@ func (c *ProjectsLocationsTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3009,12 +3047,28 @@ func (r *ProjectsLocationsTriggersService) Patch(name string, trigger *Trigger) 
 	return c
 }
 
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the trigger is not found, a new trigger will be created. In
+// this situation, `update_mask` is ignored.
+func (c *ProjectsLocationsTriggersPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsTriggersPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
 // UpdateMask sets the optional parameter "updateMask": The fields to be
 // updated; only fields explicitly provided will be updated. If no field
 // mask is provided, all provided fields in the request will be updated.
 // To update all fields, provide a field mask of "*".
 func (c *ProjectsLocationsTriggersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTriggersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Required. If
+// set, validate the request and preview the review, but do not actually
+// post it.
+func (c *ProjectsLocationsTriggersPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -3045,7 +3099,7 @@ func (c *ProjectsLocationsTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3117,8 +3171,13 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and the trigger is not found, a new trigger will be created. In this situation, `update_mask` is ignored.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the trigger. Must be unique within the location on the project. Format: projects/{project}/locations/{location}/triggers/{trigger}",
+	//       "description": "Required. The resource name of the trigger. Must be unique within the location on the project and must in `projects/{project}/locations/{location}/triggers/{trigger}` format.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
 	//       "required": true,
@@ -3129,6 +3188,11 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+name}",
@@ -3193,7 +3257,7 @@ func (c *ProjectsLocationsTriggersSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3338,7 +3402,7 @@ func (c *ProjectsLocationsTriggersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

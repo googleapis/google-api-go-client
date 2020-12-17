@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20201207",
+  "revision": "20201212",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
@@ -351,39 +351,9 @@
       "description": "The metadata that represents a processor version being created.",
       "id": "GoogleCloudDocumentaiUiv1beta3CreateProcessorVersionMetadata",
       "properties": {
-        "createTime": {
-          "description": "The creation time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "state": {
-          "description": "The state of the current disable processor operation.",
-          "enum": [
-            "STATE_UNSPECIFIED",
-            "QUEUED",
-            "PREPARING",
-            "RUNNING",
-            "SUCCEEDED",
-            "FAILED",
-            "CANCELLING",
-            "CANCELLED"
-          ],
-          "enumDescriptions": [
-            "The training state is unspecified.",
-            "The training request has been issued but processing has not yet begun.",
-            "The service is preparing to execute the training.",
-            "The training is in progress.",
-            "The training completed successfully.",
-            "The training failed. `error` should contain the details of the failure.",
-            "The training is being cancelled. `error` should describe the reason for the cancellation.",
-            "The training has been cancelled. `error` should describe the reason for the cancellation."
-          ],
-          "type": "string"
-        },
-        "updateTime": {
-          "description": "The last update time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
         }
       },
       "type": "object"
@@ -406,38 +376,6 @@
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
           "description": "The basic metadata of the long running operation."
-        },
-        "createTime": {
-          "description": "The creation time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "state": {
-          "description": "The state of the current delete processor operation.",
-          "enum": [
-            "STATE_UNSPECIFIED",
-            "WAITING",
-            "RUNNING",
-            "SUCCEEDED",
-            "FAILED"
-          ],
-          "enumDescriptions": [
-            "The default value. This value is used if the state is omitted.",
-            "Request operation is waiting for scheduling.",
-            "Request is being processed.",
-            "The operation is completed successfully.",
-            "The operation has failed."
-          ],
-          "type": "string"
-        },
-        "stateMessage": {
-          "description": "A message providing more details about the current state of processing. For example, the error message if the operation is failed.",
-          "type": "string"
-        },
-        "updateTime": {
-          "description": "The last update time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
         }
       },
       "type": "object"
@@ -477,42 +415,6 @@
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
           "description": "The basic metadata of the long running operation."
-        },
-        "createTime": {
-          "description": "The creation time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "state": {
-          "description": "The state of the current disable processor operation.",
-          "enum": [
-            "STATE_UNSPECIFIED",
-            "WAITING",
-            "RUNNING",
-            "SUCCEEDED",
-            "CANCELLING",
-            "CANCELLED",
-            "FAILED"
-          ],
-          "enumDescriptions": [
-            "The default value. This value is used if the state is omitted.",
-            "Request operation is waiting for scheduling.",
-            "Request is being processed.",
-            "The operation is completed successfully.",
-            "The operation was being cancelled.",
-            "The operation was cancelled.",
-            "The operation has failed."
-          ],
-          "type": "string"
-        },
-        "stateMessage": {
-          "description": "A message providing more details about the current state of processing. For example, the error message if the operation is failed.",
-          "type": "string"
-        },
-        "updateTime": {
-          "description": "The last update time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
         }
       },
       "type": "object"
@@ -530,42 +432,6 @@
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
           "description": "The basic metadata of the long running operation."
-        },
-        "createTime": {
-          "description": "The creation time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "state": {
-          "description": "The state of the current enable processor operation.",
-          "enum": [
-            "STATE_UNSPECIFIED",
-            "WAITING",
-            "RUNNING",
-            "SUCCEEDED",
-            "CANCELLING",
-            "CANCELLED",
-            "FAILED"
-          ],
-          "enumDescriptions": [
-            "The default value. This value is used if the state is omitted.",
-            "Request operation is waiting for scheduling.",
-            "Request is being processed.",
-            "The operation is completed successfully.",
-            "The operation was being cancelled.",
-            "The operation was cancelled.",
-            "The operation has failed."
-          ],
-          "type": "string"
-        },
-        "stateMessage": {
-          "description": "A message providing more details about the current state of processing. For example, the error message if the operation is failed.",
-          "type": "string"
-        },
-        "updateTime": {
-          "description": "The last update time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
         }
       },
       "type": "object"

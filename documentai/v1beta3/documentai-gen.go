@@ -284,30 +284,10 @@ func (s *GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata) Marsh
 // GoogleCloudDocumentaiUiv1beta3CreateProcessorVersionMetadata: The
 // metadata that represents a processor version being created.
 type GoogleCloudDocumentaiUiv1beta3CreateProcessorVersionMetadata struct {
-	// CreateTime: The creation time of the operation.
-	CreateTime string `json:"createTime,omitempty"`
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
-	// State: The state of the current disable processor operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The training state is unspecified.
-	//   "QUEUED" - The training request has been issued but processing has
-	// not yet begun.
-	//   "PREPARING" - The service is preparing to execute the training.
-	//   "RUNNING" - The training is in progress.
-	//   "SUCCEEDED" - The training completed successfully.
-	//   "FAILED" - The training failed. `error` should contain the details
-	// of the failure.
-	//   "CANCELLING" - The training is being cancelled. `error` should
-	// describe the reason for the cancellation.
-	//   "CANCELLED" - The training has been cancelled. `error` should
-	// describe the reason for the cancellation.
-	State string `json:"state,omitempty"`
-
-	// UpdateTime: The last update time of the operation.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -315,12 +295,13 @@ type GoogleCloudDocumentaiUiv1beta3CreateProcessorVersionMetadata struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -365,28 +346,6 @@ func (s *GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata) Marsh
 type GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
-
-	// CreateTime: The creation time of the operation.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// State: The state of the current delete processor operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
-	// state is omitted.
-	//   "WAITING" - Request operation is waiting for scheduling.
-	//   "RUNNING" - Request is being processed.
-	//   "SUCCEEDED" - The operation is completed successfully.
-	//   "FAILED" - The operation has failed.
-	State string `json:"state,omitempty"`
-
-	// StateMessage: A message providing more details about the current
-	// state of processing. For example, the error message if the operation
-	// is failed.
-	StateMessage string `json:"stateMessage,omitempty"`
-
-	// UpdateTime: The last update time of the operation.
-	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
@@ -483,30 +442,6 @@ type GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
-	// CreateTime: The creation time of the operation.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// State: The state of the current disable processor operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
-	// state is omitted.
-	//   "WAITING" - Request operation is waiting for scheduling.
-	//   "RUNNING" - Request is being processed.
-	//   "SUCCEEDED" - The operation is completed successfully.
-	//   "CANCELLING" - The operation was being cancelled.
-	//   "CANCELLED" - The operation was cancelled.
-	//   "FAILED" - The operation has failed.
-	State string `json:"state,omitempty"`
-
-	// StateMessage: A message providing more details about the current
-	// state of processing. For example, the error message if the operation
-	// is failed.
-	StateMessage string `json:"stateMessage,omitempty"`
-
-	// UpdateTime: The last update time of the operation.
-	UpdateTime string `json:"updateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -542,30 +477,6 @@ type GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse struct {
 type GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
-
-	// CreateTime: The creation time of the operation.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// State: The state of the current enable processor operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The default value. This value is used if the
-	// state is omitted.
-	//   "WAITING" - Request operation is waiting for scheduling.
-	//   "RUNNING" - Request is being processed.
-	//   "SUCCEEDED" - The operation is completed successfully.
-	//   "CANCELLING" - The operation was being cancelled.
-	//   "CANCELLED" - The operation was cancelled.
-	//   "FAILED" - The operation has failed.
-	State string `json:"state,omitempty"`
-
-	// StateMessage: A message providing more details about the current
-	// state of processing. For example, the error message if the operation
-	// is failed.
-	StateMessage string `json:"stateMessage,omitempty"`
-
-	// UpdateTime: The last update time of the operation.
-	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
@@ -7140,7 +7051,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7306,7 +7217,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7491,7 +7402,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7627,7 +7538,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7767,7 +7678,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7910,7 +7821,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8051,7 +7962,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8191,7 +8102,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -64,9 +64,10 @@ const (
 
 // credentialsFromJSON returns a google.Credentials based on the input.
 //
-// - If the JSON is a service account, no user are scopes provided, an audience
-//   is provided, and credentials will not be impersonated a signed JWT auth
-//   flow is executed.
+// - A self-signed JWT auth flow will be executed if: the data file is a service
+//   account, no user are scopes provided, an audience is provided, and
+//   credentials will not be impersonated.
+//
 // - Otherwise, executes a stanard OAuth 2.0 flow.
 func credentialsFromJSON(ctx context.Context, data []byte, ds *DialSettings) (*google.Credentials, error) {
 	cred, err := google.CredentialsFromJSON(ctx, data, ds.GetScopes()...)

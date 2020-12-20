@@ -230,7 +230,7 @@
       }
     }
   },
-  "revision": "20201203",
+  "revision": "20201215",
   "rootUrl": "https://artifactregistry.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -239,89 +239,46 @@
       "properties": {},
       "type": "object"
     },
-    "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
-      "id": "Empty",
-      "properties": {},
-      "type": "object"
-    },
-    "GoogleDevtoolsArtifactregistryV1alpha1ErrorInfo": {
-      "description": "Error information explaining why a package was not imported.",
-      "id": "GoogleDevtoolsArtifactregistryV1alpha1ErrorInfo",
+    "DockerImage": {
+      "description": "DockerImage represents a docker artifact.",
+      "id": "DockerImage",
       "properties": {
-        "error": {
-          "$ref": "Status",
-          "description": "The detailed error status."
+        "imageSizeBytes": {
+          "description": "Calculated size of the image.",
+          "format": "int64",
+          "type": "string"
         },
-        "gcsSource": {
-          "$ref": "GoogleDevtoolsArtifactregistryV1alpha1GcsSource",
-          "description": "Google Cloud Storage location requested."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleDevtoolsArtifactregistryV1alpha1GcsSource": {
-      "description": "Google Cloud Storage location where the artifacts currently reside.",
-      "id": "GoogleDevtoolsArtifactregistryV1alpha1GcsSource",
-      "properties": {
-        "uris": {
-          "description": "Cloud Storage paths URI (e.g., gs://my_bucket//my_object).",
+        "mediaType": {
+          "description": "Media type of this image, e.g. \"application/vnd.docker.distribution.manifest.v2+json\".",
+          "type": "string"
+        },
+        "name": {
+          "description": "Required. registry_location, project_id, repository_name and image id forms a unique image name:`projects//locations//repository//dockerimages/`. For example, \"projects/test-project/locations/us-west4/repositories/test-repo/dockerimages/ nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf\", where \"us-west4\" is the registry_location, \"test-project\" is the project_id, \"test-repo\" is the repository_name and \"nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf\" is the image's digest.",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Tags attached to this image.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
-        "useWildcards": {
-          "description": "Supports URI wildcards for matching multiple objects from a single URI.",
-          "type": "boolean"
+        "uploadTime": {
+          "description": "Time the image was uploaded.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Required. URL to access the image. Example: us-west4-docker.pkg.dev/test-project/test-repo/nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf",
+          "type": "string"
         }
       },
       "type": "object"
     },
-    "GoogleDevtoolsArtifactregistryV1alpha1ImportArtifactsResponse": {
-      "description": "The response message from importing artifacts.",
-      "id": "GoogleDevtoolsArtifactregistryV1alpha1ImportArtifactsResponse",
-      "properties": {
-        "errors": {
-          "description": "Detailed error info for packages that were not imported.",
-          "items": {
-            "$ref": "GoogleDevtoolsArtifactregistryV1alpha1ErrorInfo"
-          },
-          "type": "array"
-        },
-        "packages": {
-          "description": "The packages updated.",
-          "items": {
-            "$ref": "GoogleDevtoolsArtifactregistryV1alpha1Package"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleDevtoolsArtifactregistryV1alpha1Package": {
-      "description": "Packages are named collections of versions.",
-      "id": "GoogleDevtoolsArtifactregistryV1alpha1Package",
-      "properties": {
-        "createTime": {
-          "description": "The time when the package was created.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "displayName": {
-          "description": "The display name of the package.",
-          "type": "string"
-        },
-        "name": {
-          "description": "The name of the package, for example: \"projects/p1/locations/us-central1/repositories/repo1/packages/pkg1\".",
-          "type": "string"
-        },
-        "updateTime": {
-          "description": "The time when the package was last updated. This includes publishing a new version of the package.",
-          "format": "google-datetime",
-          "type": "string"
-        }
-      },
+    "Empty": {
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "id": "Empty",
+      "properties": {},
       "type": "object"
     },
     "ListOperationsResponse": {

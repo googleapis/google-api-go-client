@@ -157,6 +157,62 @@ type OperationsService struct {
 type CancelOperationRequest struct {
 }
 
+// DockerImage: DockerImage represents a docker artifact.
+type DockerImage struct {
+	// ImageSizeBytes: Calculated size of the image.
+	ImageSizeBytes int64 `json:"imageSizeBytes,omitempty,string"`
+
+	// MediaType: Media type of this image, e.g.
+	// "application/vnd.docker.distribution.manifest.v2+json".
+	MediaType string `json:"mediaType,omitempty"`
+
+	// Name: Required. registry_location, project_id, repository_name and
+	// image id forms a unique image
+	// name:`projects//locations//repository//dockerimages/`. For example,
+	// "projects/test-project/locations/us-west4/repositories/test-repo/docke
+	// rimages/
+	// nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a
+	// 823c7cf", where "us-west4" is the registry_location, "test-project"
+	// is the project_id, "test-repo" is the repository_name and
+	// "nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6
+	// a823c7cf" is the image's digest.
+	Name string `json:"name,omitempty"`
+
+	// Tags: Tags attached to this image.
+	Tags []string `json:"tags,omitempty"`
+
+	// UploadTime: Time the image was uploaded.
+	UploadTime string `json:"uploadTime,omitempty"`
+
+	// Uri: Required. URL to access the image. Example:
+	// us-west4-docker.pkg.dev/test-project/test-repo/nginx@sha256:e9954c1fc8
+	// 75017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageSizeBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageSizeBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DockerImage) MarshalJSON() ([]byte, error) {
+	type NoMethod DockerImage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -167,143 +223,6 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
-}
-
-// GoogleDevtoolsArtifactregistryV1alpha1ErrorInfo: Error information
-// explaining why a package was not imported.
-type GoogleDevtoolsArtifactregistryV1alpha1ErrorInfo struct {
-	// Error: The detailed error status.
-	Error *Status `json:"error,omitempty"`
-
-	// GcsSource: Google Cloud Storage location requested.
-	GcsSource *GoogleDevtoolsArtifactregistryV1alpha1GcsSource `json:"gcsSource,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Error") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Error") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDevtoolsArtifactregistryV1alpha1ErrorInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDevtoolsArtifactregistryV1alpha1ErrorInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleDevtoolsArtifactregistryV1alpha1GcsSource: Google Cloud Storage
-// location where the artifacts currently reside.
-type GoogleDevtoolsArtifactregistryV1alpha1GcsSource struct {
-	// Uris: Cloud Storage paths URI (e.g., gs://my_bucket//my_object).
-	Uris []string `json:"uris,omitempty"`
-
-	// UseWildcards: Supports URI wildcards for matching multiple objects
-	// from a single URI.
-	UseWildcards bool `json:"useWildcards,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Uris") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Uris") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDevtoolsArtifactregistryV1alpha1GcsSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDevtoolsArtifactregistryV1alpha1GcsSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleDevtoolsArtifactregistryV1alpha1ImportArtifactsResponse: The
-// response message from importing artifacts.
-type GoogleDevtoolsArtifactregistryV1alpha1ImportArtifactsResponse struct {
-	// Errors: Detailed error info for packages that were not imported.
-	Errors []*GoogleDevtoolsArtifactregistryV1alpha1ErrorInfo `json:"errors,omitempty"`
-
-	// Packages: The packages updated.
-	Packages []*GoogleDevtoolsArtifactregistryV1alpha1Package `json:"packages,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Errors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Errors") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDevtoolsArtifactregistryV1alpha1ImportArtifactsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDevtoolsArtifactregistryV1alpha1ImportArtifactsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleDevtoolsArtifactregistryV1alpha1Package: Packages are named
-// collections of versions.
-type GoogleDevtoolsArtifactregistryV1alpha1Package struct {
-	// CreateTime: The time when the package was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// DisplayName: The display name of the package.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: The name of the package, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1".
-	Name string `json:"name,omitempty"`
-
-	// UpdateTime: The time when the package was last updated. This includes
-	// publishing a new version of the package.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDevtoolsArtifactregistryV1alpha1Package) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDevtoolsArtifactregistryV1alpha1Package
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for
@@ -504,7 +423,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -645,7 +564,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -788,7 +707,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -968,7 +887,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201218")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201219")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

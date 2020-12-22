@@ -3292,7 +3292,7 @@
           ],
           "parameters": {
             "hl": {
-              "default": "en_US",
+              "default": "en-US",
               "location": "query",
               "type": "string"
             },
@@ -3788,7 +3788,7 @@
       }
     }
   },
-  "revision": "20201216",
+  "revision": "20201219",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {

@@ -831,7 +831,7 @@
       }
     }
   },
-  "revision": "20201208",
+  "revision": "20201231",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -1325,6 +1325,11 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "vpcScReferenceArchitectureEnabled": {
+          "description": "Output only. Indicates whether the VPC Service Controls reference architecture is configured for the producer VPC host network.",
+          "readOnly": true,
+          "type": "boolean"
         }
       },
       "type": "object"

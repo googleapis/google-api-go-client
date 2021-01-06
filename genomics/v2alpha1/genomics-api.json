@@ -301,7 +301,7 @@
       }
     }
   },
-  "revision": "20201207",
+  "revision": "20201231",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -357,7 +357,8 @@
               "ENABLE_FUSE",
               "PUBLISH_EXPOSED_PORTS",
               "DISABLE_IMAGE_PREFETCH",
-              "DISABLE_STANDARD_ERROR_CAPTURE"
+              "DISABLE_STANDARD_ERROR_CAPTURE",
+              "BLOCK_EXTERNAL_NETWORK"
             ],
             "enumDescriptions": [
               "Unspecified flag.",
@@ -367,7 +368,8 @@
               "Enable access to the FUSE device for this action. Filesystems can then be mounted into disks shared with other actions. The other actions do not need the `ENABLE_FUSE` flag to access the mounted filesystem. This has the effect of causing the container to be executed with `CAP_SYS_ADMIN` and exposes `/dev/fuse` to the container, so use it only for containers you trust.",
               "Exposes all ports specified by `EXPOSE` statements in the container. To discover the host side port numbers, consult the `ACTION_STARTED` event in the operation metadata.",
               "All container images are typically downloaded before any actions are executed. This helps prevent typos in URIs or issues like lack of disk space from wasting large amounts of compute resources. If set, this flag prevents the worker from downloading the image until just before the action is executed.",
-              "A small portion of the container's standard error stream is typically captured and returned inside the `ContainerStoppedEvent`. Setting this flag disables this functionality."
+              "A small portion of the container's standard error stream is typically captured and returned inside the `ContainerStoppedEvent`. Setting this flag disables this functionality.",
+              "Prevents the container from accessing the external network."
             ],
             "type": "string"
           },

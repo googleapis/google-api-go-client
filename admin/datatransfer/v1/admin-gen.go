@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -486,7 +486,7 @@ func (c *ApplicationsGetCall) Header() http.Header {
 
 func (c *ApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -594,7 +594,7 @@ func (r *ApplicationsService) List() *ApplicationsListCall {
 }
 
 // CustomerId sets the optional parameter "customerId": Immutable ID of
-// the Google Apps account.
+// the Google Workspace account.
 func (c *ApplicationsListCall) CustomerId(customerId string) *ApplicationsListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -651,7 +651,7 @@ func (c *ApplicationsListCall) Header() http.Header {
 
 func (c *ApplicationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -717,7 +717,7 @@ func (c *ApplicationsListCall) Do(opts ...googleapi.CallOption) (*ApplicationsLi
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Immutable ID of the Google Apps account.",
+	//       "description": "Immutable ID of the Google Workspace account.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -823,7 +823,7 @@ func (c *TransfersGetCall) Header() http.Header {
 
 func (c *TransfersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -956,7 +956,7 @@ func (c *TransfersInsertCall) Header() http.Header {
 
 func (c *TransfersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1055,7 +1055,7 @@ func (r *TransfersService) List() *TransfersListCall {
 }
 
 // CustomerId sets the optional parameter "customerId": Immutable ID of
-// the Google Apps account.
+// the Google Workspace account.
 func (c *TransfersListCall) CustomerId(customerId string) *TransfersListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -1132,7 +1132,7 @@ func (c *TransfersListCall) Header() http.Header {
 
 func (c *TransfersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1198,7 +1198,7 @@ func (c *TransfersListCall) Do(opts ...googleapi.CallOption) (*DataTransfersList
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Immutable ID of the Google Apps account.",
+	//       "description": "Immutable ID of the Google Workspace account.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

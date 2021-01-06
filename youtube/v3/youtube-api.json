@@ -1976,7 +1976,7 @@
               "type": "string"
             },
             "part": {
-              "description": "The *part* parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include. The part properties that you can include in the parameter value are id, snippet, cdn, and status.",
+              "description": "The *part* parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include. The part properties that you can include in the parameter value are id, snippet, cdn, content_details, and status.",
               "location": "query",
               "repeated": true,
               "required": true,
@@ -3788,7 +3788,7 @@
       }
     }
   },
-  "revision": "20201219",
+  "revision": "20201231",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {

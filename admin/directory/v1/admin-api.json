@@ -309,7 +309,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -340,7 +340,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -386,7 +386,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -490,7 +490,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the G Suite account",
+              "description": "Immutable ID of the Google Workspace account",
               "location": "path",
               "required": true,
               "type": "string"
@@ -521,7 +521,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -570,7 +570,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -627,7 +627,7 @@
                   ],
                   "parameters": {
                     "customerId": {
-                      "description": "Immutable. Immutable ID of the G Suite account.",
+                      "description": "Immutable. Immutable ID of the Google Workspace account.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -673,7 +673,7 @@
                           "type": "string"
                         },
                         "customerId": {
-                          "description": "Immutable. Immutable ID of the G Suite account.",
+                          "description": "Immutable. Immutable ID of the Google Workspace account.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -798,7 +798,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -826,7 +826,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -857,7 +857,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -884,7 +884,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -919,7 +919,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -947,7 +947,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -978,7 +978,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1005,7 +1005,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1096,7 +1096,7 @@
           "parameterOrder": [],
           "parameters": {
             "customer": {
-              "description": "The unique ID for the customer's G Suite account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users)",
+              "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users](/admin-sdk/directory/v1/reference/users)",
               "location": "query",
               "type": "string"
             },
@@ -1570,7 +1570,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1602,7 +1602,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1630,7 +1630,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1677,7 +1677,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1784,7 +1784,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1813,7 +1813,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1845,7 +1845,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1872,7 +1872,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1919,7 +1919,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1954,7 +1954,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
+              "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1992,7 +1992,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2030,7 +2030,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2058,7 +2058,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2101,7 +2101,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2128,7 +2128,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2191,7 +2191,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2243,7 +2243,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2281,7 +2281,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2309,7 +2309,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2334,7 +2334,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2361,7 +2361,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2416,7 +2416,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2450,7 +2450,7 @@
                   "type": "string"
                 },
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2482,7 +2482,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2510,7 +2510,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2541,7 +2541,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2568,7 +2568,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2607,7 +2607,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2641,7 +2641,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2672,7 +2672,7 @@
               ],
               "parameters": {
                 "customer": {
-                  "description": "The unique ID for the customer's G Suite account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
+                  "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's customer ID.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -2712,7 +2712,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2740,7 +2740,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2771,7 +2771,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2798,7 +2798,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2851,7 +2851,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2879,7 +2879,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2910,7 +2910,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2937,7 +2937,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2976,7 +2976,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3010,7 +3010,7 @@
           ],
           "parameters": {
             "customer": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3048,7 +3048,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3076,7 +3076,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3107,7 +3107,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3134,7 +3134,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3160,7 +3160,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3194,7 +3194,7 @@
           ],
           "parameters": {
             "customerId": {
-              "description": "Immutable ID of the G Suite account.",
+              "description": "Immutable ID of the Google Workspace account.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3449,7 +3449,7 @@
               "type": "string"
             },
             "customer": {
-              "description": "The unique ID for the customer's G Suite account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users). Either the `customer` or the `domain` parameter must be provided.",
+              "description": "The unique ID for the customer's Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, fill this field instead of domain. You can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users). Either the `customer` or the `domain` parameter must be provided.",
               "location": "query",
               "type": "string"
             },
@@ -3695,7 +3695,7 @@
               "type": "string"
             },
             "customer": {
-              "description": "Immutable ID of the G Suite account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
+              "description": "Immutable ID of the Google Workspace account. In case of multi-domain, to fetch all users for a customer, fill this field instead of domain.",
               "location": "query",
               "type": "string"
             },
@@ -4139,7 +4139,7 @@
       }
     }
   },
-  "revision": "20201215",
+  "revision": "20210105",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4930,7 +4930,7 @@
           "type": "string"
         },
         "id": {
-          "description": "The unique ID for the customer's G Suite account. (Readonly)",
+          "description": "The unique ID for the customer's Google Workspace account. (Readonly)",
           "type": "string"
         },
         "kind": {
@@ -5510,7 +5510,7 @@
       "type": "object"
     },
     "MobileDevice": {
-      "description": "G Suite Mobile Management includes Android, [Google Sync](http://support.google.com/a/bin/answer.py?answer=135937), and iOS devices. For more information about common group mobile device API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-mobile-devices.html).",
+      "description": "Google Workspace Mobile Management includes Android, [Google Sync](http://support.google.com/a/bin/answer.py?answer=135937), and iOS devices. For more information about common group mobile device API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-mobile-devices.html).",
       "id": "MobileDevice",
       "properties": {
         "adbStatus": {
@@ -5518,7 +5518,7 @@
           "type": "boolean"
         },
         "applications": {
-          "description": "The list of applications installed on an Android mobile device. It is not applicable to Google Sync and iOS devices. The list includes any Android applications that access G Suite data. When updating an applications list, it is important to note that updates replace the existing list. If the Android device has two existing applications and the API updates the list with five applications, the is now the updated list of five applications.",
+          "description": "The list of applications installed on an Android mobile device. It is not applicable to Google Sync and iOS devices. The list includes any Android applications that access Google Workspace data. When updating an applications list, it is important to note that updates replace the existing list. If the Android device has two existing applications and the API updates the list with five applications, the is now the updated list of five applications.",
           "items": {
             "properties": {
               "displayName": {
@@ -5794,7 +5794,7 @@
           "type": "string"
         },
         "orgUnitPath": {
-          "description": "The full path to the organizational unit. The `orgUnitPath` is a derived property. When listed, it is derived from `parentOrgunitPath` and organizational unit's `name`. For example, for an organizational unit named 'apps' under parent organization '/engineering', the orgUnitPath is '/engineering/apps'. In order to edit an `orgUnitPath`, either update the name of the organization or the `parentOrgunitPath`. A user's organizational unit determines which G Suite services the user has access to. If the user is moved to a new organization, the user's access changes. For more information about organization structures, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=182433\u0026topic=1227584\u0026ctx=topic). For more information about moving a user to a different organization, see [Update a user](/admin-sdk/directory/v1/guides/manage-users.html#update_user).",
+          "description": "The full path to the organizational unit. The `orgUnitPath` is a derived property. When listed, it is derived from `parentOrgunitPath` and organizational unit's `name`. For example, for an organizational unit named 'apps' under parent organization '/engineering', the orgUnitPath is '/engineering/apps'. In order to edit an `orgUnitPath`, either update the name of the organization or the `parentOrgunitPath`. A user's organizational unit determines which Google Workspace services the user has access to. If the user is moved to a new organization, the user's access changes. For more information about organization structures, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=182433\u0026topic=1227584\u0026ctx=topic). For more information about moving a user to a different organization, see [Update a user](/admin-sdk/directory/v1/guides/manage-users.html#update_user).",
           "type": "string"
         },
         "parentOrgUnitId": {
@@ -6357,7 +6357,7 @@
           "type": "any"
         },
         "includeInGlobalAddressList": {
-          "description": "Indicates if the user's profile is visible in the G Suite global address list when the contact sharing feature is enabled for the domain. For more information about excluding user profiles, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=1285988).",
+          "description": "Indicates if the user's profile is visible in the Google Workspace global address list when the contact sharing feature is enabled for the domain. For more information about excluding user profiles, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=1285988).",
           "type": "boolean"
         },
         "ipWhitelisted": {

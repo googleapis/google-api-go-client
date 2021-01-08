@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20201212",
+  "revision": "20201231",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
@@ -339,17 +339,6 @@
     "GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata": {
       "description": "The long running operation metadata for CreateLabelerPool.",
       "id": "GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata",
-      "properties": {
-        "commonMetadata": {
-          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
-          "description": "The basic metadata of the long running operation."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDocumentaiUiv1beta3CreateProcessorVersionMetadata": {
-      "description": "The metadata that represents a processor version being created.",
-      "id": "GoogleCloudDocumentaiUiv1beta3CreateProcessorVersionMetadata",
       "properties": {
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
@@ -442,6 +431,156 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudDocumentaiUiv1beta3ProcessorVersion": {
+      "description": "A processor version is an implementation of a processor. Each processor can have multiple versions, pre-trained by Google internally or up-trained by the customer. At a time, a processor can only have one default version version. So the processor's behavior (when processing documents) is defined by a default version.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ProcessorVersion",
+      "properties": {
+        "createTime": {
+          "description": "The time the processor version was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The display name of the processor version.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the processor version. Format: projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processor_version}",
+          "type": "string"
+        },
+        "schema": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3Schema",
+          "description": "The schema of the processor version. Describes the output."
+        },
+        "state": {
+          "description": "The state of the processor version.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "DEPLOYED",
+            "DEPLOYING",
+            "UNDEPLOYED",
+            "UNDEPLOYING",
+            "CREATING",
+            "DELETING",
+            "FAILED"
+          ],
+          "enumDescriptions": [
+            "The processor version is in an unspecified state.",
+            "The processor version is deployed and can be used for processing.",
+            "The processor version is being deployed.",
+            "The processor version is not deployed and cannot be used for processing.",
+            "The processor version is being undeployed.",
+            "The processor version is being created.",
+            "The processor version is being deleted.",
+            "The processor version failed and is in an indeterminate state."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3Schema": {
+      "description": "The schema defines the output of the processed document by a processor.",
+      "id": "GoogleCloudDocumentaiUiv1beta3Schema",
+      "properties": {
+        "description": {
+          "description": "Description of the schema.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Display name to show to users.",
+          "type": "string"
+        },
+        "entityTypes": {
+          "description": "Entity types of the schema.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3SchemaEntityType"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3SchemaEntityType": {
+      "description": "EntityType is the wrapper of a label of the corresponding model with detailed attributes and limitations for entity-based processors. Multiple types can also compose a dependency tree to represent nested types.",
+      "id": "GoogleCloudDocumentaiUiv1beta3SchemaEntityType",
+      "properties": {
+        "baseType": {
+          "description": "Type of the entity. It can be either a value type (such as \"text\", \"numeric\", \"date\" and \"address\"), or an object type which may contain nested entities (such as \"document\" and \"table\").",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description of the entity type.",
+          "type": "string"
+        },
+        "occurrenceType": {
+          "description": "Occurrence type limits the number of times an entity type appears in the document.",
+          "enum": [
+            "OCCURRENCE_TYPE_UNSPECIFIED",
+            "OPTIONAL_ONCE",
+            "OPTIONAL_MULTIPLE",
+            "REQUIRED_ONCE",
+            "REQUIRED_MULTIPLE"
+          ],
+          "enumDescriptions": [
+            "Unspecified occurrence type.",
+            "The entity type will appear zero times or once.",
+            "The entity type will appear zero or multiple times.",
+            "The entity type will only appear exactly once.",
+            "The entity type will appear once or more times."
+          ],
+          "type": "string"
+        },
+        "properties": {
+          "description": "Describing the nested structure of an entity. An EntityType may consist of several other EntityTypes. For example, in a document there can be an EntityType 'ID', which consists of EntityType 'name' and 'address', with corresponding attributes, such as TEXT for both types and ONCE for occurrence types.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3SchemaEntityType"
+          },
+          "type": "array"
+        },
+        "source": {
+          "description": "Source of this entity type.",
+          "enum": [
+            "SOURCE_UNSPECIFIED",
+            "PREDEFINED",
+            "USER_INPUT"
+          ],
+          "enumDescriptions": [
+            "Unspecified source.",
+            "The entity type is in the predefined schema of a pretrained version of a processor.",
+            "The entity type is added by the users either: - during an uptraining of an existing processor, or - during the process of creating a customized processor."
+          ],
+          "type": "string"
+        },
+        "type": {
+          "description": "Name of the type. It must be unique within the set of same level types.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata": {
+      "description": "The metadata that represents a processor version being created.",
+      "id": "GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse": {
+      "description": "The response for the TrainProcessorVersion method.",
+      "id": "GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse",
+      "properties": {
+        "processorVersion": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3ProcessorVersion",
+          "description": "The processor version produced by training."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata": {
       "description": "The long running operation metadata for the undeploy processor version method.",
       "id": "GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata",
@@ -477,6 +616,148 @@
         "commonMetadata": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
           "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1BatchProcessMetadata": {
+      "description": "The long running operation metadata for batch process method.",
+      "id": "GoogleCloudDocumentaiV1BatchProcessMetadata",
+      "properties": {
+        "createTime": {
+          "description": "The creation time of the operation.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "individualProcessStatuses": {
+          "description": "The list of response details of each document.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus"
+          },
+          "type": "array"
+        },
+        "state": {
+          "description": "The state of the current batch processing.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "WAITING",
+            "RUNNING",
+            "SUCCEEDED",
+            "CANCELLING",
+            "CANCELLED",
+            "FAILED"
+          ],
+          "enumDescriptions": [
+            "The default value. This value is used if the state is omitted.",
+            "Request operation is waiting for scheduling.",
+            "Request is being processed.",
+            "The batch processing completed successfully.",
+            "The batch processing was being cancelled.",
+            "The batch processing was cancelled.",
+            "The batch processing has failed."
+          ],
+          "type": "string"
+        },
+        "stateMessage": {
+          "description": "A message providing more details about the current state of processing. For example, the error message if the operation is failed.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "The last update time of the operation.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus": {
+      "description": "The status of a each individual document in the batch process.",
+      "id": "GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus",
+      "properties": {
+        "humanReviewOperation": {
+          "description": "The name of the operation triggered by the processed document. If the human review process is not triggered, this field will be empty. It has the same response type and metadata as the long running operation returned by ReviewDocument method.",
+          "type": "string"
+        },
+        "inputGcsSource": {
+          "description": "The source of the document, same as the [input_gcs_source] field in the request when the batch process started. The batch process is started by take snapshot of that document, since a user can move or change that document during the process.",
+          "type": "string"
+        },
+        "outputGcsDestination": {
+          "description": "The output_gcs_destination (in the request as 'output_gcs_destination') of the processed document if it was successful, otherwise empty.",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "GoogleRpcStatus",
+          "description": "The status of the processing of the document."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1BatchProcessResponse": {
+      "description": "Response message for batch process document method.",
+      "id": "GoogleCloudDocumentaiV1BatchProcessResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1CommonOperationMetadata": {
+      "description": "The common metadata for long running operations.",
+      "id": "GoogleCloudDocumentaiV1CommonOperationMetadata",
+      "properties": {
+        "createTime": {
+          "description": "The creation time of the operation.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of the operation.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "RUNNING",
+            "CANCELLING",
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified state.",
+            "Operation is still running.",
+            "Operation is being cancelled.",
+            "Operation succeeded.",
+            "Operation failed.",
+            "Operation is cancelled."
+          ],
+          "type": "string"
+        },
+        "stateMessage": {
+          "description": "A message providing more details about the current state of processing.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "The last update time of the operation.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata": {
+      "description": "The long running operation metadata for review document method.",
+      "id": "GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiV1CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1ReviewDocumentResponse": {
+      "description": "Response message for review document method.",
+      "id": "GoogleCloudDocumentaiV1ReviewDocumentResponse",
+      "properties": {
+        "gcsDestination": {
+          "description": "The Cloud Storage uri for the human reviewed document.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3064,10 +3345,55 @@
       "properties": {},
       "type": "object"
     },
+    "GoogleCloudDocumentaiV1beta3CommonOperationMetadata": {
+      "description": "The common metadata for long running operations.",
+      "id": "GoogleCloudDocumentaiV1beta3CommonOperationMetadata",
+      "properties": {
+        "createTime": {
+          "description": "The creation time of the operation.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of the operation.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "RUNNING",
+            "CANCELLING",
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified state.",
+            "Operation is still running.",
+            "Operation is being cancelled.",
+            "Operation succeeded.",
+            "Operation failed.",
+            "Operation is cancelled."
+          ],
+          "type": "string"
+        },
+        "stateMessage": {
+          "description": "A message providing more details about the current state of processing.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "The last update time of the operation.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata": {
       "description": "The long running operation metadata for review document method.",
       "id": "GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata",
       "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiV1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        },
         "createTime": {
           "description": "The creation time of the operation.",
           "format": "google-datetime",

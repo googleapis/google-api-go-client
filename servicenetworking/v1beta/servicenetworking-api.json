@@ -307,7 +307,7 @@
       }
     }
   },
-  "revision": "20201231",
+  "revision": "20210106",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -2218,6 +2218,10 @@
           "description": "This is a discovered subnet that is not within the current consumer allocated ranges.",
           "type": "boolean"
         },
+        "region": {
+          "description": "GCP region where the subnetwork is located.",
+          "type": "string"
+        },
         "secondaryIpRanges": {
           "description": "List of secondary IP ranges in this subnetwork.",
           "items": {
@@ -2342,7 +2346,7 @@
           "type": "string"
         },
         "requirements": {
-          "description": "Requirements that must be satisfied before a consumer project can use the service. Each requirement is of the form /; for example 'serviceusage.googleapis.com/billing-enabled'.",
+          "description": "Requirements that must be satisfied before a consumer project can use the service. Each requirement is of the form /; for example 'serviceusage.googleapis.com/billing-enabled'. For Google APIs, a Terms of Service requirement must be included here. Google Cloud APIs must include \"serviceusage.googleapis.com/tos/cloud\". Other Google APIs should include \"serviceusage.googleapis.com/tos/universal\". Additional ToS can be included based on the business needs.",
           "items": {
             "type": "string"
           },

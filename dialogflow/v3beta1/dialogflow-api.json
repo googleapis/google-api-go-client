@@ -224,6 +224,37 @@
                     "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
+                "getValidationResult": {
+                  "description": "Gets the latest agent validation result. Agent validation is performed when ValidateAgent is called.",
+                  "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/validationResult",
+                  "httpMethod": "GET",
+                  "id": "dialogflow.projects.locations.agents.getValidationResult",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "languageCode": {
+                      "description": "If not specified, the agent's default language is used.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Required. The agent name. Format: `projects//locations//agents//validationResult`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/validationResult$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v3beta1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1AgentValidationResult"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
                 "list": {
                   "description": "Returns the list of all agents in the specified location.",
                   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents",
@@ -319,6 +350,35 @@
                   },
                   "response": {
                     "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
+                  ]
+                },
+                "validate": {
+                  "description": "Validates the specified agent and creates or updates validation results. The agent in draft version is validated. Please call this API after the training is completed to get the complete validation results.",
+                  "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}:validate",
+                  "httpMethod": "POST",
+                  "id": "dialogflow.projects.locations.agents.validate",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The agent to validate. Format: `projects//locations//agents/`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v3beta1/{+name}:validate",
+                  "request": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1ValidateAgentRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudDialogflowCxV3beta1AgentValidationResult"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -703,6 +763,221 @@
                     }
                   },
                   "resources": {
+                    "experiments": {
+                      "methods": {
+                        "create": {
+                          "description": "Creates an Experiment in the specified Environment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments",
+                          "httpMethod": "POST",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.create",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "parent": {
+                              "description": "Required. The Agent to create an Environment for. Format: `projects//locations//agents//environments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+parent}/experiments",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "delete": {
+                          "description": "Deletes the specified Experiment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
+                          "httpMethod": "DELETE",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.delete",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The name of the Environment to delete. Format: `projects//locations//agents//environments//experiments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}",
+                          "response": {
+                            "$ref": "GoogleProtobufEmpty"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "get": {
+                          "description": "Retrieves the specified Experiment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
+                          "httpMethod": "GET",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.get",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The name of the Environment. Format: `projects//locations//agents//environments//experiments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}",
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "list": {
+                          "description": "Returns the list of all experiments in the specified Environment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments",
+                          "httpMethod": "GET",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.list",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "pageSize": {
+                              "description": "The maximum number of items to return in a single page. By default 20 and at most 100.",
+                              "format": "int32",
+                              "location": "query",
+                              "type": "integer"
+                            },
+                            "pageToken": {
+                              "description": "The next_page_token value returned from a previous list request.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "parent": {
+                              "description": "Required. The Environment to list all environments for. Format: `projects//locations//agents//environments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+parent}/experiments",
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1ListExperimentsResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "patch": {
+                          "description": "Updates the specified Experiment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
+                          "httpMethod": "PATCH",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.patch",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "The name of the experiment. Format: projects//locations//agents//environments//experiments/..",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "updateMask": {
+                              "description": "Required. The mask to control which fields get updated.",
+                              "format": "google-fieldmask",
+                              "location": "query",
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "start": {
+                          "description": "Starts the specified Experiment. This rpc only changes the state of experiment from PENDING to RUNNING.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}:start",
+                          "httpMethod": "POST",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.start",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. Resource name of the experiment to start. Format: `projects//locations//agents//environments//experiments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}:start",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1StartExperimentRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "stop": {
+                          "description": "Stops the specified Experiment. This rpc only changes the state of experiment from RUNNING to DONE.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}:stop",
+                          "httpMethod": "POST",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.stop",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. Resource name of the experiment to stop. Format: `projects//locations//agents//environments//experiments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}:stop",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1StopExperimentRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        }
+                      }
+                    },
                     "sessions": {
                       "methods": {
                         "detectIntent": {
@@ -1053,6 +1328,37 @@
                         "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
+                    "getValidationResult": {
+                      "description": "Gets the latest flow validation result. Flow validation is performed when ValidateFlow is called.",
+                      "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}/validationResult",
+                      "httpMethod": "GET",
+                      "id": "dialogflow.projects.locations.agents.flows.getValidationResult",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "languageCode": {
+                          "description": "If not specified, the agent's default language is used.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Required. The flow name. Format: `projects//locations//agents//flows//validationResult`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+/validationResult$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v3beta1/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudDialogflowCxV3beta1FlowValidationResult"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
+                      ]
+                    },
                     "list": {
                       "description": "Returns the list of all flows in the specified agent.",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows",
@@ -1158,6 +1464,35 @@
                       },
                       "response": {
                         "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
+                      ]
+                    },
+                    "validate": {
+                      "description": "Validates the specified flow and creates or updates validation results. Please call this API after the training is completed to get the complete validation results.",
+                      "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}:validate",
+                      "httpMethod": "POST",
+                      "id": "dialogflow.projects.locations.agents.flows.validate",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The flow to validate. Format: `projects//locations//agents//flows/`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/flows/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v3beta1/{+name}:validate",
+                      "request": {
+                        "$ref": "GoogleCloudDialogflowCxV3beta1ValidateFlowRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDialogflowCxV3beta1FlowValidationResult"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
@@ -3072,7 +3407,7 @@
       }
     }
   },
-  "revision": "20201213",
+  "revision": "20201231",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -4546,6 +4881,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1AgentValidationResult": {
+      "description": "The response message for Agents.GetAgentValidationResult.",
+      "id": "GoogleCloudDialogflowCxV3beta1AgentValidationResult",
+      "properties": {
+        "flowValidationResults": {
+          "description": "Contains all flow validation results.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1FlowValidationResult"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "The unique identifier of the agent validation result. Format: `projects//locations//agents//validationResult`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1AudioInput": {
       "description": "Represents the natural speech audio to be processed.",
       "id": "GoogleCloudDialogflowCxV3beta1AudioInput",
@@ -4992,6 +5345,201 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1Experiment": {
+      "description": "Represents an experiment in an environment. Next ID: 13",
+      "id": "GoogleCloudDialogflowCxV3beta1Experiment",
+      "properties": {
+        "createTime": {
+          "description": "Creation time of this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "definition": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentDefinition",
+          "description": "The definition of the experiment."
+        },
+        "description": {
+          "description": "The human-readable description of the experiment.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. The human-readable name of the experiment (unique in an environment). Limit of 64 characters.",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "End time of this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "experimentLength": {
+          "description": "Maximum number of days to run the experiment.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "lastUpdateTime": {
+          "description": "Last update time of this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the experiment. Format: projects//locations//agents//environments//experiments/..",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResult",
+          "description": "Inference result of the experiment."
+        },
+        "startTime": {
+          "description": "Start time of this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "The current state of the experiment. Transition triggered by Expriments.StartExperiment: PENDING-\u003eRUNNING. Transition triggered by Expriments.CancelExperiment: PENDING-\u003eCANCELLED or RUNNING-\u003eCANCELLED.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "DRAFT",
+            "RUNNING",
+            "DONE"
+          ],
+          "enumDescriptions": [
+            "State unspecified.",
+            "The experiment is created but not started yet.",
+            "The experiment is running.",
+            "The experiment is done."
+          ],
+          "type": "string"
+        },
+        "variantsHistory": {
+          "description": "The history of updates to the experiment variants.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1VariantsHistory"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentDefinition": {
+      "description": "Definition of the experiment. Next ID: 3",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentDefinition",
+      "properties": {
+        "condition": {
+          "description": "The condition defines which subset of sessions are selected for this experiment. If not specified, all sessions are eligible. E.g. \"query_input.language_code=en\" See the [conditions reference](https://cloud.google.com/dialogflow/cx/docs/reference/condition).",
+          "type": "string"
+        },
+        "versionVariants": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1VersionVariants",
+          "description": "The flow versions as the variants of this experiment."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentResult": {
+      "description": "The inference result which includes an objective metric to optimize and the confidence interval.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentResult",
+      "properties": {
+        "lastUpdateTime": {
+          "description": "The last time the experiment's stats data was updated. Will have default value if stats have never been computed for this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "versionMetrics": {
+          "description": "Version variants and metrics.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval": {
+      "description": "A confidence interval is a range of possible values for the experiment objective you are trying to measure.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval",
+      "properties": {
+        "confidenceLevel": {
+          "description": "The confidence level used to construct the interval, i.e. there is X% chance that the true value is within this interval.",
+          "format": "double",
+          "type": "number"
+        },
+        "lowerBound": {
+          "description": "Lower bound of the interval.",
+          "format": "double",
+          "type": "number"
+        },
+        "ratio": {
+          "description": "The percent change between an experiment metric's value and the value for its control.",
+          "format": "double",
+          "type": "number"
+        },
+        "upperBound": {
+          "description": "Upper bound of the interval.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentResultMetric": {
+      "description": "Metric and corresponding confidence intervals.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentResultMetric",
+      "properties": {
+        "confidenceInterval": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval",
+          "description": "The probability that the treatment is better than all other treatments in the experiment"
+        },
+        "ratio": {
+          "description": "Ratio value of a metric.",
+          "format": "double",
+          "type": "number"
+        },
+        "type": {
+          "description": "The type of the metric.",
+          "enum": [
+            "METRIC_UNSPECIFIED",
+            "CONTAINED_SESSION_NO_CALLBACK_RATE",
+            "LIVE_AGENT_HANDOFF_RATE",
+            "CALLBACK_SESSION_RATE",
+            "ABANDONED_SESSION_RATE",
+            "SESSION_END_RATE"
+          ],
+          "enumDescriptions": [
+            "Metric unspecified.",
+            "Percentage of contained sessions without user calling back in 24 hours.",
+            "Percentage of sessions that were handed to a human agent.",
+            "Percentage of sessions with the same user calling back.",
+            "Percentage of sessions where user hung up.",
+            "Percentage of sessions reached Dialogflow 'END_PAGE' or 'END_SESSION'."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics": {
+      "description": "Version variant and associated metrics.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics",
+      "properties": {
+        "metrics": {
+          "description": "The metrics and corresponding confidence intervals in the inference result.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResultMetric"
+          },
+          "type": "array"
+        },
+        "sessionCount": {
+          "description": "Number of sessions that were allocated to this version.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "version": {
+          "description": "The name of the flow Version. Format: `projects//locations//agents//flows//versions/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1ExportAgentRequest": {
       "description": "The request message for Agents.ExportAgent.",
       "id": "GoogleCloudDialogflowCxV3beta1ExportAgentRequest",
@@ -5101,6 +5649,29 @@
           "description": "A flow's transition routes serve two purposes: * They are responsible for matching the user's first utterances in the flow. * They are inherited by every page's transition routes and can support use cases such as the user saying \"help\" or \"can I talk to a human?\", which can be handled in a common way regardless of the current page. Transition routes defined in the page have higher priority than those defined in the flow. TransitionRoutes are evalauted in the following order: * TransitionRoutes with intent specified.. * TransitionRoutes with only condition specified. TransitionRoutes with intent specified are inherited by pages in the flow.",
           "items": {
             "$ref": "GoogleCloudDialogflowCxV3beta1TransitionRoute"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1FlowValidationResult": {
+      "description": "The response message for Flows.GetFlowValidationResult.",
+      "id": "GoogleCloudDialogflowCxV3beta1FlowValidationResult",
+      "properties": {
+        "name": {
+          "description": "The unique identifier of the flow validation result. Format: `projects//locations//agents//flows//validationResult`.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Last time the flow was validated.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "validationMessages": {
+          "description": "Contains all validation messages.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1ValidationMessage"
           },
           "type": "array"
         }
@@ -5688,6 +6259,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1ListExperimentsResponse": {
+      "description": "The response message for Experiments.ListExperiments.",
+      "id": "GoogleCloudDialogflowCxV3beta1ListExperimentsResponse",
+      "properties": {
+        "experiments": {
+          "description": "The list of experiments. There will be a maximum number of items returned based on the page_size field in the request. The list may in some cases be empty or contain fewer entries than page_size even if this isn't the last page.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no more results in the list.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1ListFlowsResponse": {
       "description": "The response message for Flows.ListFlows.",
       "id": "GoogleCloudDialogflowCxV3beta1ListFlowsResponse",
@@ -5941,7 +6530,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of parameters extracted from the query. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "The collection of parameters extracted from the query. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         },
         "resolvedInput": {
@@ -6236,7 +6825,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Additional parameters to be put into session parameters. To remove a parameter from the session, clients should explicitly set the parameter value to null. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "Additional parameters to be put into session parameters. To remove a parameter from the session, clients should explicitly set the parameter value to null. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         },
         "payload": {
@@ -6306,7 +6895,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collected session parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "The collected session parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         },
         "responseMessages": {
@@ -6364,6 +6953,21 @@
         "genericMetadata": {
           "$ref": "GoogleCloudDialogflowCxV3beta1GenericKnowledgeOperationMetadata",
           "description": "The generic information of the operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ResourceName": {
+      "description": "Resource name and display name.",
+      "id": "GoogleCloudDialogflowCxV3beta1ResourceName",
+      "properties": {
+        "displayName": {
+          "description": "Display name.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -6728,6 +7332,18 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1StartExperimentRequest": {
+      "description": "The request message for Experiments.StartExperiment.",
+      "id": "GoogleCloudDialogflowCxV3beta1StartExperimentRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1StopExperimentRequest": {
+      "description": "The request message for Experiments.StopExperiment.",
+      "id": "GoogleCloudDialogflowCxV3beta1StopExperimentRequest",
+      "properties": {},
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1SynthesizeSpeechConfig": {
       "description": "Configuration of how speech should be synthesized.",
       "id": "GoogleCloudDialogflowCxV3beta1SynthesizeSpeechConfig",
@@ -7079,6 +7695,121 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1ValidateAgentRequest": {
+      "description": "The request message for Agents.ValidateAgent.",
+      "id": "GoogleCloudDialogflowCxV3beta1ValidateAgentRequest",
+      "properties": {
+        "languageCode": {
+          "description": "If not specified, the agent's default language is used.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ValidateFlowRequest": {
+      "description": "The request message for Flows.ValidateFlow.",
+      "id": "GoogleCloudDialogflowCxV3beta1ValidateFlowRequest",
+      "properties": {
+        "languageCode": {
+          "description": "If not specified, the agent's default language is used.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ValidationMessage": {
+      "description": "Agent/flow validation message.",
+      "id": "GoogleCloudDialogflowCxV3beta1ValidationMessage",
+      "properties": {
+        "detail": {
+          "description": "The message detail.",
+          "type": "string"
+        },
+        "resourceNames": {
+          "description": "The resource names of the resources where the message is found.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1ResourceName"
+          },
+          "type": "array"
+        },
+        "resourceType": {
+          "description": "The type of the resources where the message is found.",
+          "enum": [
+            "RESOURCE_TYPE_UNSPECIFIED",
+            "AGENT",
+            "INTENT",
+            "INTENT_TRAINING_PHRASE",
+            "INTENT_PARAMETER",
+            "INTENTS",
+            "INTENT_TRAINING_PHRASES",
+            "ENTITY_TYPE",
+            "ENTITY_TYPES",
+            "WEBHOOK",
+            "FLOW",
+            "PAGE",
+            "PAGES",
+            "TRANSITION_ROUTE_GROUP"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Agent.",
+            "Intent.",
+            "Intent training phrase.",
+            "Intent parameter.",
+            "Multiple intents.",
+            "Multiple training phrases.",
+            "Entity type.",
+            "Multiple entity types.",
+            "Webhook.",
+            "Flow.",
+            "Page.",
+            "Multiple pages.",
+            "Transition route group."
+          ],
+          "type": "string"
+        },
+        "resources": {
+          "description": "The names of the resources where the message is found.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "severity": {
+          "description": "Indicates the severity of the message.",
+          "enum": [
+            "SEVERITY_UNSPECIFIED",
+            "INFO",
+            "WARNING",
+            "ERROR"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "The agent doesn't follow Dialogflow best practices.",
+            "The agent may not behave as expected.",
+            "The agent may experience failures."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1VariantsHistory": {
+      "description": "The history of variants update.",
+      "id": "GoogleCloudDialogflowCxV3beta1VariantsHistory",
+      "properties": {
+        "updateTime": {
+          "description": "Update time of the variants.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "versionVariants": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1VersionVariants",
+          "description": "The flow versions as the variants."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1Version": {
       "description": "Represents a version of a flow.",
       "id": "GoogleCloudDialogflowCxV3beta1Version",
@@ -7126,12 +7857,46 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1VersionVariants": {
+      "description": "A list of flow version variants.",
+      "id": "GoogleCloudDialogflowCxV3beta1VersionVariants",
+      "properties": {
+        "variants": {
+          "description": "A list of flow version variants.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1VersionVariantsVariant"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1VersionVariantsVariant": {
+      "description": "A single flow version with specified traffic allocation.",
+      "id": "GoogleCloudDialogflowCxV3beta1VersionVariantsVariant",
+      "properties": {
+        "isControlGroup": {
+          "description": "Whether the variant is for the control group.",
+          "type": "boolean"
+        },
+        "trafficAllocation": {
+          "description": "Percentage of the traffic which should be routed to this version of flow. Traffic allocation for a single flow must sum up to 1.0.",
+          "format": "float",
+          "type": "number"
+        },
+        "version": {
+          "description": "The name of the flow version. Format: `projects//locations//agents//flows//versions/`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1VoiceSelectionParams": {
       "description": "Description of which voice to use for speech synthesis.",
       "id": "GoogleCloudDialogflowCxV3beta1VoiceSelectionParams",
       "properties": {
         "name": {
-          "description": "Optional. The name of the voice. If not set, the service will choose a voice based on the other parameters such as language_code and ssml_gender.",
+          "description": "Optional. The name of the voice. If not set, the service will choose a voice based on the other parameters such as language_code and ssml_gender. For the list of available voices, please refer to [Supported voices and languages](https://cloud.google.com/text-to-speech/docs/voices).",
           "type": "string"
         },
         "ssmlGender": {
@@ -7421,7 +8186,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. The collection of parameters associated with this context. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "Optional. The collection of parameters associated with this context. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         }
       },
@@ -7555,7 +8320,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of parameters associated with the event. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "The collection of parameters associated with the event. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         }
       },
@@ -8626,7 +9391,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of extracted parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "The collection of extracted parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         },
         "queryText": {
@@ -8834,7 +9599,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. The collection of parameters associated with this context. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "Optional. The collection of parameters associated with this context. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         }
       },
@@ -8929,7 +9694,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of parameters associated with the event. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "The collection of parameters associated with the event. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         }
       },
@@ -10314,7 +11079,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The collection of extracted parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: string or number, depending on parameter value type - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
+          "description": "The collection of extracted parameters. Depending on your protocol or client library language, this is a map, associative array, symbol table, dictionary, or JSON object composed of a collection of (MapKey, MapValue) pairs: - MapKey type: string - MapKey value: parameter name - MapValue type: - If parameter's entity type is a composite entity: map - Else: depending on parameter value type, could be one of string, number, boolean, null, list or map - MapValue value: - If parameter's entity type is a composite entity: map from composite entity property names to property values - Else: parameter value",
           "type": "object"
         },
         "queryText": {

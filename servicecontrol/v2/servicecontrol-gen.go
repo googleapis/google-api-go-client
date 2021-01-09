@@ -909,7 +909,7 @@ type Resource struct {
 	// a resource that may be set by external tools to store and retrieve
 	// arbitrary metadata. They are not queryable and should be preserved
 	// when modifying objects. More info:
-	// http://kubernetes.io/docs/user-guide/annotations
+	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// CreateTime: Output only. The timestamp when the resource was created.
@@ -933,6 +933,15 @@ type Resource struct {
 	// Labels: The labels or tags on the resource, such as AWS resource tags
 	// and Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// Location: Immutable. The location of the resource. The location
+	// encoding is specific to the service provider, and new encoding may be
+	// introduced as the service evolves. For Google Cloud products, the
+	// encoding is what is used by Google Cloud APIs, such as `us-east1`,
+	// `aws-us-east-1`, and `azure-eastus2`. The semantics of `location` is
+	// identical to the `cloud.googleapis.com/location` label used by some
+	// Google Cloud APIs.
+	Location string `json:"location,omitempty"`
 
 	// Name: The stable identifier (name) of a resource on the `service`. A
 	// resource can be logically identified as
@@ -1319,7 +1328,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1473,7 +1482,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

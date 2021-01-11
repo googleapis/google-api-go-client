@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1726,6 +1726,46 @@ func (s *GoogleIdentityAccesscontextmanagerV1AccessPolicy) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleIdentityAccesscontextmanagerV1ApiOperation: Identification for
+// an API Operation.
+type GoogleIdentityAccesscontextmanagerV1ApiOperation struct {
+	// MethodSelectors: API methods or permissions to allow. Method or
+	// permission must belong to the service specified by `service_name`
+	// field. A single MethodSelector entry with `*` specified for the
+	// `method` field will allow all methods AND permissions for the service
+	// specified in `service_name`.
+	MethodSelectors []*GoogleIdentityAccesscontextmanagerV1MethodSelector `json:"methodSelectors,omitempty"`
+
+	// ServiceName: The name of the API whose methods or permissions the
+	// IngressPolicy or EgressPolicy want to allow. A single ApiOperation
+	// with `service_name` field set to `*` will allow all methods AND
+	// permissions for all services.
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MethodSelectors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MethodSelectors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1ApiOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1ApiOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleIdentityAccesscontextmanagerV1BasicLevel: `BasicLevel` is an
 // `AccessLevel` using a set of recommended features.
 type GoogleIdentityAccesscontextmanagerV1BasicLevel struct {
@@ -1950,6 +1990,358 @@ func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleIdentityAccesscontextmanagerV1EgressFrom: Defines the
+// conditions under which an EgressPolicy matches a request. Conditions
+// based on information about the source of the request. Note that if
+// the destination of the request is protected by a ServicePerimeter,
+// then that ServicePerimeter must have an IngressPolicy which allows
+// access in order for this request to succeed.
+type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
+	// Identities: A list of identities that are allowed access through this
+	// [EgressPolicy]. Should be in the format of email address. The email
+	// address should represent individual user or service account only.
+	Identities []string `json:"identities,omitempty"`
+
+	// IdentityType: Specifies the type of identities that are allowed
+	// access to outside the perimeter. If left unspecified, then members of
+	// `identities` field will be allowed access.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - No blanket identity group specified.
+	//   "ANY_IDENTITY" - Authorize access from all identities outside the
+	// perimeter.
+	//   "ANY_USER_ACCOUNT" - Authorize access from all human users outside
+	// the perimeter.
+	//   "ANY_SERVICE_ACCOUNT" - Authorize access from all service accounts
+	// outside the perimeter.
+	IdentityType string `json:"identityType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressFrom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1EgressPolicy: Policy for egress
+// from perimeter. EgressPolicies match requests based on `egress_from`
+// and `egress_to` stanzas. For an EgressPolicy to match, both
+// `egress_from` and `egress_to` stanzas must be matched. If an
+// EgressPolicy matches a request, the request is allowed to span the
+// ServicePerimeter boundary. For example, an EgressPolicy can be used
+// to allow VMs on networks within the ServicePerimeter to access a
+// defined set of projects outside the perimeter in certain contexts
+// (e.g. to read data from a Cloud Storage bucket or query against a
+// BigQuery dataset). EgressPolicies are concerned with the *resources*
+// that a request relates as well as the API services and API actions
+// being used. They do not related to the direction of data movement.
+// More detailed documentation for this concept can be found in the
+// descriptions of EgressFrom and EgressTo.
+type GoogleIdentityAccesscontextmanagerV1EgressPolicy struct {
+	// EgressFrom: Defines conditions on the source of a request causing
+	// this EgressPolicy to apply.
+	EgressFrom *GoogleIdentityAccesscontextmanagerV1EgressFrom `json:"egressFrom,omitempty"`
+
+	// EgressTo: Defines the conditions on the ApiOperation and destination
+	// resources that cause this EgressPolicy to apply.
+	EgressTo *GoogleIdentityAccesscontextmanagerV1EgressTo `json:"egressTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EgressFrom") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EgressFrom") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1EgressTo: Defines the conditions
+// under which an EgressPolicy matches a request. Conditions are based
+// on information about the ApiOperation intended to be performed on the
+// `resources` specified. Note that if the destination of the request is
+// protected by a ServicePerimeter, then that ServicePerimeter must have
+// an IngressPolicy which allows access in order for this request to
+// succeed.
+type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
+	// Operations: A list of ApiOperations that this egress rule applies to.
+	// A request matches if it contains an operation/service in this list.
+	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
+
+	// Resources: A list of resources, currently only projects in the form
+	// `projects/`, that match this to stanza. A request matches if it
+	// contains a resource in this list. If `*` is specified for resources,
+	// then this EgressTo rule will authorize access to all resources
+	// outside the perimeter.
+	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressTo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressFrom: Defines the
+// conditions under which an IngressPolicy matches a request. Conditions
+// are based on information about the source of the request.
+type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
+	// Identities: A list of identities that are allowed access through this
+	// ingress policy. Should be in the format of email address. The email
+	// address should represent individual user or service account only.
+	Identities []string `json:"identities,omitempty"`
+
+	// IdentityType: Specifies the type of identities that are allowed
+	// access from outside the perimeter. If left unspecified, then members
+	// of `identities` field will be allowed access.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - No blanket identity group specified.
+	//   "ANY_IDENTITY" - Authorize access from all identities outside the
+	// perimeter.
+	//   "ANY_USER_ACCOUNT" - Authorize access from all human users outside
+	// the perimeter.
+	//   "ANY_SERVICE_ACCOUNT" - Authorize access from all service accounts
+	// outside the perimeter.
+	IdentityType string `json:"identityType,omitempty"`
+
+	// Sources: Sources that this IngressPolicy authorizes access from.
+	Sources []*GoogleIdentityAccesscontextmanagerV1IngressSource `json:"sources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressFrom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressPolicy: Policy for ingress
+// into ServicePerimeter. IngressPolicies match requests based on
+// `ingress_from` and `ingress_to` stanzas. For an ingress policy to
+// match, both the `ingress_from` and `ingress_to` stanzas must be
+// matched. If an IngressPolicy matches a request, the request is
+// allowed through the perimeter boundary from outside the perimeter.
+// For example, access from the internet can be allowed either based on
+// an AccessLevel or, for traffic hosted on Google Cloud, the project of
+// the source network. For access from private networks, using the
+// project of the hosting network is required. Individual ingress
+// policies can be limited by restricting which services and/or actions
+// they match using the `ingress_to` field.
+type GoogleIdentityAccesscontextmanagerV1IngressPolicy struct {
+	// IngressFrom: Defines the conditions on the source of a request
+	// causing this IngressPolicy to apply.
+	IngressFrom *GoogleIdentityAccesscontextmanagerV1IngressFrom `json:"ingressFrom,omitempty"`
+
+	// IngressTo: Defines the conditions on the ApiOperation and request
+	// destination that cause this IngressPolicy to apply.
+	IngressTo *GoogleIdentityAccesscontextmanagerV1IngressTo `json:"ingressTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IngressFrom") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IngressFrom") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressSource: The source that
+// IngressPolicy authorizes access from.
+type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
+	// AccessLevel: An AccessLevel resource name that allow resources within
+	// the ServicePerimeters to be accessed from the internet. AccessLevels
+	// listed must be in the same policy as this ServicePerimeter.
+	// Referencing a nonexistent AccessLevel will cause an error. If no
+	// AccessLevel names are listed, resources within the perimeter can only
+	// be accessed via Google Cloud calls with request origins within the
+	// perimeter. Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`.
+	// If `*` is specified, then all IngressSources will be allowed.
+	AccessLevel string `json:"accessLevel,omitempty"`
+
+	// Resource: A Google Cloud resource that is allowed to ingress the
+	// perimeter. Requests from these resources will be allowed to access
+	// perimeter data. Currently only projects are allowed. Format:
+	// `projects/{project_number}` The project may be in any Google Cloud
+	// organization, not just the organization that the perimeter is defined
+	// in. `*` is not allowed, the case of allowing all Google Cloud
+	// resources only is not supported.
+	Resource string `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressTo: Defines the conditions
+// under which an IngressPolicy matches a request. Conditions are based
+// on information about the ApiOperation intended to be performed on the
+// destination of the request.
+type GoogleIdentityAccesscontextmanagerV1IngressTo struct {
+	// Operations: A list of ApiOperations the sources specified in
+	// corresponding IngressFrom are allowed to perform in this
+	// ServicePerimeter.
+	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
+
+	// Resources: A list of resources, currently only projects in the form
+	// `projects/`, protected by this ServicePerimeter that are allowed to
+	// be accessed by sources defined in the corresponding IngressFrom. A
+	// request matches if it contains a resource in this list. If `*` is
+	// specified for resources, then this IngressTo rule will authorize
+	// access to all resources inside the perimeter, provided that the
+	// request also matches the `operations` field.
+	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressTo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressTo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1MethodSelector: An allowed method
+// or permission of a service specified in ApiOperation.
+type GoogleIdentityAccesscontextmanagerV1MethodSelector struct {
+	// Method: Value for `method` should be a valid method name for the
+	// corresponding `service_name` in ApiOperation. If `*` used as value
+	// for `method`, then ALL methods and permissions are allowed.
+	Method string `json:"method,omitempty"`
+
+	// Permission: Value for `permission` should be a valid Cloud IAM
+	// permission for the corresponding `service_name` in ApiOperation.
+	Permission string `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Method") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Method") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1MethodSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1MethodSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleIdentityAccesscontextmanagerV1OsConstraint: A restriction on
 // the OS type and version of devices making requests.
 type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
@@ -2100,6 +2492,18 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	// "accessPolicies/MY_POLICY/accessLevels/MY_LEVEL". For Service
 	// Perimeter Bridge, must be empty.
 	AccessLevels []string `json:"accessLevels,omitempty"`
+
+	// EgressPolicies: List of EgressPolicies to apply to the perimeter. A
+	// perimeter may have multiple EgressPolicies, each of which is
+	// evaluated separately. Access is granted if any EgressPolicy grants
+	// it. Must be empty for a perimeter bridge.
+	EgressPolicies []*GoogleIdentityAccesscontextmanagerV1EgressPolicy `json:"egressPolicies,omitempty"`
+
+	// IngressPolicies: List of IngressPolicies to apply to the perimeter. A
+	// perimeter may have multiple IngressPolicies, each of which is
+	// evaluated separately. Access is granted if any Ingress Policy grants
+	// it. Must be empty for a perimeter bridge.
+	IngressPolicies []*GoogleIdentityAccesscontextmanagerV1IngressPolicy `json:"ingressPolicies,omitempty"`
 
 	// Resources: A list of Google Cloud resources that are inside of the
 	// service perimeter. Currently only projects are allowed. Format:
@@ -2482,34 +2886,34 @@ func (s *IamPolicyAnalysisState) MarshalJSON() ([]byte, error) {
 // IamPolicySearchResult: A result of IAM Policy search, containing
 // information of an IAM policy.
 type IamPolicySearchResult struct {
-	// Explanation: Explanation about the IAM policy search result. It
-	// contains additional information to explain why the search result
-	// matches the query.
+	// Explanation: Optional. Explanation about the IAM policy search
+	// result. It contains additional information to explain why the search
+	// result matches the query.
 	Explanation *Explanation `json:"explanation,omitempty"`
 
-	// Policy: The IAM policy directly set on the given resource. Note that
-	// the original IAM policy can contain multiple bindings. This only
-	// contains the bindings that match the given query. For queries that
-	// don't contain a constrain on policies (e.g., an empty query), this
-	// contains all the bindings. To search against the `policy` bindings: *
-	// use a field query: - query by the policy contained members. Example:
-	// `policy:amy@gmail.com` - query by the policy contained roles.
-	// Example: `policy:roles/compute.admin` - query by the policy contained
-	// roles' included permissions. Example:
+	// Policy: Required. The IAM policy directly set on the given resource.
+	// Note that the original IAM policy can contain multiple bindings. This
+	// only contains the bindings that match the given query. For queries
+	// that don't contain a constrain on policies (e.g., an empty query),
+	// this contains all the bindings. To search against the `policy`
+	// bindings: * use a field query: - query by the policy contained
+	// members. Example: `policy:amy@gmail.com` - query by the policy
+	// contained roles. Example: `policy:roles/compute.admin` - query by the
+	// policy contained roles' included permissions. Example:
 	// `policy.role.permissions:compute.instances.create`
 	Policy *Policy `json:"policy,omitempty"`
 
-	// Project: The project that the associated GCP resource belongs to, in
-	// the form of projects/{PROJECT_NUMBER}. If an IAM policy is set on a
-	// resource (like VM instance, Cloud Storage bucket), the project field
-	// will indicate the project that contains the resource. If an IAM
-	// policy is set on a folder or orgnization, the project field will be
-	// empty. To search against the `project`: * specify the `scope` field
-	// as this project in your search request.
+	// Project: Optional. The project that the associated GCP resource
+	// belongs to, in the form of projects/{PROJECT_NUMBER}. If an IAM
+	// policy is set on a resource (like VM instance, Cloud Storage bucket),
+	// the project field will indicate the project that contains the
+	// resource. If an IAM policy is set on a folder or orgnization, the
+	// project field will be empty. To search against the `project`: *
+	// specify the `scope` field as this project in your search request.
 	Project string `json:"project,omitempty"`
 
-	// Resource: The full resource name of the resource associated with this
-	// IAM policy. Example:
+	// Resource: Required. The full resource name of the resource associated
+	// with this IAM policy. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 	// s/instance1`. See Cloud Asset Inventory Resource Name Format
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
@@ -3214,13 +3618,13 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 // ResourceSearchResult: A result of Resource Search, containing
 // information of a cloud resource.
 type ResourceSearchResult struct {
-	// AdditionalAttributes: The additional searchable attributes of this
-	// resource. The attributes may vary from one resource type to another.
-	// Examples: `projectId` for Project, `dnsName` for DNS ManagedZone.
-	// This field contains a subset of the resource metadata fields that are
-	// returned by the List or Get APIs provided by the corresponding GCP
-	// service (e.g., Compute Engine). see API references and supported
-	// searchable attributes
+	// AdditionalAttributes: Optional. The additional searchable attributes
+	// of this resource. The attributes may vary from one resource type to
+	// another. Examples: `projectId` for Project, `dnsName` for DNS
+	// ManagedZone. This field contains a subset of the resource metadata
+	// fields that are returned by the List or Get APIs provided by the
+	// corresponding GCP service (e.g., Compute Engine). see API references
+	// and supported searchable attributes
 	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
 	// earchable_asset_types) for more information. You can search values of
 	// these fields through free text search. However, you should not
@@ -3232,40 +3636,45 @@ type ResourceSearchResult struct {
 	// query `foobar`.
 	AdditionalAttributes googleapi.RawMessage `json:"additionalAttributes,omitempty"`
 
-	// AssetType: The type of this resource. Example:
+	// AssetType: Required. The type of this resource. Example:
 	// `compute.googleapis.com/Disk`. To search against the `asset_type`: *
 	// specify the `asset_type` field in your search request.
 	AssetType string `json:"assetType,omitempty"`
 
-	// Description: One or more paragraphs of text description of this
-	// resource. Maximum length could be up to 1M bytes. To search against
-	// the `description`: * use a field query. Example:
+	// Description: Optional. One or more paragraphs of text description of
+	// this resource. Maximum length could be up to 1M bytes. This field is
+	// available only when the resource's proto contains it. To search
+	// against the `description`: * use a field query. Example:
 	// `description:"*important instance*" * use a free text query.
 	// Example: "*important instance*"
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: The display name of this resource. To search against the
-	// `display_name`: * use a field query. Example: `displayName:"My
-	// Instance" * use a free text query. Example: "My Instance"
+	// DisplayName: Optional. The display name of this resource. This field
+	// is available only when the resource's proto contains it. To search
+	// against the `display_name`: * use a field query. Example:
+	// `displayName:"My Instance" * use a free text query. Example: "My
+	// Instance"
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Labels: Labels associated with this resource. See Labelling and
-	// grouping GCP resources
+	// Labels: Optional. Labels associated with this resource. See Labelling
+	// and grouping GCP resources
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-you
-	// r-google-cloud-platform-resources) for more information. To search
+	// r-google-cloud-platform-resources) for more information. This field
+	// is available only when the resource's proto contains it. To search
 	// against the `labels`: * use a field query: - query on any label's key
 	// or value. Example: `labels:prod` - query by a given label. Example:
 	// `labels.env:prod` - query by a given label's existence. Example:
 	// `labels.env:*` * use a free text query. Example: `prod`
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Location: Location can be `global`, regional like `us-east1`, or
-	// zonal like `us-west1-b`. To search against the `location`: * use a
-	// field query. Example: `location:us-west*` * use a free text query.
-	// Example: `us-west*`
+	// Location: Optional. Location can be `global`, regional like
+	// `us-east1`, or zonal like `us-west1-b`. This field is available only
+	// when the resource's proto contains it. To search against the
+	// `location`: * use a field query. Example: `location:us-west*` * use a
+	// free text query. Example: `us-west*`
 	Location string `json:"location,omitempty"`
 
-	// Name: The full resource name of this resource. Example:
+	// Name: Required. The full resource name of this resource. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 	// s/instance1`. See Cloud Asset Inventory Resource Name Format
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
@@ -3274,18 +3683,20 @@ type ResourceSearchResult struct {
 	// `instance1`
 	Name string `json:"name,omitempty"`
 
-	// NetworkTags: Network tags associated with this resource. Like labels,
-	// network tags are a type of annotations used to group GCP resources.
-	// See Labelling GCP resources
+	// NetworkTags: Optional. Network tags associated with this resource.
+	// Like labels, network tags are a type of annotations used to group GCP
+	// resources. See Labelling GCP resources
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-you
-	// r-google-cloud-platform-resources) for more information. To search
+	// r-google-cloud-platform-resources) for more information. This field
+	// is available only when the resource's proto contains it. To search
 	// against the `network_tags`: * use a field query. Example:
 	// `networkTags:internal` * use a free text query. Example: `internal`
 	NetworkTags []string `json:"networkTags,omitempty"`
 
-	// Project: The project that this resource belongs to, in the form of
-	// projects/{PROJECT_NUMBER}. To search against the `project`: * specify
-	// the `scope` field as this project in your search request.
+	// Project: Optional. The project that this resource belongs to, in the
+	// form of projects/{PROJECT_NUMBER}. This field is available when the
+	// resource belongs to a project. To search against the `project`: *
+	// specify the `scope` field as this project in your search request.
 	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3907,7 +4318,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4045,7 +4456,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4186,7 +4597,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4330,7 +4741,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4465,7 +4876,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4616,7 +5027,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4907,7 +5318,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5109,7 +5520,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5308,7 +5719,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5492,7 +5903,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5633,24 +6044,31 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // (https://cloud.google.com/asset-inventory/docs/searching-iam-policies#
 // how_to_construct_a_query) for more information. If not specified or
 // empty, it will search all the IAM policies within the specified
-// `scope`. Examples: * `policy:amy@gmail.com` to find IAM policy
-// bindings that specify user "amy@gmail.com". *
-// `policy:roles/compute.admin` to find IAM policy bindings that specify
-// the Compute Admin role. *
+// `scope`. Note that the query string is compared against each Cloud
+// IAM policy binding, including its members, roles, and Cloud IAM
+// conditions. The returned Cloud IAM policies will only contain the
+// bindings that match your query. To learn more about the IAM policy
+// structure, see IAM policy doc
+// (https://cloud.google.com/iam/docs/policies#structure). Examples: *
+// `policy:amy@gmail.com` to find IAM policy bindings that specify user
+// "amy@gmail.com". * `policy:roles/compute.admin` to find IAM policy
+// bindings that specify the Compute Admin role. *
 // `policy.role.permissions:storage.buckets.update` to find IAM policy
 // bindings that specify a role containing "storage.buckets.update"
 // permission. Note that if callers don't have `iam.roles.get` access to
 // a role's included permissions, policy bindings that specify this role
 // will be dropped from the search results. *
 // `resource:organizations/123456` to find IAM policy bindings that are
-// set on "organizations/123456". * `Important` to find IAM policy
-// bindings that contain "Important" as a word in any of the searchable
-// fields (except for the included permissions). * `*por*` to find IAM
-// policy bindings that contain "por" as a substring in any of the
-// searchable fields (except for the included permissions). *
-// `resource:(instance1 OR instance2) policy:amy` to find IAM policy
-// bindings that are set on resources "instance1" or "instance2" and
-// also specify user "amy".
+// set on "organizations/123456". *
+// `resource=//cloudresourcemanager.googleapis.com/projects/myproject`
+// to find IAM policy bindings that are set on the project named
+// "myproject". * `Important` to find IAM policy bindings that contain
+// "Important" as a word in any of the searchable fields (except for the
+// included permissions). * `*por*` to find IAM policy bindings that
+// contain "por" as a substring in any of the searchable fields (except
+// for the included permissions). * `resource:(instance1 OR instance2)
+// policy:amy` to find IAM policy bindings that are set on resources
+// "instance1" or "instance2" and also specify user "amy".
 func (c *V1SearchAllIamPoliciesCall) Query(query string) *V1SearchAllIamPoliciesCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -5693,7 +6111,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5775,7 +6193,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `*por*` to find IAM policy bindings that contain \"por\" as a substring in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\".",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `*por*` to find IAM policy bindings that contain \"por\" as a substring in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5844,7 +6262,14 @@ func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
 // types that this request searches for. If empty, it will search all
 // the searchable asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
-// earchable_asset_types).
+// earchable_asset_types). Regular expressions are also supported. For
+// example: * "compute.googleapis.com.*" snapshots resources whose asset
+// type starts with "compute.googleapis.com". * ".*Instance" snapshots
+// resources whose asset type ends with "Instance". * ".*Instance.*"
+// snapshots resources whose asset type contains "Instance". See RE2
+// (https://github.com/google/re2/wiki/Syntax) for all supported regular
+// expression syntax. If the regular expression does not match any
+// supported asset type, an INVALID_ARGUMENT error will be returned.
 func (c *V1SearchAllResourcesCall) AssetTypes(assetTypes ...string) *V1SearchAllResourcesCall {
 	c.urlParams_.SetMulti("assetTypes", append([]string{}, assetTypes...))
 	return c
@@ -5890,15 +6315,11 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 // (http://cloud.google.com/asset-inventory/docs/searching-resources#how_
 // to_construct_a_query) for more information. If not specified or
 // empty, it will search all the resources within the specified `scope`.
-// Note that the query string is compared against each Cloud IAM policy
-// binding, including its members, roles, and Cloud IAM conditions. The
-// returned Cloud IAM policies will only contain the bindings that match
-// your query. To learn more about the IAM policy structure, see IAM
-// policy doc (https://cloud.google.com/iam/docs/policies#structure).
 // Examples: * `name:Important` to find Cloud resources whose name
-// contains "Important" as a word. * `displayName:Impor*` to find Cloud
-// resources whose display name contains "Impor" as a prefix. *
-// `description:*por*` to find Cloud resources whose description
+// contains "Important" as a word. * `name=Important` to find the Cloud
+// resource whose name is exactly "Important". * `displayName:Impor*` to
+// find Cloud resources whose display name contains "Impor" as a prefix.
+// * `description:*por*` to find Cloud resources whose description
 // contains "por" as a substring. * `location:us-west*` to find Cloud
 // resources whose location is prefixed with "us-west". * `labels:prod`
 // to find Cloud resources whose labels contain "prod" as a key or
@@ -5955,7 +6376,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6026,7 +6447,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//   ],
 	//   "parameters": {
 	//     "assetTypes": {
-	//       "description": "Optional. A list of asset types that this request searches for. If empty, it will search all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).",
+	//       "description": "Optional. A list of asset types that this request searches for. If empty, it will search all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots resources whose asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots resources whose asset type ends with \"Instance\". * \".*Instance.*\" snapshots resources whose asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -6048,7 +6469,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](http://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix. * `description:*por*` to find Cloud resources whose description contains \"por\" as a substring. * `location:us-west*` to find Cloud resources whose location is prefixed with \"us-west\". * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix in any of the searchable fields. * `*por*` to find Cloud resources that contain \"por\" as a substring in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
+	//       "description": "Optional. The query statement. See [how to construct a query](http://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix. * `description:*por*` to find Cloud resources whose description contains \"por\" as a substring. * `location:us-west*` to find Cloud resources whose location is prefixed with \"us-west\". * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix in any of the searchable fields. * `*por*` to find Cloud resources that contain \"por\" as a substring in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

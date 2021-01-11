@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1778,9 +1778,10 @@ type Operation struct {
 	// either the produce or the consumer project.
 	TraceSpans []*TraceSpan `json:"traceSpans,omitempty"`
 
-	// UserLabels: User defined labels for the resource that this operation
-	// is associated with. Only a combination of 1000 user labels per
-	// consumer project are allowed.
+	// UserLabels: Private Preview. This feature is only available for
+	// approved services. User defined labels for the resource that this
+	// operation is associated with. Only a combination of 1000 user labels
+	// per consumer project are allowed.
 	UserLabels map[string]string `json:"userLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsumerId") to
@@ -2433,7 +2434,7 @@ type Resource struct {
 	// a resource that may be set by external tools to store and retrieve
 	// arbitrary metadata. They are not queryable and should be preserved
 	// when modifying objects. More info:
-	// http://kubernetes.io/docs/user-guide/annotations
+	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// CreateTime: Output only. The timestamp when the resource was created.
@@ -2457,6 +2458,15 @@ type Resource struct {
 	// Labels: The labels or tags on the resource, such as AWS resource tags
 	// and Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// Location: Immutable. The location of the resource. The location
+	// encoding is specific to the service provider, and new encoding may be
+	// introduced as the service evolves. For Google Cloud products, the
+	// encoding is what is used by Google Cloud APIs, such as `us-east1`,
+	// `aws-us-east-1`, and `azure-eastus2`. The semantics of `location` is
+	// identical to the `cloud.googleapis.com/location` label used by some
+	// Google Cloud APIs.
+	Location string `json:"location,omitempty"`
 
 	// Name: The stable identifier (name) of a resource on the `service`. A
 	// resource can be logically identified as
@@ -2946,7 +2956,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3098,7 +3108,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3248,7 +3258,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

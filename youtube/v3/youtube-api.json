@@ -1976,7 +1976,7 @@
               "type": "string"
             },
             "part": {
-              "description": "The *part* parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include. The part properties that you can include in the parameter value are id, snippet, cdn, and status.",
+              "description": "The *part* parameter serves two purposes in this operation. It identifies the properties that the write operation will set as well as the properties that the API response will include. The part properties that you can include in the parameter value are id, snippet, cdn, content_details, and status.",
               "location": "query",
               "repeated": true,
               "required": true,
@@ -2859,65 +2859,6 @@
         }
       }
     },
-    "sponsors": {
-      "methods": {
-        "list": {
-          "description": "Retrieves a list of sponsors that match the request criteria for a channel.",
-          "flatPath": "youtube/v3/sponsors",
-          "httpMethod": "GET",
-          "id": "youtube.sponsors.list",
-          "parameterOrder": [
-            "part"
-          ],
-          "parameters": {
-            "filter": {
-              "default": "newest",
-              "description": "Parameter that specifies which channel sponsors to return.",
-              "enum": [
-                "sponsorFilterUnknown",
-                "newest",
-                "all"
-              ],
-              "enumDescriptions": [
-                "",
-                "Return the most recent sponsors, from newest to oldest.",
-                "Return all sponsors, from newest to oldest."
-              ],
-              "location": "query",
-              "type": "string"
-            },
-            "maxResults": {
-              "default": "5",
-              "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
-              "format": "uint32",
-              "location": "query",
-              "type": "integer"
-            },
-            "pageToken": {
-              "description": "The *pageToken* parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken and prevPageToken properties identify other pages that could be retrieved.",
-              "location": "query",
-              "type": "string"
-            },
-            "part": {
-              "description": "The *part* parameter specifies the sponsor resource parts that the API response will include. Supported values are id and snippet.",
-              "location": "query",
-              "repeated": true,
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "youtube/v3/sponsors",
-          "response": {
-            "$ref": "SponsorListResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/youtube",
-            "https://www.googleapis.com/auth/youtube.force-ssl",
-            "https://www.googleapis.com/auth/youtube.readonly"
-          ]
-        }
-      }
-    },
     "subscriptions": {
       "methods": {
         "delete": {
@@ -3351,7 +3292,7 @@
           ],
           "parameters": {
             "hl": {
-              "default": "en_US",
+              "default": "en-US",
               "location": "query",
               "type": "string"
             },
@@ -3847,7 +3788,7 @@
       }
     }
   },
-  "revision": "20201214",
+  "revision": "20201231",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -9629,89 +9570,6 @@
         },
         "title": {
           "description": "The title of the search result.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Sponsor": {
-      "description": "A `__sponsor__` resource represents a sponsor for a YouTube channel. A sponsor provides recurring monetary support to a creator and receives special benefits.",
-      "id": "Sponsor",
-      "properties": {
-        "etag": {
-          "description": "Etag of this resource.",
-          "type": "string"
-        },
-        "kind": {
-          "default": "youtube#sponsor",
-          "description": "Identifies what kind of resource this is. Value: the fixed string `\"youtube#sponsor\"`.",
-          "type": "string"
-        },
-        "snippet": {
-          "$ref": "SponsorSnippet",
-          "description": "The `snippet` object contains basic details about the sponsor."
-        }
-      },
-      "type": "object"
-    },
-    "SponsorListResponse": {
-      "id": "SponsorListResponse",
-      "properties": {
-        "etag": {
-          "description": "Etag of this resource.",
-          "type": "string"
-        },
-        "eventId": {
-          "description": "Serialized EventId of the request which produced this response.",
-          "type": "string"
-        },
-        "items": {
-          "description": "A list of sponsors that match the request criteria.",
-          "items": {
-            "$ref": "Sponsor"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "default": "youtube#sponsorListResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string `\"youtube#sponsorListResponse\".",
-          "type": "string"
-        },
-        "nextPageToken": {
-          "description": "The token that can be used as the value of the `pageToken` parameter to retrieve the next page in the result set.",
-          "type": "string"
-        },
-        "pageInfo": {
-          "$ref": "PageInfo"
-        },
-        "tokenPagination": {
-          "$ref": "TokenPagination"
-        },
-        "visitorId": {
-          "description": "The `visitorId` identifies the visitor.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "SponsorSnippet": {
-      "id": "SponsorSnippet",
-      "properties": {
-        "channelId": {
-          "description": "The id of the channel being sponsored.",
-          "type": "string"
-        },
-        "cumulativeDurationMonths": {
-          "description": "The cumulative time a user has been a sponsor in months.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "sponsorDetails": {
-          "$ref": "ChannelProfileDetails",
-          "description": "Details about the sponsor."
-        },
-        "sponsorSince": {
-          "description": "The date and time when the user became a sponsor. The value is specified in ISO 8601 (`YYYY-MM-DDThh:mm:ss.sZ`) format.",
           "type": "string"
         }
       },

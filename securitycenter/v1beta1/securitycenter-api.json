@@ -14,7 +14,7 @@
   "canonicalName": "Security Command Center",
   "description": "Security Command Center API provides access to temporal views of assets and findings within an organization.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://console.cloud.google.com/apis/api/securitycenter.googleapis.com/overview",
+  "documentationLink": "https://cloud.google.com/security-command-center",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -896,7 +896,7 @@
       }
     }
   },
-  "revision": "20201211",
+  "revision": "20201231",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {

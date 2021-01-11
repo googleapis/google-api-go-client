@@ -1995,7 +1995,7 @@
       }
     }
   },
-  "revision": "20201208",
+  "revision": "20201213",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2270,7 +2270,7 @@
       "type": "object"
     },
     "ClusterIstio": {
-      "description": "Istio service scoped to a single Kubernetes cluster. Learn more at http://istio.io. Clusters running OSS Istio will have their services ingested as this type.",
+      "description": "Istio service scoped to a single Kubernetes cluster. Learn more at https://istio.io. Clusters running OSS Istio will have their services ingested as this type.",
       "id": "ClusterIstio",
       "properties": {
         "clusterName": {

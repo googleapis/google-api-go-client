@@ -533,9 +533,8 @@ type GlossaryInputConfig struct {
 	// source/target term pairs. For equivalent term sets glossaries: - CSV
 	// (`.csv`): Multi-column CSV file defining equivalent glossary terms in
 	// multiple languages. The format is defined for Google Translation
-	// Toolkit and documented in [Use a
-	// glossary](https://support.google.com/translatortoolkit/answer/6306379?
-	// hl=en).
+	// Toolkit and documented in Use a glossary
+	// (https://support.google.com/translatortoolkit/answer/6306379?hl=en).
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
@@ -927,9 +926,9 @@ type OutputConfig struct {
 	// keeping updated during the process, please make sure there is no
 	// custom retention policy applied on the output bucket that may avoid
 	// file updating.
-	// (https://cloud.google.com/storage/docs/bucket-lock?hl=en#retention-pol
-	// icy) The format of translations_file (for target language code 'trg')
-	// is: gs://translation_test/a_b_c_'trg'_translations.[extension] If the
+	// (https://cloud.google.com/storage/docs/bucket-lock?hl=en#retention-policy)
+	// The format of translations_file (for target language code 'trg') is:
+	// gs://translation_test/a_b_c_'trg'_translations.[extension] If the
 	// input file extension is tsv, the output has the following columns:
 	// Column 1: ID of the request provided in the input, if it's not
 	// provided in the input, then the input row number is used (0-based).
@@ -981,11 +980,11 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

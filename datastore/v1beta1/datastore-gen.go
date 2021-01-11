@@ -624,10 +624,10 @@ type GoogleDatastoreAdminV1beta1ExportEntitiesRequest struct {
 	// the name of the Cloud Storage bucket and `NAMESPACE_PATH` is an
 	// optional Cloud Storage namespace path (this is not a Cloud Datastore
 	// namespace). For more information about Cloud Storage namespace paths,
-	// see [Object name
-	// considerations](https://cloud.google.com/storage/docs/naming#object-co
-	// nsiderations). The resulting files will be nested deeper than the
-	// specified URL prefix. The final output URL will be provided in the
+	// see Object name considerations
+	// (https://cloud.google.com/storage/docs/naming#object-considerations).
+	// The resulting files will be nested deeper than the specified URL
+	// prefix. The final output URL will be provided in the
 	// google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url
 	// field. That value should be used for subsequent ImportEntities
 	// operations. By nesting the data files deeper, the same Cloud Storage
@@ -753,10 +753,10 @@ type GoogleDatastoreAdminV1beta1ImportEntitiesRequest struct {
 	// `NAMESPACE_PATH` is an optional Cloud Storage namespace path (this is
 	// not a Cloud Datastore namespace), and `OVERALL_EXPORT_METADATA_FILE`
 	// is the metadata file written by the ExportEntities operation. For
-	// more information about Cloud Storage namespace paths, see [Object
-	// name
-	// considerations](https://cloud.google.com/storage/docs/naming#object-co
-	// nsiderations). For more information, see
+	// more information about Cloud Storage namespace paths, see Object name
+	// considerations
+	// (https://cloud.google.com/storage/docs/naming#object-considerations).
+	// For more information, see
 	// google.datastore.admin.v1beta1.ExportEntitiesResponse.output_url.
 	InputUrl string `json:"inputUrl,omitempty"`
 
@@ -884,11 +884,11 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

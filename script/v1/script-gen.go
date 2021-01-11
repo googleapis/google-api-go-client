@@ -573,11 +573,11 @@ type ExecutionRequest struct {
 
 	// SessionState: *Deprecated*. For use with Android add-ons only. An ID
 	// that represents the user's current session in the Android app for
-	// Google Docs or Sheets, included as extra data in the
-	// [Intent](https://developer.android.com/guide/components/intents-filter
-	// s.html) that launches the add-on. When an Android add-on is run with
-	// a session state, it gains the privileges of a
-	// [bound](https://developers.google.com/apps-script/guides/bound)
+	// Google Docs or Sheets, included as extra data in the Intent
+	// (https://developer.android.com/guide/components/intents-filters.html)
+	// that launches the add-on. When an Android add-on is run with a
+	// session state, it gains the privileges of a bound
+	// (https://developers.google.com/apps-script/guides/bound)
 	// script—that is, it can access information like the user's current
 	// cursor position (in Docs) or selected cell (in Sheets). To retrieve
 	// the state, call
@@ -1338,11 +1338,11 @@ func (s *MetricsValue) MarshalJSON() ([]byte, error) {
 // Operation: A representation of an execution of an Apps Script
 // function started with run. The execution response does not arrive
 // until the function finishes executing. The maximum execution runtime
-// is listed in the [Apps Script quotas
-// guide](/apps-script/guides/services/quotas#current_limitations).
-// After execution has started, it can have one of four outcomes: - If
-// the script function returns successfully, the response field contains
-// an ExecutionResponse object with the function's return value in the
+// is listed in the Apps Script quotas guide
+// (/apps-script/guides/services/quotas#current_limitations). After
+// execution has started, it can have one of four outcomes: - If the
+// script function returns successfully, the response field contains an
+// ExecutionResponse object with the function's return value in the
 // object's `result` field. - If the script function (or Apps Script
 // itself) throws an exception, the error field contains a Status
 // object. The `Status` object's `details` field contains an array with
@@ -4537,15 +4537,14 @@ type ScriptsRunCall struct {
 // must be deployed for use with the Apps Script API and the calling
 // application must share the same Cloud Platform project. This method
 // requires authorization with an OAuth 2.0 token that includes at least
-// one of the scopes listed in the
-// [Authorization](#authorization-scopes) section; script projects that
-// do not require authorization cannot be executed through this API. To
-// find the correct scopes to include in the authentication token, open
-// the project in the script editor, then select **File > Project
-// properties** and click the **Scopes** tab. The error `403,
-// PERMISSION_DENIED: The caller does not have permission` indicates
-// that the Cloud Platform project used to authorize the request is not
-// the same as the one used by the script.
+// one of the scopes listed in the Authorization (#authorization-scopes)
+// section; script projects that do not require authorization cannot be
+// executed through this API. To find the correct scopes to include in
+// the authentication token, open the project in the script editor, then
+// select **File > Project properties** and click the **Scopes** tab.
+// The error `403, PERMISSION_DENIED: The caller does not have
+// permission` indicates that the Cloud Platform project used to
+// authorize the request is not the same as the one used by the script.
 func (r *ScriptsService) Run(scriptId string, executionrequest *ExecutionRequest) *ScriptsRunCall {
 	c := &ScriptsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId

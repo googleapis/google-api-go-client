@@ -671,9 +671,8 @@ type UsageReport struct {
 
 	// Parameters: Output only. Parameter value pairs for various
 	// applications. For the Entity Usage Report parameters and values, see
-	// [the Entity Usage parameters
-	// reference](/admin-sdk/reports/v1/reference/usage-ref-appendix-a/entiti
-	// es).
+	// the Entity Usage parameters reference
+	// (/admin-sdk/reports/v1/reference/usage-ref-appendix-a/entities).
 	Parameters []*UsageReportParameters `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
@@ -2107,8 +2106,15 @@ func (c *EntityUsageReportsGetCall) CustomerId(customerId string) *EntityUsageRe
 // Filters are in the form `[application name]:parameter name[parameter
 // value],...`. In this example, the `<>` 'not equal to' operator is
 // URL-encoded in the request's query string (%3C%3E): GET
-// https://www.googleapis.com/admin/reports/v1/usage/gplus_communities/all/dates/2017-12-01 ?parameters=gplus:community_name,gplus:num_total_members &filters=gplus:num_total_members%3C%3E0 The relational operators include: - `==` - 'equal to'. - `<>` - 'not equal to'. It is URL-encoded (%3C%3E). - `<` - 'less than'. It is URL-encoded (%3C). - `<=` - 'less than or equal to'. It is URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded (%3E). - `>=` - 'greater than or equal to'. It is URL-encoded (%3E=). Filters can only be applied to numeric
-// parameters.
+// https://www.googleapis.com/admin/reports/v1/usage/gplus_communities/all/dates/2017-12-01
+// ?parameters=gplus:community_name,gplus:num_total_members
+// &filters=gplus:num_total_members%3C%3E0 The relational operators
+// include: - `==` - 'equal to'. - `<>` - 'not equal to'. It is
+// URL-encoded (%3C%3E). - `<` - 'less than'. It is URL-encoded (%3C). -
+// `<=` - 'less than or equal to'. It is URL-encoded (%3C=). - `>` -
+// 'greater than'. It is URL-encoded (%3E). - `>=` - 'greater than or
+// equal to'. It is URL-encoded (%3E=). Filters can only be applied to
+// numeric parameters.
 func (c *EntityUsageReportsGetCall) Filters(filters string) *EntityUsageReportsGetCall {
 	c.urlParams_.Set("filters", filters)
 	return c
@@ -2407,8 +2413,14 @@ func (c *UserUsageReportGetCall) CustomerId(customerId string) *UserUsageReportG
 // the form `[application name]:parameter name[parameter value],...`. In
 // this example, the `<>` 'not equal to' operator is URL-encoded in the
 // request's query string (%3C%3E): GET
-// https://www.googleapis.com/admin/reports/v1/usage/users/all/dates/2013-03-03 ?parameters=accounts:last_login_time &filters=accounts:last_login_time%3C%3E2010-10-28T10:26:35.000Z The relational operators include: - `==` - 'equal to'. - `<>` - 'not equal to'. It is URL-encoded (%3C%3E). - `<` - 'less than'. It is URL-encoded (%3C). - `<=` - 'less than or equal to'. It is URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded (%3E). - `>=` - 'greater than or equal to'. It is URL-encoded
-// (%3E=).
+// https://www.googleapis.com/admin/reports/v1/usage/users/all/dates/2013-03-03
+// ?parameters=accounts:last_login_time
+// &filters=accounts:last_login_time%3C%3E2010-10-28T10:26:35.000Z The
+// relational operators include: - `==` - 'equal to'. - `<>` - 'not
+// equal to'. It is URL-encoded (%3C%3E). - `<` - 'less than'. It is
+// URL-encoded (%3C). - `<=` - 'less than or equal to'. It is
+// URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded (%3E).
+// - `>=` - 'greater than or equal to'. It is URL-encoded (%3E=).
 func (c *UserUsageReportGetCall) Filters(filters string) *UserUsageReportGetCall {
 	c.urlParams_.Set("filters", filters)
 	return c

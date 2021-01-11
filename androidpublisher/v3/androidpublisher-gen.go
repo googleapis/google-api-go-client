@@ -734,9 +734,8 @@ func (s *Comment) MarshalJSON() ([]byte, error) {
 
 // CountryTargeting: Country targeting specification.
 type CountryTargeting struct {
-	// Countries: Countries to target, specified as two letter [CLDR
-	// codes](https://unicode.org/cldr/charts/latest/supplemental/territory_c
-	// ontainment_un_m_49.html).
+	// Countries: Countries to target, specified as two letter CLDR codes
+	// (https://unicode.org/cldr/charts/latest/supplemental/territory_containment_un_m_49.html).
 	Countries []string `json:"countries,omitempty"`
 
 	// IncludeRestOfWorld: Include "rest of world" as well as explicitly
@@ -1718,15 +1717,15 @@ type ProductPurchase struct {
 	// ObfuscatedExternalAccountId: An obfuscated version of the id that is
 	// uniquely associated with the user's account in your app. Only present
 	// if specified using
-	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid when the purchase was
-	// made.
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid
+	// when the purchase was made.
 	ObfuscatedExternalAccountId string `json:"obfuscatedExternalAccountId,omitempty"`
 
 	// ObfuscatedExternalProfileId: An obfuscated version of the id that is
 	// uniquely associated with the user's profile in your app. Only present
 	// if specified using
-	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid when the purchase was
-	// made.
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid
+	// when the purchase was made.
 	ObfuscatedExternalProfileId string `json:"obfuscatedExternalProfileId,omitempty"`
 
 	// OrderId: The order id associated with the purchase of the inapp
@@ -2201,15 +2200,15 @@ type SubscriptionPurchase struct {
 	// uniquely associated with the user's account in your app. Present for
 	// the following purchases: * If account linking happened as part of the
 	// subscription purchase flow. * It was specified using
-	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid when the purchase was
-	// made.
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedaccountid
+	// when the purchase was made.
 	ObfuscatedExternalAccountId string `json:"obfuscatedExternalAccountId,omitempty"`
 
 	// ObfuscatedExternalProfileId: An obfuscated version of the id that is
 	// uniquely associated with the user's profile in your app. Only present
 	// if specified using
-	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid when the purchase was
-	// made.
+	// https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid
+	// when the purchase was made.
 	ObfuscatedExternalProfileId string `json:"obfuscatedExternalProfileId,omitempty"`
 
 	// OrderId: The order id of the latest recurring order associated with
@@ -4313,9 +4312,9 @@ type EditsBundlesUploadCall struct {
 // Upload: Uploads a new Android App Bundle to this edit. If you are
 // using the Google API client libraries, please increase the timeout of
 // the http request before calling this endpoint (a timeout of 2 minutes
-// is recommended). See [Timeouts and
-// Errors](https://developers.google.com/api-client-library/java/google-a
-// pi-java-client/errors) for an example in java.
+// is recommended). See Timeouts and Errors
+// (https://developers.google.com/api-client-library/java/google-api-java-client/errors)
+// for an example in java.
 func (r *EditsBundlesService) Upload(packageName string, editId string) *EditsBundlesUploadCall {
 	c := &EditsBundlesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9787,9 +9786,9 @@ type InternalappsharingartifactsUploadapkCall struct {
 // Uploadapk: Uploads an APK to internal app sharing. If you are using
 // the Google API client libraries, please increase the timeout of the
 // http request before calling this endpoint (a timeout of 2 minutes is
-// recommended). See [Timeouts and
-// Errors](https://developers.google.com/api-client-library/java/google-a
-// pi-java-client/errors) for an example in java.
+// recommended). See Timeouts and Errors
+// (https://developers.google.com/api-client-library/java/google-api-java-client/errors)
+// for an example in java.
 func (r *InternalappsharingartifactsService) Uploadapk(packageName string) *InternalappsharingartifactsUploadapkCall {
 	c := &InternalappsharingartifactsUploadapkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10007,9 +10006,9 @@ type InternalappsharingartifactsUploadbundleCall struct {
 // Uploadbundle: Uploads an app bundle to internal app sharing. If you
 // are using the Google API client libraries, please increase the
 // timeout of the http request before calling this endpoint (a timeout
-// of 2 minutes is recommended). See [Timeouts and
-// Errors](https://developers.google.com/api-client-library/java/google-a
-// pi-java-client/errors) for an example in java.
+// of 2 minutes is recommended). See Timeouts and Errors
+// (https://developers.google.com/api-client-library/java/google-api-java-client/errors)
+// for an example in java.
 func (r *InternalappsharingartifactsService) Uploadbundle(packageName string) *InternalappsharingartifactsUploadbundleCall {
 	c := &InternalappsharingartifactsUploadbundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName

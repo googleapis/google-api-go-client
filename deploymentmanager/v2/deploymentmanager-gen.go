@@ -315,9 +315,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -431,7 +430,7 @@ type Deployment struct {
 	// Labels: Map of One Platform labels; provided by the client when the
 	// resource is created or updated. Specifically: Label keys must be
 	// between 1 and 63 characters long and must conform to the following
-	// regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be
+	// regular expression: `a-z ([-a-z0-9]*[a-z0-9])?` Label values must be
 	// between 0 and 63 characters long and must conform to the regular
 	// expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
 	Labels []*DeploymentLabelEntry `json:"labels,omitempty"`
@@ -535,7 +534,7 @@ type DeploymentUpdate struct {
 	// Labels: Map of One Platform labels; provided by the client when the
 	// resource is created or updated. Specifically: Label keys must be
 	// between 1 and 63 characters long and must conform to the following
-	// regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be
+	// regular expression: `a-z ([-a-z0-9]*[a-z0-9])?` Label values must be
 	// between 0 and 63 characters long and must conform to the regular
 	// expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
 	Labels []*DeploymentUpdateLabelEntry `json:"labels,omitempty"`
@@ -927,12 +926,11 @@ func (s *ManifestsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: Represents an Operation resource. Google Compute Engine
-// has three Operation resources: *
-// [Global](/compute/docs/reference/rest/{$api_version}/globalOperations)
-//  *
-// [Regional](/compute/docs/reference/rest/{$api_version}/regionOperation
-// s) *
-// [Zonal](/compute/docs/reference/rest/{$api_version}/zoneOperations)
+// has three Operation resources: * Global
+// (/compute/docs/reference/rest/{$api_version}/globalOperations) *
+// Regional
+// (/compute/docs/reference/rest/{$api_version}/regionOperations) *
+// Zonal (/compute/docs/reference/rest/{$api_version}/zoneOperations)
 // You can use an operation resource to manage asynchronous API
 // requests. For more information, read Handling API responses.
 // Operations can be global, regional or zonal. - For global operations,
@@ -1310,9 +1308,10 @@ func (s *OperationsListResponse) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1330,8 +1329,8 @@ func (s *OperationsListResponse) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1370,9 +1369,9 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

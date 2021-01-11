@@ -812,8 +812,8 @@ type GoogleCloudRetailV2alphaBigQuerySource struct {
 	// DataSchema: The schema to use when parsing the data from the source.
 	// Supported values for product imports: * `product` (default): One JSON
 	// Product per line. Each product must have a valid Product.id. *
-	// `product_merchant_center`: See [Importing catalog data from Merchant
-	// Center](/retail/recommendations-ai/docs/upload-catalog#mc). Supported
+	// `product_merchant_center`: See Importing catalog data from Merchant
+	// Center (/retail/recommendations-ai/docs/upload-catalog#mc). Supported
 	// values for user events imports: * `user_event` (default): One JSON
 	// UserEvent per line. * `user_event_ga360`: Using
 	// https://support.google.com/analytics/answer/3437719?hl=en.
@@ -1089,8 +1089,8 @@ type GoogleCloudRetailV2alphaGcsSource struct {
 	// DataSchema: The schema to use when parsing the data from the source.
 	// Supported values for product imports: * `product` (default): One JSON
 	// Product per line. Each product must have a valid Product.id. *
-	// `product_merchant_center`: See [Importing catalog data from Merchant
-	// Center](/retail/recommendations-ai/docs/upload-catalog#mc). Supported
+	// `product_merchant_center`: See Importing catalog data from Merchant
+	// Center (/retail/recommendations-ai/docs/upload-catalog#mc). Supported
 	// values for user events imports: * `user_event` (default): One JSON
 	// UserEvent per line. * `user_event_ga360`: Using
 	// https://support.google.com/analytics/answer/3437719?hl=en.
@@ -1101,9 +1101,9 @@ type GoogleCloudRetailV2alphaGcsSource struct {
 	// path (for example, `gs://bucket/directory/object.json`) or a pattern
 	// matching one or more files, such as `gs://bucket/directory/*.json`. A
 	// request can contain at most 100 files, and each file can be up to 2
-	// GB. See [Importing product
-	// information](/recommendations-ai/docs/upload-catalog) for the
-	// expected file format and setup instructions.
+	// GB. See Importing product information
+	// (/recommendations-ai/docs/upload-catalog) for the expected file
+	// format and setup instructions.
 	InputUris []string `json:"inputUris,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataSchema") to
@@ -1138,8 +1138,8 @@ type GoogleCloudRetailV2alphaImage struct {
 	// Uri: Required. URI of the image. This field must be a valid UTF-8
 	// encoded URI with a length limit of 5,000 characters. Otherwise, an
 	// INVALID_ARGUMENT error is returned. Google Merchant Center property
-	// [image_link](https://support.google.com/merchants/answer/6324350).
-	// Schema.org property [Product.image](https://schema.org/image).
+	// image_link (https://support.google.com/merchants/answer/6324350).
+	// Schema.org property Product.image (https://schema.org/image).
 	Uri string `json:"uri,omitempty"`
 
 	// Width: Width of the image in number of pixels. This field must be
@@ -1603,25 +1603,24 @@ func (s *GoogleCloudRetailV2alphaPredictResponsePredictionResult) MarshalJSON() 
 type GoogleCloudRetailV2alphaPriceInfo struct {
 	// Cost: The costs associated with the sale of a particular product.
 	// Used for gross profit reporting. * Profit = price - cost Google
-	// Merchant Center property
-	// [cost_of_goods_sold](https://support.google.com/merchants/answer/90178
-	// 95).
+	// Merchant Center property cost_of_goods_sold
+	// (https://support.google.com/merchants/answer/9017895).
 	Cost float64 `json:"cost,omitempty"`
 
-	// CurrencyCode: The 3-letter currency code defined in [ISO
-	// 4217](https://www.iso.org/iso-4217-currency-codes.html). If this
-	// field is an unrecognizable currency code, an INVALID_ARGUMENT error
-	// is returned.
+	// CurrencyCode: The 3-letter currency code defined in ISO 4217
+	// (https://www.iso.org/iso-4217-currency-codes.html). If this field is
+	// an unrecognizable currency code, an INVALID_ARGUMENT error is
+	// returned.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// OriginalPrice: Price of the product without any discount. If zero, by
 	// default set to be the price.
 	OriginalPrice float64 `json:"originalPrice,omitempty"`
 
-	// Price: Price of the product. Google Merchant Center property
-	// [price](https://support.google.com/merchants/answer/6324371).
-	// Schema.org property
-	// [Offer.priceSpecification](https://schema.org/priceSpecification).
+	// Price: Price of the product. Google Merchant Center property price
+	// (https://support.google.com/merchants/answer/6324371). Schema.org
+	// property Offer.priceSpecification
+	// (https://schema.org/priceSpecification).
 	Price float64 `json:"price,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cost") to
@@ -1686,10 +1685,9 @@ type GoogleCloudRetailV2alphaProduct struct {
 	Attributes map[string]GoogleCloudRetailV2alphaCustomAttribute `json:"attributes,omitempty"`
 
 	// Availability: The online availability of the Product. Default to
-	// Availability.IN_STOCK. Google Merchant Center Property
-	// [availability](https://support.google.com/merchants/answer/6324448).
-	// Schema.org Property
-	// [Offer.availability](https://schema.org/availability).
+	// Availability.IN_STOCK. Google Merchant Center Property availability
+	// (https://support.google.com/merchants/answer/6324448). Schema.org
+	// Property Offer.availability (https://schema.org/availability).
 	//
 	// Possible values:
 	//   "AVAILABILITY_UNSPECIFIED" - Default product availability. Default
@@ -1731,9 +1729,9 @@ type GoogleCloudRetailV2alphaProduct struct {
 	// Description: Product description. This field must be a UTF-8 encoded
 	// string with a length limit of 5,000 characters. Otherwise, an
 	// INVALID_ARGUMENT error is returned. Google Merchant Center property
-	// [description](https://support.google.com/merchants/answer/6324468).
-	// schema.org property
-	// [Product.description](https://schema.org/description).
+	// description (https://support.google.com/merchants/answer/6324468).
+	// schema.org property Product.description
+	// (https://schema.org/description).
 	Description string `json:"description,omitempty"`
 
 	// Id: Immutable. Product identifier, which is the final component of
@@ -1741,15 +1739,15 @@ type GoogleCloudRetailV2alphaProduct struct {
 	// `projects/*/locations/global/catalogs/default_catalog/branches/default
 	// _branch/products/id_1`. This field must be a UTF-8 encoded string
 	// with a length limit of 128 characters. Otherwise, an INVALID_ARGUMENT
-	// error is returned. Google Merchant Center property
-	// [id](https://support.google.com/merchants/answer/6324405). Schema.org
-	// Property [Product.sku](https://schema.org/sku).
+	// error is returned. Google Merchant Center property id
+	// (https://support.google.com/merchants/answer/6324405). Schema.org
+	// Property Product.sku (https://schema.org/sku).
 	Id string `json:"id,omitempty"`
 
 	// Images: Product images for the product. A maximum of 300 images are
-	// allowed. Google Merchant Center property
-	// [image_link](https://support.google.com/merchants/answer/6324350).
-	// Schema.org property [Product.image](https://schema.org/image).
+	// allowed. Google Merchant Center property image_link
+	// (https://support.google.com/merchants/answer/6324350). Schema.org
+	// property Product.image (https://schema.org/image).
 	Images []*GoogleCloudRetailV2alphaImage `json:"images,omitempty"`
 
 	// Name: Immutable. Full resource name of the product, such as
@@ -1758,8 +1756,7 @@ type GoogleCloudRetailV2alphaProduct struct {
 	Name string `json:"name,omitempty"`
 
 	// PriceInfo: Product price and cost information. Google Merchant Center
-	// property
-	// [price](https://support.google.com/merchants/answer/6324371).
+	// property price (https://support.google.com/merchants/answer/6324371).
 	PriceInfo *GoogleCloudRetailV2alphaPriceInfo `json:"priceInfo,omitempty"`
 
 	// PrimaryProductId: Variant group identifier. Must be an id, with the
@@ -1768,12 +1765,12 @@ type GoogleCloudRetailV2alphaProduct struct {
 	// same value as id. For VARIANT Products, this field cannot be empty. A
 	// maximum of 2,000 products are allowed to share the same Type.PRIMARY
 	// Product. Otherwise, an INVALID_ARGUMENT error is returned. Google
-	// Merchant Center Property
-	// [item_group_id](https://support.google.com/merchants/answer/6324507).
-	// Schema.org Property
-	// [Product.inProductGroupWithID](https://schema.org/inProductGroupWithID
-	// ). This field must be enabled before it can be used. [Learn
-	// more](/recommendations-ai/docs/catalog#item-group-id).
+	// Merchant Center Property item_group_id
+	// (https://support.google.com/merchants/answer/6324507). Schema.org
+	// Property Product.inProductGroupWithID
+	// (https://schema.org/inProductGroupWithID). This field must be enabled
+	// before it can be used. Learn more
+	// (/recommendations-ai/docs/catalog#item-group-id).
 	PrimaryProductId string `json:"primaryProductId,omitempty"`
 
 	// Tags: Custom tags associated with the product. At most 250 values are
@@ -1781,16 +1778,15 @@ type GoogleCloudRetailV2alphaProduct struct {
 	// length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT
 	// error is returned. This tag can be used for filtering recommendation
 	// results by passing the tag as part of the PredictRequest.filter.
-	// Google Merchant Center property
-	// [custom_label_0–4](https://support.google.com/merchants/answer/63244
-	// 73).
+	// Google Merchant Center property custom_label_0–4
+	// (https://support.google.com/merchants/answer/6324473).
 	Tags []string `json:"tags,omitempty"`
 
 	// Title: Required. Product title. This field must be a UTF-8 encoded
 	// string with a length limit of 128 characters. Otherwise, an
 	// INVALID_ARGUMENT error is returned. Google Merchant Center property
-	// [title](https://support.google.com/merchants/answer/6324415).
-	// Schema.org property [Product.name](https://schema.org/name).
+	// title (https://support.google.com/merchants/answer/6324415).
+	// Schema.org property Product.name (https://schema.org/name).
 	Title string `json:"title,omitempty"`
 
 	// Type: Immutable. The type of the product. This field is output-only.
@@ -1813,9 +1809,9 @@ type GoogleCloudRetailV2alphaProduct struct {
 	// Uri: Canonical URL directly linking to the product detail page. This
 	// field must be a UTF-8 encoded string with a length limit of 5,000
 	// characters. Otherwise, an INVALID_ARGUMENT error is returned. Google
-	// Merchant Center property
-	// [link](https://support.google.com/merchants/answer/6324416).
-	// Schema.org property [Offer.url](https://schema.org/url).
+	// Merchant Center property link
+	// (https://support.google.com/merchants/answer/6324416). Schema.org
+	// property Offer.url (https://schema.org/url).
 	Uri string `json:"uri,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1962,23 +1958,23 @@ type GoogleCloudRetailV2alphaProductLevelConfig struct {
 	// this field is set to an invalid value other than these, an
 	// INVALID_ARGUMENT error is returned. If this field is `variant` and
 	// merchant_center_product_id_field is `itemGroupId`, an
-	// INVALID_ARGUMENT error is returned. See [Using catalog
-	// levels](/retail/recommendations-ai/docs/catalog#catalog-levels) for
-	// more details.
+	// INVALID_ARGUMENT error is returned. See Using catalog levels
+	// (/retail/recommendations-ai/docs/catalog#catalog-levels) for more
+	// details.
 	IngestionProductType string `json:"ingestionProductType,omitempty"`
 
-	// MerchantCenterProductIdField: Which field of [Merchant Center
-	// Product](/bigquery-transfer/docs/merchant-center-products-schema)
-	// should be imported as Product.id. Acceptable values are: * `offerId`
-	// (default): Import `offerId` as the product ID. * `itemGroupId`:
-	// Import `itemGroupId` as the product ID. Notice that Retail API will
-	// choose one item from the ones with the same `itemGroupId`, and use it
-	// to represent the item group. If this field is set to an invalid value
+	// MerchantCenterProductIdField: Which field of Merchant Center Product
+	// (/bigquery-transfer/docs/merchant-center-products-schema) should be
+	// imported as Product.id. Acceptable values are: * `offerId` (default):
+	// Import `offerId` as the product ID. * `itemGroupId`: Import
+	// `itemGroupId` as the product ID. Notice that Retail API will choose
+	// one item from the ones with the same `itemGroupId`, and use it to
+	// represent the item group. If this field is set to an invalid value
 	// other than these, an INVALID_ARGUMENT error is returned. If this
 	// field is `itemGroupId` and ingestion_product_type is `variant`, an
-	// INVALID_ARGUMENT error is returned. See [Using catalog
-	// levels](/retail/recommendations-ai/docs/catalog#catalog-levels) for
-	// more details.
+	// INVALID_ARGUMENT error is returned. See Using catalog levels
+	// (/retail/recommendations-ai/docs/catalog#catalog-levels) for more
+	// details.
 	MerchantCenterProductIdField string `json:"merchantCenterProductIdField,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3460,11 +3456,11 @@ type GoogleProtobufEmpty struct {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

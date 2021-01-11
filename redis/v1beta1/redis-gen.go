@@ -484,7 +484,7 @@ type Instance struct {
 	AuthEnabled bool `json:"authEnabled,omitempty"`
 
 	// AuthorizedNetwork: Optional. The full name of the Google Compute
-	// Engine [network](https://cloud.google.com/vpc/docs/vpc) to which the
+	// Engine network (https://cloud.google.com/vpc/docs/vpc) to which the
 	// instance is connected. If left unspecified, the `default` network
 	// will be used.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
@@ -953,11 +953,11 @@ func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1001,12 +1001,12 @@ type TlsCertificate struct {
 	Cert string `json:"cert,omitempty"`
 
 	// CreateTime: Output only. The time when the certificate was created in
-	// [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example
+	// RFC 3339 (https://tools.ietf.org/html/rfc3339) format, for example
 	// `2020-05-18T00:00:00.094Z`.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// ExpireTime: Output only. The time when the certificate expires in
-	// [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example
+	// ExpireTime: Output only. The time when the certificate expires in RFC
+	// 3339 (https://tools.ietf.org/html/rfc3339) format, for example
 	// `2020-05-18T00:00:00.094Z`.
 	ExpireTime string `json:"expireTime,omitempty"`
 
@@ -1428,7 +1428,7 @@ type ProjectsLocationsInstancesCreateCall struct {
 
 // Create: Creates a Redis instance based on the specified tier and
 // memory size. By default, the instance is accessible from the
-// project's [default network](https://cloud.google.com/vpc/docs/vpc).
+// project's default network (https://cloud.google.com/vpc/docs/vpc).
 // The creation is executed asynchronously and callers may check the
 // returned operation to track its progress. Once the operation is
 // completed the Redis instance will be fully functional. Completed

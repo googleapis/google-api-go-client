@@ -977,8 +977,8 @@ func (s *Buyer) MarshalJSON() ([]byte, error) {
 // was not successful, as described by the specified callout status.
 type CalloutStatusRow struct {
 	// CalloutStatusId: The ID of the callout status. See
-	// [callout-status-codes](https://developers.google.com/authorized-buyers
-	// /rtb/downloads/callout-status-codes).
+	// callout-status-codes
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/callout-status-codes).
 	CalloutStatusId int64 `json:"calloutStatusId,omitempty"`
 
 	// ImpressionCount: The number of impressions for which there was a bid
@@ -1039,14 +1039,15 @@ type Client struct {
 	// among all the entities with the same type. The value of this field is
 	// ignored if the entity type is not provided. A list of all known
 	// advertisers with their identifiers is available in the
-	// [advertisers.txt](https://storage.googleapis.com/adx-rtb-dictionaries/
-	// advertisers.txt) file. A list of all known brands with their
-	// identifiers is available in the
-	// [brands.txt](https://storage.googleapis.com/adx-rtb-dictionaries/brand
-	// s.txt) file. A list of all known agencies with their identifiers is
-	// available in the
-	// [agencies.txt](https://storage.googleapis.com/adx-rtb-dictionaries/age
-	// ncies.txt) file.
+	// advertisers.txt
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/advertisers.txt)
+	// file. A list of all known brands with their identifiers is available
+	// in the brands.txt
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/brands.txt)
+	// file. A list of all known agencies with their identifiers is
+	// available in the agencies.txt
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/agencies.txt)
+	// file.
 	EntityId int64 `json:"entityId,omitempty,string"`
 
 	// EntityName: The name of the entity. This field is automatically
@@ -1798,8 +1799,8 @@ type CreativeStatusRow struct {
 	BidCount *MetricValue `json:"bidCount,omitempty"`
 
 	// CreativeStatusId: The ID of the creative status. See
-	// [creative-status-codes](https://developers.google.com/authorized-buyer
-	// s/rtb/downloads/creative-status-codes).
+	// creative-status-codes
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
 	CreativeStatusId int64 `json:"creativeStatusId,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -2691,10 +2692,9 @@ type FilterSet struct {
 	// seller (publisher) networks on which to filter; may be empty. The
 	// filters represented by multiple seller network IDs are ORed together
 	// (i.e., if non-empty, results must match any one of the publisher
-	// networks). See
-	// [seller-network-ids](https://developers.google.com/authorized-buyers/r
-	// tb/downloads/seller-network-ids) file for the set of existing seller
-	// network IDs.
+	// networks). See seller-network-ids
+	// (https://developers.google.com/authorized-buyers/rtb/downloads/seller-network-ids)
+	// file for the set of existing seller network IDs.
 	SellerNetworkIds []int64 `json:"sellerNetworkIds,omitempty"`
 
 	// TimeSeriesGranularity: The granularity of time intervals if a time
@@ -3890,9 +3890,9 @@ func (s *ListPublisherProfilesResponse) MarshalJSON() ([]byte, error) {
 // applies to.
 type LocationContext struct {
 	// GeoCriteriaIds: IDs representing the geo location for this context.
-	// Please refer to the
-	// [geo-table.csv](https://storage.googleapis.com/adx-rtb-dictionaries/ge
-	// o-table.csv) file for different geo criteria IDs.
+	// Please refer to the geo-table.csv
+	// (https://storage.googleapis.com/adx-rtb-dictionaries/geo-table.csv)
+	// file for different geo criteria IDs.
 	GeoCriteriaIds []int64 `json:"geoCriteriaIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GeoCriteriaIds") to
@@ -5081,10 +5081,9 @@ type ResumeProposalRequest struct {
 // for a given row.
 type RowDimensions struct {
 	// PublisherIdentifier: The publisher identifier for this row, if a
-	// breakdown by
-	// [BreakdownDimension.PUBLISHER_IDENTIFIER](https://developers.google.co
-	// m/authorized-buyers/apis/reference/rest/v2beta1/bidders.accounts.filte
-	// rSets#FilterSet.BreakdownDimension) was requested.
+	// breakdown by BreakdownDimension.PUBLISHER_IDENTIFIER
+	// (https://developers.google.com/authorized-buyers/apis/reference/rest/v2beta1/bidders.accounts.filterSets#FilterSet.BreakdownDimension)
+	// was requested.
 	PublisherIdentifier string `json:"publisherIdentifier,omitempty"`
 
 	// TimeInterval: The time interval that this row represents.

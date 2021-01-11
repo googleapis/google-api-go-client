@@ -147,10 +147,10 @@ type CseSiterestrictService struct {
 
 // Promotion: Promotion result.
 type Promotion struct {
-	// BodyLines: An array of block objects for this promotion. See [Google
-	// WebSearch Protocol
-	// reference](https://developers.google.com/custom-search/docs/xml_result
-	// s) for more information.
+	// BodyLines: An array of block objects for this promotion. See Google
+	// WebSearch Protocol reference
+	// (https://developers.google.com/custom-search/docs/xml_results) for
+	// more information.
 	BodyLines []*PromotionBodyLines `json:"bodyLines,omitempty"`
 
 	// DisplayLink: An abridged version of this search's result URL, e.g.
@@ -297,8 +297,8 @@ type Result struct {
 	// API, it is `customsearch#result.`
 	Kind string `json:"kind,omitempty"`
 
-	// Labels: Encapsulates all information about [refinement
-	// labels](https://developers.google.com/custom-search/docs/xml_results).
+	// Labels: Encapsulates all information about refinement labels
+	// (https://developers.google.com/custom-search/docs/xml_results).
 	Labels []*ResultLabels `json:"labels,omitempty"`
 
 	// Link: The full URL to which the search result is pointing, e.g.
@@ -308,9 +308,9 @@ type Result struct {
 	// Mime: The MIME type of the search result.
 	Mime string `json:"mime,omitempty"`
 
-	// Pagemap: Contains
-	// [PageMap](https://developers.google.com/custom-search/docs/structured_
-	// data#pagemaps) information for this search result.
+	// Pagemap: Contains PageMap
+	// (https://developers.google.com/custom-search/docs/structured_data#pagemaps)
+	// information for this search result.
 	Pagemap googleapi.RawMessage `json:"pagemap,omitempty"`
 
 	// Snippet: The snippet of the search result, in plain text.
@@ -431,9 +431,9 @@ func (s *ResultLabels) MarshalJSON() ([]byte, error) {
 type Search struct {
 	// Context: Metadata and refinements associated with the given search
 	// engine, including: * The name of the search engine that was used for
-	// the query. * A set of [facet
-	// objects](https://developers.google.com/custom-search/docs/refinements#
-	// create) (refinements) you can use for refining a search.
+	// the query. * A set of facet objects
+	// (https://developers.google.com/custom-search/docs/refinements#create)
+	// (refinements) you can use for refining a search.
 	Context googleapi.RawMessage `json:"context,omitempty"`
 
 	// Items: The current set of custom search results.
@@ -443,10 +443,10 @@ type Search struct {
 	// it is customsearch#search.
 	Kind string `json:"kind,omitempty"`
 
-	// Promotions: The set of
-	// [promotions](https://developers.google.com/custom-search/docs/promotio
-	// ns). Present only if the custom search engine's configuration files
-	// define any promotions for the given query.
+	// Promotions: The set of promotions
+	// (https://developers.google.com/custom-search/docs/promotions).
+	// Present only if the custom search engine's configuration files define
+	// any promotions for the given query.
 	Promotions []*Promotion `json:"promotions,omitempty"`
 
 	// Queries: Query metadata for the previous, current, and next pages of
@@ -532,18 +532,18 @@ type SearchQueriesNextPage struct {
 	Count int64 `json:"count,omitempty"`
 
 	// Cr: Restricts search results to documents originating in a particular
-	// country. You may use [Boolean
-	// operators](https://developers.google.com/custom-search/docs/xml_result
-	// s#booleanOperators) in the `cr` parameter's value. Google WebSearch
-	// determines the country of a document by analyzing the following: *
-	// The top-level domain (TLD) of the document's URL. * The geographic
-	// location of the web server's IP address. See [Country (cr) Parameter
-	// Values](https://developers.google.com/custom-search/docs/xml_results#c
-	// ountryCollections) for a list of valid values for this parameter.
+	// country. You may use Boolean operators
+	// (https://developers.google.com/custom-search/docs/xml_results#booleanOperators)
+	// in the `cr` parameter's value. Google WebSearch determines the
+	// country of a document by analyzing the following: * The top-level
+	// domain (TLD) of the document's URL. * The geographic location of the
+	// web server's IP address. See Country (cr) Parameter Values
+	// (https://developers.google.com/custom-search/docs/xml_results#countryCollections)
+	// for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
 	// Cx: The identifier of an engine created using the Programmable Search
-	// Engine [Control Panel](https://programmablesearchengine.google.com/).
+	// Engine Control Panel (https://programmablesearchengine.google.com/).
 	// This is a custom property not defined in the OpenSearch spec. This
 	// parameter is **required**.
 	Cx string `json:"cx,omitempty"`
@@ -556,11 +556,11 @@ type SearchQueriesNextPage struct {
 	// from the specified number of past years.
 	DateRestrict string `json:"dateRestrict,omitempty"`
 
-	// DisableCnTwTranslation: Enables or disables the [Simplified and
-	// Traditional Chinese
-	// Search](https://developers.google.com/custom-search/docs/xml_results#c
-	// hineseSearch) feature. Supported values are: * `0`: enabled (default)
-	// * `1`: disabled
+	// DisableCnTwTranslation: Enables or disables the Simplified and
+	// Traditional Chinese Search
+	// (https://developers.google.com/custom-search/docs/xml_results#chineseSearch)
+	// feature. Supported values are: * `0`: enabled (default) * `1`:
+	// disabled
 	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
 
 	// ExactTerms: Identifies a phrase that all documents in the search
@@ -580,26 +580,25 @@ type SearchQueriesNextPage struct {
 	// `wdb`) * Microsoft Write (`wri`) * Rich Text Format (`rtf`) *
 	// Shockwave Flash (`swf`) * Text (`ans`, `txt`). Additional filetypes
 	// may be added in the future. An up-to-date list can always be found in
-	// Google's [file type
-	// FAQ](https://support.google.com/webmasters/answer/35287).
+	// Google's file type FAQ
+	// (https://support.google.com/webmasters/answer/35287).
 	FileType string `json:"fileType,omitempty"`
 
 	// Filter: Activates or deactivates the automatic filtering of Google
-	// search results. See [Automatic
-	// Filtering](https://developers.google.com/custom-search/docs/xml_result
-	// s#automaticFiltering) for more information about Google's search
-	// results filters. Valid values for this parameter are: * `0`: Disabled
-	// * `1`: Enabled (default) **Note**: By default, Google applies
-	// filtering to all search results to improve the quality of those
-	// results.
+	// search results. See Automatic Filtering
+	// (https://developers.google.com/custom-search/docs/xml_results#automaticFiltering)
+	// for more information about Google's search results filters. Valid
+	// values for this parameter are: * `0`: Disabled * `1`: Enabled
+	// (default) **Note**: By default, Google applies filtering to all
+	// search results to improve the quality of those results.
 	Filter string `json:"filter,omitempty"`
 
 	// Gl: Boosts search results whose country of origin matches the
-	// parameter value. See [Country
-	// Codes](https://developers.google.com/custom-search/docs/xml_results#co
-	// untryCodes) for a list of valid values. Specifying a `gl` parameter
-	// value in WebSearch requests should improve the relevance of results.
-	// This is particularly true for international customers and, even more
+	// parameter value. See Country Codes
+	// (https://developers.google.com/custom-search/docs/xml_results#countryCodes)
+	// for a list of valid values. Specifying a `gl` parameter value in
+	// WebSearch requests should improve the relevance of results. This is
+	// particularly true for international customers and, even more
 	// specifically, for customers in English-speaking countries other than
 	// the United States.
 	Gl string `json:"gl,omitempty"`
@@ -615,15 +614,13 @@ type SearchQueriesNextPage struct {
 
 	// Hl: Specifies the interface language (host language) of your user
 	// interface. Explicitly setting this parameter improves the performance
-	// and the quality of your search results. See the [Interface
-	// Languages](https://developers.google.com/custom-search/docs/xml_result
-	// s#wsInterfaceLanguages) section of [Internationalizing Queries and
-	// Results
-	// Presentation](https://developers.google.com/custom-search/docs/xml_res
-	// ults#wsInternationalizing) for more information, and [Supported
-	// Interface
-	// Languages](https://developers.google.com/custom-search/docs/xml_result
-	// s_appendices#interfaceLanguages) for a list of supported languages.
+	// and the quality of your search results. See the Interface Languages
+	// (https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages)
+	// section of Internationalizing Queries and Results Presentation
+	// (https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing)
+	// for more information, and Supported Interface Languages
+	// (https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages)
+	// for a list of supported languages.
 	Hl string `json:"hl,omitempty"`
 
 	// Hq: Appends the specified query terms to the query, as if they were
@@ -668,9 +665,9 @@ type SearchQueriesNextPage struct {
 
 	// OrTerms: Provides additional search terms to check for in a document,
 	// where each document in the search results must contain at least one
-	// of the additional search terms. You can also use the [Boolean
-	// OR](https://developers.google.com/custom-search/docs/xml_results#Boole
-	// anOrqt) query term for this type of query.
+	// of the additional search terms. You can also use the Boolean OR
+	// (https://developers.google.com/custom-search/docs/xml_results#BooleanOrqt)
+	// query term for this type of query.
 	OrTerms string `json:"orTerms,omitempty"`
 
 	// OutputEncoding: The character encoding supported for search results.
@@ -686,12 +683,11 @@ type SearchQueriesNextPage struct {
 	// `cc_noncommercial` * `cc_nonderived`
 	Rights string `json:"rights,omitempty"`
 
-	// Safe: Specifies the [SafeSearch
-	// level](https://developers.google.com/custom-search/docs/xml_results#sa
-	// feSearchLevels) used for filtering out adult results. This is a
-	// custom property not defined in the OpenSearch spec. Valid parameter
-	// values are: * "off": Disable SafeSearch * "active": Enable
-	// SafeSearch
+	// Safe: Specifies the SafeSearch level
+	// (https://developers.google.com/custom-search/docs/xml_results#safeSearchLevels)
+	// used for filtering out adult results. This is a custom property not
+	// defined in the OpenSearch spec. Valid parameter values are: *
+	// "off": Disable SafeSearch * "active": Enable SafeSearch
 	Safe string `json:"safe,omitempty"`
 
 	// SearchTerms: The search terms entered by the user.
@@ -758,18 +754,18 @@ type SearchQueriesPreviousPage struct {
 	Count int64 `json:"count,omitempty"`
 
 	// Cr: Restricts search results to documents originating in a particular
-	// country. You may use [Boolean
-	// operators](https://developers.google.com/custom-search/docs/xml_result
-	// s#booleanOperators) in the `cr` parameter's value. Google WebSearch
-	// determines the country of a document by analyzing the following: *
-	// The top-level domain (TLD) of the document's URL. * The geographic
-	// location of the web server's IP address. See [Country (cr) Parameter
-	// Values](https://developers.google.com/custom-search/docs/xml_results#c
-	// ountryCollections) for a list of valid values for this parameter.
+	// country. You may use Boolean operators
+	// (https://developers.google.com/custom-search/docs/xml_results#booleanOperators)
+	// in the `cr` parameter's value. Google WebSearch determines the
+	// country of a document by analyzing the following: * The top-level
+	// domain (TLD) of the document's URL. * The geographic location of the
+	// web server's IP address. See Country (cr) Parameter Values
+	// (https://developers.google.com/custom-search/docs/xml_results#countryCollections)
+	// for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
 	// Cx: The identifier of an engine created using the Programmable Search
-	// Engine [Control Panel](https://programmablesearchengine.google.com/).
+	// Engine Control Panel (https://programmablesearchengine.google.com/).
 	// This is a custom property not defined in the OpenSearch spec. This
 	// parameter is **required**.
 	Cx string `json:"cx,omitempty"`
@@ -782,11 +778,11 @@ type SearchQueriesPreviousPage struct {
 	// from the specified number of past years.
 	DateRestrict string `json:"dateRestrict,omitempty"`
 
-	// DisableCnTwTranslation: Enables or disables the [Simplified and
-	// Traditional Chinese
-	// Search](https://developers.google.com/custom-search/docs/xml_results#c
-	// hineseSearch) feature. Supported values are: * `0`: enabled (default)
-	// * `1`: disabled
+	// DisableCnTwTranslation: Enables or disables the Simplified and
+	// Traditional Chinese Search
+	// (https://developers.google.com/custom-search/docs/xml_results#chineseSearch)
+	// feature. Supported values are: * `0`: enabled (default) * `1`:
+	// disabled
 	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
 
 	// ExactTerms: Identifies a phrase that all documents in the search
@@ -806,26 +802,25 @@ type SearchQueriesPreviousPage struct {
 	// `wdb`) * Microsoft Write (`wri`) * Rich Text Format (`rtf`) *
 	// Shockwave Flash (`swf`) * Text (`ans`, `txt`). Additional filetypes
 	// may be added in the future. An up-to-date list can always be found in
-	// Google's [file type
-	// FAQ](https://support.google.com/webmasters/answer/35287).
+	// Google's file type FAQ
+	// (https://support.google.com/webmasters/answer/35287).
 	FileType string `json:"fileType,omitempty"`
 
 	// Filter: Activates or deactivates the automatic filtering of Google
-	// search results. See [Automatic
-	// Filtering](https://developers.google.com/custom-search/docs/xml_result
-	// s#automaticFiltering) for more information about Google's search
-	// results filters. Valid values for this parameter are: * `0`: Disabled
-	// * `1`: Enabled (default) **Note**: By default, Google applies
-	// filtering to all search results to improve the quality of those
-	// results.
+	// search results. See Automatic Filtering
+	// (https://developers.google.com/custom-search/docs/xml_results#automaticFiltering)
+	// for more information about Google's search results filters. Valid
+	// values for this parameter are: * `0`: Disabled * `1`: Enabled
+	// (default) **Note**: By default, Google applies filtering to all
+	// search results to improve the quality of those results.
 	Filter string `json:"filter,omitempty"`
 
 	// Gl: Boosts search results whose country of origin matches the
-	// parameter value. See [Country
-	// Codes](https://developers.google.com/custom-search/docs/xml_results#co
-	// untryCodes) for a list of valid values. Specifying a `gl` parameter
-	// value in WebSearch requests should improve the relevance of results.
-	// This is particularly true for international customers and, even more
+	// parameter value. See Country Codes
+	// (https://developers.google.com/custom-search/docs/xml_results#countryCodes)
+	// for a list of valid values. Specifying a `gl` parameter value in
+	// WebSearch requests should improve the relevance of results. This is
+	// particularly true for international customers and, even more
 	// specifically, for customers in English-speaking countries other than
 	// the United States.
 	Gl string `json:"gl,omitempty"`
@@ -841,15 +836,13 @@ type SearchQueriesPreviousPage struct {
 
 	// Hl: Specifies the interface language (host language) of your user
 	// interface. Explicitly setting this parameter improves the performance
-	// and the quality of your search results. See the [Interface
-	// Languages](https://developers.google.com/custom-search/docs/xml_result
-	// s#wsInterfaceLanguages) section of [Internationalizing Queries and
-	// Results
-	// Presentation](https://developers.google.com/custom-search/docs/xml_res
-	// ults#wsInternationalizing) for more information, and [Supported
-	// Interface
-	// Languages](https://developers.google.com/custom-search/docs/xml_result
-	// s_appendices#interfaceLanguages) for a list of supported languages.
+	// and the quality of your search results. See the Interface Languages
+	// (https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages)
+	// section of Internationalizing Queries and Results Presentation
+	// (https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing)
+	// for more information, and Supported Interface Languages
+	// (https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages)
+	// for a list of supported languages.
 	Hl string `json:"hl,omitempty"`
 
 	// Hq: Appends the specified query terms to the query, as if they were
@@ -894,9 +887,9 @@ type SearchQueriesPreviousPage struct {
 
 	// OrTerms: Provides additional search terms to check for in a document,
 	// where each document in the search results must contain at least one
-	// of the additional search terms. You can also use the [Boolean
-	// OR](https://developers.google.com/custom-search/docs/xml_results#Boole
-	// anOrqt) query term for this type of query.
+	// of the additional search terms. You can also use the Boolean OR
+	// (https://developers.google.com/custom-search/docs/xml_results#BooleanOrqt)
+	// query term for this type of query.
 	OrTerms string `json:"orTerms,omitempty"`
 
 	// OutputEncoding: The character encoding supported for search results.
@@ -912,12 +905,11 @@ type SearchQueriesPreviousPage struct {
 	// `cc_noncommercial` * `cc_nonderived`
 	Rights string `json:"rights,omitempty"`
 
-	// Safe: Specifies the [SafeSearch
-	// level](https://developers.google.com/custom-search/docs/xml_results#sa
-	// feSearchLevels) used for filtering out adult results. This is a
-	// custom property not defined in the OpenSearch spec. Valid parameter
-	// values are: * "off": Disable SafeSearch * "active": Enable
-	// SafeSearch
+	// Safe: Specifies the SafeSearch level
+	// (https://developers.google.com/custom-search/docs/xml_results#safeSearchLevels)
+	// used for filtering out adult results. This is a custom property not
+	// defined in the OpenSearch spec. Valid parameter values are: *
+	// "off": Disable SafeSearch * "active": Enable SafeSearch
 	Safe string `json:"safe,omitempty"`
 
 	// SearchTerms: The search terms entered by the user.
@@ -984,18 +976,18 @@ type SearchQueriesRequest struct {
 	Count int64 `json:"count,omitempty"`
 
 	// Cr: Restricts search results to documents originating in a particular
-	// country. You may use [Boolean
-	// operators](https://developers.google.com/custom-search/docs/xml_result
-	// s#booleanOperators) in the `cr` parameter's value. Google WebSearch
-	// determines the country of a document by analyzing the following: *
-	// The top-level domain (TLD) of the document's URL. * The geographic
-	// location of the web server's IP address. See [Country (cr) Parameter
-	// Values](https://developers.google.com/custom-search/docs/xml_results#c
-	// ountryCollections) for a list of valid values for this parameter.
+	// country. You may use Boolean operators
+	// (https://developers.google.com/custom-search/docs/xml_results#booleanOperators)
+	// in the `cr` parameter's value. Google WebSearch determines the
+	// country of a document by analyzing the following: * The top-level
+	// domain (TLD) of the document's URL. * The geographic location of the
+	// web server's IP address. See Country (cr) Parameter Values
+	// (https://developers.google.com/custom-search/docs/xml_results#countryCollections)
+	// for a list of valid values for this parameter.
 	Cr string `json:"cr,omitempty"`
 
 	// Cx: The identifier of an engine created using the Programmable Search
-	// Engine [Control Panel](https://programmablesearchengine.google.com/).
+	// Engine Control Panel (https://programmablesearchengine.google.com/).
 	// This is a custom property not defined in the OpenSearch spec. This
 	// parameter is **required**.
 	Cx string `json:"cx,omitempty"`
@@ -1008,11 +1000,11 @@ type SearchQueriesRequest struct {
 	// from the specified number of past years.
 	DateRestrict string `json:"dateRestrict,omitempty"`
 
-	// DisableCnTwTranslation: Enables or disables the [Simplified and
-	// Traditional Chinese
-	// Search](https://developers.google.com/custom-search/docs/xml_results#c
-	// hineseSearch) feature. Supported values are: * `0`: enabled (default)
-	// * `1`: disabled
+	// DisableCnTwTranslation: Enables or disables the Simplified and
+	// Traditional Chinese Search
+	// (https://developers.google.com/custom-search/docs/xml_results#chineseSearch)
+	// feature. Supported values are: * `0`: enabled (default) * `1`:
+	// disabled
 	DisableCnTwTranslation string `json:"disableCnTwTranslation,omitempty"`
 
 	// ExactTerms: Identifies a phrase that all documents in the search
@@ -1032,26 +1024,25 @@ type SearchQueriesRequest struct {
 	// `wdb`) * Microsoft Write (`wri`) * Rich Text Format (`rtf`) *
 	// Shockwave Flash (`swf`) * Text (`ans`, `txt`). Additional filetypes
 	// may be added in the future. An up-to-date list can always be found in
-	// Google's [file type
-	// FAQ](https://support.google.com/webmasters/answer/35287).
+	// Google's file type FAQ
+	// (https://support.google.com/webmasters/answer/35287).
 	FileType string `json:"fileType,omitempty"`
 
 	// Filter: Activates or deactivates the automatic filtering of Google
-	// search results. See [Automatic
-	// Filtering](https://developers.google.com/custom-search/docs/xml_result
-	// s#automaticFiltering) for more information about Google's search
-	// results filters. Valid values for this parameter are: * `0`: Disabled
-	// * `1`: Enabled (default) **Note**: By default, Google applies
-	// filtering to all search results to improve the quality of those
-	// results.
+	// search results. See Automatic Filtering
+	// (https://developers.google.com/custom-search/docs/xml_results#automaticFiltering)
+	// for more information about Google's search results filters. Valid
+	// values for this parameter are: * `0`: Disabled * `1`: Enabled
+	// (default) **Note**: By default, Google applies filtering to all
+	// search results to improve the quality of those results.
 	Filter string `json:"filter,omitempty"`
 
 	// Gl: Boosts search results whose country of origin matches the
-	// parameter value. See [Country
-	// Codes](https://developers.google.com/custom-search/docs/xml_results#co
-	// untryCodes) for a list of valid values. Specifying a `gl` parameter
-	// value in WebSearch requests should improve the relevance of results.
-	// This is particularly true for international customers and, even more
+	// parameter value. See Country Codes
+	// (https://developers.google.com/custom-search/docs/xml_results#countryCodes)
+	// for a list of valid values. Specifying a `gl` parameter value in
+	// WebSearch requests should improve the relevance of results. This is
+	// particularly true for international customers and, even more
 	// specifically, for customers in English-speaking countries other than
 	// the United States.
 	Gl string `json:"gl,omitempty"`
@@ -1067,15 +1058,13 @@ type SearchQueriesRequest struct {
 
 	// Hl: Specifies the interface language (host language) of your user
 	// interface. Explicitly setting this parameter improves the performance
-	// and the quality of your search results. See the [Interface
-	// Languages](https://developers.google.com/custom-search/docs/xml_result
-	// s#wsInterfaceLanguages) section of [Internationalizing Queries and
-	// Results
-	// Presentation](https://developers.google.com/custom-search/docs/xml_res
-	// ults#wsInternationalizing) for more information, and [Supported
-	// Interface
-	// Languages](https://developers.google.com/custom-search/docs/xml_result
-	// s_appendices#interfaceLanguages) for a list of supported languages.
+	// and the quality of your search results. See the Interface Languages
+	// (https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages)
+	// section of Internationalizing Queries and Results Presentation
+	// (https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing)
+	// for more information, and Supported Interface Languages
+	// (https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages)
+	// for a list of supported languages.
 	Hl string `json:"hl,omitempty"`
 
 	// Hq: Appends the specified query terms to the query, as if they were
@@ -1120,9 +1109,9 @@ type SearchQueriesRequest struct {
 
 	// OrTerms: Provides additional search terms to check for in a document,
 	// where each document in the search results must contain at least one
-	// of the additional search terms. You can also use the [Boolean
-	// OR](https://developers.google.com/custom-search/docs/xml_results#Boole
-	// anOrqt) query term for this type of query.
+	// of the additional search terms. You can also use the Boolean OR
+	// (https://developers.google.com/custom-search/docs/xml_results#BooleanOrqt)
+	// query term for this type of query.
 	OrTerms string `json:"orTerms,omitempty"`
 
 	// OutputEncoding: The character encoding supported for search results.
@@ -1138,12 +1127,11 @@ type SearchQueriesRequest struct {
 	// `cc_noncommercial` * `cc_nonderived`
 	Rights string `json:"rights,omitempty"`
 
-	// Safe: Specifies the [SafeSearch
-	// level](https://developers.google.com/custom-search/docs/xml_results#sa
-	// feSearchLevels) used for filtering out adult results. This is a
-	// custom property not defined in the OpenSearch spec. Valid parameter
-	// values are: * "off": Disable SafeSearch * "active": Enable
-	// SafeSearch
+	// Safe: Specifies the SafeSearch level
+	// (https://developers.google.com/custom-search/docs/xml_results#safeSearchLevels)
+	// used for filtering out adult results. This is a custom property not
+	// defined in the OpenSearch spec. Valid parameter values are: *
+	// "off": Disable SafeSearch * "active": Enable SafeSearch
 	Safe string `json:"safe,omitempty"`
 
 	// SearchTerms: The search terms entered by the user.
@@ -1293,9 +1281,9 @@ func (s *SearchSpelling) MarshalJSON() ([]byte, error) {
 
 // SearchUrl: OpenSearch template and URL.
 type SearchUrl struct {
-	// Template: The actual [OpenSearch
-	// template](http://www.opensearch.org/specifications/opensearch/1.1#open
-	// search_url_template_syntax) for this API.
+	// Template: The actual OpenSearch template
+	// (http://www.opensearch.org/specifications/opensearch/1.1#opensearch_url_template_syntax)
+	// for this API.
 	Template string `json:"template,omitempty"`
 
 	// Type: The MIME type of the OpenSearch URL template for the Custom
@@ -1343,26 +1331,26 @@ func (r *CseService) List() *CseListCall {
 }
 
 // C2coff sets the optional parameter "c2coff": Enables or disables
-// [Simplified and Traditional Chinese
-// Search](https://developers.google.com/custom-search/docs/xml_results#c
-// hineseSearch). The default value for this parameter is 0 (zero),
-// meaning that the feature is enabled. Supported values are: * `1`:
-// Disabled * `0`: Enabled (default)
+// Simplified and Traditional Chinese Search
+// (https://developers.google.com/custom-search/docs/xml_results#chineseSearch).
+// The default value for this parameter is 0 (zero), meaning that the
+// feature is enabled. Supported values are: * `1`: Disabled * `0`:
+// Enabled (default)
 func (c *CseListCall) C2coff(c2coff string) *CseListCall {
 	c.urlParams_.Set("c2coff", c2coff)
 	return c
 }
 
 // Cr sets the optional parameter "cr": Restricts search results to
-// documents originating in a particular country. You may use [Boolean
-// operators](https://developers.google.com/custom-search/docs/xml_result
-// s_appendices#booleanOperators) in the cr parameter's value. Google
-// Search determines the country of a document by analyzing: * the
-// top-level domain (TLD) of the document's URL * the geographic
-// location of the Web server's IP address See the [Country Parameter
-// Values](https://developers.google.com/custom-search/docs/xml_results_a
-// ppendices#countryCollections) page for a list of valid values for
-// this parameter.
+// documents originating in a particular country. You may use Boolean
+// operators
+// (https://developers.google.com/custom-search/docs/xml_results_appendices#booleanOperators)
+// in the cr parameter's value. Google Search determines the country of
+// a document by analyzing: * the top-level domain (TLD) of the
+// document's URL * the geographic location of the Web server's IP
+// address See the Country Parameter Values
+// (https://developers.google.com/custom-search/docs/xml_results_appendices#countryCollections)
+// page for a list of valid values for this parameter.
 func (c *CseListCall) Cr(cr string) *CseListCall {
 	c.urlParams_.Set("cr", cr)
 	return c
@@ -1404,22 +1392,21 @@ func (c *CseListCall) ExcludeTerms(excludeTerms string) *CseListCall {
 
 // FileType sets the optional parameter "fileType": Restricts results to
 // files of a specified extension. A list of file types indexable by
-// Google can be found in Search Console [Help
-// Center](https://support.google.com/webmasters/answer/35287).
+// Google can be found in Search Console Help Center
+// (https://support.google.com/webmasters/answer/35287).
 func (c *CseListCall) FileType(fileType string) *CseListCall {
 	c.urlParams_.Set("fileType", fileType)
 	return c
 }
 
 // Filter sets the optional parameter "filter": Controls turning on or
-// off the duplicate content filter. * See [Automatic
-// Filtering](https://developers.google.com/custom-search/docs/xml_result
-// s#automaticFiltering) for more information about Google's search
-// results filters. Note that host crowding filtering applies only to
-// multi-site searches. * By default, Google applies filtering to all
-// search results to improve the quality of those results. Acceptable
-// values are: * `0`: Turns off duplicate content filter. * `1`: Turns
-// on duplicate content filter.
+// off the duplicate content filter. * See Automatic Filtering
+// (https://developers.google.com/custom-search/docs/xml_results#automaticFiltering)
+// for more information about Google's search results filters. Note that
+// host crowding filtering applies only to multi-site searches. * By
+// default, Google applies filtering to all search results to improve
+// the quality of those results. Acceptable values are: * `0`: Turns off
+// duplicate content filter. * `1`: Turns on duplicate content filter.
 func (c *CseListCall) Filter(filter string) *CseListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1428,13 +1415,12 @@ func (c *CseListCall) Filter(filter string) *CseListCall {
 // Gl sets the optional parameter "gl": Geolocation of end user. * The
 // `gl` parameter value is a two-letter country code. The `gl` parameter
 // boosts search results whose country of origin matches the parameter
-// value. See the [Country
-// Codes](https://developers.google.com/custom-search/docs/xml_results_ap
-// pendices#countryCodes) page for a list of valid values. * Specifying
-// a `gl` parameter value should lead to more relevant results. This is
-// particularly true for international customers and, even more
-// specifically, for customers in English- speaking countries other than
-// the United States.
+// value. See the Country Codes
+// (https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes)
+// page for a list of valid values. * Specifying a `gl` parameter value
+// should lead to more relevant results. This is particularly true for
+// international customers and, even more specifically, for customers in
+// English- speaking countries other than the United States.
 func (c *CseListCall) Gl(gl string) *CseListCall {
 	c.urlParams_.Set("gl", gl)
 	return c
@@ -1461,13 +1447,11 @@ func (c *CseListCall) HighRange(highRange string) *CseListCall {
 // Hl sets the optional parameter "hl": Sets the user interface
 // language. * Explicitly setting this parameter improves the
 // performance and the quality of your search results. * See the
-// [Interface
-// Languages](https://developers.google.com/custom-search/docs/xml_result
-// s#wsInterfaceLanguages) section of [Internationalizing Queries and
-// Results
-// Presentation](https://developers.google.com/custom-search/docs/xml_res
-// ults#wsInternationalizing) for more information, and (Supported
-// Interface
+// Interface Languages
+// (https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages)
+// section of Internationalizing Queries and Results Presentation
+// (https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing)
+// for more information, and (Supported Interface
 // Languages)[https://developers.google.com/custom-search/docs/xml_result
 // s_appendices#interfaceLanguages] for a list of supported languages.
 func (c *CseListCall) Hl(hl string) *CseListCall {
@@ -1628,9 +1612,8 @@ func (c *CseListCall) RelatedSite(relatedSite string) *CseListCall {
 // Rights sets the optional parameter "rights": Filters based on
 // licensing. Supported values include: `cc_publicdomain`,
 // `cc_attribute`, `cc_sharealike`, `cc_noncommercial`, `cc_nonderived`
-// and combinations of these. See [typical
-// combinations](https://wiki.creativecommons.org/wiki/CC_Search_integrat
-// ion).
+// and combinations of these. See typical combinations
+// (https://wiki.creativecommons.org/wiki/CC_Search_integration).
 func (c *CseListCall) Rights(rights string) *CseListCall {
 	c.urlParams_.Set("rights", rights)
 	return c
@@ -1690,9 +1673,8 @@ func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
 // Sort sets the optional parameter "sort": The sort expression to apply
 // to the results. The sort parameter specifies that the results be
 // sorted according to the specified expression i.e. sort by date.
-// [Example:
-// sort=date](https://developers.google.com/custom-search/docs/structured
-// _search#sort-by-attribute).
+// Example: sort=date
+// (https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).
 func (c *CseListCall) Sort(sort string) *CseListCall {
 	c.urlParams_.Set("sort", sort)
 	return c
@@ -2111,26 +2093,26 @@ func (r *CseSiterestrictService) List() *CseSiterestrictListCall {
 }
 
 // C2coff sets the optional parameter "c2coff": Enables or disables
-// [Simplified and Traditional Chinese
-// Search](https://developers.google.com/custom-search/docs/xml_results#c
-// hineseSearch). The default value for this parameter is 0 (zero),
-// meaning that the feature is enabled. Supported values are: * `1`:
-// Disabled * `0`: Enabled (default)
+// Simplified and Traditional Chinese Search
+// (https://developers.google.com/custom-search/docs/xml_results#chineseSearch).
+// The default value for this parameter is 0 (zero), meaning that the
+// feature is enabled. Supported values are: * `1`: Disabled * `0`:
+// Enabled (default)
 func (c *CseSiterestrictListCall) C2coff(c2coff string) *CseSiterestrictListCall {
 	c.urlParams_.Set("c2coff", c2coff)
 	return c
 }
 
 // Cr sets the optional parameter "cr": Restricts search results to
-// documents originating in a particular country. You may use [Boolean
-// operators](https://developers.google.com/custom-search/docs/xml_result
-// s_appendices#booleanOperators) in the cr parameter's value. Google
-// Search determines the country of a document by analyzing: * the
-// top-level domain (TLD) of the document's URL * the geographic
-// location of the Web server's IP address See the [Country Parameter
-// Values](https://developers.google.com/custom-search/docs/xml_results_a
-// ppendices#countryCollections) page for a list of valid values for
-// this parameter.
+// documents originating in a particular country. You may use Boolean
+// operators
+// (https://developers.google.com/custom-search/docs/xml_results_appendices#booleanOperators)
+// in the cr parameter's value. Google Search determines the country of
+// a document by analyzing: * the top-level domain (TLD) of the
+// document's URL * the geographic location of the Web server's IP
+// address See the Country Parameter Values
+// (https://developers.google.com/custom-search/docs/xml_results_appendices#countryCollections)
+// page for a list of valid values for this parameter.
 func (c *CseSiterestrictListCall) Cr(cr string) *CseSiterestrictListCall {
 	c.urlParams_.Set("cr", cr)
 	return c
@@ -2172,22 +2154,21 @@ func (c *CseSiterestrictListCall) ExcludeTerms(excludeTerms string) *CseSiterest
 
 // FileType sets the optional parameter "fileType": Restricts results to
 // files of a specified extension. A list of file types indexable by
-// Google can be found in Search Console [Help
-// Center](https://support.google.com/webmasters/answer/35287).
+// Google can be found in Search Console Help Center
+// (https://support.google.com/webmasters/answer/35287).
 func (c *CseSiterestrictListCall) FileType(fileType string) *CseSiterestrictListCall {
 	c.urlParams_.Set("fileType", fileType)
 	return c
 }
 
 // Filter sets the optional parameter "filter": Controls turning on or
-// off the duplicate content filter. * See [Automatic
-// Filtering](https://developers.google.com/custom-search/docs/xml_result
-// s#automaticFiltering) for more information about Google's search
-// results filters. Note that host crowding filtering applies only to
-// multi-site searches. * By default, Google applies filtering to all
-// search results to improve the quality of those results. Acceptable
-// values are: * `0`: Turns off duplicate content filter. * `1`: Turns
-// on duplicate content filter.
+// off the duplicate content filter. * See Automatic Filtering
+// (https://developers.google.com/custom-search/docs/xml_results#automaticFiltering)
+// for more information about Google's search results filters. Note that
+// host crowding filtering applies only to multi-site searches. * By
+// default, Google applies filtering to all search results to improve
+// the quality of those results. Acceptable values are: * `0`: Turns off
+// duplicate content filter. * `1`: Turns on duplicate content filter.
 func (c *CseSiterestrictListCall) Filter(filter string) *CseSiterestrictListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2196,13 +2177,12 @@ func (c *CseSiterestrictListCall) Filter(filter string) *CseSiterestrictListCall
 // Gl sets the optional parameter "gl": Geolocation of end user. * The
 // `gl` parameter value is a two-letter country code. The `gl` parameter
 // boosts search results whose country of origin matches the parameter
-// value. See the [Country
-// Codes](https://developers.google.com/custom-search/docs/xml_results_ap
-// pendices#countryCodes) page for a list of valid values. * Specifying
-// a `gl` parameter value should lead to more relevant results. This is
-// particularly true for international customers and, even more
-// specifically, for customers in English- speaking countries other than
-// the United States.
+// value. See the Country Codes
+// (https://developers.google.com/custom-search/docs/xml_results_appendices#countryCodes)
+// page for a list of valid values. * Specifying a `gl` parameter value
+// should lead to more relevant results. This is particularly true for
+// international customers and, even more specifically, for customers in
+// English- speaking countries other than the United States.
 func (c *CseSiterestrictListCall) Gl(gl string) *CseSiterestrictListCall {
 	c.urlParams_.Set("gl", gl)
 	return c
@@ -2229,13 +2209,11 @@ func (c *CseSiterestrictListCall) HighRange(highRange string) *CseSiterestrictLi
 // Hl sets the optional parameter "hl": Sets the user interface
 // language. * Explicitly setting this parameter improves the
 // performance and the quality of your search results. * See the
-// [Interface
-// Languages](https://developers.google.com/custom-search/docs/xml_result
-// s#wsInterfaceLanguages) section of [Internationalizing Queries and
-// Results
-// Presentation](https://developers.google.com/custom-search/docs/xml_res
-// ults#wsInternationalizing) for more information, and (Supported
-// Interface
+// Interface Languages
+// (https://developers.google.com/custom-search/docs/xml_results#wsInterfaceLanguages)
+// section of Internationalizing Queries and Results Presentation
+// (https://developers.google.com/custom-search/docs/xml_results#wsInternationalizing)
+// for more information, and (Supported Interface
 // Languages)[https://developers.google.com/custom-search/docs/xml_result
 // s_appendices#interfaceLanguages] for a list of supported languages.
 func (c *CseSiterestrictListCall) Hl(hl string) *CseSiterestrictListCall {
@@ -2396,9 +2374,8 @@ func (c *CseSiterestrictListCall) RelatedSite(relatedSite string) *CseSiterestri
 // Rights sets the optional parameter "rights": Filters based on
 // licensing. Supported values include: `cc_publicdomain`,
 // `cc_attribute`, `cc_sharealike`, `cc_noncommercial`, `cc_nonderived`
-// and combinations of these. See [typical
-// combinations](https://wiki.creativecommons.org/wiki/CC_Search_integrat
-// ion).
+// and combinations of these. See typical combinations
+// (https://wiki.creativecommons.org/wiki/CC_Search_integration).
 func (c *CseSiterestrictListCall) Rights(rights string) *CseSiterestrictListCall {
 	c.urlParams_.Set("rights", rights)
 	return c
@@ -2458,9 +2435,8 @@ func (c *CseSiterestrictListCall) SiteSearchFilter(siteSearchFilter string) *Cse
 // Sort sets the optional parameter "sort": The sort expression to apply
 // to the results. The sort parameter specifies that the results be
 // sorted according to the specified expression i.e. sort by date.
-// [Example:
-// sort=date](https://developers.google.com/custom-search/docs/structured
-// _search#sort-by-attribute).
+// Example: sort=date
+// (https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).
 func (c *CseSiterestrictListCall) Sort(sort string) *CseSiterestrictListCall {
 	c.urlParams_.Set("sort", sort)
 	return c

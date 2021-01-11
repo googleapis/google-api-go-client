@@ -576,22 +576,21 @@ type ReportedErrorEvent struct {
 	// stack trace in one of the supported programming languages and
 	// formats. Supported languages are Java, Python, JavaScript, Ruby, C#,
 	// PHP, and Go. Supported stack trace formats are: * **Java**: Must be
-	// the return value of
-	// [`Throwable.printStackTrace()`](https://docs.oracle.com/javase/7/docs/
-	// api/java/lang/Throwable.html#printStackTrace%28%29). * **Python**:
-	// Must be the return value of
-	// [`traceback.format_exc()`](https://docs.python.org/2/library/traceback
-	// .html#traceback.format_exc). * **JavaScript**: Must be the value of
-	// [`error.stack`](https://github.com/v8/v8/wiki/Stack-Trace-API) as
-	// returned by V8. * **Ruby**: Must contain frames returned by
-	// [`Exception.backtrace`](https://ruby-doc.org/core-2.2.0/Exception.html
-	// #method-i-backtrace). * **C#**: Must be the return value of
-	// [`Exception.ToString()`](https://msdn.microsoft.com/en-us/library/syst
-	// em.exception.tostring.aspx). * **PHP**: Must start with `PHP
-	// (Notice|Parse error|Fatal error|Warning)` and contain the result of
-	// [`(string)$exception`](http://php.net/manual/en/exception.tostring.php
-	// ). * **Go**: Must be the return value of
-	// [`runtime.Stack()`](https://golang.org/pkg/runtime/debug/#Stack).
+	// the return value of `Throwable.printStackTrace()`
+	// (https://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html#printStackTrace%28%29).
+	// * **Python**: Must be the return value of `traceback.format_exc()`
+	// (https://docs.python.org/2/library/traceback.html#traceback.format_exc).
+	// * **JavaScript**: Must be the value of `error.stack`
+	// (https://github.com/v8/v8/wiki/Stack-Trace-API) as returned by V8. *
+	// **Ruby**: Must contain frames returned by `Exception.backtrace`
+	// (https://ruby-doc.org/core-2.2.0/Exception.html#method-i-backtrace).
+	// * **C#**: Must be the return value of `Exception.ToString()`
+	// (https://msdn.microsoft.com/en-us/library/system.exception.tostring.aspx).
+	// * **PHP**: Must start with `PHP (Notice|Parse error|Fatal
+	// error|Warning)` and contain the result of `(string)$exception`
+	// (http://php.net/manual/en/exception.tostring.php). * **Go**: Must be
+	// the return value of `runtime.Stack()`
+	// (https://golang.org/pkg/runtime/debug/#Stack).
 	Message string `json:"message,omitempty"`
 
 	// ServiceContext: Required. The service context in which this error has
@@ -981,8 +980,9 @@ func (c *ProjectsEventsListCall) PageToken(pageToken string) *ProjectsEventsList
 
 // ServiceFilterResourceType sets the optional parameter
 // "serviceFilter.resourceType": The exact value to match against
-// [`ServiceContext.resource_type`](/error-reporting/reference/rest/v1bet
-// a1/ServiceContext#FIELDS.resource_type).
+// `ServiceContext.resource_type`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resourc
+// e_type).
 func (c *ProjectsEventsListCall) ServiceFilterResourceType(serviceFilterResourceType string) *ProjectsEventsListCall {
 	c.urlParams_.Set("serviceFilter.resourceType", serviceFilterResourceType)
 	return c
@@ -990,8 +990,9 @@ func (c *ProjectsEventsListCall) ServiceFilterResourceType(serviceFilterResource
 
 // ServiceFilterService sets the optional parameter
 // "serviceFilter.service": The exact value to match against
-// [`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/Ser
-// viceContext#FIELDS.service).
+// `ServiceContext.service`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service
+// ).
 func (c *ProjectsEventsListCall) ServiceFilterService(serviceFilterService string) *ProjectsEventsListCall {
 	c.urlParams_.Set("serviceFilter.service", serviceFilterService)
 	return c
@@ -999,8 +1000,9 @@ func (c *ProjectsEventsListCall) ServiceFilterService(serviceFilterService strin
 
 // ServiceFilterVersion sets the optional parameter
 // "serviceFilter.version": The exact value to match against
-// [`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/Ser
-// viceContext#FIELDS.version).
+// `ServiceContext.version`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version
+// ).
 func (c *ProjectsEventsListCall) ServiceFilterVersion(serviceFilterVersion string) *ProjectsEventsListCall {
 	c.urlParams_.Set("serviceFilter.version", serviceFilterVersion)
 	return c
@@ -1237,10 +1239,10 @@ type ProjectsEventsReportCall struct {
 }
 
 // Report: Report an individual error event. This endpoint accepts
-// **either** an OAuth token, **or** an [API
-// key](https://support.google.com/cloud/answer/6158862) for
-// authentication. To use an API key, append it to the URL as the value
-// of a `key` parameter. For example: `POST
+// **either** an OAuth token, **or** an API key
+// (https://support.google.com/cloud/answer/6158862) for authentication.
+// To use an API key, append it to the URL as the value of a `key`
+// parameter. For example: `POST
 // https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`
 func (r *ProjectsEventsService) Report(projectName string, reportederrorevent *ReportedErrorEvent) *ProjectsEventsReportCall {
 	c := &ProjectsEventsReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1460,8 +1462,9 @@ func (c *ProjectsGroupStatsListCall) PageToken(pageToken string) *ProjectsGroupS
 
 // ServiceFilterResourceType sets the optional parameter
 // "serviceFilter.resourceType": The exact value to match against
-// [`ServiceContext.resource_type`](/error-reporting/reference/rest/v1bet
-// a1/ServiceContext#FIELDS.resource_type).
+// `ServiceContext.resource_type`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.resourc
+// e_type).
 func (c *ProjectsGroupStatsListCall) ServiceFilterResourceType(serviceFilterResourceType string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("serviceFilter.resourceType", serviceFilterResourceType)
 	return c
@@ -1469,8 +1472,9 @@ func (c *ProjectsGroupStatsListCall) ServiceFilterResourceType(serviceFilterReso
 
 // ServiceFilterService sets the optional parameter
 // "serviceFilter.service": The exact value to match against
-// [`ServiceContext.service`](/error-reporting/reference/rest/v1beta1/Ser
-// viceContext#FIELDS.service).
+// `ServiceContext.service`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.service
+// ).
 func (c *ProjectsGroupStatsListCall) ServiceFilterService(serviceFilterService string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("serviceFilter.service", serviceFilterService)
 	return c
@@ -1478,8 +1482,9 @@ func (c *ProjectsGroupStatsListCall) ServiceFilterService(serviceFilterService s
 
 // ServiceFilterVersion sets the optional parameter
 // "serviceFilter.version": The exact value to match against
-// [`ServiceContext.version`](/error-reporting/reference/rest/v1beta1/Ser
-// viceContext#FIELDS.version).
+// `ServiceContext.version`
+// (/error-reporting/reference/rest/v1beta1/ServiceContext#FIELDS.version
+// ).
 func (c *ProjectsGroupStatsListCall) ServiceFilterVersion(serviceFilterVersion string) *ProjectsGroupStatsListCall {
 	c.urlParams_.Set("serviceFilter.version", serviceFilterVersion)
 	return c

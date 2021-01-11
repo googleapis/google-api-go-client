@@ -158,14 +158,14 @@ type PlatformSummary struct {
 	//   "FAILING" - Failing.
 	BetterAdsStatus string `json:"betterAdsStatus,omitempty"`
 
-	// EnforcementTime: The time at which
-	// [enforcement](https://support.google.com/webtools/answer/7308033)
-	// against the site began or will begin on this platform. Not set when
-	// the filter_status is OFF.
+	// EnforcementTime: The time at which enforcement
+	// (https://support.google.com/webtools/answer/7308033) against the site
+	// began or will begin on this platform. Not set when the filter_status
+	// is OFF.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
-	// FilterStatus: The site's [enforcement
-	// status](https://support.google.com/webtools/answer/7308033) on this
+	// FilterStatus: The site's enforcement status
+	// (https://support.google.com/webtools/answer/7308033) on this
 	// platform.
 	//
 	// Possible values:
@@ -193,9 +193,9 @@ type PlatformSummary struct {
 
 	// ReportUrl: A link to the full Ad Experience Report for the site on
 	// this platform.. Not set in ViolatingSitesResponse. Note that you must
-	// complete the [Search Console verification
-	// process](https://support.google.com/webmasters/answer/9008080) for
-	// the site before you can access the full report.
+	// complete the Search Console verification process
+	// (https://support.google.com/webmasters/answer/9008080) for the site
+	// before you can access the full report.
 	ReportUrl string `json:"reportUrl,omitempty"`
 
 	// UnderReview: Whether the site is currently under review on this

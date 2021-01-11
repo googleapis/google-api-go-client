@@ -1918,12 +1918,12 @@ func (c *ReportsQueryCall) Currency(currency string) *ReportsQueryCall {
 
 // Dimensions sets the optional parameter "dimensions": A
 // comma-separated list of YouTube Analytics dimensions, such as `views`
-// or `ageGroup,gender`. See the [Available
-// Reports](/youtube/analytics/v2/available_reports) document for a list
-// of the reports that you can retrieve and the dimensions used for
-// those reports. Also see the
-// [Dimensions](/youtube/analytics/v2/dimsmets/dims) document for
-// definitions of those dimensions." pattern: [0-9a-zA-Z,]+
+// or `ageGroup,gender`. See the Available Reports
+// (/youtube/analytics/v2/available_reports) document for a list of the
+// reports that you can retrieve and the dimensions used for those
+// reports. Also see the Dimensions
+// (/youtube/analytics/v2/dimsmets/dims) document for definitions of
+// those dimensions." pattern: [0-9a-zA-Z,]+
 func (c *ReportsQueryCall) Dimensions(dimensions string) *ReportsQueryCall {
 	c.urlParams_.Set("dimensions", dimensions)
 	return c
@@ -1939,12 +1939,12 @@ func (c *ReportsQueryCall) EndDate(endDate string) *ReportsQueryCall {
 
 // Filters sets the optional parameter "filters": A list of filters that
 // should be applied when retrieving YouTube Analytics data. The
-// [Available Reports](/youtube/analytics/v2/available_reports) document
+// Available Reports (/youtube/analytics/v2/available_reports) document
 // identifies the dimensions that can be used to filter each report, and
-// the [Dimensions](/youtube/analytics/v2/dimsmets/dims) document
-// defines those dimensions. If a request uses multiple filters, join
-// them together with a semicolon (`;`), and the returned result table
-// will satisfy both filters. For example, a filters parameter value of
+// the Dimensions (/youtube/analytics/v2/dimsmets/dims) document defines
+// those dimensions. If a request uses multiple filters, join them
+// together with a semicolon (`;`), and the returned result table will
+// satisfy both filters. For example, a filters parameter value of
 // `video==dMH0bHeiRNg;country==IT` restricts the result set to include
 // data for the given video in Italy.",
 func (c *ReportsQueryCall) Filters(filters string) *ReportsQueryCall {
@@ -1983,11 +1983,11 @@ func (c *ReportsQueryCall) MaxResults(maxResults int64) *ReportsQueryCall {
 
 // Metrics sets the optional parameter "metrics": A comma-separated list
 // of YouTube Analytics metrics, such as `views` or `likes,dislikes`.
-// See the [Available Reports](/youtube/analytics/v2/available_reports)
+// See the Available Reports (/youtube/analytics/v2/available_reports)
 // document for a list of the reports that you can retrieve and the
-// metrics available in each report, and see the
-// [Metrics](/youtube/analytics/v2/dimsmets/mets) document for
-// definitions of those metrics. required: true, pattern: [0-9a-zA-Z,]+
+// metrics available in each report, and see the Metrics
+// (/youtube/analytics/v2/dimsmets/mets) document for definitions of
+// those metrics. required: true, pattern: [0-9a-zA-Z,]+
 func (c *ReportsQueryCall) Metrics(metrics string) *ReportsQueryCall {
 	c.urlParams_.Set("metrics", metrics)
 	return c

@@ -296,9 +296,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -471,9 +470,8 @@ type GetPolicyOptions struct {
 	// conditional bindings must specify version 3. Policies without any
 	// conditional bindings may specify any valid value or leave the field
 	// unset. To learn which resources support conditions in their IAM
-	// policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -676,11 +674,11 @@ type GoogleCloudDatacatalogV1beta1Entry struct {
 	IntegratedSystem string `json:"integratedSystem,omitempty"`
 
 	// LinkedResource: The resource this metadata entry refers to. For
-	// Google Cloud Platform resources, `linked_resource` is the [full name
-	// of the
-	// resource](https://cloud.google.com/apis/design/resource_names#full_res
-	// ource_name). For example, the `linked_resource` for a table resource
-	// from BigQuery is: *
+	// Google Cloud Platform resources, `linked_resource` is the full name
+	// of the resource
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name).
+	// For example, the `linked_resource` for a table resource from BigQuery
+	// is: *
 	// //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables
 	// /tableId Output only when Entry is of type in the EntryType enum. For
 	// entries with user_specified_type, this field is optional and defaults
@@ -985,10 +983,10 @@ func (s *GoogleCloudDatacatalogV1beta1GcsFileSpec) MarshalJSON() ([]byte, error)
 // Storage fileset entry.
 type GoogleCloudDatacatalogV1beta1GcsFilesetSpec struct {
 	// FilePatterns: Required. Patterns to identify a set of files in Google
-	// Cloud Storage. See [Cloud Storage
-	// documentation](https://cloud.google.com/storage/docs/gsutil/addlhelp/W
-	// ildcardNames) for more information. Note that bucket wildcards are
-	// currently not supported. Examples of valid file_patterns: *
+	// Cloud Storage. See Cloud Storage documentation
+	// (https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames)
+	// for more information. Note that bucket wildcards are currently not
+	// supported. Examples of valid file_patterns: *
 	// `gs://bucket_name/dir/*`: matches all files within `bucket_name/dir`
 	// directory. * `gs://bucket_name/dir/**`: matches all files in
 	// `bucket_name/dir` spanning all subdirectories. *
@@ -1494,9 +1492,9 @@ type GoogleCloudDatacatalogV1beta1SearchCatalogRequest struct {
 	// that the user has access to. Query strings can be simple as "x" or
 	// more qualified as: * name:x * column:x * description:y Note: Query
 	// tokens need to have a minimum of 3 characters for substring matching
-	// to work correctly. See [Data Catalog Search
-	// Syntax](https://cloud.google.com/data-catalog/docs/how-to/search-refer
-	// ence) for more information.
+	// to work correctly. See Data Catalog Search Syntax
+	// (https://cloud.google.com/data-catalog/docs/how-to/search-reference)
+	// for more information.
 	Query string `json:"query,omitempty"`
 
 	// Scope: Required. The scope of this search request. A `scope` that has
@@ -1638,7 +1636,8 @@ func (s *GoogleCloudDatacatalogV1beta1SearchCatalogResponse) MarshalJSON() ([]by
 type GoogleCloudDatacatalogV1beta1SearchCatalogResult struct {
 	// LinkedResource: The full name of the cloud resource the entry belongs
 	// to. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name. Example: *
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name.
+	// Example: *
 	// `//bigquery.googleapis.com/projects/projectId/datasets/datasetId/table
 	// s/tableId`
 	LinkedResource string `json:"linkedResource,omitempty"`
@@ -1860,8 +1859,8 @@ func (s *GoogleCloudDatacatalogV1beta1TableSpec) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDatacatalogV1beta1Tag: Tags are used to attach custom
 // metadata to Data Catalog resources. Tags conform to the
-// specifications within their tag template. See [Data Catalog
-// IAM](https://cloud.google.com/data-catalog/docs/concepts/iam) for
+// specifications within their tag template. See Data Catalog IAM
+// (https://cloud.google.com/data-catalog/docs/concepts/iam) for
 // information on the permissions needed to create or view tags.
 type GoogleCloudDatacatalogV1beta1Tag struct {
 	// Column: Resources like Entry can have schemas associated with them.
@@ -2016,12 +2015,12 @@ func (s *GoogleCloudDatacatalogV1beta1TagFieldEnumValue) MarshalJSON() ([]byte, 
 
 // GoogleCloudDatacatalogV1beta1TagTemplate: A tag template defines a
 // tag, which can have one or more typed fields. The template is used to
-// create and attach the tag to GCP resources. [Tag template
-// roles](https://cloud.google.com/iam/docs/understanding-roles#data-cata
-// log-roles) provide permissions to create, edit, and use the template.
-// See, for example, the [TagTemplate
-// User](https://cloud.google.com/data-catalog/docs/how-to/template-user)
-//  role, which includes permission to use the tag template to tag
+// create and attach the tag to GCP resources. Tag template roles
+// (https://cloud.google.com/iam/docs/understanding-roles#data-catalog-roles)
+// provide permissions to create, edit, and use the template. See, for
+// example, the TagTemplate User
+// (https://cloud.google.com/data-catalog/docs/how-to/template-user)
+// role, which includes permission to use the tag template to tag
 // resources.
 type GoogleCloudDatacatalogV1beta1TagTemplate struct {
 	// DisplayName: The display name for this template. Defaults to an empty
@@ -2235,9 +2234,10 @@ func (s *GoogleCloudDatacatalogV1beta1ViewSpec) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -2255,8 +2255,8 @@ func (s *GoogleCloudDatacatalogV1beta1ViewSpec) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
 	// specify a `condition` that determines how and when the `bindings` are
@@ -2291,9 +2291,9 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2359,8 +2359,8 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -2438,9 +2438,9 @@ type CatalogSearchCall struct {
 // that Data Catalog search queries do not guarantee full recall. Query
 // results that match your query may not be returned, even in subsequent
 // result pages. Also note that results returned (and not returned) can
-// vary across repeated search queries. See [Data Catalog Search
-// Syntax](https://cloud.google.com/data-catalog/docs/how-to/search-refer
-// ence) for more information.
+// vary across repeated search queries. See Data Catalog Search Syntax
+// (https://cloud.google.com/data-catalog/docs/how-to/search-reference)
+// for more information.
 func (r *CatalogService) Search(googleclouddatacatalogv1beta1searchcatalogrequest *GoogleCloudDatacatalogV1beta1SearchCatalogRequest) *CatalogSearchCall {
 	c := &CatalogSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleclouddatacatalogv1beta1searchcatalogrequest = googleclouddatacatalogv1beta1searchcatalogrequest
@@ -2599,8 +2599,10 @@ func (r *EntriesService) Lookup() *EntriesLookupCall {
 // LinkedResource sets the optional parameter "linkedResource": The full
 // name of the Google Cloud Platform resource the Data Catalog entry
 // represents. See:
-// https://cloud.google.com/apis/design/resource_names#full_resource_name. Full names are case-sensitive. Examples: * //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId *
-// //pubsub.googleapis.com/projects/projectId/topics/topicId
+// https://cloud.google.com/apis/design/resource_names#full_resource_name.
+// Full names are case-sensitive. Examples: *
+// //bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables
+// /tableId * //pubsub.googleapis.com/projects/projectId/topics/topicId
 func (c *EntriesLookupCall) LinkedResource(linkedResource string) *EntriesLookupCall {
 	c.urlParams_.Set("linkedResource", linkedResource)
 	return c
@@ -2761,7 +2763,7 @@ type ProjectsLocationsEntryGroupsCreateCall struct {
 // Catalog API in the project identified by the `parent` parameter (see
 // [Data Catalog Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsEntryGroupsService) Create(parent string, googleclouddatacatalogv1beta1entrygroup *GoogleCloudDatacatalogV1beta1EntryGroup) *ProjectsLocationsEntryGroupsCreateCall {
 	c := &ProjectsLocationsEntryGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2920,7 +2922,7 @@ type ProjectsLocationsEntryGroupsDeleteCall struct {
 // the project identified by the `name` parameter (see [Data Catalog
 // Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsEntryGroupsService) Delete(name string) *ProjectsLocationsEntryGroupsDeleteCall {
 	c := &ProjectsLocationsEntryGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3569,7 +3571,7 @@ type ProjectsLocationsEntryGroupsPatchCall struct {
 // API in the project identified by the `entry_group.name` parameter
 // (see [Data Catalog Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsEntryGroupsService) Patch(name string, googleclouddatacatalogv1beta1entrygroup *GoogleCloudDatacatalogV1beta1EntryGroup) *ProjectsLocationsEntryGroupsPatchCall {
 	c := &ProjectsLocationsEntryGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4024,7 +4026,7 @@ type ProjectsLocationsEntryGroupsEntriesCreateCall struct {
 // Catalog API in the project identified by the `parent` parameter (see
 // [Data Catalog Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information). A maximum of 100,000 entries may be created
+// for more information). A maximum of 100,000 entries may be created
 // per entry group.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Create(parent string, googleclouddatacatalogv1beta1entry *GoogleCloudDatacatalogV1beta1Entry) *ProjectsLocationsEntryGroupsEntriesCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4182,7 +4184,7 @@ type ProjectsLocationsEntryGroupsEntriesDeleteCall struct {
 // Catalog API in the project identified by the `name` parameter (see
 // [Data Catalog Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsEntryGroupsEntriesService) Delete(name string) *ProjectsLocationsEntryGroupsEntriesDeleteCall {
 	c := &ProjectsLocationsEntryGroupsEntriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4821,7 +4823,7 @@ type ProjectsLocationsEntryGroupsEntriesPatchCall struct {
 // Catalog API in the project identified by the `entry.name` parameter
 // (see [Data Catalog Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googleclouddatacatalogv1beta1entry *GoogleCloudDatacatalogV1beta1Entry) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c := &ProjectsLocationsEntryGroupsEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5130,13 +5132,11 @@ type ProjectsLocationsEntryGroupsEntriesTagsCreateCall struct {
 }
 
 // Create: Creates a tag on an Entry. Note: The project identified by
-// the `parent` parameter for the
-// [tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta
-// 1/projects.locations.entryGroups.entries.tags/create#path-parameters)
-// and the [tag
-// template](https://cloud.google.com/data-catalog/docs/reference/rest/v1
-// beta1/projects.locations.tagTemplates/create#path-parameters) used to
-// create the tag must be from the same organization.
+// the `parent` parameter for the tag
+// (https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)
+// and the tag template
+// (https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)
+// used to create the tag must be from the same organization.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Create(parent string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsEntriesTagsCreateCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5754,13 +5754,11 @@ type ProjectsLocationsEntryGroupsTagsCreateCall struct {
 }
 
 // Create: Creates a tag on an Entry. Note: The project identified by
-// the `parent` parameter for the
-// [tag](https://cloud.google.com/data-catalog/docs/reference/rest/v1beta
-// 1/projects.locations.entryGroups.entries.tags/create#path-parameters)
-// and the [tag
-// template](https://cloud.google.com/data-catalog/docs/reference/rest/v1
-// beta1/projects.locations.tagTemplates/create#path-parameters) used to
-// create the tag must be from the same organization.
+// the `parent` parameter for the tag
+// (https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.entryGroups.entries.tags/create#path-parameters)
+// and the tag template
+// (https://cloud.google.com/data-catalog/docs/reference/rest/v1beta1/projects.locations.tagTemplates/create#path-parameters)
+// used to create the tag must be from the same organization.
 func (r *ProjectsLocationsEntryGroupsTagsService) Create(parent string, googleclouddatacatalogv1beta1tag *GoogleCloudDatacatalogV1beta1Tag) *ProjectsLocationsEntryGroupsTagsCreateCall {
 	c := &ProjectsLocationsEntryGroupsTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6379,9 +6377,9 @@ type ProjectsLocationsTagTemplatesCreateCall struct {
 
 // Create: Creates a tag template. The user should enable the Data
 // Catalog API in the project identified by the `parent` parameter (see
-// [Data Catalog Resource
-// Project](https://cloud.google.com/data-catalog/docs/concepts/resource-
-// project) for more information).
+// Data Catalog Resource Project
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+// for more information).
 func (r *ProjectsLocationsTagTemplatesService) Create(parent string, googleclouddatacatalogv1beta1tagtemplate *GoogleCloudDatacatalogV1beta1TagTemplate) *ProjectsLocationsTagTemplatesCreateCall {
 	c := &ProjectsLocationsTagTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6538,7 +6536,7 @@ type ProjectsLocationsTagTemplatesDeleteCall struct {
 // should enable the Data Catalog API in the project identified by the
 // `name` parameter (see [Data Catalog Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsTagTemplatesService) Delete(name string) *ProjectsLocationsTagTemplatesDeleteCall {
 	c := &ProjectsLocationsTagTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6986,7 +6984,7 @@ type ProjectsLocationsTagTemplatesPatchCall struct {
 // API in the project identified by the `tag_template.name` parameter
 // (see [Data Catalog Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsTagTemplatesService) Patch(name string, googleclouddatacatalogv1beta1tagtemplate *GoogleCloudDatacatalogV1beta1TagTemplate) *ProjectsLocationsTagTemplatesPatchCall {
 	c := &ProjectsLocationsTagTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7440,9 +7438,9 @@ type ProjectsLocationsTagTemplatesFieldsCreateCall struct {
 
 // Create: Creates a field in a tag template. The user should enable the
 // Data Catalog API in the project identified by the `parent` parameter
-// (see [Data Catalog Resource
-// Project](https://cloud.google.com/data-catalog/docs/concepts/resource-
-// project) for more information).
+// (see Data Catalog Resource Project
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+// for more information).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Create(parent string, googleclouddatacatalogv1beta1tagtemplatefield *GoogleCloudDatacatalogV1beta1TagTemplateField) *ProjectsLocationsTagTemplatesFieldsCreateCall {
 	c := &ProjectsLocationsTagTemplatesFieldsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7603,7 +7601,7 @@ type ProjectsLocationsTagTemplatesFieldsDeleteCall struct {
 // Users should enable the Data Catalog API in the project identified by
 // the `name` parameter (see [Data Catalog Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Delete(name string) *ProjectsLocationsTagTemplatesFieldsDeleteCall {
 	c := &ProjectsLocationsTagTemplatesFieldsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7753,7 +7751,7 @@ type ProjectsLocationsTagTemplatesFieldsPatchCall struct {
 // the project identified by the `name` parameter (see [Data Catalog
 // Resource Project]
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
-//  for more information).
+// for more information).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Patch(name string, googleclouddatacatalogv1beta1tagtemplatefield *GoogleCloudDatacatalogV1beta1TagTemplateField) *ProjectsLocationsTagTemplatesFieldsPatchCall {
 	c := &ProjectsLocationsTagTemplatesFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7916,9 +7914,9 @@ type ProjectsLocationsTagTemplatesFieldsRenameCall struct {
 
 // Rename: Renames a field in a tag template. The user should enable the
 // Data Catalog API in the project identified by the `name` parameter
-// (see [Data Catalog Resource
-// Project](https://cloud.google.com/data-catalog/docs/concepts/resource-
-// project) for more information).
+// (see Data Catalog Resource Project
+// (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
+// for more information).
 func (r *ProjectsLocationsTagTemplatesFieldsService) Rename(name string, googleclouddatacatalogv1beta1renametagtemplatefieldrequest *GoogleCloudDatacatalogV1beta1RenameTagTemplateFieldRequest) *ProjectsLocationsTagTemplatesFieldsRenameCall {
 	c := &ProjectsLocationsTagTemplatesFieldsRenameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9284,8 +9282,8 @@ func (r *ProjectsLocationsTaxonomiesService) Patch(name string, googleclouddatac
 
 // UpdateMask sets the optional parameter "updateMask": The update mask
 // applies to the resource. For the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to
-// update.
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// If not set, defaults to all of the fields that are allowed to update.
 func (c *ProjectsLocationsTaxonomiesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTaxonomiesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10476,8 +10474,8 @@ func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Patch(name string, google
 // If update_mask is not provided, all allowed fields (i.e.
 // display_name, description and parent) will be updated. For more
 // information including the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to
-// update.
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// If not set, defaults to all of the fields that are allowed to update.
 func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTaxonomiesPolicyTagsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

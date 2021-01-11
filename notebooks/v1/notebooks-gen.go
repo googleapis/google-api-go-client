@@ -193,9 +193,9 @@ type ProjectsLocationsOperationsService struct {
 }
 
 // AcceleratorConfig: Definition of a hardware accelerator. Note that
-// not all combinations of `type` and `core_count` are valid. Check
-// [GPUs on Compute Engine](/compute/docs/gpus/#gpus-list) to find a
-// valid combination. TPUs are not supported.
+// not all combinations of `type` and `core_count` are valid. Check GPUs
+// on Compute Engine (/compute/docs/gpus/#gpus-list) to find a valid
+// combination. TPUs are not supported.
 type AcceleratorConfig struct {
 	// CoreCount: Count of cores of this accelerator.
 	CoreCount int64 `json:"coreCount,omitempty,string"`
@@ -251,9 +251,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -607,9 +606,9 @@ func (s *GuestOsFeature) MarshalJSON() ([]byte, error) {
 // Instance: The definition of a notebook instance.
 type Instance struct {
 	// AcceleratorConfig: The hardware accelerator used on this instance. If
-	// you use accelerators, make sure that your configuration has [enough
-	// vCPUs and memory to support the `machine_type` you have
-	// selected](/compute/docs/gpus/#gpus-list).
+	// you use accelerators, make sure that your configuration has enough
+	// vCPUs and memory to support the `machine_type` you have selected
+	// (/compute/docs/gpus/#gpus-list).
 	AcceleratorConfig *AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
 	// BootDiskSizeGb: Input only. The size of the boot disk in GB attached
@@ -683,16 +682,16 @@ type Instance struct {
 	// KmsKey: Input only. The KMS key used to encrypt the disks, only
 	// applicable if disk_encryption is CMEK. Format:
 	// `projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cry
-	// ptoKeys/{key_id}` Learn more about [using your own encryption
-	// keys](/kms/docs/quickstart).
+	// ptoKeys/{key_id}` Learn more about using your own encryption keys
+	// (/kms/docs/quickstart).
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// Labels: Labels to apply to this instance. These can be later modified
 	// by the setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MachineType: Required. The [Compute Engine machine
-	// type](/compute/docs/machine-types) of this instance.
+	// MachineType: Required. The Compute Engine machine type
+	// (/compute/docs/machine-types) of this instance.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Metadata: Custom metadata to apply to this instance.
@@ -729,10 +728,10 @@ type Instance struct {
 	// ServiceAccount: The service account on this instance, giving access
 	// to other Google Cloud services. You can use any service account
 	// within the same project, but you must have the service account user
-	// permission to use the instance. If not specified, the [Compute Engine
-	// default service
-	// account](https://cloud.google.com/compute/docs/access/service-accounts
-	// #default_service_account) is used.
+	// permission to use the instance. If not specified, the Compute Engine
+	// default service account
+	// (https://cloud.google.com/compute/docs/access/service-accounts#default_service_account)
+	// is used.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// State: Output only. The state of this instance.
@@ -1164,9 +1163,10 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1184,8 +1184,8 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
 	// specify a `condition` that determines how and when the `bindings` are
@@ -1220,9 +1220,9 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1357,10 +1357,10 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // accelerator.
 type SetInstanceAcceleratorRequest struct {
 	// CoreCount: Required. Count of cores of this accelerator. Note that
-	// not all combinations of `type` and `core_count` are valid. Check
-	// [GPUs on Compute
-	// Engine](https://cloud.google.com/compute/docs/gpus/#gpus-list) to
-	// find a valid combination. TPUs are not supported.
+	// not all combinations of `type` and `core_count` are valid. Check GPUs
+	// on Compute Engine
+	// (https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a
+	// valid combination. TPUs are not supported.
 	CoreCount int64 `json:"coreCount,omitempty,string"`
 
 	// Type: Required. Type of this accelerator.
@@ -1438,8 +1438,8 @@ func (s *SetInstanceLabelsRequest) MarshalJSON() ([]byte, error) {
 // SetInstanceMachineTypeRequest: Request for setting instance machine
 // type.
 type SetInstanceMachineTypeRequest struct {
-	// MachineType: Required. The [Compute Engine machine
-	// type](https://cloud.google.com/compute/docs/machine-types).
+	// MachineType: Required. The Compute Engine machine type
+	// (https://cloud.google.com/compute/docs/machine-types).
 	MachineType string `json:"machineType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MachineType") to
@@ -1471,11 +1471,11 @@ type StartInstanceRequest struct {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1522,8 +1522,8 @@ type StopInstanceRequest struct {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -3129,9 +3129,8 @@ func (r *ProjectsLocationsInstancesService) GetIamPolicy(resource string) *Proje
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsInstancesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsInstancesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c

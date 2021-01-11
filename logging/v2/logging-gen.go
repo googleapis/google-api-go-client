@@ -2217,10 +2217,9 @@ type LogSink struct {
 	// methods.Until you grant this identity write-access to the
 	// destination, log entry exports from this sink will fail. For more
 	// information, see Granting Access for a Resource
-	// (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#
-	// granting_access_to_a_service_account_for_a_resource). Consult the
-	// destination service's documentation to determine the appropriate IAM
-	// roles to assign to the identity.
+	// (https://cloud.google.com/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_account_for_a_resource).
+	// Consult the destination service's documentation to determine the
+	// appropriate IAM roles to assign to the identity.
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

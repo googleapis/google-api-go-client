@@ -859,17 +859,16 @@ type GcpUserAccessBinding struct {
 	// GroupKey: Required. Immutable. Google Group id whose members are
 	// subject to this binding's restrictions. See "id" in the [G Suite
 	// Directory API's Groups resource]
-	// (https://developers.google.com/admin-sdk/directory/v1/reference/groups
-	// #resource). If a group's email address/alias is changed, this
-	// resource will continue to point at the changed group. This field does
-	// not accept group email addresses or aliases. Example:
-	// "01d520gv4vjcrht"
+	// (https://developers.google.com/admin-sdk/directory/v1/reference/groups#resource).
+	// If a group's email address/alias is changed, this resource will
+	// continue to point at the changed group. This field does not accept
+	// group email addresses or aliases. Example: "01d520gv4vjcrht"
 	GroupKey string `json:"groupKey,omitempty"`
 
 	// Name: Immutable. Assigned by the server during creation. The last
 	// segment has an arbitrary length and has only URI unreserved
-	// characters (as defined by [RFC 3986 Section
-	// 2.3](https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be
+	// characters (as defined by RFC 3986 Section 2.3
+	// (https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be
 	// specified by the client during creation. Example:
 	// "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
 	Name string `json:"name,omitempty"`
@@ -1711,11 +1710,11 @@ func (s *ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

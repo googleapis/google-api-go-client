@@ -605,14 +605,14 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 type DeprecatedEvent struct {
 	// Action: The form action data associated with an interactive card that
 	// was clicked. Only populated for CARD_CLICKED events. See the
-	// [Interactive Cards guide](/hangouts/chat/how-tos/cards-onclick) for
+	// Interactive Cards guide (/hangouts/chat/how-tos/cards-onclick) for
 	// more information.
 	Action *FormAction `json:"action,omitempty"`
 
 	// ConfigCompleteRedirectUrl: The URL the bot should redirect the user
 	// to after they have completed an authorization or configuration flow
-	// outside of Google Chat. See the [Authorizing access to 3p services
-	// guide](/hangouts/chat/how-tos/auth-3p) for more information.
+	// outside of Google Chat. See the Authorizing access to 3p services
+	// guide (/hangouts/chat/how-tos/auth-3p) for more information.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
 	// EventTime: The timestamp indicating when the event was dispatched.

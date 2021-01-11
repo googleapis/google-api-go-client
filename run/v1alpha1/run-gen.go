@@ -561,8 +561,8 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // AuthorizedDomain: A domain that a user has been authorized to
 // administer. To authorize use of a domain, verify ownership via
-// [Webmaster
-// Central](https://www.google.com/webmasters/verification/home).
+// Webmaster Central
+// (https://www.google.com/webmasters/verification/home).
 type AuthorizedDomain struct {
 	// Id: Relative name of the domain authorized for use. Example:
 	// `example.com`.
@@ -603,9 +603,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -1343,8 +1342,9 @@ type Condition struct {
 
 	// Type: type is used to communicate the status of the reconciliation
 	// process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types common to all resources include: * "Ready": True when the Resource is
-	// ready.
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types common to all resources include: * "Ready": True when the
+	// Resource is ready.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
@@ -1586,8 +1586,8 @@ type ConfigurationCondition struct {
 
 	// Type: ConfigurationConditionType is used to communicate the status of
 	// the reconciliation process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types
-	// include:"Ready"
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types include:"Ready"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
@@ -1629,8 +1629,9 @@ type ConfigurationSpec struct {
 	// Revision to be created when the spec doesn't otherwise change, a
 	// nonce label may be provided in the template metadata. For more
 	// details, see:
-	// https://github.com/knative/serving/blob/master/docs/client-conventions.md#associate-modifications-with-revisions Cloud Run does not currently support referencing a build that is responsible for materializing the container image from
-	// source.
+	// https://github.com/knative/serving/blob/master/docs/client-conventions.md#associate-modifications-with-revisions
+	// Cloud Run does not currently support referencing a build that is
+	// responsible for materializing the container image from source.
 	RevisionTemplate *RevisionTemplate `json:"revisionTemplate,omitempty"`
 
 	// Template: Template holds the latest specification for the Revision to
@@ -3351,8 +3352,8 @@ type ObjectMeta struct {
 	// the client should retry (optionally after the time indicated in the
 	// Retry-After header). Applied only if Name is not specified. More
 	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency +optional string generateName =
-	// 2;
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
+	// +optional string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
 
 	// Generation: A sequence number representing a specific generation of
@@ -3560,9 +3561,10 @@ func (s *OwnerReference) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -3580,8 +3582,8 @@ func (s *OwnerReference) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -3620,9 +3622,9 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3913,7 +3915,11 @@ type RevisionCondition struct {
 
 	// Type: RevisionConditionType is used to communicate the status of the
 	// reconciliation process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types include: * "Ready": True when the Revision is ready. * "ResourcesAvailable": True when underlying resources have been provisioned. * "ContainerHealthy": True when the Revision readiness check completes. * "Active": True when the Revision may receive
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types include: * "Ready": True when the Revision is ready. *
+	// "ResourcesAvailable": True when underlying resources have been
+	// provisioned. * "ContainerHealthy": True when the Revision readiness
+	// check completes. * "Active": True when the Revision may receive
 	// traffic.
 	Type string `json:"type,omitempty"`
 
@@ -4135,7 +4141,9 @@ func (s *RevisionTemplate) MarshalJSON() ([]byte, error) {
 // creating them; in these cases the Route is additionally responsible
 // for monitoring the Configuration for "latest ready" revision changes,
 // and smoothly rolling out latest revisions. See also:
-// https://github.com/knative/serving/blob/master/docs/spec/overview.md#route Cloud Run currently supports referencing a single Configuration to automatically deploy the "latest ready" Revision from that
+// https://github.com/knative/serving/blob/master/docs/spec/overview.md#route
+// Cloud Run currently supports referencing a single Configuration to
+// automatically deploy the "latest ready" Revision from that
 // Configuration.
 type Route struct {
 	// ApiVersion: The API version for this call such as
@@ -4207,8 +4215,8 @@ type RouteCondition struct {
 
 	// Type: RouteConditionType is used to communicate the status of the
 	// reconciliation process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types include:
-	// "Ready".
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types include: "Ready".
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
@@ -4676,7 +4684,9 @@ type ServiceCondition struct {
 
 	// Type: ServiceConditionType is used to communicate the status of the
 	// reconciliation process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types include: "Ready", "ConfigurationsReady", and "RoutesReady". "Ready" will be true when the underlying Route and Configuration are
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types include: "Ready", "ConfigurationsReady", and "RoutesReady".
+	// "Ready" will be true when the underlying Route and Configuration are
 	// ready.
 	Type string `json:"type,omitempty"`
 
@@ -5024,8 +5034,8 @@ func (s *TCPSocketAction) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -18205,9 +18215,8 @@ func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *Projec
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsServicesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServicesGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c

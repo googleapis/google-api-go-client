@@ -1584,8 +1584,8 @@ type Job struct {
 	// LanguageCode: The language of the posting. This field is distinct
 	// from any requirements for fluency that are associated with the job.
 	// Language codes must be in BCP-47 format, such as "en-US" or
-	// "sr-Latn". For more information, see [Tags for Identifying
-	// Languages](https://tools.ietf.org/html/bcp47){: class="external"
+	// "sr-Latn". For more information, see Tags for Identifying Languages
+	// (https://tools.ietf.org/html/bcp47){: class="external"
 	// target="_blank" }. If this field is unspecified and Job.description
 	// is present, detected language code based on Job.description is
 	// assigned, otherwise defaults to 'en_US'.
@@ -2114,9 +2114,9 @@ type JobQuery struct {
 	// against, for example, "en-US". If a value isn't specified, the search
 	// results can contain jobs in any locale. Language codes should be in
 	// BCP-47 format, such as "en-US" or "sr-Latn". For more information,
-	// see [Tags for Identifying
-	// Languages](https://tools.ietf.org/html/bcp47). At most 10 language
-	// code filters are allowed.
+	// see Tags for Identifying Languages
+	// (https://tools.ietf.org/html/bcp47). At most 10 language code filters
+	// are allowed.
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 
 	// LocationFilters: The location filter specifies geo-regions containing
@@ -2143,8 +2143,8 @@ type JobQuery struct {
 	// This field helps to better interpret the query. If a value isn't
 	// specified, the query language code is automatically detected, which
 	// may not be accurate. Language code should be in BCP-47 format, such
-	// as "en-US" or "sr-Latn". For more information, see [Tags for
-	// Identifying Languages](https://tools.ietf.org/html/bcp47).
+	// as "en-US" or "sr-Latn". For more information, see Tags for
+	// Identifying Languages (https://tools.ietf.org/html/bcp47).
 	QueryLanguageCode string `json:"queryLanguageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommuteFilter") to
@@ -2474,8 +2474,8 @@ type LocationFilter struct {
 	// Set this field to bias location resolution toward a specific country
 	// or territory. If this field is not set, application behavior is
 	// biased toward the United States by default. See
-	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: "CH" for
-	// Switzerland.
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// TelecommutePreference: Allows the client to return jobs without a set
@@ -2918,8 +2918,8 @@ type PostalAddress struct {
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
 	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: "CH" for
-	// Switzerland.
+	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// Revision: The schema revision of the `PostalAddress`. This must be
@@ -3466,11 +3466,11 @@ func (s *SpellingCorrection) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -3657,8 +3657,8 @@ func (c *ProjectsTenantsCompleteQueryCall) Company(company string) *ProjectsTena
 
 // LanguageCodes sets the optional parameter "languageCodes": The list
 // of languages of the query. This is the BCP-47 language code, such as
-// "en-US" or "sr-Latn". For more information, see [Tags for Identifying
-// Languages](https://tools.ietf.org/html/bcp47). The maximum number of
+// "en-US" or "sr-Latn". For more information, see Tags for Identifying
+// Languages (https://tools.ietf.org/html/bcp47). The maximum number of
 // allowed characters is 255.
 func (c *ProjectsTenantsCompleteQueryCall) LanguageCodes(languageCodes ...string) *ProjectsTenantsCompleteQueryCall {
 	c.urlParams_.SetMulti("languageCodes", append([]string{}, languageCodes...))
@@ -4674,10 +4674,9 @@ type ProjectsTenantsClientEventsCreateCall struct {
 
 // Create: Report events issued when end user interacts with customer's
 // application that uses Cloud Talent Solution. You may inspect the
-// created events in [self service
-// tools](https://console.cloud.google.com/talent-solution/overview).
-// [Learn
-// more](https://cloud.google.com/talent-solution/docs/management-tools)
+// created events in self service tools
+// (https://console.cloud.google.com/talent-solution/overview). Learn
+// more (https://cloud.google.com/talent-solution/docs/management-tools)
 // about self service tools.
 func (r *ProjectsTenantsClientEventsService) Create(parent string, clientevent *ClientEvent) *ProjectsTenantsClientEventsCreateCall {
 	c := &ProjectsTenantsClientEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}

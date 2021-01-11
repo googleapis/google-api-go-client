@@ -655,12 +655,12 @@ type Document struct {
 
 	// Language: The language of the document (if not specified, the
 	// language is automatically detected). Both ISO and BCP-47 language
-	// codes are accepted. [Language
-	// Support](https://cloud.google.com/natural-language/docs/languages)
-	// lists currently supported languages for each API method. If the
-	// language (either specified by the caller or automatically detected)
-	// is not supported by the called API method, an `INVALID_ARGUMENT`
-	// error is returned.
+	// codes are accepted. Language Support
+	// (https://cloud.google.com/natural-language/docs/languages) lists
+	// currently supported languages for each API method. If the language
+	// (either specified by the caller or automatically detected) is not
+	// supported by the called API method, an `INVALID_ARGUMENT` error is
+	// returned.
 	Language string `json:"language,omitempty"`
 
 	// Type: Required. If the type is not set or is `TYPE_UNSPECIFIED`,
@@ -1114,11 +1114,11 @@ func (s *Sentiment) UnmarshalJSON(data []byte) error {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1194,7 +1194,7 @@ type Token struct {
 	// DependencyEdge: Dependency tree parse for this token.
 	DependencyEdge *DependencyEdge `json:"dependencyEdge,omitempty"`
 
-	// Lemma: [Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29)
+	// Lemma: Lemma (https://en.wikipedia.org/wiki/Lemma_%28morphology%29)
 	// of the token.
 	Lemma string `json:"lemma,omitempty"`
 

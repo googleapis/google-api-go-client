@@ -1303,13 +1303,13 @@ type NetworkConfig struct {
 	//   "MODE_IPV4" - Use the IPv4 internet protocol.
 	Modes []string `json:"modes,omitempty"`
 
-	// Network: The name of the Google Compute Engine [VPC
-	// network](/compute/docs/networks-and-firewalls#networks) to which the
-	// instance is connected.
+	// Network: The name of the Google Compute Engine VPC network
+	// (/compute/docs/networks-and-firewalls#networks) to which the instance
+	// is connected.
 	Network string `json:"network,omitempty"`
 
-	// ReservedIpRange: A /29 CIDR block in one of the [internal IP address
-	// ranges](https://www.arin.net/knowledge/address_filters.html) that
+	// ReservedIpRange: A /29 CIDR block in one of the internal IP address
+	// ranges (https://www.arin.net/knowledge/address_filters.html) that
 	// identifies the range of IP addresses reserved for this instance. For
 	// example, 10.0.0.0/29 or 192.168.0.0/29. The range you specify can't
 	// overlap with either existing subnets or assigned IP address ranges
@@ -1602,11 +1602,11 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.

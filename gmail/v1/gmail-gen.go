@@ -1526,8 +1526,8 @@ type Message struct {
 	// message or draft to a thread, the following criteria must be met: 1.
 	// The requested `threadId` must be specified on the `Message` or
 	// `Draft.Message` you supply with your request. 2. The `References` and
-	// `In-Reply-To` headers must be set in compliance with the [RFC
-	// 2822](https://tools.ietf.org/html/rfc2822) standard. 3. The `Subject`
+	// `In-Reply-To` headers must be set in compliance with the RFC 2822
+	// (https://tools.ietf.org/html/rfc2822) standard. 3. The `Subject`
 	// headers must match.
 	ThreadId string `json:"threadId,omitempty"`
 

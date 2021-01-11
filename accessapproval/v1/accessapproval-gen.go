@@ -972,8 +972,9 @@ func (r *FoldersService) UpdateAccessApprovalSettings(name string, accessapprova
 // supported. For each field, if it is included, the currently stored
 // value will be entirely overwritten with the value of the field passed
 // in this request. For the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If this field is left unset, only the notification_emails field will be
-// updated.
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// If this field is left unset, only the notification_emails field will
+// be updated.
 func (c *FoldersUpdateAccessApprovalSettingsCall) UpdateMask(updateMask string) *FoldersUpdateAccessApprovalSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2057,8 +2058,9 @@ func (r *OrganizationsService) UpdateAccessApprovalSettings(name string, accessa
 // supported. For each field, if it is included, the currently stored
 // value will be entirely overwritten with the value of the field passed
 // in this request. For the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If this field is left unset, only the notification_emails field will be
-// updated.
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// If this field is left unset, only the notification_emails field will
+// be updated.
 func (c *OrganizationsUpdateAccessApprovalSettingsCall) UpdateMask(updateMask string) *OrganizationsUpdateAccessApprovalSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3142,8 +3144,9 @@ func (r *ProjectsService) UpdateAccessApprovalSettings(name string, accessapprov
 // supported. For each field, if it is included, the currently stored
 // value will be entirely overwritten with the value of the field passed
 // in this request. For the `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If this field is left unset, only the notification_emails field will be
-// updated.
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// If this field is left unset, only the notification_emails field will
+// be updated.
 func (c *ProjectsUpdateAccessApprovalSettingsCall) UpdateMask(updateMask string) *ProjectsUpdateAccessApprovalSettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

@@ -309,8 +309,8 @@ type Alert struct {
 	// Metadata: Output only. The metadata associated with this alert.
 	Metadata *AlertMetadata `json:"metadata,omitempty"`
 
-	// SecurityInvestigationToolLink: Output only. An optional [Security
-	// Investigation Tool](https://support.google.com/a/answer/7575955)
+	// SecurityInvestigationToolLink: Output only. An optional Security
+	// Investigation Tool (https://support.google.com/a/answer/7575955)
 	// query for this alert.
 	SecurityInvestigationToolLink string `json:"securityInvestigationToolLink,omitempty"`
 
@@ -326,8 +326,8 @@ type Alert struct {
 	StartTime string `json:"startTime,omitempty"`
 
 	// Type: Required. The type of the alert. This is output only after
-	// alert is created. For a list of available alert types see [Google
-	// Workspace Alert types](/admin-sdk/alertcenter/reference/alert-types).
+	// alert is created. For a list of available alert types see Google
+	// Workspace Alert types (/admin-sdk/alertcenter/reference/alert-types).
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Output only. The time this alert was last updated.
@@ -733,8 +733,7 @@ type CloudPubsubTopic struct {
 	PayloadFormat string `json:"payloadFormat,omitempty"`
 
 	// TopicName: The `name` field of a Cloud Pubsub [Topic]
-	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topic
-	// s#Topic).
+	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topics#Topic).
 	TopicName string `json:"topicName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PayloadFormat") to
@@ -1335,8 +1334,8 @@ func (s *MatchInfo) MarshalJSON() ([]byte, error) {
 }
 
 // Notification: Settings for callback notifications. For more details
-// see [Google Workspace Alert
-// Notification](/admin-sdk/alertcenter/guides/notifications).
+// see Google Workspace Alert Notification
+// (/admin-sdk/alertcenter/guides/notifications).
 type Notification struct {
 	// CloudPubsubTopic: A Google Cloud Pub/sub topic destination.
 	CloudPubsubTopic *CloudPubsubTopic `json:"cloudPubsubTopic,omitempty"`
@@ -1366,9 +1365,8 @@ func (s *Notification) MarshalJSON() ([]byte, error) {
 }
 
 // PhishingSpike: Alert for a spike in user reported phishing.
-// *Warning*: This type has been deprecated. Use
-// [MailPhishing](/admin-sdk/alertcenter/reference/rest/v1beta1/MailPhish
-// ing) instead.
+// *Warning*: This type has been deprecated. Use MailPhishing
+// (/admin-sdk/alertcenter/reference/rest/v1beta1/MailPhishing) instead.
 type PhishingSpike struct {
 	// DomainId: The domain ID.
 	DomainId *DomainId `json:"domainId,omitempty"`
@@ -1687,11 +1685,11 @@ func (s *StateSponsoredAttack) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2646,10 +2644,10 @@ func (c *AlertsListCall) CustomerId(customerId string) *AlertsListCall {
 }
 
 // Filter sets the optional parameter "filter": A query string for
-// filtering alert results. For more details, see [Query
-// filters](/admin-sdk/alertcenter/guides/query-filters) and [Supported
-// query filter
-// fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).
+// filtering alert results. For more details, see Query filters
+// (/admin-sdk/alertcenter/guides/query-filters) and Supported query
+// filter fields
+// (/admin-sdk/alertcenter/reference/filter-fields#alerts.list).
 func (c *AlertsListCall) Filter(filter string) *AlertsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3173,11 +3171,10 @@ func (c *AlertsFeedbackListCall) CustomerId(customerId string) *AlertsFeedbackLi
 }
 
 // Filter sets the optional parameter "filter": A query string for
-// filtering alert feedback results. For more details, see [Query
-// filters](/admin-sdk/alertcenter/guides/query-filters) and [Supported
-// query filter
-// fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback
-// .list).
+// filtering alert feedback results. For more details, see Query filters
+// (/admin-sdk/alertcenter/guides/query-filters) and Supported query
+// filter fields
+// (/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).
 func (c *AlertsFeedbackListCall) Filter(filter string) *AlertsFeedbackListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

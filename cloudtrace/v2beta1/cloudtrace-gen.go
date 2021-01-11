@@ -267,13 +267,14 @@ type TraceSink struct {
 	// WriterIdentity: Output only. A service account name for exporting the
 	// data. This field is set by sinks.create and sinks.update. The service
 	// account will need to be granted write access to the destination
-	// specified in the output configuration, see [Granting access for a
-	// resource](/iam/docs/granting-roles-to-service-accounts#granting_access
-	// _to_a_service_account_for_a_resource). To create tables and write
-	// data this account will need the dataEditor role. Read more about
-	// roles in the [BigQuery
-	// documentation](https://cloud.google.com/bigquery/docs/access-control).
-	//  E.g.: "service-00000001@00000002.iam.gserviceaccount.com"
+	// specified in the output configuration, see Granting access for a
+	// resource
+	// (/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_ser
+	// vice_account_for_a_resource). To create tables and write data this
+	// account will need the dataEditor role. Read more about roles in the
+	// BigQuery documentation
+	// (https://cloud.google.com/bigquery/docs/access-control). E.g.:
+	// "service-00000001@00000002.iam.gserviceaccount.com"
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -948,8 +949,8 @@ func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *
 // update mask. `name` and `writer_identity` fields cannot be updated.
 // An empty updateMask is considered an error. For a detailed
 // `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask Example:
-// `updateMask=output_config`.
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// Example: `updateMask=output_config`.
 func (c *ProjectsTraceSinksPatchCall) UpdateMask(updateMask string) *ProjectsTraceSinksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

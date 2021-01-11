@@ -831,7 +831,7 @@
       }
     }
   },
-  "revision": "20201208",
+  "revision": "20210106",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -1325,6 +1325,11 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "vpcScReferenceArchitectureEnabled": {
+          "description": "Output only. Indicates whether the VPC Service Controls reference architecture is configured for the producer VPC host network.",
+          "readOnly": true,
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -2611,10 +2616,17 @@
           "type": "array"
         },
         "secondaryRangeIpPrefixLengths": {
-          "description": "Optional. DO NOT USE - Under development. The size of the desired secondary ranges for the subnet. Use usual CIDR range notation. For example, '30' to find unused x.x.x.x/30 CIDR range. The goal is to determine that the allocated ranges have enough free space for all the requested secondary ranges.",
+          "description": "Optional. The size of the desired secondary ranges for the subnet. Use usual CIDR range notation. For example, '30' to find unused x.x.x.x/30 CIDR range. The goal is to determine that the allocated ranges have enough free space for all the requested secondary ranges.",
           "items": {
             "format": "int32",
             "type": "integer"
+          },
+          "type": "array"
+        },
+        "subnetworkCandidates": {
+          "description": "Optional. List of subnetwork candidates to validate. The required input fields are `name`, `network`, and `region`. Subnetworks from this list which exist will be returned in the response with the `ip_cidr_range`, `secondary_ip_cider_ranges`, and `outside_allocation` fields set.",
+          "items": {
+            "$ref": "Subnetwork"
           },
           "type": "array"
         }
@@ -2967,6 +2979,10 @@
           "description": "This is a discovered subnet that is not within the current consumer allocated ranges.",
           "type": "boolean"
         },
+        "region": {
+          "description": "GCP region where the subnetwork is located.",
+          "type": "string"
+        },
         "secondaryIpRanges": {
           "description": "List of secondary IP ranges in this subnetwork.",
           "items": {
@@ -3125,7 +3141,7 @@
           "type": "string"
         },
         "requirements": {
-          "description": "Requirements that must be satisfied before a consumer project can use the service. Each requirement is of the form /; for example 'serviceusage.googleapis.com/billing-enabled'.",
+          "description": "Requirements that must be satisfied before a consumer project can use the service. Each requirement is of the form /; for example 'serviceusage.googleapis.com/billing-enabled'. For Google APIs, a Terms of Service requirement must be included here. Google Cloud APIs must include \"serviceusage.googleapis.com/tos/cloud\". Other Google APIs should include \"serviceusage.googleapis.com/tos/universal\". Additional ToS can be included based on the business needs.",
           "items": {
             "type": "string"
           },
@@ -3185,10 +3201,19 @@
     "ValidateConsumerConfigResponse": {
       "id": "ValidateConsumerConfigResponse",
       "properties": {
+        "existingSubnetworkCandidates": {
+          "description": "List of subnetwork candidates from the request which exist with the `ip_cidr_range`, `secondary_ip_cider_ranges`, and `outside_allocation` fields set.",
+          "items": {
+            "$ref": "Subnetwork"
+          },
+          "type": "array"
+        },
         "isValid": {
+          "description": "Indicates whether all the requested validations passed.",
           "type": "boolean"
         },
         "validationError": {
+          "description": "The first validation which failed.",
           "enum": [
             "VALIDATION_ERROR_UNSPECIFIED",
             "VALIDATION_NOT_REQUESTED",

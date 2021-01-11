@@ -12,7 +12,7 @@
           "description": "View Google Analytics user permissions"
         },
         "https://www.googleapis.com/auth/analytics.readonly": {
-          "description": "View your Google Analytics data"
+          "description": "See and download your Google Analytics data"
         }
       }
     }
@@ -682,7 +682,7 @@
           "parameterOrder": [],
           "parameters": {
             "filter": {
-              "description": "Required. An expression for filtering the results of the request. Fields eligible for filtering are: `parent:`(The resource name of the parent account) or `firebase_project:`(The id or number of the linked firebase project). Some examples of filters: | Filter | Description | |-----------------------------|-------------------------------------------| | parent:accounts/123 | The account with account id: 123. | | firebase_project:project-id | The firebase project with id: project-id. | | firebase_project:123 | The firebase project with number: 123. |",
+              "description": "Required. An expression for filtering the results of the request. Fields eligible for filtering are: `parent:`(The resource name of the parent account) or `firebase_project:`(The id or number of the linked firebase project). Some examples of filters: ``` | Filter | Description | |-----------------------------|-------------------------------------------| | parent:accounts/123 | The account with account id: 123. | | firebase_project:project-id | The firebase project with id: project-id. | | firebase_project:123 | The firebase project with number: 123. | ```",
               "location": "query",
               "type": "string"
             },
@@ -963,6 +963,17 @@
                 "parent"
               ],
               "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of resources to return. The service may return fewer than this value, even if there are additional pages. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A page token, received from a previous `ListFirebaseLinks` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListProperties` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "parent": {
                   "description": "Required. Format: properties/{property_id} Example: properties/1234",
                   "location": "path",
@@ -1827,7 +1838,7 @@
       }
     }
   },
-  "revision": "20201210",
+  "revision": "20210106",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {
@@ -2422,6 +2433,10 @@
             "$ref": "GoogleAnalyticsAdminV1alphaFirebaseLink"
           },
           "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages. Currently, Google Analytics supports only one FirebaseLink per property, so this will never be populated.",
+          "type": "string"
         }
       },
       "type": "object"

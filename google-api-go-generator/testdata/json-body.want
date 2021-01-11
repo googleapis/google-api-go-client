@@ -425,8 +425,8 @@ type GoogleCloudMlV1__AutoScaling struct {
 	// HTTP request:
 	// <pre>
 	// PATCH
-	// https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes -d
-	// @./update_body.json
+	// https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes
+	// -d @./update_body.json
 	// </pre>
 	MinNodes int64 `json:"minNodes,omitempty"`
 

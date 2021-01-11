@@ -27,6 +27,7 @@ import (
 	"unicode"
 
 	"google.golang.org/api/google-api-go-generator/internal/disco"
+	"google.golang.org/api/internal/version"
 )
 
 const (
@@ -2017,7 +2018,7 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn(`reqHeaders := make(http.Header)`)
-	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")`)
+	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/%s")`, version.Repo)
 	pn("for k, v := range c.header_ {")
 	pn(" reqHeaders[k] = v")
 	pn("}")

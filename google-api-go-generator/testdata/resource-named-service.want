@@ -1995,8 +1995,9 @@ type Version struct {
 	// DefaultExpiration: Duration that static files should be cached by web
 	// proxies and browsers. Only applicable if the corresponding
 	// StaticFilesHandler
-	// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#staticfileshandler) does not specify its own expiration time. Only returned in `GET` requests if `view=FULL` is
-	// set.
+	// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#staticfileshandler)
+	// does not specify its own expiration time. Only returned in `GET`
+	// requests if `view=FULL` is set.
 	DefaultExpiration string `json:"defaultExpiration,omitempty"`
 
 	// Deployment: Code and application artifacts that make up this version.
@@ -3679,7 +3680,14 @@ func (r *AppsServicesService) Patch(appsId string, servicesId string, service *S
 // version. By default, traffic is shifted immediately. For gradual
 // traffic migration, the target version must be located within
 // instances that are configured for both warmup requests
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#inboundservicetype) and automatic scaling (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#automaticscaling). You must specify the `shardBy` (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services#shardby) field in the Service resource. Gradual traffic migration is not supported in the App Engine flexible environment. For examples, see Migrating and Splitting Traffic
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#inboundservicetype)
+// and automatic scaling
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#automaticscaling).
+// You must specify the `shardBy`
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services#shardby)
+// field in the Service resource. Gradual traffic migration is not
+// supported in the App Engine flexible environment. For examples, see
+// Migrating and Splitting Traffic
 // (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).
 func (c *AppsServicesPatchCall) MigrateTraffic(migrateTraffic bool) *AppsServicesPatchCall {
 	c.urlParams_.Set("migrateTraffic", fmt.Sprint(migrateTraffic))
@@ -4544,8 +4552,18 @@ type AppsServicesVersionsPatchCall struct {
 // Patch: Updates the specified Version resource. You can specify the
 // following fields depending on the App Engine environment and type of
 // scaling that the version resource uses: * `serving_status`
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.serving_status): For Version resources that use basic scaling, manual scaling, or run in the App Engine flexible environment. * `instance_class` (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.instance_class): For Version resources that run in the App Engine standard environment. * `automatic_scaling.min_idle_instances` (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard environment. * `automatic_scaling.max_idle_instances` (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling): For Version resources that use automatic scaling and run in the App Engine standard
-// environment.
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.serving_status):
+// For Version resources that use basic scaling, manual scaling, or run
+// in the App Engine flexible environment. * `instance_class`
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.instance_class):
+// For Version resources that run in the App Engine standard
+// environment. * `automatic_scaling.min_idle_instances`
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):
+// For Version resources that use automatic scaling and run in the App
+// Engine standard environment. * `automatic_scaling.max_idle_instances`
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):
+// For Version resources that use automatic scaling and run in the App
+// Engine standard environment.
 func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
 	c := &AppsServicesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId

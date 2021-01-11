@@ -319,8 +319,9 @@ type ProjectsLocationsInstancesCreateCall struct {
 // a successfully created DatabaseInstance is ACTIVE. Only available for
 // projects on the Blaze plan. Projects can be upgraded using the Cloud
 // Billing API
-// https://cloud.google.com/billing/reference/rest/v1/projects/updateBillingInfo. Note that it might take a few minutes for billing enablement state to propagate to Firebase
-// systems.
+// https://cloud.google.com/billing/reference/rest/v1/projects/updateBillingInfo.
+// Note that it might take a few minutes for billing enablement state to
+// propagate to Firebase systems.
 func (r *ProjectsLocationsInstancesService) Create(parent string, databaseinstance *DatabaseInstance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

@@ -1397,8 +1397,9 @@ type GoogleCloudRunV1Condition struct {
 
 	// Type: type is used to communicate the status of the reconciliation
 	// process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types common to all resources include: * "Ready": True when the Resource is
-	// ready.
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types common to all resources include: * "Ready": True when the
+	// Resource is ready.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
@@ -2060,8 +2061,8 @@ type ObjectMeta struct {
 	// found in the time allotted, and the client should retry (optionally
 	// after the time indicated in the Retry-After header). Applied only if
 	// Name is not specified. More info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency string generateName =
-	// 2;
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
+	// string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
 
 	// Generation: (Optional) A sequence number representing a specific
@@ -2677,7 +2678,9 @@ func (s *RevisionTemplate) MarshalJSON() ([]byte, error) {
 // creating them; in these cases the Route is additionally responsible
 // for monitoring the Configuration for "latest ready" revision changes,
 // and smoothly rolling out latest revisions. See also:
-// https://github.com/knative/serving/blob/master/docs/spec/overview.md#route Cloud Run currently supports referencing a single Configuration to automatically deploy the "latest ready" Revision from that
+// https://github.com/knative/serving/blob/master/docs/spec/overview.md#route
+// Cloud Run currently supports referencing a single Configuration to
+// automatically deploy the "latest ready" Revision from that
 // Configuration.
 type Route struct {
 	// ApiVersion: The API version for this call such as

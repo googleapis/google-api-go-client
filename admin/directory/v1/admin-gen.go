@@ -1191,8 +1191,7 @@ type ChromeOsDevice struct {
 	// `Dev`: The devices's developer hardware switch is enabled. When
 	// booted, the device has a command line shell. For an example of a
 	// developer switch, see the Chromebook developer information
-	// (http://www.chromium.org/chromium-os/developer-information-for-chrome-
-	// os-devices/samsung-series-5-chromebook#TOC-Developer-switch).
+	// (http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).
 	BootMode string `json:"bootMode,omitempty"`
 
 	// CpuStatusReports: Reports of CPU utilization and temperature
@@ -2881,9 +2880,9 @@ type MobileDeviceApplications struct {
 	// Permission: The list of permissions of this application. These can be
 	// either a standard Android permission or one defined by the
 	// application, and are found in an application's Android manifest
-	// (http://developer.android.com/guide/topics/manifest/uses-permission-el
-	// ement.html). Examples of a Calendar application's permissions are
-	// `READ_CALENDAR`, or `MANAGE_ACCOUNTS`.
+	// (http://developer.android.com/guide/topics/manifest/uses-permission-element.html).
+	// Examples of a Calendar application's permissions are `READ_CALENDAR`,
+	// or `MANAGE_ACCOUNTS`.
 	Permission []string `json:"permission,omitempty"`
 
 	// VersionCode: The application's version code. An example is `13`.
@@ -2995,8 +2994,7 @@ type OrgUnit struct {
 	// the nearest parent organizational unit. For more information on
 	// inheritance and users in an organization structure, see the
 	// administration help center
-	// (http://support.google.com/a/bin/answer.py?answer=182442&topic=1227584
-	// &ctx=topic).
+	// (http://support.google.com/a/bin/answer.py?answer=182442&topic=1227584&ctx=topic).
 	BlockInheritance bool `json:"blockInheritance,omitempty"`
 
 	// Description: Description of the organizational unit.
@@ -3028,9 +3026,9 @@ type OrgUnit struct {
 	// is moved to a new organization, the user's access changes. For more
 	// information about organization structures, see the administration
 	// help center
-	// (http://support.google.com/a/bin/answer.py?answer=182433&topic=1227584
-	// &ctx=topic). For more information about moving a user to a different
-	// organization, see Update a user
+	// (http://support.google.com/a/bin/answer.py?answer=182433&topic=1227584&ctx=topic).
+	// For more information about moving a user to a different organization,
+	// see Update a user
 	// (/admin-sdk/directory/v1/guides/manage-users.html#update_user).
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 

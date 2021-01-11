@@ -2266,15 +2266,14 @@ type InternalChecker struct {
 	// configured. A checker in this state can be returned by
 	// ListInternalCheckers or GetInternalChecker, as well as by examining
 	// the long running Operation
-	// (https://cloud.google.com/apis/design/design_patterns#long_running_ope
-	// rations) that created it.
+	// (https://cloud.google.com/apis/design/design_patterns#long_running_operations)
+	// that created it.
 	//   "RUNNING" - The checker is running and available for use. A checker
 	// in this state can be returned by ListInternalCheckers or
 	// GetInternalChecker as well as by examining the long running Operation
-	// (https://cloud.google.com/apis/design/design_patterns#long_running_ope
-	// rations) that created it. If a checker is being torn down, it is
-	// neither visible nor usable, so there is no "deleting" or "down"
-	// state.
+	// (https://cloud.google.com/apis/design/design_patterns#long_running_operations)
+	// that created it. If a checker is being torn down, it is neither
+	// visible nor usable, so there is no "deleting" or "down" state.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -3054,9 +3053,9 @@ type MetricAbsence struct {
 	// across all members of a group of resrouces). Multiple aggregations
 	// are applied in the order specified.This field is similar to the one
 	// in the ListTimeSeries request
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-	// eries/list). It is advisable to use the ListTimeSeries method when
-	// debugging this field.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
+	// It is advisable to use the ListTimeSeries method when debugging this
+	// field.
 	Aggregations []*Aggregation `json:"aggregations,omitempty"`
 
 	// Duration: The amount of time that a time series must fail to report
@@ -3070,12 +3069,11 @@ type MetricAbsence struct {
 	// that identifies which time series should be compared with the
 	// threshold.The filter is similar to the one that is specified in the
 	// ListTimeSeries request
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-	// eries/list) (that call is useful to verify the time series that will
-	// be retrieved / processed). The filter must specify the metric type
-	// and the resource type. Optionally, it can specify resource labels and
-	// metric labels. This field must not exceed 2048 Unicode characters in
-	// length.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
+	// (that call is useful to verify the time series that will be retrieved
+	// / processed). The filter must specify the metric type and the
+	// resource type. Optionally, it can specify resource labels and metric
+	// labels. This field must not exceed 2048 Unicode characters in length.
 	Filter string `json:"filter,omitempty"`
 
 	// Trigger: The number/percent of time series for which the comparison
@@ -3420,9 +3418,9 @@ type MetricThreshold struct {
 	// across all members of a group of resrouces). Multiple aggregations
 	// are applied in the order specified.This field is similar to the one
 	// in the ListTimeSeries request
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-	// eries/list). It is advisable to use the ListTimeSeries method when
-	// debugging this field.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
+	// It is advisable to use the ListTimeSeries method when debugging this
+	// field.
 	Aggregations []*Aggregation `json:"aggregations,omitempty"`
 
 	// Comparison: The comparison to apply between the time series
@@ -3485,12 +3483,11 @@ type MetricThreshold struct {
 	// that identifies which time series should be compared with the
 	// threshold.The filter is similar to the one that is specified in the
 	// ListTimeSeries request
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-	// eries/list) (that call is useful to verify the time series that will
-	// be retrieved / processed). The filter must specify the metric type
-	// and the resource type. Optionally, it can specify resource labels and
-	// metric labels. This field must not exceed 2048 Unicode characters in
-	// length.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
+	// (that call is useful to verify the time series that will be retrieved
+	// / processed). The filter must specify the metric type and the
+	// resource type. Optionally, it can specify resource labels and metric
+	// labels. This field must not exceed 2048 Unicode characters in length.
 	Filter string `json:"filter,omitempty"`
 
 	// ThresholdValue: A value against which to compare the time series.

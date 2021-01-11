@@ -2474,8 +2474,8 @@ type LocationFilter struct {
 	// Set this field to bias location resolution toward a specific country
 	// or territory. If this field is not set, application behavior is
 	// biased toward the United States by default. See
-	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: "CH" for
-	// Switzerland.
+	// https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// TelecommutePreference: Allows the client to return jobs without a set
@@ -2918,8 +2918,8 @@ type PostalAddress struct {
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
 	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: "CH" for
-	// Switzerland.
+	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// Revision: The schema revision of the `PostalAddress`. This must be

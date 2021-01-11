@@ -1049,8 +1049,7 @@ type DebugInstanceRequest struct {
 	// [KEY_VALUE] google-ssh
 	// {"userName":"[USERNAME]","expireOn":"[EXPIRE_TIME]"}For more
 	// information, see Adding and Removing SSH Keys
-	// (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-k
-	// eys).
+	// (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys).
 	SshKey string `json:"sshKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SshKey") to
@@ -3431,9 +3430,9 @@ type Version struct {
 	// DefaultExpiration: Duration that static files should be cached by web
 	// proxies and browsers. Only applicable if the corresponding
 	// StaticFilesHandler
-	// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-	// pps.services.versions#StaticFilesHandler) does not specify its own
-	// expiration time.Only returned in GET requests if view=FULL is set.
+	// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#StaticFilesHandler)
+	// does not specify its own expiration time.Only returned in GET
+	// requests if view=FULL is set.
 	DefaultExpiration string `json:"defaultExpiration,omitempty"`
 
 	// Deployment: Code and application artifacts that make up this
@@ -4187,8 +4186,9 @@ type AppsRepairCall struct {
 // App Engine service account. If you have deleted your App Engine
 // service account, this will not be able to recreate it. Instead, you
 // should attempt to use the IAM undelete API if possible at
-// https://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts/undelete?apix_params=%7B"name"%3A"projects%2F-%2FserviceAccounts%2Funique_id"%2C"resource"%3A%7B%7D%7D . If the deletion was recent, the numeric ID can be found in the Cloud Console Activity
-// Log.
+// https://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts/undelete?apix_params=%7B"name"%3A"projects%2F-%2FserviceAccounts%2Funique_id"%2C"resource"%3A%7B%7D%7D
+// . If the deletion was recent, the numeric ID can be found in the
+// Cloud Console Activity Log.
 func (r *AppsService) Repair(appsId string, repairapplicationrequest *RepairApplicationRequest) *AppsRepairCall {
 	c := &AppsRepairCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -8366,16 +8366,15 @@ func (r *AppsServicesService) Patch(appsId string, servicesId string, service *S
 // specify. By default, traffic is shifted immediately. For gradual
 // traffic migration, the target versions must be located within
 // instances that are configured for both warmup requests
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#InboundServiceType) and automatic scaling
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#AutomaticScaling). You must specify the shardBy
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services#ShardBy) field in the Service resource. Gradual traffic
-// migration is not supported in the App Engine flexible environment.
-// For examples, see Migrating and Splitting Traffic
-// (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting
-// -traffic).
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#InboundServiceType)
+// and automatic scaling
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#AutomaticScaling).
+// You must specify the shardBy
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services#ShardBy)
+// field in the Service resource. Gradual traffic migration is not
+// supported in the App Engine flexible environment. For examples, see
+// Migrating and Splitting Traffic
+// (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).
 func (c *AppsServicesPatchCall) MigrateTraffic(migrateTraffic bool) *AppsServicesPatchCall {
 	c.urlParams_.Set("migrateTraffic", fmt.Sprint(migrateTraffic))
 	return c
@@ -9264,51 +9263,38 @@ type AppsServicesVersionsPatchCall struct {
 // following fields depending on the App Engine environment and type of
 // scaling that the version resource uses:Standard environment
 // instance_class
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.instance_class)automatic scaling
-// in the standard environment: automatic_scaling.min_idle_instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.automatic_scaling)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.instance_class)automatic
+// scaling in the standard environment:
+// automatic_scaling.min_idle_instances
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling)
 // automatic_scaling.max_idle_instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.automatic_scaling)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling)
 // automaticScaling.standard_scheduler_settings.max_instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#StandardSchedulerSettings)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#StandardSchedulerSettings)
 // automaticScaling.standard_scheduler_settings.min_instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#StandardSchedulerSettings)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#StandardSchedulerSettings)
 // automaticScaling.standard_scheduler_settings.target_cpu_utilization
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#StandardSchedulerSettings)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#StandardSchedulerSettings)
 // automaticScaling.standard_scheduler_settings.target_throughput_utiliza
 // tion
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#StandardSchedulerSettings)basic scaling or
-// manual scaling in the standard environment: serving_status
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.serving_status)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#StandardSchedulerSettings)basic
+// scaling or manual scaling in the standard environment: serving_status
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.serving_status)
 // manual_scaling.instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#manualscaling)Flexible environment
-// serving_status
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.serving_status)automatic scaling
-// in the flexible environment: automatic_scaling.min_total_instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.automatic_scaling)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#manualscaling)Flexible
+// environment serving_status
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.serving_status)automatic
+// scaling in the flexible environment:
+// automatic_scaling.min_total_instances
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling)
 // automatic_scaling.max_total_instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.automatic_scaling)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling)
 // automatic_scaling.cool_down_period_sec
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.automatic_scaling)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling)
 // automatic_scaling.cpu_utilization.target_utilization
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#Version.FIELDS.automatic_scaling)manual scaling
-// in the flexible environment: manual_scaling.instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions#manualscaling)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling)manual
+// scaling in the flexible environment: manual_scaling.instances
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#manualscaling)
 func (r *AppsServicesVersionsService) Patch(appsId string, servicesId string, versionsId string, version *Version) *AppsServicesVersionsPatchCall {
 	c := &AppsServicesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -9658,15 +9644,15 @@ type AppsServicesVersionsInstancesDeleteCall struct {
 // Delete: Stops a running instance.The instance might be automatically
 // recreated based on the scaling settings of the version. For more
 // information, see "How Instances are Managed" (standard environment
-// (https://cloud.google.com/appengine/docs/standard/python/how-instances
-// -are-managed) | flexible environment
-// (https://cloud.google.com/appengine/docs/flexible/python/how-instances
-// -are-managed)).To ensure that instances are not re-created and avoid
-// getting billed, you can stop all instances within the target version
-// by changing the serving status of the version to STOPPED with the
+// (https://cloud.google.com/appengine/docs/standard/python/how-instances-are-managed)
+// | flexible environment
+// (https://cloud.google.com/appengine/docs/flexible/python/how-instances-are-managed)).To
+// ensure that instances are not re-created and avoid getting billed,
+// you can stop all instances within the target version by changing the
+// serving status of the version to STOPPED with the
 // apps.services.versions.patch
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-// pps.services.versions/patch) method.
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions/patch)
+// method.
 func (r *AppsServicesVersionsInstancesService) Delete(appsId string, servicesId string, versionsId string, instancesId string) *AppsServicesVersionsInstancesDeleteCall {
 	c := &AppsServicesVersionsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -10002,8 +9988,7 @@ type AppsServicesVersionsInstancesListCall struct {
 
 // List: Lists the instances of a version.Tip: To aggregate details
 // about instances over time, see the Stackdriver Monitoring API
-// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-// eries/list).
+// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
 func (r *AppsServicesVersionsInstancesService) List(appsId string, servicesId string, versionsId string) *AppsServicesVersionsInstancesListCall {
 	c := &AppsServicesVersionsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId

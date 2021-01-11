@@ -984,7 +984,8 @@ type GoogleCloudMlV1__AutoScaling struct {
 	// version, and you can also update `min_nodes` for an existing version:
 	// update_body.json: { 'autoScaling': { 'minNodes': 5 } } HTTP request:
 	// PATCH
-	// https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes -d @./update_body.json
+	// https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes
+	// -d @./update_body.json
 	MinNodes int64 `json:"minNodes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxNodes") to
@@ -1291,8 +1292,7 @@ func (s *GoogleCloudMlV1__Config) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__ContainerPort: Represents a network port in a single
 // container. This message is a subset of the Kubernetes ContainerPort
 // v1 core specification
-// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#
-// containerport-v1-core).
+// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#containerport-v1-core).
 type GoogleCloudMlV1__ContainerPort struct {
 	// ContainerPort: Number of the port to expose on the container. This
 	// must be a valid port number: 0 < PORT_NUMBER < 65536.
@@ -1324,8 +1324,7 @@ func (s *GoogleCloudMlV1__ContainerPort) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__ContainerSpec: Specification of a custom container
 // for serving predictions. This message is a subset of the Kubernetes
 // Container v1 core specification
-// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#
-// container-v1-core).
+// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#container-v1-core).
 type GoogleCloudMlV1__ContainerSpec struct {
 	// Args: Immutable. Specifies arguments for the command that runs when
 	// the container starts. This overrides the container's `CMD`
@@ -1336,15 +1335,15 @@ type GoogleCloudMlV1__ContainerSpec struct {
 	// field runs without any additional arguments. See the Kubernetes
 	// documentation about how the `command` and `args` fields interact with
 	// a container's `ENTRYPOINT` and `CMD`
-	// (https://kubernetes.io/docs/tasks/inject-data-application/define-comma
-	// nd-argument-container/#notes). If you don't specify this field and
-	// don't specify the `commmand` field, then the container's `ENTRYPOINT`
+	// (https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#notes).
+	// If you don't specify this field and don't specify the `commmand`
+	// field, then the container's `ENTRYPOINT`
 	// (https://docs.docker.com/engine/reference/builder/#cmd) and `CMD`
 	// determine what runs based on their default behavior. See the Docker
 	// documentation about how `CMD` and `ENTRYPOINT` interact
-	// (https://docs.docker.com/engine/reference/builder/#understand-how-cmd-
-	// and-entrypoint-interact). In this field, you can reference
-	// environment variables set by AI Platform Prediction
+	// (https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact).
+	// In this field, you can reference environment variables set by AI
+	// Platform Prediction
 	// (/ai-platform/prediction/docs/custom-container-requirements#aip-variab
 	// les) and environment variables set in the env field. You cannot
 	// reference environment variables set in the Docker image. In order for
@@ -1355,8 +1354,7 @@ type GoogleCloudMlV1__ContainerSpec struct {
 	// unchanged. To avoid variable expansion, you can escape this syntax
 	// with `$$`; for example: $$(VARIABLE_NAME) This field corresponds to
 	// the `args` field of the Kubernetes Containers v1 core API
-	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#
-	// container-v1-core).
+	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#container-v1-core).
 	Args []string `json:"args,omitempty"`
 
 	// Command: Immutable. Specifies the command that runs when the
@@ -1370,16 +1368,15 @@ type GoogleCloudMlV1__ContainerSpec struct {
 	// exists. If this field is not specified and the container does not
 	// have an `ENTRYPOINT`, then refer to the Docker documentation about
 	// how `CMD` and `ENTRYPOINT` interact
-	// (https://docs.docker.com/engine/reference/builder/#understand-how-cmd-
-	// and-entrypoint-interact). If you specify this field, then you can
-	// also specify the `args` field to provide additional arguments for
-	// this command. However, if you specify this field, then the
-	// container's `CMD` is ignored. See the Kubernetes documentation about
-	// how the `command` and `args` fields interact with a container's
-	// `ENTRYPOINT` and `CMD`
-	// (https://kubernetes.io/docs/tasks/inject-data-application/define-comma
-	// nd-argument-container/#notes). In this field, you can reference
-	// environment variables set by AI Platform Prediction
+	// (https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact).
+	// If you specify this field, then you can also specify the `args` field
+	// to provide additional arguments for this command. However, if you
+	// specify this field, then the container's `CMD` is ignored. See the
+	// Kubernetes documentation about how the `command` and `args` fields
+	// interact with a container's `ENTRYPOINT` and `CMD`
+	// (https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#notes).
+	// In this field, you can reference environment variables set by AI
+	// Platform Prediction
 	// (/ai-platform/prediction/docs/custom-container-requirements#aip-variab
 	// les) and environment variables set in the env field. You cannot
 	// reference environment variables set in the Docker image. In order for
@@ -1390,8 +1387,7 @@ type GoogleCloudMlV1__ContainerSpec struct {
 	// unchanged. To avoid variable expansion, you can escape this syntax
 	// with `$$`; for example: $$(VARIABLE_NAME) This field corresponds to
 	// the `command` field of the Kubernetes Containers v1 core API
-	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#
-	// container-v1-core).
+	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#container-v1-core).
 	Command []string `json:"command,omitempty"`
 
 	// Env: Immutable. List of environment variables to set in the
@@ -1405,8 +1401,7 @@ type GoogleCloudMlV1__ContainerSpec struct {
 	// the variables in the example, then the expansion does not occur. This
 	// field corresponds to the `env` field of the Kubernetes Containers v1
 	// core API
-	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#
-	// container-v1-core).
+	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#container-v1-core).
 	Env []*GoogleCloudMlV1__EnvVar `json:"env,omitempty"`
 
 	// Image: URI of the Docker image to be used as the custom container for
@@ -1446,8 +1441,7 @@ type GoogleCloudMlV1__ContainerSpec struct {
 	// Platform Prediction does not use ports other than the first one
 	// listed. This field corresponds to the `ports` field of the Kubernetes
 	// Containers v1 core API
-	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#
-	// container-v1-core).
+	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#container-v1-core).
 	Ports []*GoogleCloudMlV1__ContainerPort `json:"ports,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
@@ -1543,13 +1537,11 @@ func (s *GoogleCloudMlV1__EncryptionConfig) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__EnvVar: Represents an environment variable to be
 // made available in a container. This message is a subset of the
 // Kubernetes EnvVar v1 core specification
-// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#
-// envvar-v1-core).
+// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#envvar-v1-core).
 type GoogleCloudMlV1__EnvVar struct {
 	// Name: Name of the environment variable. Must be a valid C identifier
-	// (https://github.com/kubernetes/kubernetes/blob/v1.18.8/staging/src/k8s
-	// .io/apimachinery/pkg/util/validation/validation.go#L258) and must not
-	// begin with the prefix `AIP_`.
+	// (https://github.com/kubernetes/kubernetes/blob/v1.18.8/staging/src/k8s.io/apimachinery/pkg/util/validation/validation.go#L258)
+	// and must not begin with the prefix `AIP_`.
 	Name string `json:"name,omitempty"`
 
 	// Value: Value of the environment variable. Defaults to an empty
@@ -2748,8 +2740,8 @@ type GoogleCloudMlV1__PredictionInput struct {
 	// (https://tensorflow.github.io/serving/serving_basic.html) for
 	// information about how to use signatures. Defaults to
 	// DEFAULT_SERVING_SIGNATURE_DEF_KEY
-	// (https://www.tensorflow.org/api_docs/python/tf/saved_model/signature_c
-	// onstants) , which is "serving_default".
+	// (https://www.tensorflow.org/api_docs/python/tf/saved_model/signature_constants)
+	// , which is "serving_default".
 	SignatureName string `json:"signatureName,omitempty"`
 
 	// Uri: Use this field if you want to specify a Google Cloud Storage
@@ -2888,9 +2880,9 @@ type GoogleCloudMlV1__ReplicaConfig struct {
 	// that the version of TensorFlow included in a runtime version may
 	// differ from the numbering of the runtime version itself, because it
 	// may have a different patch version
-	// (https://www.tensorflow.org/guide/version_compat#semantic_versioning_2
-	// 0). In this field, you must specify the runtime version (TensorFlow
-	// minor version). For example, if your custom container runs TensorFlow
+	// (https://www.tensorflow.org/guide/version_compat#semantic_versioning_20).
+	// In this field, you must specify the runtime version (TensorFlow minor
+	// version). For example, if your custom container runs TensorFlow
 	// `1.x.y`, specify `1.x`.
 	TpuTfVersion string `json:"tpuTfVersion,omitempty"`
 

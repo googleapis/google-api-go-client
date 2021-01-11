@@ -785,8 +785,8 @@ type Request struct {
 	// Protocol: The network protocol used with the request, such as
 	// "http/1.1", "spdy/3", "h2", "h2c", "webrtc", "tcp", "udp", "quic".
 	// See
-	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids for
-	// details.
+	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+	// for details.
 	Protocol string `json:"protocol,omitempty"`
 
 	// Query: The HTTP URL query in the format of
@@ -1290,8 +1290,7 @@ type ServicesCheckCall struct {
 // must call the Check method multiple times. This method requires the
 // `servicemanagement.services.check` permission on the specified
 // service. For more information, see Service Control API Access Control
-// (https://cloud.google.com/service-infrastructure/docs/service-control/
-// access-control).
+// (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -1443,8 +1442,7 @@ type ServicesReportCall struct {
 // per call. This method requires the
 // `servicemanagement.services.report` permission on the specified
 // service. For more information, see Service Control API Access Control
-// (https://cloud.google.com/service-infrastructure/docs/service-control/
-// access-control).
+// (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName

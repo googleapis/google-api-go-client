@@ -247,16 +247,14 @@ func (s *AndroidInfo) MarshalJSON() ([]byte, error) {
 type CreateManagedShortLinkRequest struct {
 	// DynamicLinkInfo: Information about the Dynamic Link to be shortened.
 	// Learn more
-	// (https://firebase.google.com/docs/reference/dynamic-links/link-shorten
-	// er).
+	// (https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 	DynamicLinkInfo *DynamicLinkInfo `json:"dynamicLinkInfo,omitempty"`
 
 	// LongDynamicLink: Full long Dynamic Link URL with desired query
 	// parameters specified. For example,
 	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=com.sample"
 	// , Learn more
-	// (https://firebase.google.com/docs/reference/dynamic-links/link-shorten
-	// er).
+	// (https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
 
 	// Name: Link name to associate with the link. It's used for marketer to
@@ -342,16 +340,14 @@ func (s *CreateManagedShortLinkResponse) MarshalJSON() ([]byte, error) {
 type CreateShortDynamicLinkRequest struct {
 	// DynamicLinkInfo: Information about the Dynamic Link to be shortened.
 	// Learn more
-	// (https://firebase.google.com/docs/reference/dynamic-links/link-shorten
-	// er).
+	// (https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 	DynamicLinkInfo *DynamicLinkInfo `json:"dynamicLinkInfo,omitempty"`
 
 	// LongDynamicLink: Full long Dynamic Link URL with desired query
 	// parameters specified. For example,
 	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=com.sample"
 	// , Learn more
-	// (https://firebase.google.com/docs/reference/dynamic-links/link-shorten
-	// er).
+	// (https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
 
 	// SdkVersion: Google SDK version. Version takes the form
@@ -1059,8 +1055,7 @@ func (s *GetIosReopenAttributionResponse) MarshalJSON() ([]byte, error) {
 
 // GooglePlayAnalytics: Parameters for Google Play Campaign
 // Measurements. Learn more
-// (https://developers.google.com/analytics/devguides/collection/android/
-// v4/campaigns#campaign-params)
+// (https://developers.google.com/analytics/devguides/collection/android/v4/campaigns#campaign-params)
 type GooglePlayAnalytics struct {
 	// Gclid: AdWords autotagging parameter
 	// (https://support.google.com/analytics/answer/1033981?hl=en); used to

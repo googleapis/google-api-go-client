@@ -291,12 +291,12 @@ type AndroidNotification struct {
 	BodyLocKey string `json:"bodyLocKey,omitempty"`
 
 	// ChannelId: The notification's channel id
-	// (https://developer.android.com/guide/topics/ui/notifiers/notifications
-	// #ManageChannels) (new in Android O). The app must create a channel
-	// with this channel ID before any notification with this channel ID is
-	// received. If you don't send this channel ID in the request, or if the
-	// channel ID provided has not yet been created by the app, FCM uses the
-	// channel ID specified in the app manifest.
+	// (https://developer.android.com/guide/topics/ui/notifiers/notifications#ManageChannels)
+	// (new in Android O). The app must create a channel with this channel
+	// ID before any notification with this channel ID is received. If you
+	// don't send this channel ID in the request, or if the channel ID
+	// provided has not yet been created by the app, FCM uses the channel ID
+	// specified in the app manifest.
 	ChannelId string `json:"channelId,omitempty"`
 
 	// ClickAction: The action associated with a user click on the
@@ -310,33 +310,31 @@ type AndroidNotification struct {
 	// DefaultLightSettings: If set to true, use the Android framework's
 	// default LED light settings for the notification. Default values are
 	// specified in config.xml
-	// (https://android.googlesource.com/platform/frameworks/base/+/master/co
-	// re/res/res/values/config.xml). If `default_light_settings` is set to
-	// true and `light_settings` is also set, the user-specified
-	// `light_settings` is used instead of the default value.
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/values/config.xml).
+	// If `default_light_settings` is set to true and `light_settings` is
+	// also set, the user-specified `light_settings` is used instead of the
+	// default value.
 	DefaultLightSettings bool `json:"defaultLightSettings,omitempty"`
 
 	// DefaultSound: If set to true, use the Android framework's default
 	// sound for the notification. Default values are specified in
 	// config.xml
-	// (https://android.googlesource.com/platform/frameworks/base/+/master/co
-	// re/res/res/values/config.xml).
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/values/config.xml).
 	DefaultSound bool `json:"defaultSound,omitempty"`
 
 	// DefaultVibrateTimings: If set to true, use the Android framework's
 	// default vibrate pattern for the notification. Default values are
 	// specified in config.xml
-	// (https://android.googlesource.com/platform/frameworks/base/+/master/co
-	// re/res/res/values/config.xml). If `default_vibrate_timings` is set to
-	// true and `vibrate_timings` is also set, the default value is used
-	// instead of the user-specified `vibrate_timings`.
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/values/config.xml).
+	// If `default_vibrate_timings` is set to true and `vibrate_timings` is
+	// also set, the default value is used instead of the user-specified
+	// `vibrate_timings`.
 	DefaultVibrateTimings bool `json:"defaultVibrateTimings,omitempty"`
 
 	// EventTime: Set the time that the event in the notification occurred.
 	// Notifications in the panel are sorted by this time. A point in time
 	// is represented using protobuf.Timestamp
-	// (https://developers.google.com/protocol-buffers/docs/reference/java/co
-	// m/google/protobuf/Timestamp).
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/Timestamp).
 	EventTime string `json:"eventTime,omitempty"`
 
 	// Icon: The notification's icon. Sets the notification icon to myicon
@@ -359,8 +357,7 @@ type AndroidNotification struct {
 	// the current device. Some notifications can be bridged to other
 	// devices for remote display, such as a Wear OS watch. This hint can be
 	// set to recommend this notification not be bridged. See Wear OS guides
-	// (https://developer.android.com/training/wearables/notifications/bridge
-	// r#existing-method-of-preventing-bridging)
+	// (https://developer.android.com/training/wearables/notifications/bridger#existing-method-of-preventing-bridging)
 	LocalOnly bool `json:"localOnly,omitempty"`
 
 	// NotificationCount: Sets the number of items this notification
@@ -384,9 +381,8 @@ type AndroidNotification struct {
 	// slightly on different platforms. Note this priority differs from
 	// `AndroidMessagePriority`. This priority is processed by the client
 	// after the message has been delivered, whereas AndroidMessagePriority
-	// (https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messa
-	// ges#androidmessagepriority) is an FCM concept that controls when the
-	// message is delivered.
+	// (https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidmessagepriority)
+	// is an FCM concept that controls when the message is delivered.
 	//
 	// Possible values:
 	//   "PRIORITY_UNSPECIFIED" - If priority is unspecified, notification
@@ -449,19 +445,19 @@ type AndroidNotification struct {
 
 	// VibrateTimings: Set the vibration pattern to use. Pass in an array of
 	// protobuf.Duration
-	// (https://developers.google.com/protocol-buffers/docs/reference/google.
-	// protobuf#google.protobuf.Duration) to turn on or off the vibrator.
-	// The first value indicates the `Duration` to wait before turning the
-	// vibrator on. The next value indicates the `Duration` to keep the
-	// vibrator on. Subsequent values alternate between `Duration` to turn
-	// the vibrator off and to turn the vibrator on. If `vibrate_timings` is
-	// set and `default_vibrate_timings` is set to `true`, the default value
-	// is used instead of the user-specified `vibrate_timings`.
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)
+	// to turn on or off the vibrator. The first value indicates the
+	// `Duration` to wait before turning the vibrator on. The next value
+	// indicates the `Duration` to keep the vibrator on. Subsequent values
+	// alternate between `Duration` to turn the vibrator off and to turn the
+	// vibrator on. If `vibrate_timings` is set and
+	// `default_vibrate_timings` is set to `true`, the default value is used
+	// instead of the user-specified `vibrate_timings`.
 	VibrateTimings []string `json:"vibrateTimings,omitempty"`
 
 	// Visibility: Set the Notification.visibility
-	// (https://developer.android.com/reference/android/app/Notification.html
-	// #visibility) of the notification.
+	// (https://developer.android.com/reference/android/app/Notification.html#visibility)
+	// of the notification.
 	//
 	// Possible values:
 	//   "VISIBILITY_UNSPECIFIED" - If unspecified, default to
@@ -505,17 +501,15 @@ type ApnsConfig struct {
 
 	// Headers: HTTP request headers defined in Apple Push Notification
 	// Service. Refer to APNs request headers
-	// (https://developer.apple.com/documentation/usernotifications/setting_u
-	// p_a_remote_notification_server/sending_notification_requests_to_apns)
+	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)
 	// for supported headers, e.g. "apns-priority": "10".
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// Payload: APNs payload as a JSON object, including both `aps`
 	// dictionary and custom payload. See Payload Key Reference
-	// (https://developer.apple.com/documentation/usernotifications/setting_u
-	// p_a_remote_notification_server/generating_a_remote_notification). If
-	// present, it overrides google.firebase.fcm.v1.Notification.title and
-	// google.firebase.fcm.v1.Notification.body.
+	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification).
+	// If present, it overrides google.firebase.fcm.v1.Notification.title
+	// and google.firebase.fcm.v1.Notification.body.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FcmOptions") to
@@ -729,20 +723,17 @@ func (s *FcmOptions) MarshalJSON() ([]byte, error) {
 // LightSettings: Settings to control notification LED.
 type LightSettings struct {
 	// Color: Required. Set `color` of the LED with google.type.Color
-	// (https://github.com/googleapis/googleapis/blob/master/google/type/colo
-	// r.proto).
+	// (https://github.com/googleapis/googleapis/blob/master/google/type/color.proto).
 	Color *Color `json:"color,omitempty"`
 
 	// LightOffDuration: Required. Along with `light_on_duration `, define
 	// the blink rate of LED flashes. Resolution defined by proto.Duration
-	// (https://developers.google.com/protocol-buffers/docs/reference/google.
-	// protobuf#google.protobuf.Duration)
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)
 	LightOffDuration string `json:"lightOffDuration,omitempty"`
 
 	// LightOnDuration: Required. Along with `light_off_duration`, define
 	// the blink rate of LED flashes. Resolution defined by proto.Duration
-	// (https://developers.google.com/protocol-buffers/docs/reference/google.
-	// protobuf#google.protobuf.Duration)
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)
 	LightOnDuration string `json:"lightOnDuration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Color") to

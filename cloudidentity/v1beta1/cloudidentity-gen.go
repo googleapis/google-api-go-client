@@ -3607,8 +3607,8 @@ func (c *DevicesListCall) Customer(customer string) *DevicesListCall {
 // Filter sets the optional parameter "filter": Additional restrictions
 // when fetching list of devices. For a list of search fields, refer to
 // Mobile device search fields
-// (https://developers.google.com/admin-sdk/directory/v1/search-operators
-// ). Multiple search fields are separated by the space character.
+// (https://developers.google.com/admin-sdk/directory/v1/search-operators).
+// Multiple search fields are separated by the space character.
 func (c *DevicesListCall) Filter(filter string) *DevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4716,8 +4716,8 @@ func (c *DevicesDeviceUsersListCall) Customer(customer string) *DevicesDeviceUse
 // Filter sets the optional parameter "filter": Additional restrictions
 // when fetching list of devices. For a list of search fields, refer to
 // Mobile device search fields
-// (https://developers.google.com/admin-sdk/directory/v1/search-operators
-// ). Multiple search fields are separated by the space character.
+// (https://developers.google.com/admin-sdk/directory/v1/search-operators).
+// Multiple search fields are separated by the space character.
 func (c *DevicesDeviceUsersListCall) Filter(filter string) *DevicesDeviceUsersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4951,8 +4951,7 @@ func (r *DevicesDeviceUsersService) Lookup(parent string) *DevicesDeviceUsersLoo
 
 // AndroidId sets the optional parameter "androidId": Android Id
 // returned by Settings.Secure#ANDROID_ID
-// (https://developer.android.com/reference/android/provider/Settings.Sec
-// ure.html#ANDROID_ID).
+// (https://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID).
 func (c *DevicesDeviceUsersLookupCall) AndroidId(androidId string) *DevicesDeviceUsersLookupCall {
 	c.urlParams_.Set("androidId", androidId)
 	return c

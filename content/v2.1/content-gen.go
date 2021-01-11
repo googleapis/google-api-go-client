@@ -11518,8 +11518,8 @@ func (s *Region) MarshalJSON() ([]byte, error) {
 // area.
 type RegionGeoTargetArea struct {
 	// GeotargetCriteriaIds: Required. A non-empty list of location IDs
-	// (https://developers.google.com/adwords/api/docs/appendix/geotargeting)
-	// . They must all be of the same location type (e.g., state).
+	// (https://developers.google.com/adwords/api/docs/appendix/geotargeting).
+	// They must all be of the same location type (e.g., state).
 	GeotargetCriteriaIds googleapi.Int64s `json:"geotargetCriteriaIds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

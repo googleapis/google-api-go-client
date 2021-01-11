@@ -396,7 +396,8 @@ type GoogleCloudRecommendationengineV1beta1BigQuerySource struct {
 	// https://cloud.google.com/recommendations-ai/docs/upload-catalog#mc
 	// Supported values for user event imports: 1:
 	// "user_events_recommendations_ai" using
-	// https://cloud.google.com/recommendations-ai/docs/manage-user-events#import (Default for userEvents.import) 2. "user_events_ga360" using
+	// https://cloud.google.com/recommendations-ai/docs/manage-user-events#import
+	// (Default for userEvents.import) 2. "user_events_ga360" using
 	// https://support.google.com/analytics/answer/3437719?hl=en
 	DataSchema string `json:"dataSchema,omitempty"`
 
@@ -636,8 +637,8 @@ func (s *GoogleCloudRecommendationengineV1beta1CatalogItemCategoryHierarchy) Mar
 type GoogleCloudRecommendationengineV1beta1CatalogItemLevelConfig struct {
 	// EventItemLevel: Optional. Level of the catalog at which events are
 	// uploaded. See
-	// https://cloud.google.com/recommendations-ai/docs/catalog#catalog-levels for more
-	// details.
+	// https://cloud.google.com/recommendations-ai/docs/catalog#catalog-levels
+	// for more details.
 	//
 	// Possible values:
 	//   "CATALOG_ITEM_LEVEL_UNSPECIFIED" - Unknown value - should never be
@@ -648,8 +649,8 @@ type GoogleCloudRecommendationengineV1beta1CatalogItemLevelConfig struct {
 
 	// PredictItemLevel: Optional. Level of the catalog at which predictions
 	// are made. See
-	// https://cloud.google.com/recommendations-ai/docs/catalog#catalog-levels for more
-	// details.
+	// https://cloud.google.com/recommendations-ai/docs/catalog#catalog-levels
+	// for more details.
 	//
 	// Possible values:
 	//   "CATALOG_ITEM_LEVEL_UNSPECIFIED" - Unknown value - should never be
@@ -908,7 +909,8 @@ type GoogleCloudRecommendationengineV1beta1GcsSource struct {
 	// https://cloud.google.com/recommendations-ai/docs/upload-catalog#mc
 	// Supported values for user events imports: 1:
 	// "user_events_recommendations_ai" using
-	// https://cloud.google.com/recommendations-ai/docs/manage-user-events#import (Default for userEvents.import) 2. "user_events_ga360" using
+	// https://cloud.google.com/recommendations-ai/docs/manage-user-events#import
+	// (Default for userEvents.import) 2. "user_events_ga360" using
 	// https://support.google.com/analytics/answer/3437719?hl=en
 	JsonSchema string `json:"jsonSchema,omitempty"`
 
@@ -4223,8 +4225,7 @@ type ProjectsLocationsCatalogsEventStoresPlacementsPredictCall struct {
 // Predict: Makes a recommendation prediction. If using API Key based
 // authentication, the API Key must be registered using the
 // PredictionApiKeyRegistry service. Learn more
-// (https://cloud.google.com/recommendations-ai/docs/setting-up#register-
-// key).
+// (https://cloud.google.com/recommendations-ai/docs/setting-up#register-key).
 func (r *ProjectsLocationsCatalogsEventStoresPlacementsService) Predict(name string, googlecloudrecommendationenginev1beta1predictrequest *GoogleCloudRecommendationengineV1beta1PredictRequest) *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall {
 	c := &ProjectsLocationsCatalogsEventStoresPlacementsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

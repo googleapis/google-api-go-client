@@ -1874,8 +1874,8 @@ func (s *BuildBazelRemoteExecutionV2PriorityCapabilitiesPriorityRange) MarshalJS
 // `build.bazel.remote.execution.v2.requestmetadata-bin` * contents: the
 // base64 encoded binary `RequestMetadata` message. Note: the gRPC
 // library serializes binary headers encoded in base 64 by default
-// (https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#reques
-// ts). Therefore, if the gRPC library is used to pass/retrieve this
+// (https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#requests).
+// Therefore, if the gRPC library is used to pass/retrieve this
 // metadata, the user may ignore the base64 encoding and assume it is
 // simply serialized as a binary message.
 type BuildBazelRemoteExecutionV2RequestMetadata struct {
@@ -3054,8 +3054,11 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest struct 
 
 	// UpdateMask: The update mask applies to instance. For the `FieldMask`
 	// definition, see
-	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If an empty update_mask is provided, only the non-default valued field in the worker pool field will be updated. Note that in order to update a field to the default value (zero, false, empty string) an explicit update_mask must be
-	// provided.
+	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+	// If an empty update_mask is provided, only the non-default valued
+	// field in the worker pool field will be updated. Note that in order to
+	// update a field to the default value (zero, false, empty string) an
+	// explicit update_mask must be provided.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instance") to
@@ -3086,8 +3089,11 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest) Ma
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest struct {
 	// UpdateMask: The update mask applies to worker_pool. For the
 	// `FieldMask` definition, see
-	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If an empty update_mask is provided, only the non-default valued field in the worker pool field will be updated. Note that in order to update a field to the default value (zero, false, empty string) an explicit update_mask must be
-	// provided.
+	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+	// If an empty update_mask is provided, only the non-default valued
+	// field in the worker pool field will be updated. Note that in order to
+	// update a field to the default value (zero, false, empty string) an
+	// explicit update_mask must be provided.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// WorkerPool: Specifies the worker pool to update.

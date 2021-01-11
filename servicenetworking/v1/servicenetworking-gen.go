@@ -627,14 +627,16 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 // (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 type AuthProvider struct {
 	// Audiences: The list of JWT audiences
-	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#sectio
-	// n-4.1.3). that are allowed to access. A JWT containing any of these
-	// audiences will be accepted. When this setting is absent, JWTs with
-	// audiences: - "https://[service.name]/[google.protobuf.Api.name]" -
+	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+	// that are allowed to access. A JWT containing any of these audiences
+	// will be accepted. When this setting is absent, JWTs with audiences: -
+	// "https://[service.name]/[google.protobuf.Api.name]" -
 	// "https://[service.name]/" will be accepted. For example, if no
 	// audiences are in the setting, LibraryService API will accept JWTs
 	// with the following audiences: -
-	// https://library-example.googleapis.com/google.example.library.v1.LibraryService - https://library-example.googleapis.com/ Example: audiences: bookstore_android.apps.googleusercontent.com,
+	// https://library-example.googleapis.com/google.example.library.v1.LibraryService
+	// - https://library-example.googleapis.com/ Example: audiences:
+	// bookstore_android.apps.googleusercontent.com,
 	// bookstore_web.apps.googleusercontent.com
 	Audiences string `json:"audiences,omitempty"`
 
@@ -648,15 +650,17 @@ type AuthProvider struct {
 	Id string `json:"id,omitempty"`
 
 	// Issuer: Identifies the principal that issued the JWT. See
-	// https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1 Usually a URL or an email address. Example: https://securetoken.google.com Example:
+	// https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
+	// Usually a URL or an email address. Example:
+	// https://securetoken.google.com Example:
 	// 1234567-compute@developer.gserviceaccount.com
 	Issuer string `json:"issuer,omitempty"`
 
 	// JwksUri: URL of the provider's public key set to validate signature
 	// of the JWT. See OpenID Discovery
-	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMe
-	// tadata). Optional if the key set document: - can be retrieved from
-	// OpenID Discovery
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+	// Optional if the key set document: - can be retrieved from OpenID
+	// Discovery
 	// (https://openid.net/specs/openid-connect-discovery-1_0.html) of the
 	// issuer. - can be inferred from the email domain of the issuer (e.g. a
 	// Google service account). Example:
@@ -704,10 +708,10 @@ type AuthRequirement struct {
 	// Audiences: NOTE: This will be deprecated soon, once
 	// AuthProvider.audiences is implemented and accepted in all the runtime
 	// components. The list of JWT audiences
-	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#sectio
-	// n-4.1.3). that are allowed to access. A JWT containing any of these
-	// audiences will be accepted. When this setting is absent, only JWTs
-	// with audience "https://Service_name/API_name" will be accepted. For
+	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+	// that are allowed to access. A JWT containing any of these audiences
+	// will be accepted. When this setting is absent, only JWTs with
+	// audience "https://Service_name/API_name" will be accepted. For
 	// example, if no audiences are in the setting, LibraryService API will
 	// only accept JWTs with the following audience
 	// "https://library-example.googleapis.com/google.example.library.v1.Libr
@@ -910,7 +914,9 @@ type BackendRule struct {
 	// https://example.cloudfunctions.net/getUser Requests to the following
 	// request paths will call the backend at the translated path: Request
 	// path: /api/company/widgetworks/user/johndoe Translated:
-	// https://example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe Request path: /api/company/widgetworks/user/johndoe?timezone=EST Translated:
+	// https://example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe
+	// Request path: /api/company/widgetworks/user/johndoe?timezone=EST
+	// Translated:
 	// https://example.cloudfunctions.net/getUser?timezone=EST&cid=widgetworks&uid=johndoe
 	//   "APPEND_PATH_TO_ADDRESS" - The request path will be appended to the
 	// backend address. # Examples Given the following operation config:
@@ -932,8 +938,8 @@ type BackendRule struct {
 	// for improved performance. Configuring this field to non-default
 	// values is only supported for secure HTTP backends. This field will be
 	// ignored for all other backends. See
-	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids for more details on the supported
-	// values.
+	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+	// for more details on the supported values.
 	Protocol string `json:"protocol,omitempty"`
 
 	// Selector: Selects the methods to which this rule applies. Refer to

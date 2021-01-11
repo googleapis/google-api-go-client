@@ -737,8 +737,8 @@ func (s *FirebaseAppInfo) MarshalJSON() ([]byte, error) {
 // Cloud Storage buckets), and other Firebase and Google Cloud Platform
 // (GCP) resources. You create a `FirebaseProject` by calling
 // AddFirebase and specifying an *existing* GCP `Project`
-// (https://cloud.google.com/resource-manager/reference/rest/v1/projects)
-// . This adds Firebase resources to the existing GCP `Project`. Since a
+// (https://cloud.google.com/resource-manager/reference/rest/v1/projects).
+// This adds Firebase resources to the existing GCP `Project`. Since a
 // FirebaseProject is actually also a GCP `Project`, a `FirebaseProject`
 // has the same underlying GCP identifiers (`projectNumber` and
 // `projectId`). This allows for easy interop with Google APIs.
@@ -1780,7 +1780,7 @@ type AvailableProjectsListCall struct {
 
 // List: Lists each [Google Cloud Platform (GCP) `Project`]
 // (https://cloud.google.com/resource-manager/reference/rest/v1/projects)
-//  that can have Firebase resources added to it. A Project will only be
+// that can have Firebase resources added to it. A Project will only be
 // listed if: - The caller has sufficient Google IAM
 // (https://cloud.google.com/iam) permissions to call AddFirebase. - The
 // Project is not already a FirebaseProject. - The Project is not in an
@@ -2120,8 +2120,8 @@ type ProjectsAddFirebaseCall struct {
 
 // AddFirebase: Adds Firebase resources to the specified existing
 // [Google Cloud Platform (GCP) `Project`]
-// (https://cloud.google.com/resource-manager/reference/rest/v1/projects)
-// . Since a FirebaseProject is actually also a GCP `Project`, a
+// (https://cloud.google.com/resource-manager/reference/rest/v1/projects).
+// Since a FirebaseProject is actually also a GCP `Project`, a
 // `FirebaseProject` has the same underlying GCP identifiers
 // (`projectNumber` and `projectId`). This allows for easy interop with
 // Google APIs. The result of this call is an `Operation`
@@ -4865,11 +4865,11 @@ type ProjectsAvailableLocationsListCall struct {
 // default GCP resource location has already been set for the Project,
 // then this setting cannot be changed. This call checks for any
 // possible location restrictions
-// (https://cloud.google.com/resource-manager/docs/organization-policy/de
-// fining-locations) for the specified Project and, thus, might return a
-// subset of all possible GCP resource locations. To list all GCP
-// resource locations (regardless of any restrictions), call the
-// endpoint without specifying a unique project identifier (that is,
+// (https://cloud.google.com/resource-manager/docs/organization-policy/defining-locations)
+// for the specified Project and, thus, might return a subset of all
+// possible GCP resource locations. To list all GCP resource locations
+// (regardless of any restrictions), call the endpoint without
+// specifying a unique project identifier (that is,
 // `/v1beta1/{parent=projects/-}/listAvailableLocations`). To call
 // `ListAvailableLocations` with a specified project, a member must be
 // at minimum a Viewer of the Project. Calls without a specified project
@@ -5073,9 +5073,8 @@ type ProjectsDefaultLocationFinalizeCall struct {
 // Finalize: Sets the default Google Cloud Platform (GCP) resource
 // location for the specified FirebaseProject. This method creates an
 // App Engine application with a default Cloud Storage bucket
-// (https://cloud.google.com/appengine/docs/standard/python/googlecloudst
-// orageclient/setting-up-cloud-storage#activating_a_cloud_storage_bucket
-// ), located in the specified `locationId`
+// (https://cloud.google.com/appengine/docs/standard/python/googlecloudstorageclient/setting-up-cloud-storage#activating_a_cloud_storage_bucket),
+// located in the specified `locationId`
 // (#body.request_body.FIELDS.location_id). This location must be one of
 // the available GCP resource locations
 // (https://firebase.google.com/docs/projects/locations). After the

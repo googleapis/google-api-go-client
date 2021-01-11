@@ -231,8 +231,8 @@ func (s *AppEngineHttpQueue) MarshalJSON() ([]byte, error) {
 // `https://www.googleapis.com/auth/cloud-platform` The task will be
 // delivered to the App Engine app which belongs to the same project as
 // the queue. For more information, see How Requests are Routed
-// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
-// are-routed) and how routing is affected by dispatch files
+// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)
+// and how routing is affected by dispatch files
 // (https://cloud.google.com/appengine/docs/python/config/dispatchref).
 // Traffic is encrypted during transport and never leaves Google
 // datacenters. Because this traffic is carried over a communication
@@ -246,11 +246,11 @@ func (s *AppEngineHttpQueue) MarshalJSON() ([]byte, error) {
 // sent to is: * `url =` host `+` relative_uri Tasks can be dispatched
 // to secure app handlers, unsecure app handlers, and URIs restricted
 // with `login: admin`
-// (https://cloud.google.com/appengine/docs/standard/python/config/appref
-// ). Because tasks are not run as any user, they cannot be dispatched
-// to URIs restricted with `login: required`
-// (https://cloud.google.com/appengine/docs/standard/python/config/appref
-// ) Task dispatches also do not follow redirects. The task attempt has
+// (https://cloud.google.com/appengine/docs/standard/python/config/appref).
+// Because tasks are not run as any user, they cannot be dispatched to
+// URIs restricted with `login: required`
+// (https://cloud.google.com/appengine/docs/standard/python/config/appref)
+// Task dispatches also do not follow redirects. The task attempt has
 // succeeded if the app's request handler returns an HTTP response code
 // in the range [`200` - `299`]. The task attempt has failed if the
 // app's handler returns a non-2xx response code or Cloud Tasks does not
@@ -291,13 +291,12 @@ type AppEngineHttpRequest struct {
 	// `X-AppEngine-*` In addition, Cloud Tasks sets some headers when the
 	// task is dispatched, such as headers containing information about the
 	// task; see request headers
-	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#readi
-	// ng_request_headers). These headers are set only when the task is
-	// dispatched, so they are not visible when the task is returned in a
-	// Cloud Tasks response. Although there is no specific limit for the
-	// maximum number of headers or the size, there is a limit on the
-	// maximum size of the Task. For more information, see the CreateTask
-	// documentation.
+	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#reading_request_headers).
+	// These headers are set only when the task is dispatched, so they are
+	// not visible when the task is returned in a Cloud Tasks response.
+	// Although there is no specific limit for the maximum number of headers
+	// or the size, there is a limit on the maximum size of the Task. For
+	// more information, see the CreateTask documentation.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. The default is
@@ -305,11 +304,10 @@ type AppEngineHttpRequest struct {
 	// able to handle HTTP requests with this http_method, otherwise the
 	// task attempt fails with error code 405 (Method Not Allowed). See
 	// Writing a push task request handler
-	// (https://cloud.google.com/appengine/docs/java/taskqueue/push/creating-
-	// handlers#writing_a_push_task_request_handler) and the App Engine
-	// documentation for your runtime on How Requests are Handled
-	// (https://cloud.google.com/appengine/docs/standard/python3/how-requests
-	// -are-handled).
+	// (https://cloud.google.com/appengine/docs/java/taskqueue/push/creating-handlers#writing_a_push_task_request_handler)
+	// and the App Engine documentation for your runtime on How Requests are
+	// Handled
+	// (https://cloud.google.com/appengine/docs/standard/python3/how-requests-are-handled).
 	//
 	// Possible values:
 	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method unspecified
@@ -357,14 +355,13 @@ func (s *AppEngineHttpRequest) MarshalJSON() ([]byte, error) {
 // specific to App Engine - service, version, and instance. For more
 // information about services, versions, and instances see An Overview
 // of App Engine
-// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-eng
-// ine), Microservices Architecture on Google App Engine
-// (https://cloud.google.com/appengine/docs/python/microservices-on-app-e
-// ngine), App Engine Standard request routing
-// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
-// are-routed), and App Engine Flex request routing
-// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-
-// are-routed).
+// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine),
+// Microservices Architecture on Google App Engine
+// (https://cloud.google.com/appengine/docs/python/microservices-on-app-engine),
+// App Engine Standard request routing
+// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed),
+// and App Engine Flex request routing
+// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-are-routed).
 type AppEngineRouting struct {
 	// Host: Output only. The host that the task is sent to. The host is
 	// constructed from the domain name of the app associated with the
@@ -372,22 +369,19 @@ type AppEngineRouting struct {
 	// version, and instance. Tasks which were created using the App Engine
 	// SDK might have a custom domain name. For more information, see How
 	// Requests are Routed
-	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
-	// are-routed).
+	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed).
 	Host string `json:"host,omitempty"`
 
 	// Instance: App instance. By default, the task is sent to an instance
 	// which is available when the task is attempted. Requests can only be
 	// sent to a specific instance if manual scaling is used in App Engine
 	// Standard
-	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-eng
-	// ine?hl=en_US#scaling_types_and_instance_classes). App Engine Flex
-	// does not support instances. For more information, see App Engine
-	// Standard request routing
-	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
-	// are-routed) and App Engine Flex request routing
-	// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-
-	// are-routed).
+	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine?hl=en_US#scaling_types_and_instance_classes).
+	// App Engine Flex does not support instances. For more information, see
+	// App Engine Standard request routing
+	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)
+	// and App Engine Flex request routing
+	// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-are-routed).
 	Instance string `json:"instance,omitempty"`
 
 	// Service: App service. By default, the task is sent to the service
@@ -1225,11 +1219,10 @@ type PullMessage struct {
 	// Tag: The tasks's tag. The tag is less than 500 characters. SDK
 	// compatibility: Although the SDK allows tags to be either string or
 	// bytes
-	// (https://cloud.google.com/appengine/docs/standard/java/javadoc/com/goo
-	// gle/appengine/api/taskqueue/TaskOptions.html#tag-byte:A-), only UTF-8
-	// encoded tags can be used in Cloud Tasks. If a tag isn't UTF-8
-	// encoded, the tag will be empty when the task is returned by Cloud
-	// Tasks.
+	// (https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/taskqueue/TaskOptions.html#tag-byte:A-),
+	// only UTF-8 encoded tags can be used in Cloud Tasks. If a tag isn't
+	// UTF-8 encoded, the tag will be empty when the task is returned by
+	// Cloud Tasks.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Payload") to
@@ -1275,23 +1268,21 @@ type Queue struct {
 	// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens
 	// (-), colons (:), or periods (.). For more information, see
 	// Identifying projects
-	// (https://cloud.google.com/resource-manager/docs/creating-managing-proj
-	// ects#identifying_projects) * `LOCATION_ID` is the canonical ID for
-	// the queue's location. The list of available locations can be obtained
-	// by calling ListLocations. For more information, see
-	// https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain
-	// letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
-	// length is 100 characters.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
+	// * `LOCATION_ID` is the canonical ID for the queue's location. The
+	// list of available locations can be obtained by calling ListLocations.
+	// For more information, see https://cloud.google.com/about/locations/.
+	// * `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or
+	// hyphens (-). The maximum length is 100 characters.
 	Name string `json:"name,omitempty"`
 
 	// PurgeTime: Output only. The last time this queue was purged. All
 	// tasks that were created before this time were purged. A queue can be
 	// purged using PurgeQueue, the App Engine Task Queue SDK, or the Cloud
 	// Console
-	// (https://cloud.google.com/appengine/docs/standard/python/taskqueue/pus
-	// h/deleting-tasks-and-queues#purging_all_tasks_from_a_queue). Purge
-	// time will be truncated to the nearest microsecond. Purge time will be
-	// unset if the queue has never been purged.
+	// (https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_queue).
+	// Purge time will be truncated to the nearest microsecond. Purge time
+	// will be unset if the queue has never been purged.
 	PurgeTime string `json:"purgeTime,omitempty"`
 
 	// RateLimits: Rate limits for task dispatches. rate_limits and
@@ -1318,8 +1309,7 @@ type Queue struct {
 	// in the queue which do not have retry settings explicitly set on the
 	// task and were created by the App Engine SDK. See App Engine
 	// documentation
-	// (https://cloud.google.com/appengine/docs/standard/python/taskqueue/pus
-	// h/retrying-tasks).
+	// (https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/retrying-tasks).
 	RetryConfig *RetryConfig `json:"retryConfig,omitempty"`
 
 	// StackdriverLoggingConfig: Configuration options for writing logs to
@@ -1488,11 +1478,10 @@ type RateLimits struct {
 	// max_dispatches_per_second. The maximum value of `max_burst_size` is
 	// 500. For App Engine queues that were created or updated using
 	// `queue.yaml/xml`, `max_burst_size` is equal to bucket_size
-	// (https://cloud.google.com/appengine/docs/standard/python/config/queuer
-	// ef#bucket_size). If UpdateQueue is called on a queue without
-	// explicitly setting a value for `max_burst_size`, `max_burst_size`
-	// value will get updated if UpdateQueue is updating
-	// max_dispatches_per_second.
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#bucket_size).
+	// If UpdateQueue is called on a queue without explicitly setting a
+	// value for `max_burst_size`, `max_burst_size` value will get updated
+	// if UpdateQueue is updating max_dispatches_per_second.
 	MaxBurstSize int64 `json:"maxBurstSize,omitempty"`
 
 	// MaxConcurrentDispatches: The maximum number of concurrent tasks that
@@ -1502,8 +1491,7 @@ type RateLimits struct {
 	// queue is created, Cloud Tasks will pick the default. The maximum
 	// allowed value is 5,000. This field has the same meaning as
 	// max_concurrent_requests in queue.yaml/xml
-	// (https://cloud.google.com/appengine/docs/standard/python/config/queuer
-	// ef#max_concurrent_requests).
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#max_concurrent_requests).
 	MaxConcurrentDispatches int64 `json:"maxConcurrentDispatches,omitempty"`
 
 	// MaxDispatchesPerSecond: The maximum rate at which tasks are
@@ -1511,8 +1499,7 @@ type RateLimits struct {
 	// Cloud Tasks will pick the default. * For App Engine queues, the
 	// maximum allowed value is 500. This field has the same meaning as rate
 	// in queue.yaml/xml
-	// (https://cloud.google.com/appengine/docs/standard/python/config/queuer
-	// ef#rate).
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#rate).
 	MaxDispatchesPerSecond float64 `json:"maxDispatchesPerSecond,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxBurstSize") to
@@ -1565,8 +1552,7 @@ type RetryConfig struct {
 	// unspecified when the queue is created, Cloud Tasks will pick the
 	// default. -1 indicates unlimited attempts. This field has the same
 	// meaning as task_retry_limit in queue.yaml/xml
-	// (https://cloud.google.com/appengine/docs/standard/python/config/queuer
-	// ef#retry_parameters).
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxAttempts int64 `json:"maxAttempts,omitempty"`
 
 	// MaxBackoff: A task will be scheduled for retry between min_backoff
@@ -1575,8 +1561,7 @@ type RetryConfig struct {
 	// queue is created, Cloud Tasks will pick the default. `max_backoff`
 	// will be truncated to the nearest second. This field has the same
 	// meaning as max_backoff_seconds in queue.yaml/xml
-	// (https://cloud.google.com/appengine/docs/standard/python/config/queuer
-	// ef#retry_parameters).
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxBackoff string `json:"maxBackoff,omitempty"`
 
 	// MaxDoublings: The time between retries will double `max_doublings`
@@ -1591,8 +1576,7 @@ type RetryConfig struct {
 	// 10s, 20s, 40s, 80s, 160s, 240s, 300s, 300s, .... If unspecified when
 	// the queue is created, Cloud Tasks will pick the default. This field
 	// has the same meaning as max_doublings in queue.yaml/xml
-	// (https://cloud.google.com/appengine/docs/standard/python/config/queuer
-	// ef#retry_parameters).
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxDoublings int64 `json:"maxDoublings,omitempty"`
 
 	// MaxRetryDuration: If positive, `max_retry_duration` specifies the
@@ -1604,8 +1588,7 @@ type RetryConfig struct {
 	// will pick the default. `max_retry_duration` will be truncated to the
 	// nearest second. This field has the same meaning as task_age_limit in
 	// queue.yaml/xml
-	// (https://cloud.google.com/appengine/docs/standard/python/config/queuer
-	// ef#retry_parameters).
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxRetryDuration string `json:"maxRetryDuration,omitempty"`
 
 	// MinBackoff: A task will be scheduled for retry between min_backoff
@@ -1614,8 +1597,7 @@ type RetryConfig struct {
 	// queue is created, Cloud Tasks will pick the default. `min_backoff`
 	// will be truncated to the nearest second. This field has the same
 	// meaning as min_backoff_seconds in queue.yaml/xml
-	// (https://cloud.google.com/appengine/docs/standard/python/config/queuer
-	// ef#retry_parameters).
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MinBackoff string `json:"minBackoff,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxAttempts") to
@@ -1837,19 +1819,18 @@ type Task struct {
 	// must be in the interval [15 seconds, 30 minutes]. * For App Engine
 	// tasks, 0 indicates that the request has the default deadline. The
 	// default deadline depends on the scaling type
-	// (https://cloud.google.com/appengine/docs/standard/go/how-instances-are
-	// -managed#instance_scaling) of the service: 10 minutes for standard
-	// apps with automatic scaling, 24 hours for standard apps with manual
-	// and basic scaling, and 60 minutes for flex apps. If the request
-	// deadline is set, it must be in the interval [15 seconds, 24 hours 15
-	// seconds]. Regardless of the task's `dispatch_deadline`, the app
-	// handler will not run for longer than than the service's timeout. We
-	// recommend setting the `dispatch_deadline` to at most a few seconds
-	// more than the app handler's timeout. For more information see
-	// Timeouts
-	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeo
-	// uts). `dispatch_deadline` will be truncated to the nearest
-	// millisecond. The deadline is an approximate deadline.
+	// (https://cloud.google.com/appengine/docs/standard/go/how-instances-are-managed#instance_scaling)
+	// of the service: 10 minutes for standard apps with automatic scaling,
+	// 24 hours for standard apps with manual and basic scaling, and 60
+	// minutes for flex apps. If the request deadline is set, it must be in
+	// the interval [15 seconds, 24 hours 15 seconds]. Regardless of the
+	// task's `dispatch_deadline`, the app handler will not run for longer
+	// than than the service's timeout. We recommend setting the
+	// `dispatch_deadline` to at most a few seconds more than the app
+	// handler's timeout. For more information see Timeouts
+	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts).
+	// `dispatch_deadline` will be truncated to the nearest millisecond. The
+	// deadline is an approximate deadline.
 	DispatchDeadline string `json:"dispatchDeadline,omitempty"`
 
 	// FirstAttempt: Output only. The status of the task's first attempt.
@@ -1870,24 +1851,23 @@ type Task struct {
 	// ID` * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
 	// hyphens (-), colons (:), or periods (.). For more information, see
 	// Identifying projects
-	// (https://cloud.google.com/resource-manager/docs/creating-managing-proj
-	// ects#identifying_projects) * `LOCATION_ID` is the canonical ID for
-	// the task's location. The list of available locations can be obtained
-	// by calling ListLocations. For more information, see
-	// https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain
-	// letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
-	// length is 100 characters. * `TASK_ID` can contain only letters
-	// ([A-Za-z]), numbers ([0-9]), hyphens (-), or underscores (_). The
-	// maximum length is 500 characters.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
+	// * `LOCATION_ID` is the canonical ID for the task's location. The list
+	// of available locations can be obtained by calling ListLocations. For
+	// more information, see https://cloud.google.com/about/locations/. *
+	// `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or
+	// hyphens (-). The maximum length is 100 characters. * `TASK_ID` can
+	// contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or
+	// underscores (_). The maximum length is 500 characters.
 	Name string `json:"name,omitempty"`
 
 	// PullMessage: Pull Message contained in a task in a PULL queue type.
 	// This payload type cannot be explicitly set through Cloud Tasks API.
 	// Its purpose, currently is to provide backward compatibility with App
 	// Engine Task Queue pull
-	// (https://cloud.google.com/appengine/docs/standard/java/taskqueue/pull/
-	// ) queues to provide a way to inspect contents of pull tasks through
-	// the CloudTasks.
+	// (https://cloud.google.com/appengine/docs/standard/java/taskqueue/pull/)
+	// queues to provide a way to inspect contents of pull tasks through the
+	// CloudTasks.
 	PullMessage *PullMessage `json:"pullMessage,omitempty"`
 
 	// ResponseCount: Output only. The number of attempts which have

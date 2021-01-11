@@ -949,8 +949,8 @@ func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *
 // update mask. `name` and `writer_identity` fields cannot be updated.
 // An empty updateMask is considered an error. For a detailed
 // `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask Example:
-// `updateMask=output_config`.
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// Example: `updateMask=output_config`.
 func (c *ProjectsTraceSinksPatchCall) UpdateMask(updateMask string) *ProjectsTraceSinksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

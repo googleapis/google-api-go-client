@@ -730,8 +730,8 @@ type Instance struct {
 	// within the same project, but you must have the service account user
 	// permission to use the instance. If not specified, the Compute Engine
 	// default service account
-	// (https://cloud.google.com/compute/docs/access/service-accounts#default
-	// _service_account) is used.
+	// (https://cloud.google.com/compute/docs/access/service-accounts#default_service_account)
+	// is used.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// State: Output only. The state of this instance.

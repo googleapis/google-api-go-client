@@ -1634,8 +1634,9 @@ type GenericSignedAttestation struct {
 	// Possible values:
 	//   "CONTENT_TYPE_UNSPECIFIED" - `ContentType` is not set.
 	//   "SIMPLE_SIGNING_JSON" - Atomic format attestation signature. See
-	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276c3e0f64e77723e7/docs/atomic-signature.md The payload extracted in `plaintext` is a JSON blob conforming to the linked
-	// schema.
+	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276c3e0f64e77723e7/docs/atomic-signature.md
+	// The payload extracted in `plaintext` is a JSON blob conforming to the
+	// linked schema.
 	ContentType string `json:"contentType,omitempty"`
 
 	// SerializedPayload: The serialized payload that is verified by one or
@@ -2945,8 +2946,9 @@ type PgpSignedAttestation struct {
 	// Possible values:
 	//   "CONTENT_TYPE_UNSPECIFIED" - `ContentType` is not set.
 	//   "SIMPLE_SIGNING_JSON" - Atomic format attestation signature. See
-	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276c3e0f64e77723e7/docs/atomic-signature.md The payload extracted from `signature` is a JSON blob conforming to the linked
-	// schema.
+	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276c3e0f64e77723e7/docs/atomic-signature.md
+	// The payload extracted from `signature` is a JSON blob conforming to
+	// the linked schema.
 	ContentType string `json:"contentType,omitempty"`
 
 	// PgpKeyId: The cryptographic fingerprint of the key used to generate

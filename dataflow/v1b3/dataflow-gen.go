@@ -2165,8 +2165,8 @@ type FlexTemplateRuntimeEnvironment struct {
 	// AdditionalUserLabels: Additional user labels to be specified for the
 	// job. Keys and values must follow the restrictions specified in the
 	// labeling restrictions
-	// (https://cloud.google.com/compute/docs/labeling-resources#restrictions
-	// ) page. An object containing a list of "key": value pairs. Example: {
+	// (https://cloud.google.com/compute/docs/labeling-resources#restrictions)
+	// page. An object containing a list of "key": value pairs. Example: {
 	// "name": "wrench", "mass": "1kg", "count": "3" }.
 	AdditionalUserLabels map[string]string `json:"additionalUserLabels,omitempty"`
 
@@ -5108,8 +5108,8 @@ type RuntimeEnvironment struct {
 	// AdditionalUserLabels: Additional user labels to be specified for the
 	// job. Keys and values should follow the restrictions specified in the
 	// labeling restrictions
-	// (https://cloud.google.com/compute/docs/labeling-resources#restrictions
-	// ) page. An object containing a list of "key": value pairs. Example: {
+	// (https://cloud.google.com/compute/docs/labeling-resources#restrictions)
+	// page. An object containing a list of "key": value pairs. Example: {
 	// "name": "wrench", "mass": "1kg", "count": "3" }.
 	AdditionalUserLabels map[string]string `json:"additionalUserLabels,omitempty"`
 
@@ -7686,8 +7686,9 @@ type WorkerHealthReport struct {
 	Msg string `json:"msg,omitempty"`
 
 	// Pods: The pods running on the worker. See:
-	// http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#_v1_pod This field is used by the worker to send the status of the indvidual containers running on each
-	// worker.
+	// http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#_v1_pod
+	// This field is used by the worker to send the status of the indvidual
+	// containers running on each worker.
 	Pods []googleapi.RawMessage `json:"pods,omitempty"`
 
 	// ReportInterval: The interval at which the worker is sending health

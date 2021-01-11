@@ -2423,9 +2423,9 @@ type LineConnection struct {
 	// DrawingML Shape and Text Geometries" of "Office Open XML File
 	// Formats-Fundamentals and Markup Language Reference", part 1 of
 	// [ECMA-376 5th edition]
-	// (http://www.ecma-international.org/publications/standards/Ecma-376.htm
-	// ). The position of each connection site can also be viewed from
-	// Slides editor.
+	// (http://www.ecma-international.org/publications/standards/Ecma-376.htm).
+	// The position of each connection site can also be viewed from Slides
+	// editor.
 	ConnectionSiteIndex int64 `json:"connectionSiteIndex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConnectedObjectId")

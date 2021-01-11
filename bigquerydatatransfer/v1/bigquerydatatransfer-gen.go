@@ -1165,8 +1165,8 @@ type TransferConfig struct {
 	// UTC. Examples of valid format: `1st,3rd monday of month 15:30`,
 	// `every wed,fri of jan,jun 13:15`, and `first sunday of quarter
 	// 00:00`. See more explanation about the format here:
-	// https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format NOTE: the granularity should be at least 8 hours, or less
-	// frequent.
+	// https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format
+	// NOTE: the granularity should be at least 8 hours, or less frequent.
 	Schedule string `json:"schedule,omitempty"`
 
 	// ScheduleOptions: Options customizing the data transfer schedule.
@@ -2725,7 +2725,16 @@ func (r *ProjectsLocationsTransferConfigsService) Create(parent string, transfer
 // configuration. This is required if new credentials are needed, as
 // indicated by `CheckValidCreds`. In order to obtain
 // authorization_code, please make a request to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri=
+// * client_id should be OAuth client_id of BigQuery DTS API for the
+// given data source returned by ListDataSources method. *
+// data_source_scopes are the scopes returned by ListDataSources method.
+// * redirect_uri is an optional parameter. If not specified, then
+// authorization code is posted to the opener of authorization flow
+// window. Otherwise it will be sent to the redirect uri. A special
+// value of urn:ietf:wg:oauth:2.0:oob means that authorization code
+// should be returned in the title bar of the browser, with the page
+// text prompting the user to copy the code and paste it in the
 // application.
 func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authorizationCode string) *ProjectsLocationsTransferConfigsCreateCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
@@ -3405,7 +3414,16 @@ func (r *ProjectsLocationsTransferConfigsService) Patch(name string, transfercon
 // configuration. If it is provided, the transfer configuration will be
 // associated with the authorizing user. In order to obtain
 // authorization_code, please make a request to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri=
+// * client_id should be OAuth client_id of BigQuery DTS API for the
+// given data source returned by ListDataSources method. *
+// data_source_scopes are the scopes returned by ListDataSources method.
+// * redirect_uri is an optional parameter. If not specified, then
+// authorization code is posted to the opener of authorization flow
+// window. Otherwise it will be sent to the redirect uri. A special
+// value of urn:ietf:wg:oauth:2.0:oob means that authorization code
+// should be returned in the title bar of the browser, with the page
+// text prompting the user to copy the code and paste it in the
 // application.
 func (c *ProjectsLocationsTransferConfigsPatchCall) AuthorizationCode(authorizationCode string) *ProjectsLocationsTransferConfigsPatchCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
@@ -4663,7 +4681,16 @@ func (r *ProjectsTransferConfigsService) Create(parent string, transferconfig *T
 // configuration. This is required if new credentials are needed, as
 // indicated by `CheckValidCreds`. In order to obtain
 // authorization_code, please make a request to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri=
+// * client_id should be OAuth client_id of BigQuery DTS API for the
+// given data source returned by ListDataSources method. *
+// data_source_scopes are the scopes returned by ListDataSources method.
+// * redirect_uri is an optional parameter. If not specified, then
+// authorization code is posted to the opener of authorization flow
+// window. Otherwise it will be sent to the redirect uri. A special
+// value of urn:ietf:wg:oauth:2.0:oob means that authorization code
+// should be returned in the title bar of the browser, with the page
+// text prompting the user to copy the code and paste it in the
 // application.
 func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode string) *ProjectsTransferConfigsCreateCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)
@@ -5343,7 +5370,16 @@ func (r *ProjectsTransferConfigsService) Patch(name string, transferconfig *Tran
 // configuration. If it is provided, the transfer configuration will be
 // associated with the authorizing user. In order to obtain
 // authorization_code, please make a request to
-// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri= * client_id should be OAuth client_id of BigQuery DTS API for the given data source returned by ListDataSources method. * data_source_scopes are the scopes returned by ListDataSources method. * redirect_uri is an optional parameter. If not specified, then authorization code is posted to the opener of authorization flow window. Otherwise it will be sent to the redirect uri. A special value of urn:ietf:wg:oauth:2.0:oob means that authorization code should be returned in the title bar of the browser, with the page text prompting the user to copy the code and paste it in the
+// https://www.gstatic.com/bigquerydatatransfer/oauthz/auth?client_id=&scope=&redirect_uri=
+// * client_id should be OAuth client_id of BigQuery DTS API for the
+// given data source returned by ListDataSources method. *
+// data_source_scopes are the scopes returned by ListDataSources method.
+// * redirect_uri is an optional parameter. If not specified, then
+// authorization code is posted to the opener of authorization flow
+// window. Otherwise it will be sent to the redirect uri. A special
+// value of urn:ietf:wg:oauth:2.0:oob means that authorization code
+// should be returned in the title bar of the browser, with the page
+// text prompting the user to copy the code and paste it in the
 // application.
 func (c *ProjectsTransferConfigsPatchCall) AuthorizationCode(authorizationCode string) *ProjectsTransferConfigsPatchCall {
 	c.urlParams_.Set("authorizationCode", authorizationCode)

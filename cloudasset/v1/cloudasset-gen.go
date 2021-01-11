@@ -282,31 +282,29 @@ func (s *AnalyzeIamPolicyResponse) MarshalJSON() ([]byte, error) {
 
 // Asset: An asset in Google Cloud. An asset can be any resource in the
 // Google Cloud resource hierarchy
-// (https://cloud.google.com/resource-manager/docs/cloud-platform-resourc
-// e-hierarchy), a resource outside the Google Cloud resource hierarchy
-// (such as Google Kubernetes Engine clusters and objects), or a policy
-// (e.g. Cloud IAM policy). See Supported asset types
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g.
+// Cloud IAM policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type Asset struct {
 	// AccessLevel: Please also refer to the access level user guide
-	// (https://cloud.google.com/access-context-manager/docs/overview#access-
-	// levels).
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-levels).
 	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
 
 	// AccessPolicy: Please also refer to the access policy user guide
-	// (https://cloud.google.com/access-context-manager/docs/overview#access-
-	// policies).
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-policies).
 	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
 
 	// Ancestors: The ancestry path of an asset in Google Cloud resource
 	// hierarchy
-	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resourc
-	// e-hierarchy), represented as a list of relative resource names. An
-	// ancestry path starts with the closest ancestor in the hierarchy and
-	// ends at root. If the asset is a project, folder, or organization, the
-	// ancestry path starts from the asset itself. Example:
-	// `["projects/123456789", "folders/5432", "organizations/1234"]`
+	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+	// represented as a list of relative resource names. An ancestry path
+	// starts with the closest ancestor in the hierarchy and ends at root.
+	// If the asset is a project, folder, or organization, the ancestry path
+	// starts from the asset itself. Example: `["projects/123456789",
+	// "folders/5432", "organizations/1234"]`
 	Ancestors []string `json:"ancestors,omitempty"`
 
 	// AssetType: The type of the asset. Example:
@@ -329,20 +327,20 @@ type Asset struct {
 	// Name: The full name of the asset. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 	// s/instance1` See Resource names
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-	// e) for more information.
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
 	Name string `json:"name,omitempty"`
 
 	// OrgPolicy: A representation of an organization policy
-	// (https://cloud.google.com/resource-manager/docs/organization-policy/ov
-	// erview#organization_policy). There can be more than one organization
-	// policy with different constraints set on a given resource.
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/overview#organization_policy).
+	// There can be more than one organization policy with different
+	// constraints set on a given resource.
 	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
 
 	// OsInventory: A representation of runtime OS Inventory information.
 	// See this topic
-	// (https://cloud.google.com/compute/docs/instances/os-inventory-manageme
-	// nt) for more information.
+	// (https://cloud.google.com/compute/docs/instances/os-inventory-management)
+	// for more information.
 	OsInventory *Inventory `json:"osInventory,omitempty"`
 
 	// Resource: A representation of the resource.
@@ -557,7 +555,7 @@ type BigQueryDestination struct {
 	// nested fields in the Asset.resource.data field of that asset type (up
 	// to the 15 nested level BigQuery supports
 	// (https://cloud.google.com/bigquery/docs/nested-repeated#limitations)).
-	//  The fields in >15 nested levels will be stored in JSON format string
+	// The fields in >15 nested levels will be stored in JSON format string
 	// as a child column of its parent RECORD column. If error occurs when
 	// exporting to any table, the whole export call will return an error
 	// but the export results that already succeed will persist. Example: if
@@ -889,8 +887,8 @@ type Feed struct {
 	// asset_types are exported to the feed. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 	// s/instance1`. See Resource Names
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-	// e) for more info.
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more info.
 	AssetNames []string `json:"assetNames,omitempty"`
 
 	// AssetTypes: A list of types of the assets to receive updates. You
@@ -910,8 +908,8 @@ type Feed struct {
 	// `temporal_asset`. Example: a Feed with expression
 	// ("temporal_asset.deleted == true") will only publish Asset deletions.
 	// Other fields of `Expr` are optional. See our user guide
-	// (https://cloud.google.com/asset-inventory/docs/monitoring-asset-change
-	// s#feed_with_condition) for detailed instructions.
+	// (https://cloud.google.com/asset-inventory/docs/monitoring-asset-changes#feed_with_condition)
+	// for detailed instructions.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// ContentType: Asset content type. If not specified, no content but the
@@ -2678,11 +2676,9 @@ type IamPolicyAnalysisQuery struct {
 	// (such as "folders/123"), a project ID (such as
 	// "projects/my-project-id"), or a project number (such as
 	// "projects/12345"). To know how to get organization id, visit here
-	// (https://cloud.google.com/resource-manager/docs/creating-managing-orga
-	// nization#retrieving_your_organization_id). To know how to get folder
-	// or project id, visit here
-	// (https://cloud.google.com/resource-manager/docs/creating-managing-fold
-	// ers#viewing_or_listing_folders_and_projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+	// To know how to get folder or project id, visit here
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 	Scope string `json:"scope,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessSelector") to
@@ -3574,8 +3570,8 @@ type Resource struct {
 
 	// Parent: The full name of the immediate parent of this resource. See
 	// Resource Names
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-	// e) for more information. For Google Cloud assets, this value is the
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information. For Google Cloud assets, this value is the
 	// parent resource defined in the Cloud IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
@@ -3625,15 +3621,14 @@ type ResourceSearchResult struct {
 	// fields that are returned by the List or Get APIs provided by the
 	// corresponding GCP service (e.g., Compute Engine). see API references
 	// and supported searchable attributes
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
-	// earchable_asset_types) for more information. You can search values of
-	// these fields through free text search. However, you should not
-	// consume the field programically as the field names and values may
-	// change as the GCP service updates to a new incompatible API version.
-	// To search against the `additional_attributes`: * use a free text
-	// query to match the attributes values. Example: to search
-	// `additional_attributes = { dnsName: "foobar" }`, you can issue a
-	// query `foobar`.
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types)
+	// for more information. You can search values of these fields through
+	// free text search. However, you should not consume the field
+	// programically as the field names and values may change as the GCP
+	// service updates to a new incompatible API version. To search against
+	// the `additional_attributes`: * use a free text query to match the
+	// attributes values. Example: to search `additional_attributes = {
+	// dnsName: "foobar" }`, you can issue a query `foobar`.
 	AdditionalAttributes googleapi.RawMessage `json:"additionalAttributes,omitempty"`
 
 	// AssetType: Required. The type of this resource. Example:
@@ -3658,13 +3653,13 @@ type ResourceSearchResult struct {
 
 	// Labels: Optional. Labels associated with this resource. See Labelling
 	// and grouping GCP resources
-	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-you
-	// r-google-cloud-platform-resources) for more information. This field
-	// is available only when the resource's proto contains it. To search
-	// against the `labels`: * use a field query: - query on any label's key
-	// or value. Example: `labels:prod` - query by a given label. Example:
-	// `labels.env:prod` - query by a given label's existence. Example:
-	// `labels.env:*` * use a free text query. Example: `prod`
+	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
+	// for more information. This field is available only when the
+	// resource's proto contains it. To search against the `labels`: * use a
+	// field query: - query on any label's key or value. Example:
+	// `labels:prod` - query by a given label. Example: `labels.env:prod` -
+	// query by a given label's existence. Example: `labels.env:*` * use a
+	// free text query. Example: `prod`
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Location: Optional. Location can be `global`, regional like
@@ -3686,11 +3681,11 @@ type ResourceSearchResult struct {
 	// NetworkTags: Optional. Network tags associated with this resource.
 	// Like labels, network tags are a type of annotations used to group GCP
 	// resources. See Labelling GCP resources
-	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-you
-	// r-google-cloud-platform-resources) for more information. This field
-	// is available only when the resource's proto contains it. To search
-	// against the `network_tags`: * use a field query. Example:
-	// `networkTags:internal` * use a free text query. Example: `internal`
+	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
+	// for more information. This field is available only when the
+	// resource's proto contains it. To search against the `network_tags`: *
+	// use a field query. Example: `networkTags:internal` * use a free text
+	// query. Example: `internal`
 	NetworkTags []string `json:"networkTags,omitempty"`
 
 	// Project: Optional. The project that this resource belongs to, in the
@@ -3731,8 +3726,7 @@ type ResourceSelector struct {
 	// FullResourceName: Required. The [full resource name]
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 	// of a resource of supported resource types
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#a
-	// nalyzable_asset_types).
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
@@ -3852,8 +3846,8 @@ type SoftwarePackage struct {
 	GoogetPackage *VersionedPackage `json:"googetPackage,omitempty"`
 
 	// QfePackage: Details of a Windows Quick Fix engineering package. See
-	// https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-quickfixengineering for info in Windows Quick Fix
-	// Engineering.
+	// https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-quickfixengineering
+	// for info in Windows Quick Fix Engineering.
 	QfePackage *WindowsQuickFixEngineeringPackage `json:"qfePackage,omitempty"`
 
 	// WuaPackage: Details of a Windows Update package. See
@@ -5259,8 +5253,7 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputResourceEdges(analysi
 // Required. The [full resource name]
 // (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 // of a resource of supported resource types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#a
-// nalyzable_asset_types).
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(analysisQueryResourceSelectorFullResourceName string) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.resourceSelector.fullResourceName", analysisQueryResourceSelectorFullResourceName)
 	return c
@@ -6041,14 +6034,13 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 
 // Query sets the optional parameter "query": The query statement. See
 // how to construct a query
-// (https://cloud.google.com/asset-inventory/docs/searching-iam-policies#
-// how_to_construct_a_query) for more information. If not specified or
-// empty, it will search all the IAM policies within the specified
-// `scope`. Note that the query string is compared against each Cloud
-// IAM policy binding, including its members, roles, and Cloud IAM
-// conditions. The returned Cloud IAM policies will only contain the
-// bindings that match your query. To learn more about the IAM policy
-// structure, see IAM policy doc
+// (https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query)
+// for more information. If not specified or empty, it will search all
+// the IAM policies within the specified `scope`. Note that the query
+// string is compared against each Cloud IAM policy binding, including
+// its members, roles, and Cloud IAM conditions. The returned Cloud IAM
+// policies will only contain the bindings that match your query. To
+// learn more about the IAM policy structure, see IAM policy doc
 // (https://cloud.google.com/iam/docs/policies#structure). Examples: *
 // `policy:amy@gmail.com` to find IAM policy bindings that specify user
 // "amy@gmail.com". * `policy:roles/compute.admin` to find IAM policy
@@ -6261,10 +6253,10 @@ func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
 // AssetTypes sets the optional parameter "assetTypes": A list of asset
 // types that this request searches for. If empty, it will search all
 // the searchable asset types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
-// earchable_asset_types). Regular expressions are also supported. For
-// example: * "compute.googleapis.com.*" snapshots resources whose asset
-// type starts with "compute.googleapis.com". * ".*Instance" snapshots
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// Regular expressions are also supported. For example: *
+// "compute.googleapis.com.*" snapshots resources whose asset type
+// starts with "compute.googleapis.com". * ".*Instance" snapshots
 // resources whose asset type ends with "Instance". * ".*Instance.*"
 // snapshots resources whose asset type contains "Instance". See RE2
 // (https://github.com/google/re2/wiki/Syntax) for all supported regular
@@ -6312,14 +6304,14 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 
 // Query sets the optional parameter "query": The query statement. See
 // how to construct a query
-// (http://cloud.google.com/asset-inventory/docs/searching-resources#how_
-// to_construct_a_query) for more information. If not specified or
-// empty, it will search all the resources within the specified `scope`.
-// Examples: * `name:Important` to find Cloud resources whose name
-// contains "Important" as a word. * `name=Important` to find the Cloud
-// resource whose name is exactly "Important". * `displayName:Impor*` to
-// find Cloud resources whose display name contains "Impor" as a prefix.
-// * `description:*por*` to find Cloud resources whose description
+// (http://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query)
+// for more information. If not specified or empty, it will search all
+// the resources within the specified `scope`. Examples: *
+// `name:Important` to find Cloud resources whose name contains
+// "Important" as a word. * `name=Important` to find the Cloud resource
+// whose name is exactly "Important". * `displayName:Impor*` to find
+// Cloud resources whose display name contains "Impor" as a prefix. *
+// `description:*por*` to find Cloud resources whose description
 // contains "por" as a substring. * `location:us-west*` to find Cloud
 // resources whose location is prefixed with "us-west". * `labels:prod`
 // to find Cloud resources whose labels contain "prod" as a key or

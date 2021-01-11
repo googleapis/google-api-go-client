@@ -2098,8 +2098,7 @@ type Query struct {
 	// EndCursor: An ending point for the query results. Query cursors are
 	// returned in query result batches and can only be used to limit the
 	// same query
-	// (https://cloud.google.com/datastore/docs/concepts/queries#cursors_limi
-	// ts_and_offsets).
+	// (https://cloud.google.com/datastore/docs/concepts/queries#cursors_limits_and_offsets).
 	EndCursor string `json:"endCursor,omitempty"`
 
 	// Filter: The filter to apply.
@@ -2129,8 +2128,7 @@ type Query struct {
 	// StartCursor: A starting point for the query results. Query cursors
 	// are returned in query result batches and can only be used to continue
 	// the same query
-	// (https://cloud.google.com/datastore/docs/concepts/queries#cursors_limi
-	// ts_and_offsets).
+	// (https://cloud.google.com/datastore/docs/concepts/queries#cursors_limits_and_offsets).
 	StartCursor string `json:"startCursor,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DistinctOn") to

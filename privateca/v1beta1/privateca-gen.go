@@ -6707,8 +6707,7 @@ func (r *ProjectsLocationsCertificateAuthoritiesCertificatesService) List(parent
 // Filter sets the optional parameter "filter": Only include resources
 // that match the filter in the response. For details on supported
 // filters and syntax, see Certificates Filtering documentation
-// (https://cloud.google.com/certificate-authority-service/docs/sorting-f
-// iltering-certificates#filtering_support).
+// (https://cloud.google.com/certificate-authority-service/docs/sorting-filtering-certificates#filtering_support).
 func (c *ProjectsLocationsCertificateAuthoritiesCertificatesListCall) Filter(filter string) *ProjectsLocationsCertificateAuthoritiesCertificatesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6717,8 +6716,7 @@ func (c *ProjectsLocationsCertificateAuthoritiesCertificatesListCall) Filter(fil
 // OrderBy sets the optional parameter "orderBy": Specify how the
 // results should be sorted. For details on supported fields and syntax,
 // see Certificates Sorting documentation
-// (https://cloud.google.com/certificate-authority-service/docs/sorting-f
-// iltering-certificates#sorting_support).
+// (https://cloud.google.com/certificate-authority-service/docs/sorting-filtering-certificates#sorting_support).
 func (c *ProjectsLocationsCertificateAuthoritiesCertificatesListCall) OrderBy(orderBy string) *ProjectsLocationsCertificateAuthoritiesCertificatesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

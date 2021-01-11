@@ -728,8 +728,7 @@ type Endpoint struct {
 	CloudSqlInstance string `json:"cloudSqlInstance,omitempty"`
 
 	// GkeMasterCluster: A cluster URI for Google Kubernetes Engine master
-	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-arch
-	// itecture).
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
 	GkeMasterCluster string `json:"gkeMasterCluster,omitempty"`
 
 	// Instance: A Compute Engine instance URI.
@@ -738,8 +737,7 @@ type Endpoint struct {
 	// IpAddress: The IP address of the endpoint, which can be an external
 	// or internal IP. An IPv6 address is only allowed when the test's
 	// destination is a global load balancer VIP
-	// (https://cloud.google.com/load-balancing/docs/load-balancing-overview)
-	// .
+	// (https://cloud.google.com/load-balancing/docs/load-balancing-overview).
 	IpAddress string `json:"ipAddress,omitempty"`
 
 	// Network: A Compute Engine network URI.

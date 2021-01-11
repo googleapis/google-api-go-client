@@ -1814,9 +1814,8 @@ type VirtualMachine struct {
 	// "n1-standard-1") or a custom machine type (such as "custom-1-4096",
 	// where "1" indicates the number of vCPUs and "4096" indicates the
 	// memory in MB). See Creating an instance with a custom machine type
-	// (https://cloud.google.com/compute/docs/instances/creating-instance-wit
-	// h-custom-machine-type#create) for more specifications on creating a
-	// custom machine type.
+	// (https://cloud.google.com/compute/docs/instances/creating-instance-with-custom-machine-type#create)
+	// for more specifications on creating a custom machine type.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Network: The VM network configuration.

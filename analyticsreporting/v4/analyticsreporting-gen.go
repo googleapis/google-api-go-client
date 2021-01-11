@@ -370,8 +370,7 @@ type CohortGroup struct {
 	// time increment. - The cohort definition date ranges need not be
 	// aligned to the calendar week and month boundaries. - The `viewId`
 	// must be an app view ID
-	// (https://support.google.com/analytics/answer/2649553#WebVersusAppViews
-	// )
+	// (https://support.google.com/analytics/answer/2649553#WebVersusAppViews)
 	LifetimeValue bool `json:"lifetimeValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cohorts") to
@@ -1739,8 +1738,7 @@ type ReportRequest struct {
 	// `ga:browser` dimension which starts with Firefox;
 	// `ga:browser=~^Firefox`. For more information on dimensions and metric
 	// filters, see Filters reference
-	// (https://developers.google.com/analytics/devguides/reporting/core/v3/r
-	// eference#filters).
+	// (https://developers.google.com/analytics/devguides/reporting/core/v3/reference#filters).
 	FiltersExpression string `json:"filtersExpression,omitempty"`
 
 	// HideTotals: If set to true, hides the total of all metrics for all

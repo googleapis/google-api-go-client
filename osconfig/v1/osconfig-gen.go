@@ -616,8 +616,8 @@ type InventorySoftwarePackage struct {
 	GoogetPackage *InventoryVersionedPackage `json:"googetPackage,omitempty"`
 
 	// QfePackage: Details of a Windows Quick Fix engineering package. See
-	// https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-quickfixengineering for info in Windows Quick Fix
-	// Engineering.
+	// https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-quickfixengineering
+	// for info in Windows Quick Fix Engineering.
 	QfePackage *InventoryWindowsQuickFixEngineeringPackage `json:"qfePackage,omitempty"`
 
 	// WuaPackage: Details of a Windows Update package. See
@@ -1117,8 +1117,7 @@ func (s *PatchConfig) MarshalJSON() ([]byte, error) {
 // instance filter, package repository settings, and a schedule. For
 // more information about creating and managing patch deployments, see
 // Scheduling patch jobs
-// (https://cloud.google.com/compute/docs/os-patch-management/schedule-pa
-// tch-jobs).
+// (https://cloud.google.com/compute/docs/os-patch-management/schedule-patch-jobs).
 type PatchDeployment struct {
 	// CreateTime: Output only. Time the patch deployment was created.
 	// Timestamp is in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text
@@ -1285,8 +1284,7 @@ func (s *PatchInstanceFilterGroupLabel) MarshalJSON() ([]byte, error) {
 // the job. To paginate through instance details, use
 // ListPatchJobInstanceDetails. For more information about patch jobs,
 // see Creating patch jobs
-// (https://cloud.google.com/compute/docs/os-patch-management/create-patc
-// h-job).
+// (https://cloud.google.com/compute/docs/os-patch-management/create-patch-job).
 type PatchJob struct {
 	// CreateTime: Time this patch job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1397,8 +1395,7 @@ func (s *PatchJob) UnmarshalJSON(data []byte) error {
 // PatchJobInstanceDetails: Patch details for a VM instance. For more
 // information about reviewing VM instance details, see Listing all VM
 // instance details for a specific patch job
-// (https://cloud.google.com/compute/docs/os-patch-management/manage-patc
-// h-jobs#list-instance-details).
+// (https://cloud.google.com/compute/docs/os-patch-management/manage-patch-jobs#list-instance-details).
 type PatchJobInstanceDetails struct {
 	// AttemptCount: The number of times the agent that the agent attempts
 	// to apply the patch.

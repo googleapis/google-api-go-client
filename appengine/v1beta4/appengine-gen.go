@@ -694,8 +694,7 @@ type DebugInstanceRequest struct {
 	// [USERNAME]:ssh-rsa [KEY_VALUE] google-ssh
 	// {"userName":"[USERNAME]","expireOn":"[EXPIRE_TIME]"}For more
 	// information, see Adding and Removing SSH Keys
-	// (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-k
-	// eys).
+	// (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys).
 	SshKey string `json:"sshKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SshKey") to
@@ -2505,9 +2504,9 @@ type Version struct {
 	// DefaultExpiration: Duration that static files should be cached by web
 	// proxies and browsers. Only applicable if the corresponding
 	// StaticFilesHandler
-	// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/a
-	// pps.services.versions#staticfileshandler) does not specify its own
-	// expiration time.Only returned in GET requests if view=FULL is set.
+	// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#staticfileshandler)
+	// does not specify its own expiration time.Only returned in GET
+	// requests if view=FULL is set.
 	DefaultExpiration string `json:"defaultExpiration,omitempty"`
 
 	// Deployer: Email address of the user who created this
@@ -3023,11 +3022,9 @@ type AppsPatchCall struct {
 // Patch: Updates the specified Application resource. You can update the
 // following fields:
 // auth_domain
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps#Application.FIELDS.auth_domain)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps#Application.FIELDS.auth_domain)
 // default_cookie_expiration
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps#Application.FIELDS.default_cookie_expiration)
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps#Application.FIELDS.default_cookie_expiration)
 func (r *AppsService) Patch(appsId string, application *Application) *AppsPatchCall {
 	c := &AppsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId
@@ -4045,17 +4042,15 @@ func (c *AppsModulesPatchCall) Mask(mask string) *AppsModulesPatchCall {
 // specify. By default, traffic is shifted immediately. For gradual
 // traffic migration, the target versions must be located within
 // instances that are configured for both warmup requests
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps.modules.versions#inboundservicetype) and automatic scaling
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps.modules.versions#automaticscaling). You must specify the
-// shardBy
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps.modules#shardby) field in the Module resource. Gradual
-// traffic migration is not supported in the App Engine flexible
-// environment. For examples, see Migrating and Splitting Traffic
-// (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting
-// -traffic).
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#inboundservicetype)
+// and automatic scaling
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#automaticscaling).
+// You must specify the shardBy
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules#shardby)
+// field in the Module resource. Gradual traffic migration is not
+// supported in the App Engine flexible environment. For examples, see
+// Migrating and Splitting Traffic
+// (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).
 func (c *AppsModulesPatchCall) MigrateTraffic(migrateTraffic bool) *AppsModulesPatchCall {
 	c.urlParams_.Set("migrateTraffic", fmt.Sprint(migrateTraffic))
 	return c
@@ -4923,24 +4918,20 @@ type AppsModulesVersionsPatchCall struct {
 // following fields depending on the App Engine environment and type of
 // scaling that the version resource uses:
 // serving_status
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps.modules.versions#Version.FIELDS.serving_status):  For
-// Version resources that use basic scaling, manual scaling, or run in
-// the App Engine flexible environment.
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.serving_status):
+//  For Version resources that use basic scaling, manual scaling, or run
+// in  the App Engine flexible environment.
 // instance_class
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps.modules.versions#Version.FIELDS.instance_class):  For
-// Version resources that run in the App Engine standard
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.instance_class):
+//  For Version resources that run in the App Engine standard
 // environment.
 // automatic_scaling.min_idle_instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps.modules.versions#Version.FIELDS.automatic_scaling):  For
-// Version resources that use automatic scaling and run in the App
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.automatic_scaling):
+//  For Version resources that use automatic scaling and run in the App
 // Engine standard environment.
 // automatic_scaling.max_idle_instances
-// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1be
-// ta4/apps.modules.versions#Version.FIELDS.automatic_scaling):  For
-// Version resources that use automatic scaling and run in the App
+// (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.automatic_scaling):
+//  For Version resources that use automatic scaling and run in the App
 // Engine standard environment.
 func (r *AppsModulesVersionsService) Patch(appsId string, modulesId string, versionsId string, version *Version) *AppsModulesVersionsPatchCall {
 	c := &AppsModulesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5624,8 +5615,7 @@ type AppsModulesVersionsInstancesListCall struct {
 
 // List: Lists the instances of a version.Tip: To aggregate details
 // about instances over time, see the Stackdriver Monitoring API
-// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-// eries/list).
+// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
 func (r *AppsModulesVersionsInstancesService) List(appsId string, modulesId string, versionsId string) *AppsModulesVersionsInstancesListCall {
 	c := &AppsModulesVersionsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appsId = appsId

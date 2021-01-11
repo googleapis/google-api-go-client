@@ -454,13 +454,12 @@ func (s *CohortReportSettings) MarshalJSON() ([]byte, error) {
 // cohort is specified in the `cohort` object. Following that cohort for
 // the next six weeks is specified in the `cohortsRange` object. For
 // examples, see Cohort Report Examples
-// (https://developers.google.com/analytics/devguides/reporting/data/v1/a
-// dvanced#cohort_report_examples). The report response could show a
-// weekly time series where say your app has retained 60% of this cohort
-// after three weeks and 25% of this cohort after six weeks. These two
-// percentages can be calculated by the metric
-// `cohortActiveUsers/cohortTotalUsers` and will be separate rows in the
-// report.
+// (https://developers.google.com/analytics/devguides/reporting/data/v1/advanced#cohort_report_examples).
+// The report response could show a weekly time series where say your
+// app has retained 60% of this cohort after three weeks and 25% of this
+// cohort after six weeks. These two percentages can be calculated by
+// the metric `cohortActiveUsers/cohortTotalUsers` and will be separate
+// rows in the report.
 type CohortSpec struct {
 	// CohortReportSettings: Optional settings for a cohort report.
 	CohortReportSettings *CohortReportSettings `json:"cohortReportSettings,omitempty"`
@@ -664,13 +663,13 @@ type Dimension struct {
 	DimensionExpression *DimensionExpression `json:"dimensionExpression,omitempty"`
 
 	// Name: The name of the dimension. See the API Dimensions
-	// (https://developers.google.com/analytics/devguides/reporting/data/v1/a
-	// pi-schema#dimensions) for the list of dimension names. If
-	// `dimensionExpression` is specified, `name` can be any string that you
-	// would like. For example if a `dimensionExpression` concatenates
-	// `country` and `city`, you could call that dimension `countryAndCity`.
-	// Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`,
-	// `dimensionExpression`, and `pivots`.
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions)
+	// for the list of dimension names. If `dimensionExpression` is
+	// specified, `name` can be any string that you would like. For example
+	// if a `dimensionExpression` concatenates `country` and `city`, you
+	// could call that dimension `countryAndCity`. Dimensions are referenced
+	// by `name` in `dimensionFilter`, `orderBys`, `dimensionExpression`,
+	// and `pivots`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionExpression")
@@ -891,8 +890,7 @@ func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 type Entity struct {
 	// PropertyId: A Google Analytics GA4 property id. To learn more, see
 	// where to find your Property ID
-	// (https://developers.google.com/analytics/devguides/reporting/data/v1/p
-	// roperty-id).
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 	PropertyId string `json:"propertyId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PropertyId") to
@@ -1119,12 +1117,12 @@ type Metric struct {
 	Invisible bool `json:"invisible,omitempty"`
 
 	// Name: The name of the metric. See the API Metrics
-	// (https://developers.google.com/analytics/devguides/reporting/data/v1/a
-	// pi-schema#metrics) for the list of metric names. If `expression` is
-	// specified, `name` can be any string that you would like. For example
-	// if `expression` is `screenPageViews/sessions`, you could call that
-	// metric's name = `viewsPerSession`. Metrics are referenced by `name`
-	// in `metricFilter`, `orderBys`, and metric `expression`.
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics)
+	// for the list of metric names. If `expression` is specified, `name`
+	// can be any string that you would like. For example if `expression` is
+	// `screenPageViews/sessions`, you could call that metric's name =
+	// `viewsPerSession`. Metrics are referenced by `name` in
+	// `metricFilter`, `orderBys`, and metric `expression`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Expression") to
@@ -2139,8 +2137,7 @@ type RunReportRequest struct {
 	// Limit: The number of rows to return. If unspecified, 10 rows are
 	// returned. If -1, all rows are returned. To learn more about this
 	// pagination parameter, see Pagination
-	// (https://developers.google.com/analytics/devguides/reporting/data/v1/b
-	// asics#pagination).
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregation of metrics. Aggregated metric values
@@ -2166,8 +2163,7 @@ type RunReportRequest struct {
 
 	// Offset: The row count of the start row. The first row is counted as
 	// row 0. To learn more about this pagination parameter, see Pagination
-	// (https://developers.google.com/analytics/devguides/reporting/data/v1/b
-	// asics#pagination).
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
 
 	// OrderBys: Specifies how rows are ordered in the response.
@@ -2231,8 +2227,7 @@ type RunReportResponse struct {
 	// returns 175 rows and includes limit = 50 in the API request, the
 	// response will contain row_count = 175 but only 50 rows. To learn more
 	// about this pagination parameter, see Pagination
-	// (https://developers.google.com/analytics/devguides/reporting/data/v1/b
-	// asics#pagination).
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// Rows: Rows of dimension value combinations and metric values in the

@@ -5446,8 +5446,7 @@ func (s *GoogleCloudApigeeV1OptimizedStatsResponse) MarshalJSON() ([]byte, error
 type GoogleCloudApigeeV1Organization struct {
 	// AnalyticsRegion: Required. Primary GCP region for analytics data
 	// storage. For valid values, see Create an Apigee organization
-	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-
-	// org).
+	// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
 	// Attributes: Not used by Apigee.
@@ -5456,10 +5455,10 @@ type GoogleCloudApigeeV1Organization struct {
 	// AuthorizedNetwork: Compute Engine network used for Service Networking
 	// to be peered with Apigee runtime instances. See Getting started with
 	// the Service Networking API
-	// (https://cloud.google.com/service-infrastructure/docs/service-networki
-	// ng/getting-started). Valid only when [RuntimeType] is set to CLOUD.
-	// The value can be updated only when there are no runtime instances.
-	// For example: "default". **Note:** Not supported for Apigee hybrid.
+	// (https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started).
+	// Valid only when [RuntimeType] is set to CLOUD. The value can be
+	// updated only when there are no runtime instances. For example:
+	// "default". **Note:** Not supported for Apigee hybrid.
 	AuthorizedNetwork string `json:"authorizedNetwork,omitempty"`
 
 	// CaCertificate: Output only. Base64-encoded public certificate for the
@@ -7147,8 +7146,7 @@ type GoogleCloudApigeeV1SyncAuthorization struct {
 	// if you have multiple environments and wish to assign a unique service
 	// account to each one. The service accounts must have **Apigee
 	// Synchronizer Manager** role. See also Create service accounts
-	// (https://cloud.google.com/apigee/docs/hybrid/latest/sa-about#create-th
-	// e-service-accounts).
+	// (https://cloud.google.com/apigee/docs/hybrid/latest/sa-about#create-the-service-accounts).
 	Identities []string `json:"identities,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8426,8 +8424,7 @@ type OrganizationsCreateCall struct {
 
 // Create: Creates an Apigee organization. See Create an Apigee
 // organization
-// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-
-// org).
+// (https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).
 func (r *OrganizationsService) Create(googlecloudapigeev1organization *GoogleCloudApigeeV1Organization) *OrganizationsCreateCall {
 	c := &OrganizationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlecloudapigeev1organization = googlecloudapigeev1organization
@@ -8701,8 +8698,7 @@ type OrganizationsGetCall struct {
 
 // Get: Gets the profile for an Apigee organization. See Understanding
 // organizations
-// (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organi
-// zation-structure).
+// (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).
 func (r *OrganizationsService) Get(name string) *OrganizationsGetCall {
 	c := &OrganizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9033,8 +9029,8 @@ type OrganizationsGetSyncAuthorizationCall struct {
 // to `setSyncAuthorization`, then the existing authorization is
 // overwritten indiscriminately. For more information, see Configure the
 // Synchronizer
-// (https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-acces
-// s). **Note**: Available to Apigee hybrid only.
+// (https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-access).
+// **Note**: Available to Apigee hybrid only.
 func (r *OrganizationsService) GetSyncAuthorization(name string, googlecloudapigeev1getsyncauthorizationrequest *GoogleCloudApigeeV1GetSyncAuthorizationRequest) *OrganizationsGetSyncAuthorizationCall {
 	c := &OrganizationsGetSyncAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9177,8 +9173,7 @@ type OrganizationsListCall struct {
 
 // List: Lists the Apigee organizations and associated GCP projects that
 // you have permission to access. See Understanding organizations
-// (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organi
-// zation-structure).
+// (https://cloud.google.com/apigee/docs/api-platform/fundamentals/organization-structure).
 func (r *OrganizationsService) List(parent string) *OrganizationsListCall {
 	c := &OrganizationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9333,8 +9328,8 @@ type OrganizationsSetSyncAuthorizationCall struct {
 // ETag in the call to `setSyncAuthorization`, then the existing
 // authorization is overwritten indiscriminately. For more information,
 // see Configure the Synchronizer
-// (https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-acces
-// s). **Note**: Available to Apigee hybrid only.
+// (https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-access).
+// **Note**: Available to Apigee hybrid only.
 func (r *OrganizationsService) SetSyncAuthorization(name string, googlecloudapigeev1syncauthorization *GoogleCloudApigeeV1SyncAuthorization) *OrganizationsSetSyncAuthorizationCall {
 	c := &OrganizationsSetSyncAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21653,9 +21648,9 @@ type OrganizationsEnvironmentsGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM policy on an environment. For more
 // information, see Manage users, roles, and permissions using the API
-// (https://cloud.google.com/apigee/docs/api-platform/system-administrati
-// on/manage-users-roles). You must have the
-// `apigee.environments.getIamPolicy` permission to call this API.
+// (https://cloud.google.com/apigee/docs/api-platform/system-administration/manage-users-roles).
+// You must have the `apigee.environments.getIamPolicy` permission to
+// call this API.
 func (r *OrganizationsEnvironmentsService) GetIamPolicy(resource string) *OrganizationsEnvironmentsGetIamPolicyCall {
 	c := &OrganizationsEnvironmentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -21822,9 +21817,9 @@ type OrganizationsEnvironmentsSetIamPolicyCall struct {
 // SetIamPolicy: Sets the IAM policy on an environment, if the policy
 // already exists it will be replaced. For more information, see Manage
 // users, roles, and permissions using the API
-// (https://cloud.google.com/apigee/docs/api-platform/system-administrati
-// on/manage-users-roles). You must have the
-// `apigee.environments.setIamPolicy` permission to call this API.
+// (https://cloud.google.com/apigee/docs/api-platform/system-administration/manage-users-roles).
+// You must have the `apigee.environments.setIamPolicy` permission to
+// call this API.
 func (r *OrganizationsEnvironmentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *OrganizationsEnvironmentsSetIamPolicyCall {
 	c := &OrganizationsEnvironmentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -29061,8 +29056,7 @@ type OrganizationsEnvironmentsResourcefilesCreateCall struct {
 // Create: Creates a resource file. Specify the `Content-Type` as
 // `application/octet-stream` or `multipart/form-data`. For more
 // information about resource files, see Resource files
-// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-fi
-// les).
+// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) Create(parent string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesCreateCall {
 	c := &OrganizationsEnvironmentsResourcefilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29230,8 +29224,7 @@ type OrganizationsEnvironmentsResourcefilesDeleteCall struct {
 
 // Delete: Deletes a resource file. For more information about resource
 // files, see Resource files
-// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-fi
-// les).
+// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) Delete(parent string, type_ string, name string) *OrganizationsEnvironmentsResourcefilesDeleteCall {
 	c := &OrganizationsEnvironmentsResourcefilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29384,8 +29377,7 @@ type OrganizationsEnvironmentsResourcefilesGetCall struct {
 
 // Get: Gets the contents of a resource file. For more information about
 // resource files, see Resource files
-// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-fi
-// les).
+// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) Get(parent string, type_ string, name string) *OrganizationsEnvironmentsResourcefilesGetCall {
 	c := &OrganizationsEnvironmentsResourcefilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29549,8 +29541,7 @@ type OrganizationsEnvironmentsResourcefilesListCall struct {
 
 // List: Lists all resource files, optionally filtering by type. For
 // more information about resource files, see Resource files
-// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-fi
-// les).
+// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) List(parent string) *OrganizationsEnvironmentsResourcefilesListCall {
 	c := &OrganizationsEnvironmentsResourcefilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29712,8 +29703,7 @@ type OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall struct {
 // ListEnvironmentResources: Lists all resource files, optionally
 // filtering by type. For more information about resource files, see
 // Resource files
-// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-fi
-// les).
+// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) ListEnvironmentResources(parent string, type_ string) *OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall {
 	c := &OrganizationsEnvironmentsResourcefilesListEnvironmentResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29873,8 +29863,7 @@ type OrganizationsEnvironmentsResourcefilesUpdateCall struct {
 // Update: Updates a resource file. Specify the `Content-Type` as
 // `application/octet-stream` or `multipart/form-data`. For more
 // information about resource files, see Resource files
-// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-fi
-// les).
+// (https://cloud.google.com/apigee/docs/api-platform/develop/resource-files).
 func (r *OrganizationsEnvironmentsResourcefilesService) Update(parent string, type_ string, name string, googleapihttpbody *GoogleApiHttpBody) *OrganizationsEnvironmentsResourcefilesUpdateCall {
 	c := &OrganizationsEnvironmentsResourcefilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

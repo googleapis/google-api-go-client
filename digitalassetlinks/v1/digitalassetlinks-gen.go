@@ -522,8 +522,7 @@ type AssetlinksCheckCall struct {
 // the website's statements have not been altered by a third party. For
 // more information, see the Digital Asset Links technical design
 // specification
-// (https://github.com/google/digitalassetlinks/blob/master/well-known/de
-// tails.md).
+// (https://github.com/google/digitalassetlinks/blob/master/well-known/details.md).
 func (r *AssetlinksService) Check() *AssetlinksCheckCall {
 	c := &AssetlinksCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -815,16 +814,16 @@ type StatementsListCall struct {
 // or Android apps, have been made in a secure way by the owner of those
 // assets, as described in the Digital Asset Links technical design
 // specification
-// (https://github.com/google/digitalassetlinks/blob/master/well-known/de
-// tails.md). Specifically, you should consider that for insecure
-// websites (that is, where the URL starts with `http://` instead of
-// `https://`), this guarantee cannot be made. The `List` command is
-// most useful in cases where the API client wants to know all the ways
-// in which two assets are related, or enumerate all the relationships
-// from a particular source asset. Example: a feature that helps users
-// navigate to related items. When a mobile app is running on a device,
-// the feature would make it easy to navigate to the corresponding web
-// site or Google+ profile.
+// (https://github.com/google/digitalassetlinks/blob/master/well-known/details.md).
+// Specifically, you should consider that for insecure websites (that
+// is, where the URL starts with `http://` instead of `https://`), this
+// guarantee cannot be made. The `List` command is most useful in cases
+// where the API client wants to know all the ways in which two assets
+// are related, or enumerate all the relationships from a particular
+// source asset. Example: a feature that helps users navigate to related
+// items. When a mobile app is running on a device, the feature would
+// make it easy to navigate to the corresponding web site or Google+
+// profile.
 func (r *StatementsService) List() *StatementsListCall {
 	c := &StatementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c

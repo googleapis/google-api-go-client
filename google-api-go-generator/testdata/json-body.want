@@ -389,7 +389,7 @@ type GoogleCloudMlV1__AutoScaling struct {
 	// `rate` * `min_nodes` * number of hours since last billing
 	// cycle,
 	// where `rate` is the cost per node-hour as documented in the
-	// [pricing guide](/ml-engine/docs/pricing),
+	// pricing guide (/ml-engine/docs/pricing),
 	// even if no predictions are performed. There is additional cost for
 	// each
 	// prediction performed.
@@ -1051,8 +1051,8 @@ type GoogleCloudMlV1__Model struct {
 	//
 	// You can change the default version by
 	// calling
-	// [projects.methods.versions.setDefault](/ml-engine/reference/re
-	// st/v1/projects.models.versions/setDefault).
+	// projects.methods.versions.setDefault
+	// (/ml-engine/reference/rest/v1/projects.models.versions/setDefault).
 	DefaultVersion *GoogleCloudMlV1__Version `json:"defaultVersion,omitempty"`
 
 	// Description: Optional. The description specified for the model when
@@ -1441,16 +1441,14 @@ type GoogleCloudMlV1__PredictionInput struct {
 
 	// SignatureName: Optional. The name of the signature defined in the
 	// SavedModel to use for
-	// this job. Please refer
-	// to
-	// [SavedModel](https://tensorflow.github.io/serving/serving_basic.htm
-	// l)
+	// this job. Please refer to
+	// SavedModel
+	// (https://tensorflow.github.io/serving/serving_basic.html)
 	// for information about how to use signatures.
 	//
-	// Defaults
-	// to
-	// [DEFAULT_SERVING_SIGNATURE_DEF_KEY](https://www.tensorflow.org/api_
-	// docs/python/tf/saved_model/signature_constants)
+	// Defaults to
+	// DEFAULT_SERVING_SIGNATURE_DEF_KEY
+	// (https://www.tensorflow.org/api_docs/python/tf/saved_model/signature_constants)
 	// , which is "serving_default".
 	SignatureName string `json:"signatureName,omitempty"`
 
@@ -1466,8 +1464,7 @@ type GoogleCloudMlV1__PredictionInput struct {
 	// of the version
 	// information:
 	//
-	// "projects/YOUR_PROJECT/models/YOUR_MODEL/versions/YOUR_
-	// VERSION"
+	// "projects/YOUR_PROJECT/models/YOUR_MODEL/versions/YOUR_VERSION"
 	VersionName string `json:"versionName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Accelerator") to
@@ -1903,8 +1900,8 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 // get
 // information about all of the versions of a given model by
 // calling
-// [projects.models.versions.list](/ml-engine/reference/rest/v1/p
-// rojects.models.versions/list).
+// projects.models.versions.list
+// (/ml-engine/reference/rest/v1/projects.models.versions/list).
 type GoogleCloudMlV1__Version struct {
 	// AutoScaling: Automatically scale the number of nodes used to serve
 	// the model in
@@ -1919,16 +1916,14 @@ type GoogleCloudMlV1__Version struct {
 	// DeploymentUri: Required. The Google Cloud Storage location of the
 	// trained model used to
 	// create the version. See the
-	// [guide to
-	// model
-	// deployment](/ml-engine/docs/tensorflow/deploying-models) for
+	// guide to model
+	// deployment (/ml-engine/docs/tensorflow/deploying-models) for
 	// more
 	// information.
 	//
-	// When passing Version
-	// to
-	// [projects.models.versions.create](/ml-engine/reference/rest/v1/proj
-	// ects.models.versions/create)
+	// When passing Version to
+	// projects.models.versions.create
+	// (/ml-engine/reference/rest/v1/projects.models.versions/create)
 	// the model service uses the specified location as the source of the
 	// model.
 	// Once deployed, the model version is hosted by the prediction service,
@@ -1985,8 +1980,8 @@ type GoogleCloudMlV1__Version struct {
 	//
 	// You can change the default version by
 	// calling
-	// [projects.methods.versions.setDefault](/ml-engine/reference/re
-	// st/v1/projects.models.versions/setDefault).
+	// projects.methods.versions.setDefault
+	// (/ml-engine/reference/rest/v1/projects.models.versions/setDefault).
 	IsDefault bool `json:"isDefault,omitempty"`
 
 	// Labels: Optional. One or more labels that you can add, to organize
@@ -2370,7 +2365,7 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 //
 //
 // For a description of IAM and its features, see the
-// [IAM developer's guide](https://cloud.google.com/iam/docs).
+// IAM developer's guide (https://cloud.google.com/iam/docs).
 type GoogleIamV1__Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2481,8 +2476,8 @@ type GoogleIamV1__TestIamPermissionsRequest struct {
 	// wildcards (such as '*' or 'storage.*') are not allowed. For
 	// more
 	// information see
-	// [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -2677,8 +2672,7 @@ type GoogleProtobuf__Empty struct {
 // that is suitable for different
 // programming environments, including REST APIs and RPC APIs. It is
 // used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// gRPC (https://github.com/grpc). The error model is designed to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
@@ -3013,8 +3007,7 @@ type ProjectsPredictCall struct {
 // POST
 // method. <p>For details of the request and response format, see the
 // **guide
-// to the [predict request
-// format](/ml-engine/docs/v1/predict-request)**.
+// to the predict request format (/ml-engine/docs/v1/predict-request)**.
 func (r *ProjectsService) Predict(name string, googlecloudmlv1__predictrequest *GoogleCloudMlV1__PredictRequest) *ProjectsPredictCall {
 	c := &ProjectsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4781,10 +4774,9 @@ type ProjectsModelsCreateCall struct {
 //
 // You must add at least one version before you can request predictions
 // from
-// the model. Add versions by
-// calling
-// [projects.models.versions.create](/ml-engine/reference/rest/v1
-// /projects.models.versions/create).
+// the model. Add versions by calling
+// projects.models.versions.create
+// (/ml-engine/reference/rest/v1/projects.models.versions/create).
 func (r *ProjectsModelsService) Create(parent string, googlecloudmlv1__model *GoogleCloudMlV1__Model) *ProjectsModelsCreateCall {
 	c := &ProjectsModelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4927,10 +4919,9 @@ type ProjectsModelsDeleteCall struct {
 //
 // You can only delete a model if there are no versions in it. You can
 // delete
-// versions by
-// calling
-// [projects.models.versions.delete](/ml-engine/reference/rest/v1
-// /projects.models.versions/delete).
+// versions by calling
+// projects.models.versions.delete
+// (/ml-engine/reference/rest/v1/projects.models.versions/delete).
 func (r *ProjectsModelsService) Delete(name string) *ProjectsModelsDeleteCall {
 	c := &ProjectsModelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6057,8 +6048,8 @@ type ProjectsModelsVersionsCreateCall struct {
 // want a
 // new version to be the default, you must
 // call
-// [projects.models.versions.setDefault](/ml-engine/reference/rest/v
-// 1/projects.models.versions/setDefault).
+// projects.models.versions.setDefault
+// (/ml-engine/reference/rest/v1/projects.models.versions/setDefault).
 func (r *ProjectsModelsVersionsService) Create(parent string, googlecloudmlv1__version *GoogleCloudMlV1__Version) *ProjectsModelsVersionsCreateCall {
 	c := &ProjectsModelsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6340,8 +6331,8 @@ type ProjectsModelsVersionsGetCall struct {
 //
 // Models can have multiple versions. You can
 // call
-// [projects.models.versions.list](/ml-engine/reference/rest/v1/proj
-// ects.models.versions/list)
+// projects.models.versions.list
+// (/ml-engine/reference/rest/v1/projects.models.versions/list)
 // to get the same information that this method returns for all of
 // the
 // versions of a model.

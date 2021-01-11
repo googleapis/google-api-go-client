@@ -5642,8 +5642,8 @@ type ProjectsServiceAccountsGetIamPolicyCall struct {
 // the `getIamPolicy` method for that resource. For example, to view the
 // role grants for a project, call the Resource Manager API's
 // `projects.getIamPolicy`
-// (https://cloud.google.com/resource-manager/reference/rest/v1/projects/
-// getIamPolicy) method.
+// (https://cloud.google.com/resource-manager/reference/rest/v1/projects/getIamPolicy)
+// method.
 func (r *ProjectsServiceAccountsService) GetIamPolicy(resource string) *ProjectsServiceAccountsGetIamPolicyCall {
 	c := &ProjectsServiceAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6139,8 +6139,7 @@ type ProjectsServiceAccountsSetIamPolicyCall struct {
 // for the resource. 3. Call the resource's `setIamPolicy` method to
 // update its IAM policy. For detailed instructions, see Granting roles
 // to a service account for specific resources
-// (https://cloud.google.com/iam/help/service-accounts/granting-access-to
-// -service-accounts).
+// (https://cloud.google.com/iam/help/service-accounts/granting-access-to-service-accounts).
 func (r *ProjectsServiceAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsServiceAccountsSetIamPolicyCall {
 	c := &ProjectsServiceAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6282,9 +6281,9 @@ type ProjectsServiceAccountsSignBlobCall struct {
 
 // SignBlob: **Note:** This method is deprecated and will stop working
 // on July 1, 2021. Use the `signBlob`
-// (https://cloud.google.com/iam/help/rest-credentials/v1/projects.servic
-// eAccounts/signBlob) method in the IAM Service Account Credentials API
-// instead. If you currently use this method, see the migration guide
+// (https://cloud.google.com/iam/help/rest-credentials/v1/projects.serviceAccounts/signBlob)
+// method in the IAM Service Account Credentials API instead. If you
+// currently use this method, see the migration guide
 // (https://cloud.google.com/iam/help/credentials/migrate-api) for
 // instructions. Signs a blob using the system-managed private key for a
 // ServiceAccount.
@@ -6429,9 +6428,9 @@ type ProjectsServiceAccountsSignJwtCall struct {
 
 // SignJwt: **Note:** This method is deprecated and will stop working on
 // July 1, 2021. Use the `signJwt`
-// (https://cloud.google.com/iam/help/rest-credentials/v1/projects.servic
-// eAccounts/signJwt) method in the IAM Service Account Credentials API
-// instead. If you currently use this method, see the migration guide
+// (https://cloud.google.com/iam/help/rest-credentials/v1/projects.serviceAccounts/signJwt)
+// method in the IAM Service Account Credentials API instead. If you
+// currently use this method, see the migration guide
 // (https://cloud.google.com/iam/help/credentials/migrate-api) for
 // instructions. Signs a JSON Web Token (JWT) using the system-managed
 // private key for a ServiceAccount.

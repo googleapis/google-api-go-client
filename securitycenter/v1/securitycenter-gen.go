@@ -317,8 +317,8 @@ type Asset struct {
 	IamPolicy *IamPolicy `json:"iamPolicy,omitempty"`
 
 	// Name: The relative resource name of this asset. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
-	// "organizations/{organization_id}/assets/{asset_id}".
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// Example: "organizations/{organization_id}/assets/{asset_id}".
 	Name string `json:"name,omitempty"`
 
 	// ResourceProperties: Resource managed properties. These properties are
@@ -681,21 +681,25 @@ type Finding struct {
 	ExternalUri string `json:"externalUri,omitempty"`
 
 	// Name: The relative resource name of this finding. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// Example:
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}"
 	Name string `json:"name,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
 	// to. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name This field is immutable after creation time. For example:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// This field is immutable after creation time. For example:
 	// "organizations/{organization_id}/sources/{source_id}"
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceName: For findings on Google Cloud resources, the full
 	// resource name of the Google Cloud resource this finding is for. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name When the finding is for a non-Google Cloud resource, the resourceName can be a customer or partner defined string. This field is immutable after creation
-	// time.
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	// When the finding is for a non-Google Cloud resource, the resourceName
+	// can be a customer or partner defined string. This field is immutable
+	// after creation time.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// SecurityMarks: Output only. User specified security marks. These
@@ -1088,21 +1092,25 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	ExternalUri string `json:"externalUri,omitempty"`
 
 	// Name: The relative resource name of this finding. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// Example:
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}"
 	Name string `json:"name,omitempty"`
 
 	// Parent: The relative resource name of the source the finding belongs
 	// to. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name This field is immutable after creation time. For example:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// This field is immutable after creation time. For example:
 	// "organizations/{organization_id}/sources/{source_id}"
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceName: For findings on Google Cloud resources, the full
 	// resource name of the Google Cloud resource this finding is for. See:
-	// https://cloud.google.com/apis/design/resource_names#full_resource_name When the finding is for a non-Google Cloud resource, the resourceName can be a customer or partner defined string. This field is immutable after creation
-	// time.
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	// When the finding is for a non-Google Cloud resource, the resourceName
+	// can be a customer or partner defined string. This field is immutable
+	// after creation time.
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// SecurityMarks: Output only. User specified security marks. These
@@ -1337,7 +1345,9 @@ type GoogleCloudSecuritycenterV1p1beta1SecurityMarks struct {
 	Marks map[string]string `json:"marks,omitempty"`
 
 	// Name: The relative resource name of the SecurityMarks. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// Examples:
+	// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}/securityMarks".
 	Name string `json:"name,omitempty"`
@@ -2028,7 +2038,8 @@ type NotificationConfig struct {
 	Description string `json:"description,omitempty"`
 
 	// Name: The relative resource name of this notification config. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// Example:
 	// "organizations/{organization_id}/notificationConfigs/notify_public_buc
 	// ket".
 	Name string `json:"name,omitempty"`
@@ -2148,8 +2159,8 @@ type OrganizationSettings struct {
 	EnableAssetDiscovery bool `json:"enableAssetDiscovery,omitempty"`
 
 	// Name: The relative resource name of the settings. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
-	// "organizations/{organization_id}/organizationSettings".
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// Example: "organizations/{organization_id}/organizationSettings".
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2422,7 +2433,9 @@ type SecurityMarks struct {
 	Marks map[string]string `json:"marks,omitempty"`
 
 	// Name: The relative resource name of the SecurityMarks. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Examples: "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// Examples:
+	// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}/securityMarks".
 	Name string `json:"name,omitempty"`
@@ -2551,8 +2564,8 @@ type Source struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: The relative resource name of this source. See:
-	// https://cloud.google.com/apis/design/resource_names#relative_resource_name Example:
-	// "organizations/{organization_id}/sources/{source_id}"
+	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
+	// Example: "organizations/{organization_id}/sources/{source_id}"
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

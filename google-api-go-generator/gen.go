@@ -27,7 +27,6 @@ import (
 	"unicode"
 
 	"google.golang.org/api/google-api-go-generator/internal/disco"
-	"google.golang.org/api/internal/version"
 )
 
 const (
@@ -2018,7 +2017,7 @@ func (meth *Method) generateCode() {
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
 	pn(`reqHeaders := make(http.Header)`)
-	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/%s")`, version.Repo)
+	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")`)
 	pn("for k, v := range c.header_ {")
 	pn(" reqHeaders[k] = v")
 	pn("}")
@@ -2374,7 +2373,7 @@ func (meth *Method) NewBodyArg(ds *disco.Schema) *argument {
 
 func (meth *Method) NewArg(apiname string, p *Param) *argument {
 	apitype := p.p.Type
-	des := removeMarkdownLinks(p.p.Description)
+	des := p.p.Description
 	goname := validGoIdentifer(apiname) // but might be changed later, if conflicts
 	if strings.Contains(des, "identifier") && !strings.HasSuffix(strings.ToLower(goname), "id") {
 		goname += "id" // yay
@@ -2475,7 +2474,7 @@ func (a *arguments) String() string {
 	return buf.String()
 }
 
-var urlRE = regexp.MustCompile(`^http\S+$`)
+var urlRE = regexp.MustCompile(`^\(?http\S+$`)
 
 func asComment(pfx, c string) string {
 	var buf bytes.Buffer
@@ -2492,11 +2491,14 @@ func asComment(pfx, c string) string {
 			break
 		}
 		// Don't break URLs.
+		var si int
 		if !urlRE.MatchString(line[:maxLen]) {
 			line = line[:maxLen]
+			si = strings.LastIndex(line, " ")
+		} else {
+			si = strings.Index(line, " ")
 		}
-		si := strings.LastIndex(line, " ")
-		if nl := strings.Index(line, "\n"); nl != -1 && nl < si {
+		if nl := strings.Index(line, "\n"); nl != -1 && (nl < si || si == -1) {
 			si = nl
 		}
 		if si != -1 {

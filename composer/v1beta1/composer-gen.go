@@ -838,8 +838,8 @@ type NodeConfig struct {
 	// node pools if their value is not explicitly set during node pool
 	// creation. For more information, see [Optimizing IP address
 	// allocation]
-	// (https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-c
-	// idr). Cannot be updated.
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr).
+	// Cannot be updated.
 	MaxPodsPerNode int64 `json:"maxPodsPerNode,omitempty"`
 
 	// Network: Optional. The Compute Engine network to be used for machine

@@ -169,9 +169,9 @@ type TransferOperationsService struct {
 }
 
 // AwsAccessKey: AWS access key (see AWS Security Credentials
-// (https://docs.aws.amazon.com/general/latest/gr/aws-security-credential
-// s.html)). For information on our data retention policy for user
-// credentials, see User credentials (data-retention#user-credentials).
+// (https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)).
+// For information on our data retention policy for user credentials,
+// see User credentials (data-retention#user-credentials).
 type AwsAccessKey struct {
 	// AccessKeyId: Required. AWS access key ID.
 	AccessKeyId string `json:"accessKeyId,omitempty"`
@@ -215,8 +215,7 @@ type AwsS3Data struct {
 	AwsAccessKey *AwsAccessKey `json:"awsAccessKey,omitempty"`
 
 	// BucketName: Required. S3 Bucket name (see Creating a bucket
-	// (https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-loc
-	// ation-example.html)).
+	// (https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).
 	BucketName string `json:"bucketName,omitempty"`
 
 	// Path: Root path to transfer objects. Must be an empty string or full
@@ -251,12 +250,10 @@ func (s *AwsS3Data) MarshalJSON() ([]byte, error) {
 // source, but not a data sink. An AzureBlobStorageData resource
 // represents one Azure container. The storage account determines the
 // Azure endpoint
-// (https://docs.microsoft.com/en-us/azure/storage/common/storage-create-
-// storage-account#storage-account-endpoints). In an
-// AzureBlobStorageData resource, a blobs's name is the Azure Blob
+// (https://docs.microsoft.com/en-us/azure/storage/common/storage-create-storage-account#storage-account-endpoints).
+// In an AzureBlobStorageData resource, a blobs's name is the Azure Blob
 // Storage blob's key name
-// (https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-
-// referencing-containers--blobs--and-metadata#blob-names).
+// (https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata#blob-names).
 type AzureBlobStorageData struct {
 	// AzureCredentials: Required. Input only. Credentials used to
 	// authenticate API requests to Azure. For information on our data
@@ -307,8 +304,7 @@ type AzureCredentials struct {
 	// SasToken: Required. Azure shared access signature. (see Grant limited
 	// access to Azure Storage resources using shared access signatures
 	// (SAS)
-	// (https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-ove
-	// rview)).
+	// (https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)).
 	SasToken string `json:"sasToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SasToken") to

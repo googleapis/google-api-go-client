@@ -602,8 +602,7 @@ func (s *Attachment) MarshalJSON() ([]byte, error) {
 // `projects.topics.publish` permission.
 type CloudPubsubTopic struct {
 	// TopicName: The `name` field of a Cloud Pub/Sub Topic
-	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topic
-	// s#Topic).
+	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topics#Topic).
 	TopicName string `json:"topicName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TopicName") to

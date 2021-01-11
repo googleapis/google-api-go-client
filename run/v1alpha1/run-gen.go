@@ -1342,8 +1342,9 @@ type Condition struct {
 
 	// Type: type is used to communicate the status of the reconciliation
 	// process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types common to all resources include: * "Ready": True when the Resource is
-	// ready.
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types common to all resources include: * "Ready": True when the
+	// Resource is ready.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
@@ -1585,8 +1586,8 @@ type ConfigurationCondition struct {
 
 	// Type: ConfigurationConditionType is used to communicate the status of
 	// the reconciliation process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types
-	// include:"Ready"
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types include:"Ready"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
@@ -1628,8 +1629,9 @@ type ConfigurationSpec struct {
 	// Revision to be created when the spec doesn't otherwise change, a
 	// nonce label may be provided in the template metadata. For more
 	// details, see:
-	// https://github.com/knative/serving/blob/master/docs/client-conventions.md#associate-modifications-with-revisions Cloud Run does not currently support referencing a build that is responsible for materializing the container image from
-	// source.
+	// https://github.com/knative/serving/blob/master/docs/client-conventions.md#associate-modifications-with-revisions
+	// Cloud Run does not currently support referencing a build that is
+	// responsible for materializing the container image from source.
 	RevisionTemplate *RevisionTemplate `json:"revisionTemplate,omitempty"`
 
 	// Template: Template holds the latest specification for the Revision to
@@ -3350,8 +3352,8 @@ type ObjectMeta struct {
 	// the client should retry (optionally after the time indicated in the
 	// Retry-After header). Applied only if Name is not specified. More
 	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency +optional string generateName =
-	// 2;
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
+	// +optional string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
 
 	// Generation: A sequence number representing a specific generation of
@@ -3913,7 +3915,11 @@ type RevisionCondition struct {
 
 	// Type: RevisionConditionType is used to communicate the status of the
 	// reconciliation process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types include: * "Ready": True when the Revision is ready. * "ResourcesAvailable": True when underlying resources have been provisioned. * "ContainerHealthy": True when the Revision readiness check completes. * "Active": True when the Revision may receive
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types include: * "Ready": True when the Revision is ready. *
+	// "ResourcesAvailable": True when underlying resources have been
+	// provisioned. * "ContainerHealthy": True when the Revision readiness
+	// check completes. * "Active": True when the Revision may receive
 	// traffic.
 	Type string `json:"type,omitempty"`
 
@@ -4135,7 +4141,9 @@ func (s *RevisionTemplate) MarshalJSON() ([]byte, error) {
 // creating them; in these cases the Route is additionally responsible
 // for monitoring the Configuration for "latest ready" revision changes,
 // and smoothly rolling out latest revisions. See also:
-// https://github.com/knative/serving/blob/master/docs/spec/overview.md#route Cloud Run currently supports referencing a single Configuration to automatically deploy the "latest ready" Revision from that
+// https://github.com/knative/serving/blob/master/docs/spec/overview.md#route
+// Cloud Run currently supports referencing a single Configuration to
+// automatically deploy the "latest ready" Revision from that
 // Configuration.
 type Route struct {
 	// ApiVersion: The API version for this call such as
@@ -4207,8 +4215,8 @@ type RouteCondition struct {
 
 	// Type: RouteConditionType is used to communicate the status of the
 	// reconciliation process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types include:
-	// "Ready".
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types include: "Ready".
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
@@ -4676,7 +4684,9 @@ type ServiceCondition struct {
 
 	// Type: ServiceConditionType is used to communicate the status of the
 	// reconciliation process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types include: "Ready", "ConfigurationsReady", and "RoutesReady". "Ready" will be true when the underlying Route and Configuration are
+	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// Types include: "Ready", "ConfigurationsReady", and "RoutesReady".
+	// "Ready" will be true when the underlying Route and Configuration are
 	// ready.
 	Type string `json:"type,omitempty"`
 

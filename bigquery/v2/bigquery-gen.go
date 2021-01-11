@@ -4242,8 +4242,23 @@ type JobStatistics2 struct {
 	// StatementType: The type of query statement, if valid. Possible values
 	// (new values might be added in the future): "SELECT": SELECT query.
 	// "INSERT": INSERT query; see
-	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language. "UPDATE": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language. "DELETE": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language. "MERGE": MERGE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language. "ALTER_TABLE": ALTER TABLE query. "ALTER_VIEW": ALTER VIEW query. "ASSERT": ASSERT condition AS 'description'. "CREATE_FUNCTION": CREATE FUNCTION query. "CREATE_MODEL": CREATE [OR REPLACE] MODEL ... AS SELECT ... . "CREATE_PROCEDURE": CREATE PROCEDURE query. "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT. "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ... . "CREATE_VIEW": CREATE [OR REPLACE] VIEW ... AS SELECT ... . "DROP_FUNCTION" : DROP FUNCTION query. "DROP_PROCEDURE": DROP PROCEDURE query. "DROP_TABLE": DROP TABLE query. "DROP_VIEW": DROP VIEW
-	// query.
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language.
+	// "UPDATE": UPDATE query; see
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language.
+	// "DELETE": DELETE query; see
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language.
+	// "MERGE": MERGE query; see
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language.
+	// "ALTER_TABLE": ALTER TABLE query. "ALTER_VIEW": ALTER VIEW query.
+	// "ASSERT": ASSERT condition AS 'description'. "CREATE_FUNCTION":
+	// CREATE FUNCTION query. "CREATE_MODEL": CREATE [OR REPLACE] MODEL ...
+	// AS SELECT ... . "CREATE_PROCEDURE": CREATE PROCEDURE query.
+	// "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT.
+	// "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ...
+	// . "CREATE_VIEW": CREATE [OR REPLACE] VIEW ... AS SELECT ... .
+	// "DROP_FUNCTION" : DROP FUNCTION query. "DROP_PROCEDURE": DROP
+	// PROCEDURE query. "DROP_TABLE": DROP TABLE query. "DROP_VIEW": DROP
+	// VIEW query.
 	StatementType string `json:"statementType,omitempty"`
 
 	// Timeline: [Output-only] [Beta] Describes a timeline of job execution.
@@ -6510,8 +6525,8 @@ type TableDataInsertAllRequest struct {
 	// template, and inserts the rows into an instance table named
 	// "{destination}{templateSuffix}". BigQuery will manage creation of the
 	// instance table, using the schema of the base template table. See
-	// https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables for considerations when working with templates
-	// tables.
+	// https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables
+	// for considerations when working with templates tables.
 	TemplateSuffix string `json:"templateSuffix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IgnoreUnknownValues")

@@ -256,21 +256,19 @@ func (s *AppEngineHttpTarget) MarshalJSON() ([]byte, error) {
 
 // AppEngineRouting: App Engine Routing. For more information about
 // services, versions, and instances see An Overview of App Engine
-// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-eng
-// ine), Microservices Architecture on Google App Engine
-// (https://cloud.google.com/appengine/docs/python/microservices-on-app-e
-// ngine), App Engine Standard request routing
-// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
-// are-routed), and App Engine Flex request routing
-// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-
-// are-routed).
+// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine),
+// Microservices Architecture on Google App Engine
+// (https://cloud.google.com/appengine/docs/python/microservices-on-app-engine),
+// App Engine Standard request routing
+// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed),
+// and App Engine Flex request routing
+// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-are-routed).
 type AppEngineRouting struct {
 	// Host: Output only. The host that the job is sent to. For more
 	// information about how App Engine requests are routed, see here
-	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
-	// are-routed). The host is constructed as: * `host =
-	// [application_domain_name]` `| [service] + '.' +
-	// [application_domain_name]` `| [version] + '.' +
+	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed).
+	// The host is constructed as: * `host = [application_domain_name]` `|
+	// [service] + '.' + [application_domain_name]` `| [version] + '.' +
 	// [application_domain_name]` `| [version_dot_service]+ '.' +
 	// [application_domain_name]` `| [instance] + '.' +
 	// [application_domain_name]` `| [instance_dot_service] + '.' +
@@ -297,14 +295,12 @@ type AppEngineRouting struct {
 	// which is available when the job is attempted. Requests can only be
 	// sent to a specific instance if manual scaling is used in App Engine
 	// Standard
-	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-eng
-	// ine?hl=en_US#scaling_types_and_instance_classes). App Engine Flex
-	// does not support instances. For more information, see App Engine
-	// Standard request routing
-	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-
-	// are-routed) and App Engine Flex request routing
-	// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-
-	// are-routed).
+	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine?hl=en_US#scaling_types_and_instance_classes).
+	// App Engine Flex does not support instances. For more information, see
+	// App Engine Standard request routing
+	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)
+	// and App Engine Flex request routing
+	// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-are-routed).
 	Instance string `json:"instance,omitempty"`
 
 	// Service: App service. By default, the job is sent to the service
@@ -469,13 +465,13 @@ type Job struct {
 	// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens
 	// (-), colons (:), or periods (.). For more information, see
 	// Identifying projects
-	// (https://cloud.google.com/resource-manager/docs/creating-managing-proj
-	// ects#identifying_projects) * `LOCATION_ID` is the canonical ID for
-	// the job's location. The list of available locations can be obtained
-	// by calling ListLocations. For more information, see
-	// https://cloud.google.com/about/locations/. * `JOB_ID` can contain
-	// only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or underscores
-	// (_). The maximum length is 500 characters.
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
+	// * `LOCATION_ID` is the canonical ID for the job's location. The list
+	// of available locations can be obtained by calling ListLocations. For
+	// more information, see https://cloud.google.com/about/locations/. *
+	// `JOB_ID` can contain only letters ([A-Za-z]), numbers ([0-9]),
+	// hyphens (-), or underscores (_). The maximum length is 500
+	// characters.
 	Name string `json:"name,omitempty"`
 
 	// PubsubTarget: Pub/Sub target.
@@ -488,8 +484,8 @@ type Job struct {
 	// schedule on which the job will be executed. The schedule can be
 	// either of the following types: * Crontab
 	// (http://en.wikipedia.org/wiki/Cron#Overview) * English-like schedule
-	// (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedule
-	// s) As a general rule, execution `n + 1` of a job will not begin until
+	// (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules)
+	// As a general rule, execution `n + 1` of a job will not begin until
 	// execution `n` has finished. Cloud Scheduler will never allow two
 	// simultaneously outstanding executions. For example, this implies that
 	// if the `n+1`th execution is scheduled to run at 16:00 but the `n`th
@@ -854,9 +850,9 @@ type PubsubTarget struct {
 	// messages will be published when a job is delivered. The topic name
 	// must be in the same format as required by PubSub's
 	// PublishRequest.name
-	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#p
-	// ublishrequest), for example `projects/PROJECT_ID/topics/TOPIC_ID`.
-	// The topic must be in the same project as the Cloud Scheduler job.
+	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#publishrequest),
+	// for example `projects/PROJECT_ID/topics/TOPIC_ID`. The topic must be
+	// in the same project as the Cloud Scheduler job.
 	TopicName string `json:"topicName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to

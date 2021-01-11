@@ -2107,18 +2107,18 @@ type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// the surrogate is 'abc', the full replacement value will be:
 	// 'MY_TOKEN_INFO_TYPE(3):abc' This annotation identifies the surrogate
 	// when inspecting content using the custom infoType `SurrogateType`
-	// (https://cloud.google.com/dlp/docs/reference/rest/v2/InspectConfig#sur
-	// rogatetype). This facilitates reversal of the surrogate when it
-	// occurs in free text. In order for inspection to work properly, the
-	// name of this infoType must not occur naturally anywhere in your data;
-	// otherwise, inspection may find a surrogate that does not correspond
-	// to an actual identifier. Therefore, choose your custom infoType name
-	// carefully after considering what your data looks like. One way to
-	// select a name that has a high chance of yielding reliable detection
-	// is to include one or more unicode characters that are highly
-	// improbable to exist in your data. For example, assuming your data is
-	// entered from a regular ASCII keyboard, the symbol with the hex code
-	// point 29DD might be used like so: ⧝MY_TOKEN_TYPE
+	// (https://cloud.google.com/dlp/docs/reference/rest/v2/InspectConfig#surrogatetype).
+	// This facilitates reversal of the surrogate when it occurs in free
+	// text. In order for inspection to work properly, the name of this
+	// infoType must not occur naturally anywhere in your data; otherwise,
+	// inspection may find a surrogate that does not correspond to an actual
+	// identifier. Therefore, choose your custom infoType name carefully
+	// after considering what your data looks like. One way to select a name
+	// that has a high chance of yielding reliable detection is to include
+	// one or more unicode characters that are highly improbable to exist in
+	// your data. For example, assuming your data is entered from a regular
+	// ASCII keyboard, the symbol with the hex code point 29DD might be used
+	// like so: ⧝MY_TOKEN_TYPE
 	SurrogateInfoType *GooglePrivacyDlpV2InfoType `json:"surrogateInfoType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonAlphabet") to
@@ -2817,9 +2817,9 @@ func (s *GooglePrivacyDlpV2DetectionRule) MarshalJSON() ([]byte, error) {
 // information specific to the data, such as a list of employee IDs or
 // job titles. Dictionary words are case-insensitive and all characters
 // other than letters and digits in the unicode Basic Multilingual Plane
-// (https://en.wikipedia.org/wiki/Plane_%28Unicode%29#Basic_Multilingual_
-// Plane) will be replaced with whitespace when scanning for matches, so
-// the dictionary phrase "Sam Johnson" will match all three phrases "sam
+// (https://en.wikipedia.org/wiki/Plane_%28Unicode%29#Basic_Multilingual_Plane)
+// will be replaced with whitespace when scanning for matches, so the
+// dictionary phrase "Sam Johnson" will match all three phrases "sam
 // johnson", "Sam, Johnson", and "Sam (Johnson)". Additionally, the
 // characters surrounding any match must be of a different type than the
 // adjacent characters within the word, so letters must be next to
@@ -5951,8 +5951,8 @@ type GooglePrivacyDlpV2PublishSummaryToCscc struct {
 // Pub/Sub topic when DlpJob has completed. The message contains a
 // single field, `DlpJobName`, which is equal to the finished job's
 // `DlpJob.name`
-// (https://cloud.google.com/dlp/docs/reference/rest/v2/projects.dlpJobs#
-// DlpJob). Compatible with: Inspect, Risk
+// (https://cloud.google.com/dlp/docs/reference/rest/v2/projects.dlpJobs#DlpJob).
+// Compatible with: Inspect, Risk
 type GooglePrivacyDlpV2PublishToPubSub struct {
 	// Topic: Cloud Pub/Sub topic to send notifications to. The topic must
 	// have given publishing access rights to the DLP API service account
@@ -7198,12 +7198,12 @@ func (s *GooglePrivacyDlpV2SummaryResult) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2SurrogateType: Message for detecting output from
 // deidentification transformations such as `CryptoReplaceFfxFpeConfig`
-// (https://cloud.google.com/dlp/docs/reference/rest/v2/organizations.dei
-// dentifyTemplates#cryptoreplaceffxfpeconfig). These types of
-// transformations are those that perform pseudonymization, thereby
-// producing a "surrogate" as output. This should be used in conjunction
-// with a field on the transformation such as `surrogate_info_type`.
-// This CustomInfoType does not support the use of `detection_rules`.
+// (https://cloud.google.com/dlp/docs/reference/rest/v2/organizations.deidentifyTemplates#cryptoreplaceffxfpeconfig).
+// These types of transformations are those that perform
+// pseudonymization, thereby producing a "surrogate" as output. This
+// should be used in conjunction with a field on the transformation such
+// as `surrogate_info_type`. This CustomInfoType does not support the
+// use of `detection_rules`.
 type GooglePrivacyDlpV2SurrogateType struct {
 }
 
@@ -14652,8 +14652,8 @@ type ProjectsContentReidentifyCall struct {
 }
 
 // Reidentify: Re-identifies content that has been de-identified. See
-// https://cloud.google.com/dlp/docs/pseudonymization#re-identification_in_free_text_code_example to learn
-// more.
+// https://cloud.google.com/dlp/docs/pseudonymization#re-identification_in_free_text_code_example
+// to learn more.
 func (r *ProjectsContentService) Reidentify(parentid string, googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest) *ProjectsContentReidentifyCall {
 	c := &ProjectsContentReidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -18633,8 +18633,8 @@ type ProjectsLocationsContentReidentifyCall struct {
 }
 
 // Reidentify: Re-identifies content that has been de-identified. See
-// https://cloud.google.com/dlp/docs/pseudonymization#re-identification_in_free_text_code_example to learn
-// more.
+// https://cloud.google.com/dlp/docs/pseudonymization#re-identification_in_free_text_code_example
+// to learn more.
 func (r *ProjectsLocationsContentService) Reidentify(parentid string, googleprivacydlpv2reidentifycontentrequest *GooglePrivacyDlpV2ReidentifyContentRequest) *ProjectsLocationsContentReidentifyCall {
 	c := &ProjectsLocationsContentReidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid

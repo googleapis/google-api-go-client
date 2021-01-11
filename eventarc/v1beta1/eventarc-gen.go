@@ -368,8 +368,9 @@ type CloudRunService struct {
 
 	// Service: Required. The name of the Cloud run service being addressed
 	// (see
-	// https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services). Only services located in the same project of the trigger object can be
-	// addressed.
+	// https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services).
+	// Only services located in the same project of the trigger object can
+	// be addressed.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Path") to
@@ -1157,8 +1158,14 @@ type Trigger struct {
 	// with the trigger. The service account represents the identity of the
 	// trigger. The principal who calls this API must have
 	// `iam.serviceAccounts.actAs` permission in the service account. See
-	// https://cloud.google.com/iam/docs/understanding-service-accounts?hl=en#sa_common for more information. For Cloud Run destinations, this service account is used to generate identity tokens when invoking the service. See https://cloud.google.com/run/docs/triggering/pubsub-push#create-service-account for information on how to invoke authenticated Cloud Run services. In order to create Audit Log triggers, the service account should also have 'eventarc.events.receiveAuditLogV1Written'
-	// permission.
+	// https://cloud.google.com/iam/docs/understanding-service-accounts?hl=en#sa_common
+	// for more information. For Cloud Run destinations, this service
+	// account is used to generate identity tokens when invoking the
+	// service. See
+	// https://cloud.google.com/run/docs/triggering/pubsub-push#create-service-account
+	// for information on how to invoke authenticated Cloud Run services. In
+	// order to create Audit Log triggers, the service account should also
+	// have 'eventarc.events.receiveAuditLogV1Written' permission.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Transport: Output only. In order to deliver messages, Eventarc may

@@ -206,21 +206,19 @@ type ProjectsOperationsService struct {
 
 // Asset: An asset in Google Cloud. An asset can be any resource in the
 // Google Cloud resource hierarchy
-// (https://cloud.google.com/resource-manager/docs/cloud-platform-resourc
-// e-hierarchy), a resource outside the Google Cloud resource hierarchy
-// (such as Google Kubernetes Engine clusters and objects), or a policy
-// (e.g. Cloud IAM policy). See Supported asset types
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g.
+// Cloud IAM policy). See Supported asset types
 // (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // for more information.
 type Asset struct {
 	// AccessLevel: Please also refer to the access level user guide
-	// (https://cloud.google.com/access-context-manager/docs/overview#access-
-	// levels).
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-levels).
 	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
 
 	// AccessPolicy: Please also refer to the access policy user guide
-	// (https://cloud.google.com/access-context-manager/docs/overview#access-
-	// policies).
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-policies).
 	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
 
 	// AssetType: The type of the asset. Example:
@@ -243,14 +241,14 @@ type Asset struct {
 	// Name: The full name of the asset. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 	// s/instance1` See Resource names
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-	// e) for more information.
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
 	Name string `json:"name,omitempty"`
 
 	// OrgPolicy: A representation of an organization policy
-	// (https://cloud.google.com/resource-manager/docs/organization-policy/ov
-	// erview#organization_policy). There can be more than one organization
-	// policy with different constraints set on a given resource.
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/overview#organization_policy).
+	// There can be more than one organization policy with different
+	// constraints set on a given resource.
 	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
 
 	// Resource: A representation of the resource.
@@ -490,8 +488,8 @@ type ExportAssetsRequest struct {
 	// AssetTypes: A list of asset types of which to take a snapshot for.
 	// For example: "google.compute.Disk". If specified, only matching
 	// assets will be returned. See Introduction to Cloud Asset Inventory
-	// (https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/
-	// overview) for all supported asset types.
+	// (https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview)
+	// for all supported asset types.
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
 	// ContentType: Asset content type. If not specified, no content but the
@@ -2074,8 +2072,8 @@ type Resource struct {
 
 	// Parent: The full name of the immediate parent of this resource. See
 	// Resource Names
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-	// e) for more information. For Google Cloud assets, this value is the
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information. For Google Cloud assets, this value is the
 	// parent resource defined in the Cloud IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
@@ -2548,10 +2546,9 @@ func (r *OrganizationsService) BatchGetAssetsHistory(parent string) *Organizatio
 // full names of the assets. For example:
 // `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 // s/instance1`. See Resource Names
-// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-// e) for more info. The request becomes a no-op if the asset name list
-// is empty, and the max size of the asset name list is 100 in one
-// request.
+// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+// for more info. The request becomes a no-op if the asset name list is
+// empty, and the max size of the asset name list is 100 in one request.
 func (c *OrganizationsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *OrganizationsBatchGetAssetsHistoryCall {
 	c.urlParams_.SetMulti("assetNames", append([]string{}, assetNames...))
 	return c
@@ -3064,10 +3061,9 @@ func (r *ProjectsService) BatchGetAssetsHistory(parent string) *ProjectsBatchGet
 // full names of the assets. For example:
 // `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 // s/instance1`. See Resource Names
-// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-// e) for more info. The request becomes a no-op if the asset name list
-// is empty, and the max size of the asset name list is 100 in one
-// request.
+// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+// for more info. The request becomes a no-op if the asset name list is
+// empty, and the max size of the asset name list is 100 in one request.
 func (c *ProjectsBatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *ProjectsBatchGetAssetsHistoryCall {
 	c.urlParams_.SetMulti("assetNames", append([]string{}, assetNames...))
 	return c

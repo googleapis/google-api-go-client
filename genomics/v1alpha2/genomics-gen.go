@@ -429,8 +429,8 @@ type Disk struct {
 
 	// ReadOnly: Specifies how a sourced-base persistent disk will be
 	// mounted. See
-	// https://cloud.google.com/compute/docs/disks/persistent-disks#use_multi_instances for more details. Can only be set at create
-	// time.
+	// https://cloud.google.com/compute/docs/disks/persistent-disks#use_multi_instances
+	// for more details. Can only be set at create time.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
 	// SizeGb: The size of the disk. Defaults to 500 (GB). This field is not
@@ -438,8 +438,10 @@ type Disk struct {
 	SizeGb int64 `json:"sizeGb,omitempty"`
 
 	// Source: The full or partial URL of the persistent disk to attach. See
-	// https://cloud.google.com/compute/docs/reference/latest/instances#resource and https://cloud.google.com/compute/docs/disks/persistent-disks#snapshots for more
-	// details.
+	// https://cloud.google.com/compute/docs/reference/latest/instances#resource
+	// and
+	// https://cloud.google.com/compute/docs/disks/persistent-disks#snapshots
+	// for more details.
 	Source string `json:"source,omitempty"`
 
 	// Type: Required. The type of the disk to create.
@@ -1165,16 +1167,15 @@ type PipelineResources struct {
 	// an experimental feature that may go away. Defaults to false.
 	// Corresponds to `--no_address` flag for [gcloud compute instances
 	// create]
-	// (https://cloud.google.com/sdk/gcloud/reference/compute/instances/creat
-	// e). In order to use this, must be true for both create time and run
-	// time. Cannot be true at run time if false at create time. If you need
-	// to ssh into a private IP VM for debugging, you can ssh to a public VM
+	// (https://cloud.google.com/sdk/gcloud/reference/compute/instances/create).
+	// In order to use this, must be true for both create time and run time.
+	// Cannot be true at run time if false at create time. If you need to
+	// ssh into a private IP VM for debugging, you can ssh to a public VM
 	// and then ssh into the private VM's Internal IP. If noAddress is set,
 	// this pipeline run may only load docker images from Google Container
 	// Registry and not Docker Hub. Before using this, you must configure
 	// access to Google services from internal IPs
-	// (https://cloud.google.com/compute/docs/configure-private-google-access
-	// #configuring_access_to_google_services_from_internal_ips).
+	// (https://cloud.google.com/compute/docs/configure-private-google-access#configuring_access_to_google_services_from_internal_ips).
 	NoAddress bool `json:"noAddress,omitempty"`
 
 	// Preemptible: Whether to use preemptible VMs. Defaults to `false`. In

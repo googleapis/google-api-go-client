@@ -443,8 +443,8 @@ type IamPolicySearchResult struct {
 	Project string `json:"project,omitempty"`
 
 	// Resource: The full resource name
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-	// e) of the resource associated with this IAM policy.
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// of the resource associated with this IAM policy.
 	Resource string `json:"resource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Explanation") to
@@ -696,8 +696,8 @@ type StandardResourceMetadata struct {
 
 	// Labels: Labels associated with this resource. See Labelling and
 	// grouping GCP resources
-	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-you
-	// r-google-cloud-platform-resources) for more information.
+	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
+	// for more information.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Location: Location can be "global", regional like "us-east1", or
@@ -707,8 +707,8 @@ type StandardResourceMetadata struct {
 	// Name: The full resource name. For example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
 	// s/instance1`. See Resource Names
-	// (https://cloud.google.com/apis/design/resource_names#full_resource_nam
-	// e) for more information.
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
 	Name string `json:"name,omitempty"`
 
 	// NetworkTags: Network tags associated with this resource. Like labels,

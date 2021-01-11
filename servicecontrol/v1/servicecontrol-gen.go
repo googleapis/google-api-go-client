@@ -2310,8 +2310,8 @@ type Request struct {
 	// Protocol: The network protocol used with the request, such as
 	// "http/1.1", "spdy/3", "h2", "h2c", "webrtc", "tcp", "udp", "quic".
 	// See
-	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids for
-	// details.
+	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+	// for details.
 	Protocol string `json:"protocol,omitempty"`
 
 	// Query: The HTTP URL query in the format of

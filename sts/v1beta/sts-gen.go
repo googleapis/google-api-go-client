@@ -179,24 +179,23 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// `/.well-known/openid-configuration`, where `` is the value of this
 	// field. The document must be formatted according to section 4.2 of the
 	// OIDC 1.0 Discovery specification
-	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderCo
-	// nfigurationResponse). - `iat`: The issue time, in seconds, since the
-	// Unix epoch. Must be in the past. - `exp`: The expiration time, in
-	// seconds, since the Unix epoch. Must be less than 48 hours after
-	// `iat`. Shorter expiration times are more secure. If possible, we
-	// recommend setting an expiration time less than 6 hours. - `sub`: The
-	// identity asserted in the JWT. - `aud`: Configured by the mapper
-	// policy. The default value is the service account's unique ID. Example
-	// header: ``` { "alg": "RS256", "kid": "us-east-11" } ``` Example
-	// payload: ``` { "iss": "https://accounts.google.com", "iat":
-	// 1517963104, "exp": 1517966704, "aud": "113475438248934895348", "sub":
-	// "113475438248934895348", "my_claims": { "additional_claim": "value" }
-	// } ``` If `subject_token` is an AWS token, it must be a serialized,
-	// signed
-	// (https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_request
-	// s.html) request to the AWS `GetCallerIdentity()`
-	// (https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIden
-	// tity) method. Format the request as URL-encoded JSON, and set the
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse).
+	// - `iat`: The issue time, in seconds, since the Unix epoch. Must be in
+	// the past. - `exp`: The expiration time, in seconds, since the Unix
+	// epoch. Must be less than 48 hours after `iat`. Shorter expiration
+	// times are more secure. If possible, we recommend setting an
+	// expiration time less than 6 hours. - `sub`: The identity asserted in
+	// the JWT. - `aud`: Configured by the mapper policy. The default value
+	// is the service account's unique ID. Example header: ``` { "alg":
+	// "RS256", "kid": "us-east-11" } ``` Example payload: ``` { "iss":
+	// "https://accounts.google.com", "iat": 1517963104, "exp": 1517966704,
+	// "aud": "113475438248934895348", "sub": "113475438248934895348",
+	// "my_claims": { "additional_claim": "value" } } ``` If `subject_token`
+	// is an AWS token, it must be a serialized, signed
+	// (https://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html)
+	// request to the AWS `GetCallerIdentity()`
+	// (https://docs.aws.amazon.com/STS/latest/APIReference/API_GetCallerIdentity)
+	// method. Format the request as URL-encoded JSON, and set the
 	// `subject_token_type` parameter to
 	// `urn:ietf:params:aws:token-type:aws4_request`. The following
 	// parameters are required: - `url`: The URL of the AWS STS endpoint for
@@ -207,19 +206,36 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// must include: - `Authorization`: The request signature. -
 	// `x-amz-date`: The time you will send the request, formatted as an
 	// ISO8601 Basic
-	// (https://docs.aws.amazon.com/general/latest/gr/sigv4_elements.html#sig
-	// v4_elements_date) string. This is typically set to the current time
-	// and used to prevent replay attacks. - `host`: The hostname of the
-	// `url` field; for example, `sts.amazonaws.com`. -
-	// `x-goog-cloud-target-resource`: The full, canonical resource name of
-	// the workload identity pool provider, with or without an `https:`
-	// prefix. To help ensure data integrity, we recommend including this
-	// header in the `SignedHeaders` field of the signed request. For
-	// example:
+	// (https://docs.aws.amazon.com/general/latest/gr/sigv4_elements.html#sigv4_elements_date)
+	// string. This is typically set to the current time and used to prevent
+	// replay attacks. - `host`: The hostname of the `url` field; for
+	// example, `sts.amazonaws.com`. - `x-goog-cloud-target-resource`: The
+	// full, canonical resource name of the workload identity pool provider,
+	// with or without an `https:` prefix. To help ensure data integrity, we
+	// recommend including this header in the `SignedHeaders` field of the
+	// signed request. For example:
 	// //iam.googleapis.com/projects//locations//workloadIdentityPools//provi
 	// ders/
-	// https://iam.googleapis.com/projects//locations//workloadIdentityPools//providers/ If you are using temporary security credentials provided by AWS, you must also include the header `x-amz-security-token`, with the value ``. The following example shows a signed, serialized request: ``` { "headers":[ {"key": "x-amz-date", "value": "20200815T015049Z"}, {"key": "Authorization", "value": "AWS4-HMAC-SHA256+Credential=$credential,+SignedHeaders=host;x-amz-date;x-goog-cloud-target-resource,+Signature=$signature"}, {"key": "x-goog-cloud-target-resource", "value": "//iam.googleapis.com/projects//locations//workloadIdentityPools//providers/"}, {"key": "host", "value": "sts.amazonaws.com"} . ], "method":"POST", "url":"https://sts.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15" } ``` You can also use a Google-issued OAuth 2.0 access token with this field to obtain an access token with new security attributes applied, such as a Credential Access Boundary. In this case, set `subject_token_type` to `urn:ietf:params:oauth:token-type:access_token`. If an access token already contains security attributes, you cannot apply additional security
-	// attributes.
+	// https://iam.googleapis.com/projects//locations//workloadIdentityPools//providers/
+	// If you are using temporary security credentials provided by AWS, you
+	// must also include the header `x-amz-security-token`, with the value
+	// ``. The following example shows a signed, serialized request: ``` {
+	// "headers":[ {"key": "x-amz-date", "value": "20200815T015049Z"},
+	// {"key": "Authorization", "value":
+	// "AWS4-HMAC-SHA256+Credential=$credential,+SignedHeaders=host;x-amz-dat
+	// e;x-goog-cloud-target-resource,+Signature=$signature"}, {"key":
+	// "x-goog-cloud-target-resource", "value":
+	// "//iam.googleapis.com/projects//locations//workloadIdentityPools//prov
+	// iders/"}, {"key": "host", "value": "sts.amazonaws.com"} . ],
+	// "method":"POST",
+	// "url":"https://sts.amazonaws.com?Action=GetCallerIdentity&Version=2011
+	// -06-15" } ``` You can also use a Google-issued OAuth 2.0 access token
+	// with this field to obtain an access token with new security
+	// attributes applied, such as a Credential Access Boundary. In this
+	// case, set `subject_token_type` to
+	// `urn:ietf:params:oauth:token-type:access_token`. If an access token
+	// already contains security attributes, you cannot apply additional
+	// security attributes.
 	SubjectToken string `json:"subjectToken,omitempty"`
 
 	// SubjectTokenType: Required.

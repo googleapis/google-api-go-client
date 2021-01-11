@@ -5901,8 +5901,7 @@ type GoogleCloudDialogflowV2BatchCreateEntitiesRequest struct {
 	// LanguageCode: Optional. The language used to access language-specific
 	// data. If not specified, the agent's default language is used. For
 	// more information, see Multilingual intent and entity data
-	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-	// ntity).
+	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Entities") to
@@ -5939,8 +5938,7 @@ type GoogleCloudDialogflowV2BatchDeleteEntitiesRequest struct {
 	// LanguageCode: Optional. The language used to access language-specific
 	// data. If not specified, the agent's default language is used. For
 	// more information, see Multilingual intent and entity data
-	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-	// ntity).
+	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EntityValues") to
@@ -6036,8 +6034,7 @@ type GoogleCloudDialogflowV2BatchUpdateEntitiesRequest struct {
 	// LanguageCode: Optional. The language used to access language-specific
 	// data. If not specified, the agent's default language is used. For
 	// more information, see Multilingual intent and entity data
-	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-	// ntity).
+	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -6082,8 +6079,7 @@ type GoogleCloudDialogflowV2BatchUpdateEntityTypesRequest struct {
 	// LanguageCode: Optional. The language used to access language-specific
 	// data. If not specified, the agent's default language is used. For
 	// more information, see Multilingual intent and entity data
-	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-	// ntity).
+	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -6165,8 +6161,7 @@ type GoogleCloudDialogflowV2BatchUpdateIntentsRequest struct {
 	// LanguageCode: Optional. The language used to access language-specific
 	// data. If not specified, the agent's default language is used. For
 	// more information, see Multilingual intent and entity data
-	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-	// ntity).
+	// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -9849,8 +9844,7 @@ type GoogleCloudDialogflowV2WebhookResponse struct {
 	// (https://cloud.google.com/dialogflow/docs/integrations/aog) for rich
 	// response messages. See the format definition at Google Assistant
 	// Dialogflow webhook format
-	// (https://developers.google.com/assistant/actions/build/json/dialogflow
-	// -webhook-json)
+	// (https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// SessionEntityTypes: Optional. Additional session entity types to
@@ -12772,8 +12766,7 @@ type GoogleCloudDialogflowV2beta1WebhookResponse struct {
 	// (https://cloud.google.com/dialogflow/docs/integrations/aog) for rich
 	// response messages. See the format definition at Google Assistant
 	// Dialogflow webhook format
-	// (https://developers.google.com/assistant/actions/build/json/dialogflow
-	// -webhook-json)
+	// (https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// SessionEntityTypes: Optional. Additional session entity types to
@@ -14433,8 +14426,7 @@ type ProjectsAgentSearchCall struct {
 // listing all agents across projects the caller has access to. One can
 // achieve that with a wildcard project collection id "-". Refer to List
 // Sub-Collections
-// (https://cloud.google.com/apis/design/design_patterns#list_sub-collect
-// ions).
+// (https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
 func (r *ProjectsAgentService) Search(parent string) *ProjectsAgentSearchCall {
 	c := &ProjectsAgentSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15219,8 +15211,7 @@ func (r *ProjectsAgentEntityTypesService) Create(parent string, googleclouddialo
 // used to access language-specific data. If not specified, the agent's
 // default language is used. For more information, see Multilingual
 // intent and entity data
-// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-// ntity).
+// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 func (c *ProjectsAgentEntityTypesCreateCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -15507,8 +15498,7 @@ func (r *ProjectsAgentEntityTypesService) Get(name string) *ProjectsAgentEntityT
 // used to access language-specific data. If not specified, the agent's
 // default language is used. For more information, see Multilingual
 // intent and entity data
-// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-// ntity).
+// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 func (c *ProjectsAgentEntityTypesGetCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -15669,8 +15659,7 @@ func (r *ProjectsAgentEntityTypesService) List(parent string) *ProjectsAgentEnti
 // used to access language-specific data. If not specified, the agent's
 // default language is used. For more information, see Multilingual
 // intent and entity data
-// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-// ntity).
+// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 func (c *ProjectsAgentEntityTypesListCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -15879,8 +15868,7 @@ func (r *ProjectsAgentEntityTypesService) Patch(nameid string, googleclouddialog
 // used to access language-specific data. If not specified, the agent's
 // default language is used. For more information, see Multilingual
 // intent and entity data
-// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-// ntity).
+// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 func (c *ProjectsAgentEntityTypesPatchCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesPatchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -18794,8 +18782,7 @@ func (c *ProjectsAgentIntentsCreateCall) IntentView(intentView string) *Projects
 // used to access language-specific data. If not specified, the agent's
 // default language is used. For more information, see Multilingual
 // intent and entity data
-// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-// ntity).
+// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 func (c *ProjectsAgentIntentsCreateCall) LanguageCode(languageCode string) *ProjectsAgentIntentsCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -19107,8 +19094,7 @@ func (c *ProjectsAgentIntentsGetCall) IntentView(intentView string) *ProjectsAge
 // used to access language-specific data. If not specified, the agent's
 // default language is used. For more information, see Multilingual
 // intent and entity data
-// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-// ntity).
+// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 func (c *ProjectsAgentIntentsGetCall) LanguageCode(languageCode string) *ProjectsAgentIntentsGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -19293,8 +19279,7 @@ func (c *ProjectsAgentIntentsListCall) IntentView(intentView string) *ProjectsAg
 // used to access language-specific data. If not specified, the agent's
 // default language is used. For more information, see Multilingual
 // intent and entity data
-// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-// ntity).
+// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 func (c *ProjectsAgentIntentsListCall) LanguageCode(languageCode string) *ProjectsAgentIntentsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -19528,8 +19513,7 @@ func (c *ProjectsAgentIntentsPatchCall) IntentView(intentView string) *ProjectsA
 // used to access language-specific data. If not specified, the agent's
 // default language is used. For more information, see Multilingual
 // intent and entity data
-// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-e
-// ntity).
+// (https://cloud.google.com/dialogflow/docs/agents-multilingual#intent-entity).
 func (c *ProjectsAgentIntentsPatchCall) LanguageCode(languageCode string) *ProjectsAgentIntentsPatchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c

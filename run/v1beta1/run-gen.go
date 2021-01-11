@@ -214,8 +214,8 @@ type CustomResourceColumnDefinition struct {
 	// Format: format is an optional OpenAPI type definition for this
 	// column. The 'name' format is applied to the primary identifier column
 	// to assist in clients identifying column is the resource name. See
-	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
-	// +optional
+	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
+	// for more. +optional
 	Format string `json:"format,omitempty"`
 
 	// JsonPath: JSONPath is a simple JSON path, i.e. with array notation.
@@ -231,8 +231,8 @@ type CustomResourceColumnDefinition struct {
 	Priority int64 `json:"priority,omitempty"`
 
 	// Type: type is an OpenAPI type definition for this column. See
-	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for
-	// more.
+	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
+	// for more.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1034,8 +1034,8 @@ type ObjectMeta struct {
 	// found in the time allotted, and the client should retry (optionally
 	// after the time indicated in the Retry-After header). Applied only if
 	// Name is not specified. More info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency string generateName =
-	// 2;
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
+	// string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
 
 	// Generation: (Optional) A sequence number representing a specific

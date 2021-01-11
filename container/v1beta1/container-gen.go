@@ -490,9 +490,8 @@ type AutoprovisioningNodePoolDefaults struct {
 	// Applicable values are the friendly names of CPU platforms, such as
 	// `minCpuPlatform: "Intel Haswell" or `minCpuPlatform: "Intel Sandy
 	// Bridge". For more information, read how to specify min CPU platform
-	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platf
-	// orm) To unset the min cpu platform field pass "automatic" as field
-	// value.
+	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)
+	// To unset the min cpu platform field pass "automatic" as field value.
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// OauthScopes: The set of Google API scopes to be made available on all
@@ -830,11 +829,10 @@ type Cluster struct {
 	CurrentNodeCount int64 `json:"currentNodeCount,omitempty"`
 
 	// CurrentNodeVersion: [Output only] Deprecated, use NodePool.version
-	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta
-	// 1/projects.locations.clusters.nodePools) instead. The current version
-	// of the node software components. If they are currently at multiple
-	// versions because they're in the process of being upgraded, this
-	// reflects the minimum version of all nodes.
+	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters.nodePools)
+	// instead. The current version of the node software components. If they
+	// are currently at multiple versions because they're in the process of
+	// being upgraded, this reflects the minimum version of all nodes.
 	CurrentNodeVersion string `json:"currentNodeVersion,omitempty"`
 
 	// DatabaseEncryption: Configuration of etcd encryption.
@@ -911,23 +909,22 @@ type Cluster struct {
 	LegacyAbac *LegacyAbac `json:"legacyAbac,omitempty"`
 
 	// Location: [Output only] The name of the Google Compute Engine zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#ava
-	// ilable) or region
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#ava
-	// ilable) in which the cluster resides.
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
+	// or region
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
+	// in which the cluster resides.
 	Location string `json:"location,omitempty"`
 
 	// Locations: The list of Google Compute Engine zones
 	// (https://cloud.google.com/compute/docs/zones#available) in which the
 	// cluster's nodes should be located. This field provides a default
 	// value if NodePool.Locations
-	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/pro
-	// jects.locations.clusters.nodePools#NodePool.FIELDS.locations) are not
-	// specified during node pool creation. Warning: changing cluster
-	// locations will update the NodePool.Locations
-	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/pro
-	// jects.locations.clusters.nodePools#NodePool.FIELDS.locations) of all
-	// node pools and will result in nodes being added and/or removed.
+	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations)
+	// are not specified during node pool creation. Warning: changing
+	// cluster locations will update the NodePool.Locations
+	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters.nodePools#NodePool.FIELDS.locations)
+	// of all node pools and will result in nodes being added and/or
+	// removed.
 	Locations []string `json:"locations,omitempty"`
 
 	// LoggingService: The logging service the cluster should use to write
@@ -983,10 +980,10 @@ type Cluster struct {
 	Name string `json:"name,omitempty"`
 
 	// Network: The name of the Google Compute Engine network
-	// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks
-	// ) to which the cluster is connected. If left unspecified, the
-	// `default` network will be used. On output this shows the network ID
-	// instead of the name.
+	// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks)
+	// to which the cluster is connected. If left unspecified, the `default`
+	// network will be used. On output this shows the network ID instead of
+	// the name.
 	Network string `json:"network,omitempty"`
 
 	// NetworkConfig: Configuration for cluster networking.
@@ -1556,8 +1553,7 @@ func (s *ConsumptionMeteringConfig) MarshalJSON() ([]byte, error) {
 // CreateClusterRequest: CreateClusterRequest creates a cluster.
 type CreateClusterRequest struct {
 	// Cluster: Required. A cluster resource
-	// (https://cloud.google.com/container-engine/reference/rest/v1beta1/proj
-	// ects.locations.clusters)
+	// (https://cloud.google.com/container-engine/reference/rest/v1beta1/projects.locations.clusters)
 	Cluster *Cluster `json:"cluster,omitempty"`
 
 	// Parent: The parent (project and location) where the cluster will be
@@ -3153,8 +3149,7 @@ type NodeConfig struct {
 	// Applicable values are the friendly names of CPU platforms, such as
 	// `minCpuPlatform: "Intel Haswell" or `minCpuPlatform: "Intel Sandy
 	// Bridge". For more information, read how to specify min CPU platform
-	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platf
-	// orm)
+	// (https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// NodeGroup: Setting this field will assign instances of this pool to
@@ -3183,8 +3178,8 @@ type NodeConfig struct {
 
 	// ReservationAffinity: The optional reservation affinity. Setting this
 	// field will apply the specified Zonal Compute Reservation
-	// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resou
-	// rces) to this node pool.
+	// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resources)
+	// to this node pool.
 	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 
 	// SandboxConfig: Sandbox configuration for this node.
@@ -3258,7 +3253,11 @@ type NodeKubeletConfig struct {
 	CpuCfsQuotaPeriod string `json:"cpuCfsQuotaPeriod,omitempty"`
 
 	// CpuManagerPolicy: Control the CPU management policy on the node. See
-	// https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/ The following values are allowed. - "none": the default, which represents the existing scheduling behavior. - "static": allows pods with certain resource characteristics to be granted increased CPU affinity and exclusivity on the node. The default value is 'none' if
+	// https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/
+	// The following values are allowed. - "none": the default, which
+	// represents the existing scheduling behavior. - "static": allows pods
+	// with certain resource characteristics to be granted increased CPU
+	// affinity and exclusivity on the node. The default value is 'none' if
 	// unspecified.
 	CpuManagerPolicy string `json:"cpuManagerPolicy,omitempty"`
 
@@ -3346,18 +3345,17 @@ type NodePool struct {
 
 	// InstanceGroupUrls: [Output only] The resource URLs of the managed
 	// instance groups
-	// (https://cloud.google.com/compute/docs/instance-groups/creating-groups
-	// -of-managed-instances) associated with this node pool.
+	// (https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances)
+	// associated with this node pool.
 	InstanceGroupUrls []string `json:"instanceGroupUrls,omitempty"`
 
 	// Locations: The list of Google Compute Engine zones
 	// (https://cloud.google.com/compute/docs/zones#available) in which the
 	// NodePool's nodes should be located. If this value is unspecified
 	// during node pool creation, the Cluster.Locations
-	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/pro
-	// jects.locations.clusters#Cluster.FIELDS.locations) value will be
-	// used, instead. Warning: changing node pool locations will result in
-	// nodes being added and/or removed.
+	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1/projects.locations.clusters#Cluster.FIELDS.locations)
+	// value will be used, instead. Warning: changing node pool locations
+	// will result in nodes being added and/or removed.
 	Locations []string `json:"locations,omitempty"`
 
 	// Management: NodeManagement configuration for this NodePool.
@@ -3482,8 +3480,8 @@ func (s *NodePoolAutoscaling) MarshalJSON() ([]byte, error) {
 // NodeTaint: Kubernetes taint is comprised of three fields: key, value,
 // and effect. Effect can only be one of three types: NoSchedule,
 // PreferNoSchedule or NoExecute. See here
-// (https://kubernetes.io/docs/concepts/configuration/taint-and-toleratio
-// n) for more information, including usage and the valid values.
+// (https://kubernetes.io/docs/concepts/configuration/taint-and-toleration)
+// for more information, including usage and the valid values.
 type NodeTaint struct {
 	// Effect: Effect for taint.
 	//
@@ -3571,10 +3569,10 @@ type Operation struct {
 	Error *Status `json:"error,omitempty"`
 
 	// Location: [Output only] The name of the Google Compute Engine zone
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#ava
-	// ilable) or region
-	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#ava
-	// ilable) in which the cluster resides.
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
+	// or region
+	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
+	// in which the cluster resides.
 	Location string `json:"location,omitempty"`
 
 	// Name: The server-assigned ID for the operation.
@@ -4016,9 +4014,9 @@ func (s *ReleaseChannelConfig) MarshalJSON() ([]byte, error) {
 }
 
 // ReservationAffinity: ReservationAffinity
-// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resou
-// rces) is the configuration of desired reservation which instances
-// could take capacity from.
+// (https://cloud.google.com/compute/docs/instances/reserving-zonal-resources)
+// is the configuration of desired reservation which instances could
+// take capacity from.
 type ReservationAffinity struct {
 	// ConsumeReservationType: Corresponds to the type of reservation
 	// consumption.
@@ -6507,8 +6505,8 @@ type ProjectsLocationsClustersCreateCall struct {
 // Create: Creates a cluster, consisting of the specified number and
 // type of Google Compute Engine instances. By default, the cluster is
 // created in the project's default network
-// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks
-// ). One firewall is added for the cluster. After cluster creation, the
+// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks).
+// One firewall is added for the cluster. After cluster creation, the
 // Kubelet creates routes for each node to allow the containers on that
 // node to communicate with all other instances in the cluster. Finally,
 // an entry is added to the project's global metadata indicating which
@@ -7615,8 +7613,8 @@ type ProjectsLocationsClustersSetLocationsCall struct {
 
 // SetLocations: Sets the locations for a specific cluster. Deprecated.
 // Use projects.locations.clusters.update
-// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta
-// 1/projects.locations.clusters/update) instead.
+// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters/update)
+// instead.
 func (r *ProjectsLocationsClustersService) SetLocations(name string, setlocationsrequest *SetLocationsRequest) *ProjectsLocationsClustersSetLocationsCall {
 	c := &ProjectsLocationsClustersSetLocationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11570,8 +11568,8 @@ type ProjectsZonesClustersCreateCall struct {
 // Create: Creates a cluster, consisting of the specified number and
 // type of Google Compute Engine instances. By default, the cluster is
 // created in the project's default network
-// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks
-// ). One firewall is added for the cluster. After cluster creation, the
+// (https://cloud.google.com/compute/docs/networks-and-firewalls#networks).
+// One firewall is added for the cluster. After cluster creation, the
 // Kubelet creates routes for each node to allow the containers on that
 // node to communicate with all other instances in the cluster. Finally,
 // an entry is added to the project's global metadata indicating which
@@ -12398,8 +12396,8 @@ type ProjectsZonesClustersLocationsCall struct {
 
 // Locations: Sets the locations for a specific cluster. Deprecated. Use
 // projects.locations.clusters.update
-// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta
-// 1/projects.locations.clusters/update) instead.
+// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters/update)
+// instead.
 func (r *ProjectsZonesClustersService) Locations(projectId string, zone string, clusterId string, setlocationsrequest *SetLocationsRequest) *ProjectsZonesClustersLocationsCall {
 	c := &ProjectsZonesClustersLocationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId

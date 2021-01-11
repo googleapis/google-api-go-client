@@ -265,10 +265,16 @@ type AcceleratorConfig struct {
 	// AcceleratorTypeUri: Full URL, partial URI, or short name of the
 	// accelerator type resource to expose to this instance. See Compute
 	// Engine AcceleratorTypes
-	// (https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes
-	// )Examples *
-	// https://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80 * projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80 * nvidia-tesla-k80Auto Zone Exception: If you are using the Dataproc Auto Zone Placement (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the accelerator type resource, for example,
-	// nvidia-tesla-k80.
+	// (https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes)Examples
+	// *
+	// https://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80
+	// *
+	// projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k
+	// 80 * nvidia-tesla-k80Auto Zone Exception: If you are using the
+	// Dataproc Auto Zone Placement
+	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement)
+	// feature, you must use the short name of the accelerator type
+	// resource, for example, nvidia-tesla-k80.
 	AcceleratorTypeUri string `json:"acceleratorTypeUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
@@ -301,8 +307,10 @@ type AutoscalingConfig struct {
 	// PolicyUri: Optional. The autoscaling policy used by the cluster.Only
 	// resource names including projectid and location (region) are valid.
 	// Examples:
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id] projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]Note that the policy must be in the same project and Dataproc
-	// region.
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]
+	// projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/
+	// [policy_id]Note that the policy must be in the same project and
+	// Dataproc region.
 	PolicyUri string `json:"policyUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PolicyUri") to
@@ -665,9 +673,9 @@ type ClusterConfig struct {
 	// according to the Compute Engine zone where your cluster is deployed,
 	// and then create and manage this project-level, per-location bucket
 	// (see Dataproc staging bucket
-	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/
-	// staging-bucket)). This field requires a Cloud Storage bucket name,
-	// not a URI to a Cloud Storage bucket.
+	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)).
+	// This field requires a Cloud Storage bucket name, not a URI to a Cloud
+	// Storage bucket.
 	ConfigBucket string `json:"configBucket,omitempty"`
 
 	// EncryptionConfig: Optional. Encryption settings for the cluster.
@@ -693,7 +701,9 @@ type ClusterConfig struct {
 	// and all worker nodes. You can test a node's role metadata to run an
 	// executable on a master or worker node, as shown below using curl (you
 	// can also use wget): ROLE=$(curl -H Metadata-Flavor:Google
-	// http://metadata/computeMetadata/v1beta2/instance/attributes/dataproc-role) if [[ "${ROLE}" == 'Master' ]]; then ... master specific actions ... else ... worker specific actions ... fi
+	// http://metadata/computeMetadata/v1beta2/instance/attributes/dataproc-role)
+	// if [[ "${ROLE}" == 'Master' ]]; then ... master specific actions ...
+	// else ... worker specific actions ... fi
 	InitializationActions []*NodeInitializationAction `json:"initializationActions,omitempty"`
 
 	// LifecycleConfig: Optional. The config setting for auto delete cluster
@@ -1250,8 +1260,7 @@ type GceClusterConfig struct {
 
 	// Metadata: The Compute Engine metadata entries to add to all instances
 	// (see Project and instance metadata
-	// (https://cloud.google.com/compute/docs/storing-retrieving-metadata#pro
-	// ject_and_instance_metadata)).
+	// (https://cloud.google.com/compute/docs/storing-retrieving-metadata#project_and_instance_metadata)).
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// NetworkUri: Optional. The Compute Engine network to be used for
@@ -1262,8 +1271,8 @@ type GceClusterConfig struct {
 	// (https://cloud.google.com/compute/docs/subnetworks) for more
 	// information).A full URL, partial URI, or short name are valid.
 	// Examples:
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/regions/global/default projects/[project_id]/regions/global/default
-	// default
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/regions/global/default
+	// projects/[project_id]/regions/global/default default
 	NetworkUri string `json:"networkUri,omitempty"`
 
 	// NodeGroupAffinity: Optional. Node Group Affinity for sole-tenant
@@ -1291,15 +1300,13 @@ type GceClusterConfig struct {
 	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 
 	// ServiceAccount: Optional. The Dataproc service account
-	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/
-	// service-accounts#service_accounts_in_dataproc) (also see VM Data
-	// Plane identity
-	// (https://cloud.google.com/dataproc/docs/concepts/iam/dataproc-principa
-	// ls#vm_service_account_data_plane_identity)) used by Dataproc cluster
-	// VM instances to access Google Cloud Platform services.If not
-	// specified, the Compute Engine default service account
-	// (https://cloud.google.com/compute/docs/access/service-accounts#default
-	// _service_account) is used.
+	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/service-accounts#service_accounts_in_dataproc)
+	// (also see VM Data Plane identity
+	// (https://cloud.google.com/dataproc/docs/concepts/iam/dataproc-principals#vm_service_account_data_plane_identity))
+	// used by Dataproc cluster VM instances to access Google Cloud Platform
+	// services.If not specified, the Compute Engine default service account
+	// (https://cloud.google.com/compute/docs/access/service-accounts#default_service_account)
+	// is used.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// ServiceAccountScopes: Optional. The URIs of service account scopes to
@@ -1322,8 +1329,8 @@ type GceClusterConfig struct {
 	// SubnetworkUri: Optional. The Compute Engine subnetwork to be used for
 	// machine communications. Cannot be specified with network_uri.A full
 	// URL, partial URI, or short name are valid. Examples:
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/regions/us-east1/subnetworks/sub0 projects/[project_id]/regions/us-east1/subnetworks/sub0
-	// sub0
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/regions/us-east1/subnetworks/sub0
+	// projects/[project_id]/regions/us-east1/subnetworks/sub0 sub0
 	SubnetworkUri string `json:"subnetworkUri,omitempty"`
 
 	// Tags: The Compute Engine tags to add to all instances (see Tagging
@@ -1337,8 +1344,8 @@ type GceClusterConfig struct {
 	// zone in the corresponding Compute Engine region. On a get request,
 	// zone will always be present.A full URL, partial URI, or short name
 	// are valid. Examples:
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone] projects/[project_id]/zones/[zone]
-	// us-central1-f
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]
+	// projects/[project_id]/zones/[zone] us-central1-f
 	ZoneUri string `json:"zoneUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InternalIpOnly") to
@@ -1462,11 +1469,9 @@ func (s *GkeClusterConfig) MarshalJSON() ([]byte, error) {
 }
 
 // HadoopJob: A Dataproc job for running Apache Hadoop MapReduce
-// (https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop
-// -mapreduce-client-core/MapReduceTutorial.html) jobs on Apache Hadoop
-// YARN
-// (https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-site/YA
-// RN.html).
+// (https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html)
+// jobs on Apache Hadoop YARN
+// (https://hadoop.apache.org/docs/r2.7.1/hadoop-yarn/hadoop-yarn-site/YARN.html).
 type HadoopJob struct {
 	// ArchiveUris: Optional. HCFS URIs of archives to be extracted in the
 	// working directory of Hadoop drivers and tasks. Supported file types:
@@ -1693,8 +1698,13 @@ type InstanceGroupConfig struct {
 	// ImageUri: Optional. The Compute Engine image resource used for
 	// cluster instances.The URI can represent an image or image
 	// family.Image examples:
-	// https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id] projects/[project_id]/global/images/[image-id] image-idImage family examples. Dataproc will use the most recent image from the family: https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name] projects/[project_id]/global/images/family/[custom-image-family-name]If the URI is unspecified, it will be inferred from SoftwareConfig.image_version or the system
-	// default.
+	// https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id]
+	// projects/[project_id]/global/images/[image-id] image-idImage family
+	// examples. Dataproc will use the most recent image from the family:
+	// https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name]
+	// projects/[project_id]/global/images/family/[custom-image-family-name]I
+	// f the URI is unspecified, it will be inferred from
+	// SoftwareConfig.image_version or the system default.
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// InstanceNames: Output only. The list of instance names. Dataproc
@@ -1713,8 +1723,13 @@ type InstanceGroupConfig struct {
 	// MachineTypeUri: Optional. The Compute Engine machine type used for
 	// cluster instances.A full URL, partial URI, or short name are valid.
 	// Examples:
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2 projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2 n1-standard-2Auto Zone Exception: If you are using the Dataproc Auto Zone Placement (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the machine type resource, for example,
-	// n1-standard-2.
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2
+	// projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2
+	// n1-standard-2Auto Zone Exception: If you are using the Dataproc Auto
+	// Zone Placement
+	// (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement)
+	// feature, you must use the short name of the machine type resource,
+	// for example, n1-standard-2.
 	MachineTypeUri string `json:"machineTypeUri,omitempty"`
 
 	// ManagedGroupConfig: Output only. The config for Compute Engine
@@ -1724,8 +1739,7 @@ type InstanceGroupConfig struct {
 
 	// MinCpuPlatform: Specifies the minimum cpu platform for the Instance
 	// Group. See Dataproc -> Minimum CPU Platform
-	// (https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-
-	// cpu).
+	// (https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-cpu).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// NumInstances: Optional. The number of VM instances in the instance
@@ -2704,7 +2718,8 @@ type NodeGroupAffinity struct {
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups)
 	// that the cluster will be created on.A full URL, partial URI, or node
 	// group name are valid. Examples:
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-central1-a/nodeGroups/node-group-1 projects/[project_id]/zones/us-central1-a/nodeGroups/node-group-1
+	// https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-central1-a/nodeGroups/node-group-1
+	// projects/[project_id]/zones/us-central1-a/nodeGroups/node-group-1
 	// node-group-1
 	NodeGroupUri string `json:"nodeGroupUri,omitempty"`
 
@@ -2739,10 +2754,10 @@ type NodeInitializationAction struct {
 
 	// ExecutionTimeout: Optional. Amount of time executable has to
 	// complete. Default is 10 minutes (see JSON representation of Duration
-	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Clu
-	// ster creation fails with an explanatory error message (the name of
-	// the executable that caused the error and the exceeded timeout period)
-	// if the executable is not completed at end of the timeout period.
+	// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Cluster
+	// creation fails with an explanatory error message (the name of the
+	// executable that caused the error and the exceeded timeout period) if
+	// the executable is not completed at end of the timeout period.
 	ExecutionTimeout string `json:"executionTimeout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExecutableFile") to
@@ -3423,12 +3438,11 @@ func (s *ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 type SoftwareConfig struct {
 	// ImageVersion: Optional. The version of software inside the cluster.
 	// It must be one of the supported Dataproc Versions
-	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-v
-	// ersions#supported_dataproc_versions), such as "1.2" (including a
-	// subminor version, such as "1.2.29"), or the "preview" version
-	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-v
-	// ersions#other_versions). If unspecified, it defaults to the latest
-	// Debian version.
+	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-versions#supported_dataproc_versions),
+	// such as "1.2" (including a subminor version, such as "1.2.29"), or
+	// the "preview" version
+	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-versions#other_versions).
+	// If unspecified, it defaults to the latest Debian version.
 	ImageVersion string `json:"imageVersion,omitempty"`
 
 	// OptionalComponents: The set of optional components to activate on the
@@ -6180,11 +6194,10 @@ type ProjectsLocationsWorkflowTemplatesInstantiateCall struct {
 // operations.cancel. This will cause any inflight jobs to be cancelled
 // and workflow-owned clusters to be deleted.The Operation.metadata will
 // be WorkflowMetadata
-// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dat
-// aproc.v1beta2#workflowmetadata). Also see Using WorkflowMetadata
-// (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#u
-// sing_workflowmetadata).On successful completion, Operation.response
-// will be Empty.
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1beta2#workflowmetadata).
+// Also see Using WorkflowMetadata
+// (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
+// successful completion, Operation.response will be Empty.
 func (r *ProjectsLocationsWorkflowTemplatesService) Instantiate(name string, instantiateworkflowtemplaterequest *InstantiateWorkflowTemplateRequest) *ProjectsLocationsWorkflowTemplatesInstantiateCall {
 	c := &ProjectsLocationsWorkflowTemplatesInstantiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6333,11 +6346,10 @@ type ProjectsLocationsWorkflowTemplatesInstantiateInlineCall struct {
 // aborted via operations.cancel. This will cause any inflight jobs to
 // be cancelled and workflow-owned clusters to be deleted.The
 // Operation.metadata will be WorkflowMetadata
-// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dat
-// aproc.v1#workflowmetadata). Also see Using WorkflowMetadata
-// (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#u
-// sing_workflowmetadata).On successful completion, Operation.response
-// will be Empty.
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#workflowmetadata).
+// Also see Using WorkflowMetadata
+// (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
+// successful completion, Operation.response will be Empty.
 func (r *ProjectsLocationsWorkflowTemplatesService) InstantiateInline(parent string, workflowtemplate *WorkflowTemplate) *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall {
 	c := &ProjectsLocationsWorkflowTemplatesInstantiateInlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8327,8 +8339,7 @@ type ProjectsRegionsClustersCreateCall struct {
 
 // Create: Creates a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
-// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dat
-// aproc.v1beta2#clusteroperationmetadata).
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1beta2#clusteroperationmetadata).
 func (r *ProjectsRegionsClustersService) Create(projectId string, region string, cluster *Cluster) *ProjectsRegionsClustersCreateCall {
 	c := &ProjectsRegionsClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8498,8 +8509,7 @@ type ProjectsRegionsClustersDeleteCall struct {
 
 // Delete: Deletes a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
-// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dat
-// aproc.v1beta2#clusteroperationmetadata).
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1beta2#clusteroperationmetadata).
 func (r *ProjectsRegionsClustersService) Delete(projectId string, region string, clusterName string) *ProjectsRegionsClustersDeleteCall {
 	c := &ProjectsRegionsClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -8683,9 +8693,8 @@ type ProjectsRegionsClustersDiagnoseCall struct {
 
 // Diagnose: Gets cluster diagnostic information. The returned
 // Operation.metadata will be ClusterOperationMetadata
-// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dat
-// aproc.v1beta2#clusteroperationmetadata). After the operation
-// completes, Operation.response contains Empty.
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1beta2#clusteroperationmetadata).
+// After the operation completes, Operation.response contains Empty.
 func (r *ProjectsRegionsClustersService) Diagnose(projectId string, region string, clusterName string, diagnoseclusterrequest *DiagnoseClusterRequest) *ProjectsRegionsClustersDiagnoseCall {
 	c := &ProjectsRegionsClustersDiagnoseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9562,8 +9571,7 @@ type ProjectsRegionsClustersPatchCall struct {
 
 // Patch: Updates a cluster in a project. The returned
 // Operation.metadata will be ClusterOperationMetadata
-// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dat
-// aproc.v1beta2#clusteroperationmetadata).
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1beta2#clusteroperationmetadata).
 func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, clusterName string, cluster *Cluster) *ProjectsRegionsClustersPatchCall {
 	c := &ProjectsRegionsClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9581,8 +9589,8 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 // removing nodes (and potentially interrupting jobs). Default timeout
 // is 0 (for forceful decommission), and the maximum allowed timeout is
 // 1 day (see JSON representation of Duration
-// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Onl
-// y supported on Dataproc image versions 1.2 and higher.
+// (https://developers.google.com/protocol-buffers/docs/proto3#json)).Only
+// supported on Dataproc image versions 1.2 and higher.
 func (c *ProjectsRegionsClustersPatchCall) GracefulDecommissionTimeout(gracefulDecommissionTimeout string) *ProjectsRegionsClustersPatchCall {
 	c.urlParams_.Set("gracefulDecommissionTimeout", gracefulDecommissionTimeout)
 	return c
@@ -10399,10 +10407,9 @@ type ProjectsRegionsJobsCancelCall struct {
 
 // Cancel: Starts a job cancellation request. To access the job resource
 // after cancellation, call regions/{region}/jobs.list
-// (https://cloud.google.com/dataproc/docs/reference/rest/v1beta2/project
-// s.regions.jobs/list) or regions/{region}/jobs.get
-// (https://cloud.google.com/dataproc/docs/reference/rest/v1beta2/project
-// s.regions.jobs/get).
+// (https://cloud.google.com/dataproc/docs/reference/rest/v1beta2/projects.regions.jobs/list)
+// or regions/{region}/jobs.get
+// (https://cloud.google.com/dataproc/docs/reference/rest/v1beta2/projects.regions.jobs/get).
 func (r *ProjectsRegionsJobsService) Cancel(projectId string, region string, jobId string, canceljobrequest *CancelJobRequest) *ProjectsRegionsJobsCancelCall {
 	c := &ProjectsRegionsJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13758,11 +13765,10 @@ type ProjectsRegionsWorkflowTemplatesInstantiateCall struct {
 // operations.cancel. This will cause any inflight jobs to be cancelled
 // and workflow-owned clusters to be deleted.The Operation.metadata will
 // be WorkflowMetadata
-// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dat
-// aproc.v1beta2#workflowmetadata). Also see Using WorkflowMetadata
-// (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#u
-// sing_workflowmetadata).On successful completion, Operation.response
-// will be Empty.
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1beta2#workflowmetadata).
+// Also see Using WorkflowMetadata
+// (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
+// successful completion, Operation.response will be Empty.
 func (r *ProjectsRegionsWorkflowTemplatesService) Instantiate(name string, instantiateworkflowtemplaterequest *InstantiateWorkflowTemplateRequest) *ProjectsRegionsWorkflowTemplatesInstantiateCall {
 	c := &ProjectsRegionsWorkflowTemplatesInstantiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13911,11 +13917,10 @@ type ProjectsRegionsWorkflowTemplatesInstantiateInlineCall struct {
 // aborted via operations.cancel. This will cause any inflight jobs to
 // be cancelled and workflow-owned clusters to be deleted.The
 // Operation.metadata will be WorkflowMetadata
-// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dat
-// aproc.v1#workflowmetadata). Also see Using WorkflowMetadata
-// (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#u
-// sing_workflowmetadata).On successful completion, Operation.response
-// will be Empty.
+// (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#workflowmetadata).
+// Also see Using WorkflowMetadata
+// (https://cloud.google.com/dataproc/docs/concepts/workflows/debugging#using_workflowmetadata).On
+// successful completion, Operation.response will be Empty.
 func (r *ProjectsRegionsWorkflowTemplatesService) InstantiateInline(parent string, workflowtemplate *WorkflowTemplate) *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall {
 	c := &ProjectsRegionsWorkflowTemplatesInstantiateInlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

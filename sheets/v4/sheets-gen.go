@@ -4519,8 +4519,7 @@ func (s *DataSourceObjectReferences) MarshalJSON() ([]byte, error) {
 type DataSourceParameter struct {
 	// Name: Named parameter. Must be a legitimate identifier for the
 	// DataSource that supports it. For example, BigQuery identifier
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical
-	// #identifiers).
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical#identifiers).
 	Name string `json:"name,omitempty"`
 
 	// NamedRangeId: ID of a NamedRange. Its size must be 1x1.
@@ -6444,8 +6443,12 @@ type FindReplaceRequest struct {
 
 	// SearchByRegex: True if the find value is a regex. The regular
 	// expression and replacement should follow Java regex rules at
-	// https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html. The replacement string is allowed to refer to capturing groups. For example, if one cell has the contents "Google Sheets" and another has "Google Docs", then searching for "o.* (.*)" with a replacement of "$1 Rocks" would change the contents of the cells to "GSheets Rocks" and "GDocs Rocks"
-	// respectively.
+	// https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html.
+	// The replacement string is allowed to refer to capturing groups. For
+	// example, if one cell has the contents "Google Sheets" and another
+	// has "Google Docs", then searching for "o.* (.*)" with a
+	// replacement of "$1 Rocks" would change the contents of the cells to
+	// "GSheets Rocks" and "GDocs Rocks" respectively.
 	SearchByRegex bool `json:"searchByRegex,omitempty"`
 
 	// SheetId: The sheet to find/replace over.

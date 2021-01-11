@@ -2783,8 +2783,8 @@ type LocationFilter struct {
 	// "Liverpool, UK". Set this field if all the jobs to search against are
 	// from a same region, or jobs are world-wide, but the job seeker is
 	// from a specific region. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: "CH" for
-	// Switzerland.
+	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// TelecommutePreference: Optional. Allows the client to return jobs
@@ -3318,8 +3318,8 @@ type PostalAddress struct {
 	// RegionCode: Required. CLDR region code of the country/region of the
 	// address. This is never inferred and it is up to the user to ensure
 	// the value is correct. See http://cldr.unicode.org/ and
-	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: "CH" for
-	// Switzerland.
+	// http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+	// for details. Example: "CH" for Switzerland.
 	RegionCode string `json:"regionCode,omitempty"`
 
 	// Revision: The schema revision of the `PostalAddress`. This must be

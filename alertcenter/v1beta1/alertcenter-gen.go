@@ -733,8 +733,7 @@ type CloudPubsubTopic struct {
 	PayloadFormat string `json:"payloadFormat,omitempty"`
 
 	// TopicName: The `name` field of a Cloud Pubsub [Topic]
-	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topic
-	// s#Topic).
+	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topics#Topic).
 	TopicName string `json:"topicName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PayloadFormat") to

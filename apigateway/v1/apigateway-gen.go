@@ -219,8 +219,9 @@ type ApigatewayApi struct {
 
 	// ManagedService: Optional. Immutable. The name of a Google Managed
 	// Service (
-	// https://cloud.google.com/service-infrastructure/docs/glossary#managed). If not specified, a new Service will automatically be created in the same project as this
-	// API.
+	// https://cloud.google.com/service-infrastructure/docs/glossary#managed).
+	// If not specified, a new Service will automatically be created in the
+	// same project as this API.
 	ManagedService string `json:"managedService,omitempty"`
 
 	// Name: Output only. Resource name of the API. Format:
@@ -298,8 +299,12 @@ type ApigatewayApiConfig struct {
 
 	// ManagedServiceConfigs: Optional. Service Configuration files. At
 	// least one must be included when using gRPC service definitions. See
-	// https://cloud.google.com/endpoints/docs/grpc/grpc-service-config#service_configuration_overview for the expected file contents. If multiple files are specified, the files are merged with the following rules: * All singular scalar fields are merged using "last one wins" semantics in the order of the files uploaded. * Repeated fields are concatenated. * Singular embedded messages are merged using these rules for nested
-	// fields.
+	// https://cloud.google.com/endpoints/docs/grpc/grpc-service-config#service_configuration_overview
+	// for the expected file contents. If multiple files are specified, the
+	// files are merged with the following rules: * All singular scalar
+	// fields are merged using "last one wins" semantics in the order of the
+	// files uploaded. * Repeated fields are concatenated. * Singular
+	// embedded messages are merged using these rules for nested fields.
 	ManagedServiceConfigs []*ApigatewayApiConfigFile `json:"managedServiceConfigs,omitempty"`
 
 	// Name: Output only. Resource name of the API Config. Format:

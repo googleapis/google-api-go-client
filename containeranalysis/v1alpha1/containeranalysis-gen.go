@@ -2325,8 +2325,9 @@ type PgpSignedAttestation struct {
 	// Possible values:
 	//   "CONTENT_TYPE_UNSPECIFIED" - `ContentType` is not set.
 	//   "SIMPLE_SIGNING_JSON" - Atomic format attestation signature. See
-	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276c3e0f64e77723e7/docs/atomic-signature.md The payload extracted from `signature` is a JSON blob conforming to the linked
-	// schema.
+	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276c3e0f64e77723e7/docs/atomic-signature.md
+	// The payload extracted from `signature` is a JSON blob conforming to
+	// the linked schema.
 	ContentType string `json:"contentType,omitempty"`
 
 	// PgpKeyId: The cryptographic fingerprint of the key used to generate
@@ -3064,7 +3065,8 @@ func (s *UpgradeOccurrence) MarshalJSON() ([]byte, error) {
 
 // Version: Version contains structured information about the version of
 // the package. For a discussion of this in Debian/Ubuntu:
-// http://serverfault.com/questions/604541/debian-packages-version-convention For a discussion of this in Redhat/Fedora/Centos:
+// http://serverfault.com/questions/604541/debian-packages-version-convention
+// For a discussion of this in Redhat/Fedora/Centos:
 // http://blog.jasonantman.com/2014/07/how-yum-and-rpm-compare-versions/
 type Version struct {
 	// Epoch: Used to correct mistakes in the version numbering scheme.

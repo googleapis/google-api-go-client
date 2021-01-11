@@ -11580,8 +11580,7 @@ type GoogleCloudDialogflowV2WebhookResponse struct {
 	// (https://cloud.google.com/dialogflow/docs/integrations/aog) for rich
 	// response messages. See the format definition at Google Assistant
 	// Dialogflow webhook format
-	// (https://developers.google.com/assistant/actions/build/json/dialogflow
-	// -webhook-json)
+	// (https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// SessionEntityTypes: Optional. Additional session entity types to
@@ -14503,8 +14502,7 @@ type GoogleCloudDialogflowV2beta1WebhookResponse struct {
 	// (https://cloud.google.com/dialogflow/docs/integrations/aog) for rich
 	// response messages. See the format definition at Google Assistant
 	// Dialogflow webhook format
-	// (https://developers.google.com/assistant/actions/build/json/dialogflow
-	// -webhook-json)
+	// (https://developers.google.com/assistant/actions/build/json/dialogflow-webhook-json)
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// SessionEntityTypes: Optional. Additional session entity types to

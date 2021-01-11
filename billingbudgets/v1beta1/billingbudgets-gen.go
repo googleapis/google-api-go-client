@@ -180,8 +180,8 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	// the full REST resource name of a monitoring notification channel with
 	// the form `projects/{project_id}/notificationChannels/{channel_id}`. A
 	// maximum of 5 channels are allowed. See
-	// https://cloud.google.com/billing/docs/how-to/budgets-notification-recipients for more
-	// details.
+	// https://cloud.google.com/billing/docs/how-to/budgets-notification-recipients
+	// for more details.
 	MonitoringNotificationChannels []string `json:"monitoringNotificationChannels,omitempty"`
 
 	// PubsubTopic: Optional. The name of the Pub/Sub topic where budget
@@ -189,8 +189,13 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	// `projects/{project_id}/topics/{topic_id}`. Updates are sent at
 	// regular intervals to the topic. The topic needs to be created before
 	// the budget is created; see
-	// https://cloud.google.com/billing/docs/how-to/budgets#manage-notifications for more details. Caller is expected to have `pubsub.topics.setIamPolicy` permission on the topic when it's set for a budget, otherwise, the API call will fail with PERMISSION_DENIED. See https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications for more details on Pub/Sub roles and
-	// permissions.
+	// https://cloud.google.com/billing/docs/how-to/budgets#manage-notifications
+	// for more details. Caller is expected to have
+	// `pubsub.topics.setIamPolicy` permission on the topic when it's set
+	// for a budget, otherwise, the API call will fail with
+	// PERMISSION_DENIED. See
+	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications
+	// for more details on Pub/Sub roles and permissions.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
 	// SchemaVersion: Optional. The schema version of the notification sent
@@ -363,8 +368,7 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// calculations. If Filter.credit_types_treatment is **not**
 	// INCLUDE_SPECIFIED_CREDITS, this field must be empty. See a list of
 	// acceptable credit type values
-	// (https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tab
-	// les#credits-type).
+	// (https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tables#credits-type).
 	CreditTypes []string `json:"creditTypes,omitempty"`
 
 	// CreditTypesTreatment: Optional. If not set, default behavior is

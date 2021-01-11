@@ -862,11 +862,9 @@ type IamPolicyAnalysisQuery struct {
 	// (such as "folders/123"), a project ID (such as
 	// "projects/my-project-id"), or a project number (such as
 	// "projects/12345"). To know how to get organization id, visit here
-	// (https://cloud.google.com/resource-manager/docs/creating-managing-orga
-	// nization#retrieving_your_organization_id). To know how to get folder
-	// or project id, visit here
-	// (https://cloud.google.com/resource-manager/docs/creating-managing-fold
-	// ers#viewing_or_listing_folders_and_projects).
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+	// To know how to get folder or project id, visit here
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceSelector: Optional. Specifies a resource for analysis.
@@ -1134,8 +1132,7 @@ type ResourceSelector struct {
 	// FullResourceName: Required. The full resource name
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 	// of a resource of supported resource types
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#a
-	// nalyzable_asset_types).
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
@@ -1259,8 +1256,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(an
 // Required. The full resource name
 // (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 // of a resource of supported resource types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#a
-// nalyzable_asset_types).
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).
 func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(analysisQueryResourceSelectorFullResourceName string) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.resourceSelector.fullResourceName", analysisQueryResourceSelectorFullResourceName)
 	return c

@@ -219,8 +219,9 @@ type ApigatewayApi struct {
 
 	// ManagedService: Optional. Immutable. The name of a Google Managed
 	// Service (
-	// https://cloud.google.com/service-infrastructure/docs/glossary#managed). If not specified, a new Service will automatically be created in the same project as this
-	// API.
+	// https://cloud.google.com/service-infrastructure/docs/glossary#managed).
+	// If not specified, a new Service will automatically be created in the
+	// same project as this API.
 	ManagedService string `json:"managedService,omitempty"`
 
 	// Name: Output only. Resource name of the API. Format:
@@ -301,8 +302,12 @@ type ApigatewayApiConfig struct {
 
 	// ManagedServiceConfigs: Optional. Service Configuration files. At
 	// least one must be included when using gRPC service definitions. See
-	// https://cloud.google.com/endpoints/docs/grpc/grpc-service-config#service_configuration_overview for the expected file contents. If multiple files are specified, the files are merged with the following rules: * All singular scalar fields are merged using "last one wins" semantics in the order of the files uploaded. * Repeated fields are concatenated. * Singular embedded messages are merged using these rules for nested
-	// fields.
+	// https://cloud.google.com/endpoints/docs/grpc/grpc-service-config#service_configuration_overview
+	// for the expected file contents. If multiple files are specified, the
+	// files are merged with the following rules: * All singular scalar
+	// fields are merged using "last one wins" semantics in the order of the
+	// files uploaded. * Repeated fields are concatenated. * Singular
+	// embedded messages are merged using these rules for nested fields.
 	ManagedServiceConfigs []*ApigatewayApiConfigFile `json:"managedServiceConfigs,omitempty"`
 
 	// Name: Output only. Resource name of the API Config. Format:
@@ -565,9 +570,8 @@ func (s *ApigatewayAuditLogConfig) MarshalJSON() ([]byte, error) {
 type ApigatewayBackendConfig struct {
 	// GoogleServiceAccount: Google Cloud IAM service account used to sign
 	// OIDC tokens for backends that have authentication configured
-	// (https://cloud.google.com/service-infrastructure/docs/service-manageme
-	// nt/reference/rest/v1/services.configs#backend). This may either be
-	// the Service Account's email (i.e.
+	// (https://cloud.google.com/service-infrastructure/docs/service-management/reference/rest/v1/services.configs#backend).
+	// This may either be the Service Account's email (i.e.
 	// "{ACCOUNT_ID}@{PROJECT}.iam.gserviceaccount.com") or its full
 	// resource name (i.e. "projects/{PROJECT}/accounts/{UNIQUE_ID}"). This
 	// is most often used when the backend is a GCP resource such as a Cloud
@@ -575,8 +579,7 @@ type ApigatewayBackendConfig struct {
 	// sent as an authorization header bearer token. The audience of the
 	// OIDC token is configured in the associated Service Config in the
 	// BackendRule option
-	// (https://github.com/googleapis/googleapis/blob/master/google/api/backe
-	// nd.proto#L125).
+	// (https://github.com/googleapis/googleapis/blob/master/google/api/backend.proto#L125).
 	GoogleServiceAccount string `json:"googleServiceAccount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

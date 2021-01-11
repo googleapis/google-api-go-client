@@ -1199,15 +1199,14 @@ type FhirStore struct {
 
 	// EnableUpdateCreate: Whether this FHIR store has the updateCreate
 	// capability
-	// (https://www.hl7.org/fhir/capabilitystatement-definitions.html#Capabil
-	// ityStatement.rest.resource.updateCreate). This determines if the
-	// client can use an Update operation to create a new resource with a
-	// client-specified ID. If false, all IDs are server-assigned through
-	// the Create operation and attempts to update a non-existent resource
-	// return errors. Be careful with the audit logs if client-specified
-	// resource IDs contain sensitive data such as patient identifiers,
-	// those IDs are part of the FHIR resource path recorded in Cloud audit
-	// logs and Cloud Pub/Sub notifications.
+	// (https://www.hl7.org/fhir/capabilitystatement-definitions.html#CapabilityStatement.rest.resource.updateCreate).
+	// This determines if the client can use an Update operation to create a
+	// new resource with a client-specified ID. If false, all IDs are
+	// server-assigned through the Create operation and attempts to update a
+	// non-existent resource return errors. Be careful with the audit logs
+	// if client-specified resource IDs contain sensitive data such as
+	// patient identifiers, those IDs are part of the FHIR resource path
+	// recorded in Cloud audit logs and Cloud Pub/Sub notifications.
 	EnableUpdateCreate bool `json:"enableUpdateCreate,omitempty"`
 
 	// Labels: User-supplied key-value pairs used to organize FHIR stores.
@@ -1239,11 +1238,11 @@ type FhirStore struct {
 	// is removed from the list, the server stops streaming to that
 	// location. Before adding a new config, you must add the required
 	// `bigquery.dataEditor`
-	// (https://cloud.google.com/bigquery/docs/access-control#bigquery.dataEd
-	// itor) role to your project's **Cloud Healthcare Service Agent**
-	// service account (https://cloud.google.com/iam/docs/service-accounts).
-	// Some lag (typically on the order of dozens of seconds) is expected
-	// before the results show up in the streaming destination.
+	// (https://cloud.google.com/bigquery/docs/access-control#bigquery.dataEditor)
+	// role to your project's **Cloud Healthcare Service Agent** service
+	// account (https://cloud.google.com/iam/docs/service-accounts). Some
+	// lag (typically on the order of dozens of seconds) is expected before
+	// the results show up in the streaming destination.
 	StreamConfigs []*StreamConfig `json:"streamConfigs,omitempty"`
 
 	// Version: Immutable. The FHIR specification version that this FHIR
@@ -1604,8 +1603,23 @@ func (s *GoogleCloudHealthcareV1FhirGcsSource) MarshalJSON() ([]byte, error) {
 type Hl7V2NotificationConfig struct {
 	// Filter: Restricts notifications sent for messages matching a filter.
 	// If this is empty, all messages are matched. Syntax:
-	// https://cloud.google.com/appengine/docs/standard/python/search/query_strings The following fields and functions are available for filtering: * `message_type`, from the MSH-9.1 field. For example, `NOT message_type = "ADT". * `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in the dataset's time_zone, from the MSH-7 segment. For example, `send_date < "2017-01-02". * `send_time`, the timestamp when the message was sent, using the RFC3339 time format for comparisons, from the MSH-7 segment. For example, `send_time < "2017-01-02T00:00:00-05:00". * `send_facility`, the care center that the message came from, from the MSH-4 segment. For example, `send_facility = "ABC". * `PatientId(value, type)`, which matches if the message lists a patient having an ID of the given value and type in the PID-2, PID-3, or PID-4 segments. For example, `PatientId("123456", "MRN")`. * `labels.x`, a string value of the label with key `x` as set using the Message.labels map. For example, `labels."priority"="high". The operator `:*` can be used to assert the existence of a label. For example,
-	// `labels."priority":*`.
+	// https://cloud.google.com/appengine/docs/standard/python/search/query_strings
+	// The following fields and functions are available for filtering: *
+	// `message_type`, from the MSH-9.1 field. For example, `NOT
+	// message_type = "ADT". * `send_date` or `sendDate`, the YYYY-MM-DD
+	// date the message was sent in the dataset's time_zone, from the MSH-7
+	// segment. For example, `send_date < "2017-01-02". * `send_time`, the
+	// timestamp when the message was sent, using the RFC3339 time format
+	// for comparisons, from the MSH-7 segment. For example, `send_time <
+	// "2017-01-02T00:00:00-05:00". * `send_facility`, the care center that
+	// the message came from, from the MSH-4 segment. For example,
+	// `send_facility = "ABC". * `PatientId(value, type)`, which matches if
+	// the message lists a patient having an ID of the given value and type
+	// in the PID-2, PID-3, or PID-4 segments. For example,
+	// `PatientId("123456", "MRN")`. * `labels.x`, a string value of the
+	// label with key `x` as set using the Message.labels map. For example,
+	// `labels."priority"="high". The operator `:*` can be used to assert
+	// the existence of a label. For example, `labels."priority":*`.
 	Filter string `json:"filter,omitempty"`
 
 	// PubsubTopic: The Cloud Pub/Sub
@@ -3108,7 +3122,8 @@ func (s *StreamConfig) MarshalJSON() ([]byte, error) {
 type TagFilterList struct {
 	// Tags: Tags to be filtered. Tags must be DICOM Data Elements, File
 	// Meta Elements, or Directory Structuring Elements, as defined at:
-	// http://dicom.nema.org/medical/dicom/current/output/html/part06.html#table_6-1,. They may be provided by "Keyword" or "Tag". For example "PatientID",
+	// http://dicom.nema.org/medical/dicom/current/output/html/part06.html#table_6-1,.
+	// They may be provided by "Keyword" or "Tag". For example "PatientID",
 	// "00100010".
 	Tags []string `json:"tags,omitempty"`
 
@@ -6003,7 +6018,8 @@ func (r *ProjectsLocationsDatasetsDicomStoresService) List(parent string) *Proje
 
 // Filter sets the optional parameter "filter": Restricts stores
 // returned to those matching a filter. Syntax:
-// https://cloud.google.com/appengine/docs/standard/python/search/query_strings Only filtering on labels is supported. For example,
+// https://cloud.google.com/appengine/docs/standard/python/search/query_strings
+// Only filtering on labels is supported. For example,
 // `labels.key=value`.
 func (c *ProjectsLocationsDatasetsDicomStoresListCall) Filter(filter string) *ProjectsLocationsDatasetsDicomStoresListCall {
 	c.urlParams_.Set("filter", filter)
@@ -6357,15 +6373,14 @@ type ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall struct {
 
 // SearchForInstances: SearchForInstances returns a list of matching
 // instances. See [Search Transaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.6). For details on the implementation of SearchForInstances,
-// see Search transaction
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6).
+// For details on the implementation of SearchForInstances, see Search
+// transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call SearchForInstances, see Searching for studies,
 // series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_f
-// or_studies_series_instances_and_frames).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6489,15 +6504,14 @@ type ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall struct {
 
 // SearchForSeries: SearchForSeries returns a list of matching series.
 // See [Search Transaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.6). For details on the implementation of SearchForSeries, see
-// Search transaction
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6).
+// For details on the implementation of SearchForSeries, see Search
+// transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call SearchForSeries, see Searching for studies, series,
 // instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_f
-// or_studies_series_instances_and_frames).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6621,15 +6635,14 @@ type ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall struct {
 
 // SearchForStudies: SearchForStudies returns a list of matching
 // studies. See [Search Transaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.6). For details on the implementation of SearchForStudies, see
-// Search transaction
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6).
+// For details on the implementation of SearchForStudies, see Search
+// transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call SearchForStudies, see Searching for studies, series,
 // instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_f
-// or_studies_series_instances_and_frames).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 func (r *ProjectsLocationsDatasetsDicomStoresService) SearchForStudies(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6895,14 +6908,13 @@ type ProjectsLocationsDatasetsDicomStoresStoreInstancesCall struct {
 
 // StoreInstances: StoreInstances stores DICOM instances associated with
 // study instance unique identifiers (SUID). See [Store Transaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.5). For details on the implementation of StoreInstances, see
-// Store transaction
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5).
+// For details on the implementation of StoreInstances, see Store
+// transaction
 // (https://cloud.google.com/healthcare/docs/dicom#store_transaction) in
 // the Cloud Healthcare API conformance statement. For samples that show
 // how to call StoreInstances, see Storing DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dic
-// om_data).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
 func (r *ProjectsLocationsDatasetsDicomStoresService) StoreInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStoreInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7166,8 +7178,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall struct {
 // study could result in the new instances not appearing in search
 // results until the deletion operation finishes. For samples that show
 // how to call DeleteStudy, see Deleting a study, series, or instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_
-// study_series_or_instance).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7311,14 +7322,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall struct {
 // RetrieveMetadata: RetrieveStudyMetadata returns instance associated
 // with the given study presented as metadata with the bulk data
 // removed. See [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4). For details on the implementation of
-// RetrieveStudyMetadata, see Metadata resources
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// For details on the implementation of RetrieveStudyMetadata, see
+// Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveStudyMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// metadata).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7442,14 +7452,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall struct {
 
 // RetrieveStudy: RetrieveStudy returns all instances within the given
 // study. See [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4). For details on the implementation of RetrieveStudy, see
-// DICOM study/series/instances
-// (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinsta
-// nces) in the Cloud Healthcare API conformance statement. For samples
-// that show how to call RetrieveStudy, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// dicom_data).
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// For details on the implementation of RetrieveStudy, see DICOM
+// study/series/instances
+// (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
+// in the Cloud Healthcare API conformance statement. For samples that
+// show how to call RetrieveStudy, see Retrieving DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) RetrieveStudy(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7573,15 +7582,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall struct {
 
 // SearchForInstances: SearchForInstances returns a list of matching
 // instances. See [Search Transaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.6). For details on the implementation of SearchForInstances,
-// see Search transaction
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6).
+// For details on the implementation of SearchForInstances, see Search
+// transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call SearchForInstances, see Searching for studies,
 // series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_f
-// or_studies_series_instances_and_frames).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7705,15 +7713,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall struct {
 
 // SearchForSeries: SearchForSeries returns a list of matching series.
 // See [Search Transaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.6). For details on the implementation of SearchForSeries, see
-// Search transaction
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6).
+// For details on the implementation of SearchForSeries, see Search
+// transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call SearchForSeries, see Searching for studies, series,
 // instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_f
-// or_studies_series_instances_and_frames).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) SearchForSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7837,14 +7844,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall struct {
 
 // StoreInstances: StoreInstances stores DICOM instances associated with
 // study instance unique identifiers (SUID). See [Store Transaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.5). For details on the implementation of StoreInstances, see
-// Store transaction
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5).
+// For details on the implementation of StoreInstances, see Store
+// transaction
 // (https://cloud.google.com/healthcare/docs/dicom#store_transaction) in
 // the Cloud Healthcare API conformance statement. For samples that show
 // how to call StoreInstances, see Storing DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dic
-// om_data).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#storing_dicom_data).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesService) StoreInstances(parent string, dicomWebPath string, body_ io.Reader) *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7964,8 +7970,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall struct {
 // search results until the deletion operation finishes. For samples
 // that show how to call DeleteSeries, see Deleting a study, series, or
 // instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_
-// study_series_or_instance).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8110,14 +8115,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall struc
 // RetrieveMetadata: RetrieveSeriesMetadata returns instance associated
 // with the given study and series, presented as metadata with the bulk
 // data removed. See [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4). For details on the implementation of
-// RetrieveSeriesMetadata, see Metadata resources
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// For details on the implementation of RetrieveSeriesMetadata, see
+// Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveSeriesMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// metadata).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8241,14 +8245,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall struct 
 
 // RetrieveSeries: RetrieveSeries returns all instances within the given
 // study and series. See [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4). For details on the implementation of RetrieveSeries, see
-// DICOM study/series/instances
-// (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinsta
-// nces) in the Cloud Healthcare API conformance statement. For samples
-// that show how to call RetrieveSeries, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// dicom_data).
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// For details on the implementation of RetrieveSeries, see DICOM
+// study/series/instances
+// (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
+// in the Cloud Healthcare API conformance statement. For samples that
+// show how to call RetrieveSeries, see Retrieving DICOM data
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) RetrieveSeries(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8372,15 +8375,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall str
 
 // SearchForInstances: SearchForInstances returns a list of matching
 // instances. See [Search Transaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.6). For details on the implementation of SearchForInstances,
-// see Search transaction
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6).
+// For details on the implementation of SearchForInstances, see Search
+// transaction
 // (https://cloud.google.com/healthcare/docs/dicom#search_transaction)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call SearchForInstances, see Searching for studies,
 // series, instances, and frames
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_f
-// or_studies_series_instances_and_frames).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#searching_for_studies_series_instances_and_frames).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesService) SearchForInstances(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8507,8 +8509,7 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall struct
 // series search results can take a few seconds to be updated after an
 // instance is deleted using DeleteInstance. For samples that show how
 // to call DeleteInstance, see Deleting a study, series, or instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_
-// study_series_or_instance).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#deleting_a_study_series_or_instance).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) Delete(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8653,16 +8654,15 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceC
 // RetrieveInstance: RetrieveInstance returns instance associated with
 // the given study, series, and SOP Instance UID. See
 // [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4). For details on the implementation of RetrieveInstance, see
-// DICOM study/series/instances
-// (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinsta
-// nces) and DICOM instances
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// For details on the implementation of RetrieveInstance, see DICOM
+// study/series/instances
+// (https://cloud.google.com/healthcare/docs/dicom#dicom_studyseriesinstances)
+// and DICOM instances
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_instances) in
 // the Cloud Healthcare API conformance statement. For samples that show
 // how to call RetrieveInstance, see Retrieving an instance
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// an_instance).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_an_instance).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveInstance(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8788,14 +8788,13 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataC
 // associated with the given study, series, and SOP Instance UID
 // presented as metadata with the bulk data removed. See
 // [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4). For details on the implementation of
-// RetrieveInstanceMetadata, see Metadata resources
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// For details on the implementation of RetrieveInstanceMetadata, see
+// Metadata resources
 // (https://cloud.google.com/healthcare/docs/dicom#metadata_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveInstanceMetadata, see Retrieving metadata
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// metadata).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_metadata).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveMetadata(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8920,15 +8919,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedC
 // RetrieveRendered: RetrieveRenderedInstance returns instance
 // associated with the given study, series, and SOP Instance UID in an
 // acceptable Rendered Media Type. See [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4). For details on the implementation of
-// RetrieveRenderedInstance, see Rendered resources
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// For details on the implementation of RetrieveRenderedInstance, see
+// Rendered resources
 // (https://cloud.google.com/healthcare/docs/dicom#rendered_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveRenderedInstance, see Retrieving consumer
 // image formats
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// consumer_image_formats).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesService) RetrieveRendered(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9053,14 +9051,12 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFra
 // RetrieveFrames: RetrieveFrames returns instances associated with the
 // given study, series, SOP Instance UID and frame numbers. See
 // [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4}. For details on the implementation of RetrieveFrames, see
-// DICOM frames
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4}.
+// For details on the implementation of RetrieveFrames, see DICOM frames
 // (https://cloud.google.com/healthcare/docs/dicom#dicom_frames) in the
 // Cloud Healthcare API conformance statement. For samples that show how
 // to call RetrieveFrames, see Retrieving DICOM data
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// dicom_data).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_dicom_data).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService) RetrieveFrames(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9185,15 +9181,14 @@ type ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRen
 // RetrieveRendered: RetrieveRenderedFrames returns instances associated
 // with the given study, series, SOP Instance UID and frame numbers in
 // an acceptable Rendered Media Type. See [RetrieveTransaction]
-// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#s
-// ect_10.4). For details on the implementation of
-// RetrieveRenderedFrames, see Rendered resources
+// (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4).
+// For details on the implementation of RetrieveRenderedFrames, see
+// Rendered resources
 // (https://cloud.google.com/healthcare/docs/dicom#rendered_resources)
 // in the Cloud Healthcare API conformance statement. For samples that
 // show how to call RetrieveRenderedFrames, see Retrieving consumer
 // image formats
-// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_
-// consumer_image_formats).
+// (https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieving_consumer_image_formats).
 func (r *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesService) RetrieveRendered(parent string, dicomWebPath string) *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall {
 	c := &ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10403,7 +10398,8 @@ func (r *ProjectsLocationsDatasetsFhirStoresService) List(parent string) *Projec
 
 // Filter sets the optional parameter "filter": Restricts stores
 // returned to those matching a filter. Syntax:
-// https://cloud.google.com/appengine/docs/standard/python/search/query_strings Only filtering on labels is supported, for example
+// https://cloud.google.com/appengine/docs/standard/python/search/query_strings
+// Only filtering on labels is supported, for example
 // `labels.key=value`.
 func (c *ProjectsLocationsDatasetsFhirStoresListCall) Filter(filter string) *ProjectsLocationsDatasetsFhirStoresListCall {
 	c.urlParams_.Set("filter", filter)
@@ -11044,12 +11040,12 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 // PatientEverything: Retrieves a Patient resource and resources related
 // to that patient. Implements the FHIR extended operation
 // Patient-everything (DSTU2
-// (http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html
-// #everything), STU3
-// (http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#
-// everything), R4
-// (http://hl7.org/implement/standards/fhir/R4/patient-operations.html#ev
-// erything)). On success, the response body will contain a JSON-encoded
+// (http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html#everything),
+// STU3
+// (http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything),
+// R4
+// (http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)).
+// On success, the response body will contain a JSON-encoded
 // representation of a `Bundle` resource of type `searchset`, containing
 // the results of the operation. Errors generated by the FHIR store will
 // contain a JSON-encoded `OperationOutcome` resource describing the
@@ -11400,16 +11396,16 @@ type ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall struct {
 }
 
 // Capabilities: Gets the FHIR capability statement (STU3
-// (http://hl7.org/implement/standards/fhir/STU3/capabilitystatement.html
-// ), R4
-// (http://hl7.org/implement/standards/fhir/R4/capabilitystatement.html))
-// , or the conformance statement
+// (http://hl7.org/implement/standards/fhir/STU3/capabilitystatement.html),
+// R4
+// (http://hl7.org/implement/standards/fhir/R4/capabilitystatement.html)),
+// or the conformance statement
 // (http://hl7.org/implement/standards/fhir/DSTU2/conformance.html) in
 // the DSTU2 case for the store, which contains a description of
 // functionality supported by the server. Implements the FHIR standard
 // capabilities interaction (STU3
 // (http://hl7.org/implement/standards/fhir/STU3/http.html#capabilities),
-//  R4
+// R4
 // (http://hl7.org/implement/standards/fhir/R4/http.html#capabilities)),
 // or the conformance interaction
 // (http://hl7.org/implement/standards/fhir/DSTU2/http.html#conformance)
@@ -11764,7 +11760,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall struct {
 // ExecuteBundle: Executes all the requests in the given Bundle.
 // Implements the FHIR standard batch/transaction interaction (DSTU2
 // (http://hl7.org/implement/standards/fhir/DSTU2/http.html#transaction),
-//  STU3
+// STU3
 // (http://hl7.org/implement/standards/fhir/STU3/http.html#transaction),
 // R4
 // (http://hl7.org/implement/standards/fhir/R4/http.html#transaction)).
@@ -12355,12 +12351,12 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // indicates what search parameters are supported on each FHIR resource.
 // A list of all search parameters defined by the specification can be
 // found in the FHIR Search Parameter Registry (STU3
-// (http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry
-// .html), R4
-// (http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.h
-// tml)). FHIR search parameters for DSTU2 can be found on each
-// resource's definition page. Supported search modifiers: `:missing`,
-// `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`,
+// (http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html),
+// R4
+// (http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
+// FHIR search parameters for DSTU2 can be found on each resource's
+// definition page. Supported search modifiers: `:missing`, `:exact`,
+// `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`,
 // `:[type]`, `:not`, and `:recurse`. Supported search result
 // parameters: `_sort`, `_count`, `_include`, `_revinclude`,
 // `_summary=text`, `_summary=data`, and `_elements`. The maximum number
@@ -13329,7 +13325,8 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) List(parent string) *Proje
 
 // Filter sets the optional parameter "filter": Restricts stores
 // returned to those matching a filter. Syntax:
-// https://cloud.google.com/appengine/docs/standard/python/search/query_strings Only filtering on labels is supported. For example,
+// https://cloud.google.com/appengine/docs/standard/python/search/query_strings
+// Only filtering on labels is supported. For example,
 // `labels.key=value`.
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Filter(filter string) *ProjectsLocationsDatasetsHl7V2StoresListCall {
 	c.urlParams_.Set("filter", filter)
@@ -14583,8 +14580,23 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) List(parent string
 
 // Filter sets the optional parameter "filter": Restricts messages
 // returned to those matching a filter. Syntax:
-// https://cloud.google.com/appengine/docs/standard/python/search/query_strings Fields/functions available for filtering are: * `message_type`, from the MSH-9.1 field. For example, `NOT message_type = "ADT". * `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in the dataset's time_zone, from the MSH-7 segment. For example, `send_date < "2017-01-02". * `send_time`, the timestamp when the message was sent, using the RFC3339 time format for comparisons, from the MSH-7 segment. For example, `send_time < "2017-01-02T00:00:00-05:00". * `send_facility`, the care center that the message came from, from the MSH-4 segment. For example, `send_facility = "ABC". * `PatientId(value, type)`, which matches if the message lists a patient having an ID of the given value and type in the PID-2, PID-3, or PID-4 segments. For example, `PatientId("123456", "MRN")`. * `labels.x`, a string value of the label with key `x` as set using the Message.labels map. For example, `labels."priority"="high". The operator `:*` can be used to assert the existence of a label. For example,
-// `labels."priority":*`.
+// https://cloud.google.com/appengine/docs/standard/python/search/query_strings
+// Fields/functions available for filtering are: * `message_type`, from
+// the MSH-9.1 field. For example, `NOT message_type = "ADT". *
+// `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent
+// in the dataset's time_zone, from the MSH-7 segment. For example,
+// `send_date < "2017-01-02". * `send_time`, the timestamp when the
+// message was sent, using the RFC3339 time format for comparisons, from
+// the MSH-7 segment. For example, `send_time <
+// "2017-01-02T00:00:00-05:00". * `send_facility`, the care center that
+// the message came from, from the MSH-4 segment. For example,
+// `send_facility = "ABC". * `PatientId(value, type)`, which matches if
+// the message lists a patient having an ID of the given value and type
+// in the PID-2, PID-3, or PID-4 segments. For example,
+// `PatientId("123456", "MRN")`. * `labels.x`, a string value of the
+// label with key `x` as set using the Message.labels map. For example,
+// `labels."priority"="high". The operator `:*` can be used to assert
+// the existence of a label. For example, `labels."priority":*`.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Filter(filter string) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

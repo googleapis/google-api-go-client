@@ -2662,8 +2662,9 @@ type QueryOptions struct {
 	// queried from SPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS. Executing a
 	// SQL statement with an invalid optimizer version will fail with a
 	// syntax error (`INVALID_ARGUMENT`) status. See
-	// https://cloud.google.com/spanner/docs/query-optimizer/manage-query-optimizer for more information on managing the query optimizer. The `optimizer_version` statement hint has precedence over this
-	// setting.
+	// https://cloud.google.com/spanner/docs/query-optimizer/manage-query-optimizer
+	// for more information on managing the query optimizer. The
+	// `optimizer_version` statement hint has precedence over this setting.
 	OptimizerVersion string `json:"optimizerVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OptimizerVersion") to

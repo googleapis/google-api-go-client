@@ -1906,7 +1906,7 @@ func (c *ProcessesListCall) Header() http.Header {
 
 func (c *ProcessesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2293,7 +2293,7 @@ func (c *ProcessesListScriptProcessesCall) Header() http.Header {
 
 func (c *ProcessesListScriptProcessesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2552,7 +2552,7 @@ func (c *ProjectsCreateCall) Header() http.Header {
 
 func (c *ProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2688,7 +2688,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2841,7 +2841,7 @@ func (c *ProjectsGetContentCall) Header() http.Header {
 
 func (c *ProjectsGetContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3013,7 +3013,7 @@ func (c *ProjectsGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3171,7 +3171,7 @@ func (c *ProjectsUpdateContentCall) Header() http.Header {
 
 func (c *ProjectsUpdateContentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3310,7 +3310,7 @@ func (c *ProjectsDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3449,7 +3449,7 @@ func (c *ProjectsDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3599,7 +3599,7 @@ func (c *ProjectsDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3766,7 +3766,7 @@ func (c *ProjectsDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3935,7 +3935,7 @@ func (c *ProjectsDeploymentsUpdateCall) Header() http.Header {
 
 func (c *ProjectsDeploymentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4083,7 +4083,7 @@ func (c *ProjectsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4233,7 +4233,7 @@ func (c *ProjectsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4401,7 +4401,7 @@ func (c *ProjectsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4540,11 +4540,11 @@ type ScriptsRunCall struct {
 // one of the scopes listed in the Authorization (#authorization-scopes)
 // section; script projects that do not require authorization cannot be
 // executed through this API. To find the correct scopes to include in
-// the authentication token, open the project in the script editor, then
-// select **File > Project properties** and click the **Scopes** tab.
-// The error `403, PERMISSION_DENIED: The caller does not have
-// permission` indicates that the Cloud Platform project used to
-// authorize the request is not the same as the one used by the script.
+// the authentication token, open the script project **Overview** page
+// and scroll down to "Project OAuth Scopes." The error `403,
+// PERMISSION_DENIED: The caller does not have permission` indicates
+// that the Cloud Platform project used to authorize the request is not
+// the same as the one used by the script.
 func (r *ScriptsService) Run(scriptId string, executionrequest *ExecutionRequest) *ScriptsRunCall {
 	c := &ScriptsRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.scriptId = scriptId
@@ -4579,7 +4579,7 @@ func (c *ScriptsRunCall) Header() http.Header {
 
 func (c *ScriptsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4643,7 +4643,7 @@ func (c *ScriptsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a function in an Apps Script project. The script project must be deployed for use with the Apps Script API and the calling application must share the same Cloud Platform project. This method requires authorization with an OAuth 2.0 token that includes at least one of the scopes listed in the [Authorization](#authorization-scopes) section; script projects that do not require authorization cannot be executed through this API. To find the correct scopes to include in the authentication token, open the project in the script editor, then select **File \u003e Project properties** and click the **Scopes** tab. The error `403, PERMISSION_DENIED: The caller does not have permission` indicates that the Cloud Platform project used to authorize the request is not the same as the one used by the script.",
+	//   "description": "Runs a function in an Apps Script project. The script project must be deployed for use with the Apps Script API and the calling application must share the same Cloud Platform project. This method requires authorization with an OAuth 2.0 token that includes at least one of the scopes listed in the [Authorization](#authorization-scopes) section; script projects that do not require authorization cannot be executed through this API. To find the correct scopes to include in the authentication token, open the script project **Overview** page and scroll down to \"Project OAuth Scopes.\" The error `403, PERMISSION_DENIED: The caller does not have permission` indicates that the Cloud Platform project used to authorize the request is not the same as the one used by the script.",
 	//   "flatPath": "v1/scripts/{scriptId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "script.scripts.run",
@@ -4652,7 +4652,7 @@ func (c *ScriptsRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "scriptId": {
-	//       "description": "The script ID of the script to be executed. To find the script ID, open the project in the script editor and select **File \u003e Project properties**.",
+	//       "description": "The script ID of the script to be executed. Find the script ID on the **Project settings** page under \"IDs.\"",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

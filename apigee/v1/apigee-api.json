@@ -6446,7 +6446,7 @@
       }
     }
   },
-  "revision": "20201210",
+  "revision": "20201231",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -8027,7 +8027,7 @@
           "type": "string"
         },
         "email": {
-          "description": "Required. Email address of the developer. This value is used to uniquely identify the developer in Apigee hybrid.",
+          "description": "Required. Email address of the developer. This value is used to uniquely identify the developer in Apigee hybrid. Note that the email address has to be in lowercase only.",
           "type": "string"
         },
         "firstName": {

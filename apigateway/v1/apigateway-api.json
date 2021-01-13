@@ -13,7 +13,7 @@
   "batchPath": "batch",
   "description": "",
   "discoveryVersion": "v1",
-  "documentationLink": " https://cloud.google.com/api-gateway/docs",
+  "documentationLink": "https://cloud.google.com/api-gateway/docs",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1083,7 +1083,7 @@
       }
     }
   },
-  "revision": "20201211",
+  "revision": "20210107",
   "rootUrl": "https://apigateway.googleapis.com/",
   "schemas": {
     "ApigatewayApi": {

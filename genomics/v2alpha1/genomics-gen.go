@@ -1792,7 +1792,9 @@ type VirtualMachine struct {
 	// latest version will still be pulled. The root directory of the ext4
 	// image must contain `image` and `overlay2` directories copied from the
 	// Docker directory of a VM where the desired Docker images have already
-	// been pulled. Only a single image is supported.
+	// been pulled. Any images pulled that are not cached will be stored on
+	// the first cache disk instead of the boot disk. Only a single image is
+	// supported.
 	DockerCacheImages []string `json:"dockerCacheImages,omitempty"`
 
 	// EnableStackdriverMonitoring: Whether Stackdriver monitoring should be
@@ -2067,7 +2069,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2201,7 +2203,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2355,7 +2357,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2543,7 +2545,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2717,7 +2719,7 @@ func (c *ProjectsWorkersCheckInCall) Header() http.Header {
 
 func (c *ProjectsWorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2859,7 +2861,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210112")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

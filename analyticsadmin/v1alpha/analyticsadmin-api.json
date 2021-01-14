@@ -1838,7 +1838,7 @@
       }
     }
   },
-  "revision": "20210112",
+  "revision": "20210113",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {
@@ -2256,6 +2256,11 @@
       "description": "Read-only resource with the tag for sending data from a website to a WebDataStream.",
       "id": "GoogleAnalyticsAdminV1alphaGlobalSiteTag",
       "properties": {
+        "name": {
+          "description": "Output only. Resource name for this GlobalSiteTag resource. Format: properties/{propertyId}/globalSiteTag",
+          "readOnly": true,
+          "type": "string"
+        },
         "snippet": {
           "description": "Immutable. JavaScript code snippet to be pasted as the first item into the head tag of every webpage to measure.",
           "type": "string"

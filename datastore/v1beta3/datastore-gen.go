@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1109,9 +1109,8 @@ func (s *GoogleDatastoreAdminV1beta1Progress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GqlQuery: A [GQL
-// query](https://cloud.google.com/datastore/docs/apis/gql/gql_reference)
-// .
+// GqlQuery: A GQL query
+// (https://cloud.google.com/datastore/docs/apis/gql/gql_reference).
 type GqlQuery struct {
 	// AllowLiterals: When false, the query string must not contain any
 	// literals and instead must bind all values. For example, `SELECT *
@@ -1132,9 +1131,8 @@ type GqlQuery struct {
 	// true.
 	PositionalBindings []*GqlQueryParameter `json:"positionalBindings,omitempty"`
 
-	// QueryString: A string of the format described
-	// [here](https://cloud.google.com/datastore/docs/apis/gql/gql_reference)
-	// .
+	// QueryString: A string of the format described here
+	// (https://cloud.google.com/datastore/docs/apis/gql/gql_reference).
 	QueryString string `json:"queryString,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowLiterals") to
@@ -1714,10 +1712,9 @@ type Query struct {
 	DistinctOn []*PropertyReference `json:"distinctOn,omitempty"`
 
 	// EndCursor: An ending point for the query results. Query cursors are
-	// returned in query result batches and [can only be used to limit the
-	// same
-	// query](https://cloud.google.com/datastore/docs/concepts/queries#cursor
-	// s_limits_and_offsets).
+	// returned in query result batches and can only be used to limit the
+	// same query
+	// (https://cloud.google.com/datastore/docs/concepts/queries#cursors_limits_and_offsets).
 	EndCursor string `json:"endCursor,omitempty"`
 
 	// Filter: The filter to apply.
@@ -1745,10 +1742,9 @@ type Query struct {
 	Projection []*Projection `json:"projection,omitempty"`
 
 	// StartCursor: A starting point for the query results. Query cursors
-	// are returned in query result batches and [can only be used to
-	// continue the same
-	// query](https://cloud.google.com/datastore/docs/concepts/queries#cursor
-	// s_limits_and_offsets).
+	// are returned in query result batches and can only be used to continue
+	// the same query
+	// (https://cloud.google.com/datastore/docs/concepts/queries#cursors_limits_and_offsets).
 	StartCursor string `json:"startCursor,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DistinctOn") to
@@ -2255,7 +2251,7 @@ func (c *ProjectsAllocateIdsCall) Header() http.Header {
 
 func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2395,7 +2391,7 @@ func (c *ProjectsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2536,7 +2532,7 @@ func (c *ProjectsCommitCall) Header() http.Header {
 
 func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2676,7 +2672,7 @@ func (c *ProjectsLookupCall) Header() http.Header {
 
 func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2817,7 +2813,7 @@ func (c *ProjectsReserveIdsCall) Header() http.Header {
 
 func (c *ProjectsReserveIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2957,7 +2953,7 @@ func (c *ProjectsRollbackCall) Header() http.Header {
 
 func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3097,7 +3093,7 @@ func (c *ProjectsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

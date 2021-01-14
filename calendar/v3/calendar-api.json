@@ -12,7 +12,7 @@
           "description": "View events on all your calendars"
         },
         "https://www.googleapis.com/auth/calendar.readonly": {
-          "description": "View your calendars"
+          "description": "See and download any calendar you can access using your Google Calendar"
         },
         "https://www.googleapis.com/auth/calendar.settings.readonly": {
           "description": "View your Calendar settings"
@@ -1723,7 +1723,7 @@
       }
     }
   },
-  "revision": "20201028",
+  "revision": "20201227",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {

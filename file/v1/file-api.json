@@ -672,7 +672,7 @@
       }
     }
   },
-  "revision": "20201208",
+  "revision": "20210105",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "Backup": {
@@ -994,6 +994,11 @@
           "description": "The rollout management policy this maintenance schedule is associated with. When doing reschedule update request, the reschedule should be against this given policy.",
           "type": "string"
         },
+        "scheduleDeadlineTime": {
+          "description": "schedule_deadline_time is the time deadline any schedule start time cannot go beyond, including reschedule. It's normally the initial schedule start time plus a week. If the reschedule type is next window, simply take this value as start time. If reschedule type is IMMEDIATELY or BY_TIME, current or selected time cannot go beyond this deadline.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "startTime": {
           "description": "The scheduled start time for the maintenance.",
           "format": "google-datetime",
@@ -1178,7 +1183,8 @@
             "READY",
             "REPAIRING",
             "DELETING",
-            "ERROR"
+            "ERROR",
+            "RESTORING"
           ],
           "enumDescriptions": [
             "State not set.",
@@ -1186,7 +1192,8 @@
             "The instance is available for use.",
             "Work is being done on the instance. You can get further details from the `statusMessage` field of the `Instance` resource.",
             "The instance is shutting down.",
-            "The instance is experiencing an issue and might be unusable. You can get further details from the `statusMessage` field of the `Instance` resource."
+            "The instance is experiencing an issue and might be unusable. You can get further details from the `statusMessage` field of the `Instance` resource.",
+            "The instance is restoring a backup to an existing file share and may be unusable during this time."
           ],
           "readOnly": true,
           "type": "string"

@@ -409,24 +409,19 @@ type MobileFriendlyIssue struct {
 	// (https://support.google.com/webmasters/answer/6352293#flash_usage).
 	//   "CONFIGURE_VIEWPORT" - Viewsport is not specified using the meta
 	// viewport tag. [Learn more]
-	// (https://support.google.com/webmasters/answer/6352293#viewport_not_con
-	// figured).
+	// (https://support.google.com/webmasters/answer/6352293#viewport_not_configured).
 	//   "FIXED_WIDTH_VIEWPORT" - Viewport defined to a fixed width. [Learn
 	// more]
-	// (https://support.google.com/webmasters/answer/6352293#fixed-width_view
-	// port).
+	// (https://support.google.com/webmasters/answer/6352293#fixed-width_viewport).
 	//   "SIZE_CONTENT_TO_VIEWPORT" - Content not sized to viewport. [Learn
 	// more]
-	// (https://support.google.com/webmasters/answer/6352293#content_not_size
-	// d_to_viewport).
+	// (https://support.google.com/webmasters/answer/6352293#content_not_sized_to_viewport).
 	//   "USE_LEGIBLE_FONT_SIZES" - Font size is too small for easy reading
 	// on a small screen. [Learn More]
-	// (https://support.google.com/webmasters/answer/6352293#small_font_size)
-	// .
+	// (https://support.google.com/webmasters/answer/6352293#small_font_size).
 	//   "TAP_TARGETS_TOO_CLOSE" - Touch elements are too close to each
 	// other. [Learn more]
-	// (https://support.google.com/webmasters/answer/6352293#touch_elements_t
-	// oo_close).
+	// (https://support.google.com/webmasters/answer/6352293#touch_elements_too_close).
 	Rule string `json:"rule,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Rule") to
@@ -719,7 +714,7 @@ func (s *SearchAnalyticsQueryResponse) MarshalJSON() ([]byte, error) {
 // SitemapsListResponse: List of sitemaps.
 type SitemapsListResponse struct {
 	// Sitemap: Contains detailed information about a specific URL submitted
-	// as a [sitemap](https://support.google.com/webmasters/answer/156184).
+	// as a sitemap (https://support.google.com/webmasters/answer/156184).
 	Sitemap []*WmxSitemap `json:"sitemap,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -752,8 +747,8 @@ func (s *SitemapsListResponse) MarshalJSON() ([]byte, error) {
 // SitesListResponse: List of sites with access level information.
 type SitesListResponse struct {
 	// SiteEntry: Contains permission level information about a Search
-	// Console site. For more information, see [Permissions in Search
-	// Console](https://support.google.com/webmasters/answer/2451999).
+	// Console site. For more information, see Permissions in Search Console
+	// (https://support.google.com/webmasters/answer/2451999).
 	SiteEntry []*WmxSite `json:"siteEntry,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -828,8 +823,8 @@ func (s *TestStatus) MarshalJSON() ([]byte, error) {
 }
 
 // WmxSite: Contains permission level information about a Search Console
-// site. For more information, see [Permissions in Search
-// Console](https://support.google.com/webmasters/answer/2451999).
+// site. For more information, see Permissions in Search Console
+// (https://support.google.com/webmasters/answer/2451999).
 type WmxSite struct {
 	// PermissionLevel: The user's permission level for the site.
 	//
@@ -876,8 +871,8 @@ func (s *WmxSite) MarshalJSON() ([]byte, error) {
 }
 
 // WmxSitemap: Contains detailed information about a specific URL
-// submitted as a
-// [sitemap](https://support.google.com/webmasters/answer/156184).
+// submitted as a sitemap
+// (https://support.google.com/webmasters/answer/156184).
 type WmxSitemap struct {
 	// Contents: The various content types in the sitemap.
 	Contents []*WmxSitemapContent `json:"contents,omitempty"`
@@ -1047,7 +1042,7 @@ func (c *SearchanalyticsQueryCall) Header() http.Header {
 
 func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1187,7 +1182,7 @@ func (c *SitemapsDeleteCall) Header() http.Header {
 
 func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1309,7 +1304,7 @@ func (c *SitemapsGetCall) Header() http.Header {
 
 func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1417,7 +1412,7 @@ type SitemapsListCall struct {
 	header_      http.Header
 }
 
-// List:  Lists the [sitemaps-entries](/webmaster-tools/v3/sitemaps)
+// List:  Lists the sitemaps-entries (/webmaster-tools/v3/sitemaps)
 // submitted for this site, or included in the sitemap index file (if
 // `sitemapIndex` is specified in the request).
 func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
@@ -1471,7 +1466,7 @@ func (c *SitemapsListCall) Header() http.Header {
 
 func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1611,7 +1606,7 @@ func (c *SitemapsSubmitCall) Header() http.Header {
 
 func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1720,7 +1715,7 @@ func (c *SitesAddCall) Header() http.Header {
 
 func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1822,7 +1817,7 @@ func (c *SitesDeleteCall) Header() http.Header {
 
 func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1934,7 +1929,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2076,7 +2071,7 @@ func (c *SitesListCall) Header() http.Header {
 
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2197,7 +2192,7 @@ func (c *UrlTestingToolsMobileFriendlyTestRunCall) Header() http.Header {
 
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

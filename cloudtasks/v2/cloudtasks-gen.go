@@ -185,16 +185,16 @@ type ProjectsLocationsQueuesTasksService struct {
 // AppEngineHttpRequest: App Engine HTTP request. The message defines
 // the HTTP request that is sent to an App Engine app when the task is
 // dispatched. Using AppEngineHttpRequest requires
-// [`appengine.applications.get`](https://cloud.google.com/appengine/docs
-// /admin-api/access-control) Google IAM permission for the project and
-// the following scope: `https://www.googleapis.com/auth/cloud-platform`
-// The task will be delivered to the App Engine app which belongs to the
-// same project as the queue. For more information, see [How Requests
-// are
-// Routed](https://cloud.google.com/appengine/docs/standard/python/how-re
-// quests-are-routed) and how routing is affected by [dispatch
-// files](https://cloud.google.com/appengine/docs/python/config/dispatchr
-// ef). Traffic is encrypted during transport and never leaves Google
+// `appengine.applications.get`
+// (https://cloud.google.com/appengine/docs/admin-api/access-control)
+// Google IAM permission for the project and the following scope:
+// `https://www.googleapis.com/auth/cloud-platform` The task will be
+// delivered to the App Engine app which belongs to the same project as
+// the queue. For more information, see How Requests are Routed
+// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)
+// and how routing is affected by dispatch files
+// (https://cloud.google.com/appengine/docs/python/config/dispatchref).
+// Traffic is encrypted during transport and never leaves Google
 // datacenters. Because this traffic is carried over a communication
 // mechanism internal to Google, you cannot explicitly set the protocol
 // (for example, HTTP or HTTPS). The request to the handler, however,
@@ -205,23 +205,22 @@ type ProjectsLocationsQueuesTasksService struct {
 // what the setting is for the task-level app_engine_routing. The `url`
 // that the task will be sent to is: * `url =` host `+` relative_uri
 // Tasks can be dispatched to secure app handlers, unsecure app
-// handlers, and URIs restricted with [`login:
-// admin`](https://cloud.google.com/appengine/docs/standard/python/config
-// /appref). Because tasks are not run as any user, they cannot be
-// dispatched to URIs restricted with [`login:
-// required`](https://cloud.google.com/appengine/docs/standard/python/con
-// fig/appref) Task dispatches also do not follow redirects. The task
-// attempt has succeeded if the app's request handler returns an HTTP
-// response code in the range [`200` - `299`]. The task attempt has
-// failed if the app's handler returns a non-2xx response code or Cloud
-// Tasks does not receive response before the deadline. Failed tasks
-// will be retried according to the retry configuration. `503` (Service
-// Unavailable) is considered an App Engine system error instead of an
-// application error and will cause Cloud Tasks' traffic congestion
-// control to temporarily throttle the queue's dispatches. Unlike other
-// types of task targets, a `429` (Too Many Requests) response from an
-// app handler does not cause traffic congestion control to throttle the
-// queue.
+// handlers, and URIs restricted with `login: admin`
+// (https://cloud.google.com/appengine/docs/standard/python/config/appref).
+// Because tasks are not run as any user, they cannot be dispatched to
+// URIs restricted with `login: required`
+// (https://cloud.google.com/appengine/docs/standard/python/config/appref)
+// Task dispatches also do not follow redirects. The task attempt has
+// succeeded if the app's request handler returns an HTTP response code
+// in the range [`200` - `299`]. The task attempt has failed if the
+// app's handler returns a non-2xx response code or Cloud Tasks does not
+// receive response before the deadline. Failed tasks will be retried
+// according to the retry configuration. `503` (Service Unavailable) is
+// considered an App Engine system error instead of an application error
+// and will cause Cloud Tasks' traffic congestion control to temporarily
+// throttle the queue's dispatches. Unlike other types of task targets,
+// a `429` (Too Many Requests) response from an app handler does not
+// cause traffic congestion control to throttle the queue.
 type AppEngineHttpRequest struct {
 	// AppEngineRouting: Task-level setting for App Engine routing. * If
 	// app_engine_routing_override is set on the queue, this value is used
@@ -252,26 +251,24 @@ type AppEngineHttpRequest struct {
 	// below cannot be set or overridden: * `Host` * `X-Google-*` *
 	// `X-AppEngine-*` In addition, Cloud Tasks sets some headers when the
 	// task is dispatched, such as headers containing information about the
-	// task; see [request
-	// headers](https://cloud.google.com/tasks/docs/creating-appengine-handle
-	// rs#reading_request_headers). These headers are set only when the task
-	// is dispatched, so they are not visible when the task is returned in a
-	// Cloud Tasks response. Although there is no specific limit for the
-	// maximum number of headers or the size, there is a limit on the
-	// maximum size of the Task. For more information, see the CreateTask
-	// documentation.
+	// task; see request headers
+	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#reading_request_headers).
+	// These headers are set only when the task is dispatched, so they are
+	// not visible when the task is returned in a Cloud Tasks response.
+	// Although there is no specific limit for the maximum number of headers
+	// or the size, there is a limit on the maximum size of the Task. For
+	// more information, see the CreateTask documentation.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. The default is
 	// POST. The app's request handler for the task's target URL must be
 	// able to handle HTTP requests with this http_method, otherwise the
 	// task attempt fails with error code 405 (Method Not Allowed). See
-	// [Writing a push task request
-	// handler](https://cloud.google.com/appengine/docs/java/taskqueue/push/c
-	// reating-handlers#writing_a_push_task_request_handler) and the App
-	// Engine documentation for your runtime on [How Requests are
-	// Handled](https://cloud.google.com/appengine/docs/standard/python3/how-
-	// requests-are-handled).
+	// Writing a push task request handler
+	// (https://cloud.google.com/appengine/docs/java/taskqueue/push/creating-handlers#writing_a_push_task_request_handler)
+	// and the App Engine documentation for your runtime on How Requests are
+	// Handled
+	// (https://cloud.google.com/appengine/docs/standard/python3/how-requests-are-handled).
 	//
 	// Possible values:
 	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method unspecified
@@ -317,41 +314,39 @@ func (s *AppEngineHttpRequest) MarshalJSON() ([]byte, error) {
 
 // AppEngineRouting: App Engine Routing. Defines routing characteristics
 // specific to App Engine - service, version, and instance. For more
-// information about services, versions, and instances see [An Overview
-// of App
-// Engine](https://cloud.google.com/appengine/docs/python/an-overview-of-
-// app-engine), [Microservices Architecture on Google App
-// Engine](https://cloud.google.com/appengine/docs/python/microservices-o
-// n-app-engine), [App Engine Standard request
-// routing](https://cloud.google.com/appengine/docs/standard/python/how-r
-// equests-are-routed), and [App Engine Flex request
-// routing](https://cloud.google.com/appengine/docs/flexible/python/how-r
-// equests-are-routed). Using AppEngineRouting requires
-// [`appengine.applications.get`](https://cloud.google.com/appengine/docs
-// /admin-api/access-control) Google IAM permission for the project and
-// the following scope: `https://www.googleapis.com/auth/cloud-platform`
+// information about services, versions, and instances see An Overview
+// of App Engine
+// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine),
+// Microservices Architecture on Google App Engine
+// (https://cloud.google.com/appengine/docs/python/microservices-on-app-engine),
+// App Engine Standard request routing
+// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed),
+// and App Engine Flex request routing
+// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-are-routed).
+// Using AppEngineRouting requires `appengine.applications.get`
+// (https://cloud.google.com/appengine/docs/admin-api/access-control)
+// Google IAM permission for the project and the following scope:
+// `https://www.googleapis.com/auth/cloud-platform`
 type AppEngineRouting struct {
 	// Host: Output only. The host that the task is sent to. The host is
 	// constructed from the domain name of the app associated with the
 	// queue's project ID (for example .appspot.com), and the service,
 	// version, and instance. Tasks which were created using the App Engine
-	// SDK might have a custom domain name. For more information, see [How
-	// Requests are
-	// Routed](https://cloud.google.com/appengine/docs/standard/python/how-re
-	// quests-are-routed).
+	// SDK might have a custom domain name. For more information, see How
+	// Requests are Routed
+	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed).
 	Host string `json:"host,omitempty"`
 
 	// Instance: App instance. By default, the task is sent to an instance
 	// which is available when the task is attempted. Requests can only be
-	// sent to a specific instance if [manual scaling is used in App Engine
-	// Standard](https://cloud.google.com/appengine/docs/python/an-overview-o
-	// f-app-engine?hl=en_US#scaling_types_and_instance_classes). App Engine
-	// Flex does not support instances. For more information, see [App
-	// Engine Standard request
-	// routing](https://cloud.google.com/appengine/docs/standard/python/how-r
-	// equests-are-routed) and [App Engine Flex request
-	// routing](https://cloud.google.com/appengine/docs/flexible/python/how-r
-	// equests-are-routed).
+	// sent to a specific instance if manual scaling is used in App Engine
+	// Standard
+	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine?hl=en_US#scaling_types_and_instance_classes).
+	// App Engine Flex does not support instances. For more information, see
+	// App Engine Standard request routing
+	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)
+	// and App Engine Flex request routing
+	// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-are-routed).
 	Instance string `json:"instance,omitempty"`
 
 	// Service: App service. By default, the task is sent to the service
@@ -449,9 +444,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -523,7 +517,7 @@ type CreateTaskRequest struct {
 	// payloads, might be desirable to return only when needed because of
 	// its large size or because of the sensitivity of data that it
 	// contains. Authorization for FULL requires `cloudtasks.tasks.fullView`
-	// [Google IAM](https://cloud.google.com/iam/) permission on the Task
+	// Google IAM (https://cloud.google.com/iam/) permission on the Task
 	// resource.
 	//
 	// Possible values:
@@ -696,9 +690,8 @@ type GetPolicyOptions struct {
 	// conditional bindings must specify version 3. Policies without any
 	// conditional bindings may specify any valid value or leave the field
 	// unset. To learn which resources support conditions in their IAM
-	// policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -783,16 +776,16 @@ type HttpRequest struct {
 	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
 
-	// OauthToken: If specified, an [OAuth
-	// token](https://developers.google.com/identity/protocols/OAuth2) will
-	// be generated and attached as an `Authorization` header in the HTTP
+	// OauthToken: If specified, an OAuth token
+	// (https://developers.google.com/identity/protocols/OAuth2) will be
+	// generated and attached as an `Authorization` header in the HTTP
 	// request. This type of authorization should generally only be used
 	// when calling Google APIs hosted on *.googleapis.com.
 	OauthToken *OAuthToken `json:"oauthToken,omitempty"`
 
-	// OidcToken: If specified, an
-	// [OIDC](https://developers.google.com/identity/protocols/OpenIDConnect)
-	//  token will be generated and attached as an `Authorization` header in
+	// OidcToken: If specified, an OIDC
+	// (https://developers.google.com/identity/protocols/OpenIDConnect)
+	// token will be generated and attached as an `Authorization` header in
 	// the HTTP request. This type of authorization can be used for many
 	// scenarios, including calling Cloud Run, or endpoints where you intend
 	// to validate the token yourself.
@@ -994,21 +987,21 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OAuthToken: Contains information needed for generating an [OAuth
-// token](https://developers.google.com/identity/protocols/OAuth2). This
-// type of authorization should generally only be used when calling
-// Google APIs hosted on *.googleapis.com.
+// OAuthToken: Contains information needed for generating an OAuth token
+// (https://developers.google.com/identity/protocols/OAuth2). This type
+// of authorization should generally only be used when calling Google
+// APIs hosted on *.googleapis.com.
 type OAuthToken struct {
 	// Scope: OAuth scope to be used for generating OAuth access token. If
 	// not specified, "https://www.googleapis.com/auth/cloud-platform" will
 	// be used.
 	Scope string `json:"scope,omitempty"`
 
-	// ServiceAccountEmail: [Service account
-	// email](https://cloud.google.com/iam/docs/service-accounts) to be used
-	// for generating OAuth token. The service account must be within the
-	// same project as the queue. The caller must have
-	// iam.serviceAccounts.actAs permission for the service account.
+	// ServiceAccountEmail: Service account email
+	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
+	// generating OAuth token. The service account must be within the same
+	// project as the queue. The caller must have iam.serviceAccounts.actAs
+	// permission for the service account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Scope") to
@@ -1034,22 +1027,22 @@ func (s *OAuthToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OidcToken: Contains information needed for generating an [OpenID
-// Connect
-// token](https://developers.google.com/identity/protocols/OpenIDConnect)
-// . This type of authorization can be used for many scenarios,
-// including calling Cloud Run, or endpoints where you intend to
-// validate the token yourself.
+// OidcToken: Contains information needed for generating an OpenID
+// Connect token
+// (https://developers.google.com/identity/protocols/OpenIDConnect).
+// This type of authorization can be used for many scenarios, including
+// calling Cloud Run, or endpoints where you intend to validate the
+// token yourself.
 type OidcToken struct {
 	// Audience: Audience to be used when generating OIDC token. If not
 	// specified, the URI specified in target will be used.
 	Audience string `json:"audience,omitempty"`
 
-	// ServiceAccountEmail: [Service account
-	// email](https://cloud.google.com/iam/docs/service-accounts) to be used
-	// for generating OIDC token. The service account must be within the
-	// same project as the queue. The caller must have
-	// iam.serviceAccounts.actAs permission for the service account.
+	// ServiceAccountEmail: Service account email
+	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
+	// generating OIDC token. The service account must be within the same
+	// project as the queue. The caller must have iam.serviceAccounts.actAs
+	// permission for the service account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audience") to
@@ -1090,9 +1083,10 @@ type PauseQueueRequest struct {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1110,8 +1104,8 @@ type PauseQueueRequest struct {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
 	// specify a `condition` that determines how and when the `bindings` are
@@ -1146,9 +1140,9 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1200,21 +1194,20 @@ type Queue struct {
 	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` *
 	// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens
 	// (-), colons (:), or periods (.). For more information, see
-	// [Identifying
-	// projects](https://cloud.google.com/resource-manager/docs/creating-mana
-	// ging-projects#identifying_projects) * `LOCATION_ID` is the canonical
-	// ID for the queue's location. The list of available locations can be
-	// obtained by calling ListLocations. For more information, see
-	// https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain
-	// letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
-	// length is 100 characters.
+	// Identifying projects
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
+	// * `LOCATION_ID` is the canonical ID for the queue's location. The
+	// list of available locations can be obtained by calling ListLocations.
+	// For more information, see https://cloud.google.com/about/locations/.
+	// * `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or
+	// hyphens (-). The maximum length is 100 characters.
 	Name string `json:"name,omitempty"`
 
 	// PurgeTime: Output only. The last time this queue was purged. All
 	// tasks that were created before this time were purged. A queue can be
-	// purged using PurgeQueue, the [App Engine Task Queue SDK, or the Cloud
-	// Console](https://cloud.google.com/appengine/docs/standard/python/taskq
-	// ueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_queue).
+	// purged using PurgeQueue, the App Engine Task Queue SDK, or the Cloud
+	// Console
+	// (https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_queue).
 	// Purge time will be truncated to the nearest microsecond. Purge time
 	// will be unset if the queue has never been purged.
 	PurgeTime string `json:"purgeTime,omitempty"`
@@ -1241,20 +1234,21 @@ type Queue struct {
 	// settings cannot be set on individual tasks. * For tasks created using
 	// the App Engine SDK: the queue-level retry settings apply to all tasks
 	// in the queue which do not have retry settings explicitly set on the
-	// task and were created by the App Engine SDK. See [App Engine
-	// documentation](https://cloud.google.com/appengine/docs/standard/python
-	// /taskqueue/push/retrying-tasks).
+	// task and were created by the App Engine SDK. See App Engine
+	// documentation
+	// (https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/retrying-tasks).
 	RetryConfig *RetryConfig `json:"retryConfig,omitempty"`
 
 	// StackdriverLoggingConfig: Configuration options for writing logs to
-	// [Stackdriver Logging](https://cloud.google.com/logging/docs/). If
-	// this field is unset, then no logs are written.
+	// Stackdriver Logging (https://cloud.google.com/logging/docs/). If this
+	// field is unset, then no logs are written.
 	StackdriverLoggingConfig *StackdriverLoggingConfig `json:"stackdriverLoggingConfig,omitempty"`
 
 	// State: Output only. The state of the queue. `state` can only be
 	// changed by called PauseQueue, ResumeQueue, or uploading
-	// [queue.yaml/xml](https://cloud.google.com/appengine/docs/python/config
-	// /queueref). UpdateQueue cannot be used to change `state`.
+	// queue.yaml/xml
+	// (https://cloud.google.com/appengine/docs/python/config/queueref).
+	// UpdateQueue cannot be used to change `state`.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1317,8 +1311,8 @@ type RateLimits struct {
 	// queue and the rate is high. This field allows the queue to have a
 	// high rate so processing starts shortly after a task is enqueued, but
 	// still limits resource usage when many tasks are enqueued in a short
-	// period of time. The [token
-	// bucket](https://wikipedia.org/wiki/Token_Bucket) algorithm is used to
+	// period of time. The token bucket
+	// (https://wikipedia.org/wiki/Token_Bucket) algorithm is used to
 	// control the rate of task dispatches. Each queue has a token bucket
 	// that holds tokens, up to the maximum specified by `max_burst_size`.
 	// Each time a task is dispatched, a token is removed from the bucket.
@@ -1327,13 +1321,12 @@ type RateLimits struct {
 	// max_dispatches_per_second. Cloud Tasks will pick the value of
 	// `max_burst_size` based on the value of max_dispatches_per_second. For
 	// queues that were created or updated using `queue.yaml/xml`,
-	// `max_burst_size` is equal to
-	// [bucket_size](https://cloud.google.com/appengine/docs/standard/python/
-	// config/queueref#bucket_size). Since `max_burst_size` is output only,
-	// if UpdateQueue is called on a queue created by `queue.yaml/xml`,
-	// `max_burst_size` will be reset based on the value of
-	// max_dispatches_per_second, regardless of whether
-	// max_dispatches_per_second is updated.
+	// `max_burst_size` is equal to bucket_size
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#bucket_size).
+	// Since `max_burst_size` is output only, if UpdateQueue is called on a
+	// queue created by `queue.yaml/xml`, `max_burst_size` will be reset
+	// based on the value of max_dispatches_per_second, regardless of
+	// whether max_dispatches_per_second is updated.
 	MaxBurstSize int64 `json:"maxBurstSize,omitempty"`
 
 	// MaxConcurrentDispatches: The maximum number of concurrent tasks that
@@ -1342,17 +1335,15 @@ type RateLimits struct {
 	// the number of concurrent requests decreases. If unspecified when the
 	// queue is created, Cloud Tasks will pick the default. The maximum
 	// allowed value is 5,000. This field has the same meaning as
-	// [max_concurrent_requests in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#max_concurrent_requests).
+	// max_concurrent_requests in queue.yaml/xml
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#max_concurrent_requests).
 	MaxConcurrentDispatches int64 `json:"maxConcurrentDispatches,omitempty"`
 
 	// MaxDispatchesPerSecond: The maximum rate at which tasks are
 	// dispatched from this queue. If unspecified when the queue is created,
 	// Cloud Tasks will pick the default. * The maximum allowed value is
-	// 500. This field has the same meaning as [rate in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#rate).
+	// 500. This field has the same meaning as rate in queue.yaml/xml
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#rate).
 	MaxDispatchesPerSecond float64 `json:"maxDispatchesPerSecond,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxBurstSize") to
@@ -1404,9 +1395,8 @@ type RetryConfig struct {
 	// then there will be `max_attempts - 1` retries). Must be >= -1. If
 	// unspecified when the queue is created, Cloud Tasks will pick the
 	// default. -1 indicates unlimited attempts. This field has the same
-	// meaning as [task_retry_limit in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// meaning as task_retry_limit in queue.yaml/xml
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxAttempts int64 `json:"maxAttempts,omitempty"`
 
 	// MaxBackoff: A task will be scheduled for retry between min_backoff
@@ -1414,9 +1404,8 @@ type RetryConfig struct {
 	// specifies that the task should be retried. If unspecified when the
 	// queue is created, Cloud Tasks will pick the default. `max_backoff`
 	// will be truncated to the nearest second. This field has the same
-	// meaning as [max_backoff_seconds in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// meaning as max_backoff_seconds in queue.yaml/xml
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxBackoff string `json:"maxBackoff,omitempty"`
 
 	// MaxDoublings: The time between retries will double `max_doublings`
@@ -1430,9 +1419,8 @@ type RetryConfig struct {
 	// been attempted max_attempts times. Thus, the requests will retry at
 	// 10s, 20s, 40s, 80s, 160s, 240s, 300s, 300s, .... If unspecified when
 	// the queue is created, Cloud Tasks will pick the default. This field
-	// has the same meaning as [max_doublings in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// has the same meaning as max_doublings in queue.yaml/xml
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxDoublings int64 `json:"maxDoublings,omitempty"`
 
 	// MaxRetryDuration: If positive, `max_retry_duration` specifies the
@@ -1442,9 +1430,9 @@ type RetryConfig struct {
 	// will be made and the task will be deleted. If zero, then the task age
 	// is unlimited. If unspecified when the queue is created, Cloud Tasks
 	// will pick the default. `max_retry_duration` will be truncated to the
-	// nearest second. This field has the same meaning as [task_age_limit in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// nearest second. This field has the same meaning as task_age_limit in
+	// queue.yaml/xml
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxRetryDuration string `json:"maxRetryDuration,omitempty"`
 
 	// MinBackoff: A task will be scheduled for retry between min_backoff
@@ -1452,9 +1440,8 @@ type RetryConfig struct {
 	// specifies that the task should be retried. If unspecified when the
 	// queue is created, Cloud Tasks will pick the default. `min_backoff`
 	// will be truncated to the nearest second. This field has the same
-	// meaning as [min_backoff_seconds in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// meaning as min_backoff_seconds in queue.yaml/xml
+	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MinBackoff string `json:"minBackoff,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxAttempts") to
@@ -1489,7 +1476,7 @@ type RunTaskRequest struct {
 	// payloads, might be desirable to return only when needed because of
 	// its large size or because of the sensitivity of data that it
 	// contains. Authorization for FULL requires `cloudtasks.tasks.fullView`
-	// [Google IAM](https://cloud.google.com/iam/) permission on the Task
+	// Google IAM (https://cloud.google.com/iam/) permission on the Task
 	// resource.
 	//
 	// Possible values:
@@ -1559,10 +1546,10 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // StackdriverLoggingConfig: Configuration options for writing logs to
-// [Stackdriver Logging](https://cloud.google.com/logging/docs/).
+// Stackdriver Logging (https://cloud.google.com/logging/docs/).
 type StackdriverLoggingConfig struct {
 	// SamplingRatio: Specifies the fraction of operations to write to
-	// [Stackdriver Logging](https://cloud.google.com/logging/docs/). This
+	// Stackdriver Logging (https://cloud.google.com/logging/docs/). This
 	// field may contain any value between 0.0 and 1.0, inclusive. 0.0 is
 	// the default and means that no operations are logged.
 	SamplingRatio float64 `json:"samplingRatio,omitempty"`
@@ -1606,11 +1593,11 @@ func (s *StackdriverLoggingConfig) UnmarshalJSON(data []byte) error {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1675,19 +1662,19 @@ type Task struct {
 	// of request: * For HTTP tasks, the default is 10 minutes. The deadline
 	// must be in the interval [15 seconds, 30 minutes]. * For App Engine
 	// tasks, 0 indicates that the request has the default deadline. The
-	// default deadline depends on the [scaling
-	// type](https://cloud.google.com/appengine/docs/standard/go/how-instance
-	// s-are-managed#instance_scaling) of the service: 10 minutes for
-	// standard apps with automatic scaling, 24 hours for standard apps with
-	// manual and basic scaling, and 60 minutes for flex apps. If the
-	// request deadline is set, it must be in the interval [15 seconds, 24
-	// hours 15 seconds]. Regardless of the task's `dispatch_deadline`, the
-	// app handler will not run for longer than than the service's timeout.
-	// We recommend setting the `dispatch_deadline` to at most a few seconds
-	// more than the app handler's timeout. For more information see
-	// [Timeouts](https://cloud.google.com/tasks/docs/creating-appengine-hand
-	// lers#timeouts). `dispatch_deadline` will be truncated to the nearest
-	// millisecond. The deadline is an approximate deadline.
+	// default deadline depends on the scaling type
+	// (https://cloud.google.com/appengine/docs/standard/go/how-instances-are-managed#instance_scaling)
+	// of the service: 10 minutes for standard apps with automatic scaling,
+	// 24 hours for standard apps with manual and basic scaling, and 60
+	// minutes for flex apps. If the request deadline is set, it must be in
+	// the interval [15 seconds, 24 hours 15 seconds]. Regardless of the
+	// task's `dispatch_deadline`, the app handler will not run for longer
+	// than than the service's timeout. We recommend setting the
+	// `dispatch_deadline` to at most a few seconds more than the app
+	// handler's timeout. For more information see Timeouts
+	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts).
+	// `dispatch_deadline` will be truncated to the nearest millisecond. The
+	// deadline is an approximate deadline.
 	DispatchDeadline string `json:"dispatchDeadline,omitempty"`
 
 	// FirstAttempt: Output only. The status of the task's first attempt.
@@ -1707,16 +1694,15 @@ type Task struct {
 	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_
 	// ID` * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
 	// hyphens (-), colons (:), or periods (.). For more information, see
-	// [Identifying
-	// projects](https://cloud.google.com/resource-manager/docs/creating-mana
-	// ging-projects#identifying_projects) * `LOCATION_ID` is the canonical
-	// ID for the task's location. The list of available locations can be
-	// obtained by calling ListLocations. For more information, see
-	// https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain
-	// letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
-	// length is 100 characters. * `TASK_ID` can contain only letters
-	// ([A-Za-z]), numbers ([0-9]), hyphens (-), or underscores (_). The
-	// maximum length is 500 characters.
+	// Identifying projects
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
+	// * `LOCATION_ID` is the canonical ID for the task's location. The list
+	// of available locations can be obtained by calling ListLocations. For
+	// more information, see https://cloud.google.com/about/locations/. *
+	// `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or
+	// hyphens (-). The maximum length is 100 characters. * `TASK_ID` can
+	// contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or
+	// underscores (_). The maximum length is 500 characters.
 	Name string `json:"name,omitempty"`
 
 	// ResponseCount: Output only. The number of attempts which have
@@ -1777,8 +1763,8 @@ func (s *Task) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -1893,7 +1879,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2059,7 +2045,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2201,9 +2187,9 @@ type ProjectsLocationsQueuesCreateCall struct {
 // task will be deleted regardless of whether it was dispatched or not.
 // WARNING: Using this method may have unintended side effects if you
 // are using an App Engine `queue.yaml` or `queue.xml` file to manage
-// your queues. Read [Overview of Queue Management and
-// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before
-// using this method.
+// your queues. Read Overview of Queue Management and queue.yaml
+// (https://cloud.google.com/tasks/docs/queue-yaml) before using this
+// method.
 func (r *ProjectsLocationsQueuesService) Create(parent string, queue *Queue) *ProjectsLocationsQueuesCreateCall {
 	c := &ProjectsLocationsQueuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2238,7 +2224,7 @@ func (c *ProjectsLocationsQueuesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2346,10 +2332,10 @@ type ProjectsLocationsQueuesDeleteCall struct {
 // it has tasks in it. Note: If you delete a queue, a queue with the
 // same name can't be created for 7 days. WARNING: Using this method may
 // have unintended side effects if you are using an App Engine
-// `queue.yaml` or `queue.xml` file to manage your queues. Read
-// [Overview of Queue Management and
-// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before
-// using this method.
+// `queue.yaml` or `queue.xml` file to manage your queues. Read Overview
+// of Queue Management and queue.yaml
+// (https://cloud.google.com/tasks/docs/queue-yaml) before using this
+// method.
 func (r *ProjectsLocationsQueuesService) Delete(name string) *ProjectsLocationsQueuesDeleteCall {
 	c := &ProjectsLocationsQueuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2383,7 +2369,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2524,7 +2510,7 @@ func (c *ProjectsLocationsQueuesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2626,9 +2612,9 @@ type ProjectsLocationsQueuesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the access control policy for a Queue. Returns an
 // empty policy if the resource exists and does not have a policy set.
-// Authorization requires the following [Google
-// IAM](https://cloud.google.com/iam) permission on the specified
-// resource parent: * `cloudtasks.queues.getIamPolicy`
+// Authorization requires the following Google IAM
+// (https://cloud.google.com/iam) permission on the specified resource
+// parent: * `cloudtasks.queues.getIamPolicy`
 func (r *ProjectsLocationsQueuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsQueuesGetIamPolicyCall {
 	c := &ProjectsLocationsQueuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2663,7 +2649,7 @@ func (c *ProjectsLocationsQueuesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2778,11 +2764,11 @@ func (r *ProjectsLocationsQueuesService) List(parent string) *ProjectsLocationsQ
 // Filter sets the optional parameter "filter": `filter` can be used to
 // specify a subset of queues. Any Queue field can be used as a filter
 // and several operators as supported. For example: `<=, <, >=, >, !=,
-// =, :`. The filter syntax is the same as described in [Stackdriver's
-// Advanced Logs
-// Filters](https://cloud.google.com/logging/docs/view/advanced_filters).
-//  Sample filter "state: PAUSED". Note that using filters might cause
-// fewer queues than the requested page_size to be returned.
+// =, :`. The filter syntax is the same as described in Stackdriver's
+// Advanced Logs Filters
+// (https://cloud.google.com/logging/docs/view/advanced_filters). Sample
+// filter "state: PAUSED". Note that using filters might cause fewer
+// queues than the requested page_size to be returned.
 func (c *ProjectsLocationsQueuesListCall) Filter(filter string) *ProjectsLocationsQueuesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2846,7 +2832,7 @@ func (c *ProjectsLocationsQueuesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2989,10 +2975,10 @@ type ProjectsLocationsQueuesPatchCall struct {
 // task is 31 days old, the task will be deleted regardless of whether
 // it was dispatched or not. WARNING: Using this method may have
 // unintended side effects if you are using an App Engine `queue.yaml`
-// or `queue.xml` file to manage your queues. Read [Overview of Queue
-// Management and
-// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before
-// using this method.
+// or `queue.xml` file to manage your queues. Read Overview of Queue
+// Management and queue.yaml
+// (https://cloud.google.com/tasks/docs/queue-yaml) before using this
+// method.
 func (r *ProjectsLocationsQueuesService) Patch(name string, queue *Queue) *ProjectsLocationsQueuesPatchCall {
 	c := &ProjectsLocationsQueuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3035,7 +3021,7 @@ func (c *ProjectsLocationsQueuesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3184,7 +3170,7 @@ func (c *ProjectsLocationsQueuesPauseCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3327,7 +3313,7 @@ func (c *ProjectsLocationsQueuesPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3437,8 +3423,8 @@ type ProjectsLocationsQueuesResumeCall struct {
 // state; after calling this method it will be set to RUNNING. WARNING:
 // Resuming many high-QPS queues at the same time can lead to target
 // overloading. If you are resuming high-QPS queues, follow the 500/50/5
-// pattern described in [Managing Cloud Tasks Scaling
-// Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
+// pattern described in Managing Cloud Tasks Scaling Risks
+// (https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
 func (r *ProjectsLocationsQueuesService) Resume(name string, resumequeuerequest *ResumeQueueRequest) *ProjectsLocationsQueuesResumeCall {
 	c := &ProjectsLocationsQueuesResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3473,7 +3459,7 @@ func (c *ProjectsLocationsQueuesResumeCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3582,8 +3568,8 @@ type ProjectsLocationsQueuesSetIamPolicyCall struct {
 // any existing policy. Note: The Cloud Console does not check
 // queue-level IAM permissions yet. Project-level permissions are
 // required to use the Cloud Console. Authorization requires the
-// following [Google IAM](https://cloud.google.com/iam) permission on
-// the specified resource parent: * `cloudtasks.queues.setIamPolicy`
+// following Google IAM (https://cloud.google.com/iam) permission on the
+// specified resource parent: * `cloudtasks.queues.setIamPolicy`
 func (r *ProjectsLocationsQueuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsQueuesSetIamPolicyCall {
 	c := &ProjectsLocationsQueuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3618,7 +3604,7 @@ func (c *ProjectsLocationsQueuesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3763,7 +3749,7 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3905,7 +3891,7 @@ func (c *ProjectsLocationsQueuesTasksCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4045,7 +4031,7 @@ func (c *ProjectsLocationsQueuesTasksDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4155,8 +4141,8 @@ func (r *ProjectsLocationsQueuesTasksService) Get(name string) *ProjectsLocation
 // default because some data, such as payloads, might be desirable to
 // return only when needed because of its large size or because of the
 // sensitivity of data that it contains. Authorization for FULL requires
-// `cloudtasks.tasks.fullView` [Google
-// IAM](https://cloud.google.com/iam/) permission on the Task resource.
+// `cloudtasks.tasks.fullView` Google IAM
+// (https://cloud.google.com/iam/) permission on the Task resource.
 //
 // Possible values:
 //   "VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
@@ -4210,7 +4196,7 @@ func (c *ProjectsLocationsQueuesTasksGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4362,8 +4348,8 @@ func (c *ProjectsLocationsQueuesTasksListCall) PageToken(pageToken string) *Proj
 // default because some data, such as payloads, might be desirable to
 // return only when needed because of its large size or because of the
 // sensitivity of data that it contains. Authorization for FULL requires
-// `cloudtasks.tasks.fullView` [Google
-// IAM](https://cloud.google.com/iam/) permission on the Task resource.
+// `cloudtasks.tasks.fullView` Google IAM
+// (https://cloud.google.com/iam/) permission on the Task resource.
 //
 // Possible values:
 //   "VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
@@ -4417,7 +4403,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4612,7 +4598,7 @@ func (c *ProjectsLocationsQueuesTasksRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsQueuesTasksRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

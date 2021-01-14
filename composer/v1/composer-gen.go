@@ -367,8 +367,8 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 // EnvironmentConfig: Configuration information for an environment.
 type EnvironmentConfig struct {
 	// AirflowUri: Output only. The URI of the Apache Airflow Web UI hosted
-	// within this environment (see [Airflow web
-	// interface](/composer/docs/how-to/accessing/airflow-web-interface)).
+	// within this environment (see Airflow web interface
+	// (/composer/docs/how-to/accessing/airflow-web-interface)).
 	AirflowUri string `json:"airflowUri,omitempty"`
 
 	// DagGcsPrefix: Output only. The Cloud Storage prefix of the DAGs for
@@ -432,8 +432,8 @@ type IPAllocationPolicy struct {
 	// IP addresses to pods in the GKE cluster. This field is applicable
 	// only when `use_ip_aliases` is true. Set to blank to have GKE choose a
 	// range with the default size. Set to /netmask (e.g. `/14`) to have GKE
-	// choose a range with a specific netmask. Set to a
-	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// choose a range with a specific netmask. Set to a CIDR
+	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use.
@@ -448,8 +448,8 @@ type IPAllocationPolicy struct {
 	// IP addresses in this GKE cluster. This field is applicable only when
 	// `use_ip_aliases` is true. Set to blank to have GKE choose a range
 	// with the default size. Set to /netmask (e.g. `/14`) to have GKE
-	// choose a range with a specific netmask. Set to a
-	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// choose a range with a specific netmask. Set to a CIDR
+	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use.
@@ -659,26 +659,25 @@ type NodeConfig struct {
 	// IPs are allocated in the GKE cluster.
 	IpAllocationPolicy *IPAllocationPolicy `json:"ipAllocationPolicy,omitempty"`
 
-	// Location: Optional. The Compute Engine
-	// [zone](/compute/docs/regions-zones) in which to deploy the VMs used
-	// to run the Apache Airflow software, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example: "projects/{projectId}/zones/{zoneId}". This `location` must
-	// belong to the enclosing environment's project and location. If both
-	// this field and `nodeConfig.machineType` are specified,
-	// `nodeConfig.machineType` must belong to this `location`; if both are
-	// unspecified, the service will pick a zone in the Compute Engine
-	// region corresponding to the Cloud Composer location, and propagate
-	// that choice to both fields. If only one field (`location` or
-	// `nodeConfig.machineType`) is specified, the location information from
-	// the specified field will be propagated to the unspecified field.
+	// Location: Optional. The Compute Engine zone
+	// (/compute/docs/regions-zones) in which to deploy the VMs used to run
+	// the Apache Airflow software, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
+	// "projects/{projectId}/zones/{zoneId}". This `location` must belong to
+	// the enclosing environment's project and location. If both this field
+	// and `nodeConfig.machineType` are specified, `nodeConfig.machineType`
+	// must belong to this `location`; if both are unspecified, the service
+	// will pick a zone in the Compute Engine region corresponding to the
+	// Cloud Composer location, and propagate that choice to both fields. If
+	// only one field (`location` or `nodeConfig.machineType`) is specified,
+	// the location information from the specified field will be propagated
+	// to the unspecified field.
 	Location string `json:"location,omitempty"`
 
-	// MachineType: Optional. The Compute Engine [machine
-	// type](/compute/docs/machine-types) used for cluster instances,
-	// specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example:
+	// MachineType: Optional. The Compute Engine machine type
+	// (/compute/docs/machine-types) used for cluster instances, specified
+	// as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
 	// "projects/{projectId}/zones/{zoneId}/machineTypes/{machineTypeId}".
 	// The `machineType` must belong to the enclosing environment's project
 	// and location. If both this field and `nodeConfig.location` are
@@ -688,20 +687,20 @@ type NodeConfig struct {
 	// Composer location, and propagate that choice to both fields. If
 	// exactly one of this field and `nodeConfig.location` is specified, the
 	// location information from the specified field will be propagated to
-	// the unspecified field. The `machineTypeId` must not be a [shared-core
-	// machine type](/compute/docs/machine-types#sharedcore). If this field
+	// the unspecified field. The `machineTypeId` must not be a shared-core
+	// machine type (/compute/docs/machine-types#sharedcore). If this field
 	// is unspecified, the `machineTypeId` defaults to "n1-standard-1".
 	MachineType string `json:"machineType,omitempty"`
 
 	// Network: Optional. The Compute Engine network to be used for machine
-	// communications, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example: "projects/{projectId}/global/networks/{networkId}". [Shared
-	// VPC](/vpc/docs/shared-vpc) is not currently supported. The network
-	// must belong to the environment's project. If unspecified, the
-	// "default" network ID in the environment's project is used. If a
-	// [Custom Subnet Network](/vpc/docs/vpc#vpc_networks_and_subnets) is
-	// provided, `nodeConfig.subnetwork` must also be provided.
+	// communications, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
+	// "projects/{projectId}/global/networks/{networkId}". Shared VPC
+	// (/vpc/docs/shared-vpc) is not currently supported. The network must
+	// belong to the environment's project. If unspecified, the "default"
+	// network ID in the environment's project is used. If a Custom Subnet
+	// Network (/vpc/docs/vpc#vpc_networks_and_subnets) is provided,
+	// `nodeConfig.subnetwork` must also be provided.
 	Network string `json:"network,omitempty"`
 
 	// OauthScopes: Optional. The set of Google API scopes to be made
@@ -717,9 +716,8 @@ type NodeConfig struct {
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Subnetwork: Optional. The Compute Engine subnetwork to be used for
-	// machine communications, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example:
+	// machine communications, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
 	// "projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}"
 	// If a subnetwork is provided, `nodeConfig.network` must also be
 	// provided, and the subnetwork must belong to the enclosing
@@ -728,8 +726,8 @@ type NodeConfig struct {
 
 	// Tags: Optional. The list of instance tags applied to all node VMs.
 	// Tags are used to identify valid sources or targets for network
-	// firewalls. Each tag within the list must comply with
-	// [RFC1035](https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
+	// firewalls. Each tag within the list must comply with RFC1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
@@ -837,8 +835,8 @@ type OperationMetadata struct {
 	//   "UPDATE" - A resource update operation.
 	OperationType string `json:"operationType,omitempty"`
 
-	// Resource: Output only. The resource being operated on, as a [relative
-	// resource name]( /apis/design/resource_names#relative_resource_name).
+	// Resource: Output only. The resource being operated on, as a relative
+	// resource name ( /apis/design/resource_names#relative_resource_name).
 	Resource string `json:"resource,omitempty"`
 
 	// ResourceUuid: Output only. The UUID of the resource being operated
@@ -987,12 +985,11 @@ type SoftwareConfig struct {
 	// brackets ("]"). The property name must not be empty and must not
 	// contain an equals sign ("=") or semicolon (";"). Section and property
 	// names must not contain a period ("."). Apache Airflow configuration
-	// property names must be written in
-	// [snake_case](https://en.wikipedia.org/wiki/Snake_case). Property
-	// values can contain any character, and can be written in any
-	// lower/upper case format. Certain Apache Airflow configuration
-	// property values are
-	// [blocked](/composer/docs/concepts/airflow-configurations), and cannot
+	// property names must be written in snake_case
+	// (https://en.wikipedia.org/wiki/Snake_case). Property values can
+	// contain any character, and can be written in any lower/upper case
+	// format. Certain Apache Airflow configuration property values are
+	// blocked (/composer/docs/concepts/airflow-configurations), and cannot
 	// be overridden.
 	AirflowConfigOverrides map[string]string `json:"airflowConfigOverrides,omitempty"`
 
@@ -1015,16 +1012,16 @@ type SoftwareConfig struct {
 	// `composer-([0-9]+\.[0-9]+\.[0-9]+|latest)-airflow-[0-9]+\.[0-9]+(\.[0-
 	// 9]+.*)?`. When used as input, the server also checks if the provided
 	// version is supported and denies the request for an unsupported
-	// version. The Cloud Composer portion of the version is a [semantic
-	// version](https://semver.org) or `latest`. When the patch version is
+	// version. The Cloud Composer portion of the version is a semantic
+	// version (https://semver.org) or `latest`. When the patch version is
 	// omitted, the current Cloud Composer patch version is selected. When
 	// `latest` is provided instead of an explicit version number, the
 	// server replaces `latest` with the current Cloud Composer version and
 	// stores that version number in the same field. The portion of the
 	// image version that follows *airflow-* is an official Apache Airflow
-	// repository [release
-	// name](https://github.com/apache/incubator-airflow/releases). See also
-	// [Version List](/composer/docs/concepts/versioning/composer-versions).
+	// repository release name
+	// (https://github.com/apache/incubator-airflow/releases). See also
+	// Version List (/composer/docs/concepts/versioning/composer-versions).
 	ImageVersion string `json:"imageVersion,omitempty"`
 
 	// PypiPackages: Optional. Custom Python Package Index (PyPI) packages
@@ -1068,11 +1065,11 @@ func (s *SoftwareConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1186,7 +1183,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1324,7 +1321,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1465,7 +1462,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1623,7 +1620,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1864,7 +1861,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2041,7 +2038,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2214,7 +2211,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2357,7 +2354,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2531,7 +2528,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

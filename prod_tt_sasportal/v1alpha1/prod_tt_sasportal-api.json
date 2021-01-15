@@ -197,6 +197,120 @@
       "resources": {
         "deployments": {
           "methods": {
+            "create": {
+              "description": "Creates a new deployment.",
+              "flatPath": "v1alpha1/customers/{customersId}/deployments",
+              "httpMethod": "POST",
+              "id": "prod_tt_sasportal.customers.deployments.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The parent resource name where the deployment is to be created.",
+                  "location": "path",
+                  "pattern": "^customers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+parent}/deployments",
+              "request": {
+                "$ref": "SasPortalDeployment"
+              },
+              "response": {
+                "$ref": "SasPortalDeployment"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
+            "delete": {
+              "description": "Deletes a deployment.",
+              "flatPath": "v1alpha1/customers/{customersId}/deployments/{deploymentsId}",
+              "httpMethod": "DELETE",
+              "id": "prod_tt_sasportal.customers.deployments.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the deployment.",
+                  "location": "path",
+                  "pattern": "^customers/[^/]+/deployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+name}",
+              "response": {
+                "$ref": "SasPortalEmpty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
+            "get": {
+              "description": "Returns a requested deployment.",
+              "flatPath": "v1alpha1/customers/{customersId}/deployments/{deploymentsId}",
+              "httpMethod": "GET",
+              "id": "prod_tt_sasportal.customers.deployments.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the deployment.",
+                  "location": "path",
+                  "pattern": "^customers/[^/]+/deployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+name}",
+              "response": {
+                "$ref": "SasPortalDeployment"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
+            "list": {
+              "description": "Lists deployments.",
+              "flatPath": "v1alpha1/customers/{customersId}/deployments",
+              "httpMethod": "GET",
+              "id": "prod_tt_sasportal.customers.deployments.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of deployments to return in the response.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The parent resource name, for example, \"nodes/1\", customer/1/nodes/2.",
+                  "location": "path",
+                  "pattern": "^customers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+parent}/deployments",
+              "response": {
+                "$ref": "SasPortalListDeploymentsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
             "move": {
               "description": "Moves a deployment under another node or customer.",
               "flatPath": "v1alpha1/customers/{customersId}/deployments/{deploymentsId}:move",
@@ -220,6 +334,40 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
+            "patch": {
+              "description": "Updates an existing deployment.",
+              "flatPath": "v1alpha1/customers/{customersId}/deployments/{deploymentsId}",
+              "httpMethod": "PATCH",
+              "id": "prod_tt_sasportal.customers.deployments.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Output only. Resource name.",
+                  "location": "path",
+                  "pattern": "^customers/[^/]+/deployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Fields to be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+name}",
+              "request": {
+                "$ref": "SasPortalDeployment"
+              },
+              "response": {
+                "$ref": "SasPortalDeployment"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/userinfo.email"
@@ -332,34 +480,6 @@
         },
         "devices": {
           "methods": {
-            "bulk": {
-              "description": "Creates a device under a node or customer. Returned devices are unordered.",
-              "flatPath": "v1alpha1/customers/{customersId}/devices:bulk",
-              "httpMethod": "POST",
-              "id": "prod_tt_sasportal.customers.devices.bulk",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. The name of the parent resource.",
-                  "location": "path",
-                  "pattern": "^customers/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1alpha1/{+parent}/devices:bulk",
-              "request": {
-                "$ref": "SasPortalBulkCreateDeviceRequest"
-              },
-              "response": {
-                "$ref": "SasPortalBulkCreateDeviceResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            },
             "create": {
               "description": "Creates a device under a node or customer.",
               "flatPath": "v1alpha1/customers/{customersId}/devices",
@@ -807,6 +927,74 @@
             }
           },
           "resources": {
+            "deployments": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new deployment.",
+                  "flatPath": "v1alpha1/customers/{customersId}/nodes/{nodesId}/deployments",
+                  "httpMethod": "POST",
+                  "id": "prod_tt_sasportal.customers.nodes.deployments.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The parent resource name where the deployment is to be created.",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+/nodes/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/deployments",
+                  "request": {
+                    "$ref": "SasPortalDeployment"
+                  },
+                  "response": {
+                    "$ref": "SasPortalDeployment"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/userinfo.email"
+                  ]
+                },
+                "list": {
+                  "description": "Lists deployments.",
+                  "flatPath": "v1alpha1/customers/{customersId}/nodes/{nodesId}/deployments",
+                  "httpMethod": "GET",
+                  "id": "prod_tt_sasportal.customers.nodes.deployments.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of deployments to return in the response.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource name, for example, \"nodes/1\", customer/1/nodes/2.",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+/nodes/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/deployments",
+                  "response": {
+                    "$ref": "SasPortalListDeploymentsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/userinfo.email"
+                  ]
+                }
+              }
+            },
             "devices": {
               "methods": {
                 "create": {
@@ -981,6 +1169,33 @@
       }
     },
     "deployments": {
+      "methods": {
+        "get": {
+          "description": "Returns a requested deployment.",
+          "flatPath": "v1alpha1/deployments/{deploymentsId}",
+          "httpMethod": "GET",
+          "id": "prod_tt_sasportal.deployments.get",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The name of the deployment.",
+              "location": "path",
+              "pattern": "^deployments/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1alpha1/{+name}",
+          "response": {
+            "$ref": "SasPortalDeployment"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/userinfo.email"
+          ]
+        }
+      },
       "resources": {
         "devices": {
           "methods": {
@@ -1227,6 +1442,92 @@
       "resources": {
         "deployments": {
           "methods": {
+            "delete": {
+              "description": "Deletes a deployment.",
+              "flatPath": "v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}",
+              "httpMethod": "DELETE",
+              "id": "prod_tt_sasportal.nodes.deployments.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the deployment.",
+                  "location": "path",
+                  "pattern": "^nodes/[^/]+/deployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+name}",
+              "response": {
+                "$ref": "SasPortalEmpty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
+            "get": {
+              "description": "Returns a requested deployment.",
+              "flatPath": "v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}",
+              "httpMethod": "GET",
+              "id": "prod_tt_sasportal.nodes.deployments.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the deployment.",
+                  "location": "path",
+                  "pattern": "^nodes/[^/]+/deployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+name}",
+              "response": {
+                "$ref": "SasPortalDeployment"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
+            "list": {
+              "description": "Lists deployments.",
+              "flatPath": "v1alpha1/nodes/{nodesId}/deployments",
+              "httpMethod": "GET",
+              "id": "prod_tt_sasportal.nodes.deployments.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of deployments to return in the response.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The parent resource name, for example, \"nodes/1\", customer/1/nodes/2.",
+                  "location": "path",
+                  "pattern": "^nodes/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+parent}/deployments",
+              "response": {
+                "$ref": "SasPortalListDeploymentsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
             "move": {
               "description": "Moves a deployment under another node or customer.",
               "flatPath": "v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}:move",
@@ -1250,6 +1551,40 @@
               },
               "response": {
                 "$ref": "SasPortalOperation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/userinfo.email"
+              ]
+            },
+            "patch": {
+              "description": "Updates an existing deployment.",
+              "flatPath": "v1alpha1/nodes/{nodesId}/deployments/{deploymentsId}",
+              "httpMethod": "PATCH",
+              "id": "prod_tt_sasportal.nodes.deployments.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Output only. Resource name.",
+                  "location": "path",
+                  "pattern": "^nodes/[^/]+/deployments/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Fields to be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+name}",
+              "request": {
+                "$ref": "SasPortalDeployment"
+              },
+              "response": {
+                "$ref": "SasPortalDeployment"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/userinfo.email"
@@ -1362,34 +1697,6 @@
         },
         "devices": {
           "methods": {
-            "bulk": {
-              "description": "Creates a device under a node or customer. Returned devices are unordered.",
-              "flatPath": "v1alpha1/nodes/{nodesId}/devices:bulk",
-              "httpMethod": "POST",
-              "id": "prod_tt_sasportal.nodes.devices.bulk",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. The name of the parent resource.",
-                  "location": "path",
-                  "pattern": "^nodes/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1alpha1/{+parent}/devices:bulk",
-              "request": {
-                "$ref": "SasPortalBulkCreateDeviceRequest"
-              },
-              "response": {
-                "$ref": "SasPortalBulkCreateDeviceResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            },
             "create": {
               "description": "Creates a device under a node or customer.",
               "flatPath": "v1alpha1/nodes/{nodesId}/devices",
@@ -1837,36 +2144,76 @@
             }
           },
           "resources": {
-            "devices": {
+            "deployments": {
               "methods": {
-                "bulk": {
-                  "description": "Creates a device under a node or customer. Returned devices are unordered.",
-                  "flatPath": "v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/devices:bulk",
+                "create": {
+                  "description": "Creates a new deployment.",
+                  "flatPath": "v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/deployments",
                   "httpMethod": "POST",
-                  "id": "prod_tt_sasportal.nodes.nodes.devices.bulk",
+                  "id": "prod_tt_sasportal.nodes.nodes.deployments.create",
                   "parameterOrder": [
                     "parent"
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the parent resource.",
+                      "description": "Required. The parent resource name where the deployment is to be created.",
                       "location": "path",
                       "pattern": "^nodes/[^/]+/nodes/[^/]+$",
                       "required": true,
                       "type": "string"
                     }
                   },
-                  "path": "v1alpha1/{+parent}/devices:bulk",
+                  "path": "v1alpha1/{+parent}/deployments",
                   "request": {
-                    "$ref": "SasPortalBulkCreateDeviceRequest"
+                    "$ref": "SasPortalDeployment"
                   },
                   "response": {
-                    "$ref": "SasPortalBulkCreateDeviceResponse"
+                    "$ref": "SasPortalDeployment"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/userinfo.email"
                   ]
                 },
+                "list": {
+                  "description": "Lists deployments.",
+                  "flatPath": "v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/deployments",
+                  "httpMethod": "GET",
+                  "id": "prod_tt_sasportal.nodes.nodes.deployments.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of deployments to return in the response.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource name, for example, \"nodes/1\", customer/1/nodes/2.",
+                      "location": "path",
+                      "pattern": "^nodes/[^/]+/nodes/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/deployments",
+                  "response": {
+                    "$ref": "SasPortalListDeploymentsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/userinfo.email"
+                  ]
+                }
+              }
+            },
+            "devices": {
+              "methods": {
                 "create": {
                   "description": "Creates a device under a node or customer.",
                   "flatPath": "v1alpha1/nodes/{nodesId}/nodes/{nodesId1}/devices",
@@ -2097,7 +2444,7 @@
       }
     }
   },
-  "revision": "20201211",
+  "revision": "20210113",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -2114,31 +2461,6 @@
         "role": {
           "description": "Required. Role that is assigned to `members`.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "SasPortalBulkCreateDeviceRequest": {
-      "description": "Request for BulkCreateDevice method.",
-      "id": "SasPortalBulkCreateDeviceRequest",
-      "properties": {
-        "csv": {
-          "description": "Required. A csv with each row representing a [device]. Each row must conform to the regulations described on CreateDeviceRequest's device field.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "SasPortalBulkCreateDeviceResponse": {
-      "description": "Response for BulkCreateDevice method.",
-      "id": "SasPortalBulkCreateDeviceResponse",
-      "properties": {
-        "devices": {
-          "description": "Required. The devices that were imported.",
-          "items": {
-            "$ref": "SasPortalDevice"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -2173,6 +2495,60 @@
         },
         "sasUserIds": {
           "description": "User IDs used by the devices belonging to this customer.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SasPortalDeployment": {
+      "description": "The Deployment.",
+      "id": "SasPortalDeployment",
+      "properties": {
+        "allowedBillingModes": {
+          "description": "The allowed billing modes under this deployment.",
+          "items": {
+            "enum": [
+              "BILLING_MODE_UNSPECIFIED",
+              "MOBILE",
+              "FIXED_WIRELESS"
+            ],
+            "enumDescriptions": [
+              "Billing mode has not been specified.",
+              "Price is based on category of CBSD: Category A, Category B registered with SAS.",
+              "Price is based on type of CBSD: Base station or CPE."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "defaultBillingMode": {
+          "description": "Default billing mode for the deployment and devices under it.",
+          "enum": [
+            "BILLING_MODE_UNSPECIFIED",
+            "MOBILE",
+            "FIXED_WIRELESS"
+          ],
+          "enumDescriptions": [
+            "Billing mode has not been specified.",
+            "Price is based on category of CBSD: Category A, Category B registered with SAS.",
+            "Price is based on type of CBSD: Base station or CPE."
+          ],
+          "type": "string"
+        },
+        "displayName": {
+          "description": "The deployment's display name.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Resource name.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "sasUserIds": {
+          "description": "User id used by the devices belonging to this deployment. Each deployment should be associated with one unique user_id.",
           "items": {
             "type": "string"
           },
@@ -2624,6 +3000,24 @@
         },
         "nextPageToken": {
           "description": "A pagination token returned from a previous call to ListCustomers method that indicates from where listing should continue. If the field is missing or empty, it means there are no more customers.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SasPortalListDeploymentsResponse": {
+      "description": "Response for ListDeployments method.",
+      "id": "SasPortalListDeploymentsResponse",
+      "properties": {
+        "deployments": {
+          "description": "The deployments that match the request.",
+          "items": {
+            "$ref": "SasPortalDeployment"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "A pagination token returned from a previous call to ListDeployments method that indicates from where listing should continue. If the field is missing or empty, it means there is no more deployments.",
           "type": "string"
         }
       },

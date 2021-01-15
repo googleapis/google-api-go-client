@@ -264,7 +264,7 @@
       }
     }
   },
-  "revision": "20201107",
+  "revision": "20210109",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1beta1AllUpdatesRule": {
@@ -287,7 +287,7 @@
           "type": "string"
         },
         "schemaVersion": {
-          "description": "Optional. The schema version of the notification sent to `pubsub_topic`. Only \"1.0\" is accepted. It represents the JSON schema as defined in https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format",
+          "description": "Optional. Required when AllUpdatesRule.pubsub_topic is set. The schema version of the notification sent to AllUpdatesRule.pubsub_topic. Only \"1.0\" is accepted. It represents the JSON schema as defined in https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format.",
           "type": "string"
         }
       },

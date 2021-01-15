@@ -29,7 +29,7 @@
   "canonicalName": "Area120 Tables",
   "description": "",
   "discoveryVersion": "v1",
-  "documentationLink": "https://tables.area120.google.com",
+  "documentationLink": "https://support.google.com/area120-tables/answer/10011390",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -571,7 +571,7 @@
       }
     }
   },
-  "revision": "20210112",
+  "revision": "20210113",
   "rootUrl": "https://area120tables.googleapis.com/",
   "schemas": {
     "BatchCreateRowsRequest": {

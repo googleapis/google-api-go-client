@@ -238,7 +238,10 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// security attributes.
 	SubjectToken string `json:"subjectToken,omitempty"`
 
-	// SubjectTokenType: Required.
+	// SubjectTokenType: Required. An identifier that indicates the type of
+	// the security token in the `subject_token` parameter. Supported values
+	// are `urn:ietf:params:oauth:token-type:jwt`,
+	// `urn:ietf:params:aws:token-type:aws4_request`, and
 	// `urn:ietf:params:oauth:token-type:access_token`.
 	SubjectTokenType string `json:"subjectTokenType,omitempty"`
 
@@ -276,17 +279,17 @@ type GoogleIdentityStsV1betaExchangeTokenResponse struct {
 	AccessToken string `json:"access_token,omitempty"`
 
 	// ExpiresIn: The amount of time, in seconds, between the time when the
-	// `access_token` was issued and the time when the `access_token` will
+	// access token was issued and the time when the access token will
 	// expire. This field is absent when the `subject_token` in the request
 	// is a Google-issued, short-lived access token. In this case, the
-	// `access_token` has the same expiration time as the `subject_token`.
+	// access token has the same expiration time as the `subject_token`.
 	ExpiresIn int64 `json:"expires_in,omitempty"`
 
 	// IssuedTokenType: The token type. Always matches the value of
 	// `requested_token_type` from the request.
 	IssuedTokenType string `json:"issued_token_type,omitempty"`
 
-	// TokenType: The type of `access_token`. Always has the value `Bearer`.
+	// TokenType: The type of access token. Always has the value `Bearer`.
 	TokenType string `json:"token_type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -363,7 +366,7 @@ func (c *V1betaTokenCall) Header() http.Header {
 
 func (c *V1betaTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

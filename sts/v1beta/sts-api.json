@@ -116,7 +116,7 @@
       }
     }
   },
-  "revision": "20201009",
+  "revision": "20210109",
   "rootUrl": "https://sts.googleapis.com/",
   "schemas": {
     "GoogleIdentityStsV1betaExchangeTokenRequest": {
@@ -148,7 +148,7 @@
           "type": "string"
         },
         "subjectTokenType": {
-          "description": "Required. `urn:ietf:params:oauth:token-type:access_token`.",
+          "description": "Required. An identifier that indicates the type of the security token in the `subject_token` parameter. Supported values are `urn:ietf:params:oauth:token-type:jwt`, `urn:ietf:params:aws:token-type:aws4_request`, and `urn:ietf:params:oauth:token-type:access_token`.",
           "type": "string"
         }
       },
@@ -163,7 +163,7 @@
           "type": "string"
         },
         "expires_in": {
-          "description": "The amount of time, in seconds, between the time when the `access_token` was issued and the time when the `access_token` will expire. This field is absent when the `subject_token` in the request is a Google-issued, short-lived access token. In this case, the `access_token` has the same expiration time as the `subject_token`.",
+          "description": "The amount of time, in seconds, between the time when the access token was issued and the time when the access token will expire. This field is absent when the `subject_token` in the request is a Google-issued, short-lived access token. In this case, the access token has the same expiration time as the `subject_token`.",
           "format": "int32",
           "type": "integer"
         },
@@ -172,7 +172,7 @@
           "type": "string"
         },
         "token_type": {
-          "description": "The type of `access_token`. Always has the value `Bearer`.",
+          "description": "The type of access token. Always has the value `Bearer`.",
           "type": "string"
         }
       },

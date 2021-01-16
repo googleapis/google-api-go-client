@@ -931,8 +931,8 @@ func (s *UpdatePhotoRequest) MarshalJSON() ([]byte, error) {
 
 // UploadRef: Upload reference for media files.
 type UploadRef struct {
-	// UploadUrl: Required. An upload reference should be unique for each
-	// user. It follows the form:
+	// UploadUrl: An upload reference should be unique for each user. It
+	// follows the form:
 	// "https://streetviewpublish.googleapis.com/media/user/{account_id}/phot
 	// o/{upload_reference}"
 	UploadUrl string `json:"uploadUrl,omitempty"`
@@ -1021,7 +1021,7 @@ func (c *PhotoCreateCall) Header() http.Header {
 
 func (c *PhotoCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1149,7 +1149,7 @@ func (c *PhotoDeleteCall) Header() http.Header {
 
 func (c *PhotoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1318,7 +1318,7 @@ func (c *PhotoGetCall) Header() http.Header {
 
 func (c *PhotoGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1438,14 +1438,14 @@ type PhotoStartUploadCall struct {
 // bytes. The method uses the upload URL of the returned UploadRef to
 // upload the bytes for the Photo. In addition to the photo requirements
 // shown in
-// https://support.google.com/maps/answer/7012050?hl=en&ref_topic=6275604,
-// the photo must meet the following requirements: * Photo Sphere XMP
+// https://support.google.com/maps/answer/7012050?ref_topic=6275604, the
+// photo must meet the following requirements: * Photo Sphere XMP
 // metadata must be included in the photo metadata. See
 // https://developers.google.com/streetview/spherical-metadata for the
 // required fields. * The pixel size of the photo must meet the size
 // requirements listed in
-// https://support.google.com/maps/answer/7012050?hl=en&ref_topic=6275604,
-// and the photo must be a full 360 horizontally. After the upload
+// https://support.google.com/maps/answer/7012050?ref_topic=6275604, and
+// the photo must be a full 360 horizontally. After the upload
 // completes, the method uses UploadRef with CreatePhoto to create the
 // Photo object entry.
 func (r *PhotoService) StartUpload(empty *Empty) *PhotoStartUploadCall {
@@ -1481,7 +1481,7 @@ func (c *PhotoStartUploadCall) Header() http.Header {
 
 func (c *PhotoStartUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1542,7 +1542,7 @@ func (c *PhotoStartUploadCall) Do(opts ...googleapi.CallOption) (*UploadRef, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an upload session to start uploading photo bytes. The method uses the upload URL of the returned UploadRef to upload the bytes for the Photo. In addition to the photo requirements shown in https://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604, the photo must meet the following requirements: * Photo Sphere XMP metadata must be included in the photo metadata. See https://developers.google.com/streetview/spherical-metadata for the required fields. * The pixel size of the photo must meet the size requirements listed in https://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604, and the photo must be a full 360 horizontally. After the upload completes, the method uses UploadRef with CreatePhoto to create the Photo object entry.",
+	//   "description": "Creates an upload session to start uploading photo bytes. The method uses the upload URL of the returned UploadRef to upload the bytes for the Photo. In addition to the photo requirements shown in https://support.google.com/maps/answer/7012050?ref_topic=6275604, the photo must meet the following requirements: * Photo Sphere XMP metadata must be included in the photo metadata. See https://developers.google.com/streetview/spherical-metadata for the required fields. * The pixel size of the photo must meet the size requirements listed in https://support.google.com/maps/answer/7012050?ref_topic=6275604, and the photo must be a full 360 horizontally. After the upload completes, the method uses UploadRef with CreatePhoto to create the Photo object entry.",
 	//   "flatPath": "v1/photo:startUpload",
 	//   "httpMethod": "POST",
 	//   "id": "streetviewpublish.photo.startUpload",
@@ -1634,7 +1634,7 @@ func (c *PhotoUpdateCall) Header() http.Header {
 
 func (c *PhotoUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1783,7 +1783,7 @@ func (c *PhotosBatchDeleteCall) Header() http.Header {
 
 func (c *PhotosBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1955,7 +1955,7 @@ func (c *PhotosBatchGetCall) Header() http.Header {
 
 func (c *PhotosBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2112,7 +2112,7 @@ func (c *PhotosBatchUpdateCall) Header() http.Header {
 
 func (c *PhotosBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2298,7 +2298,7 @@ func (c *PhotosListCall) Header() http.Header {
 
 func (c *PhotosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

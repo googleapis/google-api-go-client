@@ -3298,7 +3298,7 @@
       }
     }
   },
-  "revision": "20210106",
+  "revision": "20210113",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5587,7 +5587,7 @@
         },
         "gmbAccounts": {
           "$ref": "GmbAccounts",
-          "description": "The the list of accessible GMB accounts."
+          "description": "The list of accessible GMB accounts."
         },
         "kind": {
           "description": "Identifies what kind of resource this is. Value: the fixed string \"`content#liasettingsCustomBatchResponseEntry`\"",
@@ -8612,7 +8612,7 @@
           "type": "string"
         },
         "condition": {
-          "description": "Condition or state of the item. Acceptable values are: - \"`local`\" - \"`online`\" ",
+          "description": "Condition or state of the item. Acceptable values are: - \"`new`\" - \"`refurbished`\" - \"`used`\" ",
           "type": "string"
         },
         "contentLanguage": {

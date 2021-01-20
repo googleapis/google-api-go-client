@@ -327,8 +327,14 @@ type ConfigSettings struct {
 	// from the npm module.
 	Channel string `json:"channel,omitempty"`
 
-	// EmulatedFormFactor: The form factor the emulation should use.
+	// EmulatedFormFactor: The form factor the emulation should use. This
+	// field is deprecated, form_factor should be used instead.
 	EmulatedFormFactor string `json:"emulatedFormFactor,omitempty"`
+
+	// FormFactor: How Lighthouse should interpret this run in regards to
+	// scoring performance metrics and skipping mobile-only tests in
+	// desktop.
+	FormFactor string `json:"formFactor,omitempty"`
 
 	// Locale: The locale setting.
 	Locale string `json:"locale,omitempty"`
@@ -1139,7 +1145,7 @@ func (c *PagespeedapiRunpagespeedCall) Header() http.Header {
 
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

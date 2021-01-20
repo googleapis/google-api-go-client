@@ -248,7 +248,7 @@
       }
     }
   },
-  "revision": "20210105",
+  "revision": "20210118",
   "rootUrl": "https://analyticsdata.googleapis.com/",
   "schemas": {
     "BatchRunPivotReportsRequest": {
@@ -1059,7 +1059,7 @@
         },
         "tokensPerHour": {
           "$ref": "QuotaStatus",
-          "description": "Standard Analytics Properties can use up to 5,000 tokens per day; Analytics 360 Properties can use 50,000 tokens per day. An API request consumes a single number of tokens, and that number is deducted from both the hourly and daily quotas."
+          "description": "Standard Analytics Properties can use up to 5,000 tokens per hour; Analytics 360 Properties can use 50,000 tokens per hour. An API request consumes a single number of tokens, and that number is deducted from both the hourly and daily quotas."
         }
       },
       "type": "object"

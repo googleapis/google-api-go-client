@@ -988,7 +988,7 @@
       }
     }
   },
-  "revision": "20201203",
+  "revision": "20210114",
   "rootUrl": "https://deploymentmanager.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1307,6 +1307,16 @@
         },
         "layout": {
           "description": "Output only. The YAML layout for this manifest.",
+          "type": "string"
+        },
+        "manifestSizeBytes": {
+          "description": "Output only. The computed size of the fully expanded manifest.",
+          "format": "int64",
+          "type": "string"
+        },
+        "manifestSizeLimitBytes": {
+          "description": "Output only. The size limit for expanded manifests in the project.",
+          "format": "int64",
           "type": "string"
         },
         "name": {

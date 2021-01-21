@@ -219,7 +219,6 @@ type ProjectsLocationsAgentsEntityTypesService struct {
 
 func NewProjectsLocationsAgentsEnvironmentsService(s *Service) *ProjectsLocationsAgentsEnvironmentsService {
 	rs := &ProjectsLocationsAgentsEnvironmentsService{s: s}
-	rs.Experiments = NewProjectsLocationsAgentsEnvironmentsExperimentsService(s)
 	rs.Sessions = NewProjectsLocationsAgentsEnvironmentsSessionsService(s)
 	return rs
 }
@@ -227,18 +226,7 @@ func NewProjectsLocationsAgentsEnvironmentsService(s *Service) *ProjectsLocation
 type ProjectsLocationsAgentsEnvironmentsService struct {
 	s *Service
 
-	Experiments *ProjectsLocationsAgentsEnvironmentsExperimentsService
-
 	Sessions *ProjectsLocationsAgentsEnvironmentsSessionsService
-}
-
-func NewProjectsLocationsAgentsEnvironmentsExperimentsService(s *Service) *ProjectsLocationsAgentsEnvironmentsExperimentsService {
-	rs := &ProjectsLocationsAgentsEnvironmentsExperimentsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsAgentsEnvironmentsExperimentsService struct {
-	s *Service
 }
 
 func NewProjectsLocationsAgentsEnvironmentsSessionsService(s *Service) *ProjectsLocationsAgentsEnvironmentsSessionsService {
@@ -950,10 +938,11 @@ type GoogleCloudDialogflowCxV3FormParameter struct {
 	// IsList: Indicates whether the parameter represents a list of values.
 	IsList bool `json:"isList,omitempty"`
 
-	// Redact: Indicates whether the parameter content is logged in text and
-	// audio. If it is set to true, the parameter content will be replaced
-	// to parameter name in both request and response. The default value is
-	// false.
+	// Redact: Indicates whether the parameter content should be redacted in
+	// text and audio. If the flag is set to true, the parameter content
+	// will be replaced by parameter name in both request and response.
+	// Note: the parameter content is subject to redaction if either
+	// parameter level redaction or entity type level redaction is enabled.
 	Redact bool `json:"redact,omitempty"`
 
 	// Required: Indicates whether the parameter is required. Optional
@@ -1638,10 +1627,11 @@ type GoogleCloudDialogflowCxV3IntentParameter struct {
 	// IsList: Indicates whether the parameter represents a list of values.
 	IsList bool `json:"isList,omitempty"`
 
-	// Redact: Indicates whether the parameter content is logged in text and
-	// audio. If it is set to true, the parameter content will be replaced
-	// to parameter id in both request and response. The default value is
-	// false.
+	// Redact: Indicates whether the parameter content should be redacted in
+	// text and audio. If the flag is set to true, the parameter content
+	// will be replaced by parameter name in both request and response.
+	// Note: the parameter content is subject to redaction if either
+	// parameter level redaction or entity type level redaction is enabled.
 	Redact bool `json:"redact,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EntityType") to
@@ -3128,6 +3118,10 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	// automatically. Format: `projects//locations//agents/`.
 	Name string `json:"name,omitempty"`
 
+	// SecuritySettings: Name of the SecuritySettings reference for the
+	// agent. Format: `projects//locations//securitySettings/`.
+	SecuritySettings string `json:"securitySettings,omitempty"`
+
 	// SpeechToTextSettings: Speech recognition related settings.
 	SpeechToTextSettings *GoogleCloudDialogflowCxV3beta1SpeechToTextSettings `json:"speechToTextSettings,omitempty"`
 
@@ -3849,7 +3843,7 @@ func (s *GoogleCloudDialogflowCxV3beta1EntityType) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudDialogflowCxV3beta1EntityTypeEntity: An **entity entry**
-// for an associated entity type. Next Id = 8
+// for an associated entity type.
 type GoogleCloudDialogflowCxV3beta1EntityTypeEntity struct {
 	// Synonyms: Required. A collection of value synonyms. For example, if
 	// the entity type is *vegetable*, and `value` is *scallions*, a synonym
@@ -4082,319 +4076,6 @@ type GoogleCloudDialogflowCxV3beta1EventInput struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1EventInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1EventInput
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1Experiment: Represents an experiment in
-// an environment. Next ID: 13
-type GoogleCloudDialogflowCxV3beta1Experiment struct {
-	// CreateTime: Creation time of this experiment.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// Definition: The definition of the experiment.
-	Definition *GoogleCloudDialogflowCxV3beta1ExperimentDefinition `json:"definition,omitempty"`
-
-	// Description: The human-readable description of the experiment.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Required. The human-readable name of the experiment
-	// (unique in an environment). Limit of 64 characters.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// EndTime: End time of this experiment.
-	EndTime string `json:"endTime,omitempty"`
-
-	// ExperimentLength: Maximum number of days to run the experiment.
-	ExperimentLength string `json:"experimentLength,omitempty"`
-
-	// LastUpdateTime: Last update time of this experiment.
-	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
-
-	// Name: The name of the experiment. Format:
-	// projects//locations//agents//environments//experiments/..
-	Name string `json:"name,omitempty"`
-
-	// Result: Inference result of the experiment.
-	Result *GoogleCloudDialogflowCxV3beta1ExperimentResult `json:"result,omitempty"`
-
-	// StartTime: Start time of this experiment.
-	StartTime string `json:"startTime,omitempty"`
-
-	// State: The current state of the experiment. Transition triggered by
-	// Expriments.StartExperiment: PENDING->RUNNING. Transition triggered by
-	// Expriments.CancelExperiment: PENDING->CANCELLED or
-	// RUNNING->CANCELLED.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - State unspecified.
-	//   "DRAFT" - The experiment is created but not started yet.
-	//   "RUNNING" - The experiment is running.
-	//   "DONE" - The experiment is done.
-	State string `json:"state,omitempty"`
-
-	// VariantsHistory: The history of updates to the experiment variants.
-	VariantsHistory []*GoogleCloudDialogflowCxV3beta1VariantsHistory `json:"variantsHistory,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1Experiment) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1Experiment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1ExperimentDefinition: Definition of the
-// experiment. Next ID: 3
-type GoogleCloudDialogflowCxV3beta1ExperimentDefinition struct {
-	// Condition: The condition defines which subset of sessions are
-	// selected for this experiment. If not specified, all sessions are
-	// eligible. E.g. "query_input.language_code=en" See the conditions
-	// reference
-	// (https://cloud.google.com/dialogflow/cx/docs/reference/condition).
-	Condition string `json:"condition,omitempty"`
-
-	// VersionVariants: The flow versions as the variants of this
-	// experiment.
-	VersionVariants *GoogleCloudDialogflowCxV3beta1VersionVariants `json:"versionVariants,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Condition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Condition") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ExperimentDefinition) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ExperimentDefinition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1ExperimentResult: The inference result
-// which includes an objective metric to optimize and the confidence
-// interval.
-type GoogleCloudDialogflowCxV3beta1ExperimentResult struct {
-	// LastUpdateTime: The last time the experiment's stats data was
-	// updated. Will have default value if stats have never been computed
-	// for this experiment.
-	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
-
-	// VersionMetrics: Version variants and metrics.
-	VersionMetrics []*GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics `json:"versionMetrics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LastUpdateTime") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ExperimentResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ExperimentResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval: A
-// confidence interval is a range of possible values for the experiment
-// objective you are trying to measure.
-type GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval struct {
-	// ConfidenceLevel: The confidence level used to construct the interval,
-	// i.e. there is X% chance that the true value is within this interval.
-	ConfidenceLevel float64 `json:"confidenceLevel,omitempty"`
-
-	// LowerBound: Lower bound of the interval.
-	LowerBound float64 `json:"lowerBound,omitempty"`
-
-	// Ratio: The percent change between an experiment metric's value and
-	// the value for its control.
-	Ratio float64 `json:"ratio,omitempty"`
-
-	// UpperBound: Upper bound of the interval.
-	UpperBound float64 `json:"upperBound,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConfidenceLevel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConfidenceLevel") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval
-	var s1 struct {
-		ConfidenceLevel gensupport.JSONFloat64 `json:"confidenceLevel"`
-		LowerBound      gensupport.JSONFloat64 `json:"lowerBound"`
-		Ratio           gensupport.JSONFloat64 `json:"ratio"`
-		UpperBound      gensupport.JSONFloat64 `json:"upperBound"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceLevel = float64(s1.ConfidenceLevel)
-	s.LowerBound = float64(s1.LowerBound)
-	s.Ratio = float64(s1.Ratio)
-	s.UpperBound = float64(s1.UpperBound)
-	return nil
-}
-
-// GoogleCloudDialogflowCxV3beta1ExperimentResultMetric: Metric and
-// corresponding confidence intervals.
-type GoogleCloudDialogflowCxV3beta1ExperimentResultMetric struct {
-	// ConfidenceInterval: The probability that the treatment is better than
-	// all other treatments in the experiment
-	ConfidenceInterval *GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval `json:"confidenceInterval,omitempty"`
-
-	// Ratio: Ratio value of a metric.
-	Ratio float64 `json:"ratio,omitempty"`
-
-	// Type: The type of the metric.
-	//
-	// Possible values:
-	//   "METRIC_UNSPECIFIED" - Metric unspecified.
-	//   "CONTAINED_SESSION_NO_CALLBACK_RATE" - Percentage of contained
-	// sessions without user calling back in 24 hours.
-	//   "LIVE_AGENT_HANDOFF_RATE" - Percentage of sessions that were handed
-	// to a human agent.
-	//   "CALLBACK_SESSION_RATE" - Percentage of sessions with the same user
-	// calling back.
-	//   "ABANDONED_SESSION_RATE" - Percentage of sessions where user hung
-	// up.
-	//   "SESSION_END_RATE" - Percentage of sessions reached Dialogflow
-	// 'END_PAGE' or 'END_SESSION'.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConfidenceInterval")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConfidenceInterval") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ExperimentResultMetric) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ExperimentResultMetric
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ExperimentResultMetric) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ExperimentResultMetric
-	var s1 struct {
-		Ratio gensupport.JSONFloat64 `json:"ratio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Ratio = float64(s1.Ratio)
-	return nil
-}
-
-// GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics: Version
-// variant and associated metrics.
-type GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics struct {
-	// Metrics: The metrics and corresponding confidence intervals in the
-	// inference result.
-	Metrics []*GoogleCloudDialogflowCxV3beta1ExperimentResultMetric `json:"metrics,omitempty"`
-
-	// SessionCount: Number of sessions that were allocated to this version.
-	SessionCount int64 `json:"sessionCount,omitempty"`
-
-	// Version: The name of the flow Version. Format:
-	// `projects//locations//agents//flows//versions/`.
-	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Metrics") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metrics") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4727,10 +4408,11 @@ type GoogleCloudDialogflowCxV3beta1FormParameter struct {
 	// IsList: Indicates whether the parameter represents a list of values.
 	IsList bool `json:"isList,omitempty"`
 
-	// Redact: Indicates whether the parameter content is logged in text and
-	// audio. If it is set to true, the parameter content will be replaced
-	// to parameter name in both request and response. The default value is
-	// false.
+	// Redact: Indicates whether the parameter content should be redacted in
+	// text and audio. If the flag is set to true, the parameter content
+	// will be replaced by parameter name in both request and response.
+	// Note: the parameter content is subject to redaction if either
+	// parameter level redaction or entity type level redaction is enabled.
 	Redact bool `json:"redact,omitempty"`
 
 	// Required: Indicates whether the parameter is required. Optional
@@ -5624,10 +5306,11 @@ type GoogleCloudDialogflowCxV3beta1IntentParameter struct {
 	// IsList: Indicates whether the parameter represents a list of values.
 	IsList bool `json:"isList,omitempty"`
 
-	// Redact: Indicates whether the parameter content is logged in text and
-	// audio. If it is set to true, the parameter content will be replaced
-	// to parameter id in both request and response. The default value is
-	// false.
+	// Redact: Indicates whether the parameter content should be redacted in
+	// text and audio. If the flag is set to true, the parameter content
+	// will be replaced by parameter name in both request and response.
+	// Note: the parameter content is subject to redaction if either
+	// parameter level redaction or entity type level redaction is enabled.
 	Redact bool `json:"redact,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EntityType") to
@@ -5847,46 +5530,6 @@ type GoogleCloudDialogflowCxV3beta1ListEnvironmentsResponse struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1ListEnvironmentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1ListExperimentsResponse: The response
-// message for Experiments.ListExperiments.
-type GoogleCloudDialogflowCxV3beta1ListExperimentsResponse struct {
-	// Experiments: The list of experiments. There will be a maximum number
-	// of items returned based on the page_size field in the request. The
-	// list may in some cases be empty or contain fewer entries than
-	// page_size even if this isn't the last page.
-	Experiments []*GoogleCloudDialogflowCxV3beta1Experiment `json:"experiments,omitempty"`
-
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Experiments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Experiments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1ListExperimentsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1ListExperimentsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7899,16 +7542,6 @@ func (s *GoogleCloudDialogflowCxV3beta1SpeechToTextSettings) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowCxV3beta1StartExperimentRequest: The request
-// message for Experiments.StartExperiment.
-type GoogleCloudDialogflowCxV3beta1StartExperimentRequest struct {
-}
-
-// GoogleCloudDialogflowCxV3beta1StopExperimentRequest: The request
-// message for Experiments.StopExperiment.
-type GoogleCloudDialogflowCxV3beta1StopExperimentRequest struct {
-}
-
 // GoogleCloudDialogflowCxV3beta1SynthesizeSpeechConfig: Configuration
 // of how speech should be synthesized.
 type GoogleCloudDialogflowCxV3beta1SynthesizeSpeechConfig struct {
@@ -8666,38 +8299,6 @@ func (s *GoogleCloudDialogflowCxV3beta1ValidationMessage) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowCxV3beta1VariantsHistory: The history of
-// variants update.
-type GoogleCloudDialogflowCxV3beta1VariantsHistory struct {
-	// UpdateTime: Update time of the variants.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// VersionVariants: The flow versions as the variants.
-	VersionVariants *GoogleCloudDialogflowCxV3beta1VersionVariants `json:"versionVariants,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "UpdateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UpdateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1VariantsHistory) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1VariantsHistory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowCxV3beta1Version: Represents a version of a
 // flow.
 type GoogleCloudDialogflowCxV3beta1Version struct {
@@ -8758,88 +8359,6 @@ func (s *GoogleCloudDialogflowCxV3beta1Version) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Version
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1VersionVariants: A list of flow version
-// variants.
-type GoogleCloudDialogflowCxV3beta1VersionVariants struct {
-	// Variants: A list of flow version variants.
-	Variants []*GoogleCloudDialogflowCxV3beta1VersionVariantsVariant `json:"variants,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Variants") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Variants") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1VersionVariants) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1VersionVariants
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowCxV3beta1VersionVariantsVariant: A single flow
-// version with specified traffic allocation.
-type GoogleCloudDialogflowCxV3beta1VersionVariantsVariant struct {
-	// IsControlGroup: Whether the variant is for the control group.
-	IsControlGroup bool `json:"isControlGroup,omitempty"`
-
-	// TrafficAllocation: Percentage of the traffic which should be routed
-	// to this version of flow. Traffic allocation for a single flow must
-	// sum up to 1.0.
-	TrafficAllocation float64 `json:"trafficAllocation,omitempty"`
-
-	// Version: The name of the flow version. Format:
-	// `projects//locations//agents//flows//versions/`.
-	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IsControlGroup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsControlGroup") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1VersionVariantsVariant) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowCxV3beta1VersionVariantsVariant
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDialogflowCxV3beta1VersionVariantsVariant) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDialogflowCxV3beta1VersionVariantsVariant
-	var s1 struct {
-		TrafficAllocation gensupport.JSONFloat64 `json:"trafficAllocation"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.TrafficAllocation = float64(s1.TrafficAllocation)
-	return nil
 }
 
 // GoogleCloudDialogflowCxV3beta1VoiceSelectionParams: Description of
@@ -15022,7 +14541,7 @@ func (c *ProjectsLocationsAgentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15162,7 +14681,7 @@ func (c *ProjectsLocationsAgentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15295,7 +14814,7 @@ func (c *ProjectsLocationsAgentsExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15445,7 +14964,7 @@ func (c *ProjectsLocationsAgentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15599,7 +15118,7 @@ func (c *ProjectsLocationsAgentsGetValidationResultCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15765,7 +15284,7 @@ func (c *ProjectsLocationsAgentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15943,7 +15462,7 @@ func (c *ProjectsLocationsAgentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16093,7 +15612,7 @@ func (c *ProjectsLocationsAgentsRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16237,7 +15756,7 @@ func (c *ProjectsLocationsAgentsValidateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16393,7 +15912,7 @@ func (c *ProjectsLocationsAgentsEntityTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16552,7 +16071,7 @@ func (c *ProjectsLocationsAgentsEntityTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16713,7 +16232,7 @@ func (c *ProjectsLocationsAgentsEntityTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16893,7 +16412,7 @@ func (c *ProjectsLocationsAgentsEntityTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17088,7 +16607,7 @@ func (c *ProjectsLocationsAgentsEntityTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17242,7 +16761,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17381,7 +16900,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17523,7 +17042,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17684,7 +17203,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17879,7 +17398,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsLookupEnvironmentHistoryCall) Header
 
 func (c *ProjectsLocationsAgentsEnvironmentsLookupEnvironmentHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18057,7 +17576,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18158,1065 +17677,6 @@ func (c *ProjectsLocationsAgentsEnvironmentsPatchCall) Do(opts ...googleapi.Call
 
 }
 
-// method id "dialogflow.projects.locations.agents.environments.experiments.create":
-
-type ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall struct {
-	s                                        *Service
-	parent                                   string
-	googleclouddialogflowcxv3beta1experiment *GoogleCloudDialogflowCxV3beta1Experiment
-	urlParams_                               gensupport.URLParams
-	ctx_                                     context.Context
-	header_                                  http.Header
-}
-
-// Create: Creates an Experiment in the specified Environment.
-func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Create(parent string, googleclouddialogflowcxv3beta1experiment *GoogleCloudDialogflowCxV3beta1Experiment) *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall {
-	c := &ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googleclouddialogflowcxv3beta1experiment = googleclouddialogflowcxv3beta1experiment
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall) Context(ctx context.Context) *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1experiment)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}/experiments")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dialogflow.projects.locations.agents.environments.experiments.create" call.
-// Exactly one of *GoogleCloudDialogflowCxV3beta1Experiment or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDialogflowCxV3beta1Experiment.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1Experiment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudDialogflowCxV3beta1Experiment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates an Experiment in the specified Environment.",
-	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments",
-	//   "httpMethod": "POST",
-	//   "id": "dialogflow.projects.locations.agents.environments.experiments.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The Agent to create an Environment for. Format: `projects//locations//agents//environments/`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3beta1/{+parent}/experiments",
-	//   "request": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/dialogflow"
-	//   ]
-	// }
-
-}
-
-// method id "dialogflow.projects.locations.agents.environments.experiments.delete":
-
-type ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes the specified Experiment.
-func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Delete(name string) *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall {
-	c := &ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dialogflow.projects.locations.agents.environments.experiments.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes the specified Experiment.",
-	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "dialogflow.projects.locations.agents.environments.experiments.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the Environment to delete. Format: `projects//locations//agents//environments//experiments/`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/dialogflow"
-	//   ]
-	// }
-
-}
-
-// method id "dialogflow.projects.locations.agents.environments.experiments.get":
-
-type ProjectsLocationsAgentsEnvironmentsExperimentsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Retrieves the specified Experiment.
-func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Get(name string) *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall {
-	c := &ProjectsLocationsAgentsEnvironmentsExperimentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall) Context(ctx context.Context) *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dialogflow.projects.locations.agents.environments.experiments.get" call.
-// Exactly one of *GoogleCloudDialogflowCxV3beta1Experiment or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDialogflowCxV3beta1Experiment.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1Experiment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudDialogflowCxV3beta1Experiment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the specified Experiment.",
-	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
-	//   "httpMethod": "GET",
-	//   "id": "dialogflow.projects.locations.agents.environments.experiments.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the Environment. Format: `projects//locations//agents//environments//experiments/`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/dialogflow"
-	//   ]
-	// }
-
-}
-
-// method id "dialogflow.projects.locations.agents.environments.experiments.list":
-
-type ProjectsLocationsAgentsEnvironmentsExperimentsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Returns the list of all experiments in the specified
-// Environment.
-func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) List(parent string) *ProjectsLocationsAgentsEnvironmentsExperimentsListCall {
-	c := &ProjectsLocationsAgentsEnvironmentsExperimentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return in a single page. By default 20 and at most 100.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) PageSize(pageSize int64) *ProjectsLocationsAgentsEnvironmentsExperimentsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous list request.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) PageToken(pageToken string) *ProjectsLocationsAgentsEnvironmentsExperimentsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEnvironmentsExperimentsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentsEnvironmentsExperimentsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) Context(ctx context.Context) *ProjectsLocationsAgentsEnvironmentsExperimentsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}/experiments")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dialogflow.projects.locations.agents.environments.experiments.list" call.
-// Exactly one of *GoogleCloudDialogflowCxV3beta1ListExperimentsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudDialogflowCxV3beta1ListExperimentsResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1ListExperimentsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudDialogflowCxV3beta1ListExperimentsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Returns the list of all experiments in the specified Environment.",
-	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments",
-	//   "httpMethod": "GET",
-	//   "id": "dialogflow.projects.locations.agents.environments.experiments.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of items to return in a single page. By default 20 and at most 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous list request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The Environment to list all environments for. Format: `projects//locations//agents//environments/`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3beta1/{+parent}/experiments",
-	//   "response": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1ListExperimentsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/dialogflow"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowCxV3beta1ListExperimentsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "dialogflow.projects.locations.agents.environments.experiments.patch":
-
-type ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall struct {
-	s                                        *Service
-	name                                     string
-	googleclouddialogflowcxv3beta1experiment *GoogleCloudDialogflowCxV3beta1Experiment
-	urlParams_                               gensupport.URLParams
-	ctx_                                     context.Context
-	header_                                  http.Header
-}
-
-// Patch: Updates the specified Experiment.
-func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Patch(name string, googleclouddialogflowcxv3beta1experiment *GoogleCloudDialogflowCxV3beta1Experiment) *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall {
-	c := &ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleclouddialogflowcxv3beta1experiment = googleclouddialogflowcxv3beta1experiment
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// mask to control which fields get updated.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall) Context(ctx context.Context) *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1experiment)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dialogflow.projects.locations.agents.environments.experiments.patch" call.
-// Exactly one of *GoogleCloudDialogflowCxV3beta1Experiment or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDialogflowCxV3beta1Experiment.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1Experiment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudDialogflowCxV3beta1Experiment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the specified Experiment.",
-	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "dialogflow.projects.locations.agents.environments.experiments.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the experiment. Format: projects//locations//agents//environments//experiments/..",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The mask to control which fields get updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3beta1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/dialogflow"
-	//   ]
-	// }
-
-}
-
-// method id "dialogflow.projects.locations.agents.environments.experiments.start":
-
-type ProjectsLocationsAgentsEnvironmentsExperimentsStartCall struct {
-	s                                                    *Service
-	name                                                 string
-	googleclouddialogflowcxv3beta1startexperimentrequest *GoogleCloudDialogflowCxV3beta1StartExperimentRequest
-	urlParams_                                           gensupport.URLParams
-	ctx_                                                 context.Context
-	header_                                              http.Header
-}
-
-// Start: Starts the specified Experiment. This rpc only changes the
-// state of experiment from PENDING to RUNNING.
-func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Start(name string, googleclouddialogflowcxv3beta1startexperimentrequest *GoogleCloudDialogflowCxV3beta1StartExperimentRequest) *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall {
-	c := &ProjectsLocationsAgentsEnvironmentsExperimentsStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleclouddialogflowcxv3beta1startexperimentrequest = googleclouddialogflowcxv3beta1startexperimentrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall) Context(ctx context.Context) *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1startexperimentrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}:start")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dialogflow.projects.locations.agents.environments.experiments.start" call.
-// Exactly one of *GoogleCloudDialogflowCxV3beta1Experiment or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDialogflowCxV3beta1Experiment.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStartCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1Experiment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudDialogflowCxV3beta1Experiment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Starts the specified Experiment. This rpc only changes the state of experiment from PENDING to RUNNING.",
-	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}:start",
-	//   "httpMethod": "POST",
-	//   "id": "dialogflow.projects.locations.agents.environments.experiments.start",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the experiment to start. Format: `projects//locations//agents//environments//experiments/`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3beta1/{+name}:start",
-	//   "request": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1StartExperimentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/dialogflow"
-	//   ]
-	// }
-
-}
-
-// method id "dialogflow.projects.locations.agents.environments.experiments.stop":
-
-type ProjectsLocationsAgentsEnvironmentsExperimentsStopCall struct {
-	s                                                   *Service
-	name                                                string
-	googleclouddialogflowcxv3beta1stopexperimentrequest *GoogleCloudDialogflowCxV3beta1StopExperimentRequest
-	urlParams_                                          gensupport.URLParams
-	ctx_                                                context.Context
-	header_                                             http.Header
-}
-
-// Stop: Stops the specified Experiment. This rpc only changes the state
-// of experiment from RUNNING to DONE.
-func (r *ProjectsLocationsAgentsEnvironmentsExperimentsService) Stop(name string, googleclouddialogflowcxv3beta1stopexperimentrequest *GoogleCloudDialogflowCxV3beta1StopExperimentRequest) *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall {
-	c := &ProjectsLocationsAgentsEnvironmentsExperimentsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleclouddialogflowcxv3beta1stopexperimentrequest = googleclouddialogflowcxv3beta1stopexperimentrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall) Context(ctx context.Context) *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowcxv3beta1stopexperimentrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+name}:stop")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dialogflow.projects.locations.agents.environments.experiments.stop" call.
-// Exactly one of *GoogleCloudDialogflowCxV3beta1Experiment or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDialogflowCxV3beta1Experiment.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsAgentsEnvironmentsExperimentsStopCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowCxV3beta1Experiment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleCloudDialogflowCxV3beta1Experiment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Stops the specified Experiment. This rpc only changes the state of experiment from RUNNING to DONE.",
-	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}:stop",
-	//   "httpMethod": "POST",
-	//   "id": "dialogflow.projects.locations.agents.environments.experiments.stop",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the experiment to stop. Format: `projects//locations//agents//environments//experiments/`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3beta1/{+name}:stop",
-	//   "request": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1StopExperimentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/dialogflow"
-	//   ]
-	// }
-
-}
-
 // method id "dialogflow.projects.locations.agents.environments.sessions.detectIntent":
 
 type ProjectsLocationsAgentsEnvironmentsSessionsDetectIntentCall struct {
@@ -19269,7 +17729,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsDetectIntentCall) Header() h
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19414,7 +17874,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsFulfillIntentCall) Header() 
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsFulfillIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19558,7 +18018,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsMatchIntentCall) Header() ht
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsMatchIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19702,7 +18162,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesCreateCall) Heade
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19843,7 +18303,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesDeleteCall) Heade
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19985,7 +18445,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesGetCall) Header()
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20147,7 +18607,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesListCall) Header(
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20325,7 +18785,7 @@ func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesPatchCall) Header
 
 func (c *ProjectsLocationsAgentsEnvironmentsSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20487,7 +18947,7 @@ func (c *ProjectsLocationsAgentsFlowsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20644,7 +19104,7 @@ func (c *ProjectsLocationsAgentsFlowsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20804,7 +19264,7 @@ func (c *ProjectsLocationsAgentsFlowsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20963,7 +19423,7 @@ func (c *ProjectsLocationsAgentsFlowsGetValidationResultCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentsFlowsGetValidationResultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21142,7 +19602,7 @@ func (c *ProjectsLocationsAgentsFlowsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21338,7 +19798,7 @@ func (c *ProjectsLocationsAgentsFlowsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21492,7 +19952,7 @@ func (c *ProjectsLocationsAgentsFlowsTrainCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsTrainCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21635,7 +20095,7 @@ func (c *ProjectsLocationsAgentsFlowsValidateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21796,7 +20256,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21953,7 +20413,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22118,7 +20578,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22301,7 +20761,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22502,7 +20962,7 @@ func (c *ProjectsLocationsAgentsFlowsPagesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsPagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22667,7 +21127,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall) Header() h
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22825,7 +21285,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall) Header() h
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22984,7 +21444,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall) Header() http
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23163,7 +21623,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall) Header() htt
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23358,7 +21818,7 @@ func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall) Header() ht
 
 func (c *ProjectsLocationsAgentsFlowsTransitionRouteGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23512,7 +21972,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23651,7 +22111,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23793,7 +22253,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23953,7 +22413,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24123,7 +22583,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsLoadCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsLoadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24272,7 +22732,7 @@ func (c *ProjectsLocationsAgentsFlowsVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsFlowsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24432,7 +22892,7 @@ func (c *ProjectsLocationsAgentsIntentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24577,7 +23037,7 @@ func (c *ProjectsLocationsAgentsIntentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24731,7 +23191,7 @@ func (c *ProjectsLocationsAgentsIntentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24922,7 +23382,7 @@ func (c *ProjectsLocationsAgentsIntentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25132,7 +23592,7 @@ func (c *ProjectsLocationsAgentsIntentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsIntentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25291,7 +23751,7 @@ func (c *ProjectsLocationsAgentsSessionsDetectIntentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsSessionsDetectIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25436,7 +23896,7 @@ func (c *ProjectsLocationsAgentsSessionsFulfillIntentCall) Header() http.Header 
 
 func (c *ProjectsLocationsAgentsSessionsFulfillIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25580,7 +24040,7 @@ func (c *ProjectsLocationsAgentsSessionsMatchIntentCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsSessionsMatchIntentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25724,7 +24184,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesCreateCall) Header() http.Hea
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25865,7 +24325,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesDeleteCall) Header() http.Hea
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26007,7 +24467,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesGetCall) Header() http.Header
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26169,7 +24629,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesListCall) Header() http.Heade
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26347,7 +24807,7 @@ func (c *ProjectsLocationsAgentsSessionsEntityTypesPatchCall) Header() http.Head
 
 func (c *ProjectsLocationsAgentsSessionsEntityTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26496,7 +24956,7 @@ func (c *ProjectsLocationsAgentsTestCasesBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26637,7 +25097,7 @@ func (c *ProjectsLocationsAgentsTestCasesBatchRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesBatchRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26799,7 +25259,7 @@ func (c *ProjectsLocationsAgentsTestCasesCalculateCoverageCall) Header() http.He
 
 func (c *ProjectsLocationsAgentsTestCasesCalculateCoverageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26953,7 +25413,7 @@ func (c *ProjectsLocationsAgentsTestCasesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27097,7 +25557,7 @@ func (c *ProjectsLocationsAgentsTestCasesExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27247,7 +25707,7 @@ func (c *ProjectsLocationsAgentsTestCasesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27387,7 +25847,7 @@ func (c *ProjectsLocationsAgentsTestCasesImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27567,7 +26027,7 @@ func (c *ProjectsLocationsAgentsTestCasesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27761,7 +26221,7 @@ func (c *ProjectsLocationsAgentsTestCasesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27913,7 +26373,7 @@ func (c *ProjectsLocationsAgentsTestCasesRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28108,7 +26568,7 @@ func (c *ProjectsLocationsAgentsTestCasesResultsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsTestCasesResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28284,7 +26744,7 @@ func (c *ProjectsLocationsAgentsWebhooksCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28436,7 +26896,7 @@ func (c *ProjectsLocationsAgentsWebhooksDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28583,7 +27043,7 @@ func (c *ProjectsLocationsAgentsWebhooksGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28743,7 +27203,7 @@ func (c *ProjectsLocationsAgentsWebhooksListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28921,7 +27381,7 @@ func (c *ProjectsLocationsAgentsWebhooksPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsAgentsWebhooksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29076,7 +27536,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29220,7 +27680,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29395,7 +27855,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29569,7 +28029,7 @@ func (c *ProjectsLocationsSecuritySettingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsSecuritySettingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29710,7 +28170,7 @@ func (c *ProjectsLocationsSecuritySettingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsSecuritySettingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29853,7 +28313,7 @@ func (c *ProjectsLocationsSecuritySettingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsSecuritySettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30015,7 +28475,7 @@ func (c *ProjectsLocationsSecuritySettingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsSecuritySettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30194,7 +28654,7 @@ func (c *ProjectsLocationsSecuritySettingsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsSecuritySettingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30350,7 +28810,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30494,7 +28954,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30669,7 +29129,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

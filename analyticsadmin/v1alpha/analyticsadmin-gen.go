@@ -1949,7 +1949,7 @@ func (c *AccountSummariesListCall) Header() http.Header {
 
 func (c *AccountSummariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2034,6 +2034,7 @@ func (c *AccountSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnal
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListAccountSummariesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -2112,7 +2113,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2253,7 +2254,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2337,6 +2338,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdmi
 	//     "$ref": "GoogleAnalyticsAdminV1alphaAccount"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -2399,7 +2401,7 @@ func (c *AccountsGetDataSharingSettingsCall) Header() http.Header {
 
 func (c *AccountsGetDataSharingSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2484,6 +2486,7 @@ func (c *AccountsGetDataSharingSettingsCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "GoogleAnalyticsAdminV1alphaDataSharingSettings"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -2575,7 +2578,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2664,6 +2667,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdm
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListAccountsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -2746,7 +2750,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2891,7 +2895,7 @@ func (c *AccountsProvisionAccountTicketCall) Header() http.Header {
 
 func (c *AccountsProvisionAccountTicketCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3027,7 +3031,7 @@ func (c *AccountsUserLinksAuditCall) Header() http.Header {
 
 func (c *AccountsUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3117,6 +3121,7 @@ func (c *AccountsUserLinksAuditCall) Do(opts ...googleapi.CallOption) (*GoogleAn
 	//     "$ref": "GoogleAnalyticsAdminV1alphaAuditUserLinksResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
 	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
@@ -3192,7 +3197,7 @@ func (c *AccountsUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3336,7 +3341,7 @@ func (c *AccountsUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3494,7 +3499,7 @@ func (c *AccountsUserLinksBatchGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3585,6 +3590,7 @@ func (c *AccountsUserLinksBatchGetCall) Do(opts ...googleapi.CallOption) (*Googl
 	//     "$ref": "GoogleAnalyticsAdminV1alphaBatchGetUserLinksResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
 	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
@@ -3638,7 +3644,7 @@ func (c *AccountsUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3792,7 +3798,7 @@ func (c *AccountsUserLinksCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3936,7 +3942,7 @@ func (c *AccountsUserLinksDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4077,7 +4083,7 @@ func (c *AccountsUserLinksGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4161,6 +4167,7 @@ func (c *AccountsUserLinksGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnal
 	//     "$ref": "GoogleAnalyticsAdminV1alphaUserLink"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
 	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
@@ -4241,7 +4248,7 @@ func (c *AccountsUserLinksListCall) Header() http.Header {
 
 func (c *AccountsUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4337,6 +4344,7 @@ func (c *AccountsUserLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleAna
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListUserLinksResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
 	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
@@ -4410,7 +4418,7 @@ func (c *AccountsUserLinksPatchCall) Header() http.Header {
 
 func (c *AccountsUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4550,7 +4558,7 @@ func (c *PropertiesCreateCall) Header() http.Header {
 
 func (c *PropertiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4683,7 +4691,7 @@ func (c *PropertiesDeleteCall) Header() http.Header {
 
 func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4824,7 +4832,7 @@ func (c *PropertiesGetCall) Header() http.Header {
 
 func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4908,6 +4916,7 @@ func (c *PropertiesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAd
 	//     "$ref": "GoogleAnalyticsAdminV1alphaProperty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -5015,7 +5024,7 @@ func (c *PropertiesListCall) Header() http.Header {
 
 func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5109,6 +5118,7 @@ func (c *PropertiesListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsA
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListPropertiesResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -5191,7 +5201,7 @@ func (c *PropertiesPatchCall) Header() http.Header {
 
 func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5303,8 +5313,12 @@ type PropertiesAndroidAppDataStreamsCreateCall struct {
 	header_                                         http.Header
 }
 
-// Create: Creates an android app stream with the specified location and
-// attributes.
+// Create: Creates an Android app stream with the specified location and
+// attributes. Note that an Android app stream must be linked to a
+// Firebase app to receive traffic. To create a working app stream, make
+// sure your property is linked to a Firebase project. Then, use the
+// Firebase API to create a Firebase app, which will also create an
+// appropriate data stream in Analytics (may take up to 24 hours).
 func (r *PropertiesAndroidAppDataStreamsService) Create(parent string, googleanalyticsadminv1alphaandroidappdatastream *GoogleAnalyticsAdminV1alphaAndroidAppDataStream) *PropertiesAndroidAppDataStreamsCreateCall {
 	c := &PropertiesAndroidAppDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5339,7 +5353,7 @@ func (c *PropertiesAndroidAppDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5405,7 +5419,7 @@ func (c *PropertiesAndroidAppDataStreamsCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an android app stream with the specified location and attributes.",
+	//   "description": "Creates an Android app stream with the specified location and attributes. Note that an Android app stream must be linked to a Firebase app to receive traffic. To create a working app stream, make sure your property is linked to a Firebase project. Then, use the Firebase API to create a Firebase app, which will also create an appropriate data stream in Analytics (may take up to 24 hours).",
 	//   "flatPath": "v1alpha/properties/{propertiesId}/androidAppDataStreams",
 	//   "httpMethod": "POST",
 	//   "id": "analyticsadmin.properties.androidAppDataStreams.create",
@@ -5479,7 +5493,7 @@ func (c *PropertiesAndroidAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5620,7 +5634,7 @@ func (c *PropertiesAndroidAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5705,6 +5719,7 @@ func (c *PropertiesAndroidAppDataStreamsGetCall) Do(opts ...googleapi.CallOption
 	//     "$ref": "GoogleAnalyticsAdminV1alphaAndroidAppDataStream"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -5788,7 +5803,7 @@ func (c *PropertiesAndroidAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5885,6 +5900,7 @@ func (c *PropertiesAndroidAppDataStreamsListCall) Do(opts ...googleapi.CallOptio
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListAndroidAppDataStreamsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -5967,7 +5983,7 @@ func (c *PropertiesAndroidAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6116,7 +6132,7 @@ func (c *PropertiesFirebaseLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6255,7 +6271,7 @@ func (c *PropertiesFirebaseLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6417,7 +6433,7 @@ func (c *PropertiesFirebaseLinksListCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6513,6 +6529,7 @@ func (c *PropertiesFirebaseLinksListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListFirebaseLinksResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -6595,7 +6612,7 @@ func (c *PropertiesFirebaseLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6742,7 +6759,7 @@ func (c *PropertiesGoogleAdsLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6882,7 +6899,7 @@ func (c *PropertiesGoogleAdsLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7042,7 +7059,7 @@ func (c *PropertiesGoogleAdsLinksListCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7138,6 +7155,7 @@ func (c *PropertiesGoogleAdsLinksListCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListGoogleAdsLinksResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -7220,7 +7238,7 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7333,8 +7351,12 @@ type PropertiesIosAppDataStreamsCreateCall struct {
 	header_                                     http.Header
 }
 
-// Create: Creates an iOS app data stream with the specified location
-// and attributes.
+// Create: Creates an iOS app stream with the specified location and
+// attributes. Note that an iOS app stream must be linked to a Firebase
+// app to receive traffic. To create a working app stream, make sure
+// your property is linked to a Firebase project. Then, use the Firebase
+// API to create a Firebase app, which will also create an appropriate
+// data stream in Analytics (may take up to 24 hours).
 func (r *PropertiesIosAppDataStreamsService) Create(parent string, googleanalyticsadminv1alphaiosappdatastream *GoogleAnalyticsAdminV1alphaIosAppDataStream) *PropertiesIosAppDataStreamsCreateCall {
 	c := &PropertiesIosAppDataStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7369,7 +7391,7 @@ func (c *PropertiesIosAppDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7435,7 +7457,7 @@ func (c *PropertiesIosAppDataStreamsCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an iOS app data stream with the specified location and attributes.",
+	//   "description": "Creates an iOS app stream with the specified location and attributes. Note that an iOS app stream must be linked to a Firebase app to receive traffic. To create a working app stream, make sure your property is linked to a Firebase project. Then, use the Firebase API to create a Firebase app, which will also create an appropriate data stream in Analytics (may take up to 24 hours).",
 	//   "flatPath": "v1alpha/properties/{propertiesId}/iosAppDataStreams",
 	//   "httpMethod": "POST",
 	//   "id": "analyticsadmin.properties.iosAppDataStreams.create",
@@ -7509,7 +7531,7 @@ func (c *PropertiesIosAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7650,7 +7672,7 @@ func (c *PropertiesIosAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7735,6 +7757,7 @@ func (c *PropertiesIosAppDataStreamsGetCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "GoogleAnalyticsAdminV1alphaIosAppDataStream"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -7818,7 +7841,7 @@ func (c *PropertiesIosAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7915,6 +7938,7 @@ func (c *PropertiesIosAppDataStreamsListCall) Do(opts ...googleapi.CallOption) (
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListIosAppDataStreamsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -7997,7 +8021,7 @@ func (c *PropertiesIosAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8151,7 +8175,7 @@ func (c *PropertiesUserLinksAuditCall) Header() http.Header {
 
 func (c *PropertiesUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8241,6 +8265,7 @@ func (c *PropertiesUserLinksAuditCall) Do(opts ...googleapi.CallOption) (*Google
 	//     "$ref": "GoogleAnalyticsAdminV1alphaAuditUserLinksResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
 	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
@@ -8316,7 +8341,7 @@ func (c *PropertiesUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8460,7 +8485,7 @@ func (c *PropertiesUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8618,7 +8643,7 @@ func (c *PropertiesUserLinksBatchGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8709,6 +8734,7 @@ func (c *PropertiesUserLinksBatchGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//     "$ref": "GoogleAnalyticsAdminV1alphaBatchGetUserLinksResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
 	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
@@ -8762,7 +8788,7 @@ func (c *PropertiesUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8916,7 +8942,7 @@ func (c *PropertiesUserLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9060,7 +9086,7 @@ func (c *PropertiesUserLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9201,7 +9227,7 @@ func (c *PropertiesUserLinksGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9285,6 +9311,7 @@ func (c *PropertiesUserLinksGetCall) Do(opts ...googleapi.CallOption) (*GoogleAn
 	//     "$ref": "GoogleAnalyticsAdminV1alphaUserLink"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
 	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
@@ -9365,7 +9392,7 @@ func (c *PropertiesUserLinksListCall) Header() http.Header {
 
 func (c *PropertiesUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9461,6 +9488,7 @@ func (c *PropertiesUserLinksListCall) Do(opts ...googleapi.CallOption) (*GoogleA
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListUserLinksResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.manage.users",
 	//     "https://www.googleapis.com/auth/analytics.manage.users.readonly"
 	//   ]
 	// }
@@ -9534,7 +9562,7 @@ func (c *PropertiesUserLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9676,7 +9704,7 @@ func (c *PropertiesWebDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9816,7 +9844,7 @@ func (c *PropertiesWebDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9957,7 +9985,7 @@ func (c *PropertiesWebDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10042,6 +10070,7 @@ func (c *PropertiesWebDataStreamsGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//     "$ref": "GoogleAnalyticsAdminV1alphaWebDataStream"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -10105,7 +10134,7 @@ func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Header() ht
 
 func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10191,6 +10220,7 @@ func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Do(opts ...
 	//     "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -10253,7 +10283,7 @@ func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10338,6 +10368,7 @@ func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Do(opts ...googleapi.Call
 	//     "$ref": "GoogleAnalyticsAdminV1alphaGlobalSiteTag"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -10421,7 +10452,7 @@ func (c *PropertiesWebDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10517,6 +10548,7 @@ func (c *PropertiesWebDataStreamsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "$ref": "GoogleAnalyticsAdminV1alphaListWebDataStreamsResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
 	//     "https://www.googleapis.com/auth/analytics.readonly"
 	//   ]
 	// }
@@ -10599,7 +10631,7 @@ func (c *PropertiesWebDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10758,7 +10790,7 @@ func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Header()
 
 func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210119")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

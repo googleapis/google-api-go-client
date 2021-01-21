@@ -140,6 +140,7 @@
             "$ref": "GoogleAnalyticsAdminV1alphaListAccountSummariesResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/analytics.edit",
             "https://www.googleapis.com/auth/analytics.readonly"
           ]
         }
@@ -194,6 +195,7 @@
             "$ref": "GoogleAnalyticsAdminV1alphaAccount"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/analytics.edit",
             "https://www.googleapis.com/auth/analytics.readonly"
           ]
         },
@@ -219,6 +221,7 @@
             "$ref": "GoogleAnalyticsAdminV1alphaDataSharingSettings"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/analytics.edit",
             "https://www.googleapis.com/auth/analytics.readonly"
           ]
         },
@@ -251,6 +254,7 @@
             "$ref": "GoogleAnalyticsAdminV1alphaListAccountsResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/analytics.edit",
             "https://www.googleapis.com/auth/analytics.readonly"
           ]
         },
@@ -335,6 +339,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaAuditUserLinksResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.manage.users",
                 "https://www.googleapis.com/auth/analytics.manage.users.readonly"
               ]
             },
@@ -422,6 +427,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaBatchGetUserLinksResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.manage.users",
                 "https://www.googleapis.com/auth/analytics.manage.users.readonly"
               ]
             },
@@ -533,6 +539,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaUserLink"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.manage.users",
                 "https://www.googleapis.com/auth/analytics.manage.users.readonly"
               ]
             },
@@ -569,6 +576,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaListUserLinksResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.manage.users",
                 "https://www.googleapis.com/auth/analytics.manage.users.readonly"
               ]
             },
@@ -671,6 +679,7 @@
             "$ref": "GoogleAnalyticsAdminV1alphaProperty"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/analytics.edit",
             "https://www.googleapis.com/auth/analytics.readonly"
           ]
         },
@@ -708,6 +717,7 @@
             "$ref": "GoogleAnalyticsAdminV1alphaListPropertiesResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/analytics.edit",
             "https://www.googleapis.com/auth/analytics.readonly"
           ]
         },
@@ -750,7 +760,7 @@
         "androidAppDataStreams": {
           "methods": {
             "create": {
-              "description": "Creates an android app stream with the specified location and attributes.",
+              "description": "Creates an Android app stream with the specified location and attributes. Note that an Android app stream must be linked to a Firebase app to receive traffic. To create a working app stream, make sure your property is linked to a Firebase project. Then, use the Firebase API to create a Firebase app, which will also create an appropriate data stream in Analytics (may take up to 24 hours).",
               "flatPath": "v1alpha/properties/{propertiesId}/androidAppDataStreams",
               "httpMethod": "POST",
               "id": "analyticsadmin.properties.androidAppDataStreams.create",
@@ -824,6 +834,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaAndroidAppDataStream"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -860,6 +871,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaListAndroidAppDataStreamsResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -987,6 +999,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaListFirebaseLinksResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -1114,6 +1127,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaListGoogleAdsLinksResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -1156,7 +1170,7 @@
         "iosAppDataStreams": {
           "methods": {
             "create": {
-              "description": "Creates an iOS app data stream with the specified location and attributes.",
+              "description": "Creates an iOS app stream with the specified location and attributes. Note that an iOS app stream must be linked to a Firebase app to receive traffic. To create a working app stream, make sure your property is linked to a Firebase project. Then, use the Firebase API to create a Firebase app, which will also create an appropriate data stream in Analytics (may take up to 24 hours).",
               "flatPath": "v1alpha/properties/{propertiesId}/iosAppDataStreams",
               "httpMethod": "POST",
               "id": "analyticsadmin.properties.iosAppDataStreams.create",
@@ -1230,6 +1244,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaIosAppDataStream"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -1266,6 +1281,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaListIosAppDataStreamsResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -1332,6 +1348,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaAuditUserLinksResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.manage.users",
                 "https://www.googleapis.com/auth/analytics.manage.users.readonly"
               ]
             },
@@ -1419,6 +1436,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaBatchGetUserLinksResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.manage.users",
                 "https://www.googleapis.com/auth/analytics.manage.users.readonly"
               ]
             },
@@ -1530,6 +1548,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaUserLink"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.manage.users",
                 "https://www.googleapis.com/auth/analytics.manage.users.readonly"
               ]
             },
@@ -1566,6 +1585,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaListUserLinksResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.manage.users",
                 "https://www.googleapis.com/auth/analytics.manage.users.readonly"
               ]
             },
@@ -1676,6 +1696,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaWebDataStream"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -1701,6 +1722,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -1726,6 +1748,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaGlobalSiteTag"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -1762,6 +1785,7 @@
                 "$ref": "GoogleAnalyticsAdminV1alphaListWebDataStreamsResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/analytics.edit",
                 "https://www.googleapis.com/auth/analytics.readonly"
               ]
             },
@@ -1838,7 +1862,7 @@
       }
     }
   },
-  "revision": "20210113",
+  "revision": "20210120",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {

@@ -2065,7 +2065,7 @@
       }
     }
   },
-  "revision": "20210108",
+  "revision": "20210118",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -2364,7 +2364,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content is logged in text and audio. If it is set to true, the parameter content will be replaced to parameter name in both request and response. The default value is false.",
+          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         },
         "required": {
@@ -2715,7 +2715,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content is logged in text and audio. If it is set to true, the parameter content will be replaced to parameter id in both request and response. The default value is false.",
+          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         }
       },
@@ -3788,7 +3788,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content is logged in text and audio. If it is set to true, the parameter content will be replaced to parameter name in both request and response. The default value is false.",
+          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         },
         "required": {
@@ -4139,7 +4139,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content is logged in text and audio. If it is set to true, the parameter content will be replaced to parameter id in both request and response. The default value is false.",
+          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         }
       },

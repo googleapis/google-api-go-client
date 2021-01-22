@@ -568,6 +568,9 @@ func (s *ClientData) MarshalJSON() ([]byte, error) {
 
 // ContactGroup: A contact group.
 type ContactGroup struct {
+	// ClientData: The group's client data.
+	ClientData []*GroupClientData `json:"clientData,omitempty"`
+
 	// Etag: The HTTP entity tag (https://en.wikipedia.org/wiki/HTTP_ETag)
 	// of the resource. Used for web cache validation.
 	Etag string `json:"etag,omitempty"`
@@ -612,7 +615,7 @@ type ContactGroup struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// ForceSendFields is a list of field names (e.g. "ClientData") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -620,8 +623,8 @@ type ContactGroup struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "ClientData") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -838,6 +841,12 @@ func (s *CoverPhoto) MarshalJSON() ([]byte, error) {
 type CreateContactGroupRequest struct {
 	// ContactGroup: Required. The contact group to create.
 	ContactGroup *ContactGroup `json:"contactGroup,omitempty"`
+
+	// ReadGroupFields: Optional. A field mask to restrict which fields on
+	// the group are returned. Defaults to `metadata`, `groupType`, and
+	// `name` if not set or set to empty. Valid fields are: * clientData *
+	// groupType * metadata * name
+	ReadGroupFields string `json:"readGroupFields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContactGroup") to
 	// unconditionally include in API requests. By default, fields with
@@ -1248,6 +1257,38 @@ type GetPeopleResponse struct {
 
 func (s *GetPeopleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPeopleResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GroupClientData: Arbitrary client data that is populated by clients.
+// Duplicate keys and values are allowed. LINT.IfChange(GroupClientData)
+type GroupClientData struct {
+	// Key: The client specified key of the client data.
+	Key string `json:"key,omitempty"`
+
+	// Value: The client specified value of the client data.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GroupClientData) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupClientData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2819,6 +2860,18 @@ type UpdateContactGroupRequest struct {
 	// ContactGroup: Required. The contact group to update.
 	ContactGroup *ContactGroup `json:"contactGroup,omitempty"`
 
+	// ReadGroupFields: Optional. A field mask to restrict which fields on
+	// the group are returned. Defaults to `metadata`, `groupType`, and
+	// `name` if not set or set to empty. Valid fields are: * clientData *
+	// groupType * memberCount * metadata * name
+	ReadGroupFields string `json:"readGroupFields,omitempty"`
+
+	// UpdateGroupFields: Optional. A field mask to restrict which fields on
+	// the group are updated. Multiple fields can be specified by separating
+	// them with commas. Defaults to `name` if not set or set to empty.
+	// Updated fields are replaced. Valid values are: * clientData * name
+	UpdateGroupFields string `json:"updateGroupFields,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ContactGroup") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3022,6 +3075,16 @@ func (r *ContactGroupsService) BatchGet() *ContactGroupsBatchGetCall {
 	return c
 }
 
+// GroupFields sets the optional parameter "groupFields": A field mask
+// to restrict which fields on the group are returned. Defaults to
+// `metadata`, `groupType`, `memberCount`, and `name` if not set or set
+// to empty. Valid fields are: * clientData * groupType * memberCount *
+// metadata * name
+func (c *ContactGroupsBatchGetCall) GroupFields(groupFields string) *ContactGroupsBatchGetCall {
+	c.urlParams_.Set("groupFields", groupFields)
+	return c
+}
+
 // MaxMembers sets the optional parameter "maxMembers": Specifies the
 // maximum number of members to return for each group. Defaults to 0 if
 // not set, which will return zero members.
@@ -3074,7 +3137,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3139,6 +3202,12 @@ func (c *ContactGroupsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetC
 	//   "id": "people.contactGroups.batchGet",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "groupFields": {
+	//       "description": "Optional. A field mask to restrict which fields on the group are returned. Defaults to `metadata`, `groupType`, `memberCount`, and `name` if not set or set to empty. Valid fields are: * clientData * groupType * memberCount * metadata * name",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxMembers": {
 	//       "description": "Optional. Specifies the maximum number of members to return for each group. Defaults to 0 if not set, which will return zero members.",
 	//       "format": "int32",
@@ -3208,7 +3277,7 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3341,7 +3410,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3451,6 +3520,16 @@ func (r *ContactGroupsService) Get(resourceName string) *ContactGroupsGetCall {
 	return c
 }
 
+// GroupFields sets the optional parameter "groupFields": A field mask
+// to restrict which fields on the group are returned. Defaults to
+// `metadata`, `groupType`, `memberCount`, and `name` if not set or set
+// to empty. Valid fields are: * clientData * groupType * memberCount *
+// metadata * name
+func (c *ContactGroupsGetCall) GroupFields(groupFields string) *ContactGroupsGetCall {
+	c.urlParams_.Set("groupFields", groupFields)
+	return c
+}
+
 // MaxMembers sets the optional parameter "maxMembers": Specifies the
 // maximum number of members to return. Defaults to 0 if not set, which
 // will return zero members.
@@ -3496,7 +3575,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3566,6 +3645,12 @@ func (c *ContactGroupsGetCall) Do(opts ...googleapi.CallOption) (*ContactGroup, 
 	//     "resourceName"
 	//   ],
 	//   "parameters": {
+	//     "groupFields": {
+	//       "description": "Optional. A field mask to restrict which fields on the group are returned. Defaults to `metadata`, `groupType`, `memberCount`, and `name` if not set or set to empty. Valid fields are: * clientData * groupType * memberCount * metadata * name",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "maxMembers": {
 	//       "description": "Optional. Specifies the maximum number of members to return. Defaults to 0 if not set, which will return zero members.",
 	//       "format": "int32",
@@ -3606,6 +3691,16 @@ type ContactGroupsListCall struct {
 // Members of the contact groups are not populated.
 func (r *ContactGroupsService) List() *ContactGroupsListCall {
 	c := &ContactGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// GroupFields sets the optional parameter "groupFields": A field mask
+// to restrict which fields on the group are returned. Defaults to
+// `metadata`, `groupType`, `memberCount`, and `name` if not set or set
+// to empty. Valid fields are: * clientData * groupType * memberCount *
+// metadata * name
+func (c *ContactGroupsListCall) GroupFields(groupFields string) *ContactGroupsListCall {
+	c.urlParams_.Set("groupFields", groupFields)
 	return c
 }
 
@@ -3671,7 +3766,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3736,6 +3831,12 @@ func (c *ContactGroupsListCall) Do(opts ...googleapi.CallOption) (*ListContactGr
 	//   "id": "people.contactGroups.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "groupFields": {
+	//       "description": "Optional. A field mask to restrict which fields on the group are returned. Defaults to `metadata`, `groupType`, `memberCount`, and `name` if not set or set to empty. Valid fields are: * clientData * groupType * memberCount * metadata * name",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The maximum number of resources to return. Valid values are between 1 and 1000, inclusive. Defaults to 30 if not set or set to 0.",
 	//       "format": "int32",
@@ -3833,7 +3934,7 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3977,7 +4078,7 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4119,7 +4220,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4317,7 +4418,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4520,7 +4621,7 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4671,7 +4772,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4832,7 +4933,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5038,7 +5139,7 @@ func (c *PeopleGetCall) Header() http.Header {
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5277,7 +5378,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5530,7 +5631,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5805,7 +5906,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6060,7 +6161,7 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6230,7 +6331,7 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6482,7 +6583,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

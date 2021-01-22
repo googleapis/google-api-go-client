@@ -2962,6 +2962,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/memorystore/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "memcache:v1",
+      "name": "memcache",
+      "version": "v1",
+      "title": "Cloud Memorystore for Memcached API",
+      "description": "Google Cloud Memorystore for Memcached API is used for creating and managing Memcached instances in GCP.",
+      "discoveryRestUrl": "https://memcache.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/memorystore/",
       "preferred": true
     },
     {
@@ -3384,6 +3399,21 @@
       },
       "documentationLink": "https://cloud.google.com/pubsub/lite/docs",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "realtimebidding:v1alpha",
+      "name": "realtimebidding",
+      "version": "v1alpha",
+      "title": "Real-time Bidding API",
+      "description": "Allows external bidders to manage their RTB integration with Google. This includes managing bidder endpoints, QPS quotas, configuring what ad inventory to receive via pretargeting, submitting creatives for verification, and accessing creative metadata such as approval status.",
+      "discoveryRestUrl": "https://realtimebidding.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/authorized-buyers/apis/realtimebidding/reference/rest/",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",

@@ -2291,7 +2291,7 @@
       }
     }
   },
-  "revision": "20201229",
+  "revision": "20210114",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2778,7 +2778,7 @@
           "type": "integer"
         },
         "bootDiskType": {
-          "description": "Optional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-ssd\" (Persistent Disk Solid State Drive) or \"pd-standard\" (Persistent Disk Hard Disk Drive).",
+          "description": "Optional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See Disk types (https://cloud.google.com/compute/docs/disks#disk-types).",
           "type": "string"
         },
         "numLocalSsds": {
@@ -2904,7 +2904,7 @@
         },
         "shieldedInstanceConfig": {
           "$ref": "ShieldedInstanceConfig",
-          "description": "Optional. Shielded Instance Config for clusters using shielded VMs."
+          "description": "Optional. Shielded Instance Config for clusters using Compute Engine Shielded VMs (https://cloud.google.com/security/shielded-cloud/shielded-vm)."
         },
         "subnetworkUri": {
           "description": "Optional. The Compute Engine subnetwork to be used for machine communications. Cannot be specified with network_uri.A full URL, partial URI, or short name are valid. Examples: https://www.googleapis.com/compute/v1/projects/[project_id]/regions/us-east1/subnetworks/sub0 projects/[project_id]/regions/us-east1/subnetworks/sub0 sub0",
@@ -3537,7 +3537,7 @@
           "type": "string"
         },
         "idleDeleteTtl": {
-          "description": "Optional. The duration to keep the cluster alive while idling (when no jobs are running). Passing this threshold will cause the cluster to be deleted. Minimum value is 5 minutes; maximum value is 14 days (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json).",
+          "description": "Optional. The duration to keep the cluster alive while idling (when no jobs are running). Passing this threshold will cause the cluster to be deleted. Minimum value is 5 minutes; maximum value is 14 days (see JSON representation of Duration (https://developers.google.com/protocol-buffers/docs/proto3#json)).",
           "format": "google-duration",
           "type": "string"
         },
@@ -4137,7 +4137,7 @@
       "type": "object"
     },
     "ShieldedInstanceConfig": {
-      "description": "Shielded Instance Config for clusters using shielded VMs.",
+      "description": "Shielded Instance Config for clusters using Compute Engine Shielded VMs (https://cloud.google.com/security/shielded-cloud/shielded-vm).",
       "id": "ShieldedInstanceConfig",
       "properties": {
         "enableIntegrityMonitoring": {

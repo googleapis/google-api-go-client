@@ -1670,7 +1670,7 @@
       }
     }
   },
-  "revision": "20210104",
+  "revision": "20210118",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -2783,6 +2783,18 @@
       },
       "type": "object"
     },
+    "DimensionalityReductionMetrics": {
+      "description": "Model evaluation metrics for dimensionality reduction models.",
+      "id": "DimensionalityReductionMetrics",
+      "properties": {
+        "totalExplainedVarianceRatio": {
+          "description": "Total percentage of variance explained by the selected principal components.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "EncryptionConfiguration": {
       "id": "EncryptionConfiguration",
       "properties": {
@@ -2846,6 +2858,10 @@
         "clusteringMetrics": {
           "$ref": "ClusteringMetrics",
           "description": "Populated for clustering models."
+        },
+        "dimensionalityReductionMetrics": {
+          "$ref": "DimensionalityReductionMetrics",
+          "description": "Evaluation metrics when the model is a dimensionality reduction model, which currently includes PCA."
         },
         "multiClassClassificationMetrics": {
           "$ref": "MultiClassClassificationMetrics",
@@ -3341,6 +3357,13 @@
           "description": "Learn rate used for this iteration.",
           "format": "double",
           "type": "number"
+        },
+        "principalComponentInfos": {
+          "description": "The information of the principal components.",
+          "items": {
+            "$ref": "PrincipalComponentInfo"
+          },
+          "type": "array"
         },
         "trainingLoss": {
           "description": "Loss computed on the training data at the end of iteration.",
@@ -4510,6 +4533,33 @@
           "description": "Specifies the format of the policy. Valid values are `0`, `1`, and `3`. Requests that specify an invalid value are rejected. Any operation that affects conditional role bindings must specify version `3`. This requirement applies to the following operations: * Getting a policy that includes a conditional role binding * Adding a conditional role binding to a policy * Changing a conditional role binding in a policy * Removing any role binding, with or without a condition, from a policy that includes conditions **Important:** If you use IAM Conditions, you must include the `etag` field whenever you call `setIamPolicy`. If you omit this field, then IAM allows you to overwrite a version `3` policy with a version `1` policy, and all of the conditions in the version `3` policy are lost. If a policy does not include any conditions, operations on that policy may specify any valid version or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "PrincipalComponentInfo": {
+      "description": "Principal component infos, used only for eigen decomposition based models, e.g., PCA. Ordered by explained_variance in the descending order.",
+      "id": "PrincipalComponentInfo",
+      "properties": {
+        "cumulativeExplainedVarianceRatio": {
+          "description": "The explained_variance is pre-ordered in the descending order to compute the cumulative explained variance ratio.",
+          "format": "double",
+          "type": "number"
+        },
+        "explainedVariance": {
+          "description": "Explained variance by this principal component, which is simply the eigenvalue.",
+          "format": "double",
+          "type": "number"
+        },
+        "explainedVarianceRatio": {
+          "description": "Explained_variance over the total explained variance.",
+          "format": "double",
+          "type": "number"
+        },
+        "principalComponentId": {
+          "description": "Id of the principal component.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"

@@ -24,6 +24,7 @@
   "description": "Manages Google Cloud Dataflow projects on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/dataflow",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -413,7 +414,7 @@
                   "type": "string"
                 },
                 "view": {
-                  "description": "Level of information requested in response. Default is `JOB_VIEW_SUMMARY`.",
+                  "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
                   "enum": [
                     "JOB_VIEW_UNKNOWN",
                     "JOB_VIEW_SUMMARY",
@@ -648,7 +649,7 @@
                   "type": "string"
                 },
                 "view": {
-                  "description": "Level of information requested in response. Default is `JOB_VIEW_SUMMARY`.",
+                  "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
                   "enum": [
                     "JOB_VIEW_UNKNOWN",
                     "JOB_VIEW_SUMMARY",
@@ -1353,7 +1354,7 @@
                       "type": "string"
                     },
                     "view": {
-                      "description": "Level of information requested in response. Default is `JOB_VIEW_SUMMARY`.",
+                      "description": "Deprecated. ListJobs always returns summaries now. Use GetJob for other JobViews.",
                       "enum": [
                         "JOB_VIEW_UNKNOWN",
                         "JOB_VIEW_SUMMARY",
@@ -2443,7 +2444,7 @@
       }
     }
   },
-  "revision": "20201204",
+  "revision": "20210106",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -3546,6 +3547,20 @@
           "description": "Whether to enable Streaming Engine for the job.",
           "type": "boolean"
         },
+        "flexrsGoal": {
+          "description": "Set FlexRS goal for the job. https://cloud.google.com/dataflow/docs/guides/flexrs",
+          "enum": [
+            "FLEXRS_UNSPECIFIED",
+            "FLEXRS_SPEED_OPTIMIZED",
+            "FLEXRS_COST_OPTIMIZED"
+          ],
+          "enumDescriptions": [
+            "Run in the default mode.",
+            "Optimize for lower execution time.",
+            "Optimize for lower cost."
+          ],
+          "type": "string"
+        },
         "ipConfiguration": {
           "description": "Configuration for VM IPs.",
           "enum": [
@@ -3841,7 +3856,7 @@
       "type": "object"
     },
     "Job": {
-      "description": "Defines a job to be run by the Cloud Dataflow service.",
+      "description": "Defines a job to be run by the Cloud Dataflow service. nextID: 26",
       "id": "Job",
       "properties": {
         "clientRequestId": {
@@ -3976,6 +3991,10 @@
             "`JOB_STATE_RESOURCE_CLEANING_UP` indicates that the batch job's associated resources are currently being cleaned up after a successful run. Currently, this is an opt-in feature, please reach out to Cloud support team if you are intersted."
           ],
           "type": "string"
+        },
+        "satisfiesPzs": {
+          "description": "Reserved for future use. This field is set only in responses from the server; it is ignored if it is set in any requests.",
+          "type": "boolean"
         },
         "stageStates": {
           "description": "This field may be mutated by the Cloud Dataflow service; callers cannot mutate it.",
@@ -4273,7 +4292,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Users need to set transform_name_mappings Ex:{\"oldTransformName\":\"newTransformName\",...}'",
+          "description": "Use this to pass transform_name_mappings for streaming update jobs. Ex:{\"oldTransformName\":\"newTransformName\",...}'",
           "type": "object"
         },
         "update": {

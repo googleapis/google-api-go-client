@@ -6249,7 +6249,7 @@
       }
     }
   },
-  "revision": "20201204",
+  "revision": "20210112",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -8313,7 +8313,8 @@
             "SDF_VERSION_4_2",
             "SDF_VERSION_5",
             "SDF_VERSION_5_1",
-            "SDF_VERSION_5_2"
+            "SDF_VERSION_5_2",
+            "SDF_VERSION_5_3"
           ],
           "enumDescriptions": [
             "SDF version value is not specified or is unknown in this version.",
@@ -8323,7 +8324,8 @@
             "SDF version 4.2",
             "SDF version 5.",
             "SDF version 5.1",
-            "SDF version 5.2;"
+            "SDF version 5.2;",
+            "SDF version 5.3"
           ],
           "type": "string"
         }
@@ -8543,7 +8545,7 @@
           "enumDescriptions": [
             "Hosting source is not specified or is unknown in this version.",
             "A creative synced from Campaign Manager 360. Create and update methods are **not** supported for this hosting type.",
-            "A creative hosted by a third-party ad server (3PAS). Create and update methods are supported for this hosting type if the creative_type is one of the following: * `CREATIVE_TYPE_EXPANDABLE` * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_VIDEO`",
+            "A creative hosted by a third-party ad server (3PAS). Create and update methods are supported for this hosting type if the creative_type is one of the following: * `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_EXPANDABLE` * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_VIDEO`",
             "A creative created in DV360 and hosted by Campaign Manager 360. Create and update methods are supported for this hosting type if the creative_type is one of the following: * `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_NATIVE` * `CREATIVE_TYPE_NATIVE_APP_INSTALL` * `CREATIVE_TYPE_NATIVE_APP_INSTALL_SQUARE` * `CREATIVE_TYPE_NATIVE_SITE_SQUARE` * `CREATIVE_TYPE_NATIVE_VIDEO` * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_VIDEO`",
             "A rich media creative created in Studio and hosted by Campaign Manager 360. Create and update methods are **not** supported for this hosting type."
           ],
@@ -8607,7 +8609,7 @@
           "type": "boolean"
         },
         "requirePingForAttribution": {
-          "description": "Optional. Indicates that the creative will wait for a return ping for attribution. Only valid when using a Campaign Manager 360 tracking ad with a third-party ad server parameter and the ${DC_DBM_TOKEN} macro. Optional and only valid for third-party tag creatives or third-party VAST tag creatives. Third-party tag creatives are creatives with following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_EXPANDABLE` Third-party VAST tag creatives are creatives with following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: * `CREATIVE_TYPE_VIDEO`",
+          "description": "Optional. Indicates that the creative will wait for a return ping for attribution. Only valid when using a Campaign Manager 360 tracking ad with a third-party ad server parameter and the ${DC_DBM_TOKEN} macro. Optional and only valid for third-party tag creatives or third-party VAST tag creatives. Third-party tag creatives are creatives with following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_EXPANDABLE` Third-party VAST tag creatives are creatives with following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: * `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_VIDEO`",
           "type": "boolean"
         },
         "reviewStatus": {
@@ -8667,7 +8669,7 @@
           "type": "string"
         },
         "vastTagUrl": {
-          "description": "Optional. The URL of the VAST tag for a third-party VAST tag creative. Required and only valid for third-party VAST tag creatives. Third-party VAST tag creatives are creatives with following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: * `CREATIVE_TYPE_VIDEO`",
+          "description": "Optional. The URL of the VAST tag for a third-party VAST tag creative. Required and only valid for third-party VAST tag creatives. Third-party VAST tag creatives are creatives with following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: * `CREATIVE_TYPE_AUDIO` * `CREATIVE_TYPE_VIDEO`",
           "type": "string"
         },
         "vpaid": {
@@ -10702,14 +10704,18 @@
             "GOOGLE_AUDIENCE_TYPE_AFFINITY",
             "GOOGLE_AUDIENCE_TYPE_IN_MARKET",
             "GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS",
-            "GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES"
+            "GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES",
+            "GOOGLE_AUDIENCE_TYPE_LIFE_EVENT",
+            "GOOGLE_AUDIENCE_TYPE_EXTENDED_DEMOGRAPHIC"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown.",
             "Affinity type Google audience.",
             "In-Market type Google audience.",
-            "Installed-apps type Google audience.",
-            "New-mobile-devices type Google audience."
+            "Installed-Apps type Google audience.",
+            "New-Mobile-Devices type Google audience.",
+            "Life-Event type Google audience.",
+            "Extended-Demographic type Google audience."
           ],
           "readOnly": true,
           "type": "string"
@@ -13238,12 +13244,12 @@
       "id": "PerformanceGoal",
       "properties": {
         "performanceGoalAmountMicros": {
-          "description": "The goal amount, in micros of the advertiser's currency. Applicable when performance_goal_type is one of: * `PERFORMANCE_GOAL_TYPE_CPM` * `PERFORMANCE_GOAL_TYPE_CPC` * `PERFORMANCE_GOAL_TYPE_CPA` * `PERFORMANCE_GOAL_TYPE_CPIAVC` For example 1500000 represents 1.5 standard units of the currency.",
+          "description": "The goal amount, in micros of the advertiser's currency. Applicable when performance_goal_type is one of: * `PERFORMANCE_GOAL_TYPE_CPM` * `PERFORMANCE_GOAL_TYPE_CPC` * `PERFORMANCE_GOAL_TYPE_CPA` * `PERFORMANCE_GOAL_TYPE_CPIAVC` * `PERFORMANCE_GOAL_TYPE_VCPM` For example 1500000 represents 1.5 standard units of the currency.",
           "format": "int64",
           "type": "string"
         },
         "performanceGoalPercentageMicros": {
-          "description": "The decimal representation of the goal percentage in micros. Applicable when performance_goal_type is one of: * `PERFORMANCE_GOAL_TYPE_CTR` * `PERFORMANCE_GOAL_TYPE_VIEWABILITY` For example, 70000 represents 7% (decimal 0.07).",
+          "description": "The decimal representation of the goal percentage in micros. Applicable when performance_goal_type is one of: * `PERFORMANCE_GOAL_TYPE_CTR` * `PERFORMANCE_GOAL_TYPE_VIEWABILITY` * `PERFORMANCE_GOAL_TYPE_CVR_CLICKS` * `PERFORMANCE_GOAL_TYPE_CVR_IMPRESSIONS` * `PERFORMANCE_GOAL_TYPE_VTR` * `PERFORMANCE_GOAL_TYPE_AUDIO_COMPLETION_RATE` * `PERFORMANCE_GOAL_TYPE_VIDEO_COMPLETION_RATE` For example, 70000 represents 7% (decimal 0.07).",
           "format": "int64",
           "type": "string"
         },
@@ -13525,7 +13531,8 @@
             "SDF_VERSION_4_2",
             "SDF_VERSION_5",
             "SDF_VERSION_5_1",
-            "SDF_VERSION_5_2"
+            "SDF_VERSION_5_2",
+            "SDF_VERSION_5_3"
           ],
           "enumDescriptions": [
             "SDF version value is not specified or is unknown in this version.",
@@ -13535,7 +13542,8 @@
             "SDF version 4.2",
             "SDF version 5.",
             "SDF version 5.1",
-            "SDF version 5.2;"
+            "SDF version 5.2;",
+            "SDF version 5.3"
           ],
           "type": "string"
         }
@@ -13577,7 +13585,8 @@
             "SDF_VERSION_4_2",
             "SDF_VERSION_5",
             "SDF_VERSION_5_1",
-            "SDF_VERSION_5_2"
+            "SDF_VERSION_5_2",
+            "SDF_VERSION_5_3"
           ],
           "enumDescriptions": [
             "SDF version value is not specified or is unknown in this version.",
@@ -13587,7 +13596,8 @@
             "SDF version 4.2",
             "SDF version 5.",
             "SDF version 5.1",
-            "SDF version 5.2;"
+            "SDF version 5.2;",
+            "SDF version 5.3"
           ],
           "type": "string"
         }

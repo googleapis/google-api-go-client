@@ -567,9 +567,9 @@ type GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig struct {
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
 
-	// LanguageCode: Optional. The Language of this question, as a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value
-	// is en-US. Only need to set this when task is language related. For
+	// LanguageCode: Optional. The Language of this question, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US. Only need to set this when task is language related. For
 	// example, French text classification.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -1697,12 +1697,11 @@ type GoogleCloudDatalabelingV1beta1BigQuerySource struct {
 	// long. If you specify the URI of a table that does not exist, Data
 	// Labeling Service creates a table at the URI with the correct schema
 	// when you create your EvaluationJob. If you specify the URI of a table
-	// that already exists, it must have the [correct
-	// schema](/ml-engine/docs/continuous-evaluation/create-job#table-schema)
-	// . Provide the table URI in the following format:
-	// "bq://{your_project_id}/ {your_dataset_name}/{your_table_name}"
-	// [Learn
-	// more](/ml-engine/docs/continuous-evaluation/create-job#table-schema).
+	// that already exists, it must have the correct schema
+	// (/ml-engine/docs/continuous-evaluation/create-job#table-schema).
+	// Provide the table URI in the following format:
+	// "bq://{your_project_id}/ {your_dataset_name}/{your_table_name}" Learn
+	// more (/ml-engine/docs/continuous-evaluation/create-job#table-schema).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
@@ -1731,10 +1730,10 @@ func (s *GoogleCloudDatalabelingV1beta1BigQuerySource) MarshalJSON() ([]byte, er
 // GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions: Options
 // regarding evaluation between bounding boxes.
 type GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions struct {
-	// IouThreshold: Minimum [intersection-over-union
-	// (IOU)](/vision/automl/object-detection/docs/evaluate#intersection-over
-	// -union) required for 2 bounding boxes to be considered a match. This
-	// must be a number between 0 and 1.
+	// IouThreshold: Minimum intersection-over-union (IOU)
+	// (/vision/automl/object-detection/docs/evaluate#intersection-over-union
+	// ) required for 2 bounding boxes to be considered a match. This must
+	// be a number between 0 and 1.
 	IouThreshold float64 `json:"iouThreshold,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IouThreshold") to
@@ -1907,9 +1906,9 @@ type GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry struct {
 	// label is categorized as positive or negative (in the context of this
 	// point on the PR curve) based on whether the label's score meets this
 	// threshold. For image object detection (bounding box) tasks, this is
-	// the [intersection-over-union
-	// (IOU)](/vision/automl/object-detection/docs/evaluate#intersection-over
-	// -union) threshold for the context of this point on the PR curve.
+	// the intersection-over-union (IOU)
+	// (/vision/automl/object-detection/docs/evaluate#intersection-over-union
+	// ) threshold for the context of this point on the PR curve.
 	ConfidenceThreshold float64 `json:"confidenceThreshold,omitempty"`
 
 	// F1Score: Harmonic mean of recall and precision.
@@ -2485,8 +2484,8 @@ func (s *GoogleCloudDatalabelingV1beta1EvaluationConfig) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudDatalabelingV1beta1EvaluationJob: Defines an evaluation
-// job that runs periodically to generate Evaluations. [Creating an
-// evaluation job](/ml-engine/docs/continuous-evaluation/create-job) is
+// job that runs periodically to generate Evaluations. Creating an
+// evaluation job (/ml-engine/docs/continuous-evaluation/create-job) is
 // the starting point for using continuous evaluation.
 type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
 	// AnnotationSpecSet: Required. Name of the AnnotationSpecSet describing
@@ -2519,11 +2518,10 @@ type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
 	// in the evaluation job's BigQuery table, set this to `false`.
 	LabelMissingGroundTruth bool `json:"labelMissingGroundTruth,omitempty"`
 
-	// ModelVersion: Required. The [AI Platform Prediction model
-	// version](/ml-engine/docs/prediction-overview) to be evaluated.
-	// Prediction input and output is sampled from this model version. When
-	// creating an evaluation job, specify the model version in the
-	// following format:
+	// ModelVersion: Required. The AI Platform Prediction model version
+	// (/ml-engine/docs/prediction-overview) to be evaluated. Prediction
+	// input and output is sampled from this model version. When creating an
+	// evaluation job, specify the model version in the following format:
 	// "projects/{project_id}/models/{model_name}/versions/{version_name}"
 	// There can only be one evaluation job per model version.
 	ModelVersion string `json:"modelVersion,omitempty"`
@@ -2536,11 +2534,11 @@ type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
 	// Schedule: Required. Describes the interval at which the job runs.
 	// This interval must be at least 1 day, and it is rounded to the
 	// nearest day. For example, if you specify a 50-hour interval, the job
-	// runs every 2 days. You can provide the schedule in [crontab
-	// format](/scheduler/docs/configuring/cron-job-schedules) or in an
-	// [English-like
-	// format](/appengine/docs/standard/python/config/cronref#schedule_format
-	// ). Regardless of what you specify, the job will run at 10:00 AM UTC.
+	// runs every 2 days. You can provide the schedule in crontab format
+	// (/scheduler/docs/configuring/cron-job-schedules) or in an
+	// English-like format
+	// (/appengine/docs/standard/python/config/cronref#schedule_format).
+	// Regardless of what you specify, the job will run at 10:00 AM UTC.
 	// Only the interval from this schedule is used, not the specific time
 	// of day.
 	Schedule string `json:"schedule,omitempty"`
@@ -2677,9 +2675,8 @@ type GoogleCloudDatalabelingV1beta1EvaluationJobConfig struct {
 	// `label_score_json_key`: the score key for prediction output.
 	// Required. * `bounding_box_json_key`: the bounding box key for
 	// prediction output. Required if your model version perform image
-	// object detection. Learn [how to configure prediction
-	// keys](/ml-engine/docs/continuous-evaluation/create-job#prediction-keys
-	// ).
+	// object detection. Learn how to configure prediction keys
+	// (/ml-engine/docs/continuous-evaluation/create-job#prediction-keys).
 	BigqueryImportKeys map[string]string `json:"bigqueryImportKeys,omitempty"`
 
 	// BoundingPolyConfig: Specify this field if your model version performs
@@ -3329,9 +3326,9 @@ type GoogleCloudDatalabelingV1beta1HumanAnnotationConfig struct {
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
 
-	// LanguageCode: Optional. The Language of this question, as a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value
-	// is en-US. Only need to set this when task is language related. For
+	// LanguageCode: Optional. The Language of this question, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US. Only need to set this when task is language related. For
 	// example, French text classification.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -5746,9 +5743,9 @@ func (s *GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig) MarshalJSON()
 
 // GoogleCloudDatalabelingV1beta1TextMetadata: Metadata for the text.
 type GoogleCloudDatalabelingV1beta1TextMetadata struct {
-	// LanguageCode: The language of this text, as a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value
-	// is en-US.
+	// LanguageCode: The language of this text, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -6360,9 +6357,9 @@ type GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig struct {
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
 
-	// LanguageCode: Optional. The Language of this question, as a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value
-	// is en-US. Only need to set this when task is language related. For
+	// LanguageCode: Optional. The Language of this question, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US. Only need to set this when task is language related. For
 	// example, French text classification.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -7209,9 +7206,9 @@ type GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig struct {
 	// `[a-zA-Z\\d_-]{0,128}`.
 	LabelGroup string `json:"labelGroup,omitempty"`
 
-	// LanguageCode: Optional. The Language of this question, as a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value
-	// is en-US. Only need to set this when task is language related. For
+	// LanguageCode: Optional. The Language of this question, as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). Default value is
+	// en-US. Only need to set this when task is language related. For
 	// example, French text classification.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -7952,11 +7949,11 @@ type GoogleProtobufEmpty struct {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -8040,7 +8037,7 @@ func (c *ProjectsAnnotationSpecSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8180,7 +8177,7 @@ func (c *ProjectsAnnotationSpecSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8321,7 +8318,7 @@ func (c *ProjectsAnnotationSpecSetsGetCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8492,7 +8489,7 @@ func (c *ProjectsAnnotationSpecSetsListCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8667,7 +8664,7 @@ func (c *ProjectsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8806,7 +8803,7 @@ func (c *ProjectsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8938,7 +8935,7 @@ func (c *ProjectsDatasetsExportDataCall) Header() http.Header {
 
 func (c *ProjectsDatasetsExportDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9087,7 +9084,7 @@ func (c *ProjectsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9228,7 +9225,7 @@ func (c *ProjectsDatasetsImportDataCall) Header() http.Header {
 
 func (c *ProjectsDatasetsImportDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9401,7 +9398,7 @@ func (c *ProjectsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9573,7 +9570,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9714,7 +9711,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9885,7 +9882,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10070,7 +10067,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Header() http.Header
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10239,7 +10236,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Header() http.Heade
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10431,7 +10428,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Header() http.Header 
 
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10607,7 +10604,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Header() http.Header
 
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10779,7 +10776,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Header() ht
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10920,7 +10917,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Header() http.
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11083,7 +11080,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Header() http
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11253,7 +11250,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateC
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11391,7 +11388,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteC
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11532,7 +11529,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11695,7 +11692,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCal
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11875,7 +11872,7 @@ func (c *ProjectsDatasetsDataItemsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12044,7 +12041,7 @@ func (c *ProjectsDatasetsDataItemsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDataItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12228,7 +12225,7 @@ func (c *ProjectsDatasetsEvaluationsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsEvaluationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12368,7 +12365,7 @@ func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Header() http.
 
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12533,7 +12530,7 @@ func (c *ProjectsDatasetsImageLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsImageLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12674,7 +12671,7 @@ func (c *ProjectsDatasetsTextLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsTextLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12815,7 +12812,7 @@ func (c *ProjectsDatasetsVideoLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsVideoLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12955,7 +12952,7 @@ func (c *ProjectsEvaluationJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13095,7 +13092,7 @@ func (c *ProjectsEvaluationJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13236,7 +13233,7 @@ func (c *ProjectsEvaluationJobsGetCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13411,7 +13408,7 @@ func (c *ProjectsEvaluationJobsListCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13601,7 +13598,7 @@ func (c *ProjectsEvaluationJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13750,7 +13747,7 @@ func (c *ProjectsEvaluationJobsPauseCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13892,7 +13889,7 @@ func (c *ProjectsEvaluationJobsResumeCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14081,7 +14078,7 @@ func (c *ProjectsEvaluationsSearchCall) Header() http.Header {
 
 func (c *ProjectsEvaluationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14256,7 +14253,7 @@ func (c *ProjectsInstructionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstructionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14394,7 +14391,7 @@ func (c *ProjectsInstructionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstructionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14535,7 +14532,7 @@ func (c *ProjectsInstructionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstructionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14705,7 +14702,7 @@ func (c *ProjectsInstructionsListCall) Header() http.Header {
 
 func (c *ProjectsInstructionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14898,7 +14895,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15034,7 +15031,7 @@ func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15177,7 +15174,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15351,7 +15348,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

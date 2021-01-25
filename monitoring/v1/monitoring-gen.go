@@ -1576,8 +1576,8 @@ func (s *Tile) MarshalJSON() ([]byte, error) {
 // TimeSeriesFilter: A filter that defines a subset of time series data
 // that is displayed in a widget. Time series data is fetched using the
 // ListTimeSeries
-// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-// eries/list) method.
+// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
+// method.
 type TimeSeriesFilter struct {
 	// Aggregation: By default, the raw time series data is returned. Use
 	// this field to combine multiple time series for different views of the
@@ -1685,8 +1685,8 @@ type TimeSeriesQuery struct {
 	// UnitOverride: The unit of data contained in fetched time series. If
 	// non-empty, this unit will override any unit that accompanies fetched
 	// data. The format is the same as the unit
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.metri
-	// cDescriptors) field in MetricDescriptor.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors)
+	// field in MetricDescriptor.
 	UnitOverride string `json:"unitOverride,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TimeSeriesFilter") to
@@ -1898,7 +1898,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2041,7 +2041,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2187,7 +2187,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2353,7 +2353,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2525,7 +2525,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210106")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

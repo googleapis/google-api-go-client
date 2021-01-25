@@ -17,10 +17,11 @@ import (
 // service.
 func TranslateText(service *translate.Service, text, language string) (string, error) {
 	parent := fmt.Sprintf("projects/%s/locations/global", os.Getenv("GOOGLE_CLOUD_PROJECT"))
-	resp, err := service.Projects.Locations.TranslateText(parent, &translate.TranslateTextRequest{
+	req := &translate.TranslateTextRequest{
 		TargetLanguageCode: language,
 		Contents:           []string{text},
-	}).Do()
+	}
+	resp, err := service.Projects.Locations.TranslateText(parent, req).Do()
 	if err != nil {
 		return "", fmt.Errorf("unable to translate text: %v", err)
 	}

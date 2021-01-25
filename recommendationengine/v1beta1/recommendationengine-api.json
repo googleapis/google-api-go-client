@@ -12,7 +12,7 @@
   "baseUrl": "https://recommendationengine.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Recommendations AI",
-  "description": "Note that we now highly recommend new customers to use Retail API that incorporates the GA version of the Recommendations AI funtionalities. To enable Retail API, please visit https://console.cloud.google.com/apis/library/retail.googleapis.com. This is Recommendations AI service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
+  "description": "Note that we now highly recommend new customers to use Retail API, which incorporates the GA version of the Recommendations AI funtionalities. To enable Retail API, please visit https://console.cloud.google.com/apis/library/retail.googleapis.com. The Recommendations AI service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/recommendations-ai/docs",
   "fullyEncodeReservedExpansion": true,
@@ -842,7 +842,7 @@
       }
     }
   },
-  "revision": "20210108",
+  "revision": "20210115",
   "rootUrl": "https://recommendationengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {

@@ -6446,7 +6446,7 @@
       }
     }
   },
-  "revision": "20201231",
+  "revision": "20210113",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -9621,7 +9621,7 @@
       "id": "GoogleCloudApigeeV1ProvisionOrganizationRequest",
       "properties": {
         "analyticsRegion": {
-          "description": "Primary Cloud Platform region for analytics data storage. For valid values, see [Create an organization](https://docs.apigee.com/hybrid/latest/precog-provision). Defaults to us-west1.",
+          "description": "Primary Cloud Platform region for analytics data storage. For valid values, see [Create an organization](https://cloud.google.com/apigee/docs/hybrid/latest/precog-provision). Defaults to `us-west1`.",
           "type": "string"
         },
         "authorizedNetwork": {
@@ -9629,7 +9629,7 @@
           "type": "string"
         },
         "runtimeLocation": {
-          "description": "Cloud Platform location for the runtime instance. Defaults to us-west1-a.",
+          "description": "Cloud Platform location for the runtime instance. Defaults to `us-west1-a`.",
           "type": "string"
         }
       },

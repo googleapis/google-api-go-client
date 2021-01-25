@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20201231",
+  "revision": "20210118",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
@@ -674,9 +674,9 @@
       "description": "The status of a each individual document in the batch process.",
       "id": "GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus",
       "properties": {
-        "humanReviewOperation": {
-          "description": "The name of the operation triggered by the processed document. If the human review process is not triggered, this field will be empty. It has the same response type and metadata as the long running operation returned by ReviewDocument method.",
-          "type": "string"
+        "humanReviewStatus": {
+          "$ref": "GoogleCloudDocumentaiV1HumanReviewStatus",
+          "description": "The status of human review on the processed document."
         },
         "inputGcsSource": {
           "description": "The source of the document, same as the [input_gcs_source] field in the request when the batch process started. The batch process is started by take snapshot of that document, since a user can move or change that document during the process.",
@@ -735,6 +735,39 @@
         "updateTime": {
           "description": "The last update time of the operation.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1HumanReviewStatus": {
+      "description": "The status of human review on a processed document.",
+      "id": "GoogleCloudDocumentaiV1HumanReviewStatus",
+      "properties": {
+        "humanReviewOperation": {
+          "description": "The name of the operation triggered by the processed document. Non-empty only when the [state] is [HUMAN_REVIEW_IN_PROGRESS]. It has the same response type and metadata as the long running operation returned by [ReviewDocument] method.",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of human review on the processing request.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "HUMAN_REVIEW_SKIPPED",
+            "HUMAN_REVIEW_VALIDATION_PASSED",
+            "HUMAN_REVIEW_IN_PROGRESS",
+            "HUMAN_REVIEW_ERROR"
+          ],
+          "enumDescriptions": [
+            "State unspecified.",
+            "Human review is skipped for the document, it's either due to the human review is not enabled on the processor or the processing request sets to skip it.",
+            "Human review validation is triggered and passed, so no review is needed.",
+            "Human review validation is triggered and the document is under review.",
+            "Some error happened during triggering human review, see the [state_message] for details."
+          ],
+          "type": "string"
+        },
+        "stateMessage": {
+          "description": "A message providing more details about the human review state.",
           "type": "string"
         }
       },
@@ -3321,8 +3354,12 @@
       "id": "GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus",
       "properties": {
         "humanReviewOperation": {
-          "description": "The name of the operation triggered by the processed document. If the human review process is not triggered, this field will be empty. It has the same response type and metadata as the long running operation returned by ReviewDocument method.",
+          "description": "The name of the operation triggered by the processed document. If the human review process is not triggered, this field will be empty. It has the same response type and metadata as the long running operation returned by ReviewDocument method. .",
           "type": "string"
+        },
+        "humanReviewStatus": {
+          "$ref": "GoogleCloudDocumentaiV1beta3HumanReviewStatus",
+          "description": "The status of human review on the processed document."
         },
         "inputGcsSource": {
           "description": "The source of the document, same as the [input_gcs_source] field in the request when the batch process started. The batch process is started by take snapshot of that document, since a user can move or change that document during the process.",
@@ -3381,6 +3418,39 @@
         "updateTime": {
           "description": "The last update time of the operation.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta3HumanReviewStatus": {
+      "description": "The status of human review on a processed document.",
+      "id": "GoogleCloudDocumentaiV1beta3HumanReviewStatus",
+      "properties": {
+        "humanReviewOperation": {
+          "description": "The name of the operation triggered by the processed document. Non-empty only when the [state] is [HUMAN_REVIEW_IN_PROGRESS]. It has the same response type and metadata as the long running operation returned by [ReviewDocument] method.",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of human review on the processing request.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "HUMAN_REVIEW_SKIPPED",
+            "HUMAN_REVIEW_VALIDATION_PASSED",
+            "HUMAN_REVIEW_IN_PROGRESS",
+            "HUMAN_REVIEW_ERROR"
+          ],
+          "enumDescriptions": [
+            "State unspecified.",
+            "Human review is skipped for the document, it's either due to the human review is not enabled on the processor or the processing request sets to skip it.",
+            "Human review validation is triggered and passed, so no review is needed.",
+            "Human review validation is triggered and the document is under review.",
+            "Some error happened during triggering human review, see the [state_message] for details."
+          ],
+          "type": "string"
+        },
+        "stateMessage": {
+          "description": "A message providing more details about the human review state.",
           "type": "string"
         }
       },

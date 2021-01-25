@@ -5022,7 +5022,7 @@
       }
     }
   },
-  "revision": "20210106",
+  "revision": "20210113",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5030,7 +5030,7 @@
       "id": "Account",
       "properties": {
         "adsLinks": {
-          "description": "List of linked Ads accounts that are active or pending approval. To create a new link request, add a new link with status `active` to the list. It will remain in a `pending` state until approved or rejected either in the Ads interface or through the AdWords API. To delete an active link, or to cancel a link request, remove it from the list.",
+          "description": "Linked Ads accounts that are active or pending approval. To create a new link request, add a new link with status `active` to the list. It will remain in a `pending` state until approved or rejected either in the Ads interface or through the AdWords API. To delete an active link, or to cancel a link request, remove it from the list.",
           "items": {
             "$ref": "AccountAdsLink"
           },
@@ -5041,7 +5041,7 @@
           "type": "boolean"
         },
         "automaticLabelIds": {
-          "description": "List of automatically created label IDs that are assigned to the account by CSS Center.",
+          "description": "Automatically created label IDs that are assigned to the account by CSS Center.",
           "items": {
             "format": "uint64",
             "type": "string"
@@ -5071,7 +5071,7 @@
           "type": "string"
         },
         "labelIds": {
-          "description": "List of manually created label IDs that are assigned to the account by CSS.",
+          "description": "Manually created label IDs that are assigned to the account by CSS.",
           "items": {
             "format": "uint64",
             "type": "string"
@@ -5098,7 +5098,7 @@
           "type": "string"
         },
         "youtubeChannelLinks": {
-          "description": "List of linked YouTube channels that are active or pending approval. To create a new link request, add a new link with status `active` to the list. It will remain in a `pending` state until approved or rejected in the YT Creator Studio interface. To delete an active link, or to cancel a link request, remove it from the list.",
+          "description": "Linked YouTube channels that are active or pending approval. To create a new link request, add a new link with status `active` to the list. It will remain in a `pending` state until approved or rejected in the YT Creator Studio interface. To delete an active link, or to cancel a link request, remove it from the list.",
           "items": {
             "$ref": "AccountYouTubeChannelLink"
           },
@@ -12029,7 +12029,7 @@
           ],
           "enumDescriptions": [
             "Unused.",
-            "Statistical measurement based rules among Google SA merchants. If this rule is chosen, repricer will adjust the offer price based on statistical metrics (i.e. mean, median, min) among other merchants who sell the same product. Details need to be provdided in the RuleDefinition.",
+            "Statistical measurement based rules among Google SA merchants. If this rule is chosen, repricer will adjust the offer price based on statistical metrics (currently only min is available) among other merchants who sell the same product. Details need to be provdided in the RuleDefinition.",
             "Cost of goods sale based rule. Repricer will adjust the offer price based on the offer's sale cost which is provided by the merchant."
           ],
           "type": "string"
@@ -12109,7 +12109,7 @@
           ],
           "enumDescriptions": [
             "Unused.",
-            "Statistical measurement based rules among Google SA merchants. If this rule is chosen, repricer will adjust the offer price based on statistical metrics (i.e. mean, median, min) among other merchants who sell the same product. Details need to be provdided in the RuleDefinition.",
+            "Statistical measurement based rules among Google SA merchants. If this rule is chosen, repricer will adjust the offer price based on statistical metrics (currently only min is available) among other merchants who sell the same product. Details need to be provdided in the RuleDefinition.",
             "Cost of goods sale based rule. Repricer will adjust the offer price based on the offer's sale cost which is provided by the merchant."
           ],
           "type": "string"
@@ -12271,7 +12271,7 @@
           ],
           "enumDescriptions": [
             "Unused.",
-            "Statistical measurement based rules among Google SA merchants. If this rule is chosen, repricer will adjust the offer price based on statistical metrics (i.e. mean, median, min) among other merchants who sell the same product. Details need to be provdided in the RuleDefinition.",
+            "Statistical measurement based rules among Google SA merchants. If this rule is chosen, repricer will adjust the offer price based on statistical metrics (currently only min is available) among other merchants who sell the same product. Details need to be provdided in the RuleDefinition.",
             "Cost of goods sale based rule. Repricer will adjust the offer price based on the offer's sale cost which is provided by the merchant."
           ],
           "type": "string"

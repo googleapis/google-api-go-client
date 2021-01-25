@@ -859,11 +859,9 @@ func (s *GoogleCloudDocumentaiV1BatchProcessMetadata) MarshalJSON() ([]byte, err
 // GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus:
 // The status of a each individual document in the batch process.
 type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
-	// HumanReviewOperation: The name of the operation triggered by the
-	// processed document. If the human review process is not triggered,
-	// this field will be empty. It has the same response type and metadata
-	// as the long running operation returned by ReviewDocument method.
-	HumanReviewOperation string `json:"humanReviewOperation,omitempty"`
+	// HumanReviewStatus: The status of human review on the processed
+	// document.
+	HumanReviewStatus *GoogleCloudDocumentaiV1HumanReviewStatus `json:"humanReviewStatus,omitempty"`
 
 	// InputGcsSource: The source of the document, same as the
 	// [input_gcs_source] field in the request when the batch process
@@ -880,16 +878,15 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	// Status: The status of the processing of the document.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "HumanReviewOperation") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "HumanReviewStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HumanReviewOperation") to
+	// NullFields is a list of field names (e.g. "HumanReviewStatus") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -953,6 +950,60 @@ type GoogleCloudDocumentaiV1CommonOperationMetadata struct {
 
 func (s *GoogleCloudDocumentaiV1CommonOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1CommonOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1HumanReviewStatus: The status of human review
+// on a processed document.
+type GoogleCloudDocumentaiV1HumanReviewStatus struct {
+	// HumanReviewOperation: The name of the operation triggered by the
+	// processed document. Non-empty only when the [state] is
+	// [HUMAN_REVIEW_IN_PROGRESS]. It has the same response type and
+	// metadata as the long running operation returned by [ReviewDocument]
+	// method.
+	HumanReviewOperation string `json:"humanReviewOperation,omitempty"`
+
+	// State: The state of human review on the processing request.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "HUMAN_REVIEW_SKIPPED" - Human review is skipped for the document,
+	// it's either due to the human review is not enabled on the processor
+	// or the processing request sets to skip it.
+	//   "HUMAN_REVIEW_VALIDATION_PASSED" - Human review validation is
+	// triggered and passed, so no review is needed.
+	//   "HUMAN_REVIEW_IN_PROGRESS" - Human review validation is triggered
+	// and the document is under review.
+	//   "HUMAN_REVIEW_ERROR" - Some error happened during triggering human
+	// review, see the [state_message] for details.
+	State string `json:"state,omitempty"`
+
+	// StateMessage: A message providing more details about the human review
+	// state.
+	StateMessage string `json:"stateMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "HumanReviewOperation") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HumanReviewOperation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1HumanReviewStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1HumanReviewStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4838,8 +4889,12 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	// HumanReviewOperation: The name of the operation triggered by the
 	// processed document. If the human review process is not triggered,
 	// this field will be empty. It has the same response type and metadata
-	// as the long running operation returned by ReviewDocument method.
+	// as the long running operation returned by ReviewDocument method. .
 	HumanReviewOperation string `json:"humanReviewOperation,omitempty"`
+
+	// HumanReviewStatus: The status of human review on the processed
+	// document.
+	HumanReviewStatus *GoogleCloudDocumentaiV1beta3HumanReviewStatus `json:"humanReviewStatus,omitempty"`
 
 	// InputGcsSource: The source of the document, same as the
 	// [input_gcs_source] field in the request when the batch process
@@ -4890,6 +4945,10 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 
 	// OutputConfig: The overall output config for batch process.
 	OutputConfig *GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig `json:"outputConfig,omitempty"`
+
+	// SkipHumanReview: Whether Human Review feature should be skipped for
+	// this request. Default to false.
+	SkipHumanReview bool `json:"skipHumanReview,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InputConfigs") to
 	// unconditionally include in API requests. By default, fields with
@@ -6548,6 +6607,60 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentTranslation) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3HumanReviewStatus: The status of human
+// review on a processed document.
+type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
+	// HumanReviewOperation: The name of the operation triggered by the
+	// processed document. Non-empty only when the [state] is
+	// [HUMAN_REVIEW_IN_PROGRESS]. It has the same response type and
+	// metadata as the long running operation returned by [ReviewDocument]
+	// method.
+	HumanReviewOperation string `json:"humanReviewOperation,omitempty"`
+
+	// State: The state of human review on the processing request.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "HUMAN_REVIEW_SKIPPED" - Human review is skipped for the document,
+	// it's either due to the human review is not enabled on the processor
+	// or the processing request sets to skip it.
+	//   "HUMAN_REVIEW_VALIDATION_PASSED" - Human review validation is
+	// triggered and passed, so no review is needed.
+	//   "HUMAN_REVIEW_IN_PROGRESS" - Human review validation is triggered
+	// and the document is under review.
+	//   "HUMAN_REVIEW_ERROR" - Some error happened during triggering human
+	// review, see the [state_message] for details.
+	State string `json:"state,omitempty"`
+
+	// StateMessage: A message providing more details about the human review
+	// state.
+	StateMessage string `json:"stateMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "HumanReviewOperation") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HumanReviewOperation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3HumanReviewStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3HumanReviewStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3NormalizedVertex: A vertex represents a
 // 2D point in the image. NOTE: the normalized vertex coordinates are
 // relative to the original image and range from 0 to 1.
@@ -6641,8 +6754,12 @@ type GoogleCloudDocumentaiV1beta3ProcessResponse struct {
 	// HumanReviewOperation: The name of the operation triggered by the
 	// processed document. If the human review process is not triggered,
 	// this field will be empty. It has the same response type and metadata
-	// as the long running operation returned by ReviewDocument method.
+	// as the long running operation returned by ReviewDocument method. .
 	HumanReviewOperation string `json:"humanReviewOperation,omitempty"`
+
+	// HumanReviewStatus: The status of human review on the processed
+	// document.
+	HumanReviewStatus *GoogleCloudDocumentaiV1beta3HumanReviewStatus `json:"humanReviewStatus,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -7512,7 +7629,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7678,7 +7795,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7863,7 +7980,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7999,7 +8116,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8139,7 +8256,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8282,7 +8399,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8423,7 +8540,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8563,7 +8680,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

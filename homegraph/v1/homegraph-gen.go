@@ -225,7 +225,9 @@ type Device struct {
 	// (https://developers.google.com/assistant/smarthome/reference/intent/query)
 	// and EXECUTE
 	// (https://developers.google.com/assistant/smarthome/reference/intent/execute)
-	// intent.
+	// intent. Data in this object has a few constraints: No sensitive
+	// information, including but not limited to Personally Identifiable
+	// Information.
 	CustomData googleapi.RawMessage `json:"customData,omitempty"`
 
 	// DeviceInfo: Device manufacturer, model, hardware version, and
@@ -910,7 +912,7 @@ func (c *AgentUsersDeleteCall) Header() http.Header {
 
 func (c *AgentUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1049,7 +1051,7 @@ func (c *DevicesQueryCall) Header() http.Header {
 
 func (c *DevicesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1186,7 +1188,7 @@ func (c *DevicesReportStateAndNotificationCall) Header() http.Header {
 
 func (c *DevicesReportStateAndNotificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1318,7 +1320,7 @@ func (c *DevicesRequestSyncCall) Header() http.Header {
 
 func (c *DevicesRequestSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1446,7 +1448,7 @@ func (c *DevicesSyncCall) Header() http.Header {
 
 func (c *DevicesSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210113")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

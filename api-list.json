@@ -317,7 +317,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/analytics/trusted-testing/analytics-data/",
+      "documentationLink": "https://developers.google.com/analytics/devguides/reporting/data/v1/",
       "preferred": true
     },
     {
@@ -526,7 +526,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://tables.area120.google.com",
+      "documentationLink": "https://support.google.com/area120-tables/answer/10011390",
       "preferred": true
     },
     {
@@ -2122,6 +2122,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/eventarc",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "eventarc:v1",
+      "name": "eventarc",
+      "version": "v1",
+      "title": "Eventarc API",
+      "description": "",
+      "discoveryRestUrl": "https://eventarc.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/eventarc",
       "preferred": true
     },
     {
@@ -2507,6 +2522,21 @@
       "title": "Gmail Postmaster Tools API",
       "description": "The Postmaster Tools API is a RESTful API that provides programmatic access to email traffic metrics (like spam reports, delivery errors etc) otherwise available through the Gmail Postmaster Tools UI currently.",
       "discoveryRestUrl": "https://gmailpostmastertools.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/gmail/postmaster",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "gmailpostmastertools:v1",
+      "name": "gmailpostmastertools",
+      "version": "v1",
+      "title": "Gmail Postmaster Tools API",
+      "description": "The Postmaster Tools API is a RESTful API that provides programmatic access to email traffic metrics (like spam reports, delivery errors etc) otherwise available through the Gmail Postmaster Tools UI currently.",
+      "discoveryRestUrl": "https://gmailpostmastertools.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2927,6 +2957,21 @@
       "title": "Cloud Memorystore for Memcached API",
       "description": "Google Cloud Memorystore for Memcached API is used for creating and managing Memcached instances in GCP.",
       "discoveryRestUrl": "https://memcache.googleapis.com/$discovery/rest?version=v1beta2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/memorystore/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "memcache:v1",
+      "name": "memcache",
+      "version": "v1",
+      "title": "Cloud Memorystore for Memcached API",
+      "description": "Google Cloud Memorystore for Memcached API is used for creating and managing Memcached instances in GCP.",
+      "discoveryRestUrl": "https://memcache.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3357,6 +3402,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "realtimebidding:v1alpha",
+      "name": "realtimebidding",
+      "version": "v1alpha",
+      "title": "Real-time Bidding API",
+      "description": "Allows external bidders to manage their RTB integration with Google. This includes managing bidder endpoints, QPS quotas, configuring what ad inventory to receive via pretargeting, submitting creatives for verification, and accessing creative metadata such as approval status.",
+      "discoveryRestUrl": "https://realtimebidding.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/authorized-buyers/apis/realtimebidding/reference/rest/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "realtimebidding:v1",
       "name": "realtimebidding",
       "version": "v1",
@@ -3376,7 +3436,7 @@
       "name": "recommendationengine",
       "version": "v1beta1",
       "title": "Recommendations AI (Beta)",
-      "description": "Note that we now highly recommend new customers to use Retail API that incorporates the GA version of the Recommendations AI funtionalities. To enable Retail API, please visit https://console.cloud.google.com/apis/library/retail.googleapis.com. This is Recommendations AI service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
+      "description": "Note that we now highly recommend new customers to use Retail API, which incorporates the GA version of the Recommendations AI funtionalities. To enable Retail API, please visit https://console.cloud.google.com/apis/library/retail.googleapis.com. The Recommendations AI service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
       "discoveryRestUrl": "https://recommendationengine.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3496,7 +3556,7 @@
       "name": "reseller",
       "version": "v1",
       "title": "Google Workspace Reseller API",
-      "description": "Perform common functions that are available on the Google Apps Reseller Console at scale like placing orders and viewing customer information",
+      "description": "Perform common functions that are available on the Channel Services console at scale, like placing orders and viewing customer information",
       "discoveryRestUrl": "https://reseller.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

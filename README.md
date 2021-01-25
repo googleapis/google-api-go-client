@@ -32,7 +32,7 @@ func main() {
 * The code review instance may be found [here](https://code-review.googlesource.com).
 
 ## Status
-[![GoDoc](https://godoc.org/google.golang.org/api?status.svg)](https://godoc.org/google.golang.org/api)
+[![Go Reference](https://pkg.go.dev/badge/google.golang.org/api.svg)](https://pkg.go.dev/google.golang.org/api)
 
 These are auto-generated Go libraries from the Google Discovery Service's JSON description files of the available "new style" Google APIs.
 

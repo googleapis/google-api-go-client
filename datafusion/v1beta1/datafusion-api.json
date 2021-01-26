@@ -106,36 +106,6 @@
   "protocol": "rest",
   "resources": {
     "projects": {
-      "methods": {
-        "removeIamPolicy": {
-          "description": "Remove IAM policy that is currently set on the given resource.",
-          "flatPath": "v1beta1/projects/{projectsId}:removeIamPolicy",
-          "httpMethod": "POST",
-          "id": "datafusion.projects.removeIamPolicy",
-          "parameterOrder": [
-            "resource"
-          ],
-          "parameters": {
-            "resource": {
-              "description": "The resource on which IAM policy to be removed is attached to.",
-              "location": "path",
-              "pattern": "^projects/.*$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1beta1/{+resource}:removeIamPolicy",
-          "request": {
-            "$ref": "RemoveIamPolicyRequest"
-          },
-          "response": {
-            "$ref": "RemoveIamPolicyResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
-        }
-      },
       "resources": {
         "locations": {
           "methods": {
@@ -205,6 +175,34 @@
               "path": "v1beta1/{+name}/locations",
               "response": {
                 "$ref": "ListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "removeIamPolicy": {
+              "description": "Remove IAM policy that is currently set on the given resource.",
+              "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/{locationsId1}:removeIamPolicy",
+              "httpMethod": "POST",
+              "id": "datafusion.projects.locations.removeIamPolicy",
+              "parameterOrder": [
+                "resource"
+              ],
+              "parameters": {
+                "resource": {
+                  "description": "The resource on which IAM policy to be removed is attached to.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/locations/[^/]+/.*$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+resource}:removeIamPolicy",
+              "request": {
+                "$ref": "RemoveIamPolicyRequest"
+              },
+              "response": {
+                "$ref": "RemoveIamPolicyResponse"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
@@ -695,7 +693,7 @@
       }
     }
   },
-  "revision": "20210107",
+  "revision": "20210121",
   "rootUrl": "https://datafusion.googleapis.com/",
   "schemas": {
     "Accelerator": {

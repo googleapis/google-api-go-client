@@ -77,7 +77,7 @@ func TestTranslateText(t *testing.T) {
         w.Write(b)
     }))
     defer ts.Close()
-    svc, err := translate.NewService(ctx, option.WithEndpoint(ts.URL))
+    svc, err := translate.NewService(ctx, option.WithoutAuthentication(), option.WithEndpoint(ts.URL))
     if err != nil {
         t.Fatalf("unable to create client: %v", err)
     }

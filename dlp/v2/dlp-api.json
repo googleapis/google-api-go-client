@@ -195,476 +195,8 @@
     },
     "organizations": {
       "resources": {
-        "deidentifyTemplates": {
-          "methods": {
-            "create": {
-              "description": "Creates a DeidentifyTemplate for re-using frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
-              "httpMethod": "POST",
-              "id": "dlp.organizations.deidentifyTemplates.create",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+parent}/deidentifyTemplates",
-              "request": {
-                "$ref": "GooglePrivacyDlpV2CreateDeidentifyTemplateRequest"
-              },
-              "response": {
-                "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "delete": {
-              "description": "Deletes a DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-              "httpMethod": "DELETE",
-              "id": "dlp.organizations.deidentifyTemplates.delete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of the organization and deidentify template to be deleted, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "response": {
-                "$ref": "GoogleProtobufEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "get": {
-              "description": "Gets a DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-              "httpMethod": "GET",
-              "id": "dlp.organizations.deidentifyTemplates.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of the organization and deidentify template to be read, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "response": {
-                "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Lists DeidentifyTemplates. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
-              "httpMethod": "GET",
-              "id": "dlp.organizations.deidentifyTemplates.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "locationId": {
-                  "description": "Deprecated. This field has no effect.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "orderBy": {
-                  "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Page token to continue retrieval. Comes from previous call to `ListDeidentifyTemplates`.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+parent}/deidentifyTemplates",
-              "response": {
-                "$ref": "GooglePrivacyDlpV2ListDeidentifyTemplatesResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "patch": {
-              "description": "Updates the DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-              "httpMethod": "PATCH",
-              "id": "dlp.organizations.deidentifyTemplates.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of organization and deidentify template to be updated, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "request": {
-                "$ref": "GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest"
-              },
-              "response": {
-                "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            }
-          }
-        },
-        "inspectTemplates": {
-          "methods": {
-            "create": {
-              "description": "Creates an InspectTemplate for re-using frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
-              "httpMethod": "POST",
-              "id": "dlp.organizations.inspectTemplates.create",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+parent}/inspectTemplates",
-              "request": {
-                "$ref": "GooglePrivacyDlpV2CreateInspectTemplateRequest"
-              },
-              "response": {
-                "$ref": "GooglePrivacyDlpV2InspectTemplate"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "delete": {
-              "description": "Deletes an InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
-              "httpMethod": "DELETE",
-              "id": "dlp.organizations.inspectTemplates.delete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of the organization and inspectTemplate to be deleted, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/inspectTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "response": {
-                "$ref": "GoogleProtobufEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "get": {
-              "description": "Gets an InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
-              "httpMethod": "GET",
-              "id": "dlp.organizations.inspectTemplates.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of the organization and inspectTemplate to be read, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/inspectTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "response": {
-                "$ref": "GooglePrivacyDlpV2InspectTemplate"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Lists InspectTemplates. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
-              "httpMethod": "GET",
-              "id": "dlp.organizations.inspectTemplates.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "locationId": {
-                  "description": "Deprecated. This field has no effect.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "orderBy": {
-                  "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Page token to continue retrieval. Comes from previous call to `ListInspectTemplates`.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+parent}/inspectTemplates",
-              "response": {
-                "$ref": "GooglePrivacyDlpV2ListInspectTemplatesResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "patch": {
-              "description": "Updates the InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
-              "httpMethod": "PATCH",
-              "id": "dlp.organizations.inspectTemplates.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of organization and inspectTemplate to be updated, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/inspectTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "request": {
-                "$ref": "GooglePrivacyDlpV2UpdateInspectTemplateRequest"
-              },
-              "response": {
-                "$ref": "GooglePrivacyDlpV2InspectTemplate"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            }
-          }
-        },
         "locations": {
           "resources": {
-            "deidentifyTemplates": {
-              "methods": {
-                "create": {
-                  "description": "Creates a DeidentifyTemplate for re-using frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates",
-                  "httpMethod": "POST",
-                  "id": "dlp.organizations.locations.deidentifyTemplates.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+parent}/deidentifyTemplates",
-                  "request": {
-                    "$ref": "GooglePrivacyDlpV2CreateDeidentifyTemplateRequest"
-                  },
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "delete": {
-                  "description": "Deletes a DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-                  "httpMethod": "DELETE",
-                  "id": "dlp.organizations.locations.deidentifyTemplates.delete",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of the organization and deidentify template to be deleted, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "response": {
-                    "$ref": "GoogleProtobufEmpty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "get": {
-                  "description": "Gets a DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-                  "httpMethod": "GET",
-                  "id": "dlp.organizations.locations.deidentifyTemplates.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of the organization and deidentify template to be read, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "list": {
-                  "description": "Lists DeidentifyTemplates. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates",
-                  "httpMethod": "GET",
-                  "id": "dlp.organizations.locations.deidentifyTemplates.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "locationId": {
-                      "description": "Deprecated. This field has no effect.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "orderBy": {
-                      "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "pageSize": {
-                      "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "Page token to continue retrieval. Comes from previous call to `ListDeidentifyTemplates`.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+parent}/deidentifyTemplates",
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2ListDeidentifyTemplatesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "patch": {
-                  "description": "Updates the DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-                  "httpMethod": "PATCH",
-                  "id": "dlp.organizations.locations.deidentifyTemplates.patch",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of organization and deidentify template to be updated, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "request": {
-                    "$ref": "GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest"
-                  },
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                }
-              }
-            },
             "dlpJobs": {
               "methods": {
                 "list": {
@@ -728,162 +260,6 @@
                   "path": "v2/{+parent}/dlpJobs",
                   "response": {
                     "$ref": "GooglePrivacyDlpV2ListDlpJobsResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                }
-              }
-            },
-            "inspectTemplates": {
-              "methods": {
-                "create": {
-                  "description": "Creates an InspectTemplate for re-using frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates",
-                  "httpMethod": "POST",
-                  "id": "dlp.organizations.locations.inspectTemplates.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+parent}/inspectTemplates",
-                  "request": {
-                    "$ref": "GooglePrivacyDlpV2CreateInspectTemplateRequest"
-                  },
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2InspectTemplate"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "delete": {
-                  "description": "Deletes an InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates/{inspectTemplatesId}",
-                  "httpMethod": "DELETE",
-                  "id": "dlp.organizations.locations.inspectTemplates.delete",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of the organization and inspectTemplate to be deleted, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "response": {
-                    "$ref": "GoogleProtobufEmpty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "get": {
-                  "description": "Gets an InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates/{inspectTemplatesId}",
-                  "httpMethod": "GET",
-                  "id": "dlp.organizations.locations.inspectTemplates.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of the organization and inspectTemplate to be read, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2InspectTemplate"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "list": {
-                  "description": "Lists InspectTemplates. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates",
-                  "httpMethod": "GET",
-                  "id": "dlp.organizations.locations.inspectTemplates.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "locationId": {
-                      "description": "Deprecated. This field has no effect.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "orderBy": {
-                      "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "pageSize": {
-                      "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "Page token to continue retrieval. Comes from previous call to `ListInspectTemplates`.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+parent}/inspectTemplates",
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2ListInspectTemplatesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "patch": {
-                  "description": "Updates the InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates/{inspectTemplatesId}",
-                  "httpMethod": "PATCH",
-                  "id": "dlp.organizations.locations.inspectTemplates.patch",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of organization and inspectTemplate to be updated, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "request": {
-                    "$ref": "GooglePrivacyDlpV2UpdateInspectTemplateRequest"
-                  },
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2InspectTemplate"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -1051,318 +427,6 @@
                   ]
                 }
               }
-            },
-            "storedInfoTypes": {
-              "methods": {
-                "create": {
-                  "description": "Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes",
-                  "httpMethod": "POST",
-                  "id": "dlp.organizations.locations.storedInfoTypes.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+parent}/storedInfoTypes",
-                  "request": {
-                    "$ref": "GooglePrivacyDlpV2CreateStoredInfoTypeRequest"
-                  },
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2StoredInfoType"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "delete": {
-                  "description": "Deletes a stored infoType. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes/{storedInfoTypesId}",
-                  "httpMethod": "DELETE",
-                  "id": "dlp.organizations.locations.storedInfoTypes.delete",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of the organization and storedInfoType to be deleted, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "response": {
-                    "$ref": "GoogleProtobufEmpty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "get": {
-                  "description": "Gets a stored infoType. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes/{storedInfoTypesId}",
-                  "httpMethod": "GET",
-                  "id": "dlp.organizations.locations.storedInfoTypes.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of the organization and storedInfoType to be read, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2StoredInfoType"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "list": {
-                  "description": "Lists stored infoTypes. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes",
-                  "httpMethod": "GET",
-                  "id": "dlp.organizations.locations.storedInfoTypes.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "locationId": {
-                      "description": "Deprecated. This field has no effect.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "orderBy": {
-                      "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "pageSize": {
-                      "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "Page token to continue retrieval. Comes from previous call to `ListStoredInfoTypes`.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+parent}/storedInfoTypes",
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2ListStoredInfoTypesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "patch": {
-                  "description": "Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-                  "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes/{storedInfoTypesId}",
-                  "httpMethod": "PATCH",
-                  "id": "dlp.organizations.locations.storedInfoTypes.patch",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. Resource name of organization and storedInfoType to be updated, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "request": {
-                    "$ref": "GooglePrivacyDlpV2UpdateStoredInfoTypeRequest"
-                  },
-                  "response": {
-                    "$ref": "GooglePrivacyDlpV2StoredInfoType"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "storedInfoTypes": {
-          "methods": {
-            "create": {
-              "description": "Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
-              "httpMethod": "POST",
-              "id": "dlp.organizations.storedInfoTypes.create",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+parent}/storedInfoTypes",
-              "request": {
-                "$ref": "GooglePrivacyDlpV2CreateStoredInfoTypeRequest"
-              },
-              "response": {
-                "$ref": "GooglePrivacyDlpV2StoredInfoType"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "delete": {
-              "description": "Deletes a stored infoType. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
-              "httpMethod": "DELETE",
-              "id": "dlp.organizations.storedInfoTypes.delete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of the organization and storedInfoType to be deleted, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "response": {
-                "$ref": "GoogleProtobufEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "get": {
-              "description": "Gets a stored infoType. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
-              "httpMethod": "GET",
-              "id": "dlp.organizations.storedInfoTypes.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of the organization and storedInfoType to be read, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "response": {
-                "$ref": "GooglePrivacyDlpV2StoredInfoType"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Lists stored infoTypes. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
-              "httpMethod": "GET",
-              "id": "dlp.organizations.storedInfoTypes.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "locationId": {
-                  "description": "Deprecated. This field has no effect.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "orderBy": {
-                  "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Page token to continue retrieval. Comes from previous call to `ListStoredInfoTypes`.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+parent}/storedInfoTypes",
-              "response": {
-                "$ref": "GooglePrivacyDlpV2ListStoredInfoTypesResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "patch": {
-              "description": "Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-              "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
-              "httpMethod": "PATCH",
-              "id": "dlp.organizations.storedInfoTypes.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource name of organization and storedInfoType to be updated, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2/{+name}",
-              "request": {
-                "$ref": "GooglePrivacyDlpV2UpdateStoredInfoTypeRequest"
-              },
-              "response": {
-                "$ref": "GooglePrivacyDlpV2StoredInfoType"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
             }
           }
         }
@@ -1470,7 +534,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1498,7 +562,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the organization and deidentify template to be deleted, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+                  "description": "Required. Resource name of the deidentify template to be deleted, for example projects/project-id/deidentifyTemplates/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
                   "required": true,
@@ -1523,7 +587,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the organization and deidentify template to be read, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+                  "description": "Required. Resource name of the deidentify template to be read, for example projects/project-id/deidentifyTemplates/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
                   "required": true,
@@ -1569,7 +633,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1594,7 +658,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of organization and deidentify template to be updated, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+                  "description": "Required. Resource name of deidentify template to be updated, for example projects/project-id/deidentifyTemplates/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
                   "required": true,
@@ -1834,7 +898,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1862,7 +926,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the organization and inspectTemplate to be deleted, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+                  "description": "Required. Resource name of the inspectTemplate to be deleted, for example projects/project-id/inspectTemplates/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/inspectTemplates/[^/]+$",
                   "required": true,
@@ -1887,7 +951,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the organization and inspectTemplate to be read, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+                  "description": "Required. Resource name of the inspectTemplate to be read, for example projects/project-id/inspectTemplates/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/inspectTemplates/[^/]+$",
                   "required": true,
@@ -1933,7 +997,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1958,7 +1022,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of organization and inspectTemplate to be updated, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+                  "description": "Required. Resource name of inspectTemplate to be updated, for example projects/project-id/inspectTemplates/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/inspectTemplates/[^/]+$",
                   "required": true,
@@ -2269,7 +1333,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2297,7 +1361,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of the organization and deidentify template to be deleted, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+                      "description": "Required. Resource name of the deidentify template to be deleted, for example projects/project-id/deidentifyTemplates/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
                       "required": true,
@@ -2322,7 +1386,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of the organization and deidentify template to be read, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+                      "description": "Required. Resource name of the deidentify template to be read, for example projects/project-id/deidentifyTemplates/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
                       "required": true,
@@ -2368,7 +1432,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2393,7 +1457,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of organization and deidentify template to be updated, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+                      "description": "Required. Resource name of deidentify template to be updated, for example projects/project-id/deidentifyTemplates/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
                       "required": true,
@@ -2689,7 +1753,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2717,7 +1781,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of the organization and inspectTemplate to be deleted, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+                      "description": "Required. Resource name of the inspectTemplate to be deleted, for example projects/project-id/inspectTemplates/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
                       "required": true,
@@ -2742,7 +1806,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of the organization and inspectTemplate to be read, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+                      "description": "Required. Resource name of the inspectTemplate to be read, for example projects/project-id/inspectTemplates/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
                       "required": true,
@@ -2788,7 +1852,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -2813,7 +1877,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of organization and inspectTemplate to be updated, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+                      "description": "Required. Resource name of inspectTemplate to be updated, for example projects/project-id/inspectTemplates/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
                       "required": true,
@@ -3062,7 +2126,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -3090,7 +2154,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of the organization and storedInfoType to be deleted, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+                      "description": "Required. Resource name of the storedInfoType to be deleted, for example projects/project-id/storedInfoTypes/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
                       "required": true,
@@ -3115,7 +2179,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of the organization and storedInfoType to be read, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+                      "description": "Required. Resource name of the storedInfoType to be read, for example projects/project-id/storedInfoTypes/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
                       "required": true,
@@ -3161,7 +2225,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                      "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -3186,7 +2250,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of organization and storedInfoType to be updated, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+                      "description": "Required. Resource name of storedInfoType to be updated, for example projects/project-id/storedInfoTypes/432452342.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
                       "required": true,
@@ -3220,7 +2284,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -3248,7 +2312,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the organization and storedInfoType to be deleted, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+                  "description": "Required. Resource name of the storedInfoType to be deleted, for example projects/project-id/storedInfoTypes/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
                   "required": true,
@@ -3273,7 +2337,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the organization and storedInfoType to be read, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+                  "description": "Required. Resource name of the storedInfoType to be read, for example projects/project-id/storedInfoTypes/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
                   "required": true,
@@ -3319,7 +2383,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+                  "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -3344,7 +2408,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of organization and storedInfoType to be updated, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+                  "description": "Required. Resource name of storedInfoType to be updated, for example projects/project-id/storedInfoTypes/432452342.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
                   "required": true,
@@ -3367,7 +2431,7 @@
       }
     }
   },
-  "revision": "20201231",
+  "revision": "20210124",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3813,12 +2877,12 @@
       "id": "GooglePrivacyDlpV2CloudStorageOptions",
       "properties": {
         "bytesLimitPerFile": {
-          "description": "Max number of bytes to scan from a file. If a scanned file's size is bigger than this value then the rest of the bytes are omitted. Only one of bytes_limit_per_file and bytes_limit_per_file_percent can be specified.",
+          "description": "Max number of bytes to scan from a file. If a scanned file's size is bigger than this value then the rest of the bytes are omitted. Only one of bytes_limit_per_file and bytes_limit_per_file_percent can be specified. Cannot be set if de-identification is requested.",
           "format": "int64",
           "type": "string"
         },
         "bytesLimitPerFilePercent": {
-          "description": "Max percentage of bytes to scan from a file. The rest are omitted. The number of bytes scanned is rounded down. Must be between 0 and 100, inclusively. Both 0 and 100 means no limit. Defaults to 0. Only one of bytes_limit_per_file and bytes_limit_per_file_percent can be specified.",
+          "description": "Max percentage of bytes to scan from a file. The rest are omitted. The number of bytes scanned is rounded down. Must be between 0 and 100, inclusively. Both 0 and 100 means no limit. Defaults to 0. Only one of bytes_limit_per_file and bytes_limit_per_file_percent can be specified. Cannot be set if de-identification is requested.",
           "format": "int32",
           "type": "integer"
         },
@@ -4520,7 +3584,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`",
+          "description": "Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID`.",
           "readOnly": true,
           "type": "string"
         },
@@ -4979,7 +4043,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2FindingLimits": {
-      "description": "Configuration to control the number of findings returned.",
+      "description": "Configuration to control the number of findings returned. Cannot be set if de-identification is requested.",
       "id": "GooglePrivacyDlpV2FindingLimits",
       "properties": {
         "maxFindingsPerInfoType": {
@@ -5510,7 +4574,7 @@
           "description": "The core content of the template. Configuration of the scanning process."
         },
         "name": {
-          "description": "Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;",
+          "description": "Output only. The template name. The template will have one of the following formats: `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID`",
           "readOnly": true,
           "type": "string"
         },
@@ -6814,7 +5878,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2Schedule": {
-      "description": "Schedule for triggeredJobs.",
+      "description": "Schedule for inspect job triggers.",
       "id": "GooglePrivacyDlpV2Schedule",
       "properties": {
         "recurrencePeriodDuration": {

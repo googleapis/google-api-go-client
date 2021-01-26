@@ -522,7 +522,7 @@
       }
     }
   },
-  "revision": "20201113",
+  "revision": "20210122",
   "rootUrl": "https://binaryauthorization.googleapis.com/",
   "schemas": {
     "AdmissionRule": {
@@ -845,6 +845,27 @@
             "Disables global policy evaluation."
           ],
           "type": "string"
+        },
+        "istioServiceIdentityAdmissionRules": {
+          "additionalProperties": {
+            "$ref": "AdmissionRule"
+          },
+          "description": "Optional. Per-istio-service-identity admission rules. Istio service identity spec format: spiffe:///ns//sa/ or /ns//sa/ e.g. spiffe://example.com/ns/test-ns/sa/default",
+          "type": "object"
+        },
+        "kubernetesNamespaceAdmissionRules": {
+          "additionalProperties": {
+            "$ref": "AdmissionRule"
+          },
+          "description": "Optional. Per-kubernetes-namespace admission rules. K8s namespace spec format: [a-z.-]+, e.g. 'some-namespace'",
+          "type": "object"
+        },
+        "kubernetesServiceAccountAdmissionRules": {
+          "additionalProperties": {
+            "$ref": "AdmissionRule"
+          },
+          "description": "Optional. Per-kubernetes-service-account admission rules. Service account spec format: `namespace:serviceaccount`. e.g. 'test-ns:default'",
+          "type": "object"
         },
         "name": {
           "description": "Output only. The resource name, in the format `projects/*/policy`. There is at most one policy per project.",

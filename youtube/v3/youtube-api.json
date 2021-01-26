@@ -3788,7 +3788,7 @@
       }
     }
   },
-  "revision": "20201231",
+  "revision": "20210125",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -4213,7 +4213,8 @@
           "type": "string"
         },
         "publishedAt": {
-          "description": "The date and time that the video was uploaded. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the video was uploaded.",
+          "format": "date-time",
           "type": "string"
         },
         "thumbnails": {
@@ -4377,7 +4378,8 @@
           "type": "string"
         },
         "lastUpdated": {
-          "description": "The date and time when the caption track was last updated. The value is specified in ISO 8601 format.",
+          "description": "The date and time when the caption track was last updated.",
+          "format": "date-time",
           "type": "string"
         },
         "name": {
@@ -4661,7 +4663,8 @@
           "type": "string"
         },
         "timeLinked": {
-          "description": "The date and time of when the channel was linked to the content owner. The value is specified in ISO 8601 format.",
+          "description": "The date and time when the channel was linked to the content owner.",
+          "format": "date-time",
           "type": "string"
         }
       },
@@ -5089,7 +5092,8 @@
           "description": "Localized title and description, read-only."
         },
         "publishedAt": {
-          "description": "The date and time that the channel was created. The value is specified in \u003c a href=\"//www.w3.org/TR/NOTE-datetime\"\u003eISO 8601 format.",
+          "description": "The date and time that the channel was created.",
+          "format": "date-time",
           "type": "string"
         },
         "thumbnails": {
@@ -5335,7 +5339,8 @@
           "type": "string"
         },
         "publishedAt": {
-          "description": "The date and time when the comment was orignally published. The value is specified in ISO 8601 format.",
+          "description": "The date and time when the comment was originally published.",
+          "format": "date-time",
           "type": "string"
         },
         "textDisplay": {
@@ -5347,7 +5352,8 @@
           "type": "string"
         },
         "updatedAt": {
-          "description": "The date and time when was last updated . The value is specified in ISO 8601 format.",
+          "description": "The date and time when the comment was last updated.",
+          "format": "date-time",
           "type": "string"
         },
         "videoId": {
@@ -7686,6 +7692,7 @@
         },
         "boundStreamLastUpdateTimeMs": {
           "description": "The date and time that the live stream referenced by boundStreamId was last updated.",
+          "format": "date-time",
           "type": "string"
         },
         "closedCaptionsType": {
@@ -7858,11 +7865,13 @@
       "id": "LiveBroadcastSnippet",
       "properties": {
         "actualEndTime": {
-          "description": "The date and time that the broadcast actually ended. This information is only available once the broadcast's state is complete. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the broadcast actually ended. This information is only available once the broadcast's state is complete.",
+          "format": "date-time",
           "type": "string"
         },
         "actualStartTime": {
-          "description": "The date and time that the broadcast actually started. This information is only available once the broadcast's state is live. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the broadcast actually started. This information is only available once the broadcast's state is live.",
+          "format": "date-time",
           "type": "string"
         },
         "channelId": {
@@ -7882,15 +7891,18 @@
           "type": "string"
         },
         "publishedAt": {
-          "description": "The date and time that the broadcast was added to YouTube's live broadcast schedule. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the broadcast was added to YouTube's live broadcast schedule.",
+          "format": "date-time",
           "type": "string"
         },
         "scheduledEndTime": {
-          "description": "The date and time that the broadcast is scheduled to end. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the broadcast is scheduled to start.",
+          "format": "date-time",
           "type": "string"
         },
         "scheduledStartTime": {
-          "description": "The date and time that the broadcast is scheduled to start. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the broadcast is scheduled to end.",
+          "format": "date-time",
           "type": "string"
         },
         "thumbnails": {
@@ -8183,7 +8195,8 @@
           "type": "string"
         },
         "offlineAt": {
-          "description": "The date and time when the underlying stream went offline. The value is specified in ISO 8601 format.",
+          "description": "The date and time when the underlying stream went offline.",
+          "format": "date-time",
           "type": "string"
         },
         "pageInfo": {
@@ -8243,7 +8256,8 @@
           "$ref": "LiveChatMessageRetractedDetails"
         },
         "publishedAt": {
-          "description": "The date and time when the message was orignally published. The value is specified in ISO 8601 format.",
+          "description": "The date and time when the message was orignally published.",
+          "format": "date-time",
           "type": "string"
         },
         "superChatDetails": {
@@ -8724,7 +8738,8 @@
           "type": "boolean"
         },
         "publishedAt": {
-          "description": "The date and time that the stream was created. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the stream was created.",
+          "format": "date-time",
           "type": "string"
         },
         "title": {
@@ -9158,7 +9173,8 @@
           "type": "string"
         },
         "videoPublishedAt": {
-          "description": "The date and time that the video was published to YouTube. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the video was published to YouTube.",
+          "format": "date-time",
           "type": "string"
         }
       },
@@ -9234,7 +9250,8 @@
           "type": "integer"
         },
         "publishedAt": {
-          "description": "The date and time that the item was added to the playlist. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the item was added to the playlist.",
+          "format": "date-time",
           "type": "string"
         },
         "resourceId": {
@@ -9368,7 +9385,8 @@
           "description": "Localized title and description, read-only."
         },
         "publishedAt": {
-          "description": "The date and time that the playlist was created. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the playlist was created.",
+          "format": "date-time",
           "type": "string"
         },
         "tags": {
@@ -9561,7 +9579,8 @@
           "type": "string"
         },
         "publishedAt": {
-          "description": "The creation date and time of the resource that the search result identifies. The value is specified in ISO 8601 format.",
+          "description": "The creation date and time of the resource that the search result identifies.",
+          "format": "date-time",
           "type": "string"
         },
         "thumbnails": {
@@ -9699,7 +9718,8 @@
           "type": "string"
         },
         "publishedAt": {
-          "description": "The date and time that the subscription was created. The value is specified in ISO 8601 format.",
+          "description": "The date and time that the subscription was created.",
+          "format": "date-time",
           "type": "string"
         },
         "resourceId": {
@@ -9826,7 +9846,8 @@
           "type": "string"
         },
         "createdAt": {
-          "description": "The date and time when the event occurred. The value is specified in ISO 8601 format.",
+          "description": "The date and time when the event occurred.",
+          "format": "date-time",
           "type": "string"
         },
         "currency": {
@@ -10664,11 +10685,13 @@
           "type": "string"
         },
         "actualEndTime": {
-          "description": "The time that the broadcast actually ended. The value is specified in ISO 8601 format. This value will not be available until the broadcast is over.",
+          "description": "The time that the broadcast actually ended. This value will not be available until the broadcast is over.",
+          "format": "date-time",
           "type": "string"
         },
         "actualStartTime": {
-          "description": "The time that the broadcast actually started. The value is specified in ISO 8601 format. This value will not be available until the broadcast begins.",
+          "description": "The time that the broadcast actually started. This value will not be available until the broadcast begins.",
+          "format": "date-time",
           "type": "string"
         },
         "concurrentViewers": {
@@ -10677,11 +10700,13 @@
           "type": "string"
         },
         "scheduledEndTime": {
-          "description": "The time that the broadcast is scheduled to end. The value is specified in ISO 8601 format. If the value is empty or the property is not present, then the broadcast is scheduled to continue indefinitely.",
+          "description": "The time that the broadcast is scheduled to end. If the value is empty or the property is not present, then the broadcast is scheduled to contiue indefinitely.",
+          "format": "date-time",
           "type": "string"
         },
         "scheduledStartTime": {
-          "description": "The time that the broadcast is scheduled to begin. The value is specified in ISO 8601 format.",
+          "description": "The time that the broadcast is scheduled to begin.",
+          "format": "date-time",
           "type": "string"
         }
       },
@@ -10892,7 +10917,8 @@
           "type": "string"
         },
         "recordingDate": {
-          "description": "The date and time when the video was recorded. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sssZ) format.",
+          "description": "The date and time when the video was recorded.",
+          "format": "date-time",
           "type": "string"
         }
       },
@@ -10947,7 +10973,8 @@
           "description": "Localized snippet selected with the hl parameter. If no such localization exists, this field is populated with the default snippet. (Read-only)"
         },
         "publishedAt": {
-          "description": "The date and time that the video was uploaded. The value is specified in ISO 8601 format.",
+          "description": "The date and time when the video was uploaded.",
+          "format": "date-time",
           "type": "string"
         },
         "tags": {
@@ -11062,7 +11089,8 @@
           "type": "boolean"
         },
         "publishAt": {
-          "description": "The date and time when the video is scheduled to publish. It can be set only if the privacy status of the video is private. The value is specified in ISO 8601 format.",
+          "description": "The date and time when the video is scheduled to publish. It can be set only if the privacy status of the video is private..",
+          "format": "date-time",
           "type": "string"
         },
         "rejectionReason": {

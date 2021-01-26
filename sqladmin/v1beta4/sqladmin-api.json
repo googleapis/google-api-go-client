@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         },
         "https://www.googleapis.com/auth/sqlservice.admin": {
           "description": "Manage your Google SQL Service instances"
@@ -1834,7 +1834,7 @@
       }
     }
   },
-  "revision": "20210111",
+  "revision": "20210119",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -2071,7 +2071,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of this run; can be either \"AUTOMATED\" or \"ON_DEMAND\".",
+          "description": "The type of this run; can be either \"AUTOMATED\" or \"ON_DEMAND\". This field defaults to \"ON_DEMAND\" and is ignored, when specified for insert requests.",
           "enum": [
             "SQL_BACKUP_RUN_TYPE_UNSPECIFIED",
             "AUTOMATED",
@@ -3979,6 +3979,10 @@
       "description": "SslCerts create ephemeral certificate request.",
       "id": "SslCertsCreateEphemeralRequest",
       "properties": {
+        "access_token": {
+          "description": "Access token to include in the signed certificate.",
+          "type": "string"
+        },
         "public_key": {
           "description": "PEM encoded public key to include in the signed certificate.",
           "type": "string"

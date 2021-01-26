@@ -313,6 +313,9 @@ type Build struct {
 	// upon successful completion of all build steps.
 	Artifacts *Artifacts `json:"artifacts,omitempty"`
 
+	// AvailableSecrets: Secrets and secret environment variables.
+	AvailableSecrets *Secrets `json:"availableSecrets,omitempty"`
+
 	// BuildTriggerId: Output only. The ID of the `BuildTrigger` that
 	// triggered this build, if it was triggered automatically.
 	BuildTriggerId string `json:"buildTriggerId,omitempty"`
@@ -366,7 +369,11 @@ type Build struct {
 	// Results: Output only. Results of the build.
 	Results *Results `json:"results,omitempty"`
 
-	// Secrets: Secrets to decrypt using Cloud Key Management Service.
+	// Secrets: Secrets to decrypt using Cloud Key Management Service. Note:
+	// Secret Manager is the recommended technique for managing sensitive
+	// data with Cloud Build. Use `available_secrets` to configure builds to
+	// access secrets from Secret Manager. For instructions, see:
+	// https://cloud.google.com/cloud-build/docs/securing-builds/use-secrets
 	Secrets []*Secret `json:"secrets,omitempty"`
 
 	// ServiceAccount: IAM service account whose credentials will be used at
@@ -880,6 +887,44 @@ func (s *Hash) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InlineSecret: Pairs a set of secret environment variables mapped to
+// encrypted values with the Cloud KMS key to use to decrypt the value.
+type InlineSecret struct {
+	// EnvMap: Map of environment variable name to its encrypted value.
+	// Secret environment variables must be unique across all of a build's
+	// secrets, and must be used by at least one build step. Values can be
+	// at most 64 KB in size. There can be at most 100 secret values across
+	// all of a build's secrets.
+	EnvMap map[string]string `json:"envMap,omitempty"`
+
+	// KmsKeyName: Resource name of Cloud KMS crypto key to decrypt the
+	// encrypted value. In format:
+	// projects/*/locations/*/keyRings/*/cryptoKeys/*
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnvMap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnvMap") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InlineSecret) MarshalJSON() ([]byte, error) {
+	type NoMethod InlineSecret
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListWorkerPoolsResponse: Response containing existing `WorkerPools`.
 type ListWorkerPoolsResponse struct {
 	// WorkerPools: `WorkerPools` for the specified project.
@@ -1384,6 +1429,9 @@ func (s *SMTPDelivery) MarshalJSON() ([]byte, error) {
 
 // Secret: Pairs a set of secret environment variables containing
 // encrypted values with the Cloud KMS key to use to decrypt the value.
+// Note: Use `kmsKeyName` with `available_secrets` instead of using
+// `kmsKeyName` with `secret`. For instructions see:
+// https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-credentials.
 type Secret struct {
 	// KmsKeyName: Cloud KMS key name to use to decrypt these envs.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
@@ -1414,6 +1462,74 @@ type Secret struct {
 
 func (s *Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod Secret
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecretManagerSecret: Pairs a secret environment variable with a
+// SecretVersion in Secret Manager.
+type SecretManagerSecret struct {
+	// Env: Environment variable name to associate with the secret. Secret
+	// environment variables must be unique across all of a build's secrets,
+	// and must be used by at least one build step.
+	Env string `json:"env,omitempty"`
+
+	// VersionName: Resource name of the SecretVersion. In format:
+	// projects/*/secrets/*/versions/*
+	VersionName string `json:"versionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Env") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Env") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretManagerSecret) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretManagerSecret
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Secrets: Secrets and secret environment variables.
+type Secrets struct {
+	// Inline: Secrets encrypted with KMS key and the associated secret
+	// environment variable.
+	Inline []*InlineSecret `json:"inline,omitempty"`
+
+	// SecretManager: Secrets in Secret Manager and associated secret
+	// environment variable.
+	SecretManager []*SecretManagerSecret `json:"secretManager,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Inline") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Inline") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Secrets) MarshalJSON() ([]byte, error) {
+	type NoMethod Secrets
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1845,7 +1961,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1996,7 +2112,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2141,7 +2257,7 @@ func (c *ProjectsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2284,7 +2400,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2425,7 +2541,7 @@ func (c *ProjectsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2569,7 +2685,7 @@ func (c *ProjectsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2711,7 +2827,7 @@ func (c *ProjectsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -178,74 +178,29 @@ type LocationsInfoTypesService struct {
 
 func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
-	rs.DeidentifyTemplates = NewOrganizationsDeidentifyTemplatesService(s)
-	rs.InspectTemplates = NewOrganizationsInspectTemplatesService(s)
 	rs.Locations = NewOrganizationsLocationsService(s)
-	rs.StoredInfoTypes = NewOrganizationsStoredInfoTypesService(s)
 	return rs
 }
 
 type OrganizationsService struct {
 	s *Service
 
-	DeidentifyTemplates *OrganizationsDeidentifyTemplatesService
-
-	InspectTemplates *OrganizationsInspectTemplatesService
-
 	Locations *OrganizationsLocationsService
-
-	StoredInfoTypes *OrganizationsStoredInfoTypesService
-}
-
-func NewOrganizationsDeidentifyTemplatesService(s *Service) *OrganizationsDeidentifyTemplatesService {
-	rs := &OrganizationsDeidentifyTemplatesService{s: s}
-	return rs
-}
-
-type OrganizationsDeidentifyTemplatesService struct {
-	s *Service
-}
-
-func NewOrganizationsInspectTemplatesService(s *Service) *OrganizationsInspectTemplatesService {
-	rs := &OrganizationsInspectTemplatesService{s: s}
-	return rs
-}
-
-type OrganizationsInspectTemplatesService struct {
-	s *Service
 }
 
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
-	rs.DeidentifyTemplates = NewOrganizationsLocationsDeidentifyTemplatesService(s)
 	rs.DlpJobs = NewOrganizationsLocationsDlpJobsService(s)
-	rs.InspectTemplates = NewOrganizationsLocationsInspectTemplatesService(s)
 	rs.JobTriggers = NewOrganizationsLocationsJobTriggersService(s)
-	rs.StoredInfoTypes = NewOrganizationsLocationsStoredInfoTypesService(s)
 	return rs
 }
 
 type OrganizationsLocationsService struct {
 	s *Service
 
-	DeidentifyTemplates *OrganizationsLocationsDeidentifyTemplatesService
-
 	DlpJobs *OrganizationsLocationsDlpJobsService
 
-	InspectTemplates *OrganizationsLocationsInspectTemplatesService
-
 	JobTriggers *OrganizationsLocationsJobTriggersService
-
-	StoredInfoTypes *OrganizationsLocationsStoredInfoTypesService
-}
-
-func NewOrganizationsLocationsDeidentifyTemplatesService(s *Service) *OrganizationsLocationsDeidentifyTemplatesService {
-	rs := &OrganizationsLocationsDeidentifyTemplatesService{s: s}
-	return rs
-}
-
-type OrganizationsLocationsDeidentifyTemplatesService struct {
-	s *Service
 }
 
 func NewOrganizationsLocationsDlpJobsService(s *Service) *OrganizationsLocationsDlpJobsService {
@@ -257,39 +212,12 @@ type OrganizationsLocationsDlpJobsService struct {
 	s *Service
 }
 
-func NewOrganizationsLocationsInspectTemplatesService(s *Service) *OrganizationsLocationsInspectTemplatesService {
-	rs := &OrganizationsLocationsInspectTemplatesService{s: s}
-	return rs
-}
-
-type OrganizationsLocationsInspectTemplatesService struct {
-	s *Service
-}
-
 func NewOrganizationsLocationsJobTriggersService(s *Service) *OrganizationsLocationsJobTriggersService {
 	rs := &OrganizationsLocationsJobTriggersService{s: s}
 	return rs
 }
 
 type OrganizationsLocationsJobTriggersService struct {
-	s *Service
-}
-
-func NewOrganizationsLocationsStoredInfoTypesService(s *Service) *OrganizationsLocationsStoredInfoTypesService {
-	rs := &OrganizationsLocationsStoredInfoTypesService{s: s}
-	return rs
-}
-
-type OrganizationsLocationsStoredInfoTypesService struct {
-	s *Service
-}
-
-func NewOrganizationsStoredInfoTypesService(s *Service) *OrganizationsStoredInfoTypesService {
-	rs := &OrganizationsStoredInfoTypesService{s: s}
-	return rs
-}
-
-type OrganizationsStoredInfoTypesService struct {
 	s *Service
 }
 
@@ -1215,14 +1143,16 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// BytesLimitPerFile: Max number of bytes to scan from a file. If a
 	// scanned file's size is bigger than this value then the rest of the
 	// bytes are omitted. Only one of bytes_limit_per_file and
-	// bytes_limit_per_file_percent can be specified.
+	// bytes_limit_per_file_percent can be specified. Cannot be set if
+	// de-identification is requested.
 	BytesLimitPerFile int64 `json:"bytesLimitPerFile,omitempty,string"`
 
 	// BytesLimitPerFilePercent: Max percentage of bytes to scan from a
 	// file. The rest are omitted. The number of bytes scanned is rounded
 	// down. Must be between 0 and 100, inclusively. Both 0 and 100 means no
 	// limit. Defaults to 0. Only one of bytes_limit_per_file and
-	// bytes_limit_per_file_percent can be specified.
+	// bytes_limit_per_file_percent can be specified. Cannot be set if
+	// de-identification is requested.
 	BytesLimitPerFilePercent int64 `json:"bytesLimitPerFilePercent,omitempty"`
 
 	// FileSet: The set of one or more files to scan.
@@ -2543,8 +2473,7 @@ type GooglePrivacyDlpV2DeidentifyTemplate struct {
 
 	// Name: Output only. The template name. The template will have one of
 	// the following formats:
-	// `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID` OR
-	// `organizations/ORGANIZATION_ID/deidentifyTemplates/TEMPLATE_ID`
+	// `projects/PROJECT_ID/deidentifyTemplates/TEMPLATE_ID`.
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: Output only. The last update timestamp of an
@@ -3374,7 +3303,8 @@ func (s *GooglePrivacyDlpV2Finding) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2FindingLimits: Configuration to control the number
-// of findings returned.
+// of findings returned. Cannot be set if de-identification is
+// requested.
 type GooglePrivacyDlpV2FindingLimits struct {
 	// MaxFindingsPerInfoType: Configuration of findings limit given for
 	// specified infoTypes.
@@ -4365,8 +4295,7 @@ type GooglePrivacyDlpV2InspectTemplate struct {
 
 	// Name: Output only. The template name. The template will have one of
 	// the following formats:
-	// `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID` OR
-	// `organizations/ORGANIZATION_ID/inspectTemplates/TEMPLATE_ID`;
+	// `projects/PROJECT_ID/inspectTemplates/TEMPLATE_ID`
 	Name string `json:"name,omitempty"`
 
 	// UpdateTime: Output only. The last update timestamp of an
@@ -6789,7 +6718,7 @@ func (s *GooglePrivacyDlpV2SaveFindings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2Schedule: Schedule for triggeredJobs.
+// GooglePrivacyDlpV2Schedule: Schedule for inspect job triggers.
 type GooglePrivacyDlpV2Schedule struct {
 	// RecurrencePeriodDuration: With this option a job is started a regular
 	// periodic basis. For example: every day (86400 seconds). A scheduled
@@ -8215,7 +8144,7 @@ func (c *InfoTypesListCall) Header() http.Header {
 
 func (c *InfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8394,7 +8323,7 @@ func (c *LocationsInfoTypesListCall) Header() http.Header {
 
 func (c *LocationsInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8491,2380 +8420,6 @@ func (c *LocationsInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePr
 	//   "path": "v2/{+parent}/infoTypes",
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2ListInfoTypesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.deidentifyTemplates.create":
-
-type OrganizationsDeidentifyTemplatesCreateCall struct {
-	s                                                 *Service
-	parentid                                          string
-	googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest
-	urlParams_                                        gensupport.URLParams
-	ctx_                                              context.Context
-	header_                                           http.Header
-}
-
-// Create: Creates a DeidentifyTemplate for re-using frequently used
-// configuration for de-identifying content, images, and storage. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsDeidentifyTemplatesService) Create(parentid string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *OrganizationsDeidentifyTemplatesCreateCall {
-	c := &OrganizationsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	c.googleprivacydlpv2createdeidentifytemplaterequest = googleprivacydlpv2createdeidentifytemplaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsDeidentifyTemplatesCreateCall) Fields(s ...googleapi.Field) *OrganizationsDeidentifyTemplatesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsDeidentifyTemplatesCreateCall) Context(ctx context.Context) *OrganizationsDeidentifyTemplatesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsDeidentifyTemplatesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createdeidentifytemplaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/deidentifyTemplates")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.deidentifyTemplates.create" call.
-// Exactly one of *GooglePrivacyDlpV2DeidentifyTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2DeidentifyTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2DeidentifyTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2DeidentifyTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
-	//   "httpMethod": "POST",
-	//   "id": "dlp.organizations.deidentifyTemplates.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/deidentifyTemplates",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2CreateDeidentifyTemplateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.deidentifyTemplates.delete":
-
-type OrganizationsDeidentifyTemplatesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a DeidentifyTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsDeidentifyTemplatesService) Delete(name string) *OrganizationsDeidentifyTemplatesDeleteCall {
-	c := &OrganizationsDeidentifyTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsDeidentifyTemplatesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsDeidentifyTemplatesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsDeidentifyTemplatesDeleteCall) Context(ctx context.Context) *OrganizationsDeidentifyTemplatesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsDeidentifyTemplatesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.deidentifyTemplates.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsDeidentifyTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "dlp.organizations.deidentifyTemplates.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and deidentify template to be deleted, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.deidentifyTemplates.get":
-
-type OrganizationsDeidentifyTemplatesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets a DeidentifyTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsDeidentifyTemplatesService) Get(name string) *OrganizationsDeidentifyTemplatesGetCall {
-	c := &OrganizationsDeidentifyTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsDeidentifyTemplatesGetCall) Fields(s ...googleapi.Field) *OrganizationsDeidentifyTemplatesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsDeidentifyTemplatesGetCall) IfNoneMatch(entityTag string) *OrganizationsDeidentifyTemplatesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsDeidentifyTemplatesGetCall) Context(ctx context.Context) *OrganizationsDeidentifyTemplatesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsDeidentifyTemplatesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.deidentifyTemplates.get" call.
-// Exactly one of *GooglePrivacyDlpV2DeidentifyTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2DeidentifyTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2DeidentifyTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2DeidentifyTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.deidentifyTemplates.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and deidentify template to be read, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.deidentifyTemplates.list":
-
-type OrganizationsDeidentifyTemplatesListCall struct {
-	s            *Service
-	parentid     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists DeidentifyTemplates. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsDeidentifyTemplatesService) List(parentid string) *OrganizationsDeidentifyTemplatesListCall {
-	c := &OrganizationsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	return c
-}
-
-// LocationId sets the optional parameter "locationId": Deprecated. This
-// field has no effect.
-func (c *OrganizationsDeidentifyTemplatesListCall) LocationId(locationId string) *OrganizationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("locationId", locationId)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
-func (c *OrganizationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *OrganizationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
-func (c *OrganizationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *OrganizationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
-// `ListDeidentifyTemplates`.
-func (c *OrganizationsDeidentifyTemplatesListCall) PageToken(pageToken string) *OrganizationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsDeidentifyTemplatesListCall) Fields(s ...googleapi.Field) *OrganizationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsDeidentifyTemplatesListCall) IfNoneMatch(entityTag string) *OrganizationsDeidentifyTemplatesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsDeidentifyTemplatesListCall) Context(ctx context.Context) *OrganizationsDeidentifyTemplatesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsDeidentifyTemplatesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/deidentifyTemplates")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.deidentifyTemplates.list" call.
-// Exactly one of *GooglePrivacyDlpV2ListDeidentifyTemplatesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePrivacyDlpV2ListDeidentifyTemplatesResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListDeidentifyTemplatesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2ListDeidentifyTemplatesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists DeidentifyTemplates. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.deidentifyTemplates.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "locationId": {
-	//       "description": "Deprecated. This field has no effect.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListDeidentifyTemplates`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/deidentifyTemplates",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2ListDeidentifyTemplatesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsDeidentifyTemplatesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListDeidentifyTemplatesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "dlp.organizations.deidentifyTemplates.patch":
-
-type OrganizationsDeidentifyTemplatesPatchCall struct {
-	s                                                 *Service
-	name                                              string
-	googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest
-	urlParams_                                        gensupport.URLParams
-	ctx_                                              context.Context
-	header_                                           http.Header
-}
-
-// Patch: Updates the DeidentifyTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsDeidentifyTemplatesService) Patch(name string, googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) *OrganizationsDeidentifyTemplatesPatchCall {
-	c := &OrganizationsDeidentifyTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleprivacydlpv2updatedeidentifytemplaterequest = googleprivacydlpv2updatedeidentifytemplaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsDeidentifyTemplatesPatchCall) Fields(s ...googleapi.Field) *OrganizationsDeidentifyTemplatesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsDeidentifyTemplatesPatchCall) Context(ctx context.Context) *OrganizationsDeidentifyTemplatesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsDeidentifyTemplatesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updatedeidentifytemplaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.deidentifyTemplates.patch" call.
-// Exactly one of *GooglePrivacyDlpV2DeidentifyTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2DeidentifyTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsDeidentifyTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2DeidentifyTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2DeidentifyTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "dlp.organizations.deidentifyTemplates.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of organization and deidentify template to be updated, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.inspectTemplates.create":
-
-type OrganizationsInspectTemplatesCreateCall struct {
-	s                                              *Service
-	parentid                                       string
-	googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest
-	urlParams_                                     gensupport.URLParams
-	ctx_                                           context.Context
-	header_                                        http.Header
-}
-
-// Create: Creates an InspectTemplate for re-using frequently used
-// configuration for inspecting content, images, and storage. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsInspectTemplatesService) Create(parentid string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *OrganizationsInspectTemplatesCreateCall {
-	c := &OrganizationsInspectTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	c.googleprivacydlpv2createinspecttemplaterequest = googleprivacydlpv2createinspecttemplaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsInspectTemplatesCreateCall) Fields(s ...googleapi.Field) *OrganizationsInspectTemplatesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsInspectTemplatesCreateCall) Context(ctx context.Context) *OrganizationsInspectTemplatesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsInspectTemplatesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createinspecttemplaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inspectTemplates")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.inspectTemplates.create" call.
-// Exactly one of *GooglePrivacyDlpV2InspectTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2InspectTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsInspectTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2InspectTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2InspectTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates an InspectTemplate for re-using frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
-	//   "httpMethod": "POST",
-	//   "id": "dlp.organizations.inspectTemplates.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/inspectTemplates",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2CreateInspectTemplateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2InspectTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.inspectTemplates.delete":
-
-type OrganizationsInspectTemplatesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes an InspectTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsInspectTemplatesService) Delete(name string) *OrganizationsInspectTemplatesDeleteCall {
-	c := &OrganizationsInspectTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsInspectTemplatesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsInspectTemplatesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsInspectTemplatesDeleteCall) Context(ctx context.Context) *OrganizationsInspectTemplatesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsInspectTemplatesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.inspectTemplates.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsInspectTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes an InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "dlp.organizations.inspectTemplates.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and inspectTemplate to be deleted, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/inspectTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.inspectTemplates.get":
-
-type OrganizationsInspectTemplatesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets an InspectTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsInspectTemplatesService) Get(name string) *OrganizationsInspectTemplatesGetCall {
-	c := &OrganizationsInspectTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsInspectTemplatesGetCall) Fields(s ...googleapi.Field) *OrganizationsInspectTemplatesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsInspectTemplatesGetCall) IfNoneMatch(entityTag string) *OrganizationsInspectTemplatesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsInspectTemplatesGetCall) Context(ctx context.Context) *OrganizationsInspectTemplatesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsInspectTemplatesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.inspectTemplates.get" call.
-// Exactly one of *GooglePrivacyDlpV2InspectTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2InspectTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsInspectTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2InspectTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2InspectTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets an InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.inspectTemplates.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and inspectTemplate to be read, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/inspectTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2InspectTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.inspectTemplates.list":
-
-type OrganizationsInspectTemplatesListCall struct {
-	s            *Service
-	parentid     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists InspectTemplates. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsInspectTemplatesService) List(parentid string) *OrganizationsInspectTemplatesListCall {
-	c := &OrganizationsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	return c
-}
-
-// LocationId sets the optional parameter "locationId": Deprecated. This
-// field has no effect.
-func (c *OrganizationsInspectTemplatesListCall) LocationId(locationId string) *OrganizationsInspectTemplatesListCall {
-	c.urlParams_.Set("locationId", locationId)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
-func (c *OrganizationsInspectTemplatesListCall) OrderBy(orderBy string) *OrganizationsInspectTemplatesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
-func (c *OrganizationsInspectTemplatesListCall) PageSize(pageSize int64) *OrganizationsInspectTemplatesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
-// `ListInspectTemplates`.
-func (c *OrganizationsInspectTemplatesListCall) PageToken(pageToken string) *OrganizationsInspectTemplatesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsInspectTemplatesListCall) Fields(s ...googleapi.Field) *OrganizationsInspectTemplatesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsInspectTemplatesListCall) IfNoneMatch(entityTag string) *OrganizationsInspectTemplatesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsInspectTemplatesListCall) Context(ctx context.Context) *OrganizationsInspectTemplatesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsInspectTemplatesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inspectTemplates")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.inspectTemplates.list" call.
-// Exactly one of *GooglePrivacyDlpV2ListInspectTemplatesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePrivacyDlpV2ListInspectTemplatesResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListInspectTemplatesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2ListInspectTemplatesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists InspectTemplates. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.inspectTemplates.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "locationId": {
-	//       "description": "Deprecated. This field has no effect.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListInspectTemplates`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/inspectTemplates",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2ListInspectTemplatesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsInspectTemplatesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListInspectTemplatesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "dlp.organizations.inspectTemplates.patch":
-
-type OrganizationsInspectTemplatesPatchCall struct {
-	s                                              *Service
-	name                                           string
-	googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest
-	urlParams_                                     gensupport.URLParams
-	ctx_                                           context.Context
-	header_                                        http.Header
-}
-
-// Patch: Updates the InspectTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsInspectTemplatesService) Patch(name string, googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest) *OrganizationsInspectTemplatesPatchCall {
-	c := &OrganizationsInspectTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleprivacydlpv2updateinspecttemplaterequest = googleprivacydlpv2updateinspecttemplaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsInspectTemplatesPatchCall) Fields(s ...googleapi.Field) *OrganizationsInspectTemplatesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsInspectTemplatesPatchCall) Context(ctx context.Context) *OrganizationsInspectTemplatesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsInspectTemplatesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updateinspecttemplaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.inspectTemplates.patch" call.
-// Exactly one of *GooglePrivacyDlpV2InspectTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2InspectTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2InspectTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2InspectTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "dlp.organizations.inspectTemplates.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of organization and inspectTemplate to be updated, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/inspectTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2UpdateInspectTemplateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2InspectTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.deidentifyTemplates.create":
-
-type OrganizationsLocationsDeidentifyTemplatesCreateCall struct {
-	s                                                 *Service
-	parentid                                          string
-	googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest
-	urlParams_                                        gensupport.URLParams
-	ctx_                                              context.Context
-	header_                                           http.Header
-}
-
-// Create: Creates a DeidentifyTemplate for re-using frequently used
-// configuration for de-identifying content, images, and storage. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsLocationsDeidentifyTemplatesService) Create(parentid string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *OrganizationsLocationsDeidentifyTemplatesCreateCall {
-	c := &OrganizationsLocationsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	c.googleprivacydlpv2createdeidentifytemplaterequest = googleprivacydlpv2createdeidentifytemplaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDeidentifyTemplatesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Context(ctx context.Context) *OrganizationsLocationsDeidentifyTemplatesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createdeidentifytemplaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/deidentifyTemplates")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.deidentifyTemplates.create" call.
-// Exactly one of *GooglePrivacyDlpV2DeidentifyTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2DeidentifyTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2DeidentifyTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2DeidentifyTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration for de-identifying content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates",
-	//   "httpMethod": "POST",
-	//   "id": "dlp.organizations.locations.deidentifyTemplates.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/deidentifyTemplates",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2CreateDeidentifyTemplateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.deidentifyTemplates.delete":
-
-type OrganizationsLocationsDeidentifyTemplatesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a DeidentifyTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsLocationsDeidentifyTemplatesService) Delete(name string) *OrganizationsLocationsDeidentifyTemplatesDeleteCall {
-	c := &OrganizationsLocationsDeidentifyTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDeidentifyTemplatesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsDeidentifyTemplatesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.deidentifyTemplates.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsDeidentifyTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "dlp.organizations.locations.deidentifyTemplates.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and deidentify template to be deleted, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.deidentifyTemplates.get":
-
-type OrganizationsLocationsDeidentifyTemplatesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets a DeidentifyTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsLocationsDeidentifyTemplatesService) Get(name string) *OrganizationsLocationsDeidentifyTemplatesGetCall {
-	c := &OrganizationsLocationsDeidentifyTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDeidentifyTemplatesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsDeidentifyTemplatesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Context(ctx context.Context) *OrganizationsLocationsDeidentifyTemplatesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.deidentifyTemplates.get" call.
-// Exactly one of *GooglePrivacyDlpV2DeidentifyTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2DeidentifyTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2DeidentifyTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2DeidentifyTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.locations.deidentifyTemplates.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and deidentify template to be read, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.deidentifyTemplates.list":
-
-type OrganizationsLocationsDeidentifyTemplatesListCall struct {
-	s            *Service
-	parentid     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists DeidentifyTemplates. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsLocationsDeidentifyTemplatesService) List(parentid string) *OrganizationsLocationsDeidentifyTemplatesListCall {
-	c := &OrganizationsLocationsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	return c
-}
-
-// LocationId sets the optional parameter "locationId": Deprecated. This
-// field has no effect.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) LocationId(locationId string) *OrganizationsLocationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("locationId", locationId)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *OrganizationsLocationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) PageSize(pageSize int64) *OrganizationsLocationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
-// `ListDeidentifyTemplates`.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) PageToken(pageToken string) *OrganizationsLocationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDeidentifyTemplatesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsDeidentifyTemplatesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Context(ctx context.Context) *OrganizationsLocationsDeidentifyTemplatesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/deidentifyTemplates")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.deidentifyTemplates.list" call.
-// Exactly one of *GooglePrivacyDlpV2ListDeidentifyTemplatesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePrivacyDlpV2ListDeidentifyTemplatesResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListDeidentifyTemplatesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2ListDeidentifyTemplatesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists DeidentifyTemplates. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.locations.deidentifyTemplates.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "locationId": {
-	//       "description": "Deprecated. This field has no effect.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListDeidentifyTemplates`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/deidentifyTemplates",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2ListDeidentifyTemplatesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsLocationsDeidentifyTemplatesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListDeidentifyTemplatesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "dlp.organizations.locations.deidentifyTemplates.patch":
-
-type OrganizationsLocationsDeidentifyTemplatesPatchCall struct {
-	s                                                 *Service
-	name                                              string
-	googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest
-	urlParams_                                        gensupport.URLParams
-	ctx_                                              context.Context
-	header_                                           http.Header
-}
-
-// Patch: Updates the DeidentifyTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates-deid to learn
-// more.
-func (r *OrganizationsLocationsDeidentifyTemplatesService) Patch(name string, googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) *OrganizationsLocationsDeidentifyTemplatesPatchCall {
-	c := &OrganizationsLocationsDeidentifyTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleprivacydlpv2updatedeidentifytemplaterequest = googleprivacydlpv2updatedeidentifytemplaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDeidentifyTemplatesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Context(ctx context.Context) *OrganizationsLocationsDeidentifyTemplatesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updatedeidentifytemplaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.deidentifyTemplates.patch" call.
-// Exactly one of *GooglePrivacyDlpV2DeidentifyTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2DeidentifyTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsDeidentifyTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2DeidentifyTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2DeidentifyTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the DeidentifyTemplate. See https://cloud.google.com/dlp/docs/creating-templates-deid to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "dlp.organizations.locations.deidentifyTemplates.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of organization and deidentify template to be updated, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2DeidentifyTemplate"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -11001,7 +8556,7 @@ func (c *OrganizationsLocationsDlpJobsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11153,794 +8708,6 @@ func (c *OrganizationsLocationsDlpJobsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
-// method id "dlp.organizations.locations.inspectTemplates.create":
-
-type OrganizationsLocationsInspectTemplatesCreateCall struct {
-	s                                              *Service
-	parentid                                       string
-	googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest
-	urlParams_                                     gensupport.URLParams
-	ctx_                                           context.Context
-	header_                                        http.Header
-}
-
-// Create: Creates an InspectTemplate for re-using frequently used
-// configuration for inspecting content, images, and storage. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsLocationsInspectTemplatesService) Create(parentid string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *OrganizationsLocationsInspectTemplatesCreateCall {
-	c := &OrganizationsLocationsInspectTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	c.googleprivacydlpv2createinspecttemplaterequest = googleprivacydlpv2createinspecttemplaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsInspectTemplatesCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInspectTemplatesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsInspectTemplatesCreateCall) Context(ctx context.Context) *OrganizationsLocationsInspectTemplatesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsInspectTemplatesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createinspecttemplaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inspectTemplates")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.inspectTemplates.create" call.
-// Exactly one of *GooglePrivacyDlpV2InspectTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2InspectTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsInspectTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2InspectTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2InspectTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates an InspectTemplate for re-using frequently used configuration for inspecting content, images, and storage. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates",
-	//   "httpMethod": "POST",
-	//   "id": "dlp.organizations.locations.inspectTemplates.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/inspectTemplates",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2CreateInspectTemplateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2InspectTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.inspectTemplates.delete":
-
-type OrganizationsLocationsInspectTemplatesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes an InspectTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsLocationsInspectTemplatesService) Delete(name string) *OrganizationsLocationsInspectTemplatesDeleteCall {
-	c := &OrganizationsLocationsInspectTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInspectTemplatesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsInspectTemplatesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.inspectTemplates.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsInspectTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes an InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates/{inspectTemplatesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "dlp.organizations.locations.inspectTemplates.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and inspectTemplate to be deleted, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.inspectTemplates.get":
-
-type OrganizationsLocationsInspectTemplatesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets an InspectTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsLocationsInspectTemplatesService) Get(name string) *OrganizationsLocationsInspectTemplatesGetCall {
-	c := &OrganizationsLocationsInspectTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsInspectTemplatesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInspectTemplatesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsInspectTemplatesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsInspectTemplatesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsInspectTemplatesGetCall) Context(ctx context.Context) *OrganizationsLocationsInspectTemplatesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsInspectTemplatesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.inspectTemplates.get" call.
-// Exactly one of *GooglePrivacyDlpV2InspectTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2InspectTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsInspectTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2InspectTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2InspectTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets an InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates/{inspectTemplatesId}",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.locations.inspectTemplates.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and inspectTemplate to be read, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2InspectTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.inspectTemplates.list":
-
-type OrganizationsLocationsInspectTemplatesListCall struct {
-	s            *Service
-	parentid     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists InspectTemplates. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsLocationsInspectTemplatesService) List(parentid string) *OrganizationsLocationsInspectTemplatesListCall {
-	c := &OrganizationsLocationsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	return c
-}
-
-// LocationId sets the optional parameter "locationId": Deprecated. This
-// field has no effect.
-func (c *OrganizationsLocationsInspectTemplatesListCall) LocationId(locationId string) *OrganizationsLocationsInspectTemplatesListCall {
-	c.urlParams_.Set("locationId", locationId)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the template was created. - `update_time`: corresponds to
-// time the template was last updated. - `name`: corresponds to
-// template's name. - `display_name`: corresponds to template's display
-// name.
-func (c *OrganizationsLocationsInspectTemplatesListCall) OrderBy(orderBy string) *OrganizationsLocationsInspectTemplatesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
-func (c *OrganizationsLocationsInspectTemplatesListCall) PageSize(pageSize int64) *OrganizationsLocationsInspectTemplatesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
-// `ListInspectTemplates`.
-func (c *OrganizationsLocationsInspectTemplatesListCall) PageToken(pageToken string) *OrganizationsLocationsInspectTemplatesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsInspectTemplatesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInspectTemplatesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsInspectTemplatesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsInspectTemplatesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsInspectTemplatesListCall) Context(ctx context.Context) *OrganizationsLocationsInspectTemplatesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsInspectTemplatesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/inspectTemplates")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.inspectTemplates.list" call.
-// Exactly one of *GooglePrivacyDlpV2ListInspectTemplatesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePrivacyDlpV2ListInspectTemplatesResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListInspectTemplatesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2ListInspectTemplatesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists InspectTemplates. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.locations.inspectTemplates.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "locationId": {
-	//       "description": "Deprecated. This field has no effect.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to time the template was created. - `update_time`: corresponds to time the template was last updated. - `name`: corresponds to template's name. - `display_name`: corresponds to template's display name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListInspectTemplates`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/inspectTemplates",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2ListInspectTemplatesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsLocationsInspectTemplatesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListInspectTemplatesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "dlp.organizations.locations.inspectTemplates.patch":
-
-type OrganizationsLocationsInspectTemplatesPatchCall struct {
-	s                                              *Service
-	name                                           string
-	googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest
-	urlParams_                                     gensupport.URLParams
-	ctx_                                           context.Context
-	header_                                        http.Header
-}
-
-// Patch: Updates the InspectTemplate. See
-// https://cloud.google.com/dlp/docs/creating-templates to learn more.
-func (r *OrganizationsLocationsInspectTemplatesService) Patch(name string, googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest) *OrganizationsLocationsInspectTemplatesPatchCall {
-	c := &OrganizationsLocationsInspectTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleprivacydlpv2updateinspecttemplaterequest = googleprivacydlpv2updateinspecttemplaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsInspectTemplatesPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsInspectTemplatesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsInspectTemplatesPatchCall) Context(ctx context.Context) *OrganizationsLocationsInspectTemplatesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsInspectTemplatesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updateinspecttemplaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.inspectTemplates.patch" call.
-// Exactly one of *GooglePrivacyDlpV2InspectTemplate or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2InspectTemplate.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2InspectTemplate, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2InspectTemplate{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the InspectTemplate. See https://cloud.google.com/dlp/docs/creating-templates to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/inspectTemplates/{inspectTemplatesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "dlp.organizations.locations.inspectTemplates.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of organization and inspectTemplate to be updated, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2UpdateInspectTemplateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2InspectTemplate"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "dlp.organizations.locations.jobTriggers.create":
 
 type OrganizationsLocationsJobTriggersCreateCall struct {
@@ -11990,7 +8757,7 @@ func (c *OrganizationsLocationsJobTriggersCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12130,7 +8897,7 @@ func (c *OrganizationsLocationsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12273,7 +9040,7 @@ func (c *OrganizationsLocationsJobTriggersGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12479,7 +9246,7 @@ func (c *OrganizationsLocationsJobTriggersListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12665,7 +9432,7 @@ func (c *OrganizationsLocationsJobTriggersPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12759,1590 +9526,6 @@ func (c *OrganizationsLocationsJobTriggersPatchCall) Do(opts ...googleapi.CallOp
 
 }
 
-// method id "dlp.organizations.locations.storedInfoTypes.create":
-
-type OrganizationsLocationsStoredInfoTypesCreateCall struct {
-	s                                             *Service
-	parentid                                      string
-	googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest
-	urlParams_                                    gensupport.URLParams
-	ctx_                                          context.Context
-	header_                                       http.Header
-}
-
-// Create: Creates a pre-built stored infoType to be used for
-// inspection. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsLocationsStoredInfoTypesService) Create(parentid string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *OrganizationsLocationsStoredInfoTypesCreateCall {
-	c := &OrganizationsLocationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	c.googleprivacydlpv2createstoredinfotyperequest = googleprivacydlpv2createstoredinfotyperequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsStoredInfoTypesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Context(ctx context.Context) *OrganizationsLocationsStoredInfoTypesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createstoredinfotyperequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.storedInfoTypes.create" call.
-// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2StoredInfoType{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes",
-	//   "httpMethod": "POST",
-	//   "id": "dlp.organizations.locations.storedInfoTypes.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/storedInfoTypes",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2CreateStoredInfoTypeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.storedInfoTypes.delete":
-
-type OrganizationsLocationsStoredInfoTypesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a stored infoType. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsLocationsStoredInfoTypesService) Delete(name string) *OrganizationsLocationsStoredInfoTypesDeleteCall {
-	c := &OrganizationsLocationsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsStoredInfoTypesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsStoredInfoTypesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.storedInfoTypes.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsStoredInfoTypesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a stored infoType. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes/{storedInfoTypesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "dlp.organizations.locations.storedInfoTypes.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and storedInfoType to be deleted, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.storedInfoTypes.get":
-
-type OrganizationsLocationsStoredInfoTypesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets a stored infoType. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsLocationsStoredInfoTypesService) Get(name string) *OrganizationsLocationsStoredInfoTypesGetCall {
-	c := &OrganizationsLocationsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsStoredInfoTypesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsStoredInfoTypesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsStoredInfoTypesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsStoredInfoTypesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsStoredInfoTypesGetCall) Context(ctx context.Context) *OrganizationsLocationsStoredInfoTypesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsStoredInfoTypesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.storedInfoTypes.get" call.
-// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2StoredInfoType{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a stored infoType. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes/{storedInfoTypesId}",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.locations.storedInfoTypes.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and storedInfoType to be read, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.locations.storedInfoTypes.list":
-
-type OrganizationsLocationsStoredInfoTypesListCall struct {
-	s            *Service
-	parentid     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists stored infoTypes. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsLocationsStoredInfoTypesService) List(parentid string) *OrganizationsLocationsStoredInfoTypesListCall {
-	c := &OrganizationsLocationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	return c
-}
-
-// LocationId sets the optional parameter "locationId": Deprecated. This
-// field has no effect.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) LocationId(locationId string) *OrganizationsLocationsStoredInfoTypesListCall {
-	c.urlParams_.Set("locationId", locationId)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, display_name,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the most recent version of the resource was created. -
-// `state`: corresponds to the state of the resource. - `name`:
-// corresponds to resource name. - `display_name`: corresponds to info
-// type's display name.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) OrderBy(orderBy string) *OrganizationsLocationsStoredInfoTypesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsLocationsStoredInfoTypesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
-// `ListStoredInfoTypes`.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) PageToken(pageToken string) *OrganizationsLocationsStoredInfoTypesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsStoredInfoTypesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsStoredInfoTypesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) Context(ctx context.Context) *OrganizationsLocationsStoredInfoTypesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.storedInfoTypes.list" call.
-// Exactly one of *GooglePrivacyDlpV2ListStoredInfoTypesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePrivacyDlpV2ListStoredInfoTypesResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListStoredInfoTypesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2ListStoredInfoTypesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists stored infoTypes. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.locations.storedInfoTypes.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "locationId": {
-	//       "description": "Deprecated. This field has no effect.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListStoredInfoTypes`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/storedInfoTypes",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2ListStoredInfoTypesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsLocationsStoredInfoTypesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListStoredInfoTypesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "dlp.organizations.locations.storedInfoTypes.patch":
-
-type OrganizationsLocationsStoredInfoTypesPatchCall struct {
-	s                                             *Service
-	name                                          string
-	googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest
-	urlParams_                                    gensupport.URLParams
-	ctx_                                          context.Context
-	header_                                       http.Header
-}
-
-// Patch: Updates the stored infoType by creating a new version. The
-// existing version will continue to be used until the new version is
-// ready. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsLocationsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *OrganizationsLocationsStoredInfoTypesPatchCall {
-	c := &OrganizationsLocationsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleprivacydlpv2updatestoredinfotyperequest = googleprivacydlpv2updatestoredinfotyperequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsStoredInfoTypesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Context(ctx context.Context) *OrganizationsLocationsStoredInfoTypesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updatestoredinfotyperequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.locations.storedInfoTypes.patch" call.
-// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2StoredInfoType{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/storedInfoTypes/{storedInfoTypesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "dlp.organizations.locations.storedInfoTypes.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of organization and storedInfoType to be updated, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2UpdateStoredInfoTypeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.storedInfoTypes.create":
-
-type OrganizationsStoredInfoTypesCreateCall struct {
-	s                                             *Service
-	parentid                                      string
-	googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest
-	urlParams_                                    gensupport.URLParams
-	ctx_                                          context.Context
-	header_                                       http.Header
-}
-
-// Create: Creates a pre-built stored infoType to be used for
-// inspection. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsStoredInfoTypesService) Create(parentid string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *OrganizationsStoredInfoTypesCreateCall {
-	c := &OrganizationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	c.googleprivacydlpv2createstoredinfotyperequest = googleprivacydlpv2createstoredinfotyperequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsStoredInfoTypesCreateCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsStoredInfoTypesCreateCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsStoredInfoTypesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createstoredinfotyperequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.storedInfoTypes.create" call.
-// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2StoredInfoType{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a pre-built stored infoType to be used for inspection. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
-	//   "httpMethod": "POST",
-	//   "id": "dlp.organizations.storedInfoTypes.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/storedInfoTypes",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2CreateStoredInfoTypeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.storedInfoTypes.delete":
-
-type OrganizationsStoredInfoTypesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a stored infoType. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsStoredInfoTypesService) Delete(name string) *OrganizationsStoredInfoTypesDeleteCall {
-	c := &OrganizationsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsStoredInfoTypesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsStoredInfoTypesDeleteCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsStoredInfoTypesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.storedInfoTypes.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsStoredInfoTypesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a stored infoType. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "dlp.organizations.storedInfoTypes.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and storedInfoType to be deleted, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.storedInfoTypes.get":
-
-type OrganizationsStoredInfoTypesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets a stored infoType. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsStoredInfoTypesService) Get(name string) *OrganizationsStoredInfoTypesGetCall {
-	c := &OrganizationsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsStoredInfoTypesGetCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsStoredInfoTypesGetCall) IfNoneMatch(entityTag string) *OrganizationsStoredInfoTypesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsStoredInfoTypesGetCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsStoredInfoTypesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.storedInfoTypes.get" call.
-// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2StoredInfoType{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a stored infoType. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.storedInfoTypes.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the organization and storedInfoType to be read, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "dlp.organizations.storedInfoTypes.list":
-
-type OrganizationsStoredInfoTypesListCall struct {
-	s            *Service
-	parentid     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists stored infoTypes. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsStoredInfoTypesService) List(parentid string) *OrganizationsStoredInfoTypesListCall {
-	c := &OrganizationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parentid = parentid
-	return c
-}
-
-// LocationId sets the optional parameter "locationId": Deprecated. This
-// field has no effect.
-func (c *OrganizationsStoredInfoTypesListCall) LocationId(locationId string) *OrganizationsStoredInfoTypesListCall {
-	c.urlParams_.Set("locationId", locationId)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Comma separated list
-// of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc, display_name,
-// create_time desc` Supported fields are: - `create_time`: corresponds
-// to time the most recent version of the resource was created. -
-// `state`: corresponds to the state of the resource. - `name`:
-// corresponds to resource name. - `display_name`: corresponds to info
-// type's display name.
-func (c *OrganizationsStoredInfoTypesListCall) OrderBy(orderBy string) *OrganizationsStoredInfoTypesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Size of the page,
-// can be limited by server. If zero server returns a page of max size
-// 100.
-func (c *OrganizationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsStoredInfoTypesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Page token to
-// continue retrieval. Comes from previous call to
-// `ListStoredInfoTypes`.
-func (c *OrganizationsStoredInfoTypesListCall) PageToken(pageToken string) *OrganizationsStoredInfoTypesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsStoredInfoTypesListCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OrganizationsStoredInfoTypesListCall) IfNoneMatch(entityTag string) *OrganizationsStoredInfoTypesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsStoredInfoTypesListCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsStoredInfoTypesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parentid,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.storedInfoTypes.list" call.
-// Exactly one of *GooglePrivacyDlpV2ListStoredInfoTypesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePrivacyDlpV2ListStoredInfoTypesResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListStoredInfoTypesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2ListStoredInfoTypesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists stored infoTypes. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
-	//   "httpMethod": "GET",
-	//   "id": "dlp.organizations.storedInfoTypes.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "locationId": {
-	//       "description": "Deprecated. This field has no effect.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc, display_name, create_time desc` Supported fields are: - `create_time`: corresponds to time the most recent version of the resource was created. - `state`: corresponds to the state of the resource. - `name`: corresponds to resource name. - `display_name`: corresponds to info type's display name.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Size of the page, can be limited by server. If zero server returns a page of max size 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token to continue retrieval. Comes from previous call to `ListStoredInfoTypes`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/storedInfoTypes",
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2ListStoredInfoTypesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsStoredInfoTypesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListStoredInfoTypesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "dlp.organizations.storedInfoTypes.patch":
-
-type OrganizationsStoredInfoTypesPatchCall struct {
-	s                                             *Service
-	name                                          string
-	googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest
-	urlParams_                                    gensupport.URLParams
-	ctx_                                          context.Context
-	header_                                       http.Header
-}
-
-// Patch: Updates the stored infoType by creating a new version. The
-// existing version will continue to be used until the new version is
-// ready. See
-// https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn
-// more.
-func (r *OrganizationsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *OrganizationsStoredInfoTypesPatchCall {
-	c := &OrganizationsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googleprivacydlpv2updatestoredinfotyperequest = googleprivacydlpv2updatestoredinfotyperequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OrganizationsStoredInfoTypesPatchCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OrganizationsStoredInfoTypesPatchCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OrganizationsStoredInfoTypesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updatestoredinfotyperequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dlp.organizations.storedInfoTypes.patch" call.
-// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *OrganizationsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GooglePrivacyDlpV2StoredInfoType{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates the stored infoType by creating a new version. The existing version will continue to be used until the new version is ready. See https://cloud.google.com/dlp/docs/creating-stored-infotypes to learn more.",
-	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "dlp.organizations.storedInfoTypes.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of organization and storedInfoType to be updated, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GooglePrivacyDlpV2UpdateStoredInfoTypeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "dlp.projects.content.deidentify":
 
 type ProjectsContentDeidentifyCall struct {
@@ -14395,7 +9578,7 @@ func (c *ProjectsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14544,7 +9727,7 @@ func (c *ProjectsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14688,7 +9871,7 @@ func (c *ProjectsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14833,7 +10016,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14907,7 +10090,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -14974,7 +10157,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15042,7 +10225,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and deidentify template to be deleted, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+	//       "description": "Required. Resource name of the deidentify template to be deleted, for example projects/project-id/deidentifyTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -15117,7 +10300,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15189,7 +10372,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and deidentify template to be read, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+	//       "description": "Required. Resource name of the deidentify template to be read, for example projects/project-id/deidentifyTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -15301,7 +10484,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15395,7 +10578,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -15482,7 +10665,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15556,7 +10739,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of organization and deidentify template to be updated, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+	//       "description": "Required. Resource name of deidentify template to be updated, for example projects/project-id/deidentifyTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -15628,7 +10811,7 @@ func (c *ProjectsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15774,7 +10957,7 @@ func (c *ProjectsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15917,7 +11100,7 @@ func (c *ProjectsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16061,7 +11244,7 @@ func (c *ProjectsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16278,7 +11461,7 @@ func (c *ProjectsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16482,7 +11665,7 @@ func (c *ProjectsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16625,7 +11808,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16699,7 +11882,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -16765,7 +11948,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16833,7 +12016,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and inspectTemplate to be deleted, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+	//       "description": "Required. Resource name of the inspectTemplate to be deleted, for example projects/project-id/inspectTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/inspectTemplates/[^/]+$",
 	//       "required": true,
@@ -16907,7 +12090,7 @@ func (c *ProjectsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16979,7 +12162,7 @@ func (c *ProjectsInspectTemplatesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and inspectTemplate to be read, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+	//       "description": "Required. Resource name of the inspectTemplate to be read, for example projects/project-id/inspectTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/inspectTemplates/[^/]+$",
 	//       "required": true,
@@ -17090,7 +12273,7 @@ func (c *ProjectsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17184,7 +12367,7 @@ func (c *ProjectsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -17270,7 +12453,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17344,7 +12527,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of organization and inspectTemplate to be updated, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+	//       "description": "Required. Resource name of inspectTemplate to be updated, for example projects/project-id/inspectTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/inspectTemplates/[^/]+$",
 	//       "required": true,
@@ -17412,7 +12595,7 @@ func (c *ProjectsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17555,7 +12738,7 @@ func (c *ProjectsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17695,7 +12878,7 @@ func (c *ProjectsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17838,7 +13021,7 @@ func (c *ProjectsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18044,7 +13227,7 @@ func (c *ProjectsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18230,7 +13413,7 @@ func (c *ProjectsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18376,7 +13559,7 @@ func (c *ProjectsLocationsContentDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18525,7 +13708,7 @@ func (c *ProjectsLocationsContentInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18669,7 +13852,7 @@ func (c *ProjectsLocationsContentReidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsContentReidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18814,7 +13997,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18888,7 +14071,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -18955,7 +14138,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19023,7 +14206,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesDeleteCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and deidentify template to be deleted, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+	//       "description": "Required. Resource name of the deidentify template to be deleted, for example projects/project-id/deidentifyTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -19098,7 +14281,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19170,7 +14353,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and deidentify template to be read, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+	//       "description": "Required. Resource name of the deidentify template to be read, for example projects/project-id/deidentifyTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -19282,7 +14465,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19376,7 +14559,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -19463,7 +14646,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19537,7 +14720,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of organization and deidentify template to be updated, for example `organizations/433245324/deidentifyTemplates/432452342` or projects/project-id/deidentifyTemplates/432452342.",
+	//       "description": "Required. Resource name of deidentify template to be updated, for example projects/project-id/deidentifyTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -19609,7 +14792,7 @@ func (c *ProjectsLocationsDlpJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19755,7 +14938,7 @@ func (c *ProjectsLocationsDlpJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19898,7 +15081,7 @@ func (c *ProjectsLocationsDlpJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20031,7 +15214,7 @@ func (c *ProjectsLocationsDlpJobsFinishCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsFinishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20183,7 +15366,7 @@ func (c *ProjectsLocationsDlpJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20320,7 +15503,7 @@ func (c *ProjectsLocationsDlpJobsHybridInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsHybridInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20543,7 +15726,7 @@ func (c *ProjectsLocationsDlpJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDlpJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20747,7 +15930,7 @@ func (c *ProjectsLocationsImageRedactCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageRedactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20890,7 +16073,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20964,7 +16147,7 @@ func (c *ProjectsLocationsInspectTemplatesCreateCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21030,7 +16213,7 @@ func (c *ProjectsLocationsInspectTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21098,7 +16281,7 @@ func (c *ProjectsLocationsInspectTemplatesDeleteCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and inspectTemplate to be deleted, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+	//       "description": "Required. Resource name of the inspectTemplate to be deleted, for example projects/project-id/inspectTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
 	//       "required": true,
@@ -21172,7 +16355,7 @@ func (c *ProjectsLocationsInspectTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21244,7 +16427,7 @@ func (c *ProjectsLocationsInspectTemplatesGetCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and inspectTemplate to be read, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+	//       "description": "Required. Resource name of the inspectTemplate to be read, for example projects/project-id/inspectTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
 	//       "required": true,
@@ -21355,7 +16538,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21449,7 +16632,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -21535,7 +16718,7 @@ func (c *ProjectsLocationsInspectTemplatesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInspectTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21609,7 +16792,7 @@ func (c *ProjectsLocationsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of organization and inspectTemplate to be updated, for example `organizations/433245324/inspectTemplates/432452342` or projects/project-id/inspectTemplates/432452342.",
+	//       "description": "Required. Resource name of inspectTemplate to be updated, for example projects/project-id/inspectTemplates/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/inspectTemplates/[^/]+$",
 	//       "required": true,
@@ -21677,7 +16860,7 @@ func (c *ProjectsLocationsJobTriggersActivateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21820,7 +17003,7 @@ func (c *ProjectsLocationsJobTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21960,7 +17143,7 @@ func (c *ProjectsLocationsJobTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22103,7 +17286,7 @@ func (c *ProjectsLocationsJobTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22240,7 +17423,7 @@ func (c *ProjectsLocationsJobTriggersHybridInspectCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersHybridInspectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22452,7 +17635,7 @@ func (c *ProjectsLocationsJobTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22638,7 +17821,7 @@ func (c *ProjectsLocationsJobTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22781,7 +17964,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22854,7 +18037,7 @@ func (c *ProjectsLocationsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -22921,7 +18104,7 @@ func (c *ProjectsLocationsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22989,7 +18172,7 @@ func (c *ProjectsLocationsStoredInfoTypesDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and storedInfoType to be deleted, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+	//       "description": "Required. Resource name of the storedInfoType to be deleted, for example projects/project-id/storedInfoTypes/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
 	//       "required": true,
@@ -23064,7 +18247,7 @@ func (c *ProjectsLocationsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23135,7 +18318,7 @@ func (c *ProjectsLocationsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and storedInfoType to be read, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+	//       "description": "Required. Resource name of the storedInfoType to be read, for example projects/project-id/storedInfoTypes/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
 	//       "required": true,
@@ -23247,7 +18430,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23341,7 +18524,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -23430,7 +18613,7 @@ func (c *ProjectsLocationsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23503,7 +18686,7 @@ func (c *ProjectsLocationsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of organization and storedInfoType to be updated, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+	//       "description": "Required. Resource name of storedInfoType to be updated, for example projects/project-id/storedInfoTypes/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/storedInfoTypes/[^/]+$",
 	//       "required": true,
@@ -23573,7 +18756,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23646,7 +18829,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -23713,7 +18896,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23781,7 +18964,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and storedInfoType to be deleted, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+	//       "description": "Required. Resource name of the storedInfoType to be deleted, for example projects/project-id/storedInfoTypes/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
 	//       "required": true,
@@ -23856,7 +19039,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23927,7 +19110,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the organization and storedInfoType to be read, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+	//       "description": "Required. Resource name of the storedInfoType to be read, for example projects/project-id/storedInfoTypes/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
 	//       "required": true,
@@ -24039,7 +19222,7 @@ func (c *ProjectsStoredInfoTypesListCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24133,7 +19316,7 @@ func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID + Organizations scope, location specified: `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no location specified (defaults to global): `organizations/`ORG_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
+	//       "description": "Required. Parent resource name. The format of this value varies depending on the scope of the request (project) and whether you have [specified a processing location](https://cloud.google.com/dlp/docs/specifying-location): + Projects scope, location specified: `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no location specified (defaults to global): `projects/`PROJECT_ID The following example `parent` string specifies a parent project with the identifier `example-project`, and specifies the `europe-west3` location for processing data: parent=projects/example-project/locations/europe-west3",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -24222,7 +19405,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Header() http.Header {
 
 func (c *ProjectsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210123")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24295,7 +19478,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of organization and storedInfoType to be updated, for example `organizations/433245324/storedInfoTypes/432452342` or projects/project-id/storedInfoTypes/432452342.",
+	//       "description": "Required. Resource name of storedInfoType to be updated, for example projects/project-id/storedInfoTypes/432452342.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
 	//       "required": true,

@@ -3808,7 +3808,7 @@
         "repricingreports": {
           "methods": {
             "list": {
-              "description": "Lists the metrics report for a given Repricing product. Reports of the last 3 days may not be complete.",
+              "description": "Lists the metrics report for a given Repricing product.",
               "flatPath": "content/v2.1/{merchantId}/productstatuses/{productId}/repricingreports",
               "httpMethod": "GET",
               "id": "content.productstatuses.repricingreports.list",
@@ -3818,7 +3818,7 @@
               ],
               "parameters": {
                 "endDate": {
-                  "description": "Gets Repricing reports on and before this date in the merchant's timezone. You can only retrieve data up to 3 days ago (default) or earlier. Format is YYYY-MM-DD.",
+                  "description": "Gets Repricing reports on and before this date in the merchant's timezone. You can only retrieve data up to 7 days ago (default) or earlier. Format is YYYY-MM-DD.",
                   "location": "query",
                   "type": "string"
                 },
@@ -3852,7 +3852,7 @@
                   "type": "string"
                 },
                 "startDate": {
-                  "description": "Gets Repricing reports on and after this date in the merchant's timezone, up to one year ago. Do not use a start date later than 3 days ago (default). Format is YYYY-MM-DD.",
+                  "description": "Gets Repricing reports on and after this date in the merchant's timezone, up to one year ago. Do not use a start date later than 7 days ago (default). Format is YYYY-MM-DD.",
                   "location": "query",
                   "type": "string"
                 }
@@ -4340,7 +4340,7 @@
         "repricingreports": {
           "methods": {
             "list": {
-              "description": "Lists the metrics report for a given Repricing rule. Reports of the last 3 days may not be complete.",
+              "description": "Lists the metrics report for a given Repricing rule.",
               "flatPath": "content/v2.1/{merchantId}/repricingrules/{ruleId}/repricingreports",
               "httpMethod": "GET",
               "id": "content.repricingrules.repricingreports.list",
@@ -4350,7 +4350,7 @@
               ],
               "parameters": {
                 "endDate": {
-                  "description": "Gets Repricing reports on and before this date in the merchant's timezone. You can only retrieve data up to 3 days ago (default) or earlier. Format: YYYY-MM-DD.",
+                  "description": "Gets Repricing reports on and before this date in the merchant's timezone. You can only retrieve data up to 7 days ago (default) or earlier. Format: YYYY-MM-DD.",
                   "location": "query",
                   "type": "string"
                 },
@@ -4379,7 +4379,7 @@
                   "type": "string"
                 },
                 "startDate": {
-                  "description": "Gets Repricing reports on and after this date in the merchant's timezone, up to one year ago. Do not use a start date later than 3 days ago (default). Format: YYYY-MM-DD.",
+                  "description": "Gets Repricing reports on and after this date in the merchant's timezone, up to one year ago. Do not use a start date later than 7 days ago (default). Format: YYYY-MM-DD.",
                   "location": "query",
                   "type": "string"
                 }
@@ -5022,7 +5022,7 @@
       }
     }
   },
-  "revision": "20210113",
+  "revision": "20210120",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {

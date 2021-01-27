@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "View and manage your data across Google Cloud Platform services"
         }
       }
     }
@@ -142,7 +142,7 @@
       }
     }
   },
-  "revision": "20210111",
+  "revision": "20210125",
   "rootUrl": "https://fcm.googleapis.com/",
   "schemas": {
     "AndroidConfig": {

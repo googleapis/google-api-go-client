@@ -2563,7 +2563,7 @@
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "Required. The mask to specify which fields should be updated. Only a test case's metadata and replayed_conversation_turns may be updated. The original test_case_conversation_turns may not be updated.",
+                          "description": "Required. The mask to specify which fields should be updated. The `creationTime` and `lastTestResult` cannot be updated.",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -3192,7 +3192,7 @@
       }
     }
   },
-  "revision": "20210118",
+  "revision": "20210124",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3Agent": {

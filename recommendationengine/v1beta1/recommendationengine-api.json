@@ -12,7 +12,7 @@
   "baseUrl": "https://recommendationengine.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Recommendations AI",
-  "description": "Recommendations AI service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
+  "description": "Note that we now highly recommend new customers to use Retail API, which incorporates the GA version of the Recommendations AI funtionalities. To enable Retail API, please visit https://console.cloud.google.com/apis/library/retail.googleapis.com. The Recommendations AI service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/recommendations-ai/docs",
   "fullyEncodeReservedExpansion": true,
@@ -443,7 +443,7 @@
                     "placements": {
                       "methods": {
                         "predict": {
-                          "description": "Makes a recommendation prediction. If using API Key based authentication, the API Key must be registered using the PredictionApiKeyRegistry service. [Learn more](/recommendations-ai/docs/setting-up#register-key).",
+                          "description": "Makes a recommendation prediction. If using API Key based authentication, the API Key must be registered using the PredictionApiKeyRegistry service. [Learn more](https://cloud.google.com/recommendations-ai/docs/setting-up#register-key).",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/placements/{placementsId}:predict",
                           "httpMethod": "POST",
                           "id": "recommendationengine.projects.locations.catalogs.eventStores.placements.predict",
@@ -842,7 +842,7 @@
       }
     }
   },
-  "revision": "20201027",
+  "revision": "20210115",
   "rootUrl": "https://recommendationengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -2043,7 +2043,7 @@
     }
   },
   "servicePath": "",
-  "title": "Recommendations AI",
+  "title": "Recommendations AI (Beta)",
   "version": "v1beta1",
   "version_module": true
 }

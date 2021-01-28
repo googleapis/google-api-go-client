@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -307,6 +307,45 @@ func (s *AccessPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ApiOperation: Identification for an API Operation.
+type ApiOperation struct {
+	// MethodSelectors: API methods or permissions to allow. Method or
+	// permission must belong to the service specified by `service_name`
+	// field. A single MethodSelector entry with `*` specified for the
+	// `method` field will allow all methods AND permissions for the service
+	// specified in `service_name`.
+	MethodSelectors []*MethodSelector `json:"methodSelectors,omitempty"`
+
+	// ServiceName: The name of the API whose methods or permissions the
+	// IngressPolicy or EgressPolicy want to allow. A single ApiOperation
+	// with `service_name` field set to `*` will allow all methods AND
+	// permissions for all services.
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MethodSelectors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MethodSelectors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApiOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiOperation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BasicLevel: `BasicLevel` is an `AccessLevel` using a set of
 // recommended features.
 type BasicLevel struct {
@@ -601,6 +640,141 @@ func (s *DevicePolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EgressFrom: Defines the conditions under which an EgressPolicy
+// matches a request. Conditions based on information about the source
+// of the request. Note that if the destination of the request is
+// protected by a ServicePerimeter, then that ServicePerimeter must have
+// an IngressPolicy which allows access in order for this request to
+// succeed.
+type EgressFrom struct {
+	// Identities: A list of identities that are allowed access through this
+	// [EgressPolicy]. Should be in the format of email address. The email
+	// address should represent individual user or service account only.
+	Identities []string `json:"identities,omitempty"`
+
+	// IdentityType: Specifies the type of identities that are allowed
+	// access to outside the perimeter. If left unspecified, then members of
+	// `identities` field will be allowed access.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - No blanket identity group specified.
+	//   "ANY_IDENTITY" - Authorize access from all identities outside the
+	// perimeter.
+	//   "ANY_USER_ACCOUNT" - Authorize access from all human users outside
+	// the perimeter.
+	//   "ANY_SERVICE_ACCOUNT" - Authorize access from all service accounts
+	// outside the perimeter.
+	IdentityType string `json:"identityType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EgressFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod EgressFrom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EgressPolicy: Policy for egress from perimeter. EgressPolicies match
+// requests based on `egress_from` and `egress_to` stanzas. For an
+// EgressPolicy to match, both `egress_from` and `egress_to` stanzas
+// must be matched. If an EgressPolicy matches a request, the request is
+// allowed to span the ServicePerimeter boundary. For example, an
+// EgressPolicy can be used to allow VMs on networks within the
+// ServicePerimeter to access a defined set of projects outside the
+// perimeter in certain contexts (e.g. to read data from a Cloud Storage
+// bucket or query against a BigQuery dataset). EgressPolicies are
+// concerned with the *resources* that a request relates as well as the
+// API services and API actions being used. They do not related to the
+// direction of data movement. More detailed documentation for this
+// concept can be found in the descriptions of EgressFrom and EgressTo.
+type EgressPolicy struct {
+	// EgressFrom: Defines conditions on the source of a request causing
+	// this EgressPolicy to apply.
+	EgressFrom *EgressFrom `json:"egressFrom,omitempty"`
+
+	// EgressTo: Defines the conditions on the ApiOperation and destination
+	// resources that cause this EgressPolicy to apply.
+	EgressTo *EgressTo `json:"egressTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EgressFrom") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EgressFrom") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EgressPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod EgressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EgressTo: Defines the conditions under which an EgressPolicy matches
+// a request. Conditions are based on information about the ApiOperation
+// intended to be performed on the `resources` specified. Note that if
+// the destination of the request is protected by a ServicePerimeter,
+// then that ServicePerimeter must have an IngressPolicy which allows
+// access in order for this request to succeed.
+type EgressTo struct {
+	// Operations: A list of ApiOperations that this egress rule applies to.
+	// A request matches if it contains an operation/service in this list.
+	Operations []*ApiOperation `json:"operations,omitempty"`
+
+	// Resources: A list of resources, currently only projects in the form
+	// `projects/`, that match this to stanza. A request matches if it
+	// contains a resource in this list. If `*` is specified for resources,
+	// then this EgressTo rule will authorize access to all resources
+	// outside the perimeter.
+	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EgressTo) MarshalJSON() ([]byte, error) {
+	type NoMethod EgressTo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -685,17 +859,16 @@ type GcpUserAccessBinding struct {
 	// GroupKey: Required. Immutable. Google Group id whose members are
 	// subject to this binding's restrictions. See "id" in the [G Suite
 	// Directory API's Groups resource]
-	// (https://developers.google.com/admin-sdk/directory/v1/reference/groups
-	// #resource). If a group's email address/alias is changed, this
-	// resource will continue to point at the changed group. This field does
-	// not accept group email addresses or aliases. Example:
-	// "01d520gv4vjcrht"
+	// (https://developers.google.com/admin-sdk/directory/v1/reference/groups#resource).
+	// If a group's email address/alias is changed, this resource will
+	// continue to point at the changed group. This field does not accept
+	// group email addresses or aliases. Example: "01d520gv4vjcrht"
 	GroupKey string `json:"groupKey,omitempty"`
 
 	// Name: Immutable. Assigned by the server during creation. The last
 	// segment has an arbitrary length and has only URI unreserved
-	// characters (as defined by [RFC 3986 Section
-	// 2.3](https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be
+	// characters (as defined by RFC 3986 Section 2.3
+	// (https://tools.ietf.org/html/rfc3986#section-2.3)). Should not be
 	// specified by the client during creation. Example:
 	// "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
 	Name string `json:"name,omitempty"`
@@ -723,6 +896,185 @@ type GcpUserAccessBinding struct {
 
 func (s *GcpUserAccessBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod GcpUserAccessBinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IngressFrom: Defines the conditions under which an IngressPolicy
+// matches a request. Conditions are based on information about the
+// source of the request.
+type IngressFrom struct {
+	// Identities: A list of identities that are allowed access through this
+	// ingress policy. Should be in the format of email address. The email
+	// address should represent individual user or service account only.
+	Identities []string `json:"identities,omitempty"`
+
+	// IdentityType: Specifies the type of identities that are allowed
+	// access from outside the perimeter. If left unspecified, then members
+	// of `identities` field will be allowed access.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - No blanket identity group specified.
+	//   "ANY_IDENTITY" - Authorize access from all identities outside the
+	// perimeter.
+	//   "ANY_USER_ACCOUNT" - Authorize access from all human users outside
+	// the perimeter.
+	//   "ANY_SERVICE_ACCOUNT" - Authorize access from all service accounts
+	// outside the perimeter.
+	IdentityType string `json:"identityType,omitempty"`
+
+	// Sources: Sources that this IngressPolicy authorizes access from.
+	Sources []*IngressSource `json:"sources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IngressFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod IngressFrom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IngressPolicy: Policy for ingress into ServicePerimeter.
+// IngressPolicies match requests based on `ingress_from` and
+// `ingress_to` stanzas. For an ingress policy to match, both the
+// `ingress_from` and `ingress_to` stanzas must be matched. If an
+// IngressPolicy matches a request, the request is allowed through the
+// perimeter boundary from outside the perimeter. For example, access
+// from the internet can be allowed either based on an AccessLevel or,
+// for traffic hosted on Google Cloud, the project of the source
+// network. For access from private networks, using the project of the
+// hosting network is required. Individual ingress policies can be
+// limited by restricting which services and/or actions they match using
+// the `ingress_to` field.
+type IngressPolicy struct {
+	// IngressFrom: Defines the conditions on the source of a request
+	// causing this IngressPolicy to apply.
+	IngressFrom *IngressFrom `json:"ingressFrom,omitempty"`
+
+	// IngressTo: Defines the conditions on the ApiOperation and request
+	// destination that cause this IngressPolicy to apply.
+	IngressTo *IngressTo `json:"ingressTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IngressFrom") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IngressFrom") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IngressPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod IngressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IngressSource: The source that IngressPolicy authorizes access from.
+type IngressSource struct {
+	// AccessLevel: An AccessLevel resource name that allow resources within
+	// the ServicePerimeters to be accessed from the internet. AccessLevels
+	// listed must be in the same policy as this ServicePerimeter.
+	// Referencing a nonexistent AccessLevel will cause an error. If no
+	// AccessLevel names are listed, resources within the perimeter can only
+	// be accessed via Google Cloud calls with request origins within the
+	// perimeter. Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`.
+	// If `*` is specified, then all IngressSources will be allowed.
+	AccessLevel string `json:"accessLevel,omitempty"`
+
+	// Resource: A Google Cloud resource that is allowed to ingress the
+	// perimeter. Requests from these resources will be allowed to access
+	// perimeter data. Currently only projects are allowed. Format:
+	// `projects/{project_number}` The project may be in any Google Cloud
+	// organization, not just the organization that the perimeter is defined
+	// in. `*` is not allowed, the case of allowing all Google Cloud
+	// resources only is not supported.
+	Resource string `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IngressSource) MarshalJSON() ([]byte, error) {
+	type NoMethod IngressSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IngressTo: Defines the conditions under which an IngressPolicy
+// matches a request. Conditions are based on information about the
+// ApiOperation intended to be performed on the destination of the
+// request.
+type IngressTo struct {
+	// Operations: A list of ApiOperations the sources specified in
+	// corresponding IngressFrom are allowed to perform in this
+	// ServicePerimeter.
+	Operations []*ApiOperation `json:"operations,omitempty"`
+
+	// Resources: A list of resources, currently only projects in the form
+	// `projects/`, protected by this ServicePerimeter that are allowed to
+	// be accessed by sources defined in the corresponding IngressFrom. A
+	// request matches if it contains a resource in this list. If `*` is
+	// specified for resources, then this IngressTo rule will authorize
+	// access to all resources inside the perimeter, provided that the
+	// request also matches the `operations` field.
+	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IngressTo) MarshalJSON() ([]byte, error) {
+	type NoMethod IngressTo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -910,6 +1262,41 @@ type ListServicePerimetersResponse struct {
 
 func (s *ListServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServicePerimetersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MethodSelector: An allowed method or permission of a service
+// specified in ApiOperation.
+type MethodSelector struct {
+	// Method: Value for `method` should be a valid method name for the
+	// corresponding `service_name` in ApiOperation. If `*` used as value
+	// for `method`, then ALL methods and permissions are allowed.
+	Method string `json:"method,omitempty"`
+
+	// Permission: Value for `permission` should be a valid Cloud IAM
+	// permission for the corresponding `service_name` in ApiOperation.
+	Permission string `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Method") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Method") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MethodSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod MethodSelector
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1271,6 +1658,18 @@ type ServicePerimeterConfig struct {
 	// Perimeter Bridge, must be empty.
 	AccessLevels []string `json:"accessLevels,omitempty"`
 
+	// EgressPolicies: List of EgressPolicies to apply to the perimeter. A
+	// perimeter may have multiple EgressPolicies, each of which is
+	// evaluated separately. Access is granted if any EgressPolicy grants
+	// it. Must be empty for a perimeter bridge.
+	EgressPolicies []*EgressPolicy `json:"egressPolicies,omitempty"`
+
+	// IngressPolicies: List of IngressPolicies to apply to the perimeter. A
+	// perimeter may have multiple IngressPolicies, each of which is
+	// evaluated separately. Access is granted if any Ingress Policy grants
+	// it. Must be empty for a perimeter bridge.
+	IngressPolicies []*IngressPolicy `json:"ingressPolicies,omitempty"`
+
 	// Resources: A list of Google Cloud resources that are inside of the
 	// service perimeter. Currently only projects are allowed. Format:
 	// `projects/{project_number}`
@@ -1311,11 +1710,11 @@ func (s *ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1439,7 +1838,7 @@ func (c *AccessPoliciesCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1566,7 +1965,7 @@ func (c *AccessPoliciesDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1707,7 +2106,7 @@ func (c *AccessPoliciesGetCall) Header() http.Header {
 
 func (c *AccessPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1872,7 +2271,7 @@ func (c *AccessPoliciesListCall) Header() http.Header {
 
 func (c *AccessPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2043,7 +2442,7 @@ func (c *AccessPoliciesPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2192,7 +2591,7 @@ func (c *AccessPoliciesAccessLevelsCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2332,7 +2731,7 @@ func (c *AccessPoliciesAccessLevelsDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,7 +2893,7 @@ func (c *AccessPoliciesAccessLevelsGetCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2686,7 +3085,7 @@ func (c *AccessPoliciesAccessLevelsListCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2879,7 +3278,7 @@ func (c *AccessPoliciesAccessLevelsPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3033,7 +3432,7 @@ func (c *AccessPoliciesAccessLevelsReplaceAllCall) Header() http.Header {
 
 func (c *AccessPoliciesAccessLevelsReplaceAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3184,7 +3583,7 @@ func (c *AccessPoliciesServicePerimetersCommitCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3328,7 +3727,7 @@ func (c *AccessPoliciesServicePerimetersCreateCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3468,7 +3867,7 @@ func (c *AccessPoliciesServicePerimetersDeleteCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3609,7 +4008,7 @@ func (c *AccessPoliciesServicePerimetersGetCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3768,7 +4167,7 @@ func (c *AccessPoliciesServicePerimetersListCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3946,7 +4345,7 @@ func (c *AccessPoliciesServicePerimetersPatchCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4099,7 +4498,7 @@ func (c *AccessPoliciesServicePerimetersReplaceAllCall) Header() http.Header {
 
 func (c *AccessPoliciesServicePerimetersReplaceAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4248,7 +4647,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4389,7 +4788,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4532,7 +4931,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4706,7 +5105,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4882,7 +5281,7 @@ func (c *OrganizationsGcpUserAccessBindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5023,7 +5422,7 @@ func (c *OrganizationsGcpUserAccessBindingsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5164,7 +5563,7 @@ func (c *OrganizationsGcpUserAccessBindingsGetCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5325,7 +5724,7 @@ func (c *OrganizationsGcpUserAccessBindingsListCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5505,7 +5904,7 @@ func (c *OrganizationsGcpUserAccessBindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsGcpUserAccessBindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

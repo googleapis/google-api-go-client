@@ -312,6 +312,12 @@
                   "location": "query",
                   "type": "string"
                 },
+                "instanceDeadline": {
+                  "description": "Deadline used while retrieving metadata for instances. Instances whose metadata cannot be retrieved within this deadline will be added to unreachable in ListInstancesResponse.",
+                  "format": "google-datetime",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "Number of instances to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
                   "format": "int32",
@@ -1895,7 +1901,7 @@
       }
     }
   },
-  "revision": "20201130",
+  "revision": "20210115",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "Backup": {
@@ -2677,6 +2683,13 @@
         "nextPageToken": {
           "description": "`next_page_token` can be sent in a subsequent ListInstances call to fetch more of the matching instances.",
           "type": "string"
+        },
+        "unreachable": {
+          "description": "The list of unreachable instances. It includes the names of instances whose metadata could not be retrieved within instance_deadline.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

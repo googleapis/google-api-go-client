@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -306,6 +306,8 @@ type Action struct {
 	// container's standard error stream is typically captured and returned
 	// inside the `ContainerStoppedEvent`. Setting this flag disables this
 	// functionality.
+	//   "BLOCK_EXTERNAL_NETWORK" - Prevents the container from accessing
+	// the external network.
 	Flags []string `json:"flags,omitempty"`
 
 	// ImageUri: Required. The URI to pull the container image from. Note
@@ -448,6 +450,9 @@ type CheckInResponse struct {
 	// delays, but the worker must attempt to transmit the extension request
 	// no later than the deadline.
 	Deadline string `json:"deadline,omitempty"`
+
+	// Features: Feature configuration for the operation.
+	Features googleapi.RawMessage `json:"features,omitempty"`
 
 	// Metadata: The metadata that describes the operation assigned to the
 	// worker.
@@ -1638,11 +1643,11 @@ func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1790,7 +1795,9 @@ type VirtualMachine struct {
 	// latest version will still be pulled. The root directory of the ext4
 	// image must contain `image` and `overlay2` directories copied from the
 	// Docker directory of a VM where the desired Docker images have already
-	// been pulled. Only a single image is supported.
+	// been pulled. Any images pulled that are not cached will be stored on
+	// the first cache disk instead of the boot disk. Only a single image is
+	// supported.
 	DockerCacheImages []string `json:"dockerCacheImages,omitempty"`
 
 	// EnableStackdriverMonitoring: Whether Stackdriver monitoring should be
@@ -1798,9 +1805,10 @@ type VirtualMachine struct {
 	EnableStackdriverMonitoring bool `json:"enableStackdriverMonitoring,omitempty"`
 
 	// Labels: Optional set of labels to apply to the VM and any attached
-	// disk resources. These labels must adhere to the [name and value
-	// restrictions](https://cloud.google.com/compute/docs/labeling-resources
-	// ) on VM labels imposed by Compute Engine. Labels keys with the prefix
+	// disk resources. These labels must adhere to the name and value
+	// restrictions
+	// (https://cloud.google.com/compute/docs/labeling-resources) on VM
+	// labels imposed by Compute Engine. Labels keys with the prefix
 	// 'google-' are reserved for use by Google. Labels applied at creation
 	// time to the VM. Applied on a best-effort basis to attached disk
 	// resources shortly after VM creation.
@@ -1810,10 +1818,9 @@ type VirtualMachine struct {
 	// create. Must be the short name of a standard machine type (such as
 	// "n1-standard-1") or a custom machine type (such as "custom-1-4096",
 	// where "1" indicates the number of vCPUs and "4096" indicates the
-	// memory in MB). See [Creating an instance with a custom machine
-	// type](https://cloud.google.com/compute/docs/instances/creating-instanc
-	// e-with-custom-machine-type#create) for more specifications on
-	// creating a custom machine type.
+	// memory in MB). See Creating an instance with a custom machine type
+	// (https://cloud.google.com/compute/docs/instances/creating-instance-with-custom-machine-type#create)
+	// for more specifications on creating a custom machine type.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Network: The VM network configuration.
@@ -2029,8 +2036,8 @@ type PipelinesRunCall struct {
 // you delete this permission, or if you enabled the Cloud Genomics API
 // before the v2alpha1 API launch, you must disable and re-enable the
 // API to grant the Genomics Service Agent the required permissions.
-// Authorization requires the following [Google
-// IAM](https://cloud.google.com/iam/) permission: *
+// Authorization requires the following Google IAM
+// (https://cloud.google.com/iam/) permission: *
 // `genomics.operations.create` [1]: /genomics/gsa
 func (r *PipelinesService) Run(runpipelinerequest *RunPipelineRequest) *PipelinesRunCall {
 	c := &PipelinesRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2065,7 +2072,7 @@ func (c *PipelinesRunCall) Header() http.Header {
 
 func (c *PipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2163,7 +2170,7 @@ type ProjectsOperationsCancelCall struct {
 // is not guaranteed. Clients may use Operations.GetOperation or
 // Operations.ListOperations to check whether the cancellation succeeded
 // or the operation completed despite cancellation. Authorization
-// requires the following [Google IAM](https://cloud.google.com/iam)
+// requires the following Google IAM (https://cloud.google.com/iam)
 // permission: * `genomics.operations.cancel`
 func (r *ProjectsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2199,7 +2206,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2308,7 +2315,7 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service. Authorization requires the following
-// [Google IAM](https://cloud.google.com/iam) permission: *
+// Google IAM (https://cloud.google.com/iam) permission: *
 // `genomics.operations.get`
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2353,7 +2360,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2455,8 +2462,8 @@ type ProjectsOperationsListCall struct {
 }
 
 // List: Lists operations that match the specified filter in the
-// request. Authorization requires the following [Google
-// IAM](https://cloud.google.com/iam) permission: *
+// request. Authorization requires the following Google IAM
+// (https://cloud.google.com/iam) permission: *
 // `genomics.operations.list`
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2476,9 +2483,9 @@ func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCal
 // the value is true. In v1 and v1alpha2, the following filter fields
 // are supported: * projectId: Required. Corresponds to
 // OperationMetadata.projectId. * createTime: The time this job was
-// created, in seconds from the
-// [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `>=` and/or
-// `<=` operators. * status: Can be `RUNNING`, `SUCCESS`, `FAILURE`, or
+// created, in seconds from the epoch
+// (http://en.wikipedia.org/wiki/Unix_time). Can use `>=` and/or `<=`
+// operators. * status: Can be `RUNNING`, `SUCCESS`, `FAILURE`, or
 // `CANCELED`. Only one status may be specified. * labels.key where key
 // is a label key. Examples: * `projectId = my-project AND createTime >=
 // 1432140000` * `projectId = my-project AND createTime >= 1432140000
@@ -2541,7 +2548,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2715,7 +2722,7 @@ func (c *ProjectsWorkersCheckInCall) Header() http.Header {
 
 func (c *ProjectsWorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2857,7 +2864,7 @@ func (c *WorkersCheckInCall) Header() http.Header {
 
 func (c *WorkersCheckInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

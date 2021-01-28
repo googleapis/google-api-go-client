@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -136,6 +136,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Folders = NewFoldersService(s)
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	s.Services = NewServicesService(s)
 	s.UptimeCheckIps = NewUptimeCheckIpsService(s)
@@ -146,6 +148,10 @@ type Service struct {
 	client    *http.Client
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	Folders *FoldersService
+
+	Organizations *OrganizationsService
 
 	Projects *ProjectsService
 
@@ -159,6 +165,48 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewFoldersService(s *Service) *FoldersService {
+	rs := &FoldersService{s: s}
+	rs.TimeSeries = NewFoldersTimeSeriesService(s)
+	return rs
+}
+
+type FoldersService struct {
+	s *Service
+
+	TimeSeries *FoldersTimeSeriesService
+}
+
+func NewFoldersTimeSeriesService(s *Service) *FoldersTimeSeriesService {
+	rs := &FoldersTimeSeriesService{s: s}
+	return rs
+}
+
+type FoldersTimeSeriesService struct {
+	s *Service
+}
+
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	rs.TimeSeries = NewOrganizationsTimeSeriesService(s)
+	return rs
+}
+
+type OrganizationsService struct {
+	s *Service
+
+	TimeSeries *OrganizationsTimeSeriesService
+}
+
+func NewOrganizationsTimeSeriesService(s *Service) *OrganizationsTimeSeriesService {
+	rs := &OrganizationsTimeSeriesService{s: s}
+	return rs
+}
+
+type OrganizationsTimeSeriesService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -930,7 +978,7 @@ func (s *CloudEndpoints) MarshalJSON() ([]byte, error) {
 }
 
 // ClusterIstio: Istio service scoped to a single Kubernetes cluster.
-// Learn more at http://istio.io. Clusters running OSS Istio will have
+// Learn more at https://istio.io. Clusters running OSS Istio will have
 // their services ingested as this type.
 type ClusterIstio struct {
 	// ClusterName: The name of the Kubernetes cluster in which this Istio
@@ -1472,11 +1520,10 @@ type Distribution struct {
 	Range *Range `json:"range,omitempty"`
 
 	// SumOfSquaredDeviation: The sum of squared deviations from the mean of
-	// the values in the population. For values x_i this is:
-	// Sum[i=1..n]((x_i - mean)^2) Knuth, "The Art of Computer Programming",
-	// Vol. 2, page 232, 3rd edition describes Welford's method for
-	// accumulating this sum in one pass.If count is zero then this field
-	// must be zero.
+	// the values in the population. For values x_i this is: Sumi=1..n ((x_i
+	// - mean)^2) Knuth, "The Art of Computer Programming", Vol. 2, page
+	// 232, 3rd edition describes Welford's method for accumulating this sum
+	// in one pass.If count is zero then this field must be zero.
 	SumOfSquaredDeviation float64 `json:"sumOfSquaredDeviation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketCounts") to
@@ -2267,15 +2314,14 @@ type InternalChecker struct {
 	// configured. A checker in this state can be returned by
 	// ListInternalCheckers or GetInternalChecker, as well as by examining
 	// the long running Operation
-	// (https://cloud.google.com/apis/design/design_patterns#long_running_ope
-	// rations) that created it.
+	// (https://cloud.google.com/apis/design/design_patterns#long_running_operations)
+	// that created it.
 	//   "RUNNING" - The checker is running and available for use. A checker
 	// in this state can be returned by ListInternalCheckers or
 	// GetInternalChecker as well as by examining the long running Operation
-	// (https://cloud.google.com/apis/design/design_patterns#long_running_ope
-	// rations) that created it. If a checker is being torn down, it is
-	// neither visible nor usable, so there is no "deleting" or "down"
-	// state.
+	// (https://cloud.google.com/apis/design/design_patterns#long_running_operations)
+	// that created it. If a checker is being torn down, it is neither
+	// visible nor usable, so there is no "deleting" or "down" state.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -2297,6 +2343,51 @@ type InternalChecker struct {
 
 func (s *InternalChecker) MarshalJSON() ([]byte, error) {
 	type NoMethod InternalChecker
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IstioCanonicalService: Canonical service scoped to an Istio mesh.
+// Anthos clusters running ASM >= 1.6.8 will have their services
+// ingested as this type.
+type IstioCanonicalService struct {
+	// CanonicalService: The name of the canonical service underlying this
+	// service. Corresponds to the destination_canonical_service_name metric
+	// label in label in Istio metrics
+	// (https://cloud.google.com/monitoring/api/metrics_istio).
+	CanonicalService string `json:"canonicalService,omitempty"`
+
+	// CanonicalServiceNamespace: The namespace of the canonical service
+	// underlying this service. Corresponds to the
+	// destination_canonical_service_namespace metric label in Istio metrics
+	// (https://cloud.google.com/monitoring/api/metrics_istio).
+	CanonicalServiceNamespace string `json:"canonicalServiceNamespace,omitempty"`
+
+	// MeshUid: Identifier for the Istio mesh in which this canonical
+	// service is defined. Corresponds to the mesh_uid metric label in Istio
+	// metrics (https://cloud.google.com/monitoring/api/metrics_istio).
+	MeshUid string `json:"meshUid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanonicalService") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanonicalService") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IstioCanonicalService) MarshalJSON() ([]byte, error) {
+	type NoMethod IstioCanonicalService
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3055,9 +3146,9 @@ type MetricAbsence struct {
 	// across all members of a group of resrouces). Multiple aggregations
 	// are applied in the order specified.This field is similar to the one
 	// in the ListTimeSeries request
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-	// eries/list). It is advisable to use the ListTimeSeries method when
-	// debugging this field.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
+	// It is advisable to use the ListTimeSeries method when debugging this
+	// field.
 	Aggregations []*Aggregation `json:"aggregations,omitempty"`
 
 	// Duration: The amount of time that a time series must fail to report
@@ -3071,12 +3162,11 @@ type MetricAbsence struct {
 	// that identifies which time series should be compared with the
 	// threshold.The filter is similar to the one that is specified in the
 	// ListTimeSeries request
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-	// eries/list) (that call is useful to verify the time series that will
-	// be retrieved / processed). The filter must specify the metric type
-	// and the resource type. Optionally, it can specify resource labels and
-	// metric labels. This field must not exceed 2048 Unicode characters in
-	// length.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
+	// (that call is useful to verify the time series that will be retrieved
+	// / processed). The filter must specify the metric type and the
+	// resource type. Optionally, it can specify resource labels and metric
+	// labels. This field must not exceed 2048 Unicode characters in length.
 	Filter string `json:"filter,omitempty"`
 
 	// Trigger: The number/percent of time series for which the comparison
@@ -3421,9 +3511,9 @@ type MetricThreshold struct {
 	// across all members of a group of resrouces). Multiple aggregations
 	// are applied in the order specified.This field is similar to the one
 	// in the ListTimeSeries request
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-	// eries/list). It is advisable to use the ListTimeSeries method when
-	// debugging this field.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
+	// It is advisable to use the ListTimeSeries method when debugging this
+	// field.
 	Aggregations []*Aggregation `json:"aggregations,omitempty"`
 
 	// Comparison: The comparison to apply between the time series
@@ -3486,12 +3576,11 @@ type MetricThreshold struct {
 	// that identifies which time series should be compared with the
 	// threshold.The filter is similar to the one that is specified in the
 	// ListTimeSeries request
-	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeS
-	// eries/list) (that call is useful to verify the time series that will
-	// be retrieved / processed). The filter must specify the metric type
-	// and the resource type. Optionally, it can specify resource labels and
-	// metric labels. This field must not exceed 2048 Unicode characters in
-	// length.
+	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
+	// (that call is useful to verify the time series that will be retrieved
+	// / processed). The filter must specify the metric type and the
+	// resource type. Optionally, it can specify resource labels and metric
+	// labels. This field must not exceed 2048 Unicode characters in length.
 	Filter string `json:"filter,omitempty"`
 
 	// ThresholdValue: A value against which to compare the time series.
@@ -4418,6 +4507,11 @@ type MService struct {
 
 	// DisplayName: Name used for UI elements listing this Service.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// IstioCanonicalService: Type used for canonical services scoped to an
+	// Istio mesh. Metrics for Istio are documented here
+	// (https://istio.io/latest/docs/reference/config/metrics/)
+	IstioCanonicalService *IstioCanonicalService `json:"istioCanonicalService,omitempty"`
 
 	// MeshIstio: Type used for Istio services scoped to an Istio mesh.
 	MeshIstio *MeshIstio `json:"meshIstio,omitempty"`
@@ -5514,6 +5608,1912 @@ func (s *WindowsBasedSli) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "monitoring.folders.timeSeries.list":
+
+type FoldersTimeSeriesListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists time series that match a filter. This method does not
+// require a Workspace.
+func (r *FoldersTimeSeriesService) List(name string) *FoldersTimeSeriesListCall {
+	c := &FoldersTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AggregationAlignmentPeriod sets the optional parameter
+// "aggregation.alignmentPeriod": The alignment_period specifies a time
+// interval, in seconds, that is used to divide the data in all the time
+// series into consistent blocks of time. This will be done before the
+// per-series aligner can be applied to the data.The value must be at
+// least 60 seconds. If a per-series aligner other than ALIGN_NONE is
+// specified, this field is required or an error is returned. If no
+// per-series aligner is specified, or the aligner ALIGN_NONE is
+// specified, then this field is ignored.The maximum value of the
+// alignment_period is 104 weeks (2 years) for charts, and 90,000
+// seconds (25 hours) for alerting policies.
+func (c *FoldersTimeSeriesListCall) AggregationAlignmentPeriod(aggregationAlignmentPeriod string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("aggregation.alignmentPeriod", aggregationAlignmentPeriod)
+	return c
+}
+
+// AggregationCrossSeriesReducer sets the optional parameter
+// "aggregation.crossSeriesReducer": The reduction operation to be used
+// to combine time series into a single time series, where the value of
+// each data point in the resulting series is a function of all the
+// already aligned values in the input time series.Not all reducer
+// operations can be applied to all time series. The valid choices
+// depend on the metric_kind and the value_type of the original time
+// series. Reduction can yield a time series with a different
+// metric_kind or value_type than the input time series.Time series data
+// must first be aligned (see per_series_aligner) in order to perform
+// cross-time series reduction. If cross_series_reducer is specified,
+// then per_series_aligner must be specified, and must not be
+// ALIGN_NONE. An alignment_period must also be specified; otherwise, an
+// error is returned.
+//
+// Possible values:
+//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+// Aligner is returned.
+//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric or distribution values. The value_type of
+// the output is DOUBLE.
+//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric values. The value_type of the output is
+// the same as the value_type of the input.
+//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric values. The value_type of the output is
+// the same as the value_type of the input.
+//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+// each alignment period. This reducer is valid for DELTA and GAUGE
+// metrics with numeric and distribution values. The value_type of the
+// output is the same as the value_type of the input.
+//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+// time series for each alignment period. This reducer is valid for
+// DELTA and GAUGE metrics with numeric or distribution values. The
+// value_type of the output is DOUBLE.
+//   "REDUCE_COUNT" - Reduce by computing the number of data points
+// across time series for each alignment period. This reducer is valid
+// for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
+// string value_type. The value_type of the output is INT64.
+//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+// data points across time series for each alignment period. This
+// reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
+// The value_type of the output is INT64.
+//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+// False-valued data points across time series for each alignment
+// period. This reducer is valid for DELTA and GAUGE metrics of Boolean
+// value_type. The value_type of the output is INT64.
+//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+// number of True-valued data points to the total number of data points
+// for each alignment period. This reducer is valid for DELTA and GAUGE
+// metrics of Boolean value_type. The output value is in the range 0.0,
+// 1.0 and has value_type DOUBLE.
+//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+func (c *FoldersTimeSeriesListCall) AggregationCrossSeriesReducer(aggregationCrossSeriesReducer string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("aggregation.crossSeriesReducer", aggregationCrossSeriesReducer)
+	return c
+}
+
+// AggregationGroupByFields sets the optional parameter
+// "aggregation.groupByFields": The set of fields to preserve when
+// cross_series_reducer is specified. The group_by_fields determine how
+// the time series are partitioned into subsets prior to applying the
+// aggregation operation. Each subset contains time series that have the
+// same value for each of the grouping fields. Each individual time
+// series is a member of exactly one subset. The cross_series_reducer is
+// applied to each subset of time series. It is not possible to reduce
+// across different resource types, so this field implicitly contains
+// resource.type. Fields not specified in group_by_fields are aggregated
+// away. If group_by_fields is not specified and all the time series
+// have the same resource type, then the time series are aggregated into
+// a single output time series. If cross_series_reducer is not defined,
+// this field is ignored.
+func (c *FoldersTimeSeriesListCall) AggregationGroupByFields(aggregationGroupByFields ...string) *FoldersTimeSeriesListCall {
+	c.urlParams_.SetMulti("aggregation.groupByFields", append([]string{}, aggregationGroupByFields...))
+	return c
+}
+
+// AggregationPerSeriesAligner sets the optional parameter
+// "aggregation.perSeriesAligner": An Aligner describes how to bring the
+// data points in a single time series into temporal alignment. Except
+// for ALIGN_NONE, all alignments cause all the data points in an
+// alignment_period to be mathematically grouped together, resulting in
+// a single data point for each alignment_period with end timestamp at
+// the end of the period.Not all alignment operations may be applied to
+// all time series. The valid choices depend on the metric_kind and
+// value_type of the original time series. Alignment can change the
+// metric_kind or the value_type of the time series.Time series data
+// must be aligned in order to perform cross-time series reduction. If
+// cross_series_reducer is specified, then per_series_aligner must be
+// specified and not equal to ALIGN_NONE and alignment_period must be
+// specified; otherwise, an error is returned.
+//
+// Possible values:
+//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+// cross-series reduction is requested. The value_type of the result is
+// the same as the value_type of the input.
+//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+// y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
+// the selected alignment period results in periods with no data, then
+// the aligned value for such a period is created by interpolation. The
+// value_type of the aligned result is the same as the value_type of the
+// input.
+//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+// as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
+// aligner as providing the slope of the line that passes through the
+// value at the start and at the end of the alignment_period.This
+// aligner is valid for CUMULATIVE and DELTA metrics with numeric
+// values. If the selected alignment period results in periods with no
+// data, then the aligned value for such a period is created by
+// interpolation. The output is a GAUGE metric with value_type
+// DOUBLE.If, by "rate", you mean "percentage change", see the
+// ALIGN_PERCENT_CHANGE aligner instead.
+//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+// points around the alignment period boundary. This aligner is valid
+// for GAUGE metrics with numeric values. The value_type of the aligned
+// result is the same as the value_type of the input.
+//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+// before the end of the alignment period to the boundary at the end of
+// the alignment period. This aligner is valid for GAUGE metrics. The
+// value_type of the aligned result is the same as the value_type of the
+// input.
+//   "ALIGN_MIN" - Align the time series by returning the minimum value
+// in each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// the same as the value_type of the input.
+//   "ALIGN_MAX" - Align the time series by returning the maximum value
+// in each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// the same as the value_type of the input.
+//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+// each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// DOUBLE.
+//   "ALIGN_COUNT" - Align the time series by returning the number of
+// values in each alignment period. This aligner is valid for GAUGE and
+// DELTA metrics with numeric or Boolean values. The value_type of the
+// aligned result is INT64.
+//   "ALIGN_SUM" - Align the time series by returning the sum of the
+// values in each alignment period. This aligner is valid for GAUGE and
+// DELTA metrics with numeric and distribution values. The value_type of
+// the aligned result is the same as the value_type of the input.
+//   "ALIGN_STDDEV" - Align the time series by returning the standard
+// deviation of the values in each alignment period. This aligner is
+// valid for GAUGE and DELTA metrics with numeric values. The value_type
+// of the output is DOUBLE.
+//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+// of True values in each alignment period. This aligner is valid for
+// GAUGE metrics with Boolean values. The value_type of the output is
+// INT64.
+//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+// of False values in each alignment period. This aligner is valid for
+// GAUGE metrics with Boolean values. The value_type of the output is
+// INT64.
+//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+// ratio of the number of True values to the total number of values in
+// each alignment period. This aligner is valid for GAUGE metrics with
+// Boolean values. The output value is in the range 0.0, 1.0 and has
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 99th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 95th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 50th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 5th percentile of all data
+// points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+// This aligner is valid for GAUGE and DELTA metrics with numeric
+// values. This alignment returns ((current - previous)/previous) * 100,
+// where the value of previous is determined based on the
+// alignment_period.If the values of current and previous are both 0,
+// then the returned value is 0. If only previous is 0, the returned
+// value is infinity.A 10-minute moving mean is computed at each point
+// of the alignment period prior to the above calculation to smooth the
+// metric and prevent false positives from very short-lived spikes. The
+// moving mean is only applicable for data whose values are >= 0. Any
+// values < 0 are treated as a missing datapoint, and are ignored. While
+// DELTA metrics are accepted by this alignment, special care should be
+// taken that the values for the metric will always be positive. The
+// output is a GAUGE metric with value_type DOUBLE.
+func (c *FoldersTimeSeriesListCall) AggregationPerSeriesAligner(aggregationPerSeriesAligner string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("aggregation.perSeriesAligner", aggregationPerSeriesAligner)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Required. A monitoring
+// filter (https://cloud.google.com/monitoring/api/v3/filters) that
+// specifies which time series should be returned. The filter must
+// specify a single metric type, and can additionally specify metric
+// labels and other information. For example: metric.type =
+// "compute.googleapis.com/instance/cpu/usage_time" AND
+// metric.labels.instance_name = "my-instance-name"
+func (c *FoldersTimeSeriesListCall) Filter(filter string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// IntervalEndTime sets the optional parameter "interval.endTime":
+// Required. The end of the time interval.
+func (c *FoldersTimeSeriesListCall) IntervalEndTime(intervalEndTime string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("interval.endTime", intervalEndTime)
+	return c
+}
+
+// IntervalStartTime sets the optional parameter "interval.startTime":
+// The beginning of the time interval. The default value for the start
+// time is the end time. The start time must not be later than the end
+// time.
+func (c *FoldersTimeSeriesListCall) IntervalStartTime(intervalStartTime string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("interval.startTime", intervalStartTime)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Unsupported: must be
+// left blank. The points in each time series are currently returned in
+// reverse time order (most recent to oldest).
+func (c *FoldersTimeSeriesListCall) OrderBy(orderBy string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": A positive number
+// that is the maximum number of results to return. If page_size is
+// empty or more than 100,000 results, the effective page_size is
+// 100,000 results. If view is set to FULL, this is the maximum number
+// of Points returned. If view is set to HEADERS, this is the maximum
+// number of TimeSeries returned.
+func (c *FoldersTimeSeriesListCall) PageSize(pageSize int64) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If this field is
+// not empty then it must contain the nextPageToken value returned by a
+// previous call to this method. Using this field causes the method to
+// return additional results from the previous method call.
+func (c *FoldersTimeSeriesListCall) PageToken(pageToken string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SecondaryAggregationAlignmentPeriod sets the optional parameter
+// "secondaryAggregation.alignmentPeriod": The alignment_period
+// specifies a time interval, in seconds, that is used to divide the
+// data in all the time series into consistent blocks of time. This will
+// be done before the per-series aligner can be applied to the data.The
+// value must be at least 60 seconds. If a per-series aligner other than
+// ALIGN_NONE is specified, this field is required or an error is
+// returned. If no per-series aligner is specified, or the aligner
+// ALIGN_NONE is specified, then this field is ignored.The maximum value
+// of the alignment_period is 104 weeks (2 years) for charts, and 90,000
+// seconds (25 hours) for alerting policies.
+func (c *FoldersTimeSeriesListCall) SecondaryAggregationAlignmentPeriod(secondaryAggregationAlignmentPeriod string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("secondaryAggregation.alignmentPeriod", secondaryAggregationAlignmentPeriod)
+	return c
+}
+
+// SecondaryAggregationCrossSeriesReducer sets the optional parameter
+// "secondaryAggregation.crossSeriesReducer": The reduction operation to
+// be used to combine time series into a single time series, where the
+// value of each data point in the resulting series is a function of all
+// the already aligned values in the input time series.Not all reducer
+// operations can be applied to all time series. The valid choices
+// depend on the metric_kind and the value_type of the original time
+// series. Reduction can yield a time series with a different
+// metric_kind or value_type than the input time series.Time series data
+// must first be aligned (see per_series_aligner) in order to perform
+// cross-time series reduction. If cross_series_reducer is specified,
+// then per_series_aligner must be specified, and must not be
+// ALIGN_NONE. An alignment_period must also be specified; otherwise, an
+// error is returned.
+//
+// Possible values:
+//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+// Aligner is returned.
+//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric or distribution values. The value_type of
+// the output is DOUBLE.
+//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric values. The value_type of the output is
+// the same as the value_type of the input.
+//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric values. The value_type of the output is
+// the same as the value_type of the input.
+//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+// each alignment period. This reducer is valid for DELTA and GAUGE
+// metrics with numeric and distribution values. The value_type of the
+// output is the same as the value_type of the input.
+//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+// time series for each alignment period. This reducer is valid for
+// DELTA and GAUGE metrics with numeric or distribution values. The
+// value_type of the output is DOUBLE.
+//   "REDUCE_COUNT" - Reduce by computing the number of data points
+// across time series for each alignment period. This reducer is valid
+// for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
+// string value_type. The value_type of the output is INT64.
+//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+// data points across time series for each alignment period. This
+// reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
+// The value_type of the output is INT64.
+//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+// False-valued data points across time series for each alignment
+// period. This reducer is valid for DELTA and GAUGE metrics of Boolean
+// value_type. The value_type of the output is INT64.
+//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+// number of True-valued data points to the total number of data points
+// for each alignment period. This reducer is valid for DELTA and GAUGE
+// metrics of Boolean value_type. The output value is in the range 0.0,
+// 1.0 and has value_type DOUBLE.
+//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+func (c *FoldersTimeSeriesListCall) SecondaryAggregationCrossSeriesReducer(secondaryAggregationCrossSeriesReducer string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("secondaryAggregation.crossSeriesReducer", secondaryAggregationCrossSeriesReducer)
+	return c
+}
+
+// SecondaryAggregationGroupByFields sets the optional parameter
+// "secondaryAggregation.groupByFields": The set of fields to preserve
+// when cross_series_reducer is specified. The group_by_fields determine
+// how the time series are partitioned into subsets prior to applying
+// the aggregation operation. Each subset contains time series that have
+// the same value for each of the grouping fields. Each individual time
+// series is a member of exactly one subset. The cross_series_reducer is
+// applied to each subset of time series. It is not possible to reduce
+// across different resource types, so this field implicitly contains
+// resource.type. Fields not specified in group_by_fields are aggregated
+// away. If group_by_fields is not specified and all the time series
+// have the same resource type, then the time series are aggregated into
+// a single output time series. If cross_series_reducer is not defined,
+// this field is ignored.
+func (c *FoldersTimeSeriesListCall) SecondaryAggregationGroupByFields(secondaryAggregationGroupByFields ...string) *FoldersTimeSeriesListCall {
+	c.urlParams_.SetMulti("secondaryAggregation.groupByFields", append([]string{}, secondaryAggregationGroupByFields...))
+	return c
+}
+
+// SecondaryAggregationPerSeriesAligner sets the optional parameter
+// "secondaryAggregation.perSeriesAligner": An Aligner describes how to
+// bring the data points in a single time series into temporal
+// alignment. Except for ALIGN_NONE, all alignments cause all the data
+// points in an alignment_period to be mathematically grouped together,
+// resulting in a single data point for each alignment_period with end
+// timestamp at the end of the period.Not all alignment operations may
+// be applied to all time series. The valid choices depend on the
+// metric_kind and value_type of the original time series. Alignment can
+// change the metric_kind or the value_type of the time series.Time
+// series data must be aligned in order to perform cross-time series
+// reduction. If cross_series_reducer is specified, then
+// per_series_aligner must be specified and not equal to ALIGN_NONE and
+// alignment_period must be specified; otherwise, an error is returned.
+//
+// Possible values:
+//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+// cross-series reduction is requested. The value_type of the result is
+// the same as the value_type of the input.
+//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+// y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
+// the selected alignment period results in periods with no data, then
+// the aligned value for such a period is created by interpolation. The
+// value_type of the aligned result is the same as the value_type of the
+// input.
+//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+// as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
+// aligner as providing the slope of the line that passes through the
+// value at the start and at the end of the alignment_period.This
+// aligner is valid for CUMULATIVE and DELTA metrics with numeric
+// values. If the selected alignment period results in periods with no
+// data, then the aligned value for such a period is created by
+// interpolation. The output is a GAUGE metric with value_type
+// DOUBLE.If, by "rate", you mean "percentage change", see the
+// ALIGN_PERCENT_CHANGE aligner instead.
+//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+// points around the alignment period boundary. This aligner is valid
+// for GAUGE metrics with numeric values. The value_type of the aligned
+// result is the same as the value_type of the input.
+//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+// before the end of the alignment period to the boundary at the end of
+// the alignment period. This aligner is valid for GAUGE metrics. The
+// value_type of the aligned result is the same as the value_type of the
+// input.
+//   "ALIGN_MIN" - Align the time series by returning the minimum value
+// in each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// the same as the value_type of the input.
+//   "ALIGN_MAX" - Align the time series by returning the maximum value
+// in each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// the same as the value_type of the input.
+//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+// each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// DOUBLE.
+//   "ALIGN_COUNT" - Align the time series by returning the number of
+// values in each alignment period. This aligner is valid for GAUGE and
+// DELTA metrics with numeric or Boolean values. The value_type of the
+// aligned result is INT64.
+//   "ALIGN_SUM" - Align the time series by returning the sum of the
+// values in each alignment period. This aligner is valid for GAUGE and
+// DELTA metrics with numeric and distribution values. The value_type of
+// the aligned result is the same as the value_type of the input.
+//   "ALIGN_STDDEV" - Align the time series by returning the standard
+// deviation of the values in each alignment period. This aligner is
+// valid for GAUGE and DELTA metrics with numeric values. The value_type
+// of the output is DOUBLE.
+//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+// of True values in each alignment period. This aligner is valid for
+// GAUGE metrics with Boolean values. The value_type of the output is
+// INT64.
+//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+// of False values in each alignment period. This aligner is valid for
+// GAUGE metrics with Boolean values. The value_type of the output is
+// INT64.
+//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+// ratio of the number of True values to the total number of values in
+// each alignment period. This aligner is valid for GAUGE metrics with
+// Boolean values. The output value is in the range 0.0, 1.0 and has
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 99th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 95th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 50th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 5th percentile of all data
+// points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+// This aligner is valid for GAUGE and DELTA metrics with numeric
+// values. This alignment returns ((current - previous)/previous) * 100,
+// where the value of previous is determined based on the
+// alignment_period.If the values of current and previous are both 0,
+// then the returned value is 0. If only previous is 0, the returned
+// value is infinity.A 10-minute moving mean is computed at each point
+// of the alignment period prior to the above calculation to smooth the
+// metric and prevent false positives from very short-lived spikes. The
+// moving mean is only applicable for data whose values are >= 0. Any
+// values < 0 are treated as a missing datapoint, and are ignored. While
+// DELTA metrics are accepted by this alignment, special care should be
+// taken that the values for the metric will always be positive. The
+// output is a GAUGE metric with value_type DOUBLE.
+func (c *FoldersTimeSeriesListCall) SecondaryAggregationPerSeriesAligner(secondaryAggregationPerSeriesAligner string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("secondaryAggregation.perSeriesAligner", secondaryAggregationPerSeriesAligner)
+	return c
+}
+
+// View sets the optional parameter "view": Required. Specifies which
+// information is returned about the time series.
+//
+// Possible values:
+//   "FULL" - Returns the identity of the metric(s), the time series,
+// and the time series data.
+//   "HEADERS" - Returns the identity of the metric and the time series
+// resource, but not the time series data.
+func (c *FoldersTimeSeriesListCall) View(view string) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersTimeSeriesListCall) Fields(s ...googleapi.Field) *FoldersTimeSeriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersTimeSeriesListCall) IfNoneMatch(entityTag string) *FoldersTimeSeriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersTimeSeriesListCall) Context(ctx context.Context) *FoldersTimeSeriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersTimeSeriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}/timeSeries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.folders.timeSeries.list" call.
+// Exactly one of *ListTimeSeriesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListTimeSeriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTimeSeriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListTimeSeriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists time series that match a filter. This method does not require a Workspace.",
+	//   "flatPath": "v3/folders/{foldersId}/timeSeries",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.folders.timeSeries.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "aggregation.alignmentPeriod": {
+	//       "description": "The alignment_period specifies a time interval, in seconds, that is used to divide the data in all the time series into consistent blocks of time. This will be done before the per-series aligner can be applied to the data.The value must be at least 60 seconds. If a per-series aligner other than ALIGN_NONE is specified, this field is required or an error is returned. If no per-series aligner is specified, or the aligner ALIGN_NONE is specified, then this field is ignored.The maximum value of the alignment_period is 104 weeks (2 years) for charts, and 90,000 seconds (25 hours) for alerting policies.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "aggregation.crossSeriesReducer": {
+	//       "description": "The reduction operation to be used to combine time series into a single time series, where the value of each data point in the resulting series is a function of all the already aligned values in the input time series.Not all reducer operations can be applied to all time series. The valid choices depend on the metric_kind and the value_type of the original time series. Reduction can yield a time series with a different metric_kind or value_type than the input time series.Time series data must first be aligned (see per_series_aligner) in order to perform cross-time series reduction. If cross_series_reducer is specified, then per_series_aligner must be specified, and must not be ALIGN_NONE. An alignment_period must also be specified; otherwise, an error is returned.",
+	//       "enum": [
+	//         "REDUCE_NONE",
+	//         "REDUCE_MEAN",
+	//         "REDUCE_MIN",
+	//         "REDUCE_MAX",
+	//         "REDUCE_SUM",
+	//         "REDUCE_STDDEV",
+	//         "REDUCE_COUNT",
+	//         "REDUCE_COUNT_TRUE",
+	//         "REDUCE_COUNT_FALSE",
+	//         "REDUCE_FRACTION_TRUE",
+	//         "REDUCE_PERCENTILE_99",
+	//         "REDUCE_PERCENTILE_95",
+	//         "REDUCE_PERCENTILE_50",
+	//         "REDUCE_PERCENTILE_05"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No cross-time series reduction. The output of the Aligner is returned.",
+	//         "Reduce by computing the mean value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric or distribution values. The value_type of the output is DOUBLE.",
+	//         "Reduce by computing the minimum value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the maximum value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the sum across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric and distribution values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the standard deviation across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric or distribution values. The value_type of the output is DOUBLE.",
+	//         "Reduce by computing the number of data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of numeric, Boolean, distribution, and string value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the number of True-valued data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the number of False-valued data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the ratio of the number of True-valued data points to the total number of data points for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The output value is in the range 0.0, 1.0 and has value_type DOUBLE.",
+	//         "Reduce by computing the 99th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 95th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 50th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 5th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "aggregation.groupByFields": {
+	//       "description": "The set of fields to preserve when cross_series_reducer is specified. The group_by_fields determine how the time series are partitioned into subsets prior to applying the aggregation operation. Each subset contains time series that have the same value for each of the grouping fields. Each individual time series is a member of exactly one subset. The cross_series_reducer is applied to each subset of time series. It is not possible to reduce across different resource types, so this field implicitly contains resource.type. Fields not specified in group_by_fields are aggregated away. If group_by_fields is not specified and all the time series have the same resource type, then the time series are aggregated into a single output time series. If cross_series_reducer is not defined, this field is ignored.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "aggregation.perSeriesAligner": {
+	//       "description": "An Aligner describes how to bring the data points in a single time series into temporal alignment. Except for ALIGN_NONE, all alignments cause all the data points in an alignment_period to be mathematically grouped together, resulting in a single data point for each alignment_period with end timestamp at the end of the period.Not all alignment operations may be applied to all time series. The valid choices depend on the metric_kind and value_type of the original time series. Alignment can change the metric_kind or the value_type of the time series.Time series data must be aligned in order to perform cross-time series reduction. If cross_series_reducer is specified, then per_series_aligner must be specified and not equal to ALIGN_NONE and alignment_period must be specified; otherwise, an error is returned.",
+	//       "enum": [
+	//         "ALIGN_NONE",
+	//         "ALIGN_DELTA",
+	//         "ALIGN_RATE",
+	//         "ALIGN_INTERPOLATE",
+	//         "ALIGN_NEXT_OLDER",
+	//         "ALIGN_MIN",
+	//         "ALIGN_MAX",
+	//         "ALIGN_MEAN",
+	//         "ALIGN_COUNT",
+	//         "ALIGN_SUM",
+	//         "ALIGN_STDDEV",
+	//         "ALIGN_COUNT_TRUE",
+	//         "ALIGN_COUNT_FALSE",
+	//         "ALIGN_FRACTION_TRUE",
+	//         "ALIGN_PERCENTILE_99",
+	//         "ALIGN_PERCENTILE_95",
+	//         "ALIGN_PERCENTILE_50",
+	//         "ALIGN_PERCENTILE_05",
+	//         "ALIGN_PERCENT_CHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No alignment. Raw data is returned. Not valid if cross-series reduction is requested. The value_type of the result is the same as the value_type of the input.",
+	//         "Align and convert to DELTA. The output is delta = y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If the selected alignment period results in periods with no data, then the aligned value for such a period is created by interpolation. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align and convert to a rate. The result is computed as rate = (y1 - y0)/(t1 - t0), or \"delta over time\". Think of this aligner as providing the slope of the line that passes through the value at the start and at the end of the alignment_period.This aligner is valid for CUMULATIVE and DELTA metrics with numeric values. If the selected alignment period results in periods with no data, then the aligned value for such a period is created by interpolation. The output is a GAUGE metric with value_type DOUBLE.If, by \"rate\", you mean \"percentage change\", see the ALIGN_PERCENT_CHANGE aligner instead.",
+	//         "Align by interpolating between adjacent points around the alignment period boundary. This aligner is valid for GAUGE metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align by moving the most recent data point before the end of the alignment period to the boundary at the end of the alignment period. This aligner is valid for GAUGE metrics. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the minimum value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the maximum value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the mean value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is DOUBLE.",
+	//         "Align the time series by returning the number of values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric or Boolean values. The value_type of the aligned result is INT64.",
+	//         "Align the time series by returning the sum of the values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric and distribution values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the standard deviation of the values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the output is DOUBLE.",
+	//         "Align the time series by returning the number of True values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The value_type of the output is INT64.",
+	//         "Align the time series by returning the number of False values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The value_type of the output is INT64.",
+	//         "Align the time series by returning the ratio of the number of True values to the total number of values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The output value is in the range 0.0, 1.0 and has value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 99th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 95th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 50th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 5th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align and convert to a percentage change. This aligner is valid for GAUGE and DELTA metrics with numeric values. This alignment returns ((current - previous)/previous) * 100, where the value of previous is determined based on the alignment_period.If the values of current and previous are both 0, then the returned value is 0. If only previous is 0, the returned value is infinity.A 10-minute moving mean is computed at each point of the alignment period prior to the above calculation to smooth the metric and prevent false positives from very short-lived spikes. The moving mean is only applicable for data whose values are \u003e= 0. Any values \u003c 0 are treated as a missing datapoint, and are ignored. While DELTA metrics are accepted by this alignment, special care should be taken that the values for the metric will always be positive. The output is a GAUGE metric with value_type DOUBLE."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Required. A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example: metric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND metric.labels.instance_name = \"my-instance-name\" ",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "interval.endTime": {
+	//       "description": "Required. The end of the time interval.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "interval.startTime": {
+	//       "description": "Optional. The beginning of the time interval. The default value for the start time is the end time. The start time must not be later than the end time.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Unsupported: must be left blank. The points in each time series are currently returned in reverse time order (most recent to oldest).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "A positive number that is the maximum number of results to return. If page_size is empty or more than 100,000 results, the effective page_size is 100,000 results. If view is set to FULL, this is the maximum number of Points returned. If view is set to HEADERS, this is the maximum number of TimeSeries returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "secondaryAggregation.alignmentPeriod": {
+	//       "description": "The alignment_period specifies a time interval, in seconds, that is used to divide the data in all the time series into consistent blocks of time. This will be done before the per-series aligner can be applied to the data.The value must be at least 60 seconds. If a per-series aligner other than ALIGN_NONE is specified, this field is required or an error is returned. If no per-series aligner is specified, or the aligner ALIGN_NONE is specified, then this field is ignored.The maximum value of the alignment_period is 104 weeks (2 years) for charts, and 90,000 seconds (25 hours) for alerting policies.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "secondaryAggregation.crossSeriesReducer": {
+	//       "description": "The reduction operation to be used to combine time series into a single time series, where the value of each data point in the resulting series is a function of all the already aligned values in the input time series.Not all reducer operations can be applied to all time series. The valid choices depend on the metric_kind and the value_type of the original time series. Reduction can yield a time series with a different metric_kind or value_type than the input time series.Time series data must first be aligned (see per_series_aligner) in order to perform cross-time series reduction. If cross_series_reducer is specified, then per_series_aligner must be specified, and must not be ALIGN_NONE. An alignment_period must also be specified; otherwise, an error is returned.",
+	//       "enum": [
+	//         "REDUCE_NONE",
+	//         "REDUCE_MEAN",
+	//         "REDUCE_MIN",
+	//         "REDUCE_MAX",
+	//         "REDUCE_SUM",
+	//         "REDUCE_STDDEV",
+	//         "REDUCE_COUNT",
+	//         "REDUCE_COUNT_TRUE",
+	//         "REDUCE_COUNT_FALSE",
+	//         "REDUCE_FRACTION_TRUE",
+	//         "REDUCE_PERCENTILE_99",
+	//         "REDUCE_PERCENTILE_95",
+	//         "REDUCE_PERCENTILE_50",
+	//         "REDUCE_PERCENTILE_05"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No cross-time series reduction. The output of the Aligner is returned.",
+	//         "Reduce by computing the mean value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric or distribution values. The value_type of the output is DOUBLE.",
+	//         "Reduce by computing the minimum value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the maximum value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the sum across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric and distribution values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the standard deviation across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric or distribution values. The value_type of the output is DOUBLE.",
+	//         "Reduce by computing the number of data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of numeric, Boolean, distribution, and string value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the number of True-valued data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the number of False-valued data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the ratio of the number of True-valued data points to the total number of data points for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The output value is in the range 0.0, 1.0 and has value_type DOUBLE.",
+	//         "Reduce by computing the 99th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 95th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 50th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 5th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "secondaryAggregation.groupByFields": {
+	//       "description": "The set of fields to preserve when cross_series_reducer is specified. The group_by_fields determine how the time series are partitioned into subsets prior to applying the aggregation operation. Each subset contains time series that have the same value for each of the grouping fields. Each individual time series is a member of exactly one subset. The cross_series_reducer is applied to each subset of time series. It is not possible to reduce across different resource types, so this field implicitly contains resource.type. Fields not specified in group_by_fields are aggregated away. If group_by_fields is not specified and all the time series have the same resource type, then the time series are aggregated into a single output time series. If cross_series_reducer is not defined, this field is ignored.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "secondaryAggregation.perSeriesAligner": {
+	//       "description": "An Aligner describes how to bring the data points in a single time series into temporal alignment. Except for ALIGN_NONE, all alignments cause all the data points in an alignment_period to be mathematically grouped together, resulting in a single data point for each alignment_period with end timestamp at the end of the period.Not all alignment operations may be applied to all time series. The valid choices depend on the metric_kind and value_type of the original time series. Alignment can change the metric_kind or the value_type of the time series.Time series data must be aligned in order to perform cross-time series reduction. If cross_series_reducer is specified, then per_series_aligner must be specified and not equal to ALIGN_NONE and alignment_period must be specified; otherwise, an error is returned.",
+	//       "enum": [
+	//         "ALIGN_NONE",
+	//         "ALIGN_DELTA",
+	//         "ALIGN_RATE",
+	//         "ALIGN_INTERPOLATE",
+	//         "ALIGN_NEXT_OLDER",
+	//         "ALIGN_MIN",
+	//         "ALIGN_MAX",
+	//         "ALIGN_MEAN",
+	//         "ALIGN_COUNT",
+	//         "ALIGN_SUM",
+	//         "ALIGN_STDDEV",
+	//         "ALIGN_COUNT_TRUE",
+	//         "ALIGN_COUNT_FALSE",
+	//         "ALIGN_FRACTION_TRUE",
+	//         "ALIGN_PERCENTILE_99",
+	//         "ALIGN_PERCENTILE_95",
+	//         "ALIGN_PERCENTILE_50",
+	//         "ALIGN_PERCENTILE_05",
+	//         "ALIGN_PERCENT_CHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No alignment. Raw data is returned. Not valid if cross-series reduction is requested. The value_type of the result is the same as the value_type of the input.",
+	//         "Align and convert to DELTA. The output is delta = y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If the selected alignment period results in periods with no data, then the aligned value for such a period is created by interpolation. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align and convert to a rate. The result is computed as rate = (y1 - y0)/(t1 - t0), or \"delta over time\". Think of this aligner as providing the slope of the line that passes through the value at the start and at the end of the alignment_period.This aligner is valid for CUMULATIVE and DELTA metrics with numeric values. If the selected alignment period results in periods with no data, then the aligned value for such a period is created by interpolation. The output is a GAUGE metric with value_type DOUBLE.If, by \"rate\", you mean \"percentage change\", see the ALIGN_PERCENT_CHANGE aligner instead.",
+	//         "Align by interpolating between adjacent points around the alignment period boundary. This aligner is valid for GAUGE metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align by moving the most recent data point before the end of the alignment period to the boundary at the end of the alignment period. This aligner is valid for GAUGE metrics. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the minimum value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the maximum value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the mean value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is DOUBLE.",
+	//         "Align the time series by returning the number of values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric or Boolean values. The value_type of the aligned result is INT64.",
+	//         "Align the time series by returning the sum of the values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric and distribution values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the standard deviation of the values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the output is DOUBLE.",
+	//         "Align the time series by returning the number of True values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The value_type of the output is INT64.",
+	//         "Align the time series by returning the number of False values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The value_type of the output is INT64.",
+	//         "Align the time series by returning the ratio of the number of True values to the total number of values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The output value is in the range 0.0, 1.0 and has value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 99th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 95th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 50th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 5th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align and convert to a percentage change. This aligner is valid for GAUGE and DELTA metrics with numeric values. This alignment returns ((current - previous)/previous) * 100, where the value of previous is determined based on the alignment_period.If the values of current and previous are both 0, then the returned value is 0. If only previous is 0, the returned value is infinity.A 10-minute moving mean is computed at each point of the alignment period prior to the above calculation to smooth the metric and prevent false positives from very short-lived spikes. The moving mean is only applicable for data whose values are \u003e= 0. Any values \u003c 0 are treated as a missing datapoint, and are ignored. While DELTA metrics are accepted by this alignment, special care should be taken that the values for the metric will always be positive. The output is a GAUGE metric with value_type DOUBLE."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Required. Specifies which information is returned about the time series.",
+	//       "enum": [
+	//         "FULL",
+	//         "HEADERS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns the identity of the metric(s), the time series, and the time series data.",
+	//         "Returns the identity of the metric and the time series resource, but not the time series data."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}/timeSeries",
+	//   "response": {
+	//     "$ref": "ListTimeSeriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersTimeSeriesListCall) Pages(ctx context.Context, f func(*ListTimeSeriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "monitoring.organizations.timeSeries.list":
+
+type OrganizationsTimeSeriesListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists time series that match a filter. This method does not
+// require a Workspace.
+func (r *OrganizationsTimeSeriesService) List(name string) *OrganizationsTimeSeriesListCall {
+	c := &OrganizationsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AggregationAlignmentPeriod sets the optional parameter
+// "aggregation.alignmentPeriod": The alignment_period specifies a time
+// interval, in seconds, that is used to divide the data in all the time
+// series into consistent blocks of time. This will be done before the
+// per-series aligner can be applied to the data.The value must be at
+// least 60 seconds. If a per-series aligner other than ALIGN_NONE is
+// specified, this field is required or an error is returned. If no
+// per-series aligner is specified, or the aligner ALIGN_NONE is
+// specified, then this field is ignored.The maximum value of the
+// alignment_period is 104 weeks (2 years) for charts, and 90,000
+// seconds (25 hours) for alerting policies.
+func (c *OrganizationsTimeSeriesListCall) AggregationAlignmentPeriod(aggregationAlignmentPeriod string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("aggregation.alignmentPeriod", aggregationAlignmentPeriod)
+	return c
+}
+
+// AggregationCrossSeriesReducer sets the optional parameter
+// "aggregation.crossSeriesReducer": The reduction operation to be used
+// to combine time series into a single time series, where the value of
+// each data point in the resulting series is a function of all the
+// already aligned values in the input time series.Not all reducer
+// operations can be applied to all time series. The valid choices
+// depend on the metric_kind and the value_type of the original time
+// series. Reduction can yield a time series with a different
+// metric_kind or value_type than the input time series.Time series data
+// must first be aligned (see per_series_aligner) in order to perform
+// cross-time series reduction. If cross_series_reducer is specified,
+// then per_series_aligner must be specified, and must not be
+// ALIGN_NONE. An alignment_period must also be specified; otherwise, an
+// error is returned.
+//
+// Possible values:
+//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+// Aligner is returned.
+//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric or distribution values. The value_type of
+// the output is DOUBLE.
+//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric values. The value_type of the output is
+// the same as the value_type of the input.
+//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric values. The value_type of the output is
+// the same as the value_type of the input.
+//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+// each alignment period. This reducer is valid for DELTA and GAUGE
+// metrics with numeric and distribution values. The value_type of the
+// output is the same as the value_type of the input.
+//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+// time series for each alignment period. This reducer is valid for
+// DELTA and GAUGE metrics with numeric or distribution values. The
+// value_type of the output is DOUBLE.
+//   "REDUCE_COUNT" - Reduce by computing the number of data points
+// across time series for each alignment period. This reducer is valid
+// for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
+// string value_type. The value_type of the output is INT64.
+//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+// data points across time series for each alignment period. This
+// reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
+// The value_type of the output is INT64.
+//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+// False-valued data points across time series for each alignment
+// period. This reducer is valid for DELTA and GAUGE metrics of Boolean
+// value_type. The value_type of the output is INT64.
+//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+// number of True-valued data points to the total number of data points
+// for each alignment period. This reducer is valid for DELTA and GAUGE
+// metrics of Boolean value_type. The output value is in the range 0.0,
+// 1.0 and has value_type DOUBLE.
+//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+func (c *OrganizationsTimeSeriesListCall) AggregationCrossSeriesReducer(aggregationCrossSeriesReducer string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("aggregation.crossSeriesReducer", aggregationCrossSeriesReducer)
+	return c
+}
+
+// AggregationGroupByFields sets the optional parameter
+// "aggregation.groupByFields": The set of fields to preserve when
+// cross_series_reducer is specified. The group_by_fields determine how
+// the time series are partitioned into subsets prior to applying the
+// aggregation operation. Each subset contains time series that have the
+// same value for each of the grouping fields. Each individual time
+// series is a member of exactly one subset. The cross_series_reducer is
+// applied to each subset of time series. It is not possible to reduce
+// across different resource types, so this field implicitly contains
+// resource.type. Fields not specified in group_by_fields are aggregated
+// away. If group_by_fields is not specified and all the time series
+// have the same resource type, then the time series are aggregated into
+// a single output time series. If cross_series_reducer is not defined,
+// this field is ignored.
+func (c *OrganizationsTimeSeriesListCall) AggregationGroupByFields(aggregationGroupByFields ...string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.SetMulti("aggregation.groupByFields", append([]string{}, aggregationGroupByFields...))
+	return c
+}
+
+// AggregationPerSeriesAligner sets the optional parameter
+// "aggregation.perSeriesAligner": An Aligner describes how to bring the
+// data points in a single time series into temporal alignment. Except
+// for ALIGN_NONE, all alignments cause all the data points in an
+// alignment_period to be mathematically grouped together, resulting in
+// a single data point for each alignment_period with end timestamp at
+// the end of the period.Not all alignment operations may be applied to
+// all time series. The valid choices depend on the metric_kind and
+// value_type of the original time series. Alignment can change the
+// metric_kind or the value_type of the time series.Time series data
+// must be aligned in order to perform cross-time series reduction. If
+// cross_series_reducer is specified, then per_series_aligner must be
+// specified and not equal to ALIGN_NONE and alignment_period must be
+// specified; otherwise, an error is returned.
+//
+// Possible values:
+//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+// cross-series reduction is requested. The value_type of the result is
+// the same as the value_type of the input.
+//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+// y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
+// the selected alignment period results in periods with no data, then
+// the aligned value for such a period is created by interpolation. The
+// value_type of the aligned result is the same as the value_type of the
+// input.
+//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+// as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
+// aligner as providing the slope of the line that passes through the
+// value at the start and at the end of the alignment_period.This
+// aligner is valid for CUMULATIVE and DELTA metrics with numeric
+// values. If the selected alignment period results in periods with no
+// data, then the aligned value for such a period is created by
+// interpolation. The output is a GAUGE metric with value_type
+// DOUBLE.If, by "rate", you mean "percentage change", see the
+// ALIGN_PERCENT_CHANGE aligner instead.
+//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+// points around the alignment period boundary. This aligner is valid
+// for GAUGE metrics with numeric values. The value_type of the aligned
+// result is the same as the value_type of the input.
+//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+// before the end of the alignment period to the boundary at the end of
+// the alignment period. This aligner is valid for GAUGE metrics. The
+// value_type of the aligned result is the same as the value_type of the
+// input.
+//   "ALIGN_MIN" - Align the time series by returning the minimum value
+// in each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// the same as the value_type of the input.
+//   "ALIGN_MAX" - Align the time series by returning the maximum value
+// in each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// the same as the value_type of the input.
+//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+// each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// DOUBLE.
+//   "ALIGN_COUNT" - Align the time series by returning the number of
+// values in each alignment period. This aligner is valid for GAUGE and
+// DELTA metrics with numeric or Boolean values. The value_type of the
+// aligned result is INT64.
+//   "ALIGN_SUM" - Align the time series by returning the sum of the
+// values in each alignment period. This aligner is valid for GAUGE and
+// DELTA metrics with numeric and distribution values. The value_type of
+// the aligned result is the same as the value_type of the input.
+//   "ALIGN_STDDEV" - Align the time series by returning the standard
+// deviation of the values in each alignment period. This aligner is
+// valid for GAUGE and DELTA metrics with numeric values. The value_type
+// of the output is DOUBLE.
+//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+// of True values in each alignment period. This aligner is valid for
+// GAUGE metrics with Boolean values. The value_type of the output is
+// INT64.
+//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+// of False values in each alignment period. This aligner is valid for
+// GAUGE metrics with Boolean values. The value_type of the output is
+// INT64.
+//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+// ratio of the number of True values to the total number of values in
+// each alignment period. This aligner is valid for GAUGE metrics with
+// Boolean values. The output value is in the range 0.0, 1.0 and has
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 99th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 95th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 50th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 5th percentile of all data
+// points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+// This aligner is valid for GAUGE and DELTA metrics with numeric
+// values. This alignment returns ((current - previous)/previous) * 100,
+// where the value of previous is determined based on the
+// alignment_period.If the values of current and previous are both 0,
+// then the returned value is 0. If only previous is 0, the returned
+// value is infinity.A 10-minute moving mean is computed at each point
+// of the alignment period prior to the above calculation to smooth the
+// metric and prevent false positives from very short-lived spikes. The
+// moving mean is only applicable for data whose values are >= 0. Any
+// values < 0 are treated as a missing datapoint, and are ignored. While
+// DELTA metrics are accepted by this alignment, special care should be
+// taken that the values for the metric will always be positive. The
+// output is a GAUGE metric with value_type DOUBLE.
+func (c *OrganizationsTimeSeriesListCall) AggregationPerSeriesAligner(aggregationPerSeriesAligner string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("aggregation.perSeriesAligner", aggregationPerSeriesAligner)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Required. A monitoring
+// filter (https://cloud.google.com/monitoring/api/v3/filters) that
+// specifies which time series should be returned. The filter must
+// specify a single metric type, and can additionally specify metric
+// labels and other information. For example: metric.type =
+// "compute.googleapis.com/instance/cpu/usage_time" AND
+// metric.labels.instance_name = "my-instance-name"
+func (c *OrganizationsTimeSeriesListCall) Filter(filter string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// IntervalEndTime sets the optional parameter "interval.endTime":
+// Required. The end of the time interval.
+func (c *OrganizationsTimeSeriesListCall) IntervalEndTime(intervalEndTime string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("interval.endTime", intervalEndTime)
+	return c
+}
+
+// IntervalStartTime sets the optional parameter "interval.startTime":
+// The beginning of the time interval. The default value for the start
+// time is the end time. The start time must not be later than the end
+// time.
+func (c *OrganizationsTimeSeriesListCall) IntervalStartTime(intervalStartTime string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("interval.startTime", intervalStartTime)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Unsupported: must be
+// left blank. The points in each time series are currently returned in
+// reverse time order (most recent to oldest).
+func (c *OrganizationsTimeSeriesListCall) OrderBy(orderBy string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": A positive number
+// that is the maximum number of results to return. If page_size is
+// empty or more than 100,000 results, the effective page_size is
+// 100,000 results. If view is set to FULL, this is the maximum number
+// of Points returned. If view is set to HEADERS, this is the maximum
+// number of TimeSeries returned.
+func (c *OrganizationsTimeSeriesListCall) PageSize(pageSize int64) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If this field is
+// not empty then it must contain the nextPageToken value returned by a
+// previous call to this method. Using this field causes the method to
+// return additional results from the previous method call.
+func (c *OrganizationsTimeSeriesListCall) PageToken(pageToken string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SecondaryAggregationAlignmentPeriod sets the optional parameter
+// "secondaryAggregation.alignmentPeriod": The alignment_period
+// specifies a time interval, in seconds, that is used to divide the
+// data in all the time series into consistent blocks of time. This will
+// be done before the per-series aligner can be applied to the data.The
+// value must be at least 60 seconds. If a per-series aligner other than
+// ALIGN_NONE is specified, this field is required or an error is
+// returned. If no per-series aligner is specified, or the aligner
+// ALIGN_NONE is specified, then this field is ignored.The maximum value
+// of the alignment_period is 104 weeks (2 years) for charts, and 90,000
+// seconds (25 hours) for alerting policies.
+func (c *OrganizationsTimeSeriesListCall) SecondaryAggregationAlignmentPeriod(secondaryAggregationAlignmentPeriod string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("secondaryAggregation.alignmentPeriod", secondaryAggregationAlignmentPeriod)
+	return c
+}
+
+// SecondaryAggregationCrossSeriesReducer sets the optional parameter
+// "secondaryAggregation.crossSeriesReducer": The reduction operation to
+// be used to combine time series into a single time series, where the
+// value of each data point in the resulting series is a function of all
+// the already aligned values in the input time series.Not all reducer
+// operations can be applied to all time series. The valid choices
+// depend on the metric_kind and the value_type of the original time
+// series. Reduction can yield a time series with a different
+// metric_kind or value_type than the input time series.Time series data
+// must first be aligned (see per_series_aligner) in order to perform
+// cross-time series reduction. If cross_series_reducer is specified,
+// then per_series_aligner must be specified, and must not be
+// ALIGN_NONE. An alignment_period must also be specified; otherwise, an
+// error is returned.
+//
+// Possible values:
+//   "REDUCE_NONE" - No cross-time series reduction. The output of the
+// Aligner is returned.
+//   "REDUCE_MEAN" - Reduce by computing the mean value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric or distribution values. The value_type of
+// the output is DOUBLE.
+//   "REDUCE_MIN" - Reduce by computing the minimum value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric values. The value_type of the output is
+// the same as the value_type of the input.
+//   "REDUCE_MAX" - Reduce by computing the maximum value across time
+// series for each alignment period. This reducer is valid for DELTA and
+// GAUGE metrics with numeric values. The value_type of the output is
+// the same as the value_type of the input.
+//   "REDUCE_SUM" - Reduce by computing the sum across time series for
+// each alignment period. This reducer is valid for DELTA and GAUGE
+// metrics with numeric and distribution values. The value_type of the
+// output is the same as the value_type of the input.
+//   "REDUCE_STDDEV" - Reduce by computing the standard deviation across
+// time series for each alignment period. This reducer is valid for
+// DELTA and GAUGE metrics with numeric or distribution values. The
+// value_type of the output is DOUBLE.
+//   "REDUCE_COUNT" - Reduce by computing the number of data points
+// across time series for each alignment period. This reducer is valid
+// for DELTA and GAUGE metrics of numeric, Boolean, distribution, and
+// string value_type. The value_type of the output is INT64.
+//   "REDUCE_COUNT_TRUE" - Reduce by computing the number of True-valued
+// data points across time series for each alignment period. This
+// reducer is valid for DELTA and GAUGE metrics of Boolean value_type.
+// The value_type of the output is INT64.
+//   "REDUCE_COUNT_FALSE" - Reduce by computing the number of
+// False-valued data points across time series for each alignment
+// period. This reducer is valid for DELTA and GAUGE metrics of Boolean
+// value_type. The value_type of the output is INT64.
+//   "REDUCE_FRACTION_TRUE" - Reduce by computing the ratio of the
+// number of True-valued data points to the total number of data points
+// for each alignment period. This reducer is valid for DELTA and GAUGE
+// metrics of Boolean value_type. The output value is in the range 0.0,
+// 1.0 and has value_type DOUBLE.
+//   "REDUCE_PERCENTILE_99" - Reduce by computing the 99th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_95" - Reduce by computing the 95th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_50" - Reduce by computing the 50th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+//   "REDUCE_PERCENTILE_05" - Reduce by computing the 5th percentile
+// (https://en.wikipedia.org/wiki/Percentile) of data points across time
+// series for each alignment period. This reducer is valid for GAUGE and
+// DELTA metrics of numeric and distribution type. The value of the
+// output is DOUBLE.
+func (c *OrganizationsTimeSeriesListCall) SecondaryAggregationCrossSeriesReducer(secondaryAggregationCrossSeriesReducer string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("secondaryAggregation.crossSeriesReducer", secondaryAggregationCrossSeriesReducer)
+	return c
+}
+
+// SecondaryAggregationGroupByFields sets the optional parameter
+// "secondaryAggregation.groupByFields": The set of fields to preserve
+// when cross_series_reducer is specified. The group_by_fields determine
+// how the time series are partitioned into subsets prior to applying
+// the aggregation operation. Each subset contains time series that have
+// the same value for each of the grouping fields. Each individual time
+// series is a member of exactly one subset. The cross_series_reducer is
+// applied to each subset of time series. It is not possible to reduce
+// across different resource types, so this field implicitly contains
+// resource.type. Fields not specified in group_by_fields are aggregated
+// away. If group_by_fields is not specified and all the time series
+// have the same resource type, then the time series are aggregated into
+// a single output time series. If cross_series_reducer is not defined,
+// this field is ignored.
+func (c *OrganizationsTimeSeriesListCall) SecondaryAggregationGroupByFields(secondaryAggregationGroupByFields ...string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.SetMulti("secondaryAggregation.groupByFields", append([]string{}, secondaryAggregationGroupByFields...))
+	return c
+}
+
+// SecondaryAggregationPerSeriesAligner sets the optional parameter
+// "secondaryAggregation.perSeriesAligner": An Aligner describes how to
+// bring the data points in a single time series into temporal
+// alignment. Except for ALIGN_NONE, all alignments cause all the data
+// points in an alignment_period to be mathematically grouped together,
+// resulting in a single data point for each alignment_period with end
+// timestamp at the end of the period.Not all alignment operations may
+// be applied to all time series. The valid choices depend on the
+// metric_kind and value_type of the original time series. Alignment can
+// change the metric_kind or the value_type of the time series.Time
+// series data must be aligned in order to perform cross-time series
+// reduction. If cross_series_reducer is specified, then
+// per_series_aligner must be specified and not equal to ALIGN_NONE and
+// alignment_period must be specified; otherwise, an error is returned.
+//
+// Possible values:
+//   "ALIGN_NONE" - No alignment. Raw data is returned. Not valid if
+// cross-series reduction is requested. The value_type of the result is
+// the same as the value_type of the input.
+//   "ALIGN_DELTA" - Align and convert to DELTA. The output is delta =
+// y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If
+// the selected alignment period results in periods with no data, then
+// the aligned value for such a period is created by interpolation. The
+// value_type of the aligned result is the same as the value_type of the
+// input.
+//   "ALIGN_RATE" - Align and convert to a rate. The result is computed
+// as rate = (y1 - y0)/(t1 - t0), or "delta over time". Think of this
+// aligner as providing the slope of the line that passes through the
+// value at the start and at the end of the alignment_period.This
+// aligner is valid for CUMULATIVE and DELTA metrics with numeric
+// values. If the selected alignment period results in periods with no
+// data, then the aligned value for such a period is created by
+// interpolation. The output is a GAUGE metric with value_type
+// DOUBLE.If, by "rate", you mean "percentage change", see the
+// ALIGN_PERCENT_CHANGE aligner instead.
+//   "ALIGN_INTERPOLATE" - Align by interpolating between adjacent
+// points around the alignment period boundary. This aligner is valid
+// for GAUGE metrics with numeric values. The value_type of the aligned
+// result is the same as the value_type of the input.
+//   "ALIGN_NEXT_OLDER" - Align by moving the most recent data point
+// before the end of the alignment period to the boundary at the end of
+// the alignment period. This aligner is valid for GAUGE metrics. The
+// value_type of the aligned result is the same as the value_type of the
+// input.
+//   "ALIGN_MIN" - Align the time series by returning the minimum value
+// in each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// the same as the value_type of the input.
+//   "ALIGN_MAX" - Align the time series by returning the maximum value
+// in each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// the same as the value_type of the input.
+//   "ALIGN_MEAN" - Align the time series by returning the mean value in
+// each alignment period. This aligner is valid for GAUGE and DELTA
+// metrics with numeric values. The value_type of the aligned result is
+// DOUBLE.
+//   "ALIGN_COUNT" - Align the time series by returning the number of
+// values in each alignment period. This aligner is valid for GAUGE and
+// DELTA metrics with numeric or Boolean values. The value_type of the
+// aligned result is INT64.
+//   "ALIGN_SUM" - Align the time series by returning the sum of the
+// values in each alignment period. This aligner is valid for GAUGE and
+// DELTA metrics with numeric and distribution values. The value_type of
+// the aligned result is the same as the value_type of the input.
+//   "ALIGN_STDDEV" - Align the time series by returning the standard
+// deviation of the values in each alignment period. This aligner is
+// valid for GAUGE and DELTA metrics with numeric values. The value_type
+// of the output is DOUBLE.
+//   "ALIGN_COUNT_TRUE" - Align the time series by returning the number
+// of True values in each alignment period. This aligner is valid for
+// GAUGE metrics with Boolean values. The value_type of the output is
+// INT64.
+//   "ALIGN_COUNT_FALSE" - Align the time series by returning the number
+// of False values in each alignment period. This aligner is valid for
+// GAUGE metrics with Boolean values. The value_type of the output is
+// INT64.
+//   "ALIGN_FRACTION_TRUE" - Align the time series by returning the
+// ratio of the number of True values to the total number of values in
+// each alignment period. This aligner is valid for GAUGE metrics with
+// Boolean values. The output value is in the range 0.0, 1.0 and has
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_99" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 99th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_95" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 95th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_50" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 50th percentile of all
+// data points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENTILE_05" - Align the time series by using percentile
+// aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting
+// data point in each alignment period is the 5th percentile of all data
+// points in the period. This aligner is valid for GAUGE and DELTA
+// metrics with distribution values. The output is a GAUGE metric with
+// value_type DOUBLE.
+//   "ALIGN_PERCENT_CHANGE" - Align and convert to a percentage change.
+// This aligner is valid for GAUGE and DELTA metrics with numeric
+// values. This alignment returns ((current - previous)/previous) * 100,
+// where the value of previous is determined based on the
+// alignment_period.If the values of current and previous are both 0,
+// then the returned value is 0. If only previous is 0, the returned
+// value is infinity.A 10-minute moving mean is computed at each point
+// of the alignment period prior to the above calculation to smooth the
+// metric and prevent false positives from very short-lived spikes. The
+// moving mean is only applicable for data whose values are >= 0. Any
+// values < 0 are treated as a missing datapoint, and are ignored. While
+// DELTA metrics are accepted by this alignment, special care should be
+// taken that the values for the metric will always be positive. The
+// output is a GAUGE metric with value_type DOUBLE.
+func (c *OrganizationsTimeSeriesListCall) SecondaryAggregationPerSeriesAligner(secondaryAggregationPerSeriesAligner string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("secondaryAggregation.perSeriesAligner", secondaryAggregationPerSeriesAligner)
+	return c
+}
+
+// View sets the optional parameter "view": Required. Specifies which
+// information is returned about the time series.
+//
+// Possible values:
+//   "FULL" - Returns the identity of the metric(s), the time series,
+// and the time series data.
+//   "HEADERS" - Returns the identity of the metric and the time series
+// resource, but not the time series data.
+func (c *OrganizationsTimeSeriesListCall) View(view string) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsTimeSeriesListCall) Fields(s ...googleapi.Field) *OrganizationsTimeSeriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsTimeSeriesListCall) IfNoneMatch(entityTag string) *OrganizationsTimeSeriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsTimeSeriesListCall) Context(ctx context.Context) *OrganizationsTimeSeriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsTimeSeriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}/timeSeries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "monitoring.organizations.timeSeries.list" call.
+// Exactly one of *ListTimeSeriesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListTimeSeriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTimeSeriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListTimeSeriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists time series that match a filter. This method does not require a Workspace.",
+	//   "flatPath": "v3/organizations/{organizationsId}/timeSeries",
+	//   "httpMethod": "GET",
+	//   "id": "monitoring.organizations.timeSeries.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "aggregation.alignmentPeriod": {
+	//       "description": "The alignment_period specifies a time interval, in seconds, that is used to divide the data in all the time series into consistent blocks of time. This will be done before the per-series aligner can be applied to the data.The value must be at least 60 seconds. If a per-series aligner other than ALIGN_NONE is specified, this field is required or an error is returned. If no per-series aligner is specified, or the aligner ALIGN_NONE is specified, then this field is ignored.The maximum value of the alignment_period is 104 weeks (2 years) for charts, and 90,000 seconds (25 hours) for alerting policies.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "aggregation.crossSeriesReducer": {
+	//       "description": "The reduction operation to be used to combine time series into a single time series, where the value of each data point in the resulting series is a function of all the already aligned values in the input time series.Not all reducer operations can be applied to all time series. The valid choices depend on the metric_kind and the value_type of the original time series. Reduction can yield a time series with a different metric_kind or value_type than the input time series.Time series data must first be aligned (see per_series_aligner) in order to perform cross-time series reduction. If cross_series_reducer is specified, then per_series_aligner must be specified, and must not be ALIGN_NONE. An alignment_period must also be specified; otherwise, an error is returned.",
+	//       "enum": [
+	//         "REDUCE_NONE",
+	//         "REDUCE_MEAN",
+	//         "REDUCE_MIN",
+	//         "REDUCE_MAX",
+	//         "REDUCE_SUM",
+	//         "REDUCE_STDDEV",
+	//         "REDUCE_COUNT",
+	//         "REDUCE_COUNT_TRUE",
+	//         "REDUCE_COUNT_FALSE",
+	//         "REDUCE_FRACTION_TRUE",
+	//         "REDUCE_PERCENTILE_99",
+	//         "REDUCE_PERCENTILE_95",
+	//         "REDUCE_PERCENTILE_50",
+	//         "REDUCE_PERCENTILE_05"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No cross-time series reduction. The output of the Aligner is returned.",
+	//         "Reduce by computing the mean value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric or distribution values. The value_type of the output is DOUBLE.",
+	//         "Reduce by computing the minimum value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the maximum value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the sum across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric and distribution values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the standard deviation across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric or distribution values. The value_type of the output is DOUBLE.",
+	//         "Reduce by computing the number of data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of numeric, Boolean, distribution, and string value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the number of True-valued data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the number of False-valued data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the ratio of the number of True-valued data points to the total number of data points for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The output value is in the range 0.0, 1.0 and has value_type DOUBLE.",
+	//         "Reduce by computing the 99th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 95th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 50th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 5th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "aggregation.groupByFields": {
+	//       "description": "The set of fields to preserve when cross_series_reducer is specified. The group_by_fields determine how the time series are partitioned into subsets prior to applying the aggregation operation. Each subset contains time series that have the same value for each of the grouping fields. Each individual time series is a member of exactly one subset. The cross_series_reducer is applied to each subset of time series. It is not possible to reduce across different resource types, so this field implicitly contains resource.type. Fields not specified in group_by_fields are aggregated away. If group_by_fields is not specified and all the time series have the same resource type, then the time series are aggregated into a single output time series. If cross_series_reducer is not defined, this field is ignored.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "aggregation.perSeriesAligner": {
+	//       "description": "An Aligner describes how to bring the data points in a single time series into temporal alignment. Except for ALIGN_NONE, all alignments cause all the data points in an alignment_period to be mathematically grouped together, resulting in a single data point for each alignment_period with end timestamp at the end of the period.Not all alignment operations may be applied to all time series. The valid choices depend on the metric_kind and value_type of the original time series. Alignment can change the metric_kind or the value_type of the time series.Time series data must be aligned in order to perform cross-time series reduction. If cross_series_reducer is specified, then per_series_aligner must be specified and not equal to ALIGN_NONE and alignment_period must be specified; otherwise, an error is returned.",
+	//       "enum": [
+	//         "ALIGN_NONE",
+	//         "ALIGN_DELTA",
+	//         "ALIGN_RATE",
+	//         "ALIGN_INTERPOLATE",
+	//         "ALIGN_NEXT_OLDER",
+	//         "ALIGN_MIN",
+	//         "ALIGN_MAX",
+	//         "ALIGN_MEAN",
+	//         "ALIGN_COUNT",
+	//         "ALIGN_SUM",
+	//         "ALIGN_STDDEV",
+	//         "ALIGN_COUNT_TRUE",
+	//         "ALIGN_COUNT_FALSE",
+	//         "ALIGN_FRACTION_TRUE",
+	//         "ALIGN_PERCENTILE_99",
+	//         "ALIGN_PERCENTILE_95",
+	//         "ALIGN_PERCENTILE_50",
+	//         "ALIGN_PERCENTILE_05",
+	//         "ALIGN_PERCENT_CHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No alignment. Raw data is returned. Not valid if cross-series reduction is requested. The value_type of the result is the same as the value_type of the input.",
+	//         "Align and convert to DELTA. The output is delta = y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If the selected alignment period results in periods with no data, then the aligned value for such a period is created by interpolation. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align and convert to a rate. The result is computed as rate = (y1 - y0)/(t1 - t0), or \"delta over time\". Think of this aligner as providing the slope of the line that passes through the value at the start and at the end of the alignment_period.This aligner is valid for CUMULATIVE and DELTA metrics with numeric values. If the selected alignment period results in periods with no data, then the aligned value for such a period is created by interpolation. The output is a GAUGE metric with value_type DOUBLE.If, by \"rate\", you mean \"percentage change\", see the ALIGN_PERCENT_CHANGE aligner instead.",
+	//         "Align by interpolating between adjacent points around the alignment period boundary. This aligner is valid for GAUGE metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align by moving the most recent data point before the end of the alignment period to the boundary at the end of the alignment period. This aligner is valid for GAUGE metrics. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the minimum value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the maximum value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the mean value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is DOUBLE.",
+	//         "Align the time series by returning the number of values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric or Boolean values. The value_type of the aligned result is INT64.",
+	//         "Align the time series by returning the sum of the values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric and distribution values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the standard deviation of the values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the output is DOUBLE.",
+	//         "Align the time series by returning the number of True values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The value_type of the output is INT64.",
+	//         "Align the time series by returning the number of False values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The value_type of the output is INT64.",
+	//         "Align the time series by returning the ratio of the number of True values to the total number of values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The output value is in the range 0.0, 1.0 and has value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 99th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 95th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 50th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 5th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align and convert to a percentage change. This aligner is valid for GAUGE and DELTA metrics with numeric values. This alignment returns ((current - previous)/previous) * 100, where the value of previous is determined based on the alignment_period.If the values of current and previous are both 0, then the returned value is 0. If only previous is 0, the returned value is infinity.A 10-minute moving mean is computed at each point of the alignment period prior to the above calculation to smooth the metric and prevent false positives from very short-lived spikes. The moving mean is only applicable for data whose values are \u003e= 0. Any values \u003c 0 are treated as a missing datapoint, and are ignored. While DELTA metrics are accepted by this alignment, special care should be taken that the values for the metric will always be positive. The output is a GAUGE metric with value_type DOUBLE."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Required. A monitoring filter (https://cloud.google.com/monitoring/api/v3/filters) that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example: metric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND metric.labels.instance_name = \"my-instance-name\" ",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "interval.endTime": {
+	//       "description": "Required. The end of the time interval.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "interval.startTime": {
+	//       "description": "Optional. The beginning of the time interval. The default value for the start time is the end time. The start time must not be later than the end time.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Unsupported: must be left blank. The points in each time series are currently returned in reverse time order (most recent to oldest).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "A positive number that is the maximum number of results to return. If page_size is empty or more than 100,000 results, the effective page_size is 100,000 results. If view is set to FULL, this is the maximum number of Points returned. If view is set to HEADERS, this is the maximum number of TimeSeries returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "secondaryAggregation.alignmentPeriod": {
+	//       "description": "The alignment_period specifies a time interval, in seconds, that is used to divide the data in all the time series into consistent blocks of time. This will be done before the per-series aligner can be applied to the data.The value must be at least 60 seconds. If a per-series aligner other than ALIGN_NONE is specified, this field is required or an error is returned. If no per-series aligner is specified, or the aligner ALIGN_NONE is specified, then this field is ignored.The maximum value of the alignment_period is 104 weeks (2 years) for charts, and 90,000 seconds (25 hours) for alerting policies.",
+	//       "format": "google-duration",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "secondaryAggregation.crossSeriesReducer": {
+	//       "description": "The reduction operation to be used to combine time series into a single time series, where the value of each data point in the resulting series is a function of all the already aligned values in the input time series.Not all reducer operations can be applied to all time series. The valid choices depend on the metric_kind and the value_type of the original time series. Reduction can yield a time series with a different metric_kind or value_type than the input time series.Time series data must first be aligned (see per_series_aligner) in order to perform cross-time series reduction. If cross_series_reducer is specified, then per_series_aligner must be specified, and must not be ALIGN_NONE. An alignment_period must also be specified; otherwise, an error is returned.",
+	//       "enum": [
+	//         "REDUCE_NONE",
+	//         "REDUCE_MEAN",
+	//         "REDUCE_MIN",
+	//         "REDUCE_MAX",
+	//         "REDUCE_SUM",
+	//         "REDUCE_STDDEV",
+	//         "REDUCE_COUNT",
+	//         "REDUCE_COUNT_TRUE",
+	//         "REDUCE_COUNT_FALSE",
+	//         "REDUCE_FRACTION_TRUE",
+	//         "REDUCE_PERCENTILE_99",
+	//         "REDUCE_PERCENTILE_95",
+	//         "REDUCE_PERCENTILE_50",
+	//         "REDUCE_PERCENTILE_05"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No cross-time series reduction. The output of the Aligner is returned.",
+	//         "Reduce by computing the mean value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric or distribution values. The value_type of the output is DOUBLE.",
+	//         "Reduce by computing the minimum value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the maximum value across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the sum across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric and distribution values. The value_type of the output is the same as the value_type of the input.",
+	//         "Reduce by computing the standard deviation across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics with numeric or distribution values. The value_type of the output is DOUBLE.",
+	//         "Reduce by computing the number of data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of numeric, Boolean, distribution, and string value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the number of True-valued data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the number of False-valued data points across time series for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The value_type of the output is INT64.",
+	//         "Reduce by computing the ratio of the number of True-valued data points to the total number of data points for each alignment period. This reducer is valid for DELTA and GAUGE metrics of Boolean value_type. The output value is in the range 0.0, 1.0 and has value_type DOUBLE.",
+	//         "Reduce by computing the 99th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 95th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 50th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE.",
+	//         "Reduce by computing the 5th percentile (https://en.wikipedia.org/wiki/Percentile) of data points across time series for each alignment period. This reducer is valid for GAUGE and DELTA metrics of numeric and distribution type. The value of the output is DOUBLE."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "secondaryAggregation.groupByFields": {
+	//       "description": "The set of fields to preserve when cross_series_reducer is specified. The group_by_fields determine how the time series are partitioned into subsets prior to applying the aggregation operation. Each subset contains time series that have the same value for each of the grouping fields. Each individual time series is a member of exactly one subset. The cross_series_reducer is applied to each subset of time series. It is not possible to reduce across different resource types, so this field implicitly contains resource.type. Fields not specified in group_by_fields are aggregated away. If group_by_fields is not specified and all the time series have the same resource type, then the time series are aggregated into a single output time series. If cross_series_reducer is not defined, this field is ignored.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "secondaryAggregation.perSeriesAligner": {
+	//       "description": "An Aligner describes how to bring the data points in a single time series into temporal alignment. Except for ALIGN_NONE, all alignments cause all the data points in an alignment_period to be mathematically grouped together, resulting in a single data point for each alignment_period with end timestamp at the end of the period.Not all alignment operations may be applied to all time series. The valid choices depend on the metric_kind and value_type of the original time series. Alignment can change the metric_kind or the value_type of the time series.Time series data must be aligned in order to perform cross-time series reduction. If cross_series_reducer is specified, then per_series_aligner must be specified and not equal to ALIGN_NONE and alignment_period must be specified; otherwise, an error is returned.",
+	//       "enum": [
+	//         "ALIGN_NONE",
+	//         "ALIGN_DELTA",
+	//         "ALIGN_RATE",
+	//         "ALIGN_INTERPOLATE",
+	//         "ALIGN_NEXT_OLDER",
+	//         "ALIGN_MIN",
+	//         "ALIGN_MAX",
+	//         "ALIGN_MEAN",
+	//         "ALIGN_COUNT",
+	//         "ALIGN_SUM",
+	//         "ALIGN_STDDEV",
+	//         "ALIGN_COUNT_TRUE",
+	//         "ALIGN_COUNT_FALSE",
+	//         "ALIGN_FRACTION_TRUE",
+	//         "ALIGN_PERCENTILE_99",
+	//         "ALIGN_PERCENTILE_95",
+	//         "ALIGN_PERCENTILE_50",
+	//         "ALIGN_PERCENTILE_05",
+	//         "ALIGN_PERCENT_CHANGE"
+	//       ],
+	//       "enumDescriptions": [
+	//         "No alignment. Raw data is returned. Not valid if cross-series reduction is requested. The value_type of the result is the same as the value_type of the input.",
+	//         "Align and convert to DELTA. The output is delta = y1 - y0.This alignment is valid for CUMULATIVE and DELTA metrics. If the selected alignment period results in periods with no data, then the aligned value for such a period is created by interpolation. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align and convert to a rate. The result is computed as rate = (y1 - y0)/(t1 - t0), or \"delta over time\". Think of this aligner as providing the slope of the line that passes through the value at the start and at the end of the alignment_period.This aligner is valid for CUMULATIVE and DELTA metrics with numeric values. If the selected alignment period results in periods with no data, then the aligned value for such a period is created by interpolation. The output is a GAUGE metric with value_type DOUBLE.If, by \"rate\", you mean \"percentage change\", see the ALIGN_PERCENT_CHANGE aligner instead.",
+	//         "Align by interpolating between adjacent points around the alignment period boundary. This aligner is valid for GAUGE metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align by moving the most recent data point before the end of the alignment period to the boundary at the end of the alignment period. This aligner is valid for GAUGE metrics. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the minimum value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the maximum value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the mean value in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the aligned result is DOUBLE.",
+	//         "Align the time series by returning the number of values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric or Boolean values. The value_type of the aligned result is INT64.",
+	//         "Align the time series by returning the sum of the values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric and distribution values. The value_type of the aligned result is the same as the value_type of the input.",
+	//         "Align the time series by returning the standard deviation of the values in each alignment period. This aligner is valid for GAUGE and DELTA metrics with numeric values. The value_type of the output is DOUBLE.",
+	//         "Align the time series by returning the number of True values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The value_type of the output is INT64.",
+	//         "Align the time series by returning the number of False values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The value_type of the output is INT64.",
+	//         "Align the time series by returning the ratio of the number of True values to the total number of values in each alignment period. This aligner is valid for GAUGE metrics with Boolean values. The output value is in the range 0.0, 1.0 and has value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 99th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 95th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 50th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 5th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
+	//         "Align and convert to a percentage change. This aligner is valid for GAUGE and DELTA metrics with numeric values. This alignment returns ((current - previous)/previous) * 100, where the value of previous is determined based on the alignment_period.If the values of current and previous are both 0, then the returned value is 0. If only previous is 0, the returned value is infinity.A 10-minute moving mean is computed at each point of the alignment period prior to the above calculation to smooth the metric and prevent false positives from very short-lived spikes. The moving mean is only applicable for data whose values are \u003e= 0. Any values \u003c 0 are treated as a missing datapoint, and are ignored. While DELTA metrics are accepted by this alignment, special care should be taken that the values for the metric will always be positive. The output is a GAUGE metric with value_type DOUBLE."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Required. Specifies which information is returned about the time series.",
+	//       "enum": [
+	//         "FULL",
+	//         "HEADERS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Returns the identity of the metric(s), the time series, and the time series data.",
+	//         "Returns the identity of the metric and the time series resource, but not the time series data."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3/{+name}/timeSeries",
+	//   "response": {
+	//     "$ref": "ListTimeSeriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/monitoring",
+	//     "https://www.googleapis.com/auth/monitoring.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsTimeSeriesListCall) Pages(ctx context.Context, f func(*ListTimeSeriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "monitoring.projects.alertPolicies.create":
 
 type ProjectsAlertPoliciesCreateCall struct {
@@ -5560,7 +7560,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5699,7 +7699,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5841,7 +7841,7 @@ func (c *ProjectsAlertPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6023,7 +8023,7 @@ func (c *ProjectsAlertPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6228,7 +8228,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6377,7 +8377,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6526,7 +8526,7 @@ func (c *ProjectsGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6679,7 +8679,7 @@ func (c *ProjectsGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6826,7 +8826,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7021,7 +9021,7 @@ func (c *ProjectsGroupsListCall) Header() http.Header {
 
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7213,7 +9213,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7412,7 +9412,7 @@ func (c *ProjectsGroupsMembersListCall) Header() http.Header {
 
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7600,7 +9600,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7741,7 +9741,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7884,7 +9884,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8061,7 +10061,7 @@ func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8246,7 +10246,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8421,7 +10421,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8609,7 +10609,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8773,7 +10773,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8946,7 +10946,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9095,7 +11095,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9247,7 +11247,7 @@ func (c *ProjectsNotificationChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9404,7 +11404,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Header() http.Head
 
 func (c *ProjectsNotificationChannelsGetVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9594,7 +11594,7 @@ func (c *ProjectsNotificationChannelsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9781,7 +11781,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9930,7 +11930,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Header() http.Hea
 
 func (c *ProjectsNotificationChannelsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10073,7 +12073,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10217,7 +12217,7 @@ func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10916,7 +12916,7 @@ func (c *ProjectsTimeSeriesListCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11100,7 +13100,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -11313,7 +13313,7 @@ func (c *ProjectsTimeSeriesQueryCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11476,7 +13476,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11618,7 +13618,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11760,7 +13760,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11926,7 +13926,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12108,7 +14108,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12263,7 +14263,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12407,7 +14407,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12549,7 +14549,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12731,7 +14731,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12912,7 +14912,7 @@ func (c *ServicesPatchCall) Header() http.Header {
 
 func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13068,7 +15068,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13212,7 +15212,7 @@ func (c *ServicesServiceLevelObjectivesDeleteCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13375,7 +15375,7 @@ func (c *ServicesServiceLevelObjectivesGetCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13581,7 +15581,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13778,7 +15778,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13952,7 +15952,7 @@ func (c *UptimeCheckIpsListCall) Header() http.Header {
 
 func (c *UptimeCheckIpsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

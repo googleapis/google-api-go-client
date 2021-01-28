@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -230,6 +230,38 @@ func (s *AllowedIpRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DatabaseConfig: The configuration of Cloud SQL instance that is used
+// by the Apache Airflow software.
+type DatabaseConfig struct {
+	// MachineType: Optional. Cloud SQL machine type used by Airflow
+	// database. It has to be one of: db-n1-standard-2, db-n1-standard-4,
+	// db-n1-standard-8 or db-n1-standard-16. If not specified,
+	// db-n1-standard-2 will be used.
+	MachineType string `json:"machineType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MachineType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole or partial calendar date, such as a
 // birthday. The time of day and time zone are either specified
 // elsewhere or are insignificant. The date is relative to the Gregorian
@@ -367,8 +399,8 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 // EnvironmentConfig: Configuration information for an environment.
 type EnvironmentConfig struct {
 	// AirflowUri: Output only. The URI of the Apache Airflow Web UI hosted
-	// within this environment (see [Airflow web
-	// interface](/composer/docs/how-to/accessing/airflow-web-interface)).
+	// within this environment (see Airflow web interface
+	// (/composer/docs/how-to/accessing/airflow-web-interface)).
 	AirflowUri string `json:"airflowUri,omitempty"`
 
 	// DagGcsPrefix: Output only. The Cloud Storage prefix of the DAGs for
@@ -377,6 +409,10 @@ type EnvironmentConfig struct {
 	// "/"-delimited object name prefixes. DAG objects for this environment
 	// reside in a simulated directory with the given prefix.
 	DagGcsPrefix string `json:"dagGcsPrefix,omitempty"`
+
+	// DatabaseConfig: Optional. The configuration settings for Cloud SQL
+	// instance used internally by Apache Airflow software.
+	DatabaseConfig *DatabaseConfig `json:"databaseConfig,omitempty"`
 
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
 	// this environment.
@@ -396,6 +432,10 @@ type EnvironmentConfig struct {
 	// SoftwareConfig: The configuration settings for software inside the
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
+
+	// WebServerConfig: Optional. The configuration settings for the Airflow
+	// web server App Engine instance.
+	WebServerConfig *WebServerConfig `json:"webServerConfig,omitempty"`
 
 	// WebServerNetworkAccessControl: Optional. The network-level access
 	// control policy for the Airflow web server. If unspecified, no
@@ -432,8 +472,8 @@ type IPAllocationPolicy struct {
 	// IP addresses to pods in the GKE cluster. This field is applicable
 	// only when `use_ip_aliases` is true. Set to blank to have GKE choose a
 	// range with the default size. Set to /netmask (e.g. `/14`) to have GKE
-	// choose a range with a specific netmask. Set to a
-	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// choose a range with a specific netmask. Set to a CIDR
+	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use.
@@ -448,8 +488,8 @@ type IPAllocationPolicy struct {
 	// IP addresses in this GKE cluster. This field is applicable only when
 	// `use_ip_aliases` is true. Set to blank to have GKE choose a range
 	// with the default size. Set to /netmask (e.g. `/14`) to have GKE
-	// choose a range with a specific netmask. Set to a
-	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// choose a range with a specific netmask. Set to a CIDR
+	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use.
@@ -659,26 +699,25 @@ type NodeConfig struct {
 	// IPs are allocated in the GKE cluster.
 	IpAllocationPolicy *IPAllocationPolicy `json:"ipAllocationPolicy,omitempty"`
 
-	// Location: Optional. The Compute Engine
-	// [zone](/compute/docs/regions-zones) in which to deploy the VMs used
-	// to run the Apache Airflow software, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example: "projects/{projectId}/zones/{zoneId}". This `location` must
-	// belong to the enclosing environment's project and location. If both
-	// this field and `nodeConfig.machineType` are specified,
-	// `nodeConfig.machineType` must belong to this `location`; if both are
-	// unspecified, the service will pick a zone in the Compute Engine
-	// region corresponding to the Cloud Composer location, and propagate
-	// that choice to both fields. If only one field (`location` or
-	// `nodeConfig.machineType`) is specified, the location information from
-	// the specified field will be propagated to the unspecified field.
+	// Location: Optional. The Compute Engine zone
+	// (/compute/docs/regions-zones) in which to deploy the VMs used to run
+	// the Apache Airflow software, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
+	// "projects/{projectId}/zones/{zoneId}". This `location` must belong to
+	// the enclosing environment's project and location. If both this field
+	// and `nodeConfig.machineType` are specified, `nodeConfig.machineType`
+	// must belong to this `location`; if both are unspecified, the service
+	// will pick a zone in the Compute Engine region corresponding to the
+	// Cloud Composer location, and propagate that choice to both fields. If
+	// only one field (`location` or `nodeConfig.machineType`) is specified,
+	// the location information from the specified field will be propagated
+	// to the unspecified field.
 	Location string `json:"location,omitempty"`
 
-	// MachineType: Optional. The Compute Engine [machine
-	// type](/compute/docs/machine-types) used for cluster instances,
-	// specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example:
+	// MachineType: Optional. The Compute Engine machine type
+	// (/compute/docs/machine-types) used for cluster instances, specified
+	// as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
 	// "projects/{projectId}/zones/{zoneId}/machineTypes/{machineTypeId}".
 	// The `machineType` must belong to the enclosing environment's project
 	// and location. If both this field and `nodeConfig.location` are
@@ -688,20 +727,20 @@ type NodeConfig struct {
 	// Composer location, and propagate that choice to both fields. If
 	// exactly one of this field and `nodeConfig.location` is specified, the
 	// location information from the specified field will be propagated to
-	// the unspecified field. The `machineTypeId` must not be a [shared-core
-	// machine type](/compute/docs/machine-types#sharedcore). If this field
+	// the unspecified field. The `machineTypeId` must not be a shared-core
+	// machine type (/compute/docs/machine-types#sharedcore). If this field
 	// is unspecified, the `machineTypeId` defaults to "n1-standard-1".
 	MachineType string `json:"machineType,omitempty"`
 
 	// Network: Optional. The Compute Engine network to be used for machine
-	// communications, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example: "projects/{projectId}/global/networks/{networkId}". [Shared
-	// VPC](/vpc/docs/shared-vpc) is not currently supported. The network
-	// must belong to the environment's project. If unspecified, the
-	// "default" network ID in the environment's project is used. If a
-	// [Custom Subnet Network](/vpc/docs/vpc#vpc_networks_and_subnets) is
-	// provided, `nodeConfig.subnetwork` must also be provided.
+	// communications, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
+	// "projects/{projectId}/global/networks/{networkId}". Shared VPC
+	// (/vpc/docs/shared-vpc) is not currently supported. The network must
+	// belong to the environment's project. If unspecified, the "default"
+	// network ID in the environment's project is used. If a Custom Subnet
+	// Network (/vpc/docs/vpc#vpc_networks_and_subnets) is provided,
+	// `nodeConfig.subnetwork` must also be provided.
 	Network string `json:"network,omitempty"`
 
 	// OauthScopes: Optional. The set of Google API scopes to be made
@@ -717,9 +756,8 @@ type NodeConfig struct {
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Subnetwork: Optional. The Compute Engine subnetwork to be used for
-	// machine communications, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example:
+	// machine communications, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
 	// "projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}"
 	// If a subnetwork is provided, `nodeConfig.network` must also be
 	// provided, and the subnetwork must belong to the enclosing
@@ -728,8 +766,8 @@ type NodeConfig struct {
 
 	// Tags: Optional. The list of instance tags applied to all node VMs.
 	// Tags are used to identify valid sources or targets for network
-	// firewalls. Each tag within the list must comply with
-	// [RFC1035](https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
+	// firewalls. Each tag within the list must comply with RFC1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
@@ -837,8 +875,8 @@ type OperationMetadata struct {
 	//   "UPDATE" - A resource update operation.
 	OperationType string `json:"operationType,omitempty"`
 
-	// Resource: Output only. The resource being operated on, as a [relative
-	// resource name]( /apis/design/resource_names#relative_resource_name).
+	// Resource: Output only. The resource being operated on, as a relative
+	// resource name ( /apis/design/resource_names#relative_resource_name).
 	Resource string `json:"resource,omitempty"`
 
 	// ResourceUuid: Output only. The UUID of the resource being operated
@@ -987,12 +1025,11 @@ type SoftwareConfig struct {
 	// brackets ("]"). The property name must not be empty and must not
 	// contain an equals sign ("=") or semicolon (";"). Section and property
 	// names must not contain a period ("."). Apache Airflow configuration
-	// property names must be written in
-	// [snake_case](https://en.wikipedia.org/wiki/Snake_case). Property
-	// values can contain any character, and can be written in any
-	// lower/upper case format. Certain Apache Airflow configuration
-	// property values are
-	// [blocked](/composer/docs/concepts/airflow-configurations), and cannot
+	// property names must be written in snake_case
+	// (https://en.wikipedia.org/wiki/Snake_case). Property values can
+	// contain any character, and can be written in any lower/upper case
+	// format. Certain Apache Airflow configuration property values are
+	// blocked (/composer/docs/concepts/airflow-configurations), and cannot
 	// be overridden.
 	AirflowConfigOverrides map[string]string `json:"airflowConfigOverrides,omitempty"`
 
@@ -1015,16 +1052,16 @@ type SoftwareConfig struct {
 	// `composer-([0-9]+\.[0-9]+\.[0-9]+|latest)-airflow-[0-9]+\.[0-9]+(\.[0-
 	// 9]+.*)?`. When used as input, the server also checks if the provided
 	// version is supported and denies the request for an unsupported
-	// version. The Cloud Composer portion of the version is a [semantic
-	// version](https://semver.org) or `latest`. When the patch version is
+	// version. The Cloud Composer portion of the version is a semantic
+	// version (https://semver.org) or `latest`. When the patch version is
 	// omitted, the current Cloud Composer patch version is selected. When
 	// `latest` is provided instead of an explicit version number, the
 	// server replaces `latest` with the current Cloud Composer version and
 	// stores that version number in the same field. The portion of the
 	// image version that follows *airflow-* is an official Apache Airflow
-	// repository [release
-	// name](https://github.com/apache/incubator-airflow/releases). See also
-	// [Version List](/composer/docs/concepts/versioning/composer-versions).
+	// repository release name
+	// (https://github.com/apache/incubator-airflow/releases). See also
+	// Version List (/composer/docs/concepts/versioning/composer-versions).
 	ImageVersion string `json:"imageVersion,omitempty"`
 
 	// PypiPackages: Optional. Custom Python Package Index (PyPI) packages
@@ -1068,11 +1105,11 @@ func (s *SoftwareConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1106,6 +1143,40 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WebServerConfig: The configuration settings for the Airflow web
+// server App Engine instance.
+type WebServerConfig struct {
+	// MachineType: Optional. Machine type on which Airflow web server is
+	// running. It has to be one of: composer-n1-webserver-2,
+	// composer-n1-webserver-4 or composer-n1-webserver-8. If not specified,
+	// composer-n1-webserver-2 will be used. Value custom is returned only
+	// in response, if Airflow web server parameters were manually changed
+	// to a non-standard values.
+	MachineType string `json:"machineType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MachineType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WebServerConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1186,7 +1257,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1324,7 +1395,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1465,7 +1536,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1623,7 +1694,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1814,7 +1885,9 @@ func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *E
 // Horizontally scale the number of nodes in the environment. An integer
 // greater than or equal to 3 must be provided in the `config.nodeCount`
 // field. config.webServerNetworkAccessControl Replace the environment's
-// current WebServerNetworkAccessControl.
+// current WebServerNetworkAccessControl. config.databaseConfig Replace
+// the environment's current DatabaseConfig. config.webServerConfig
+// Replace the environment's current WebServerConfig.
 // config.softwareConfig.airflowConfigOverrides Replace all Apache
 // Airflow config overrides. If a replacement config overrides map is
 // not included in `environment`, all config overrides are cleared. It
@@ -1864,7 +1937,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1944,7 +2017,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of numpy, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.numpy\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and numpy will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } **Note:** Only the following fields can be updated: *Mask* *Purpose* config.softwareConfig.pypiPackages Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. config.softwareConfig.pypiPackages.packagename Update the custom PyPI package packagename, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the \"config.softwareConfig.pypiPackages\" mask. labels Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. labels.labelName Set the label named labelName, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the \"labels\" mask. config.nodeCount Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. config.webServerNetworkAccessControl Replace the environment's current WebServerNetworkAccessControl. config.softwareConfig.airflowConfigOverrides Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. config.softwareConfig.airflowConfigOverrides.section-name Override the Apache Airflow config property name in the section named section, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the \"config.softwareConfig.airflowConfigOverrides\" mask. config.softwareConfig.envVariables Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. ",
+	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of numpy, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.numpy\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and numpy will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } **Note:** Only the following fields can be updated: *Mask* *Purpose* config.softwareConfig.pypiPackages Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. config.softwareConfig.pypiPackages.packagename Update the custom PyPI package packagename, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the \"config.softwareConfig.pypiPackages\" mask. labels Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. labels.labelName Set the label named labelName, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the \"labels\" mask. config.nodeCount Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. config.webServerNetworkAccessControl Replace the environment's current WebServerNetworkAccessControl. config.databaseConfig Replace the environment's current DatabaseConfig. config.webServerConfig Replace the environment's current WebServerConfig. config.softwareConfig.airflowConfigOverrides Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. config.softwareConfig.airflowConfigOverrides.section-name Override the Apache Airflow config property name in the section named section, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the \"config.softwareConfig.airflowConfigOverrides\" mask. config.softwareConfig.envVariables Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2041,7 +2114,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2214,7 +2287,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2357,7 +2430,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2531,7 +2604,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

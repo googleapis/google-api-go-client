@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -759,7 +759,8 @@ type Pose struct {
 	// AccuracyMeters: The estimated horizontal accuracy of this pose in
 	// meters with 68% confidence (one standard deviation). For example, on
 	// Android, this value is available from this method:
-	// https://developer.android.com/reference/android/location/Location#getAccuracy(). Other platforms have different methods of obtaining similar accuracy
+	// https://developer.android.com/reference/android/location/Location#getAccuracy().
+	// Other platforms have different methods of obtaining similar accuracy
 	// estimations.
 	AccuracyMeters float64 `json:"accuracyMeters,omitempty"`
 
@@ -774,8 +775,11 @@ type Pose struct {
 
 	// LatLngPair: Latitude and longitude pair of the pose, as explained
 	// here:
-	// https://cloud.google.com/datastore/docs/reference/rest/Shared.Types/LatLng When creating a Photo, if the latitude and longitude pair are not provided, the geolocation from the exif header is used. A latitude and longitude pair not provided in the photo or exif header causes the photo process to
-	// fail.
+	// https://cloud.google.com/datastore/docs/reference/rest/Shared.Types/LatLng
+	// When creating a Photo, if the latitude and longitude pair are not
+	// provided, the geolocation from the exif header is used. A latitude
+	// and longitude pair not provided in the photo or exif header causes
+	// the photo process to fail.
 	LatLngPair *LatLng `json:"latLngPair,omitempty"`
 
 	// Level: Level (the floor in a building) used to configure vertical
@@ -841,11 +845,11 @@ func (s *Pose) UnmarshalJSON(data []byte) error {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -927,8 +931,8 @@ func (s *UpdatePhotoRequest) MarshalJSON() ([]byte, error) {
 
 // UploadRef: Upload reference for media files.
 type UploadRef struct {
-	// UploadUrl: Required. An upload reference should be unique for each
-	// user. It follows the form:
+	// UploadUrl: An upload reference should be unique for each user. It
+	// follows the form:
 	// "https://streetviewpublish.googleapis.com/media/user/{account_id}/phot
 	// o/{upload_reference}"
 	UploadUrl string `json:"uploadUrl,omitempty"`
@@ -973,11 +977,12 @@ type PhotoCreateCall struct {
 // Create: After the client finishes uploading the photo with the
 // returned UploadRef, CreatePhoto publishes the uploaded Photo to
 // Street View on Google Maps. Currently, the only way to set heading,
-// pitch, and roll in CreatePhoto is through the [Photo Sphere XMP
-// metadata](https://developers.google.com/streetview/spherical-metadata)
-//  in the photo bytes. CreatePhoto ignores the `pose.heading`,
-// `pose.pitch`, `pose.roll`, `pose.altitude`, and `pose.level` fields
-// in Pose. This method returns the following error codes: *
+// pitch, and roll in CreatePhoto is through the Photo Sphere XMP
+// metadata
+// (https://developers.google.com/streetview/spherical-metadata) in the
+// photo bytes. CreatePhoto ignores the `pose.heading`, `pose.pitch`,
+// `pose.roll`, `pose.altitude`, and `pose.level` fields in Pose. This
+// method returns the following error codes: *
 // google.rpc.Code.INVALID_ARGUMENT if the request is malformed or if
 // the uploaded photo is not a 360 photo. * google.rpc.Code.NOT_FOUND if
 // the upload reference does not exist. *
@@ -1016,7 +1021,7 @@ func (c *PhotoCreateCall) Header() http.Header {
 
 func (c *PhotoCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1144,7 +1149,7 @@ func (c *PhotoDeleteCall) Header() http.Header {
 
 func (c *PhotoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1313,7 +1318,7 @@ func (c *PhotoGetCall) Header() http.Header {
 
 func (c *PhotoGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1433,8 +1438,16 @@ type PhotoStartUploadCall struct {
 // bytes. The method uses the upload URL of the returned UploadRef to
 // upload the bytes for the Photo. In addition to the photo requirements
 // shown in
-// https://support.google.com/maps/answer/7012050?hl=en&ref_topic=6275604, the photo must meet the following requirements: * Photo Sphere XMP metadata must be included in the photo metadata. See https://developers.google.com/streetview/spherical-metadata for the required fields. * The pixel size of the photo must meet the size requirements listed in https://support.google.com/maps/answer/7012050?hl=en&ref_topic=6275604, and the photo must be a full 360 horizontally. After the upload completes, the method uses UploadRef with CreatePhoto to create the Photo object
-// entry.
+// https://support.google.com/maps/answer/7012050?ref_topic=6275604, the
+// photo must meet the following requirements: * Photo Sphere XMP
+// metadata must be included in the photo metadata. See
+// https://developers.google.com/streetview/spherical-metadata for the
+// required fields. * The pixel size of the photo must meet the size
+// requirements listed in
+// https://support.google.com/maps/answer/7012050?ref_topic=6275604, and
+// the photo must be a full 360 horizontally. After the upload
+// completes, the method uses UploadRef with CreatePhoto to create the
+// Photo object entry.
 func (r *PhotoService) StartUpload(empty *Empty) *PhotoStartUploadCall {
 	c := &PhotoStartUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.empty = empty
@@ -1468,7 +1481,7 @@ func (c *PhotoStartUploadCall) Header() http.Header {
 
 func (c *PhotoStartUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1529,7 +1542,7 @@ func (c *PhotoStartUploadCall) Do(opts ...googleapi.CallOption) (*UploadRef, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an upload session to start uploading photo bytes. The method uses the upload URL of the returned UploadRef to upload the bytes for the Photo. In addition to the photo requirements shown in https://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604, the photo must meet the following requirements: * Photo Sphere XMP metadata must be included in the photo metadata. See https://developers.google.com/streetview/spherical-metadata for the required fields. * The pixel size of the photo must meet the size requirements listed in https://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604, and the photo must be a full 360 horizontally. After the upload completes, the method uses UploadRef with CreatePhoto to create the Photo object entry.",
+	//   "description": "Creates an upload session to start uploading photo bytes. The method uses the upload URL of the returned UploadRef to upload the bytes for the Photo. In addition to the photo requirements shown in https://support.google.com/maps/answer/7012050?ref_topic=6275604, the photo must meet the following requirements: * Photo Sphere XMP metadata must be included in the photo metadata. See https://developers.google.com/streetview/spherical-metadata for the required fields. * The pixel size of the photo must meet the size requirements listed in https://support.google.com/maps/answer/7012050?ref_topic=6275604, and the photo must be a full 360 horizontally. After the upload completes, the method uses UploadRef with CreatePhoto to create the Photo object entry.",
 	//   "flatPath": "v1/photo:startUpload",
 	//   "httpMethod": "POST",
 	//   "id": "streetviewpublish.photo.startUpload",
@@ -1621,7 +1634,7 @@ func (c *PhotoUpdateCall) Header() http.Header {
 
 func (c *PhotoUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1770,7 +1783,7 @@ func (c *PhotosBatchDeleteCall) Header() http.Header {
 
 func (c *PhotosBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1942,7 +1955,7 @@ func (c *PhotosBatchGetCall) Header() http.Header {
 
 func (c *PhotosBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2099,7 +2112,7 @@ func (c *PhotosBatchUpdateCall) Header() http.Header {
 
 func (c *PhotosBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2285,7 +2298,7 @@ func (c *PhotosListCall) Header() http.Header {
 
 func (c *PhotosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

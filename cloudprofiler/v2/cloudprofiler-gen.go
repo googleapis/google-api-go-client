@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -227,16 +227,16 @@ func (s *CreateProfileRequest) MarshalJSON() ([]byte, error) {
 // information.
 type Deployment struct {
 	// Labels: Labels identify the deployment within the user universe and
-	// same target. Validation regex for label names:
-	// `^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$`. Value for an individual label
-	// must be <= 512 bytes, the total size of all label names and values
-	// must be <= 1024 bytes. Label named "language" can be used to record
-	// the programming language of the profiled deployment. The standard
-	// choices for the value include "java", "go", "python", "ruby",
-	// "nodejs", "php", "dotnet". For deployments running on Google Cloud
-	// Platform, "zone" or "region" label should be present describing the
-	// deployment location. An example of a zone is "us-central1-a", an
-	// example of a region is "us-central1" or "us-central".
+	// same target. Validation regex for label names: `^a-z0-9
+	// ([a-z0-9-]{0,61}[a-z0-9])?$`. Value for an individual label must be
+	// <= 512 bytes, the total size of all label names and values must be <=
+	// 1024 bytes. Label named "language" can be used to record the
+	// programming language of the profiled deployment. The standard choices
+	// for the value include "java", "go", "python", "ruby", "nodejs",
+	// "php", "dotnet". For deployments running on Google Cloud Platform,
+	// "zone" or "region" label should be present describing the deployment
+	// location. An example of a zone is "us-central1-a", an example of a
+	// region is "us-central1" or "us-central".
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// ProjectId: Project ID is the ID of a cloud project. Validation regex:
@@ -246,8 +246,8 @@ type Deployment struct {
 	// Target: Target is the service name used to group related deployments:
 	// * Service name for GAE Flex / Standard. * Cluster and container name
 	// for GKE. * User-specified string for direct GCE profiling (e.g.
-	// Java). * Job name for Dataflow. Validation regex:
-	// `^[a-z]([-a-z0-9_.]{0,253}[a-z0-9])?$`.
+	// Java). * Job name for Dataflow. Validation regex: `^a-z
+	// ([-a-z0-9_.]{0,253}[a-z0-9])?$`.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -407,7 +407,7 @@ func (c *ProjectsProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -551,7 +551,7 @@ func (c *ProjectsProfilesCreateOfflineCall) Header() http.Header {
 
 func (c *ProjectsProfilesCreateOfflineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -706,7 +706,7 @@ func (c *ProjectsProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

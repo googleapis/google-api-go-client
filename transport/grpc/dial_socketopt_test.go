@@ -90,6 +90,7 @@ func getTCPUserTimeout(conn net.Conn) (int, error) {
 
 // Check that tcp timeout dialer overwrites user defined dialer.
 func TestDialWithDirectPathEnabled(t *testing.T) {
+	t.Skip("https://github.com/googleapis/google-api-go-client/issues/790")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
 
 	userDialer := grpc.WithDialer(func(addr string, timeout time.Duration) (net.Conn, error) {

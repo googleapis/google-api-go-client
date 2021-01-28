@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -184,10 +184,10 @@ type ProjectsWorkerPoolsService struct {
 // upon successful completion of all build steps.
 type ArtifactObjects struct {
 	// Location: Cloud Storage bucket and optional object path, in the form
-	// "gs://bucket/path/to/somewhere/". (see [Bucket Name
-	// Requirements](https://cloud.google.com/storage/docs/bucket-naming#requ
-	// irements)). Files in the workspace matching any path pattern will be
-	// uploaded to Cloud Storage with this location as a prefix.
+	// "gs://bucket/path/to/somewhere/". (see Bucket Name Requirements
+	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
+	// Files in the workspace matching any path pattern will be uploaded to
+	// Cloud Storage with this location as a prefix.
 	Location string `json:"location,omitempty"`
 
 	// Paths: Path globs used to match files in the build's workspace.
@@ -313,6 +313,9 @@ type Build struct {
 	// upon successful completion of all build steps.
 	Artifacts *Artifacts `json:"artifacts,omitempty"`
 
+	// AvailableSecrets: Secrets and secret environment variables.
+	AvailableSecrets *Secrets `json:"availableSecrets,omitempty"`
+
 	// BuildTriggerId: Output only. The ID of the `BuildTrigger` that
 	// triggered this build, if it was triggered automatically.
 	BuildTriggerId string `json:"buildTriggerId,omitempty"`
@@ -341,9 +344,9 @@ type Build struct {
 	LogUrl string `json:"logUrl,omitempty"`
 
 	// LogsBucket: Google Cloud Storage bucket where logs should be written
-	// (see [Bucket Name
-	// Requirements](https://cloud.google.com/storage/docs/bucket-naming#requ
-	// irements)). Logs file names will be of the format
+	// (see Bucket Name Requirements
+	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
+	// Logs file names will be of the format
 	// `${logs_bucket}/log-${build_id}.txt`.
 	LogsBucket string `json:"logsBucket,omitempty"`
 
@@ -366,14 +369,18 @@ type Build struct {
 	// Results: Output only. Results of the build.
 	Results *Results `json:"results,omitempty"`
 
-	// Secrets: Secrets to decrypt using Cloud Key Management Service.
+	// Secrets: Secrets to decrypt using Cloud Key Management Service. Note:
+	// Secret Manager is the recommended technique for managing sensitive
+	// data with Cloud Build. Use `available_secrets` to configure builds to
+	// access secrets from Secret Manager. For instructions, see:
+	// https://cloud.google.com/cloud-build/docs/securing-builds/use-secrets
 	Secrets []*Secret `json:"secrets,omitempty"`
 
 	// ServiceAccount: IAM service account whose credentials will be used at
 	// build runtime. Must be of the format
 	// `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. ACCOUNT can be
 	// email address or uniqueId of the service account. This field is in
-	// alpha and is not publicly available.
+	// beta.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Source: The location of the source files to build.
@@ -529,8 +536,7 @@ type BuildOptions struct {
 	//   "CLOUD_LOGGING_ONLY" - Only Cloud Logging is enabled. Note that
 	// logs for both the Cloud Console UI and Cloud SDK are based on Cloud
 	// Storage logs, so neither will provide logs if this option is chosen.
-	//   "NONE" - Turn off all logging. No build logs will be captured. Next
-	// ID: 6
+	//   "NONE" - Turn off all logging. No build logs will be captured.
 	Logging string `json:"logging,omitempty"`
 
 	// MachineType: Compute Engine machine type on which to run the build.
@@ -587,7 +593,7 @@ type BuildOptions struct {
 
 	// WorkerPool: Option to specify a `WorkerPool` for the build. Format:
 	// projects/{project}/locations/{location}/workerPools/{workerPool} This
-	// field is experimental.
+	// field is in beta and is available only to restricted users.
 	WorkerPool string `json:"workerPool,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
@@ -651,13 +657,13 @@ type BuildStep struct {
 	// attempt to pull the image first, using the builder service account's
 	// credentials if necessary. The Docker daemon's cache will already have
 	// the latest versions of all of the officially supported build steps
-	// ([https://github.com/GoogleCloudPlatform/cloud-builders](https://githu
-	// b.com/GoogleCloudPlatform/cloud-builders)). The Docker daemon will
-	// also have cached many of the layers for some popular images, like
-	// "ubuntu", "debian", but they will be refreshed at the time you
-	// attempt to use them. If you built an image in a previous build step,
-	// it will be stored in the host's Docker daemon's cache and is
-	// available to use as the name for a later build step.
+	// (https://github.com/GoogleCloudPlatform/cloud-builders
+	// (https://github.com/GoogleCloudPlatform/cloud-builders)). The Docker
+	// daemon will also have cached many of the layers for some popular
+	// images, like "ubuntu", "debian", but they will be refreshed at the
+	// time you attempt to use them. If you built an image in a previous
+	// build step, it will be stored in the host's Docker daemon's cache and
+	// is available to use as the name for a later build step.
 	Name string `json:"name,omitempty"`
 
 	// PullTiming: Output only. Stores timing information for pulling this
@@ -877,6 +883,44 @@ type Hash struct {
 
 func (s *Hash) MarshalJSON() ([]byte, error) {
 	type NoMethod Hash
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InlineSecret: Pairs a set of secret environment variables mapped to
+// encrypted values with the Cloud KMS key to use to decrypt the value.
+type InlineSecret struct {
+	// EnvMap: Map of environment variable name to its encrypted value.
+	// Secret environment variables must be unique across all of a build's
+	// secrets, and must be used by at least one build step. Values can be
+	// at most 64 KB in size. There can be at most 100 secret values across
+	// all of a build's secrets.
+	EnvMap map[string]string `json:"envMap,omitempty"`
+
+	// KmsKeyName: Resource name of Cloud KMS crypto key to decrypt the
+	// encrypted value. In format:
+	// projects/*/locations/*/keyRings/*/cryptoKeys/*
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnvMap") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnvMap") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InlineSecret) MarshalJSON() ([]byte, error) {
+	type NoMethod InlineSecret
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1306,8 +1350,8 @@ type Results struct {
 	BuildStepImages []string `json:"buildStepImages,omitempty"`
 
 	// BuildStepOutputs: List of build step outputs, produced by builder
-	// images, in the order corresponding to build step indices. [Cloud
-	// Builders](https://cloud.google.com/cloud-build/docs/cloud-builders)
+	// images, in the order corresponding to build step indices. Cloud
+	// Builders (https://cloud.google.com/cloud-build/docs/cloud-builders)
 	// can produce this output by writing to `$BUILDER_OUTPUT/output`. Only
 	// the first 4KB of data is stored.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
@@ -1392,6 +1436,9 @@ func (s *SMTPDelivery) MarshalJSON() ([]byte, error) {
 
 // Secret: Pairs a set of secret environment variables containing
 // encrypted values with the Cloud KMS key to use to decrypt the value.
+// Note: Use `kmsKeyName` with `available_secrets` instead of using
+// `kmsKeyName` with `secret`. For instructions see:
+// https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-credentials.
 type Secret struct {
 	// KmsKeyName: Cloud KMS key name to use to decrypt these envs.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
@@ -1422,6 +1469,74 @@ type Secret struct {
 
 func (s *Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod Secret
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecretManagerSecret: Pairs a secret environment variable with a
+// SecretVersion in Secret Manager.
+type SecretManagerSecret struct {
+	// Env: Environment variable name to associate with the secret. Secret
+	// environment variables must be unique across all of a build's secrets,
+	// and must be used by at least one build step.
+	Env string `json:"env,omitempty"`
+
+	// VersionName: Resource name of the SecretVersion. In format:
+	// projects/*/secrets/*/versions/*
+	VersionName string `json:"versionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Env") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Env") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretManagerSecret) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretManagerSecret
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Secrets: Secrets and secret environment variables.
+type Secrets struct {
+	// Inline: Secrets encrypted with KMS key and the associated secret
+	// environment variable.
+	Inline []*InlineSecret `json:"inline,omitempty"`
+
+	// SecretManager: Secrets in Secret Manager and associated secret
+	// environment variable.
+	SecretManager []*SecretManagerSecret `json:"secretManager,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Inline") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Inline") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Secrets) MarshalJSON() ([]byte, error) {
+	type NoMethod Secrets
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1536,11 +1651,11 @@ func (s *SourceProvenance) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1581,10 +1696,9 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // StorageSource: Location of the source in an archive file in Google
 // Cloud Storage.
 type StorageSource struct {
-	// Bucket: Google Cloud Storage bucket containing the source (see
-	// [Bucket Name
-	// Requirements](https://cloud.google.com/storage/docs/bucket-naming#requ
-	// irements)).
+	// Bucket: Google Cloud Storage bucket containing the source (see Bucket
+	// Name Requirements
+	// (https://cloud.google.com/storage/docs/bucket-naming#requirements)).
 	Bucket string `json:"bucket,omitempty"`
 
 	// Generation: Google Cloud Storage generation for the object. If the
@@ -1889,7 +2003,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2040,7 +2154,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2176,7 +2290,7 @@ func (c *ProjectsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2314,7 +2428,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2455,7 +2569,7 @@ func (c *ProjectsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2599,7 +2713,7 @@ func (c *ProjectsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2734,7 +2848,7 @@ func (c *ProjectsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

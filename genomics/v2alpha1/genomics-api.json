@@ -301,7 +301,7 @@
       }
     }
   },
-  "revision": "20201207",
+  "revision": "20210125",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -357,7 +357,8 @@
               "ENABLE_FUSE",
               "PUBLISH_EXPOSED_PORTS",
               "DISABLE_IMAGE_PREFETCH",
-              "DISABLE_STANDARD_ERROR_CAPTURE"
+              "DISABLE_STANDARD_ERROR_CAPTURE",
+              "BLOCK_EXTERNAL_NETWORK"
             ],
             "enumDescriptions": [
               "Unspecified flag.",
@@ -367,7 +368,8 @@
               "Enable access to the FUSE device for this action. Filesystems can then be mounted into disks shared with other actions. The other actions do not need the `ENABLE_FUSE` flag to access the mounted filesystem. This has the effect of causing the container to be executed with `CAP_SYS_ADMIN` and exposes `/dev/fuse` to the container, so use it only for containers you trust.",
               "Exposes all ports specified by `EXPOSE` statements in the container. To discover the host side port numbers, consult the `ACTION_STARTED` event in the operation metadata.",
               "All container images are typically downloaded before any actions are executed. This helps prevent typos in URIs or issues like lack of disk space from wasting large amounts of compute resources. If set, this flag prevents the worker from downloading the image until just before the action is executed.",
-              "A small portion of the container's standard error stream is typically captured and returned inside the `ContainerStoppedEvent`. Setting this flag disables this functionality."
+              "A small portion of the container's standard error stream is typically captured and returned inside the `ContainerStoppedEvent`. Setting this flag disables this functionality.",
+              "Prevents the container from accessing the external network."
             ],
             "type": "string"
           },
@@ -468,6 +470,14 @@
           "description": "The deadline by which the worker must request an extension. The backend will allow for network transmission time and other delays, but the worker must attempt to transmit the extension request no later than the deadline.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "features": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Feature configuration for the operation.",
+          "type": "object"
         },
         "metadata": {
           "additionalProperties": {
@@ -1204,7 +1214,7 @@
           "type": "array"
         },
         "dockerCacheImages": {
-          "description": "The Compute Engine Disk Images to use as a Docker cache. The disks will be mounted into the Docker folder in a way that the images present in the cache will not need to be pulled. The digests of the cached images must match those of the tags used or the latest version will still be pulled. The root directory of the ext4 image must contain `image` and `overlay2` directories copied from the Docker directory of a VM where the desired Docker images have already been pulled. Only a single image is supported.",
+          "description": "The Compute Engine Disk Images to use as a Docker cache. The disks will be mounted into the Docker folder in a way that the images present in the cache will not need to be pulled. The digests of the cached images must match those of the tags used or the latest version will still be pulled. The root directory of the ext4 image must contain `image` and `overlay2` directories copied from the Docker directory of a VM where the desired Docker images have already been pulled. Any images pulled that are not cached will be stored on the first cache disk instead of the boot disk. Only a single image is supported.",
           "items": {
             "type": "string"
           },

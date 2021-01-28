@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -278,7 +278,7 @@ type Api struct {
 	// is empty, the major version is derived from the package name, as
 	// outlined below. If the field is not empty, the version in the package
 	// name will be verified to be consistent with what is provided here.
-	// The versioning schema uses [semantic versioning](http://semver.org)
+	// The versioning schema uses semantic versioning (http://semver.org)
 	// where the major version number indicates a breaking change and the
 	// minor version an additive, non-breaking change. Both version numbers
 	// are signals to users what to expect from different versions, and
@@ -410,20 +410,20 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 }
 
 // AuthProvider: Configuration for an authentication provider, including
-// support for [JSON Web Token
-// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32)
-// .
+// support for JSON Web Token (JWT)
+// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 type AuthProvider struct {
-	// Audiences: The list of JWT
-	// [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-toke
-	// n-32#section-4.1.3). that are allowed to access. A JWT containing any
-	// of these audiences will be accepted. When this setting is absent,
-	// JWTs with audiences: -
+	// Audiences: The list of JWT audiences
+	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+	// that are allowed to access. A JWT containing any of these audiences
+	// will be accepted. When this setting is absent, JWTs with audiences: -
 	// "https://[service.name]/[google.protobuf.Api.name]" -
 	// "https://[service.name]/" will be accepted. For example, if no
 	// audiences are in the setting, LibraryService API will accept JWTs
 	// with the following audiences: -
-	// https://library-example.googleapis.com/google.example.library.v1.LibraryService - https://library-example.googleapis.com/ Example: audiences: bookstore_android.apps.googleusercontent.com,
+	// https://library-example.googleapis.com/google.example.library.v1.LibraryService
+	// - https://library-example.googleapis.com/ Example: audiences:
+	// bookstore_android.apps.googleusercontent.com,
 	// bookstore_web.apps.googleusercontent.com
 	Audiences string `json:"audiences,omitempty"`
 
@@ -437,18 +437,20 @@ type AuthProvider struct {
 	Id string `json:"id,omitempty"`
 
 	// Issuer: Identifies the principal that issued the JWT. See
-	// https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1 Usually a URL or an email address. Example: https://securetoken.google.com Example:
+	// https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
+	// Usually a URL or an email address. Example:
+	// https://securetoken.google.com Example:
 	// 1234567-compute@developer.gserviceaccount.com
 	Issuer string `json:"issuer,omitempty"`
 
 	// JwksUri: URL of the provider's public key set to validate signature
-	// of the JWT. See [OpenID
-	// Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#
-	// ProviderMetadata). Optional if the key set document: - can be
-	// retrieved from [OpenID
-	// Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
-	//  of the issuer. - can be inferred from the email domain of the issuer
-	// (e.g. a Google service account). Example:
+	// of the JWT. See OpenID Discovery
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+	// Optional if the key set document: - can be retrieved from OpenID
+	// Discovery
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html) of the
+	// issuer. - can be inferred from the email domain of the issuer (e.g. a
+	// Google service account). Example:
 	// https://www.googleapis.com/oauth2/v1/certs
 	JwksUri string `json:"jwksUri,omitempty"`
 
@@ -487,19 +489,18 @@ func (s *AuthProvider) MarshalJSON() ([]byte, error) {
 }
 
 // AuthRequirement: User-defined authentication requirements, including
-// support for [JSON Web Token
-// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32)
-// .
+// support for JSON Web Token (JWT)
+// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 type AuthRequirement struct {
 	// Audiences: NOTE: This will be deprecated soon, once
 	// AuthProvider.audiences is implemented and accepted in all the runtime
-	// components. The list of JWT
-	// [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-toke
-	// n-32#section-4.1.3). that are allowed to access. A JWT containing any
-	// of these audiences will be accepted. When this setting is absent,
-	// only JWTs with audience "https://Service_name/API_name" will be
-	// accepted. For example, if no audiences are in the setting,
-	// LibraryService API will only accept JWTs with the following audience
+	// components. The list of JWT audiences
+	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+	// that are allowed to access. A JWT containing any of these audiences
+	// will be accepted. When this setting is absent, only JWTs with
+	// audience "https://Service_name/API_name" will be accepted. For
+	// example, if no audiences are in the setting, LibraryService API will
+	// only accept JWTs with the following audience
 	// "https://library-example.googleapis.com/google.example.library.v1.Libr
 	// aryService". Example: audiences:
 	// bookstore_android.apps.googleusercontent.com,
@@ -700,7 +701,9 @@ type BackendRule struct {
 	// https://example.cloudfunctions.net/getUser Requests to the following
 	// request paths will call the backend at the translated path: Request
 	// path: /api/company/widgetworks/user/johndoe Translated:
-	// https://example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe Request path: /api/company/widgetworks/user/johndoe?timezone=EST Translated:
+	// https://example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe
+	// Request path: /api/company/widgetworks/user/johndoe?timezone=EST
+	// Translated:
 	// https://example.cloudfunctions.net/getUser?timezone=EST&cid=widgetworks&uid=johndoe
 	//   "APPEND_PATH_TO_ADDRESS" - The request path will be appended to the
 	// backend address. # Examples Given the following operation config:
@@ -722,8 +725,8 @@ type BackendRule struct {
 	// for improved performance. Configuring this field to non-default
 	// values is only supported for secure HTTP backends. This field will be
 	// ignored for all other backends. See
-	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids for more details on the supported
-	// values.
+	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+	// for more details on the supported values.
 	Protocol string `json:"protocol,omitempty"`
 
 	// Selector: Selects the methods to which this rule applies. Refer to
@@ -862,9 +865,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -1584,16 +1586,17 @@ func (s *EnableServiceRequest) MarshalJSON() ([]byte, error) {
 type EnableServiceResponse struct {
 }
 
-// Endpoint: `Endpoint` describes a network endpoint that serves a set
-// of APIs. A service may expose any number of endpoints, and all
-// endpoints share the same service configuration, such as quota
-// configuration and monitoring configuration. Example service
-// configuration: name: library-example.googleapis.com endpoints: #
-// Below entry makes 'google.example.library.v1.Library' # API be served
-// from endpoint address library-example.googleapis.com. # It also
-// allows HTTP OPTIONS calls to be passed to the backend, for # it to
-// decide whether the subsequent cross-origin request is # allowed to
-// proceed. - name: library-example.googleapis.com allow_cors: true
+// Endpoint: `Endpoint` describes a network endpoint of a service that
+// serves a set of APIs. It is commonly known as a service endpoint. A
+// service may expose any number of service endpoints, and all service
+// endpoints share the same service definition, such as quota limits and
+// monitoring metrics. Example service configuration: name:
+// library-example.googleapis.com endpoints: # Below entry makes
+// 'google.example.library.v1.Library' # API be served from endpoint
+// address library-example.googleapis.com. # It also allows HTTP OPTIONS
+// calls to be passed to the backend, for # it to decide whether the
+// subsequent cross-origin request is # allowed to proceed. - name:
+// library-example.googleapis.com allow_cors: true
 type Endpoint struct {
 	// Aliases: DEPRECATED: This field is no longer supported. Instead of
 	// using aliases, please specify multiple google.api.Endpoint for each
@@ -1601,9 +1604,9 @@ type Endpoint struct {
 	// hosted on.
 	Aliases []string `json:"aliases,omitempty"`
 
-	// AllowCors: Allowing
-	// [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing),
-	// aka cross-domain traffic, would allow the backends served from this
+	// AllowCors: Allowing CORS
+	// (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), aka
+	// cross-domain traffic, would allow the backends served from this
 	// endpoint to receive and respond to HTTP OPTIONS requests. The
 	// response will be used by the browser to determine whether the
 	// subsequent cross-origin request is allowed to proceed.
@@ -1613,10 +1616,10 @@ type Endpoint struct {
 	Name string `json:"name,omitempty"`
 
 	// Target: The specification of an Internet routable address of API
-	// frontend that will handle requests to this [API
-	// Endpoint](https://cloud.google.com/apis/design/glossary). It should
-	// be either a valid IPv4 address or a fully-qualified domain name. For
-	// example, "8.8.8.8" or "myservice.appspot.com".
+	// frontend that will handle requests to this API Endpoint
+	// (https://cloud.google.com/apis/design/glossary). It should be either
+	// a valid IPv4 address or a fully-qualified domain name. For example,
+	// "8.8.8.8" or "myservice.appspot.com".
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aliases") to
@@ -2020,9 +2023,8 @@ type GetPolicyOptions struct {
 	// conditional bindings must specify version 3. Policies without any
 	// conditional bindings may specify any valid value or leave the field
 	// unset. To learn which resources support conditions in their IAM
-	// policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2094,33 +2096,32 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HttpRule: # gRPC Transcoding gRPC Transcoding is a feature for
 // mapping between a gRPC method and one or more HTTP REST endpoints. It
 // allows developers to build a single API service that supports both
-// gRPC APIs and REST APIs. Many systems, including [Google
-// APIs](https://github.com/googleapis/googleapis), [Cloud
-// Endpoints](https://cloud.google.com/endpoints), [gRPC
-// Gateway](https://github.com/grpc-ecosystem/grpc-gateway), and
-// [Envoy](https://github.com/envoyproxy/envoy) proxy support this
-// feature and use it for large scale production services. `HttpRule`
-// defines the schema of the gRPC/REST mapping. The mapping specifies
-// how different portions of the gRPC request message are mapped to the
-// URL path, URL query parameters, and HTTP request body. It also
-// controls how the gRPC response message is mapped to the HTTP response
-// body. `HttpRule` is typically specified as an `google.api.http`
-// annotation on the gRPC method. Each mapping specifies a URL path
-// template and an HTTP method. The path template may refer to one or
-// more fields in the gRPC request message, as long as each field is a
-// non-repeated field with a primitive (non-message) type. The path
-// template controls how fields of the request message are mapped to the
-// URL path. Example: service Messaging { rpc
-// GetMessage(GetMessageRequest) returns (Message) { option
-// (google.api.http) = { get: "/v1/{name=messages/*}" }; } } message
-// GetMessageRequest { string name = 1; // Mapped to URL path. } message
-// Message { string text = 1; // The resource content. } This enables an
-// HTTP REST to gRPC mapping as below: HTTP | gRPC -----|----- `GET
-// /v1/messages/123456` | `GetMessage(name: "messages/123456")` Any
-// fields in the request message which are not bound by the path
-// template automatically become HTTP query parameters if there is no
-// HTTP request body. For example: service Messaging { rpc
-// GetMessage(GetMessageRequest) returns (Message) { option
+// gRPC APIs and REST APIs. Many systems, including Google APIs
+// (https://github.com/googleapis/googleapis), Cloud Endpoints
+// (https://cloud.google.com/endpoints), gRPC Gateway
+// (https://github.com/grpc-ecosystem/grpc-gateway), and Envoy
+// (https://github.com/envoyproxy/envoy) proxy support this feature and
+// use it for large scale production services. `HttpRule` defines the
+// schema of the gRPC/REST mapping. The mapping specifies how different
+// portions of the gRPC request message are mapped to the URL path, URL
+// query parameters, and HTTP request body. It also controls how the
+// gRPC response message is mapped to the HTTP response body. `HttpRule`
+// is typically specified as an `google.api.http` annotation on the gRPC
+// method. Each mapping specifies a URL path template and an HTTP
+// method. The path template may refer to one or more fields in the gRPC
+// request message, as long as each field is a non-repeated field with a
+// primitive (non-message) type. The path template controls how fields
+// of the request message are mapped to the URL path. Example: service
+// Messaging { rpc GetMessage(GetMessageRequest) returns (Message) {
+// option (google.api.http) = { get: "/v1/{name=messages/*}" }; } }
+// message GetMessageRequest { string name = 1; // Mapped to URL path. }
+// message Message { string text = 1; // The resource content. } This
+// enables an HTTP REST to gRPC mapping as below: HTTP | gRPC
+// -----|----- `GET /v1/messages/123456` | `GetMessage(name:
+// "messages/123456")` Any fields in the request message which are not
+// bound by the path template automatically become HTTP query parameters
+// if there is no HTTP request body. For example: service Messaging {
+// rpc GetMessage(GetMessageRequest) returns (Message) { option
 // (google.api.http) = { get:"/v1/messages/{message_id}" }; } } message
 // GetMessageRequest { message SubMessage { string subfield = 1; }
 // string message_id = 1; // Mapped to URL path. int64 revision = 2; //
@@ -2200,16 +2201,16 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // variable is expanded into a URL path on the client side, all
 // characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The server
 // side does the reverse decoding. Such variables show up in the
-// [Discovery
-// Document](https://developers.google.com/discovery/v1/reference/apis)
-// as `{var}`. If a variable contains multiple path segments, such as
+// Discovery Document
+// (https://developers.google.com/discovery/v1/reference/apis) as
+// `{var}`. If a variable contains multiple path segments, such as
 // "{var=foo/*}" or "{var=**}", when such a variable is expanded
 // into a URL path on the client side, all characters except
 // `[-_.~/0-9a-zA-Z]` are percent-encoded. The server side does the
 // reverse decoding, except "%2F" and "%2f" are left unchanged. Such
-// variables show up in the [Discovery
-// Document](https://developers.google.com/discovery/v1/reference/apis)
-// as `{+var}`. ## Using gRPC API Service Configuration gRPC API Service
+// variables show up in the Discovery Document
+// (https://developers.google.com/discovery/v1/reference/apis) as
+// `{+var}`. ## Using gRPC API Service Configuration gRPC API Service
 // Configuration (service config) is a configuration language for
 // configuring a gRPC service to become a user-facing product. The
 // service config is simply the YAML representation of the
@@ -2225,26 +2226,26 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // example.v1.Messaging.GetMessage get:
 // /v1/messages/{message_id}/{sub.subfield} ## Special notes When gRPC
 // Transcoding is used to map a gRPC to JSON REST endpoints, the proto
-// to JSON conversion must follow the [proto3
-// specification](https://developers.google.com/protocol-buffers/docs/pro
-// to3#json). While the single segment variable follows the semantics of
-// [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple
-// String Expansion, the multi segment variable **does not** follow RFC
-// 6570 Section 3.2.3 Reserved Expansion. The reason is that the
-// Reserved Expansion does not expand special characters like `?` and
-// `#`, which would lead to invalid URLs. As the result, gRPC
-// Transcoding uses a custom encoding for multi segment variables. The
-// path variables **must not** refer to any repeated or mapped field,
-// because client libraries are not capable of handling such variable
-// expansion. The path variables **must not** capture the leading "/"
-// character. The reason is that the most common use case "{var}" does
-// not capture the leading "/" character. For consistency, all path
-// variables must share the same behavior. Repeated message fields must
-// not be mapped to URL query parameters, because no client library can
-// support such complicated mapping. If an API needs to use a JSON array
-// for request or response body, it can map the request or response body
-// to a repeated field. However, some gRPC Transcoding implementations
-// may not support this feature.
+// to JSON conversion must follow the proto3 specification
+// (https://developers.google.com/protocol-buffers/docs/proto3#json).
+// While the single segment variable follows the semantics of RFC 6570
+// (https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String
+// Expansion, the multi segment variable **does not** follow RFC 6570
+// Section 3.2.3 Reserved Expansion. The reason is that the Reserved
+// Expansion does not expand special characters like `?` and `#`, which
+// would lead to invalid URLs. As the result, gRPC Transcoding uses a
+// custom encoding for multi segment variables. The path variables
+// **must not** refer to any repeated or mapped field, because client
+// libraries are not capable of handling such variable expansion. The
+// path variables **must not** capture the leading "/" character. The
+// reason is that the most common use case "{var}" does not capture the
+// leading "/" character. For consistency, all path variables must share
+// the same behavior. Repeated message fields must not be mapped to URL
+// query parameters, because no client library can support such
+// complicated mapping. If an API needs to use a JSON array for request
+// or response body, it can map the request or response body to a
+// repeated field. However, some gRPC Transcoding implementations may
+// not support this feature.
 type HttpRule struct {
 	// AdditionalBindings: Additional HTTP bindings for the selector. Nested
 	// bindings must not contain an `additional_bindings` field themselves
@@ -2681,8 +2682,8 @@ type ManagedService struct {
 	// service.
 	ProducerProjectId string `json:"producerProjectId,omitempty"`
 
-	// ServiceName: The name of the service. See the
-	// [overview](/service-management/overview) for naming requirements.
+	// ServiceName: The name of the service. See the overview
+	// (/service-management/overview) for naming requirements.
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2876,8 +2877,8 @@ type MetricDescriptor struct {
 	// granular way, you can create a `DOUBLE CUMULATIVE` metric whose
 	// `unit` is `ks{CPU}`, and then write the value `12.005` (which is
 	// `12005/1000`), or use `Kis{CPU}` and write `11.723` (which is
-	// `12005/1024`). The supported units are a subset of [The Unified Code
-	// for Units of Measure](http://unitsofmeasure.org/ucum.html) standard:
+	// `12005/1024`). The supported units are a subset of The Unified Code
+	// for Units of Measure (http://unitsofmeasure.org/ucum.html) standard:
 	// **Basic units (UNIT)** * `bit` bit * `By` byte * `s` second * `min`
 	// minute * `h` hour * `d` day * `1` dimensionless **Prefixes (PREFIX)**
 	// * `k` kilo (10^3) * `M` mega (10^6) * `G` giga (10^9) * `T` tera
@@ -2900,11 +2901,11 @@ type MetricDescriptor struct {
 	// equivalent to `1`. For examples, `{request}/s == 1/s`,
 	// `By{transmitted}/s == By/s`. * `NAME` is a sequence of non-blank
 	// printable ASCII characters not containing `{` or `}`. * `1`
-	// represents a unitary [dimensionless
-	// unit](https://en.wikipedia.org/wiki/Dimensionless_quantity) of 1,
-	// such as in `1/s`. It is typically used when none of the basic units
-	// are appropriate. For example, "new users per day" can be represented
-	// as `1/d` or `{new-users}/d` (and a metric value `5` would mean "5 new
+	// represents a unitary dimensionless unit
+	// (https://en.wikipedia.org/wiki/Dimensionless_quantity) of 1, such as
+	// in `1/s`. It is typically used when none of the basic units are
+	// appropriate. For example, "new users per day" can be represented as
+	// `1/d` or `{new-users}/d` (and a metric value `5` would mean "5 new
 	// users). Alternatively, "thousands of page views per day" would be
 	// represented as `1000/d` or `k1/d` or `k{page_views}/d` (and a metric
 	// value of `5.3` would mean "5300 page views per day"). * `%`
@@ -3581,9 +3582,10 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -3601,8 +3603,8 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -3641,9 +3643,9 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3974,7 +3976,8 @@ type Service struct {
 	// Billing: Billing configuration.
 	Billing *Billing `json:"billing,omitempty"`
 
-	// ConfigVersion: This field is obsolete. Its value must be set to `3`.
+	// ConfigVersion: Deprecated. The service config compiler always sets
+	// this field to `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -4192,11 +4195,11 @@ func (s *SourceInfo) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -4464,8 +4467,8 @@ func (s *SystemParameters) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -4646,16 +4649,21 @@ func (s *UndeleteServiceResponse) MarshalJSON() ([]byte, error) {
 type Usage struct {
 	// ProducerNotificationChannel: The full resource name of a channel used
 	// for sending notifications to the service producer. Google Service
-	// Management currently only supports [Google Cloud
-	// Pub/Sub](https://cloud.google.com/pubsub) as a notification channel.
-	// To use Google Cloud Pub/Sub as the channel, this must be the name of
-	// a Cloud Pub/Sub topic that uses the Cloud Pub/Sub topic name format
+	// Management currently only supports Google Cloud Pub/Sub
+	// (https://cloud.google.com/pubsub) as a notification channel. To use
+	// Google Cloud Pub/Sub as the channel, this must be the name of a Cloud
+	// Pub/Sub topic that uses the Cloud Pub/Sub topic name format
 	// documented in https://cloud.google.com/pubsub/docs/overview.
 	ProducerNotificationChannel string `json:"producerNotificationChannel,omitempty"`
 
 	// Requirements: Requirements that must be satisfied before a consumer
 	// project can use the service. Each requirement is of the form /; for
-	// example 'serviceusage.googleapis.com/billing-enabled'.
+	// example 'serviceusage.googleapis.com/billing-enabled'. For Google
+	// APIs, a Terms of Service requirement must be included here. Google
+	// Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+	// Other Google APIs should include
+	// "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+	// included based on the business needs.
 	Requirements []string `json:"requirements,omitempty"`
 
 	// Rules: A list of usage rules that apply to individual API methods.
@@ -4800,7 +4808,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4984,7 +4992,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5153,7 +5161,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5282,7 +5290,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5380,9 +5388,9 @@ type ServicesEnableCall struct {
 }
 
 // Enable: Enables a service for a project, so it can be used for the
-// project. See [Cloud Auth
-// Guide](https://cloud.google.com/docs/authentication) for more
-// information. Operation
+// project. See Cloud Auth Guide
+// (https://cloud.google.com/docs/authentication) for more information.
+// Operation
 func (r *ServicesService) Enable(serviceName string, enableservicerequest *EnableServiceRequest) *ServicesEnableCall {
 	c := &ServicesEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -5417,7 +5425,7 @@ func (c *ServicesEnableCall) Header() http.Header {
 
 func (c *ServicesEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5564,7 +5572,7 @@ func (c *ServicesGenerateConfigReportCall) Header() http.Header {
 
 func (c *ServicesGenerateConfigReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5702,7 +5710,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5871,7 +5879,7 @@ func (c *ServicesGetConfigCall) Header() http.Header {
 
 func (c *ServicesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6028,7 +6036,7 @@ func (c *ServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6213,7 +6221,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6383,7 +6391,7 @@ func (c *ServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6529,7 +6537,7 @@ func (c *ServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6673,7 +6681,7 @@ func (c *ServicesUndeleteCall) Header() http.Header {
 
 func (c *ServicesUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6810,7 +6818,7 @@ func (c *ServicesConfigsCreateCall) Header() http.Header {
 
 func (c *ServicesConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6975,7 +6983,7 @@ func (c *ServicesConfigsGetCall) Header() http.Header {
 
 func (c *ServicesConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7158,7 +7166,7 @@ func (c *ServicesConfigsListCall) Header() http.Header {
 
 func (c *ServicesConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7334,7 +7342,7 @@ func (c *ServicesConfigsSubmitCall) Header() http.Header {
 
 func (c *ServicesConfigsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7476,7 +7484,7 @@ func (c *ServicesConsumersGetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7621,7 +7629,7 @@ func (c *ServicesConsumersSetIamPolicyCall) Header() http.Header {
 
 func (c *ServicesConsumersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7767,7 +7775,7 @@ func (c *ServicesConsumersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ServicesConsumersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7919,7 +7927,7 @@ func (c *ServicesRolloutsCreateCall) Header() http.Header {
 
 func (c *ServicesRolloutsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8070,7 +8078,7 @@ func (c *ServicesRolloutsGetCall) Header() http.Header {
 
 func (c *ServicesRolloutsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8190,11 +8198,11 @@ func (r *ServicesRolloutsService) List(serviceName string) *ServicesRolloutsList
 
 // Filter sets the optional parameter "filter": Required. Use `filter`
 // to return subset of rollouts. The following filters are supported: --
-// To limit the results to only those in
-// [status](google.api.servicemanagement.v1.RolloutStatus) 'SUCCESS',
-// use filter='status=SUCCESS' -- To limit the results to those in
-// [status](google.api.servicemanagement.v1.RolloutStatus) 'CANCELLED'
-// or 'FAILED', use filter='status=CANCELLED OR status=FAILED'
+// To limit the results to only those in status
+// (google.api.servicemanagement.v1.RolloutStatus) 'SUCCESS', use
+// filter='status=SUCCESS' -- To limit the results to those in status
+// (google.api.servicemanagement.v1.RolloutStatus) 'CANCELLED' or
+// 'FAILED', use filter='status=CANCELLED OR status=FAILED'
 func (c *ServicesRolloutsListCall) Filter(filter string) *ServicesRolloutsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8252,7 +8260,7 @@ func (c *ServicesRolloutsListCall) Header() http.Header {
 
 func (c *ServicesRolloutsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

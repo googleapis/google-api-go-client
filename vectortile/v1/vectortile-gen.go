@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -576,13 +576,20 @@ type Geometry struct {
 	// Areas: The areas present in this geometry.
 	Areas []*Area `json:"areas,omitempty"`
 
-	// ExtrudedAreas: The extruded areas present in this geometry.
+	// ExtrudedAreas: The extruded areas present in this geometry. Not
+	// populated if modeled_volumes are included in this geometry unless
+	// always_include_building_footprints is set in GetFeatureTileRequest,
+	// in which case the client should decide which (extruded areas or
+	// modeled volumes) should be used (they should not be rendered
+	// together).
 	ExtrudedAreas []*ExtrudedArea `json:"extrudedAreas,omitempty"`
 
 	// Lines: The lines present in this geometry.
 	Lines []*Line `json:"lines,omitempty"`
 
-	// ModeledVolumes: The modeled volumes present in this geometry.
+	// ModeledVolumes: The modeled volumes present in this geometry. Not
+	// populated unless enable_modeled_volumes has been set in
+	// GetFeatureTileRequest.
 	ModeledVolumes []*ModeledVolume `json:"modeledVolumes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Areas") to
@@ -1167,6 +1174,16 @@ func (r *FeaturetilesService) Get(name string) *FeaturetilesGetCall {
 	return c
 }
 
+// AlwaysIncludeBuildingFootprints sets the optional parameter
+// "alwaysIncludeBuildingFootprints": Flag indicating whether the
+// returned tile will always contain 2.5D footprints for structures. If
+// enabled_modeled_volumes is set, this will mean that structures will
+// have both their 3D models and 2.5D footprints returned.
+func (c *FeaturetilesGetCall) AlwaysIncludeBuildingFootprints(alwaysIncludeBuildingFootprints bool) *FeaturetilesGetCall {
+	c.urlParams_.Set("alwaysIncludeBuildingFootprints", fmt.Sprint(alwaysIncludeBuildingFootprints))
+	return c
+}
+
 // ClientInfoApiClient sets the optional parameter
 // "clientInfo.apiClient": API client name and version. For example, the
 // SDK calling the API. The exact format is up to the client.
@@ -1362,7 +1379,7 @@ func (c *FeaturetilesGetCall) Header() http.Header {
 
 func (c *FeaturetilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1432,6 +1449,11 @@ func (c *FeaturetilesGetCall) Do(opts ...googleapi.CallOption) (*FeatureTile, er
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "alwaysIncludeBuildingFootprints": {
+	//       "description": "Flag indicating whether the returned tile will always contain 2.5D footprints for structures. If enabled_modeled_volumes is set, this will mean that structures will have both their 3D models and 2.5D footprints returned.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "clientInfo.apiClient": {
 	//       "description": "API client name and version. For example, the SDK calling the API. The exact format is up to the client.",
 	//       "location": "query",
@@ -1725,7 +1747,7 @@ func (c *TerraintilesGetCall) Header() http.Header {
 
 func (c *TerraintilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

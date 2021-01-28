@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -168,11 +168,10 @@ type TransferOperationsService struct {
 	s *Service
 }
 
-// AwsAccessKey: AWS access key (see [AWS Security
-// Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-securit
-// y-credentials.html)). For information on our data retention policy
-// for user credentials, see [User
-// credentials](data-retention#user-credentials).
+// AwsAccessKey: AWS access key (see AWS Security Credentials
+// (https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)).
+// For information on our data retention policy for user credentials,
+// see User credentials (data-retention#user-credentials).
 type AwsAccessKey struct {
 	// AccessKeyId: Required. AWS access key ID.
 	AccessKeyId string `json:"accessKeyId,omitempty"`
@@ -211,14 +210,18 @@ type AwsS3Data struct {
 	// AwsAccessKey: Required. Input only. AWS access key used to sign the
 	// API requests to the AWS S3 bucket. Permissions on the bucket must be
 	// granted to the access ID of the AWS access key. For information on
-	// our data retention policy for user credentials, see [User
-	// credentials](data-retention#user-credentials).
+	// our data retention policy for user credentials, see User credentials
+	// (data-retention#user-credentials).
 	AwsAccessKey *AwsAccessKey `json:"awsAccessKey,omitempty"`
 
-	// BucketName: Required. S3 Bucket name (see [Creating a
-	// bucket](https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-
-	// get-location-example.html)).
+	// BucketName: Required. S3 Bucket name (see Creating a bucket
+	// (https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).
 	BucketName string `json:"bucketName,omitempty"`
+
+	// Path: Root path to transfer objects. Must be an empty string or full
+	// path name that ends with a '/'. This field is treated as an object
+	// prefix. As such, it should generally not begin with a '/'.
+	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AwsAccessKey") to
 	// unconditionally include in API requests. By default, fields with
@@ -246,23 +249,26 @@ func (s *AwsS3Data) MarshalJSON() ([]byte, error) {
 // AzureBlobStorageData: An AzureBlobStorageData resource can be a data
 // source, but not a data sink. An AzureBlobStorageData resource
 // represents one Azure container. The storage account determines the
-// [Azure
-// endpoint](https://docs.microsoft.com/en-us/azure/storage/common/storag
-// e-create-storage-account#storage-account-endpoints). In an
-// AzureBlobStorageData resource, a blobs's name is the [Azure Blob
-// Storage blob's key
-// name](https://docs.microsoft.com/en-us/rest/api/storageservices/naming
-// -and-referencing-containers--blobs--and-metadata#blob-names).
+// Azure endpoint
+// (https://docs.microsoft.com/en-us/azure/storage/common/storage-create-storage-account#storage-account-endpoints).
+// In an AzureBlobStorageData resource, a blobs's name is the Azure Blob
+// Storage blob's key name
+// (https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata#blob-names).
 type AzureBlobStorageData struct {
 	// AzureCredentials: Required. Input only. Credentials used to
 	// authenticate API requests to Azure. For information on our data
-	// retention policy for user credentials, see [User
-	// credentials](data-retention#user-credentials).
+	// retention policy for user credentials, see User credentials
+	// (data-retention#user-credentials).
 	AzureCredentials *AzureCredentials `json:"azureCredentials,omitempty"`
 
 	// Container: Required. The container to transfer from the Azure Storage
 	// account.
 	Container string `json:"container,omitempty"`
+
+	// Path: Root path to transfer objects. Must be an empty string or full
+	// path name that ends with a '/'. This field is treated as an object
+	// prefix. As such, it should generally not begin with a '/'.
+	Path string `json:"path,omitempty"`
 
 	// StorageAccount: Required. The name of the Azure Storage account.
 	StorageAccount string `json:"storageAccount,omitempty"`
@@ -292,14 +298,13 @@ func (s *AzureBlobStorageData) MarshalJSON() ([]byte, error) {
 }
 
 // AzureCredentials: Azure credentials For information on our data
-// retention policy for user credentials, see [User
-// credentials](data-retention#user-credentials).
+// retention policy for user credentials, see User credentials
+// (data-retention#user-credentials).
 type AzureCredentials struct {
-	// SasToken: Required. Azure shared access signature. (see [Grant
-	// limited access to Azure Storage resources using shared access
-	// signatures
-	// (SAS)](https://docs.microsoft.com/en-us/azure/storage/common/storage-s
-	// as-overview)).
+	// SasToken: Required. Azure shared access signature. (see Grant limited
+	// access to Azure Storage resources using shared access signatures
+	// (SAS)
+	// (https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)).
 	SasToken string `json:"sasToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SasToken") to
@@ -550,10 +555,18 @@ func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 // `updated` property of Cloud Storage objects, which changes when the
 // content or the metadata of the object is updated.
 type GcsData struct {
-	// BucketName: Required. Cloud Storage bucket name (see [Bucket Name
-	// Requirements](https://cloud.google.com/storage/docs/naming#requirement
-	// s)).
+	// BucketName: Required. Cloud Storage bucket name (see Bucket Name
+	// Requirements
+	// (https://cloud.google.com/storage/docs/naming#requirements)).
 	BucketName string `json:"bucketName,omitempty"`
+
+	// Path: Root path to transfer objects. Must be an empty string or full
+	// path name that ends with a '/'. This field is treated as an object
+	// prefix. As such, it should generally not begin with a '/'. (must meet
+	// Object Name
+	// Requirements](https://cloud.google.com/storage/docs/naming#objectnames
+	// )).
+	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketName") to
 	// unconditionally include in API requests. By default, fields with
@@ -619,9 +632,9 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 // following tab-delimited fields: * **HTTP URL** — The location of
 // the object. * **Length** — The size of the object in bytes. *
 // **MD5** — The base64-encoded MD5 hash of the object. For an example
-// of a valid TSV file, see [Transferring data from
-// URLs](https://cloud.google.com/storage-transfer/docs/create-url-list).
-//  When transferring data based on a URL list, keep the following in
+// of a valid TSV file, see Transferring data from URLs
+// (https://cloud.google.com/storage-transfer/docs/create-url-list).
+// When transferring data based on a URL list, keep the following in
 // mind: * When an object located at `http(s)://hostname:port/` is
 // transferred to a data sink, the name of the object at the data sink
 // is `/`. * If the specified size of an object does not match the
@@ -1041,11 +1054,11 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1583,7 +1596,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1715,7 +1728,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1852,7 +1865,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2016,7 +2029,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2182,7 +2195,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2340,7 +2353,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2491,7 +2504,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2650,7 +2663,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2824,7 +2837,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2964,7 +2977,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

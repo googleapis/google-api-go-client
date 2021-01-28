@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -86,7 +86,7 @@ const (
 	// View and manage your Google Analytics data
 	AnalyticsScope = "https://www.googleapis.com/auth/analytics"
 
-	// View your Google Analytics data
+	// See and download your Google Analytics data
 	AnalyticsReadonlyScope = "https://www.googleapis.com/auth/analytics.readonly"
 )
 
@@ -365,7 +365,7 @@ func (s *CaseExpression) MarshalJSON() ([]byte, error) {
 
 // Cohort: Defines a cohort selection criteria. A cohort is a group of
 // users who share a common characteristic. For example, users with the
-// same `firstTouchDate` belong to the same cohort.
+// same `firstSessionDate` belong to the same cohort.
 type Cohort struct {
 	// DateRange: The cohort selects users whose first touch date is between
 	// start date and end date defined in the `dateRange`. This `dateRange`
@@ -385,7 +385,7 @@ type Cohort struct {
 	DateRange *DateRange `json:"dateRange,omitempty"`
 
 	// Dimension: Dimension used by the cohort. Required and only supports
-	// `firstTouchDate`.
+	// `firstSessionDate`.
 	Dimension string `json:"dimension,omitempty"`
 
 	// Name: Assigns a name to this cohort. The dimension `cohort` is valued
@@ -446,19 +446,20 @@ func (s *CohortReportSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CohortSpec: Specification of cohorts for a cohort report. Cohort
-// reports can be used for example to create a time series of user
-// retention for the cohort. For example, you could select the cohort of
-// users that were acquired in the first week of September and follow
-// that cohort for the next six weeks. Selecting the users acquired in
-// the first week of September cohort is specified in the `cohort`
-// object. Following that cohort for the next six weeks is specified in
-// the `cohortsRange` object. The report response could show a weekly
-// time series where say your app has retained 60% of this cohort after
-// three weeks and 25% of this cohort after six weeks. These two
-// percentages can be calculated by the metric
-// `cohortActiveUsers/cohortTotalUsers` and will be separate rows in the
-// report.
+// CohortSpec: The specification of cohorts for a cohort report. Cohort
+// reports create a time series of user retention for the cohort. For
+// example, you could select the cohort of users that were acquired in
+// the first week of September and follow that cohort for the next six
+// weeks. Selecting the users acquired in the first week of September
+// cohort is specified in the `cohort` object. Following that cohort for
+// the next six weeks is specified in the `cohortsRange` object. For
+// examples, see Cohort Report Examples
+// (https://developers.google.com/analytics/devguides/reporting/data/v1/advanced#cohort_report_examples).
+// The report response could show a weekly time series where say your
+// app has retained 60% of this cohort after three weeks and 25% of this
+// cohort after six weeks. These two percentages can be calculated by
+// the metric `cohortActiveUsers/cohortTotalUsers` and will be separate
+// rows in the report.
 type CohortSpec struct {
 	// CohortReportSettings: Optional settings for a cohort report.
 	CohortReportSettings *CohortReportSettings `json:"cohortReportSettings,omitempty"`
@@ -661,14 +662,14 @@ type Dimension struct {
 	// concatenate(country, ", ", city).
 	DimensionExpression *DimensionExpression `json:"dimensionExpression,omitempty"`
 
-	// Name: The name of the dimension. See the [API
-	// Dimensions](https://developers.google.com/analytics/devguides/reportin
-	// g/data/v1/api-schema#dimensions) for the list of dimension names. If
-	// `dimensionExpression` is specified, `name` can be any string that you
-	// would like. For example if a `dimensionExpression` concatenates
-	// `country` and `city`, you could call that dimension `countryAndCity`.
-	// Dimensions are referenced by `name` in `dimensionFilter`, `orderBys`,
-	// `dimensionExpression`, and `pivots`.
+	// Name: The name of the dimension. See the API Dimensions
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#dimensions)
+	// for the list of dimension names. If `dimensionExpression` is
+	// specified, `name` can be any string that you would like. For example
+	// if a `dimensionExpression` concatenates `country` and `city`, you
+	// could call that dimension `countryAndCity`. Dimensions are referenced
+	// by `name` in `dimensionFilter`, `orderBys`, `dimensionExpression`,
+	// and `pivots`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionExpression")
@@ -767,7 +768,7 @@ func (s *DimensionHeader) MarshalJSON() ([]byte, error) {
 
 // DimensionMetadata: Explains a dimension.
 type DimensionMetadata struct {
-	// ApiName: This dimension's name. Useable in [Dimension](#Dimension)'s
+	// ApiName: This dimension's name. Useable in Dimension (#Dimension)'s
 	// `name`. For example, `eventName`.
 	ApiName string `json:"apiName,omitempty"`
 
@@ -888,9 +889,8 @@ func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 // tracked.
 type Entity struct {
 	// PropertyId: A Google Analytics GA4 property id. To learn more, see
-	// [where to find your Property
-	// ID](https://developers.google.com/analytics/devguides/reporting/data/v
-	// 1/property-id).
+	// where to find your Property ID
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 	PropertyId string `json:"propertyId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PropertyId") to
@@ -1116,14 +1116,13 @@ type Metric struct {
 	// `expression`.
 	Invisible bool `json:"invisible,omitempty"`
 
-	// Name: The name of the metric. See the [API
-	// Metrics](https://developers.google.com/analytics/devguides/reporting/d
-	// ata/v1/api-schema#metrics) for the list of metric names. If
-	// `expression` is specified, `name` can be any string that you would
-	// like. For example if `expression` is `screenPageViews/sessions`, you
-	// could call that metric's name = `viewsPerSession`. Metrics are
-	// referenced by `name` in `metricFilter`, `orderBys`, and metric
-	// `expression`.
+	// Name: The name of the metric. See the API Metrics
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/api-schema#metrics)
+	// for the list of metric names. If `expression` is specified, `name`
+	// can be any string that you would like. For example if `expression` is
+	// `screenPageViews/sessions`, you could call that metric's name =
+	// `viewsPerSession`. Metrics are referenced by `name` in
+	// `metricFilter`, `orderBys`, and metric `expression`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Expression") to
@@ -1207,7 +1206,7 @@ func (s *MetricHeader) MarshalJSON() ([]byte, error) {
 
 // MetricMetadata: Explains a metric.
 type MetricMetadata struct {
-	// ApiName: A metric name. Useable in [Metric](#Metric)'s `name`. For
+	// ApiName: A metric name. Useable in Metric (#Metric)'s `name`. For
 	// example, `eventCount`.
 	ApiName string `json:"apiName,omitempty"`
 
@@ -1225,7 +1224,7 @@ type MetricMetadata struct {
 	Description string `json:"description,omitempty"`
 
 	// Expression: The mathematical expression for this derived metric. Can
-	// be used in [Metric](#Metric)'s `expression` field for equivalent
+	// be used in Metric (#Metric)'s `expression` field for equivalent
 	// reports. Most metrics are not expressions, and for non-expressions,
 	// this field is empty.
 	Expression string `json:"expression,omitempty"`
@@ -1682,8 +1681,8 @@ type PropertyQuota struct {
 	TokensPerDay *QuotaStatus `json:"tokensPerDay,omitempty"`
 
 	// TokensPerHour: Standard Analytics Properties can use up to 5,000
-	// tokens per day; Analytics 360 Properties can use 50,000 tokens per
-	// day. An API request consumes a single number of tokens, and that
+	// tokens per hour; Analytics 360 Properties can use 50,000 tokens per
+	// hour. An API request consumes a single number of tokens, and that
 	// number is deducted from both the hourly and daily quotas.
 	TokensPerHour *QuotaStatus `json:"tokensPerHour,omitempty"`
 
@@ -1873,8 +1872,8 @@ type RunPivotReportRequest struct {
 	Pivots []*Pivot `json:"pivots,omitempty"`
 
 	// ReturnPropertyQuota: Toggles whether to return the current state of
-	// this Analytics Property's quota. Quota is returned in
-	// [PropertyQuota](#PropertyQuota).
+	// this Analytics Property's quota. Quota is returned in PropertyQuota
+	// (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CohortSpec") to
@@ -2009,7 +2008,7 @@ type RunRealtimeReportRequest struct {
 
 	// ReturnPropertyQuota: Toggles whether to return the current state of
 	// this Analytics Property's Realtime quota. Quota is returned in
-	// [PropertyQuota](#PropertyQuota).
+	// PropertyQuota (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
@@ -2137,9 +2136,8 @@ type RunReportRequest struct {
 
 	// Limit: The number of rows to return. If unspecified, 10 rows are
 	// returned. If -1, all rows are returned. To learn more about this
-	// pagination parameter, see
-	// [Pagination](https://developers.google.com/analytics/devguides/reporti
-	// ng/data/v1/basics#pagination).
+	// pagination parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregation of metrics. Aggregated metric values
@@ -2164,17 +2162,16 @@ type RunReportRequest struct {
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// Offset: The row count of the start row. The first row is counted as
-	// row 0. To learn more about this pagination parameter, see
-	// [Pagination](https://developers.google.com/analytics/devguides/reporti
-	// ng/data/v1/basics#pagination).
+	// row 0. To learn more about this pagination parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
 
 	// OrderBys: Specifies how rows are ordered in the response.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
 
 	// ReturnPropertyQuota: Toggles whether to return the current state of
-	// this Analytics Property's quota. Quota is returned in
-	// [PropertyQuota](#PropertyQuota).
+	// this Analytics Property's quota. Quota is returned in PropertyQuota
+	// (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CohortSpec") to
@@ -2229,9 +2226,8 @@ type RunReportResponse struct {
 	// the number of rows returned in the response. For example if a query
 	// returns 175 rows and includes limit = 50 in the API request, the
 	// response will contain row_count = 175 but only 50 rows. To learn more
-	// about this pagination parameter, see
-	// [Pagination](https://developers.google.com/analytics/devguides/reporti
-	// ng/data/v1/basics#pagination).
+	// about this pagination parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// Rows: Rows of dimension value combinations and metric values in the
@@ -2378,7 +2374,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2516,7 +2512,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2656,7 +2652,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2783,7 +2779,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2913,7 +2909,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3045,7 +3041,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

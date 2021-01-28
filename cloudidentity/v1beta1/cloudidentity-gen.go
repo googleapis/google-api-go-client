@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -266,8 +266,8 @@ func (s *AndroidAttributes) MarshalJSON() ([]byte, error) {
 // ApproveDeviceUserRequest: Request message for approving the device to
 // access user data.
 type ApproveDeviceUserRequest struct {
-	// Customer: Required. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Customer: Required. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
 	// organization, use `customers/{customer_id}`, where customer_id is the
@@ -329,8 +329,8 @@ func (s *ApproveDeviceUserResponse) MarshalJSON() ([]byte, error) {
 // BlockDeviceUserRequest: Request message for blocking account on
 // device.
 type BlockDeviceUserRequest struct {
-	// Customer: Required. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Customer: Required. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
 	// organization, use `customers/{customer_id}`, where customer_id is the
@@ -392,8 +392,8 @@ func (s *BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
 // CancelWipeDeviceRequest: Request message for cancelling an unfinished
 // device wipe.
 type CancelWipeDeviceRequest struct {
-	// Customer: Required. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Customer: Required. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
 	// organization, use `customers/{customer_id}`, where customer_id is the
@@ -456,8 +456,8 @@ func (s *CancelWipeDeviceResponse) MarshalJSON() ([]byte, error) {
 // CancelWipeDeviceUserRequest: Request message for cancelling an
 // unfinished user account wipe.
 type CancelWipeDeviceUserRequest struct {
-	// Customer: Required. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Customer: Required. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
 	// organization, use `customers/{customer_id}`, where customer_id is the
@@ -614,8 +614,8 @@ type ClientState struct {
 	//   "UNMANAGED" - The resource is not managed.
 	Managed string `json:"managed,omitempty"`
 
-	// Name: Output only. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Name: Output only. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// ClientState in format:
 	// `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner
 	// _id}`, where partner_id corresponds to the partner storing the data.
@@ -662,8 +662,8 @@ func (s *ClientState) MarshalJSON() ([]byte, error) {
 // CreateDeviceRequest: Request message for creating a Company Owned
 // device.
 type CreateDeviceRequest struct {
-	// Customer: Required. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Customer: Required. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
 	// organization, use `customers/{customer_id}`, where customer_id is the
@@ -853,10 +853,10 @@ type Device struct {
 	// Model: Output only. Model name of device. Example: Pixel 3.
 	Model string `json:"model,omitempty"`
 
-	// Name: Output only. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
-	// Device in format: `devices/{device_id}`, where device_id is the
-	// unique id assigned to the Device.
+	// Name: Output only. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the Device
+	// in format: `devices/{device_id}`, where device_id is the unique id
+	// assigned to the Device.
 	Name string `json:"name,omitempty"`
 
 	// NetworkOperator: Output only. Mobile or network operator of device,
@@ -970,8 +970,8 @@ type DeviceUser struct {
 	// but the Windows account is still intact.
 	ManagementState string `json:"managementState,omitempty"`
 
-	// Name: Output only. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Name: Output only. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// DeviceUser in format: `devices/{device_id}/deviceUsers/{user_id}`,
 	// where user_id is the ID of the user associated with the user session.
 	Name string `json:"name,omitempty"`
@@ -1022,7 +1022,8 @@ func (s *DeviceUser) MarshalJSON() ([]byte, error) {
 // DynamicGroupMetadata: Dynamic group metadata like queries and status.
 type DynamicGroupMetadata struct {
 	// Queries: Memberships will be the union of all queries. Only one entry
-	// with USER resource is currently supported.
+	// with USER resource is currently supported. Customers can create up to
+	// 100 dynamic groups.
 	Queries []*DynamicGroupQuery `json:"queries,omitempty"`
 
 	// Status: Output only. Status of the dynamic group.
@@ -1474,8 +1475,8 @@ type GoogleAppsCloudidentityDevicesV1ClientState struct {
 	//   "UNMANAGED" - The resource is not managed.
 	Managed string `json:"managed,omitempty"`
 
-	// Name: Output only. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Name: Output only. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// ClientState in format:
 	// `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner
 	// _id}`, where partner_id corresponds to the partner storing the data.
@@ -1681,10 +1682,10 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	// Model: Output only. Model name of device. Example: Pixel 3.
 	Model string `json:"model,omitempty"`
 
-	// Name: Output only. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
-	// Device in format: `devices/{device_id}`, where device_id is the
-	// unique id assigned to the Device.
+	// Name: Output only. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the Device
+	// in format: `devices/{device_id}`, where device_id is the unique id
+	// assigned to the Device.
 	Name string `json:"name,omitempty"`
 
 	// NetworkOperator: Output only. Mobile or network operator of device,
@@ -1794,8 +1795,8 @@ type GoogleAppsCloudidentityDevicesV1DeviceUser struct {
 	// but the Windows account is still intact.
 	ManagementState string `json:"managementState,omitempty"`
 
-	// Name: Output only. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Name: Output only. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// DeviceUser in format: `devices/{device_id}/deviceUsers/{user_id}`,
 	// where user_id is the ID of the user associated with the user session.
 	Name string `json:"name,omitempty"`
@@ -1937,9 +1938,9 @@ type Group struct {
 	// {"system/groups/external": ""}.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. The [resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
-	// `Group`. Shall be of the form `groups/{group_id}`.
+	// Name: Output only. The resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the `Group`.
+	// Shall be of the form `groups/{group_id}`.
 	Name string `json:"name,omitempty"`
 
 	// Parent: Required. Immutable. The resource name of the entity under
@@ -2220,8 +2221,8 @@ func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 // LookupGroupNameResponse: The response message for
 // GroupsService.LookupGroupName.
 type LookupGroupNameResponse struct {
-	// Name: Output only. The [resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Name: Output only. The resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// looked-up `Group`.
 	Name string `json:"name,omitempty"`
 
@@ -2255,8 +2256,8 @@ func (s *LookupGroupNameResponse) MarshalJSON() ([]byte, error) {
 // LookupMembershipNameResponse: The response message for
 // MembershipsService.LookupMembershipName.
 type LookupMembershipNameResponse struct {
-	// Name: The [resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Name: The resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// looked-up `Membership`. Must be of the form
 	// `groups/{group_id}/memberships/{membership_id}`.
 	Name string `json:"name,omitempty"`
@@ -2295,8 +2296,8 @@ type LookupSelfDeviceUsersResponse struct {
 	// Devices API methods such as List, Get, etc.
 	Customer string `json:"customer,omitempty"`
 
-	// Names: [Resource
-	// names](https://cloud.google.com/apis/design/resource_names) of the
+	// Names: Resource names
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// DeviceUsers in the format:
 	// `devices/{device_id}/deviceUsers/{user_resource_id}`, where device_id
 	// is the unique ID assigned to a Device and user_resource_id is the
@@ -2400,8 +2401,8 @@ type Membership struct {
 	// when returned.
 	MemberKey *EntityKey `json:"memberKey,omitempty"`
 
-	// Name: Output only. The [resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Name: Output only. The resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// `Membership`. Shall be of the form
 	// `groups/{group_id}/memberships/{membership_id}`.
 	Name string `json:"name,omitempty"`
@@ -2784,11 +2785,11 @@ func (s *SearchTransitiveMembershipsResponse) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2893,8 +2894,8 @@ func (s *UpdateMembershipRolesParams) MarshalJSON() ([]byte, error) {
 
 // WipeDeviceRequest: Request message for wiping all data on the device.
 type WipeDeviceRequest struct {
-	// Customer: Required. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Customer: Required. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
 	// organization, use `customers/{customer_id}`, where customer_id is the
@@ -2957,8 +2958,8 @@ func (s *WipeDeviceResponse) MarshalJSON() ([]byte, error) {
 // WipeDeviceUserRequest: Request message for starting an account wipe
 // on device.
 type WipeDeviceUserRequest struct {
-	// Customer: Required. [Resource
-	// name](https://cloud.google.com/apis/design/resource_names) of the
+	// Customer: Required. Resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
 	// organization, use `customers/{customer_id}`, where customer_id is the
@@ -3065,7 +3066,7 @@ func (c *DevicesCancelWipeCall) Header() http.Header {
 
 func (c *DevicesCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3203,7 +3204,7 @@ func (c *DevicesCreateCall) Header() http.Header {
 
 func (c *DevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3298,8 +3299,8 @@ func (r *DevicesService) Delete(name string) *DevicesDeleteCall {
 	return c
 }
 
-// Customer sets the optional parameter "customer": Required. [Resource
-// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer sets the optional parameter "customer": Required. Resource
+// name (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
 // organization, use `customers/{customer_id}`, where customer_id is the
@@ -3336,7 +3337,7 @@ func (c *DevicesDeleteCall) Header() http.Header {
 
 func (c *DevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3442,8 +3443,8 @@ func (r *DevicesService) Get(name string) *DevicesGetCall {
 	return c
 }
 
-// Customer sets the optional parameter "customer": Required. [Resource
-// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer sets the optional parameter "customer": Required. Resource
+// name (https://cloud.google.com/apis/design/resource_names) of the
 // Customer in format: `customers/{customer_id}`, where customer_id is
 // the customer to whom the device belongs.
 func (c *DevicesGetCall) Customer(customer string) *DevicesGetCall {
@@ -3488,7 +3489,7 @@ func (c *DevicesGetCall) Header() http.Header {
 
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3595,8 +3596,8 @@ func (r *DevicesService) List() *DevicesListCall {
 	return c
 }
 
-// Customer sets the optional parameter "customer": Required. [Resource
-// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer sets the optional parameter "customer": Required. Resource
+// name (https://cloud.google.com/apis/design/resource_names) of the
 // customer.
 func (c *DevicesListCall) Customer(customer string) *DevicesListCall {
 	c.urlParams_.Set("customer", customer)
@@ -3605,10 +3606,9 @@ func (c *DevicesListCall) Customer(customer string) *DevicesListCall {
 
 // Filter sets the optional parameter "filter": Additional restrictions
 // when fetching list of devices. For a list of search fields, refer to
-// [Mobile device search
-// fields](https://developers.google.com/admin-sdk/directory/v1/search-op
-// erators). Multiple search fields are separated by the space
-// character.
+// Mobile device search fields
+// (https://developers.google.com/admin-sdk/directory/v1/search-operators).
+// Multiple search fields are separated by the space character.
 func (c *DevicesListCall) Filter(filter string) *DevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3697,7 +3697,7 @@ func (c *DevicesListCall) Header() http.Header {
 
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3879,7 +3879,7 @@ func (c *DevicesWipeCall) Header() http.Header {
 
 func (c *DevicesWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4016,7 +4016,7 @@ func (c *DevicesDeviceUsersApproveCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4153,7 +4153,7 @@ func (c *DevicesDeviceUsersBlockCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersBlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4292,7 +4292,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4401,8 +4401,8 @@ func (r *DevicesDeviceUsersService) Delete(name string) *DevicesDeviceUsersDelet
 	return c
 }
 
-// Customer sets the optional parameter "customer": Required. [Resource
-// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer sets the optional parameter "customer": Required. Resource
+// name (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
 // organization, use `customers/{customer_id}`, where customer_id is the
@@ -4439,7 +4439,7 @@ func (c *DevicesDeviceUsersDeleteCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4545,8 +4545,8 @@ func (r *DevicesDeviceUsersService) Get(name string) *DevicesDeviceUsersGetCall 
 	return c
 }
 
-// Customer sets the optional parameter "customer": Required. [Resource
-// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer sets the optional parameter "customer": Required. Resource
+// name (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
 // organization, use `customers/{customer_id}`, where customer_id is the
@@ -4593,7 +4593,7 @@ func (c *DevicesDeviceUsersGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4702,8 +4702,8 @@ func (r *DevicesDeviceUsersService) List(parent string) *DevicesDeviceUsersListC
 	return c
 }
 
-// Customer sets the optional parameter "customer": Required. [Resource
-// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer sets the optional parameter "customer": Required. Resource
+// name (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
 // organization, use `customers/{customer_id}`, where customer_id is the
@@ -4715,10 +4715,9 @@ func (c *DevicesDeviceUsersListCall) Customer(customer string) *DevicesDeviceUse
 
 // Filter sets the optional parameter "filter": Additional restrictions
 // when fetching list of devices. For a list of search fields, refer to
-// [Mobile device search
-// fields](https://developers.google.com/admin-sdk/directory/v1/search-op
-// erators). Multiple search fields are separated by the space
-// character.
+// Mobile device search fields
+// (https://developers.google.com/admin-sdk/directory/v1/search-operators).
+// Multiple search fields are separated by the space character.
 func (c *DevicesDeviceUsersListCall) Filter(filter string) *DevicesDeviceUsersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4787,7 +4786,7 @@ func (c *DevicesDeviceUsersListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4951,9 +4950,8 @@ func (r *DevicesDeviceUsersService) Lookup(parent string) *DevicesDeviceUsersLoo
 }
 
 // AndroidId sets the optional parameter "androidId": Android Id
-// returned by
-// [Settings.Secure#ANDROID_ID](https://developer.android.com/reference/a
-// ndroid/provider/Settings.Secure.html#ANDROID_ID).
+// returned by Settings.Secure#ANDROID_ID
+// (https://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID).
 func (c *DevicesDeviceUsersLookupCall) AndroidId(androidId string) *DevicesDeviceUsersLookupCall {
 	c.urlParams_.Set("androidId", androidId)
 	return c
@@ -5035,7 +5033,7 @@ func (c *DevicesDeviceUsersLookupCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5217,7 +5215,7 @@ func (c *DevicesDeviceUsersWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5326,8 +5324,8 @@ func (r *DevicesDeviceUsersClientStatesService) Get(name string) *DevicesDeviceU
 	return c
 }
 
-// Customer sets the optional parameter "customer": Required. [Resource
-// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer sets the optional parameter "customer": Required. Resource
+// name (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
 // organization, use `customers/{customer_id}`, where customer_id is the
@@ -5374,7 +5372,7 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5487,8 +5485,8 @@ func (r *DevicesDeviceUsersClientStatesService) Patch(name string, clientstate *
 	return c
 }
 
-// Customer sets the optional parameter "customer": Required. [Resource
-// name](https://cloud.google.com/apis/design/resource_names) of the
+// Customer sets the optional parameter "customer": Required. Resource
+// name (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
 // organization, use `customers/{customer_id}`, where customer_id is the
@@ -5533,7 +5531,7 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5693,7 +5691,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5835,7 +5833,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5977,7 +5975,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6163,7 +6161,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6304,9 +6302,9 @@ type GroupsLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up the [resource
-// name](https://cloud.google.com/apis/design/resource_names) of a
-// `Group` by its `EntityKey`.
+// Lookup: Looks up the resource name
+// (https://cloud.google.com/apis/design/resource_names) of a `Group` by
+// its `EntityKey`.
 func (r *GroupsService) Lookup() *GroupsLookupCall {
 	c := &GroupsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6371,7 +6369,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6514,7 +6512,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6653,10 +6651,10 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 }
 
 // Query sets the optional parameter "query": Required. The search
-// query. Must be specified in [Common Expression
-// Language](https://opensource.google/projects/cel). May only contain
-// equality operators on the parent and inclusion operators on labels
-// (e.g., `parent == 'customers/{customer_id}' &&
+// query. Must be specified in Common Expression Language
+// (https://opensource.google/projects/cel). May only contain equality
+// operators on the parent and inclusion operators on labels (e.g.,
+// `parent == 'customers/{customer_id}' &&
 // 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
 func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 	c.urlParams_.Set("query", query)
@@ -6711,7 +6709,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6913,7 +6911,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Header() http.Header {
 
 func (c *GroupsMembershipsCheckTransitiveMembershipCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7056,7 +7054,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7195,7 +7193,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7337,7 +7335,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7500,7 +7498,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetMembershipGraphCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7683,7 +7681,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7830,8 +7828,8 @@ type GroupsMembershipsLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up the [resource
-// name](https://cloud.google.com/apis/design/resource_names) of a
+// Lookup: Looks up the resource name
+// (https://cloud.google.com/apis/design/resource_names) of a
 // `Membership` by its `EntityKey`.
 func (r *GroupsMembershipsService) Lookup(parent string) *GroupsMembershipsLookupCall {
 	c := &GroupsMembershipsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7898,7 +7896,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8046,7 +8044,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8228,7 +8226,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Header() http.Header {
 
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8430,7 +8428,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Header() http.Header 
 
 func (c *GroupsMembershipsSearchTransitiveMembershipsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

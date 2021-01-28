@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -250,8 +250,8 @@ func (s *HttpBody) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Link: Links object defined in [section 4.2 of RFC
-// 7483](https://tools.ietf.org/html/rfc7483#section-4.2).
+// Link: Links object defined in section 4.2 of RFC 7483
+// (https://tools.ietf.org/html/rfc7483#section-4.2).
 type Link struct {
 	// Href: Target URL of a link. Example: "http://example.com/previous".
 	Href string `json:"href,omitempty"`
@@ -298,8 +298,8 @@ func (s *Link) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Notice: Notices object defined in [section 4.3 of RFC
-// 7483](https://tools.ietf.org/html/rfc7483#section-4.3).
+// Notice: Notices object defined in section 4.3 of RFC 7483
+// (https://tools.ietf.org/html/rfc7483#section-4.3).
 type Notice struct {
 	// Description: Description of the notice.
 	Description []string `json:"description,omitempty"`
@@ -310,11 +310,11 @@ type Notice struct {
 	// Title: Title of a notice. Example: "Terms of Service".
 	Title string `json:"title,omitempty"`
 
-	// Type: Type values defined in [section 10.2.1 of RFC
-	// 7483](https://tools.ietf.org/html/rfc7483#section-10.2.1) specific to
-	// a whole response: "result set truncated due to authorization",
-	// "result set truncated due to excessive load", "result set truncated
-	// due to unexplainable reasons".
+	// Type: Type values defined in section 10.2.1 of RFC 7483
+	// (https://tools.ietf.org/html/rfc7483#section-10.2.1) specific to a
+	// whole response: "result set truncated due to authorization", "result
+	// set truncated due to excessive load", "result set truncated due to
+	// unexplainable reasons".
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -353,8 +353,8 @@ type RdapResponse struct {
 	JsonResponse *HttpBody `json:"jsonResponse,omitempty"`
 
 	// Lang: Error language code. Error response info fields are defined in
-	// [section 6 of RFC
-	// 7483](https://tools.ietf.org/html/rfc7483#section-6).
+	// section 6 of RFC 7483
+	// (https://tools.ietf.org/html/rfc7483#section-6).
 	Lang string `json:"lang,omitempty"`
 
 	// Notices: Notices applying to this response.
@@ -449,7 +449,7 @@ func (c *AutnumGetCall) Header() http.Header {
 
 func (c *AutnumGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -588,7 +588,7 @@ func (c *DomainGetCall) Header() http.Header {
 
 func (c *DomainGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -730,7 +730,7 @@ func (c *EntityGetCall) Header() http.Header {
 
 func (c *EntityGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -872,7 +872,7 @@ func (c *IpGetCall) Header() http.Header {
 
 func (c *IpGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1019,7 +1019,7 @@ func (c *NameserverGetCall) Header() http.Header {
 
 func (c *NameserverGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1158,7 +1158,7 @@ func (c *V1GetDomainsCall) Header() http.Header {
 
 func (c *V1GetDomainsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1286,7 +1286,7 @@ func (c *V1GetEntitiesCall) Header() http.Header {
 
 func (c *V1GetEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1413,7 +1413,7 @@ func (c *V1GetHelpCall) Header() http.Header {
 
 func (c *V1GetHelpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1541,7 +1541,7 @@ func (c *V1GetIpCall) Header() http.Header {
 
 func (c *V1GetIpCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1669,7 +1669,7 @@ func (c *V1GetNameserversCall) Header() http.Header {
 
 func (c *V1GetNameserversCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

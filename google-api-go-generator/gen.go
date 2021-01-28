@@ -842,7 +842,7 @@ func (a *API) generateScopeConstants() {
 		n++
 		ident := scopeIdentifier(scope)
 		if scope.Description != "" {
-			a.p("%s", asComment("\t", scope.Description))
+			a.p("%s", asComment("\t", removeMarkdownLinks(scope.Description)))
 		}
 		a.pn("\t%s = %q", ident, scope.ID)
 	}
@@ -905,7 +905,7 @@ func (p *Property) Default() string {
 }
 
 func (p *Property) Description() string {
-	return p.p.Schema.Description
+	return removeMarkdownLinks(p.p.Schema.Description)
 }
 
 func (p *Property) Enum() ([]string, bool) {
@@ -1345,7 +1345,7 @@ func (s *Schema) writeVariant(api *API, v *disco.Variant) {
 }
 
 func (s *Schema) Description() string {
-	return s.typ.Description
+	return removeMarkdownLinks(s.typ.Description)
 }
 
 func (s *Schema) writeSchemaStruct(api *API) {
@@ -1836,7 +1836,7 @@ func (meth *Method) generateCode() {
 	pn(" header_ http.Header")
 	pn("}")
 
-	p("\n%s", asComment("", methodName+": "+meth.m.Description))
+	p("\n%s", asComment("", methodName+": "+removeMarkdownLinks(meth.m.Description)))
 	if res != nil {
 		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.Name, meth.m.Name)]; url != "" {
 			pn("// For details, see %v", url)
@@ -1889,7 +1889,7 @@ func (meth *Method) generateCode() {
 		des := opt.p.Description
 		des = strings.Replace(des, "Optional.", "", 1)
 		des = strings.TrimSpace(des)
-		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.p.Name, des)))
+		p("\n%s", asComment("", fmt.Sprintf("%s sets the optional parameter %q: %s", setter, opt.p.Name, removeMarkdownLinks(des))))
 		addFieldValueComments(p, opt, "", true)
 		np := new(namePool)
 		np.Get("c") // take the receiver's name
@@ -2099,7 +2099,11 @@ func (meth *Method) generateCode() {
 		pn(`gensupport.SetOptions(c.urlParams_, opts...)`)
 		pn(`res, err := c.doRequest("media")`)
 		pn("if err != nil { return nil, err }")
-		pn("if err := googleapi.CheckMediaResponse(res); err != nil {")
+		if meth.api.Name == "storage" {
+			pn("if err := googleapi.CheckMediaResponse(res); err != nil {")
+		} else {
+			pn("if err := googleapi.CheckResponse(res); err != nil {")
+		}
 		pn("res.Body.Close()")
 		pn("return nil, err")
 		pn("}")
@@ -2471,7 +2475,7 @@ func (a *arguments) String() string {
 	return buf.String()
 }
 
-var urlRE = regexp.MustCompile(`^http\S+$`)
+var urlRE = regexp.MustCompile(`^\(?http\S+$`)
 
 func asComment(pfx, c string) string {
 	var buf bytes.Buffer
@@ -2488,11 +2492,14 @@ func asComment(pfx, c string) string {
 			break
 		}
 		// Don't break URLs.
+		var si int
 		if !urlRE.MatchString(line[:maxLen]) {
 			line = line[:maxLen]
+			si = strings.LastIndex(line, " ")
+		} else {
+			si = strings.Index(line, " ")
 		}
-		si := strings.LastIndex(line, " ")
-		if nl := strings.Index(line, "\n"); nl != -1 && nl < si {
+		if nl := strings.Index(line, "\n"); nl != -1 && (nl < si || si == -1) {
 			si = nl
 		}
 		if si != -1 {
@@ -2636,4 +2643,20 @@ func addFieldValueComments(p func(format string, args ...interface{}), field Fie
 	for _, l := range lines {
 		p("%s", l)
 	}
+}
+
+// markdownLinkRe is a non-greedy regex meant to find markdown style links. It
+// also captures the name of the link.
+var markdownLinkRe = regexp.MustCompile("([^`]|\\A)(\\[([^\\[]*?)]\\((.*?)\\))([^`]|\\z)")
+
+func removeMarkdownLinks(input string) string {
+	out := input
+	sm := markdownLinkRe.FindAllStringSubmatch(input, -1)
+	if len(sm) == 0 {
+		return out
+	}
+	for _, match := range sm {
+		out = strings.Replace(out, match[2], fmt.Sprintf("%s (%s)", match[3], match[4]), 1)
+	}
+	return out
 }

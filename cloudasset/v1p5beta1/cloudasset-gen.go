@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -145,38 +145,36 @@ type AssetsService struct {
 }
 
 // Asset: An asset in Google Cloud. An asset can be any resource in the
-// Google Cloud [resource
-// hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platfo
-// rm-resource-hierarchy), a resource outside the Google Cloud resource
-// hierarchy (such as Google Kubernetes Engine clusters and objects), or
-// a policy (e.g. Cloud IAM policy). See [Supported asset
-// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-// ypes) for more information.
+// Google Cloud resource hierarchy
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g.
+// Cloud IAM policy). See Supported asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+// for more information.
 type Asset struct {
-	// AccessLevel: Please also refer to the [access level user
-	// guide](https://cloud.google.com/access-context-manager/docs/overview#a
-	// ccess-levels).
+	// AccessLevel: Please also refer to the access level user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-levels).
 	AccessLevel *GoogleIdentityAccesscontextmanagerV1AccessLevel `json:"accessLevel,omitempty"`
 
-	// AccessPolicy: Please also refer to the [access policy user
-	// guide](https://cloud.google.com/access-context-manager/docs/overview#a
-	// ccess-policies).
+	// AccessPolicy: Please also refer to the access policy user guide
+	// (https://cloud.google.com/access-context-manager/docs/overview#access-policies).
 	AccessPolicy *GoogleIdentityAccesscontextmanagerV1AccessPolicy `json:"accessPolicy,omitempty"`
 
-	// Ancestors: The ancestry path of an asset in Google Cloud [resource
-	// hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platfo
-	// rm-resource-hierarchy), represented as a list of relative resource
-	// names. An ancestry path starts with the closest ancestor in the
-	// hierarchy and ends at root. If the asset is a project, folder, or
-	// organization, the ancestry path starts from the asset itself.
-	// Example: `["projects/123456789", "folders/5432",
-	// "organizations/1234"]`
+	// Ancestors: The ancestry path of an asset in Google Cloud resource
+	// hierarchy
+	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+	// represented as a list of relative resource names. An ancestry path
+	// starts with the closest ancestor in the hierarchy and ends at root.
+	// If the asset is a project, folder, or organization, the ancestry path
+	// starts from the asset itself. Example: `["projects/123456789",
+	// "folders/5432", "organizations/1234"]`
 	Ancestors []string `json:"ancestors,omitempty"`
 
 	// AssetType: The type of the asset. Example:
-	// `compute.googleapis.com/Disk` See [Supported asset
-	// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-	// ypes) for more information.
+	// `compute.googleapis.com/Disk` See Supported asset types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for more information.
 	AssetType string `json:"assetType,omitempty"`
 
 	// IamPolicy: A representation of the Cloud IAM policy set on a Google
@@ -185,30 +183,29 @@ type Asset struct {
 	// granted access scope from any policies set on parent resources in the
 	// resource hierarchy. Therefore, the effectively policy is the union of
 	// both the policy set on this resource and each policy set on all of
-	// the resource's ancestry resource levels in the hierarchy. See [this
-	// topic](https://cloud.google.com/iam/docs/policies#inheritance) for
+	// the resource's ancestry resource levels in the hierarchy. See this
+	// topic (https://cloud.google.com/iam/docs/policies#inheritance) for
 	// more information.
 	IamPolicy *Policy `json:"iamPolicy,omitempty"`
 
 	// Name: The full name of the asset. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
-	// s/instance1` See [Resource
-	// names](https://cloud.google.com/apis/design/resource_names#full_resour
-	// ce_name) for more information.
+	// s/instance1` See Resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
 	Name string `json:"name,omitempty"`
 
-	// OrgPolicy: A representation of an [organization
-	// policy](https://cloud.google.com/resource-manager/docs/organization-po
-	// licy/overview#organization_policy). There can be more than one
-	// organization policy with different constraints set on a given
-	// resource.
+	// OrgPolicy: A representation of an organization policy
+	// (https://cloud.google.com/resource-manager/docs/organization-policy/overview#organization_policy).
+	// There can be more than one organization policy with different
+	// constraints set on a given resource.
 	OrgPolicy []*GoogleCloudOrgpolicyV1Policy `json:"orgPolicy,omitempty"`
 
 	// Resource: A representation of the resource.
 	Resource *Resource `json:"resource,omitempty"`
 
-	// ServicePerimeter: Please also refer to the [service perimeter user
-	// guide](https://cloud.google.com/vpc-service-controls/docs/overview).
+	// ServicePerimeter: Please also refer to the service perimeter user
+	// guide (https://cloud.google.com/vpc-service-controls/docs/overview).
 	ServicePerimeter *GoogleIdentityAccesscontextmanagerV1ServicePerimeter `json:"servicePerimeter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
@@ -339,9 +336,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -663,9 +659,10 @@ type GoogleCloudOrgpolicyV1Policy struct {
 	BooleanPolicy *GoogleCloudOrgpolicyV1BooleanPolicy `json:"booleanPolicy,omitempty"`
 
 	// Constraint: The name of the `Constraint` the `Policy` is configuring,
-	// for example, `constraints/serviceuser.services`. A [list of available
-	// constraints](/resource-manager/docs/organization-policy/org-policy-con
-	// straints) is available. Immutable after creation.
+	// for example, `constraints/serviceuser.services`. A list of available
+	// constraints
+	// (/resource-manager/docs/organization-policy/org-policy-constraints)
+	// is available. Immutable after creation.
 	Constraint string `json:"constraint,omitempty"`
 
 	// Etag: An opaque tag indicating the current version of the `Policy`,
@@ -827,6 +824,46 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 
 func (s *GoogleIdentityAccesscontextmanagerV1AccessPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1AccessPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1ApiOperation: Identification for
+// an API Operation.
+type GoogleIdentityAccesscontextmanagerV1ApiOperation struct {
+	// MethodSelectors: API methods or permissions to allow. Method or
+	// permission must belong to the service specified by `service_name`
+	// field. A single MethodSelector entry with `*` specified for the
+	// `method` field will allow all methods AND permissions for the service
+	// specified in `service_name`.
+	MethodSelectors []*GoogleIdentityAccesscontextmanagerV1MethodSelector `json:"methodSelectors,omitempty"`
+
+	// ServiceName: The name of the API whose methods or permissions the
+	// IngressPolicy or EgressPolicy want to allow. A single ApiOperation
+	// with `service_name` field set to `*` will allow all methods AND
+	// permissions for all services.
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MethodSelectors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MethodSelectors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1ApiOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1ApiOperation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1055,6 +1092,358 @@ func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleIdentityAccesscontextmanagerV1EgressFrom: Defines the
+// conditions under which an EgressPolicy matches a request. Conditions
+// based on information about the source of the request. Note that if
+// the destination of the request is protected by a ServicePerimeter,
+// then that ServicePerimeter must have an IngressPolicy which allows
+// access in order for this request to succeed.
+type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
+	// Identities: A list of identities that are allowed access through this
+	// [EgressPolicy]. Should be in the format of email address. The email
+	// address should represent individual user or service account only.
+	Identities []string `json:"identities,omitempty"`
+
+	// IdentityType: Specifies the type of identities that are allowed
+	// access to outside the perimeter. If left unspecified, then members of
+	// `identities` field will be allowed access.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - No blanket identity group specified.
+	//   "ANY_IDENTITY" - Authorize access from all identities outside the
+	// perimeter.
+	//   "ANY_USER_ACCOUNT" - Authorize access from all human users outside
+	// the perimeter.
+	//   "ANY_SERVICE_ACCOUNT" - Authorize access from all service accounts
+	// outside the perimeter.
+	IdentityType string `json:"identityType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressFrom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1EgressPolicy: Policy for egress
+// from perimeter. EgressPolicies match requests based on `egress_from`
+// and `egress_to` stanzas. For an EgressPolicy to match, both
+// `egress_from` and `egress_to` stanzas must be matched. If an
+// EgressPolicy matches a request, the request is allowed to span the
+// ServicePerimeter boundary. For example, an EgressPolicy can be used
+// to allow VMs on networks within the ServicePerimeter to access a
+// defined set of projects outside the perimeter in certain contexts
+// (e.g. to read data from a Cloud Storage bucket or query against a
+// BigQuery dataset). EgressPolicies are concerned with the *resources*
+// that a request relates as well as the API services and API actions
+// being used. They do not related to the direction of data movement.
+// More detailed documentation for this concept can be found in the
+// descriptions of EgressFrom and EgressTo.
+type GoogleIdentityAccesscontextmanagerV1EgressPolicy struct {
+	// EgressFrom: Defines conditions on the source of a request causing
+	// this EgressPolicy to apply.
+	EgressFrom *GoogleIdentityAccesscontextmanagerV1EgressFrom `json:"egressFrom,omitempty"`
+
+	// EgressTo: Defines the conditions on the ApiOperation and destination
+	// resources that cause this EgressPolicy to apply.
+	EgressTo *GoogleIdentityAccesscontextmanagerV1EgressTo `json:"egressTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EgressFrom") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EgressFrom") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1EgressTo: Defines the conditions
+// under which an EgressPolicy matches a request. Conditions are based
+// on information about the ApiOperation intended to be performed on the
+// `resources` specified. Note that if the destination of the request is
+// protected by a ServicePerimeter, then that ServicePerimeter must have
+// an IngressPolicy which allows access in order for this request to
+// succeed.
+type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
+	// Operations: A list of ApiOperations that this egress rule applies to.
+	// A request matches if it contains an operation/service in this list.
+	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
+
+	// Resources: A list of resources, currently only projects in the form
+	// `projects/`, that match this to stanza. A request matches if it
+	// contains a resource in this list. If `*` is specified for resources,
+	// then this EgressTo rule will authorize access to all resources
+	// outside the perimeter.
+	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressTo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressFrom: Defines the
+// conditions under which an IngressPolicy matches a request. Conditions
+// are based on information about the source of the request.
+type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
+	// Identities: A list of identities that are allowed access through this
+	// ingress policy. Should be in the format of email address. The email
+	// address should represent individual user or service account only.
+	Identities []string `json:"identities,omitempty"`
+
+	// IdentityType: Specifies the type of identities that are allowed
+	// access from outside the perimeter. If left unspecified, then members
+	// of `identities` field will be allowed access.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - No blanket identity group specified.
+	//   "ANY_IDENTITY" - Authorize access from all identities outside the
+	// perimeter.
+	//   "ANY_USER_ACCOUNT" - Authorize access from all human users outside
+	// the perimeter.
+	//   "ANY_SERVICE_ACCOUNT" - Authorize access from all service accounts
+	// outside the perimeter.
+	IdentityType string `json:"identityType,omitempty"`
+
+	// Sources: Sources that this IngressPolicy authorizes access from.
+	Sources []*GoogleIdentityAccesscontextmanagerV1IngressSource `json:"sources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Identities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Identities") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressFrom
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressPolicy: Policy for ingress
+// into ServicePerimeter. IngressPolicies match requests based on
+// `ingress_from` and `ingress_to` stanzas. For an ingress policy to
+// match, both the `ingress_from` and `ingress_to` stanzas must be
+// matched. If an IngressPolicy matches a request, the request is
+// allowed through the perimeter boundary from outside the perimeter.
+// For example, access from the internet can be allowed either based on
+// an AccessLevel or, for traffic hosted on Google Cloud, the project of
+// the source network. For access from private networks, using the
+// project of the hosting network is required. Individual ingress
+// policies can be limited by restricting which services and/or actions
+// they match using the `ingress_to` field.
+type GoogleIdentityAccesscontextmanagerV1IngressPolicy struct {
+	// IngressFrom: Defines the conditions on the source of a request
+	// causing this IngressPolicy to apply.
+	IngressFrom *GoogleIdentityAccesscontextmanagerV1IngressFrom `json:"ingressFrom,omitempty"`
+
+	// IngressTo: Defines the conditions on the ApiOperation and request
+	// destination that cause this IngressPolicy to apply.
+	IngressTo *GoogleIdentityAccesscontextmanagerV1IngressTo `json:"ingressTo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IngressFrom") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IngressFrom") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressSource: The source that
+// IngressPolicy authorizes access from.
+type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
+	// AccessLevel: An AccessLevel resource name that allow resources within
+	// the ServicePerimeters to be accessed from the internet. AccessLevels
+	// listed must be in the same policy as this ServicePerimeter.
+	// Referencing a nonexistent AccessLevel will cause an error. If no
+	// AccessLevel names are listed, resources within the perimeter can only
+	// be accessed via Google Cloud calls with request origins within the
+	// perimeter. Example: `accessPolicies/MY_POLICY/accessLevels/MY_LEVEL`.
+	// If `*` is specified, then all IngressSources will be allowed.
+	AccessLevel string `json:"accessLevel,omitempty"`
+
+	// Resource: A Google Cloud resource that is allowed to ingress the
+	// perimeter. Requests from these resources will be allowed to access
+	// perimeter data. Currently only projects are allowed. Format:
+	// `projects/{project_number}` The project may be in any Google Cloud
+	// organization, not just the organization that the perimeter is defined
+	// in. `*` is not allowed, the case of allowing all Google Cloud
+	// resources only is not supported.
+	Resource string `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessLevel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1IngressTo: Defines the conditions
+// under which an IngressPolicy matches a request. Conditions are based
+// on information about the ApiOperation intended to be performed on the
+// destination of the request.
+type GoogleIdentityAccesscontextmanagerV1IngressTo struct {
+	// Operations: A list of ApiOperations the sources specified in
+	// corresponding IngressFrom are allowed to perform in this
+	// ServicePerimeter.
+	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
+
+	// Resources: A list of resources, currently only projects in the form
+	// `projects/`, protected by this ServicePerimeter that are allowed to
+	// be accessed by sources defined in the corresponding IngressFrom. A
+	// request matches if it contains a resource in this list. If `*` is
+	// specified for resources, then this IngressTo rule will authorize
+	// access to all resources inside the perimeter, provided that the
+	// request also matches the `operations` field.
+	Resources []string `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1IngressTo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressTo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleIdentityAccesscontextmanagerV1MethodSelector: An allowed method
+// or permission of a service specified in ApiOperation.
+type GoogleIdentityAccesscontextmanagerV1MethodSelector struct {
+	// Method: Value for `method` should be a valid method name for the
+	// corresponding `service_name` in ApiOperation. If `*` used as value
+	// for `method`, then ALL methods and permissions are allowed.
+	Method string `json:"method,omitempty"`
+
+	// Permission: Value for `permission` should be a valid Cloud IAM
+	// permission for the corresponding `service_name` in ApiOperation.
+	Permission string `json:"permission,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Method") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Method") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleIdentityAccesscontextmanagerV1MethodSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleIdentityAccesscontextmanagerV1MethodSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleIdentityAccesscontextmanagerV1OsConstraint: A restriction on
 // the OS type and version of devices making requests.
 type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
@@ -1206,6 +1595,18 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	// Perimeter Bridge, must be empty.
 	AccessLevels []string `json:"accessLevels,omitempty"`
 
+	// EgressPolicies: List of EgressPolicies to apply to the perimeter. A
+	// perimeter may have multiple EgressPolicies, each of which is
+	// evaluated separately. Access is granted if any EgressPolicy grants
+	// it. Must be empty for a perimeter bridge.
+	EgressPolicies []*GoogleIdentityAccesscontextmanagerV1EgressPolicy `json:"egressPolicies,omitempty"`
+
+	// IngressPolicies: List of IngressPolicies to apply to the perimeter. A
+	// perimeter may have multiple IngressPolicies, each of which is
+	// evaluated separately. Access is granted if any Ingress Policy grants
+	// it. Must be empty for a perimeter bridge.
+	IngressPolicies []*GoogleIdentityAccesscontextmanagerV1IngressPolicy `json:"ingressPolicies,omitempty"`
+
 	// Resources: A list of Google Cloud resources that are inside of the
 	// service perimeter. Currently only projects are allowed. Format:
 	// `projects/{project_number}`
@@ -1332,9 +1733,10 @@ func (s *ListAssetsResponse) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -1352,8 +1754,8 @@ func (s *ListAssetsResponse) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1392,9 +1794,9 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
@@ -1440,12 +1842,12 @@ type Resource struct {
 	DiscoveryName string `json:"discoveryName,omitempty"`
 
 	// Parent: The full name of the immediate parent of this resource. See
-	// [Resource
-	// Names](https://cloud.google.com/apis/design/resource_names#full_resour
-	// ce_name) for more information. For Google Cloud assets, this value is
-	// the parent resource defined in the [Cloud IAM policy
-	// hierarchy](https://cloud.google.com/iam/docs/overview#policy_hierarchy
-	// ). Example:
+	// Resource Names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information. For Google Cloud assets, this value is the
+	// parent resource defined in the Cloud IAM policy hierarchy
+	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
+	// Example:
 	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
 	// third-party assets, this field may be set differently.
 	Parent string `json:"parent,omitempty"`
@@ -1508,14 +1910,14 @@ func (r *AssetsService) List(parent string) *AssetsListCall {
 // asset type starts with "compute.googleapis.com". * ".*Instance"
 // snapshots resources whose asset type ends with "Instance". *
 // ".*Instance.*" snapshots resources whose asset type contains
-// "Instance". See [RE2](https://github.com/google/re2/wiki/Syntax) for
+// "Instance". See RE2 (https://github.com/google/re2/wiki/Syntax) for
 // all supported regular expression syntax. If the regular expression
 // does not match any supported asset type, an INVALID_ARGUMENT error
 // will be returned. If specified, only matching assets will be
 // returned, otherwise, it will snapshot all asset types. See
-// [Introduction to Cloud Asset
-// Inventory](https://cloud.google.com/asset-inventory/docs/overview)
-// for all supported asset types.
+// Introduction to Cloud Asset Inventory
+// (https://cloud.google.com/asset-inventory/docs/overview) for all
+// supported asset types.
 func (c *AssetsListCall) AssetTypes(assetTypes ...string) *AssetsListCall {
 	c.urlParams_.SetMulti("assetTypes", append([]string{}, assetTypes...))
 	return c
@@ -1603,7 +2005,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

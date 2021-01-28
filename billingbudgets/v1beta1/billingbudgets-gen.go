@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -180,8 +180,8 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	// the full REST resource name of a monitoring notification channel with
 	// the form `projects/{project_id}/notificationChannels/{channel_id}`. A
 	// maximum of 5 channels are allowed. See
-	// https://cloud.google.com/billing/docs/how-to/budgets-notification-recipients for more
-	// details.
+	// https://cloud.google.com/billing/docs/how-to/budgets-notification-recipients
+	// for more details.
 	MonitoringNotificationChannels []string `json:"monitoringNotificationChannels,omitempty"`
 
 	// PubsubTopic: Optional. The name of the Pub/Sub topic where budget
@@ -189,14 +189,20 @@ type GoogleCloudBillingBudgetsV1beta1AllUpdatesRule struct {
 	// `projects/{project_id}/topics/{topic_id}`. Updates are sent at
 	// regular intervals to the topic. The topic needs to be created before
 	// the budget is created; see
-	// https://cloud.google.com/billing/docs/how-to/budgets#manage-notifications for more details. Caller is expected to have `pubsub.topics.setIamPolicy` permission on the topic when it's set for a budget, otherwise, the API call will fail with PERMISSION_DENIED. See https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications for more details on Pub/Sub roles and
-	// permissions.
+	// https://cloud.google.com/billing/docs/how-to/budgets#manage-notifications
+	// for more details. Caller is expected to have
+	// `pubsub.topics.setIamPolicy` permission on the topic when it's set
+	// for a budget, otherwise, the API call will fail with
+	// PERMISSION_DENIED. See
+	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications
+	// for more details on Pub/Sub roles and permissions.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
-	// SchemaVersion: Optional. The schema version of the notification sent
-	// to `pubsub_topic`. Only "1.0" is accepted. It represents the JSON
-	// schema as defined in
-	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format
+	// SchemaVersion: Optional. Required when AllUpdatesRule.pubsub_topic is
+	// set. The schema version of the notification sent to
+	// AllUpdatesRule.pubsub_topic. Only "1.0" is accepted. It represents
+	// the JSON schema as defined in
+	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format.
 	SchemaVersion string `json:"schemaVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -361,10 +367,9 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// INCLUDE_SPECIFIED_CREDITS, this is a list of credit types to be
 	// subtracted from gross cost to determine the spend for threshold
 	// calculations. If Filter.credit_types_treatment is **not**
-	// INCLUDE_SPECIFIED_CREDITS, this field must be empty. See [a list of
-	// acceptable credit type
-	// values](https://cloud.google.com/billing/docs/how-to/export-data-bigqu
-	// ery-tables#credits-type).
+	// INCLUDE_SPECIFIED_CREDITS, this field must be empty. See a list of
+	// acceptable credit type values
+	// (https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tables#credits-type).
 	CreditTypes []string `json:"creditTypes,omitempty"`
 
 	// CreditTypesTreatment: Optional. If not set, default behavior is
@@ -681,7 +686,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -821,7 +826,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -966,7 +971,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1132,7 +1137,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1305,7 +1310,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

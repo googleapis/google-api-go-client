@@ -116,13 +116,17 @@
       }
     }
   },
-  "revision": "20201004",
+  "revision": "20210109",
   "rootUrl": "https://sts.googleapis.com/",
   "schemas": {
     "GoogleIdentityStsV1ExchangeTokenRequest": {
       "description": "Request message for ExchangeToken.",
       "id": "GoogleIdentityStsV1ExchangeTokenRequest",
       "properties": {
+        "audience": {
+          "description": "The full resource name of the identity provider; for example: `//iam.googleapis.com/projects//workloadIdentityPools//providers/`. Required when exchanging an external credential for a Google access token.",
+          "type": "string"
+        },
         "grantType": {
           "description": "Required. The grant type. Must be `urn:ietf:params:oauth:grant-type:token-exchange`, which indicates a token exchange.",
           "type": "string"
@@ -133,6 +137,10 @@
         },
         "requestedTokenType": {
           "description": "Required. An identifier for the type of requested security token. Must be `urn:ietf:params:oauth:token-type:access_token`.",
+          "type": "string"
+        },
+        "scope": {
+          "description": "The OAuth 2.0 scopes to include on the resulting access token, formatted as a list of space-delimited, case-sensitive strings. Required when exchanging an external credential for a Google access token.",
           "type": "string"
         },
         "subjectToken": {
@@ -155,7 +163,7 @@
           "type": "string"
         },
         "expires_in": {
-          "description": "The amount of time, in seconds, between the time when the `access_token` was issued and the time when the `access_token` will expire. This field is absent when the `subject_token` in the request is a Google-issued, short-lived access token. In this case, the `access_token` has the same expiration time as the `subject_token`.",
+          "description": "The amount of time, in seconds, between the time when the access token was issued and the time when the access token will expire. This field is absent when the `subject_token` in the request is a Google-issued, short-lived access token. In this case, the access token has the same expiration time as the `subject_token`.",
           "format": "int32",
           "type": "integer"
         },
@@ -164,7 +172,7 @@
           "type": "string"
         },
         "token_type": {
-          "description": "The type of `access_token`. Always has the value `Bearer`.",
+          "description": "The type of access token. Always has the value `Bearer`.",
           "type": "string"
         }
       },

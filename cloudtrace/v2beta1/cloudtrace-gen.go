@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -267,13 +267,14 @@ type TraceSink struct {
 	// WriterIdentity: Output only. A service account name for exporting the
 	// data. This field is set by sinks.create and sinks.update. The service
 	// account will need to be granted write access to the destination
-	// specified in the output configuration, see [Granting access for a
-	// resource](/iam/docs/granting-roles-to-service-accounts#granting_access
-	// _to_a_service_account_for_a_resource). To create tables and write
-	// data this account will need the dataEditor role. Read more about
-	// roles in the [BigQuery
-	// documentation](https://cloud.google.com/bigquery/docs/access-control).
-	//  E.g.: "service-00000001@00000002.iam.gserviceaccount.com"
+	// specified in the output configuration, see Granting access for a
+	// resource
+	// (/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_ser
+	// vice_account_for_a_resource). To create tables and write data this
+	// account will need the dataEditor role. Read more about roles in the
+	// BigQuery documentation
+	// (https://cloud.google.com/bigquery/docs/access-control). E.g.:
+	// "service-00000001@00000002.iam.gserviceaccount.com"
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -353,7 +354,7 @@ func (c *ProjectsTraceSinksCreateCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -492,7 +493,7 @@ func (c *ProjectsTraceSinksDeleteCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -635,7 +636,7 @@ func (c *ProjectsTraceSinksGetCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -799,7 +800,7 @@ func (c *ProjectsTraceSinksListCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -948,8 +949,8 @@ func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *
 // update mask. `name` and `writer_identity` fields cannot be updated.
 // An empty updateMask is considered an error. For a detailed
 // `FieldMask` definition, see
-// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask Example:
-// `updateMask=output_config`.
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+// Example: `updateMask=output_config`.
 func (c *ProjectsTraceSinksPatchCall) UpdateMask(updateMask string) *ProjectsTraceSinksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -982,7 +983,7 @@ func (c *ProjectsTraceSinksPatchCall) Header() http.Header {
 
 func (c *ProjectsTraceSinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

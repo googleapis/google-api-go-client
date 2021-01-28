@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -214,8 +214,8 @@ type CustomResourceColumnDefinition struct {
 	// Format: format is an optional OpenAPI type definition for this
 	// column. The 'name' format is applied to the primary identifier column
 	// to assist in clients identifying column is the resource name. See
-	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for more.
-	// +optional
+	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
+	// for more. +optional
 	Format string `json:"format,omitempty"`
 
 	// JsonPath: JSONPath is a simple JSON path, i.e. with array notation.
@@ -231,8 +231,8 @@ type CustomResourceColumnDefinition struct {
 	Priority int64 `json:"priority,omitempty"`
 
 	// Type: type is an OpenAPI type definition for this column. See
-	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for
-	// more.
+	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
+	// for more.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1034,8 +1034,8 @@ type ObjectMeta struct {
 	// found in the time allotted, and the client should retry (optionally
 	// after the time indicated in the Retry-After header). Applied only if
 	// Name is not specified. More info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency string generateName =
-	// 2;
+	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
+	// string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
 
 	// Generation: (Optional) A sequence number representing a specific
@@ -1279,7 +1279,7 @@ func (c *CustomresourcedefinitionsListCall) Header() http.Header {
 
 func (c *CustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1452,7 +1452,7 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Header() http.Header {
 
 func (c *NamespacesCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1596,7 +1596,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Header() http.Header
 
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1793,7 +1793,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Header() http.Heade
 
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

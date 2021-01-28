@@ -180,6 +180,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "mine": {
@@ -740,6 +742,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "mine": {
@@ -879,6 +883,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "100",
+              "minimum": "1",
               "type": "integer"
             },
             "moderationStatus": {
@@ -1061,6 +1067,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "100",
+              "minimum": "1",
               "type": "integer"
             },
             "pageToken": {
@@ -1516,6 +1524,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "mine": {
@@ -1790,6 +1800,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "2000",
+              "minimum": "200",
               "type": "integer"
             },
             "pageToken": {
@@ -1808,6 +1820,8 @@
               "description": "Specifies the size of the profile image that should be returned for each user.",
               "format": "uint32",
               "location": "query",
+              "maximum": "720",
+              "minimum": "16",
               "type": "integer"
             }
           },
@@ -1896,6 +1910,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "pageToken": {
@@ -2015,6 +2031,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "mine": {
@@ -2121,6 +2139,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "1000",
+              "minimum": "0",
               "type": "integer"
             },
             "mode": {
@@ -2274,6 +2294,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "onBehalfOfContentOwner": {
@@ -2451,6 +2473,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "mine": {
@@ -2607,6 +2631,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "onBehalfOfContentOwner": {
@@ -2943,6 +2969,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "0",
               "type": "integer"
             },
             "mine": {
@@ -3034,6 +3062,8 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "1",
               "type": "integer"
             },
             "pageToken": {
@@ -3538,6 +3568,8 @@
             "maxHeight": {
               "format": "int32",
               "location": "query",
+              "maximum": "8192",
+              "minimum": "72",
               "type": "integer"
             },
             "maxResults": {
@@ -3545,12 +3577,16 @@
               "description": "The *maxResults* parameter specifies the maximum number of items that should be returned in the result set. *Note:* This parameter is supported for use in conjunction with the myRating and chart parameters, but it is not supported for use in conjunction with the id parameter.",
               "format": "uint32",
               "location": "query",
+              "maximum": "50",
+              "minimum": "1",
               "type": "integer"
             },
             "maxWidth": {
               "description": "Return the player with maximum height specified in",
               "format": "int32",
               "location": "query",
+              "maximum": "8192",
+              "minimum": "72",
               "type": "integer"
             },
             "myRating": {
@@ -3788,7 +3824,7 @@
       }
     }
   },
-  "revision": "20210125",
+  "revision": "20210126",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -7811,6 +7847,22 @@
           },
           "description": "This setting indicates whether the broadcast should automatically begin with an in-stream slate when you update the broadcast's status to live. After updating the status, you then need to send a liveCuepoints.insert request that sets the cuepoint's eventState to end to remove the in-stream slate and make your broadcast stream visible to viewers.",
           "type": "boolean"
+        },
+        "stereoLayout": {
+          "description": "The 3D stereo layout of this broadcast. This defaults to mono.",
+          "enum": [
+            "stereoLayoutUnspecified",
+            "mono",
+            "leftRight",
+            "topBottom"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"

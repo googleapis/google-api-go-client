@@ -315,9 +315,25 @@
                       ],
                       "parameters": {
                         "force": {
-                          "description": "Whether to force the creation of the quota override. If creating an override would cause the effective quota for the consumer to decrease by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.",
+                          "description": "Whether to force the creation of the quota override. Setting the force parameter to 'true' ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.",
                           "location": "query",
                           "type": "boolean"
+                        },
+                        "forceOnly": {
+                          "description": "The list of quota safety checks to ignore before the override mutation. Unlike 'force' field that ignores all the quota safety checks, the 'force_only' field ignores only the specified checks; other checks are still enforced. The 'force' and 'force_only' fields cannot both be set.",
+                          "enum": [
+                            "QUOTA_SAFETY_CHECK_UNSPECIFIED",
+                            "LIMIT_DECREASE_BELOW_USAGE",
+                            "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH"
+                          ],
+                          "enumDescriptions": [
+                            "Unspecified quota safety check.",
+                            "Validates that a quota mutation would not cause the consumer's effective limit to be lower than the consumer's quota usage.",
+                            "Validates that a quota mutation would not cause the consumer's effective limit to decrease by more than 10 percent."
+                          ],
+                          "location": "query",
+                          "repeated": true,
+                          "type": "string"
                         },
                         "parent": {
                           "description": "The resource name of the parent quota limit, returned by a ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
@@ -348,9 +364,25 @@
                       ],
                       "parameters": {
                         "force": {
-                          "description": "Whether to force the deletion of the quota override. If deleting an override would cause the effective quota for the consumer to decrease by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.",
+                          "description": "Whether to force the deletion of the quota override. Setting the force parameter to 'true' ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.",
                           "location": "query",
                           "type": "boolean"
+                        },
+                        "forceOnly": {
+                          "description": "The list of quota safety checks to ignore before the override mutation. Unlike 'force' field that ignores all the quota safety checks, the 'force_only' field ignores only the specified checks; other checks are still enforced. The 'force' and 'force_only' fields cannot both be set.",
+                          "enum": [
+                            "QUOTA_SAFETY_CHECK_UNSPECIFIED",
+                            "LIMIT_DECREASE_BELOW_USAGE",
+                            "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH"
+                          ],
+                          "enumDescriptions": [
+                            "Unspecified quota safety check.",
+                            "Validates that a quota mutation would not cause the consumer's effective limit to be lower than the consumer's quota usage.",
+                            "Validates that a quota mutation would not cause the consumer's effective limit to decrease by more than 10 percent."
+                          ],
+                          "location": "query",
+                          "repeated": true,
+                          "type": "string"
                         },
                         "name": {
                           "description": "The resource name of the override to delete. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOverrides/4a3f2c1d`",
@@ -414,9 +446,25 @@
                       ],
                       "parameters": {
                         "force": {
-                          "description": "Whether to force the update of the quota override. If updating an override would cause the effective quota for the consumer to decrease by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.",
+                          "description": "Whether to force the update of the quota override. Setting the force parameter to 'true' ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.",
                           "location": "query",
                           "type": "boolean"
+                        },
+                        "forceOnly": {
+                          "description": "The list of quota safety checks to ignore before the override mutation. Unlike 'force' field that ignores all the quota safety checks, the 'force_only' field ignores only the specified checks; other checks are still enforced. The 'force' and 'force_only' fields cannot both be set.",
+                          "enum": [
+                            "QUOTA_SAFETY_CHECK_UNSPECIFIED",
+                            "LIMIT_DECREASE_BELOW_USAGE",
+                            "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH"
+                          ],
+                          "enumDescriptions": [
+                            "Unspecified quota safety check.",
+                            "Validates that a quota mutation would not cause the consumer's effective limit to be lower than the consumer's quota usage.",
+                            "Validates that a quota mutation would not cause the consumer's effective limit to decrease by more than 10 percent."
+                          ],
+                          "location": "query",
+                          "repeated": true,
+                          "type": "string"
                         },
                         "name": {
                           "description": "The resource name of the override to update. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOverrides/4a3f2c1d`",
@@ -452,7 +500,7 @@
       }
     }
   },
-  "revision": "20210124",
+  "revision": "20210126",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "Api": {
@@ -2182,8 +2230,25 @@
       "id": "V1Beta1ImportProducerOverridesRequest",
       "properties": {
         "force": {
-          "description": "Whether to force the creation of the quota overrides. If creating an override would cause the effective quota for the consumer to decrease by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.",
+          "description": "Whether to force the creation of the quota overrides. Setting the force parameter to 'true' ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.",
           "type": "boolean"
+        },
+        "forceOnly": {
+          "description": "The list of quota safety checks to ignore before the override mutation. Unlike 'force' field that ignores all the quota safety checks, the 'force_only' field ignores only the specified checks; other checks are still enforced. The 'force' and 'force_only' fields cannot both be set.",
+          "items": {
+            "enum": [
+              "QUOTA_SAFETY_CHECK_UNSPECIFIED",
+              "LIMIT_DECREASE_BELOW_USAGE",
+              "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH"
+            ],
+            "enumDescriptions": [
+              "Unspecified quota safety check.",
+              "Validates that a quota mutation would not cause the consumer's effective limit to be lower than the consumer's quota usage.",
+              "Validates that a quota mutation would not cause the consumer's effective limit to decrease by more than 10 percent."
+            ],
+            "type": "string"
+          },
+          "type": "array"
         },
         "inlineSource": {
           "$ref": "V1Beta1OverrideInlineSource",

@@ -2214,8 +2214,8 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest struct
 	// assumed. Examples: Include only pools with more than 100 reserved
 	// workers: `(worker_count > 100) (worker_config.reserved = true)`
 	// Include only pools with a certain label or machines of the
-	// n1-standard family: `worker_config.labels.key1 : * OR
-	// worker_config.machine_type: n1-standard`
+	// e2-standard family: `worker_config.labels.key1 : * OR
+	// worker_config.machine_type: e2-standard`
 	Filter string `json:"filter,omitempty"`
 
 	// Parent: Resource name of the instance. Format:
@@ -2383,7 +2383,7 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Required. Machine type of the worker, such as
-	// `n1-standard-2`. See
+	// `e2-standard-2`. See
 	// https://cloud.google.com/compute/docs/machine-types for a list of
 	// supported machine types. Note that `f1-micro` and `g1-small` are not
 	// yet supported.
@@ -3275,7 +3275,7 @@ func (c *ProjectsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3416,7 +3416,7 @@ func (c *ProjectsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3557,7 +3557,7 @@ func (c *ProjectsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3704,7 +3704,7 @@ func (c *ProjectsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3872,7 +3872,7 @@ func (c *ProjectsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4032,7 +4032,7 @@ func (c *ProjectsInstancesWorkerpoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4173,7 +4173,7 @@ func (c *ProjectsInstancesWorkerpoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4314,7 +4314,7 @@ func (c *ProjectsInstancesWorkerpoolsGetCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4439,8 +4439,8 @@ func (r *ProjectsInstancesWorkerpoolsService) List(parent string) *ProjectsInsta
 // `AND` is assumed. Examples: Include only pools with more than 100
 // reserved workers: `(worker_count > 100) (worker_config.reserved =
 // true)` Include only pools with a certain label or machines of the
-// n1-standard family: `worker_config.labels.key1 : * OR
-// worker_config.machine_type: n1-standard`
+// e2-standard family: `worker_config.labels.key1 : * OR
+// worker_config.machine_type: e2-standard`
 func (c *ProjectsInstancesWorkerpoolsListCall) Filter(filter string) *ProjectsInstancesWorkerpoolsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4483,7 +4483,7 @@ func (c *ProjectsInstancesWorkerpoolsListCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4557,7 +4557,7 @@ func (c *ProjectsInstancesWorkerpoolsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. String values are case-insensitive. The comparison operator must be either `:`, `=`, `!=`, `\u003e`, `\u003e=`, `\u003c=` or `\u003c`. The `:` operator can be used with string fields to match substrings. For non-string fields it is equivalent to the `=` operator. The `:*` comparison can be used to test whether a key has been defined. You can also filter on nested fields. To filter on multiple expressions, you can separate expression using `AND` and `OR` operators, using parentheses to specify precedence. If neither operator is specified, `AND` is assumed. Examples: Include only pools with more than 100 reserved workers: `(worker_count \u003e 100) (worker_config.reserved = true)` Include only pools with a certain label or machines of the n1-standard family: `worker_config.labels.key1 : * OR worker_config.machine_type: n1-standard`",
+	//       "description": "Optional. A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. String values are case-insensitive. The comparison operator must be either `:`, `=`, `!=`, `\u003e`, `\u003e=`, `\u003c=` or `\u003c`. The `:` operator can be used with string fields to match substrings. For non-string fields it is equivalent to the `=` operator. The `:*` comparison can be used to test whether a key has been defined. You can also filter on nested fields. To filter on multiple expressions, you can separate expression using `AND` and `OR` operators, using parentheses to specify precedence. If neither operator is specified, `AND` is assumed. Examples: Include only pools with more than 100 reserved workers: `(worker_count \u003e 100) (worker_config.reserved = true)` Include only pools with a certain label or machines of the e2-standard family: `worker_config.labels.key1 : * OR worker_config.machine_type: e2-standard`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4630,7 +4630,7 @@ func (c *ProjectsInstancesWorkerpoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsInstancesWorkerpoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4781,7 +4781,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

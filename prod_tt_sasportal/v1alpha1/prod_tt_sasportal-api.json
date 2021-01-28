@@ -284,6 +284,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of deployments to return in the response.",
                   "format": "int32",
@@ -836,6 +841,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of nodes to return in the response.",
                   "format": "int32",
@@ -966,6 +976,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of deployments to return in the response.",
                       "format": "int32",
@@ -1135,6 +1150,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of nodes to return in the response.",
                       "format": "int32",
@@ -1501,6 +1521,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of deployments to return in the response.",
                   "format": "int32",
@@ -2053,6 +2078,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of nodes to return in the response.",
                   "format": "int32",
@@ -2183,6 +2213,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of deployments to return in the response.",
                       "format": "int32",
@@ -2352,6 +2387,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of nodes to return in the response.",
                       "format": "int32",
@@ -2444,7 +2484,7 @@
       }
     }
   },
-  "revision": "20210113",
+  "revision": "20210126",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {

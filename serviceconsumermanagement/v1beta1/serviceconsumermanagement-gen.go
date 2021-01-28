@@ -3455,12 +3455,26 @@ func (s *V1Beta1GenerateServiceIdentityResponse) MarshalJSON() ([]byte, error) {
 // V1Beta1ImportProducerOverridesRequest: Request message for
 // ImportProducerOverrides
 type V1Beta1ImportProducerOverridesRequest struct {
-	// Force: Whether to force the creation of the quota overrides. If
-	// creating an override would cause the effective quota for the consumer
-	// to decrease by more than 10 percent, the call is rejected, as a
-	// safety measure to avoid accidentally decreasing quota too quickly.
-	// Setting the force parameter to true ignores this restriction.
+	// Force: Whether to force the creation of the quota overrides. Setting
+	// the force parameter to 'true' ignores all quota safety checks that
+	// would fail the request. QuotaSafetyCheck lists all such validations.
 	Force bool `json:"force,omitempty"`
+
+	// ForceOnly: The list of quota safety checks to ignore before the
+	// override mutation. Unlike 'force' field that ignores all the quota
+	// safety checks, the 'force_only' field ignores only the specified
+	// checks; other checks are still enforced. The 'force' and 'force_only'
+	// fields cannot both be set.
+	//
+	// Possible values:
+	//   "QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
+	//   "LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
+	// would not cause the consumer's effective limit to be lower than the
+	// consumer's quota usage.
+	//   "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
+	// mutation would not cause the consumer's effective limit to decrease
+	// by more than 10 percent.
+	ForceOnly []string `json:"forceOnly,omitempty"`
 
 	// InlineSource: The import data is specified in the request message
 	// itself
@@ -4204,7 +4218,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4367,7 +4381,7 @@ func (c *ServicesConsumerQuotaMetricsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4520,7 +4534,7 @@ func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) Header() http.
 
 func (c *ServicesConsumerQuotaMetricsImportProducerOverridesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4706,7 +4720,7 @@ func (c *ServicesConsumerQuotaMetricsListCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4917,7 +4931,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsGetCall) Header() http.Header {
 
 func (c *ServicesConsumerQuotaMetricsLimitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5048,13 +5062,30 @@ func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Create(pare
 }
 
 // Force sets the optional parameter "force": Whether to force the
-// creation of the quota override. If creating an override would cause
-// the effective quota for the consumer to decrease by more than 10
-// percent, the call is rejected, as a safety measure to avoid
-// accidentally decreasing quota too quickly. Setting the force
-// parameter to true ignores this restriction.
+// creation of the quota override. Setting the force parameter to 'true'
+// ignores all quota safety checks that would fail the request.
+// QuotaSafetyCheck lists all such validations.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceOnly sets the optional parameter "forceOnly": The list of quota
+// safety checks to ignore before the override mutation. Unlike 'force'
+// field that ignores all the quota safety checks, the 'force_only'
+// field ignores only the specified checks; other checks are still
+// enforced. The 'force' and 'force_only' fields cannot both be set.
+//
+// Possible values:
+//   "QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
+//   "LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
+// would not cause the consumer's effective limit to be lower than the
+// consumer's quota usage.
+//   "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
+// mutation would not cause the consumer's effective limit to decrease
+// by more than 10 percent.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) ForceOnly(forceOnly ...string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall {
+	c.urlParams_.SetMulti("forceOnly", append([]string{}, forceOnly...))
 	return c
 }
 
@@ -5085,7 +5116,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5158,9 +5189,25 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesCreateCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "force": {
-	//       "description": "Whether to force the creation of the quota override. If creating an override would cause the effective quota for the consumer to decrease by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.",
+	//       "description": "Whether to force the creation of the quota override. Setting the force parameter to 'true' ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "forceOnly": {
+	//       "description": "The list of quota safety checks to ignore before the override mutation. Unlike 'force' field that ignores all the quota safety checks, the 'force_only' field ignores only the specified checks; other checks are still enforced. The 'force' and 'force_only' fields cannot both be set.",
+	//       "enum": [
+	//         "QUOTA_SAFETY_CHECK_UNSPECIFIED",
+	//         "LIMIT_DECREASE_BELOW_USAGE",
+	//         "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified quota safety check.",
+	//         "Validates that a quota mutation would not cause the consumer's effective limit to be lower than the consumer's quota usage.",
+	//         "Validates that a quota mutation would not cause the consumer's effective limit to decrease by more than 10 percent."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
 	//     },
 	//     "parent": {
 	//       "description": "The resource name of the parent quota limit, returned by a ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion`",
@@ -5202,13 +5249,30 @@ func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Delete(name
 }
 
 // Force sets the optional parameter "force": Whether to force the
-// deletion of the quota override. If deleting an override would cause
-// the effective quota for the consumer to decrease by more than 10
-// percent, the call is rejected, as a safety measure to avoid
-// accidentally decreasing quota too quickly. Setting the force
-// parameter to true ignores this restriction.
+// deletion of the quota override. Setting the force parameter to 'true'
+// ignores all quota safety checks that would fail the request.
+// QuotaSafetyCheck lists all such validations.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceOnly sets the optional parameter "forceOnly": The list of quota
+// safety checks to ignore before the override mutation. Unlike 'force'
+// field that ignores all the quota safety checks, the 'force_only'
+// field ignores only the specified checks; other checks are still
+// enforced. The 'force' and 'force_only' fields cannot both be set.
+//
+// Possible values:
+//   "QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
+//   "LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
+// would not cause the consumer's effective limit to be lower than the
+// consumer's quota usage.
+//   "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
+// mutation would not cause the consumer's effective limit to decrease
+// by more than 10 percent.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) ForceOnly(forceOnly ...string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall {
+	c.urlParams_.SetMulti("forceOnly", append([]string{}, forceOnly...))
 	return c
 }
 
@@ -5239,7 +5303,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Header()
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5307,9 +5371,25 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesDeleteCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "force": {
-	//       "description": "Whether to force the deletion of the quota override. If deleting an override would cause the effective quota for the consumer to decrease by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.",
+	//       "description": "Whether to force the deletion of the quota override. Setting the force parameter to 'true' ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "forceOnly": {
+	//       "description": "The list of quota safety checks to ignore before the override mutation. Unlike 'force' field that ignores all the quota safety checks, the 'force_only' field ignores only the specified checks; other checks are still enforced. The 'force' and 'force_only' fields cannot both be set.",
+	//       "enum": [
+	//         "QUOTA_SAFETY_CHECK_UNSPECIFIED",
+	//         "LIMIT_DECREASE_BELOW_USAGE",
+	//         "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified quota safety check.",
+	//         "Validates that a quota mutation would not cause the consumer's effective limit to be lower than the consumer's quota usage.",
+	//         "Validates that a quota mutation would not cause the consumer's effective limit to decrease by more than 10 percent."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
 	//     },
 	//     "name": {
 	//       "description": "The resource name of the override to delete. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOverrides/4a3f2c1d`",
@@ -5399,7 +5479,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) Header() h
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5541,13 +5621,30 @@ func (r *ServicesConsumerQuotaMetricsLimitsProducerOverridesService) Patch(name 
 }
 
 // Force sets the optional parameter "force": Whether to force the
-// update of the quota override. If updating an override would cause the
-// effective quota for the consumer to decrease by more than 10 percent,
-// the call is rejected, as a safety measure to avoid accidentally
-// decreasing quota too quickly. Setting the force parameter to true
-// ignores this restriction.
+// update of the quota override. Setting the force parameter to 'true'
+// ignores all quota safety checks that would fail the request.
+// QuotaSafetyCheck lists all such validations.
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Force(force bool) *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// ForceOnly sets the optional parameter "forceOnly": The list of quota
+// safety checks to ignore before the override mutation. Unlike 'force'
+// field that ignores all the quota safety checks, the 'force_only'
+// field ignores only the specified checks; other checks are still
+// enforced. The 'force' and 'force_only' fields cannot both be set.
+//
+// Possible values:
+//   "QUOTA_SAFETY_CHECK_UNSPECIFIED" - Unspecified quota safety check.
+//   "LIMIT_DECREASE_BELOW_USAGE" - Validates that a quota mutation
+// would not cause the consumer's effective limit to be lower than the
+// consumer's quota usage.
+//   "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH" - Validates that a quota
+// mutation would not cause the consumer's effective limit to decrease
+// by more than 10 percent.
+func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) ForceOnly(forceOnly ...string) *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall {
+	c.urlParams_.SetMulti("forceOnly", append([]string{}, forceOnly...))
 	return c
 }
 
@@ -5585,7 +5682,7 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Header() 
 
 func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210126")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5658,9 +5755,25 @@ func (c *ServicesConsumerQuotaMetricsLimitsProducerOverridesPatchCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "force": {
-	//       "description": "Whether to force the update of the quota override. If updating an override would cause the effective quota for the consumer to decrease by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.",
+	//       "description": "Whether to force the update of the quota override. Setting the force parameter to 'true' ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "forceOnly": {
+	//       "description": "The list of quota safety checks to ignore before the override mutation. Unlike 'force' field that ignores all the quota safety checks, the 'force_only' field ignores only the specified checks; other checks are still enforced. The 'force' and 'force_only' fields cannot both be set.",
+	//       "enum": [
+	//         "QUOTA_SAFETY_CHECK_UNSPECIFIED",
+	//         "LIMIT_DECREASE_BELOW_USAGE",
+	//         "LIMIT_DECREASE_PERCENTAGE_TOO_HIGH"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unspecified quota safety check.",
+	//         "Validates that a quota mutation would not cause the consumer's effective limit to be lower than the consumer's quota usage.",
+	//         "Validates that a quota mutation would not cause the consumer's effective limit to decrease by more than 10 percent."
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
 	//     },
 	//     "name": {
 	//       "description": "The resource name of the override to update. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOverrides/4a3f2c1d`",

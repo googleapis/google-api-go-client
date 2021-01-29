@@ -2150,37 +2150,6 @@ func (s *ReportError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReportInfo: Contains additional info about the report operation.
-type ReportInfo struct {
-	// OperationId: The Operation.operation_id value from the request.
-	OperationId string `json:"operationId,omitempty"`
-
-	// QuotaInfo: Quota usage info when processing the `Operation`.
-	QuotaInfo *QuotaInfo `json:"quotaInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "OperationId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OperationId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ReportInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod ReportInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ReportRequest: Request message for the Report method.
 type ReportRequest struct {
 	// Operations: Operations to be reported. Typically the service should
@@ -2235,15 +2204,6 @@ type ReportResponse struct {
 	// happens, it's impossible to know which of the 'Operations' in the
 	// request succeeded or failed.
 	ReportErrors []*ReportError `json:"reportErrors,omitempty"`
-
-	// ReportInfos: Quota usage for each quota release `Operation` request.
-	// Fully or partially failed quota release request may or may not be
-	// present in `report_quota_info`. For example, a failed quota release
-	// request will have the current quota usage info when precise quota
-	// library returns the info. A deadline exceeded quota request will not
-	// have quota usage info. If there is no quota release request,
-	// report_quota_info will be empty.
-	ReportInfos []*ReportInfo `json:"reportInfos,omitempty"`
 
 	// ServiceConfigId: The actual config id used to process the request.
 	ServiceConfigId string `json:"serviceConfigId,omitempty"`
@@ -2956,7 +2916,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3108,7 +3068,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3258,7 +3218,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

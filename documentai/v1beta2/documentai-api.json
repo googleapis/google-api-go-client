@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20210118",
+  "revision": "20210123",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
@@ -429,6 +429,107 @@
       "description": "Response message for the enable processor method. Intentionally empty proto for adding fields in future.",
       "id": "GoogleCloudDocumentaiUiv1beta3EnableProcessorResponse",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata": {
+      "description": "Metadata of the EvaluateProcessorVersion method.",
+      "id": "GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse": {
+      "description": "Metadata of the EvaluateProcessorVersion method.",
+      "id": "GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse",
+      "properties": {
+        "evaluation": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3Evaluation",
+          "description": "The evaluation result."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3Evaluation": {
+      "description": "An evaluation of a ProcessorVersion's performance.",
+      "id": "GoogleCloudDocumentaiUiv1beta3Evaluation",
+      "properties": {
+        "allEntitiesMetrics": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics",
+          "description": "Metrics for all the entities in aggregate."
+        },
+        "createTime": {
+          "description": "The time that the evaluation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "entityMetrics": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics"
+          },
+          "description": "Metrics across confidence levels, for different entities.",
+          "type": "object"
+        },
+        "name": {
+          "description": "The resource name of the evaluation. Format: projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processor_version}/evaluations/{evaluation}",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics": {
+      "description": "Evaluations metrics, at a specific confidence level.",
+      "id": "GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics",
+      "properties": {
+        "confidenceLevel": {
+          "description": "The confidence level.",
+          "format": "float",
+          "type": "number"
+        },
+        "metrics": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3EvaluationMetrics",
+          "description": "The metrics at the specific confidence level."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3EvaluationMetrics": {
+      "description": "Evaluation metrics, either in aggregate or about a specific entity.",
+      "id": "GoogleCloudDocumentaiUiv1beta3EvaluationMetrics",
+      "properties": {
+        "f1Score": {
+          "description": "The calculated f1 score.",
+          "format": "float",
+          "type": "number"
+        },
+        "precision": {
+          "description": "The calculated precision.",
+          "format": "float",
+          "type": "number"
+        },
+        "recall": {
+          "description": "The calculated recall.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics": {
+      "description": "Metrics across multiple confidence levels.",
+      "id": "GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics",
+      "properties": {
+        "confidenceLevelMetrics": {
+          "description": "Metrics across confidence levels.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3ProcessorVersion": {

@@ -1221,7 +1221,7 @@
       }
     }
   },
-  "revision": "20201213",
+  "revision": "20210124",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AndroidAttributes": {
@@ -3039,6 +3039,45 @@
         "membershipRole": {
           "$ref": "MembershipRole",
           "description": "The `MembershipRole`s to be updated. Only `MEMBER` `MembershipRoles` can currently be updated. May only contain a `MembershipRole` with `name` `MEMBER`."
+        }
+      },
+      "type": "object"
+    },
+    "UserInvitation": {
+      "description": "UserInvitation to join a Google Workspace organization.",
+      "id": "UserInvitation",
+      "properties": {
+        "mailsSentCount": {
+          "description": "Number of invitation emails sent to the user.",
+          "format": "int64",
+          "type": "string"
+        },
+        "name": {
+          "description": "Shall be of the form `customers/{customer}/userinvitations/{user_email_address}`",
+          "type": "string"
+        },
+        "state": {
+          "description": "State of the `UserInvitation`.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "NOT_YET_SENT",
+            "INVITED",
+            "ACCEPTED",
+            "DECLINED"
+          ],
+          "enumDescriptions": [
+            "The default value. This value is used if the state is omitted.",
+            "The `UserInvitation` has been created and is ready for sending as an email.",
+            "The user has been invited by email.",
+            "The user has accepted the invitation and is part of the organization.",
+            "The user declined the invitation."
+          ],
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Time when the `UserInvitation` was last updated.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"

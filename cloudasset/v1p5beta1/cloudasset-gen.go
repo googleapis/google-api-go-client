@@ -1688,7 +1688,8 @@ type ListAssetsResponse struct {
 	// Assets: Assets.
 	Assets []*Asset `json:"assets,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results. Set to
+	// NextPageToken: Token to retrieve the next page of results. It expires
+	// 72 hours after the page token for the first page is generated. Set to
 	// empty if there are no remaining results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -2005,7 +2006,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

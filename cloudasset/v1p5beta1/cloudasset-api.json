@@ -177,7 +177,7 @@
       }
     }
   },
-  "revision": "20201211",
+  "revision": "20210122",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -957,7 +957,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "Token to retrieve the next page of results. Set to empty if there are no remaining results.",
+          "description": "Token to retrieve the next page of results. It expires 72 hours after the page token for the first page is generated. Set to empty if there are no remaining results.",
           "type": "string"
         },
         "readTime": {

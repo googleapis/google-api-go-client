@@ -3636,12 +3636,20 @@ type ResourceSearchResult struct {
 	// specify the `asset_type` field in your search request.
 	AssetType string `json:"assetType,omitempty"`
 
+	// CreateTime: Optional. The create timestamp of this resource, at which
+	// the resource was created. The granularity is in seconds.
+	// Timestamp.nanos will always be 0. This field is available only when
+	// the resource's proto contains it. To search against `create_time`: *
+	// use a field query (value in seconds). Example: `createTime >=
+	// 1594294238`
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Description: Optional. One or more paragraphs of text description of
 	// this resource. Maximum length could be up to 1M bytes. This field is
 	// available only when the resource's proto contains it. To search
 	// against the `description`: * use a field query. Example:
-	// `description:"*important instance*" * use a free text query.
-	// Example: "*important instance*"
+	// `description:"important instance" * use a free text query. Example:
+	// "important instance"
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Optional. The display name of this resource. This field
@@ -3650,6 +3658,22 @@ type ResourceSearchResult struct {
 	// `displayName:"My Instance" * use a free text query. Example: "My
 	// Instance"
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Folders: Optional. The folder(s) that this resource belongs to, in
+	// the form of folders/{FOLDER_NUMBER}. This field is available when the
+	// resource belongs to one or more folders. To search against `folders`:
+	// * use a field query. Example: `folders:(123 OR 456)` * specify the
+	// `scope` field as this folder in your search request.
+	Folders []string `json:"folders,omitempty"`
+
+	// KmsKey: Optional. The Cloud KMS CryptoKey
+	// (https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys?hl=en)
+	// name or CryptoKeyVersion
+	// (https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys.cryptoKeyVersions?hl=en)
+	// name. This field is available only when the resource's proto contains
+	// it. To search against the `kms_key`: * use a field query. Example:
+	// `kmsKey:key` * use a free text query. Example: `key`
+	KmsKey string `json:"kmsKey,omitempty"`
 
 	// Labels: Optional. Labels associated with this resource. See Labelling
 	// and grouping GCP resources
@@ -3688,11 +3712,45 @@ type ResourceSearchResult struct {
 	// query. Example: `internal`
 	NetworkTags []string `json:"networkTags,omitempty"`
 
+	// Organization: Optional. The organization that this resource belongs
+	// to, in the form of organizations/{ORGANIZATION_NUMBER}. This field is
+	// available when the resource belongs to a organization. To search
+	// against `organization`: * use a field query. Example:
+	// `organization:123` * specify the `scope` field as this organization
+	// in your search request.
+	Organization string `json:"organization,omitempty"`
+
 	// Project: Optional. The project that this resource belongs to, in the
 	// form of projects/{PROJECT_NUMBER}. This field is available when the
-	// resource belongs to a project. To search against the `project`: *
-	// specify the `scope` field as this project in your search request.
+	// resource belongs to a project. To search against `project`: * use a
+	// field query. Example: `project:12345` * specify the `scope` field as
+	// this project in your search request.
 	Project string `json:"project,omitempty"`
+
+	// State: Optional. The state of this resource. Different resources
+	// types have different state definitions that are mapped from various
+	// fields of different resource types. This field is available only when
+	// the resource's proto contains it. Example: If the resource is an
+	// instance provided by Compute Engine, its state will include
+	// PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDING, SUSPENDED,
+	// REPAIRING, and TERMINATED. See `status` definition in API Reference
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/instances).
+	// If the resource is a project provided by Cloud Resource Manager, its
+	// state will include LIFECYCLE_STATE_UNSPECIFIED, ACTIVE,
+	// DELETE_REQUESTED and DELETE_IN_PROGRESS. See `lifecycleState`
+	// definition in API Reference
+	// (https://cloud.google.com/resource-manager/reference/rest/v1/projects).
+	// To search against the `state`: * use a field query. Example:
+	// `state:RUNNING` * use a free text query. Example: `RUNNING`
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Optional. The last update timestamp of this resource, at
+	// which the resource was last modified or deleted. The granularity is
+	// in seconds. Timestamp.nanos will always be 0. This field is available
+	// only when the resource's proto contains it. To search against
+	// `update_time`: * use a field query (value in seconds). Example:
+	// `updateTime < 1594294238`
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AdditionalAttributes") to unconditionally include in API requests.
@@ -4312,7 +4370,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4450,7 +4508,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4591,7 +4649,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4735,7 +4793,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4870,7 +4928,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5021,7 +5079,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5311,7 +5369,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5513,7 +5571,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5712,7 +5770,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5896,7 +5954,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6044,21 +6102,25 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // (https://cloud.google.com/iam/docs/policies#structure). Examples: *
 // `policy:amy@gmail.com` to find IAM policy bindings that specify user
 // "amy@gmail.com". * `policy:roles/compute.admin` to find IAM policy
-// bindings that specify the Compute Admin role. *
-// `policy.role.permissions:storage.buckets.update` to find IAM policy
-// bindings that specify a role containing "storage.buckets.update"
-// permission. Note that if callers don't have `iam.roles.get` access to
-// a role's included permissions, policy bindings that specify this role
-// will be dropped from the search results. *
+// bindings that specify the Compute Admin role. * `policy:comp*` to
+// find IAM policy bindings that contain "comp" as a prefix of any word
+// in the binding. * `policy.role.permissions:storage.buckets.update` to
+// find IAM policy bindings that specify a role containing
+// "storage.buckets.update" permission. Note that if callers don't have
+// `iam.roles.get` access to a role's included permissions, policy
+// bindings that specify this role will be dropped from the search
+// results. * `policy.role.permissions:upd*` to find IAM policy bindings
+// that specify a role containing "upd" as a prefix of any word in the
+// role permission. Note that if callers don't have `iam.roles.get`
+// access to a role's included permissions, policy bindings that specify
+// this role will be dropped from the search results. *
 // `resource:organizations/123456` to find IAM policy bindings that are
 // set on "organizations/123456". *
 // `resource=//cloudresourcemanager.googleapis.com/projects/myproject`
 // to find IAM policy bindings that are set on the project named
 // "myproject". * `Important` to find IAM policy bindings that contain
 // "Important" as a word in any of the searchable fields (except for the
-// included permissions). * `*por*` to find IAM policy bindings that
-// contain "por" as a substring in any of the searchable fields (except
-// for the included permissions). * `resource:(instance1 OR instance2)
+// included permissions). * `resource:(instance1 OR instance2)
 // policy:amy` to find IAM policy bindings that are set on resources
 // "instance1" or "instance2" and also specify user "amy".
 func (c *V1SearchAllIamPoliciesCall) Query(query string) *V1SearchAllIamPoliciesCall {
@@ -6103,7 +6165,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6185,7 +6247,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `*por*` to find IAM policy bindings that contain \"por\" as a substring in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\".",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6310,22 +6372,19 @@ func (c *V1SearchAllResourcesCall) PageToken(pageToken string) *V1SearchAllResou
 // `name:Important` to find Cloud resources whose name contains
 // "Important" as a word. * `name=Important` to find the Cloud resource
 // whose name is exactly "Important". * `displayName:Impor*` to find
-// Cloud resources whose display name contains "Impor" as a prefix. *
-// `description:*por*` to find Cloud resources whose description
-// contains "por" as a substring. * `location:us-west*` to find Cloud
-// resources whose location is prefixed with "us-west". * `labels:prod`
-// to find Cloud resources whose labels contain "prod" as a key or
-// value. * `labels.env:prod` to find Cloud resources that have a label
-// "env" and its value is "prod". * `labels.env:*` to find Cloud
+// Cloud resources whose display name contains "Impor" as a prefix of
+// any word in the field. * `location:us-west*` to find Cloud resources
+// whose location contains both "us" and "west" as prefixes. *
+// `labels:prod` to find Cloud resources whose labels contain "prod" as
+// a key or value. * `labels.env:prod` to find Cloud resources that have
+// a label "env" and its value is "prod". * `labels.env:*` to find Cloud
 // resources that have a label "env". * `Important` to find Cloud
 // resources that contain "Important" as a word in any of the searchable
 // fields. * `Impor*` to find Cloud resources that contain "Impor" as a
-// prefix in any of the searchable fields. * `*por*` to find Cloud
-// resources that contain "por" as a substring in any of the searchable
-// fields. * `Important location:(us-west1 OR global)` to find Cloud
-// resources that contain "Important" as a word in any of the searchable
-// fields and are also located in the "us-west1" region or the "global"
-// location.
+// prefix of any word in any of the searchable fields. * `Important
+// location:(us-west1 OR global)` to find Cloud resources that contain
+// "Important" as a word in any of the searchable fields and are also
+// located in the "us-west1" region or the "global" location.
 func (c *V1SearchAllResourcesCall) Query(query string) *V1SearchAllResourcesCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -6368,7 +6427,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6461,7 +6520,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](http://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix. * `description:*por*` to find Cloud resources whose description contains \"por\" as a substring. * `location:us-west*` to find Cloud resources whose location is prefixed with \"us-west\". * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix in any of the searchable fields. * `*por*` to find Cloud resources that contain \"por\" as a substring in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
+	//       "description": "Optional. The query statement. See [how to construct a query](http://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix of any word in the field. * `location:us-west*` to find Cloud resources whose location contains both \"us\" and \"west\" as prefixes. * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix of any word in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

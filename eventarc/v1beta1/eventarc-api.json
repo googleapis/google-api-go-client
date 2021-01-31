@@ -584,7 +584,7 @@
       }
     }
   },
-  "revision": "20201203",
+  "revision": "20210126",
   "rootUrl": "https://eventarc.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -947,11 +947,12 @@
       "id": "Pubsub",
       "properties": {
         "subscription": {
-          "description": "The name of the Pub/Sub subscription created and managed by Eventarc system as a transport for the event delivery. The value must be in the form of `projects/{PROJECT_ID}/subscriptions/{SUBSCRIPTION_NAME}`.",
+          "description": "Output only. The name of the Pub/Sub subscription created and managed by Eventarc system as a transport for the event delivery. Format: `projects/{PROJECT_ID}/subscriptions/{SUBSCRIPTION_NAME}`.",
+          "readOnly": true,
           "type": "string"
         },
         "topic": {
-          "description": "The name of the Pub/Sub topic created and managed by Eventarc system as a transport for the event delivery. The value must be in the form of `projects/{PROJECT_ID}/topics/{TOPIC_NAME}`.",
+          "description": "Optional. The name of the Pub/Sub topic created and managed by Eventarc system as a transport for the event delivery. Format: `projects/{PROJECT_ID}/topics/{TOPIC_NAME}`. You may set an existing topic for triggers of the type `google.cloud.pubsub.topic.v1.messagePublished` only. The topic you provide here will not be deleted by Eventarc at trigger deletion.",
           "type": "string"
         }
       },
@@ -1034,7 +1035,7 @@
       "properties": {
         "pubsub": {
           "$ref": "Pubsub",
-          "description": "The Pub/Sub topic and subscription that maybe created by Eventarc as delivery intermediary."
+          "description": "The Pub/Sub topic and subscription used by Eventarc as delivery intermediary."
         }
       },
       "type": "object"
@@ -1075,7 +1076,7 @@
         },
         "transport": {
           "$ref": "Transport",
-          "description": "Output only. In order to deliver messages, Eventarc may configure other GCP products as transport intermediary. This field returns a reference to that transport intermediary. This information can be used for debugging purposes.",
+          "description": "Output only. In order to deliver messages, Eventarc may use other GCP products as transport intermediary. This field contains a reference to that transport intermediary. This information can be used for debugging purposes.",
           "readOnly": true
         },
         "updateTime": {

@@ -1,5 +1,48 @@
 # Changes
 
+## [0.38.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.37.0...v0.38.0) (2021-01-29)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#846](https://www.github.com/googleapis/google-api-go-client/issues/846) [#845](https://www.github.com/googleapis/google-api-go-client/issues/845) [#844](https://www.github.com/googleapis/google-api-go-client/issues/844) [#840](https://www.github.com/googleapis/google-api-go-client/issues/840)
+
+
+### Bug Fixes
+
+* **internal:** don't self-sign JWT when an endpoint provided ([#847](https://www.github.com/googleapis/google-api-go-client/issues/847)) ([55f262c](https://www.github.com/googleapis/google-api-go-client/commit/55f262c3a4e8d287ceeeee844b0d174299acc439))
+* **internal:** don't use self-signed JWT with impersonation ([#788](https://www.github.com/googleapis/google-api-go-client/issues/788)) ([1dc7dac](https://www.github.com/googleapis/google-api-go-client/commit/1dc7dacd54b4b93f5465b71f2ee8c27e59630454))
+
+## [0.37.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.36.0...v0.37.0) (2021-01-25)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#839](https://www.github.com/googleapis/google-api-go-client/issues/839) [#838](https://www.github.com/googleapis/google-api-go-client/issues/838) [#836](https://www.github.com/googleapis/google-api-go-client/issues/836) [#834](https://www.github.com/googleapis/google-api-go-client/issues/834) [#833](https://www.github.com/googleapis/google-api-go-client/issues/833) [#831](https://www.github.com/googleapis/google-api-go-client/issues/831) [#830](https://www.github.com/googleapis/google-api-go-client/issues/830) [#829](https://www.github.com/googleapis/google-api-go-client/issues/829) [#828](https://www.github.com/googleapis/google-api-go-client/issues/828) [#827](https://www.github.com/googleapis/google-api-go-client/issues/827) [#825](https://www.github.com/googleapis/google-api-go-client/issues/825) [#824](https://www.github.com/googleapis/google-api-go-client/issues/824) [#823](https://www.github.com/googleapis/google-api-go-client/issues/823) [#822](https://www.github.com/googleapis/google-api-go-client/issues/822) [#820](https://www.github.com/googleapis/google-api-go-client/issues/820) [#819](https://www.github.com/googleapis/google-api-go-client/issues/819) [#817](https://www.github.com/googleapis/google-api-go-client/issues/817) [#816](https://www.github.com/googleapis/google-api-go-client/issues/816) [#812](https://www.github.com/googleapis/google-api-go-client/issues/812) [#811](https://www.github.com/googleapis/google-api-go-client/issues/811) [#810](https://www.github.com/googleapis/google-api-go-client/issues/810) [#809](https://www.github.com/googleapis/google-api-go-client/issues/809) [#807](https://www.github.com/googleapis/google-api-go-client/issues/807) [#806](https://www.github.com/googleapis/google-api-go-client/issues/806) [#805](https://www.github.com/googleapis/google-api-go-client/issues/805) [#803](https://www.github.com/googleapis/google-api-go-client/issues/803) [#800](https://www.github.com/googleapis/google-api-go-client/issues/800) [#799](https://www.github.com/googleapis/google-api-go-client/issues/799) [#793](https://www.github.com/googleapis/google-api-go-client/issues/793) [#792](https://www.github.com/googleapis/google-api-go-client/issues/792) [#786](https://www.github.com/googleapis/google-api-go-client/issues/786) [#784](https://www.github.com/googleapis/google-api-go-client/issues/784) [#782](https://www.github.com/googleapis/google-api-go-client/issues/782) [#779](https://www.github.com/googleapis/google-api-go-client/issues/779) [#771](https://www.github.com/googleapis/google-api-go-client/issues/771) [#770](https://www.github.com/googleapis/google-api-go-client/issues/770) [#768](https://www.github.com/googleapis/google-api-go-client/issues/768)
+* **transport/bytestream:** Add Close method for shutdown ([#787](https://www.github.com/googleapis/google-api-go-client/issues/787)) ([96bfd87](https://www.github.com/googleapis/google-api-go-client/commit/96bfd877fbc5869c0a4d87de4daeb1f76aaca79d)), refs [#775](https://www.github.com/googleapis/google-api-go-client/issues/775)
+
+
+### Bug Fixes
+
+* **all:** use CheckResponse for media downloads ([#773](https://www.github.com/googleapis/google-api-go-client/issues/773)) ([39cbab0](https://www.github.com/googleapis/google-api-go-client/commit/39cbab06d28f1d017bfc016c6735f6f45c51c90e)), refs [#752](https://www.github.com/googleapis/google-api-go-client/issues/752)
+* **compute:** don't tigger linter for field named Deprecated ([#774](https://www.github.com/googleapis/google-api-go-client/issues/774)) ([d2bc921](https://www.github.com/googleapis/google-api-go-client/commit/d2bc921f997425bc267d8e4845286b0d67bbe1ef)), refs [#767](https://www.github.com/googleapis/google-api-go-client/issues/767)
+* don't use markdown style links ([#789](https://www.github.com/googleapis/google-api-go-client/issues/789)) ([09ddacb](https://www.github.com/googleapis/google-api-go-client/commit/09ddacba9c3b45798fa309d3719638c754ec69a1)), refs [#712](https://www.github.com/googleapis/google-api-go-client/issues/712)
+* **transport/grpc:** check Compute Engine environment for DirectPath ([#781](https://www.github.com/googleapis/google-api-go-client/issues/781)) ([89287b6](https://www.github.com/googleapis/google-api-go-client/commit/89287b68a240f818e9ae70a6395b1d72e21ee236))
+
+## [0.36.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.35.0...v0.36.0) (2020-12-03)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#766](https://www.github.com/googleapis/google-api-go-client/issues/766) [#762](https://www.github.com/googleapis/google-api-go-client/issues/762) [#758](https://www.github.com/googleapis/google-api-go-client/issues/758) [#760](https://www.github.com/googleapis/google-api-go-client/issues/760) [#757](https://www.github.com/googleapis/google-api-go-client/issues/757) [#756](https://www.github.com/googleapis/google-api-go-client/issues/756) [#754](https://www.github.com/googleapis/google-api-go-client/issues/754) [#753](https://www.github.com/googleapis/google-api-go-client/issues/753) [#749](https://www.github.com/googleapis/google-api-go-client/issues/749) [#747](https://www.github.com/googleapis/google-api-go-client/issues/747) [#744](https://www.github.com/googleapis/google-api-go-client/issues/744)
+* **internaloption:** add better support for self-signed JWT ([#738](https://www.github.com/googleapis/google-api-go-client/issues/738)) ([1a7550f](https://www.github.com/googleapis/google-api-go-client/commit/1a7550f9546052997806ff7ea9bcba55326bdb16))
+* **transport:** Add default certificate caching support ([#721](https://www.github.com/googleapis/google-api-go-client/issues/721)) ([caa4d89](https://www.github.com/googleapis/google-api-go-client/commit/caa4d89fd452600f9911cfa0945500566cf9c72e))
+
+
+### Bug Fixes
+
+* **google-api-go-generator:** add patch for compute mtls endpoint ([#761](https://www.github.com/googleapis/google-api-go-client/issues/761)) ([445fe0b](https://www.github.com/googleapis/google-api-go-client/commit/445fe0be627de9769c5b252e77858c78682a6b8c))
+
 ## [0.35.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.34.0...v0.35.0) (2020-11-06)
 
 

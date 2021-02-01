@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -856,10 +856,10 @@ type GuestPolicy struct {
 	// empty, all VM instances underneath this policy are targeted. At the
 	// same level in the resource hierarchy (that is within a project), the
 	// service prevents the creation of multiple policies that conflict with
-	// each other. For more information, see how the service [handles
-	// assignment
-	// conflicts](/compute/docs/os-config-management/create-guest-policy#hand
-	// le-conflicts).
+	// each other. For more information, see how the service handles
+	// assignment conflicts
+	// (/compute/docs/os-config-management/create-guest-policy#handle-conflic
+	// ts).
 	Assignment *Assignment `json:"assignment,omitempty"`
 
 	// CreateTime: Output only. Time this guest policy was created.
@@ -1083,8 +1083,8 @@ type InventorySoftwarePackage struct {
 	GoogetPackage *InventoryVersionedPackage `json:"googetPackage,omitempty"`
 
 	// QfePackage: Details of a Windows Quick Fix engineering package. See
-	// https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-quickfixengineering for info in Windows Quick Fix
-	// Engineering.
+	// https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-quickfixengineering
+	// for info in Windows Quick Fix Engineering.
 	QfePackage *InventoryWindowsQuickFixEngineeringPackage `json:"qfePackage,omitempty"`
 
 	// WuaPackage: Details of a Windows Update package. See
@@ -1564,7 +1564,7 @@ func (s *MonthlySchedule) MarshalJSON() ([]byte, error) {
 }
 
 // OneTimeSchedule: Sets the time for a one time patch deployment.
-// Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text
+// Timestamp is in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text
 // format.
 type OneTimeSchedule struct {
 	// ExecuteTime: Required. The desired patch job execution time.
@@ -1774,12 +1774,11 @@ func (s *PatchConfig) MarshalJSON() ([]byte, error) {
 // patch jobs use to complete a patch. These configurations include
 // instance filter, package repository settings, and a schedule. For
 // more information about creating and managing patch deployments, see
-// [Scheduling patch
-// jobs](https://cloud.google.com/compute/docs/os-patch-management/schedu
-// le-patch-jobs).
+// Scheduling patch jobs
+// (https://cloud.google.com/compute/docs/os-patch-management/schedule-patch-jobs).
 type PatchDeployment struct {
 	// CreateTime: Output only. Time the patch deployment was created.
-	// Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text
+	// Timestamp is in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text
 	// format.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1795,8 +1794,8 @@ type PatchDeployment struct {
 	InstanceFilter *PatchInstanceFilter `json:"instanceFilter,omitempty"`
 
 	// LastExecuteTime: Output only. The last time a patch job was started
-	// by this deployment. Timestamp is in
-	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
+	// by this deployment. Timestamp is in RFC3339
+	// (https://www.ietf.org/rfc/rfc3339.txt) text format.
 	LastExecuteTime string `json:"lastExecuteTime,omitempty"`
 
 	// Name: Unique name for the patch deployment resource in a project. The
@@ -1818,7 +1817,7 @@ type PatchDeployment struct {
 	Rollout *PatchRollout `json:"rollout,omitempty"`
 
 	// UpdateTime: Output only. Time the patch deployment was last updated.
-	// Timestamp is in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text
+	// Timestamp is in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text
 	// format.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1938,9 +1937,8 @@ func (s *PatchInstanceFilterGroupLabel) MarshalJSON() ([]byte, error) {
 // in progress or has completed. Instance details are not included in
 // the job. To paginate through instance details, use
 // `ListPatchJobInstanceDetails`. For more information about patch jobs,
-// see [Creating patch
-// jobs](https://cloud.google.com/compute/docs/os-patch-management/create
-// -patch-job).
+// see Creating patch jobs
+// (https://cloud.google.com/compute/docs/os-patch-management/create-patch-job).
 type PatchJob struct {
 	// CreateTime: Time this patch job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2049,10 +2047,9 @@ func (s *PatchJob) UnmarshalJSON(data []byte) error {
 }
 
 // PatchJobInstanceDetails: Patch details for a VM instance. For more
-// information about reviewing VM instance details, see [Listing all VM
-// instance details for a specific patch
-// job](https://cloud.google.com/compute/docs/os-patch-management/manage-
-// patch-jobs#list-instance-details).
+// information about reviewing VM instance details, see Listing all VM
+// instance details for a specific patch job
+// (https://cloud.google.com/compute/docs/os-patch-management/manage-patch-jobs#list-instance-details).
 type PatchJobInstanceDetails struct {
 	// AttemptCount: The number of times the agent that the agent attempts
 	// to apply the patch.
@@ -2829,8 +2826,8 @@ type SoftwareRecipeStepRunScript struct {
 
 	// Interpreter: The script interpreter to use to run the script. If no
 	// interpreter is specified the script is executed directly, which
-	// likely only succeed for scripts with [shebang
-	// lines](https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
+	// likely only succeed for scripts with shebang lines
+	// (https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
 	//
 	// Possible values:
 	//   "INTERPRETER_UNSPECIFIED" - Default value for ScriptType.
@@ -2910,8 +2907,8 @@ func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeZone: Represents a time zone from the [IANA Time Zone
-// Database](https://www.iana.org/time-zones).
+// TimeZone: Represents a time zone from the IANA Time Zone Database
+// (https://www.iana.org/time-zones).
 type TimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`
@@ -3332,7 +3329,7 @@ func (c *ProjectsGuestPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3475,7 +3472,7 @@ func (c *ProjectsGuestPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3616,7 +3613,7 @@ func (c *ProjectsGuestPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3775,7 +3772,7 @@ func (c *ProjectsGuestPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3949,7 +3946,7 @@ func (c *ProjectsGuestPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsGuestPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4106,7 +4103,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4249,7 +4246,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4390,7 +4387,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4549,7 +4546,7 @@ func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4717,7 +4714,7 @@ func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4857,7 +4854,7 @@ func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5007,7 +5004,7 @@ func (c *ProjectsPatchJobsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5175,7 +5172,7 @@ func (c *ProjectsPatchJobsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5379,7 +5376,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5554,7 +5551,7 @@ func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) Header() http.Hea
 
 func (c *ProjectsZonesInstancesLookupEffectiveGuestPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

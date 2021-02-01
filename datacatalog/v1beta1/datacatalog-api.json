@@ -1808,7 +1808,7 @@
       }
     }
   },
-  "revision": "20201107",
+  "revision": "20201210",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -2477,6 +2477,11 @@
       "properties": {
         "linkedResource": {
           "description": "The full name of the cloud resource the entry belongs to. See: https://cloud.google.com/apis/design/resource_names#full_resource_name. Example: * `//bigquery.googleapis.com/projects/projectId/datasets/datasetId/tables/tableId`",
+          "type": "string"
+        },
+        "modifyTime": {
+          "description": "Last-modified timestamp of the entry from the managing system.",
+          "format": "google-datetime",
           "type": "string"
         },
         "relativeResourceName": {

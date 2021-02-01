@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -2423,9 +2423,9 @@ type LineConnection struct {
 	// DrawingML Shape and Text Geometries" of "Office Open XML File
 	// Formats-Fundamentals and Markup Language Reference", part 1 of
 	// [ECMA-376 5th edition]
-	// (http://www.ecma-international.org/publications/standards/Ecma-376.htm
-	// ). The position of each connection site can also be viewed from
-	// Slides editor.
+	// (http://www.ecma-international.org/publications/standards/Ecma-376.htm).
+	// The position of each connection site can also be viewed from Slides
+	// editor.
 	ConnectionSiteIndex int64 `json:"connectionSiteIndex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConnectedObjectId")
@@ -4841,7 +4841,9 @@ func (s *ShapeBackgroundFill) MarshalJSON() ([]byte, error) {
 // placeholder shape as determined by the placeholder field, then these
 // properties may be inherited from a parent placeholder shape.
 // Determining the rendered value of the property depends on the
-// corresponding property_state field value.
+// corresponding property_state field value. Any text autofit settings
+// on the shape are automatically deactivated by requests that can
+// impact how text fits in the shape.
 type ShapeProperties struct {
 	// ContentAlignment: The alignment of the content in the shape. If
 	// unspecified, the alignment is inherited from a parent placeholder if
@@ -6937,8 +6939,8 @@ type WeightedFontFamily struct {
 	// Weight: The rendered weight of the text. This field can have any
 	// value that is a multiple of `100` between `100` and `900`, inclusive.
 	// This range corresponds to the numerical values described in the CSS
-	// 2.1 Specification, [section
-	// 15.6](https://www.w3.org/TR/CSS21/fonts.html#font-boldness), with
+	// 2.1 Specification, section 15.6
+	// (https://www.w3.org/TR/CSS21/fonts.html#font-boldness), with
 	// non-numerical values disallowed. Weights greater than or equal to
 	// `700` are considered bold, and weights less than `700`are not bold.
 	// The default value is `400` ("normal").
@@ -7088,7 +7090,7 @@ func (c *PresentationsBatchUpdateCall) Header() http.Header {
 
 func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7234,7 +7236,7 @@ func (c *PresentationsCreateCall) Header() http.Header {
 
 func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7372,7 +7374,7 @@ func (c *PresentationsGetCall) Header() http.Header {
 
 func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7523,7 +7525,7 @@ func (c *PresentationsPagesGetCall) Header() http.Header {
 
 func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7637,8 +7639,8 @@ type PresentationsPagesGetThumbnailCall struct {
 
 // GetThumbnail: Generates a thumbnail of the latest version of the
 // specified page in the presentation and returns a URL to the thumbnail
-// image. This request counts as an [expensive read
-// request](/slides/limits) for quota purposes.
+// image. This request counts as an expensive read request
+// (/slides/limits) for quota purposes.
 func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObjectId string) *PresentationsPagesGetThumbnailCall {
 	c := &PresentationsPagesGetThumbnailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
@@ -7712,7 +7714,7 @@ func (c *PresentationsPagesGetThumbnailCall) Header() http.Header {
 
 func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

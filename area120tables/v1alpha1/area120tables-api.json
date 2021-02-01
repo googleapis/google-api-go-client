@@ -16,6 +16,9 @@
         },
         "https://www.googleapis.com/auth/spreadsheets.readonly": {
           "description": "View your Google Spreadsheets"
+        },
+        "https://www.googleapis.com/auth/tables": {
+          "description": "See, edit, create, and delete your tables in Tables by Area 120"
         }
       }
     }
@@ -26,7 +29,7 @@
   "canonicalName": "Area120 Tables",
   "description": "",
   "discoveryVersion": "v1",
-  "documentationLink": "https://tables.area120.google.com",
+  "documentationLink": "https://support.google.com/area120-tables/answer/10011390",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -145,7 +148,8 @@
             "https://www.googleapis.com/auth/drive.file",
             "https://www.googleapis.com/auth/drive.readonly",
             "https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/spreadsheets.readonly"
+            "https://www.googleapis.com/auth/spreadsheets.readonly",
+            "https://www.googleapis.com/auth/tables"
           ]
         },
         "list": {
@@ -176,7 +180,8 @@
             "https://www.googleapis.com/auth/drive.file",
             "https://www.googleapis.com/auth/drive.readonly",
             "https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/spreadsheets.readonly"
+            "https://www.googleapis.com/auth/spreadsheets.readonly",
+            "https://www.googleapis.com/auth/tables"
           ]
         }
       },
@@ -210,7 +215,39 @@
               "scopes": [
                 "https://www.googleapis.com/auth/drive",
                 "https://www.googleapis.com/auth/drive.file",
-                "https://www.googleapis.com/auth/spreadsheets"
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/tables"
+              ]
+            },
+            "batchDelete": {
+              "description": "Deletes multiple rows.",
+              "flatPath": "v1alpha1/tables/{tablesId}/rows:batchDelete",
+              "httpMethod": "POST",
+              "id": "area120tables.tables.rows.batchDelete",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The parent table shared by all rows being deleted. Format: tables/{table}",
+                  "location": "path",
+                  "pattern": "^tables/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1alpha1/{+parent}/rows:batchDelete",
+              "request": {
+                "$ref": "BatchDeleteRowsRequest"
+              },
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/drive",
+                "https://www.googleapis.com/auth/drive.file",
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/tables"
               ]
             },
             "batchUpdate": {
@@ -240,7 +277,8 @@
               "scopes": [
                 "https://www.googleapis.com/auth/drive",
                 "https://www.googleapis.com/auth/drive.file",
-                "https://www.googleapis.com/auth/spreadsheets"
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/tables"
               ]
             },
             "create": {
@@ -283,7 +321,8 @@
               "scopes": [
                 "https://www.googleapis.com/auth/drive",
                 "https://www.googleapis.com/auth/drive.file",
-                "https://www.googleapis.com/auth/spreadsheets"
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/tables"
               ]
             },
             "delete": {
@@ -310,7 +349,8 @@
               "scopes": [
                 "https://www.googleapis.com/auth/drive",
                 "https://www.googleapis.com/auth/drive.file",
-                "https://www.googleapis.com/auth/spreadsheets"
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/tables"
               ]
             },
             "get": {
@@ -352,7 +392,8 @@
                 "https://www.googleapis.com/auth/drive.file",
                 "https://www.googleapis.com/auth/drive.readonly",
                 "https://www.googleapis.com/auth/spreadsheets",
-                "https://www.googleapis.com/auth/spreadsheets.readonly"
+                "https://www.googleapis.com/auth/spreadsheets.readonly",
+                "https://www.googleapis.com/auth/tables"
               ]
             },
             "list": {
@@ -405,7 +446,8 @@
                 "https://www.googleapis.com/auth/drive.file",
                 "https://www.googleapis.com/auth/drive.readonly",
                 "https://www.googleapis.com/auth/spreadsheets",
-                "https://www.googleapis.com/auth/spreadsheets.readonly"
+                "https://www.googleapis.com/auth/spreadsheets.readonly",
+                "https://www.googleapis.com/auth/tables"
               ]
             },
             "patch": {
@@ -454,7 +496,8 @@
               "scopes": [
                 "https://www.googleapis.com/auth/drive",
                 "https://www.googleapis.com/auth/drive.file",
-                "https://www.googleapis.com/auth/spreadsheets"
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/tables"
               ]
             }
           }
@@ -489,7 +532,8 @@
             "https://www.googleapis.com/auth/drive.file",
             "https://www.googleapis.com/auth/drive.readonly",
             "https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/spreadsheets.readonly"
+            "https://www.googleapis.com/auth/spreadsheets.readonly",
+            "https://www.googleapis.com/auth/tables"
           ]
         },
         "list": {
@@ -520,13 +564,14 @@
             "https://www.googleapis.com/auth/drive.file",
             "https://www.googleapis.com/auth/drive.readonly",
             "https://www.googleapis.com/auth/spreadsheets",
-            "https://www.googleapis.com/auth/spreadsheets.readonly"
+            "https://www.googleapis.com/auth/spreadsheets.readonly",
+            "https://www.googleapis.com/auth/tables"
           ]
         }
       }
     }
   },
-  "revision": "20201116",
+  "revision": "20210113",
   "rootUrl": "https://area120tables.googleapis.com/",
   "schemas": {
     "BatchCreateRowsRequest": {
@@ -551,6 +596,20 @@
           "description": "The created rows.",
           "items": {
             "$ref": "Row"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BatchDeleteRowsRequest": {
+      "description": "Request message for TablesService.BatchDeleteRows",
+      "id": "BatchDeleteRowsRequest",
+      "properties": {
+        "names": {
+          "description": "Required. The names of the rows to delete. All rows must belong to the parent table or else the entire batch will fail. A maximum of 500 rows can be deleted in a batch. Format: tables/{table}/rows/{row}",
+          "items": {
+            "type": "string"
           },
           "type": "array"
         }

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -285,9 +285,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -369,8 +368,9 @@ type CloudRunService struct {
 
 	// Service: Required. The name of the Cloud run service being addressed
 	// (see
-	// https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services). Only services located in the same project of the trigger object can be
-	// addressed.
+	// https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services).
+	// Only services located in the same project of the trigger object can
+	// be addressed.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Path") to
@@ -399,7 +399,7 @@ func (s *CloudRunService) MarshalJSON() ([]byte, error) {
 // Destination: Represents a target of an invocation over HTTP.
 type Destination struct {
 	// CloudRunService: Cloud Run fully-managed service that receives the
-	// events. The service should be running in the same project of the
+	// events. The service should be running in the same project as the
 	// trigger.
 	CloudRunService *CloudRunService `json:"cloudRunService,omitempty"`
 
@@ -668,13 +668,12 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MatchingCriteria: Matches events based on exact matches on the
 // CloudEvents attributes.
 type MatchingCriteria struct {
-	// Attribute: Required. The name of a CloudEvents atrribute. Currently,
+	// Attribute: Required. The name of a CloudEvents attribute. Currently,
 	// only a subset of attributes can be specified. All triggers MUST
-	// provide a matching criteria for attribute 'type'. Event types specify
-	// what event type has attributes are allowed based on
+	// provide a matching criteria for the 'type' attribute.
 	Attribute string `json:"attribute,omitempty"`
 
-	// Value: Required. The value for the attribute
+	// Value: Required. The value for the attribute.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attribute") to
@@ -825,9 +824,10 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // expression that allows access to a resource only if the expression
 // evaluates to `true`. A condition can add constraints based on
 // attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies). **JSON example:** { "bindings": [ { "role":
+// resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+// **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
 // "user:mike@example.com", "group:admins@example.com",
 // "domain:google.com",
@@ -845,8 +845,8 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
 // timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the [IAM
-// documentation](https://cloud.google.com/iam/docs/).
+// 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -885,9 +885,9 @@ type Policy struct {
 	// of the conditions in the version `3` policy are lost. If a policy
 	// does not include any conditions, operations on that policy may
 	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// resources support conditions in their IAM policies, see the IAM
+	// documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -919,15 +919,18 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // Pubsub: Represents a Pub/Sub transport.
 type Pubsub struct {
-	// Subscription: The name of the Pub/Sub subscription created and
-	// managed by Eventarc system as a transport for the event delivery. The
-	// value must be in the form of
-	// `projects/{PROJECT_ID}/subscriptions/{SUBSCRIPTION_NAME}
+	// Subscription: Output only. The name of the Pub/Sub subscription
+	// created and managed by Eventarc system as a transport for the event
+	// delivery. Format:
+	// `projects/{PROJECT_ID}/subscriptions/{SUBSCRIPTION_NAME}`.
 	Subscription string `json:"subscription,omitempty"`
 
-	// Topic: The name of the Pub/Sub topic created and managed by Eventarc
-	// system as a transport for the event delivery. The value must be in
-	// the form of `projects/{PROJECT_ID}/topics/{TOPIC_NAME}
+	// Topic: Optional. The name of the Pub/Sub topic created and managed by
+	// Eventarc system as a transport for the event delivery. Format:
+	// `projects/{PROJECT_ID}/topics/{TOPIC_NAME}`. You may set an existing
+	// topic for triggers of the type
+	// `google.cloud.pubsub.topic.v1.messagePublished` only. The topic you
+	// provide here will not be deleted by Eventarc at trigger deletion.
 	Topic string `json:"topic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
@@ -992,11 +995,11 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1039,8 +1042,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 type TestIamPermissionsRequest struct {
 	// Permissions: The set of permissions to check for the `resource`.
 	// Permissions with wildcards (such as '*' or 'storage.*') are not
-	// allowed. For more information see [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// allowed. For more information see IAM Overview
+	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
@@ -1103,8 +1106,8 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // Transport: Represents the transport intermediaries created for the
 // trigger in order to deliver events.
 type Transport struct {
-	// Pubsub: The Pub/Sub topic and subscription that maybe created by
-	// Eventarc as delivery intermediary.
+	// Pubsub: The Pub/Sub topic and subscription used by Eventarc as
+	// delivery intermediary.
 	Pubsub *Pubsub `json:"pubsub,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Pubsub") to
@@ -1135,8 +1138,8 @@ type Trigger struct {
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Destination: Required. Destinations specify where the events will be
-	// sent to. Exactly one destination is supported at this time.
+	// Destination: Required. Destination specifies where the events should
+	// be sent to.
 	Destination *Destination `json:"destination,omitempty"`
 
 	// Etag: Output only. This checksum is computed by the server based on
@@ -1145,27 +1148,33 @@ type Trigger struct {
 	Etag string `json:"etag,omitempty"`
 
 	// MatchingCriteria: Required. The criteria by which events are
-	// filtered. Only events that match with this critera will be sent to
-	// the destinations.
+	// filtered. Only events that match with this criteria will be sent to
+	// the destination.
 	MatchingCriteria []*MatchingCriteria `json:"matchingCriteria,omitempty"`
 
 	// Name: Required. The resource name of the trigger. Must be unique
-	// within the location on the project. Format:
-	// projects/{project}/locations/{location}/triggers/{trigger}
+	// within the location on the project and must in
+	// `projects/{project}/locations/{location}/triggers/{trigger}` format.
 	Name string `json:"name,omitempty"`
 
 	// ServiceAccount: Optional. The IAM service account email associated
 	// with the trigger. The service account represents the identity of the
 	// trigger. The principal who calls this API must have
 	// `iam.serviceAccounts.actAs` permission in the service account. See
-	// https://cloud.google.com/iam/docs/understanding-service-accounts?hl=en#sa_common for more information. For Cloud Run destinations, this service account is used to generate identity tokens when invoking the service. See https://cloud.google.com/run/docs/triggering/pubsub-push#create-service-account for information on how to invoke authenticated Cloud Run services. In order to create Audit Log triggers, the service account should also have 'eventarc.events.receiveAuditLogV1Written'
-	// permission.
+	// https://cloud.google.com/iam/docs/understanding-service-accounts?hl=en#sa_common
+	// for more information. For Cloud Run destinations, this service
+	// account is used to generate identity tokens when invoking the
+	// service. See
+	// https://cloud.google.com/run/docs/triggering/pubsub-push#create-service-account
+	// for information on how to invoke authenticated Cloud Run services. In
+	// order to create Audit Log triggers, the service account should also
+	// have 'eventarc.events.receiveAuditLogV1Written' permission.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Transport: Output only. In order to deliver messages, Eventarc may
-	// configure other GCP products as transport intermediary. This field
-	// returns a reference to that transport intermediary. This information
-	// can be used for debugging purposes.
+	// use other GCP products as transport intermediary. This field contains
+	// a reference to that transport intermediary. This information can be
+	// used for debugging purposes.
 	Transport *Transport `json:"transport,omitempty"`
 
 	// UpdateTime: Output only. The last-modified time.
@@ -1253,7 +1262,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1419,7 +1428,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1600,7 +1609,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1741,7 +1750,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1884,7 +1893,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2058,7 +2067,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2210,6 +2219,14 @@ func (c *ProjectsLocationsTriggersCreateCall) TriggerId(triggerId string) *Proje
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": Required. If
+// set, validate the request and preview the review, but do not actually
+// post it.
+func (c *ProjectsLocationsTriggersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2237,7 +2254,7 @@ func (c *ProjectsLocationsTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2320,6 +2337,11 @@ func (c *ProjectsLocationsTriggersCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "description": "Required. The user-provided ID to be assigned to the trigger.",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}/triggers",
@@ -2353,11 +2375,27 @@ func (r *ProjectsLocationsTriggersService) Delete(name string) *ProjectsLocation
 	return c
 }
 
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the trigger is not found, the request will succeed but no
+// action will be taken on the server.
+func (c *ProjectsLocationsTriggersDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsTriggersDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
 // Etag sets the optional parameter "etag": If provided, the trigger
 // will only be deleted if the etag matches the current etag on the
 // resource.
 func (c *ProjectsLocationsTriggersDeleteCall) Etag(etag string) *ProjectsLocationsTriggersDeleteCall {
 	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Required. If
+// set, validate the request and preview the review, but do not actually
+// post it.
+func (c *ProjectsLocationsTriggersDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -2388,7 +2426,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2455,6 +2493,11 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and the trigger is not found, the request will succeed but no action will be taken on the server.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "etag": {
 	//       "description": "If provided, the trigger will only be deleted if the etag matches the current etag on the resource.",
 	//       "location": "query",
@@ -2466,6 +2509,11 @@ func (c *ProjectsLocationsTriggersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+name}",
@@ -2534,7 +2582,7 @@ func (c *ProjectsLocationsTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2650,9 +2698,8 @@ func (r *ProjectsLocationsTriggersService) GetIamPolicy(resource string) *Projec
 // conditional bindings must specify version 3. Policies without any
 // conditional bindings may specify any valid value or leave the field
 // unset. To learn which resources support conditions in their IAM
-// policies, see the [IAM
-// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-// olicies).
+// policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsTriggersGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsTriggersGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
 	return c
@@ -2695,7 +2742,7 @@ func (c *ProjectsLocationsTriggersGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2872,7 +2919,7 @@ func (c *ProjectsLocationsTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3017,12 +3064,28 @@ func (r *ProjectsLocationsTriggersService) Patch(name string, trigger *Trigger) 
 	return c
 }
 
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the trigger is not found, a new trigger will be created. In
+// this situation, `update_mask` is ignored.
+func (c *ProjectsLocationsTriggersPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsTriggersPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
 // UpdateMask sets the optional parameter "updateMask": The fields to be
 // updated; only fields explicitly provided will be updated. If no field
 // mask is provided, all provided fields in the request will be updated.
 // To update all fields, provide a field mask of "*".
 func (c *ProjectsLocationsTriggersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTriggersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Required. If
+// set, validate the request and preview the review, but do not actually
+// post it.
+func (c *ProjectsLocationsTriggersPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsTriggersPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -3053,7 +3116,7 @@ func (c *ProjectsLocationsTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3125,8 +3188,13 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and the trigger is not found, a new trigger will be created. In this situation, `update_mask` is ignored.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the trigger. Must be unique within the location on the project. Format: projects/{project}/locations/{location}/triggers/{trigger}",
+	//       "description": "Required. The resource name of the trigger. Must be unique within the location on the project and must in `projects/{project}/locations/{location}/triggers/{trigger}` format.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
 	//       "required": true,
@@ -3137,6 +3205,11 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Required. If set, validate the request and preview the review, but do not actually post it.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+name}",
@@ -3201,7 +3274,7 @@ func (c *ProjectsLocationsTriggersSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3346,7 +3419,7 @@ func (c *ProjectsLocationsTriggersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201118")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

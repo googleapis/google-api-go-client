@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -105,7 +105,9 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Dms = NewDmsService(s)
 	s.Media = NewMediaService(s)
+	s.Rooms = NewRoomsService(s)
 	s.Spaces = NewSpacesService(s)
 	return s, nil
 }
@@ -115,7 +117,11 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Dms *DmsService
+
 	Media *MediaService
+
+	Rooms *RoomsService
 
 	Spaces *SpacesService
 }
@@ -127,12 +133,54 @@ func (s *Service) userAgent() string {
 	return googleapi.UserAgent + " " + s.UserAgent
 }
 
+func NewDmsService(s *Service) *DmsService {
+	rs := &DmsService{s: s}
+	rs.Conversations = NewDmsConversationsService(s)
+	return rs
+}
+
+type DmsService struct {
+	s *Service
+
+	Conversations *DmsConversationsService
+}
+
+func NewDmsConversationsService(s *Service) *DmsConversationsService {
+	rs := &DmsConversationsService{s: s}
+	return rs
+}
+
+type DmsConversationsService struct {
+	s *Service
+}
+
 func NewMediaService(s *Service) *MediaService {
 	rs := &MediaService{s: s}
 	return rs
 }
 
 type MediaService struct {
+	s *Service
+}
+
+func NewRoomsService(s *Service) *RoomsService {
+	rs := &RoomsService{s: s}
+	rs.Conversations = NewRoomsConversationsService(s)
+	return rs
+}
+
+type RoomsService struct {
+	s *Service
+
+	Conversations *RoomsConversationsService
+}
+
+func NewRoomsConversationsService(s *Service) *RoomsConversationsService {
+	rs := &RoomsConversationsService{s: s}
+	return rs
+}
+
+type RoomsConversationsService struct {
 	s *Service
 }
 
@@ -557,14 +605,14 @@ func (s *CardHeader) MarshalJSON() ([]byte, error) {
 type DeprecatedEvent struct {
 	// Action: The form action data associated with an interactive card that
 	// was clicked. Only populated for CARD_CLICKED events. See the
-	// [Interactive Cards guide](/hangouts/chat/how-tos/cards-onclick) for
+	// Interactive Cards guide (/hangouts/chat/how-tos/cards-onclick) for
 	// more information.
 	Action *FormAction `json:"action,omitempty"`
 
 	// ConfigCompleteRedirectUrl: The URL the bot should redirect the user
 	// to after they have completed an authorization or configuration flow
-	// outside of Google Chat. See the [Authorizing access to 3p services
-	// guide](/hangouts/chat/how-tos/auth-3p) for more information.
+	// outside of Google Chat. See the Authorizing access to 3p services
+	// guide (/hangouts/chat/how-tos/auth-3p) for more information.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
 	// EventTime: The timestamp indicating when the event was dispatched.
@@ -1580,6 +1628,477 @@ func (s *WidgetMarkup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "chat.dms.messages":
+
+type DmsMessagesCall struct {
+	s          *Service
+	parent     string
+	message    *Message
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Messages: Legacy path for creating message. Calling these will result
+// in a BadRequest response.
+func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
+	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.message = message
+	return c
+}
+
+// ThreadKey sets the optional parameter "threadKey": Opaque thread
+// identifier string that can be specified to group messages into a
+// single thread. If this is the first message with a given thread
+// identifier, a new thread is created. Subsequent messages with the
+// same thread identifier will be posted into the same thread. This
+// relieves bots and webhooks from having to store the Hangouts Chat
+// thread ID of a thread (created earlier by them) to post further
+// updates to it. Has no effect if thread field, corresponding to an
+// existing thread, is set in message.
+func (c *DmsMessagesCall) ThreadKey(threadKey string) *DmsMessagesCall {
+	c.urlParams_.Set("threadKey", threadKey)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DmsMessagesCall) Fields(s ...googleapi.Field) *DmsMessagesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DmsMessagesCall) Context(ctx context.Context) *DmsMessagesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DmsMessagesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.dms.messages" call.
+// Exactly one of *Message or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Message.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Message{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Legacy path for creating message. Calling these will result in a BadRequest response.",
+	//   "flatPath": "v1/dms/{dmsId}/messages",
+	//   "httpMethod": "POST",
+	//   "id": "chat.dms.messages",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "location": "path",
+	//       "pattern": "^dms/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "threadKey": {
+	//       "description": "Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/messages",
+	//   "request": {
+	//     "$ref": "Message"
+	//   },
+	//   "response": {
+	//     "$ref": "Message"
+	//   }
+	// }
+
+}
+
+// method id "chat.dms.webhooks":
+
+type DmsWebhooksCall struct {
+	s          *Service
+	parent     string
+	message    *Message
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Webhooks: Legacy path for creating message. Calling these will result
+// in a BadRequest response.
+func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
+	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.message = message
+	return c
+}
+
+// ThreadKey sets the optional parameter "threadKey": Opaque thread
+// identifier string that can be specified to group messages into a
+// single thread. If this is the first message with a given thread
+// identifier, a new thread is created. Subsequent messages with the
+// same thread identifier will be posted into the same thread. This
+// relieves bots and webhooks from having to store the Hangouts Chat
+// thread ID of a thread (created earlier by them) to post further
+// updates to it. Has no effect if thread field, corresponding to an
+// existing thread, is set in message.
+func (c *DmsWebhooksCall) ThreadKey(threadKey string) *DmsWebhooksCall {
+	c.urlParams_.Set("threadKey", threadKey)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DmsWebhooksCall) Fields(s ...googleapi.Field) *DmsWebhooksCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DmsWebhooksCall) Context(ctx context.Context) *DmsWebhooksCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DmsWebhooksCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/webhooks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.dms.webhooks" call.
+// Exactly one of *Message or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Message.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Message{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Legacy path for creating message. Calling these will result in a BadRequest response.",
+	//   "flatPath": "v1/dms/{dmsId}/webhooks",
+	//   "httpMethod": "POST",
+	//   "id": "chat.dms.webhooks",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "location": "path",
+	//       "pattern": "^dms/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "threadKey": {
+	//       "description": "Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/webhooks",
+	//   "request": {
+	//     "$ref": "Message"
+	//   },
+	//   "response": {
+	//     "$ref": "Message"
+	//   }
+	// }
+
+}
+
+// method id "chat.dms.conversations.messages":
+
+type DmsConversationsMessagesCall struct {
+	s          *Service
+	parent     string
+	message    *Message
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Messages: Legacy path for creating message. Calling these will result
+// in a BadRequest response.
+func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
+	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.message = message
+	return c
+}
+
+// ThreadKey sets the optional parameter "threadKey": Opaque thread
+// identifier string that can be specified to group messages into a
+// single thread. If this is the first message with a given thread
+// identifier, a new thread is created. Subsequent messages with the
+// same thread identifier will be posted into the same thread. This
+// relieves bots and webhooks from having to store the Hangouts Chat
+// thread ID of a thread (created earlier by them) to post further
+// updates to it. Has no effect if thread field, corresponding to an
+// existing thread, is set in message.
+func (c *DmsConversationsMessagesCall) ThreadKey(threadKey string) *DmsConversationsMessagesCall {
+	c.urlParams_.Set("threadKey", threadKey)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DmsConversationsMessagesCall) Fields(s ...googleapi.Field) *DmsConversationsMessagesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DmsConversationsMessagesCall) Context(ctx context.Context) *DmsConversationsMessagesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DmsConversationsMessagesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.dms.conversations.messages" call.
+// Exactly one of *Message or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Message.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Message{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Legacy path for creating message. Calling these will result in a BadRequest response.",
+	//   "flatPath": "v1/dms/{dmsId}/conversations/{conversationsId}/messages",
+	//   "httpMethod": "POST",
+	//   "id": "chat.dms.conversations.messages",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "location": "path",
+	//       "pattern": "^dms/[^/]+/conversations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "threadKey": {
+	//       "description": "Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/messages",
+	//   "request": {
+	//     "$ref": "Message"
+	//   },
+	//   "response": {
+	//     "$ref": "Message"
+	//   }
+	// }
+
+}
+
 // method id "chat.media.download":
 
 type MediaDownloadCall struct {
@@ -1636,7 +2155,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1669,7 +2188,7 @@ func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
 		return nil, err
 	}
@@ -1739,6 +2258,477 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 
 }
 
+// method id "chat.rooms.messages":
+
+type RoomsMessagesCall struct {
+	s          *Service
+	parent     string
+	message    *Message
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Messages: Legacy path for creating message. Calling these will result
+// in a BadRequest response.
+func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
+	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.message = message
+	return c
+}
+
+// ThreadKey sets the optional parameter "threadKey": Opaque thread
+// identifier string that can be specified to group messages into a
+// single thread. If this is the first message with a given thread
+// identifier, a new thread is created. Subsequent messages with the
+// same thread identifier will be posted into the same thread. This
+// relieves bots and webhooks from having to store the Hangouts Chat
+// thread ID of a thread (created earlier by them) to post further
+// updates to it. Has no effect if thread field, corresponding to an
+// existing thread, is set in message.
+func (c *RoomsMessagesCall) ThreadKey(threadKey string) *RoomsMessagesCall {
+	c.urlParams_.Set("threadKey", threadKey)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoomsMessagesCall) Fields(s ...googleapi.Field) *RoomsMessagesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RoomsMessagesCall) Context(ctx context.Context) *RoomsMessagesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RoomsMessagesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.rooms.messages" call.
+// Exactly one of *Message or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Message.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Message{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Legacy path for creating message. Calling these will result in a BadRequest response.",
+	//   "flatPath": "v1/rooms/{roomsId}/messages",
+	//   "httpMethod": "POST",
+	//   "id": "chat.rooms.messages",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "location": "path",
+	//       "pattern": "^rooms/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "threadKey": {
+	//       "description": "Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/messages",
+	//   "request": {
+	//     "$ref": "Message"
+	//   },
+	//   "response": {
+	//     "$ref": "Message"
+	//   }
+	// }
+
+}
+
+// method id "chat.rooms.webhooks":
+
+type RoomsWebhooksCall struct {
+	s          *Service
+	parent     string
+	message    *Message
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Webhooks: Legacy path for creating message. Calling these will result
+// in a BadRequest response.
+func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
+	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.message = message
+	return c
+}
+
+// ThreadKey sets the optional parameter "threadKey": Opaque thread
+// identifier string that can be specified to group messages into a
+// single thread. If this is the first message with a given thread
+// identifier, a new thread is created. Subsequent messages with the
+// same thread identifier will be posted into the same thread. This
+// relieves bots and webhooks from having to store the Hangouts Chat
+// thread ID of a thread (created earlier by them) to post further
+// updates to it. Has no effect if thread field, corresponding to an
+// existing thread, is set in message.
+func (c *RoomsWebhooksCall) ThreadKey(threadKey string) *RoomsWebhooksCall {
+	c.urlParams_.Set("threadKey", threadKey)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoomsWebhooksCall) Fields(s ...googleapi.Field) *RoomsWebhooksCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RoomsWebhooksCall) Context(ctx context.Context) *RoomsWebhooksCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RoomsWebhooksCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/webhooks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.rooms.webhooks" call.
+// Exactly one of *Message or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Message.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Message{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Legacy path for creating message. Calling these will result in a BadRequest response.",
+	//   "flatPath": "v1/rooms/{roomsId}/webhooks",
+	//   "httpMethod": "POST",
+	//   "id": "chat.rooms.webhooks",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "location": "path",
+	//       "pattern": "^rooms/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "threadKey": {
+	//       "description": "Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/webhooks",
+	//   "request": {
+	//     "$ref": "Message"
+	//   },
+	//   "response": {
+	//     "$ref": "Message"
+	//   }
+	// }
+
+}
+
+// method id "chat.rooms.conversations.messages":
+
+type RoomsConversationsMessagesCall struct {
+	s          *Service
+	parent     string
+	message    *Message
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Messages: Legacy path for creating message. Calling these will result
+// in a BadRequest response.
+func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
+	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.message = message
+	return c
+}
+
+// ThreadKey sets the optional parameter "threadKey": Opaque thread
+// identifier string that can be specified to group messages into a
+// single thread. If this is the first message with a given thread
+// identifier, a new thread is created. Subsequent messages with the
+// same thread identifier will be posted into the same thread. This
+// relieves bots and webhooks from having to store the Hangouts Chat
+// thread ID of a thread (created earlier by them) to post further
+// updates to it. Has no effect if thread field, corresponding to an
+// existing thread, is set in message.
+func (c *RoomsConversationsMessagesCall) ThreadKey(threadKey string) *RoomsConversationsMessagesCall {
+	c.urlParams_.Set("threadKey", threadKey)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoomsConversationsMessagesCall) Fields(s ...googleapi.Field) *RoomsConversationsMessagesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RoomsConversationsMessagesCall) Context(ctx context.Context) *RoomsConversationsMessagesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RoomsConversationsMessagesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.rooms.conversations.messages" call.
+// Exactly one of *Message or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Message.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Message{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Legacy path for creating message. Calling these will result in a BadRequest response.",
+	//   "flatPath": "v1/rooms/{roomsId}/conversations/{conversationsId}/messages",
+	//   "httpMethod": "POST",
+	//   "id": "chat.rooms.conversations.messages",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "location": "path",
+	//       "pattern": "^rooms/[^/]+/conversations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "threadKey": {
+	//       "description": "Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/messages",
+	//   "request": {
+	//     "$ref": "Message"
+	//   },
+	//   "response": {
+	//     "$ref": "Message"
+	//   }
+	// }
+
+}
+
 // method id "chat.spaces.get":
 
 type SpacesGetCall struct {
@@ -1794,7 +2784,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1948,7 +2938,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2054,6 +3044,163 @@ func (c *SpacesListCall) Pages(ctx context.Context, f func(*ListSpacesResponse) 
 	}
 }
 
+// method id "chat.spaces.webhooks":
+
+type SpacesWebhooksCall struct {
+	s          *Service
+	parent     string
+	message    *Message
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Webhooks: Legacy path for creating message. Calling these will result
+// in a BadRequest response.
+func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
+	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.message = message
+	return c
+}
+
+// ThreadKey sets the optional parameter "threadKey": Opaque thread
+// identifier string that can be specified to group messages into a
+// single thread. If this is the first message with a given thread
+// identifier, a new thread is created. Subsequent messages with the
+// same thread identifier will be posted into the same thread. This
+// relieves bots and webhooks from having to store the Hangouts Chat
+// thread ID of a thread (created earlier by them) to post further
+// updates to it. Has no effect if thread field, corresponding to an
+// existing thread, is set in message.
+func (c *SpacesWebhooksCall) ThreadKey(threadKey string) *SpacesWebhooksCall {
+	c.urlParams_.Set("threadKey", threadKey)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpacesWebhooksCall) Fields(s ...googleapi.Field) *SpacesWebhooksCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpacesWebhooksCall) Context(ctx context.Context) *SpacesWebhooksCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpacesWebhooksCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/webhooks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.webhooks" call.
+// Exactly one of *Message or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Message.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Message{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Legacy path for creating message. Calling these will result in a BadRequest response.",
+	//   "flatPath": "v1/spaces/{spacesId}/webhooks",
+	//   "httpMethod": "POST",
+	//   "id": "chat.spaces.webhooks",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "location": "path",
+	//       "pattern": "^spaces/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "threadKey": {
+	//       "description": "Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Hangouts Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/webhooks",
+	//   "request": {
+	//     "$ref": "Message"
+	//   },
+	//   "response": {
+	//     "$ref": "Message"
+	//   }
+	// }
+
+}
+
 // method id "chat.spaces.members.get":
 
 type SpacesMembersGetCall struct {
@@ -2109,7 +3256,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2265,7 +3412,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2443,7 +3590,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2583,7 +3730,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2721,7 +3868,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2861,7 +4008,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3014,7 +4161,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

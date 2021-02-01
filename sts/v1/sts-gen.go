@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -136,6 +136,13 @@ type V1Service struct {
 // GoogleIdentityStsV1ExchangeTokenRequest: Request message for
 // ExchangeToken.
 type GoogleIdentityStsV1ExchangeTokenRequest struct {
+	// Audience: The full resource name of the identity provider; for
+	// example:
+	// `//iam.googleapis.com/projects//workloadIdentityPools//providers/`.
+	// Required when exchanging an external credential for a Google access
+	// token.
+	Audience string `json:"audience,omitempty"`
+
 	// GrantType: Required. The grant type. Must be
 	// `urn:ietf:params:oauth:grant-type:token-exchange`, which indicates a
 	// token exchange.
@@ -151,6 +158,12 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// `urn:ietf:params:oauth:token-type:access_token`.
 	RequestedTokenType string `json:"requestedTokenType,omitempty"`
 
+	// Scope: The OAuth 2.0 scopes to include on the resulting access token,
+	// formatted as a list of space-delimited, case-sensitive strings.
+	// Required when exchanging an external credential for a Google access
+	// token.
+	Scope string `json:"scope,omitempty"`
+
 	// SubjectToken: Required. The input token. You can use a Google-issued
 	// OAuth 2.0 access token with this field to obtain an access token with
 	// new security attributes applied, such as a Credential Access
@@ -163,7 +176,7 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// `urn:ietf:params:oauth:token-type:access_token`.
 	SubjectTokenType string `json:"subjectTokenType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GrantType") to
+	// ForceSendFields is a list of field names (e.g. "Audience") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -171,7 +184,7 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GrantType") to include in
+	// NullFields is a list of field names (e.g. "Audience") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -194,17 +207,17 @@ type GoogleIdentityStsV1ExchangeTokenResponse struct {
 	AccessToken string `json:"access_token,omitempty"`
 
 	// ExpiresIn: The amount of time, in seconds, between the time when the
-	// `access_token` was issued and the time when the `access_token` will
+	// access token was issued and the time when the access token will
 	// expire. This field is absent when the `subject_token` in the request
 	// is a Google-issued, short-lived access token. In this case, the
-	// `access_token` has the same expiration time as the `subject_token`.
+	// access token has the same expiration time as the `subject_token`.
 	ExpiresIn int64 `json:"expires_in,omitempty"`
 
 	// IssuedTokenType: The token type. Always matches the value of
 	// `requested_token_type` from the request.
 	IssuedTokenType string `json:"issued_token_type,omitempty"`
 
-	// TokenType: The type of `access_token`. Always has the value `Bearer`.
+	// TokenType: The type of access token. Always has the value `Bearer`.
 	TokenType string `json:"token_type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -278,7 +291,7 @@ func (c *V1TokenCall) Header() http.Header {
 
 func (c *V1TokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

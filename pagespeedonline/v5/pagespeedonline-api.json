@@ -112,7 +112,9 @@
           "flatPath": "pagespeedonline/v5/runPagespeed",
           "httpMethod": "GET",
           "id": "pagespeedonline.pagespeedapi.runpagespeed",
-          "parameterOrder": [],
+          "parameterOrder": [
+            "url"
+          ],
           "parameters": {
             "captchaToken": {
               "description": "The captcha token passed when filling out a captcha.",
@@ -144,6 +146,7 @@
             "locale": {
               "description": "The locale used to localize formatted results",
               "location": "query",
+              "pattern": "[a-zA-Z]+((_|-)[a-zA-Z]+)?",
               "type": "string"
             },
             "strategy": {
@@ -164,6 +167,8 @@
             "url": {
               "description": "Required. The URL to fetch and analyze",
               "location": "query",
+              "pattern": "(?i)(url:|origin:)?http(s)?://.*",
+              "required": true,
               "type": "string"
             },
             "utm_campaign": {
@@ -188,7 +193,7 @@
       }
     }
   },
-  "revision": "20200813",
+  "revision": "20210119",
   "rootUrl": "https://pagespeedonline.googleapis.com/",
   "schemas": {
     "AuditRefs": {
@@ -284,7 +289,11 @@
           "type": "string"
         },
         "emulatedFormFactor": {
-          "description": "The form factor the emulation should use.",
+          "description": "The form factor the emulation should use. This field is deprecated, form_factor should be used instead.",
+          "type": "string"
+        },
+        "formFactor": {
+          "description": "How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop.",
           "type": "string"
         },
         "locale": {

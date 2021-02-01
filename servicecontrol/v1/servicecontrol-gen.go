@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -531,8 +531,8 @@ type AuthenticationInfo struct {
 	// request. For third party identity callers, the `principal_subject`
 	// field is populated instead of this field. For privacy reasons, the
 	// principal email address is sometimes redacted. For more information,
-	// see [Caller identities in audit
-	// logs](https://cloud.google.com/logging/docs/audit#user-id).
+	// see Caller identities in audit logs
+	// (https://cloud.google.com/logging/docs/audit#user-id).
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
 	// PrincipalSubject: String representation of identity of requesting
@@ -887,8 +887,7 @@ type ConsumerInfo struct {
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
 	// Type: The type of the consumer which should have been defined in
-	// [Google Resource
-	// Manager](https://cloud.google.com/resource-manager/).
+	// Google Resource Manager (https://cloud.google.com/resource-manager/).
 	//
 	// Possible values:
 	//   "CONSUMER_TYPE_UNSPECIFIED" - This is never used.
@@ -972,7 +971,7 @@ type Distribution struct {
 	Minimum float64 `json:"minimum,omitempty"`
 
 	// SumOfSquaredDeviation: The sum of squared deviations from the mean:
-	// Sum[i=1..count]((x_i - mean)^2) where each x_i is a sample values. If
+	// Sumi=1..count ((x_i - mean)^2) where each x_i is a sample values. If
 	// `count` is zero then this field must be zero, otherwise validation of
 	// the request fails.
 	SumOfSquaredDeviation float64 `json:"sumOfSquaredDeviation,omitempty"`
@@ -1237,9 +1236,9 @@ type HttpRequest struct {
 	// "HTTP/2", "websocket"
 	Protocol string `json:"protocol,omitempty"`
 
-	// Referer: The referer URL of the request, as defined in [HTTP/1.1
-	// Header Field
-	// Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+	// Referer: The referer URL of the request, as defined in HTTP/1.1
+	// Header Field Definitions
+	// (http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
 	Referer string `json:"referer,omitempty"`
 
 	// RemoteIp: The IP address (IPv4 or IPv6) of the client that issued the
@@ -1709,16 +1708,16 @@ type Operation struct {
 	// Importance: DO NOT USE. This is an experimental field.
 	//
 	// Possible values:
-	//   "LOW" - The API implementation may cache and aggregate the data.
-	// The data may be lost when rare and unexpected system failures occur.
-	//   "HIGH" - The API implementation doesn't cache and aggregate the
-	// data. If the method returns successfully, it's guaranteed that the
-	// data has been persisted in durable storage.
-	//   "DEBUG" - In addition to the behavior described in HIGH, DEBUG
-	// enables additional validation logic that is only useful during the
-	// onboarding process. This is only available to Google internal
-	// services and the service must be allowlisted by
-	// chemist-dev@google.com in order to use this level.
+	//   "LOW" - Allows data caching, batching, and aggregation. It provides
+	// higher performance with higher data loss risk.
+	//   "HIGH" - Disables data aggregation to minimize data loss. It is for
+	// operations that contains significant monetary value or audit trail.
+	// This feature only applies to the client libraries.
+	//   "DEBUG" - Deprecated. Do not use. Disables data aggregation and
+	// enables additional validation logic. It should only be used during
+	// the onboarding process. It is only available to Google internal
+	// services, and the service must be approved by chemist-dev@google.com
+	// in order to use this level.
 	Importance string `json:"importance,omitempty"`
 
 	// Labels: Labels describing the operation. Only the following labels
@@ -1779,9 +1778,10 @@ type Operation struct {
 	// either the produce or the consumer project.
 	TraceSpans []*TraceSpan `json:"traceSpans,omitempty"`
 
-	// UserLabels: User defined labels for the resource that this operation
-	// is associated with. Only a combination of 1000 user labels per
-	// consumer project are allowed.
+	// UserLabels: Private Preview. This feature is only available for
+	// approved services. User defined labels for the resource that this
+	// operation is associated with. Only a combination of 1000 user labels
+	// per consumer project are allowed.
 	UserLabels map[string]string `json:"userLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsumerId") to
@@ -2150,37 +2150,6 @@ func (s *ReportError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReportInfo: Contains additional info about the report operation.
-type ReportInfo struct {
-	// OperationId: The Operation.operation_id value from the request.
-	OperationId string `json:"operationId,omitempty"`
-
-	// QuotaInfo: Quota usage info when processing the `Operation`.
-	QuotaInfo *QuotaInfo `json:"quotaInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "OperationId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OperationId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ReportInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod ReportInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ReportRequest: Request message for the Report method.
 type ReportRequest struct {
 	// Operations: Operations to be reported. Typically the service should
@@ -2235,15 +2204,6 @@ type ReportResponse struct {
 	// happens, it's impossible to know which of the 'Operations' in the
 	// request succeeded or failed.
 	ReportErrors []*ReportError `json:"reportErrors,omitempty"`
-
-	// ReportInfos: Quota usage for each quota release `Operation` request.
-	// Fully or partially failed quota release request may or may not be
-	// present in `report_quota_info`. For example, a failed quota release
-	// request will have the current quota usage info when precise quota
-	// library returns the info. A deadline exceeded quota request will not
-	// have quota usage info. If there is no quota release request,
-	// report_quota_info will be empty.
-	ReportInfos []*ReportInfo `json:"reportInfos,omitempty"`
 
 	// ServiceConfigId: The actual config id used to process the request.
 	ServiceConfigId string `json:"serviceConfigId,omitempty"`
@@ -2310,8 +2270,8 @@ type Request struct {
 	// Protocol: The network protocol used with the request, such as
 	// "http/1.1", "spdy/3", "h2", "h2c", "webrtc", "tcp", "udp", "quic".
 	// See
-	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids for
-	// details.
+	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+	// for details.
 	Protocol string `json:"protocol,omitempty"`
 
 	// Query: The HTTP URL query in the format of
@@ -2434,7 +2394,7 @@ type Resource struct {
 	// a resource that may be set by external tools to store and retrieve
 	// arbitrary metadata. They are not queryable and should be preserved
 	// when modifying objects. More info:
-	// http://kubernetes.io/docs/user-guide/annotations
+	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
 	// CreateTime: Output only. The timestamp when the resource was created.
@@ -2458,6 +2418,15 @@ type Resource struct {
 	// Labels: The labels or tags on the resource, such as AWS resource tags
 	// and Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// Location: Immutable. The location of the resource. The location
+	// encoding is specific to the service provider, and new encoding may be
+	// introduced as the service evolves. For Google Cloud products, the
+	// encoding is what is used by Google Cloud APIs, such as `us-east1`,
+	// `aws-us-east-1`, and `azure-eastus2`. The semantics of `location` is
+	// identical to the `cloud.googleapis.com/location` label used by some
+	// Google Cloud APIs.
+	Location string `json:"location,omitempty"`
 
 	// Name: The stable identifier (name) of a resource on the `service`. A
 	// resource can be logically identified as
@@ -2675,11 +2644,11 @@ func (s *SpanContext) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -2907,8 +2876,8 @@ type ServicesAllocateQuotaCall struct {
 // AllocateQuota: Attempts to allocate quota for the specified consumer.
 // It should be called before the operation is executed. This method
 // requires the `servicemanagement.services.quota` permission on the
-// specified service. For more information, see [Cloud
-// IAM](https://cloud.google.com/iam). **NOTE:** The client **must**
+// specified service. For more information, see Cloud IAM
+// (https://cloud.google.com/iam). **NOTE:** The client **must**
 // fail-open on server errors `INTERNAL`, `UNKNOWN`,
 // `DEADLINE_EXCEEDED`, and `UNAVAILABLE`. To ensure system reliability,
 // the server may inject these errors to prohibit any hard dependency on
@@ -2947,7 +2916,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3063,8 +3032,8 @@ type ServicesCheckCall struct {
 // having the latest policy information. NOTE: the CheckRequest has the
 // size limit of 64KB. This method requires the
 // `servicemanagement.services.check` permission on the specified
-// service. For more information, see [Cloud
-// IAM](https://cloud.google.com/iam).
+// service. For more information, see Cloud IAM
+// (https://cloud.google.com/iam).
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3099,7 +3068,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3213,8 +3182,8 @@ type ServicesReportCall struct {
 // more than 0.01% for business and compliance reasons. NOTE: the
 // ReportRequest has the size limit (wire-format byte size) of 1MB. This
 // method requires the `servicemanagement.services.report` permission on
-// the specified service. For more information, see [Google Cloud
-// IAM](https://cloud.google.com/iam).
+// the specified service. For more information, see Google Cloud IAM
+// (https://cloud.google.com/iam).
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -3249,7 +3218,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

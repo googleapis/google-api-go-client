@@ -104,7 +104,7 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 	if err := isServiceAccount(data); err != nil {
 		return nil, err
 	}
-	cfg, err := google.JWTConfigFromJSON(data, ds.Scopes...)
+	cfg, err := google.JWTConfigFromJSON(data, ds.GetScopes()...)
 	if err != nil {
 		return nil, err
 	}

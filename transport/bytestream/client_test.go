@@ -424,5 +424,6 @@ func newTestSetup(input string) *TestSetup {
 }
 
 func (testSetup *TestSetup) Close() {
+	testSetup.client.Close()
 	testSetup.rpcTest.Close()
 }

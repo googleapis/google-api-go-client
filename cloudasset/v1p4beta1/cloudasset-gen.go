@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -236,9 +236,8 @@ type Binding struct {
 	// binding does not apply to the current request. However, a different
 	// role binding might grant the same role to one or more of the members
 	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the [IAM
-	// documentation](https://cloud.google.com/iam/help/conditions/resource-p
-	// olicies).
+	// IAM policies, see the IAM documentation
+	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -680,8 +679,8 @@ type GoogleCloudAssetV1p4beta1Identity struct {
 	// AnalysisState: The analysis state of this identity.
 	AnalysisState *GoogleCloudAssetV1p4beta1AnalysisState `json:"analysisState,omitempty"`
 
-	// Name: The identity name in any form of members appear in [IAM policy
-	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding),
+	// Name: The identity name in any form of members appear in IAM policy
+	// binding (https://cloud.google.com/iam/reference/rest/v1/Binding),
 	// such as: - user:foo@google.com - group:group1@google.com -
 	// serviceAccount:s1@prj1.iam.gserviceaccount.com -
 	// projectOwner:some_project_id - domain:google.com - allUsers - etc.
@@ -754,9 +753,8 @@ type GoogleCloudAssetV1p4beta1Resource struct {
 	// AnalysisState: The analysis state of this resource.
 	AnalysisState *GoogleCloudAssetV1p4beta1AnalysisState `json:"analysisState,omitempty"`
 
-	// FullResourceName: The [full resource
-	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
-	// at)
+	// FullResourceName: The full resource name
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisState") to
@@ -863,12 +861,10 @@ type IamPolicyAnalysisQuery struct {
 	// an organization number (such as "organizations/123"), a folder number
 	// (such as "folders/123"), a project ID (such as
 	// "projects/my-project-id"), or a project number (such as
-	// "projects/12345"). To know how to get organization id, visit [here
-	// ](https://cloud.google.com/resource-manager/docs/creating-managing-org
-	// anization#retrieving_your_organization_id). To know how to get folder
-	// or project id, visit [here
-	// ](https://cloud.google.com/resource-manager/docs/creating-managing-fol
-	// ders#viewing_or_listing_folders_and_projects).
+	// "projects/12345"). To know how to get organization id, visit here
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
+	// To know how to get folder or project id, visit here
+	// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceSelector: Optional. Specifies a resource for analysis.
@@ -906,9 +902,9 @@ type IamPolicyAnalysisResult struct {
 	// selectors specified in the request.
 	AccessControlLists []*GoogleCloudAssetV1p4beta1AccessControlList `json:"accessControlLists,omitempty"`
 
-	// AttachedResourceFullName: The [full resource
-	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
-	// at) of the resource to which the iam_binding policy attaches.
+	// AttachedResourceFullName: The full resource name
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of the resource to which the iam_binding policy attaches.
 	AttachedResourceFullName string `json:"attachedResourceFullName,omitempty"`
 
 	// FullyExplored: Represents whether all analyses on the iam_binding
@@ -951,9 +947,9 @@ func (s *IamPolicyAnalysisResult) MarshalJSON() ([]byte, error) {
 // resource access, based on roles assigned either directly to them or
 // to the groups they belong to, directly or indirectly.
 type IdentitySelector struct {
-	// Identity: Required. The identity appear in the form of members in
-	// [IAM policy
-	// binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The
+	// Identity: Required. The identity appear in the form of members in IAM
+	// policy binding
+	// (https://cloud.google.com/iam/reference/rest/v1/Binding). The
 	// examples of supported forms are: "user:mike@example.com",
 	// "group:admins@example.com", "domain:google.com",
 	// "serviceAccount:my-project-id@appspot.gserviceaccount.com". Notice
@@ -1133,11 +1129,10 @@ func (s *Options) MarshalJSON() ([]byte, error) {
 // policies, which may be set directly on the resource, or on ancestors
 // such as organizations, folders or projects.
 type ResourceSelector struct {
-	// FullResourceName: Required. The [full resource
-	// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
-	// at) of a resource of [supported resource
-	// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-	// ypes#analyzable_asset_types).
+	// FullResourceName: Required. The full resource name
+	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+	// of a resource of supported resource types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
@@ -1166,11 +1161,11 @@ func (s *ResourceSelector) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1244,8 +1239,8 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryAccessSelectorRoles(analysi
 
 // AnalysisQueryIdentitySelectorIdentity sets the optional parameter
 // "analysisQuery.identitySelector.identity": Required. The identity
-// appear in the form of members in [IAM policy
-// binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The
+// appear in the form of members in IAM policy binding
+// (https://cloud.google.com/iam/reference/rest/v1/Binding). The
 // examples of supported forms are: "user:mike@example.com",
 // "group:admins@example.com", "domain:google.com",
 // "serviceAccount:my-project-id@appspot.gserviceaccount.com". Notice
@@ -1258,11 +1253,10 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryIdentitySelectorIdentity(an
 
 // AnalysisQueryResourceSelectorFullResourceName sets the optional
 // parameter "analysisQuery.resourceSelector.fullResourceName":
-// Required. The [full resource
-// name](https://cloud.google.com/asset-inventory/docs/resource-name-form
-// at) of a resource of [supported resource
-// types](https://cloud.google.com/asset-inventory/docs/supported-asset-t
-// ypes#analyzable_asset_types).
+// Required. The full resource name
+// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
+// of a resource of supported resource types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#analyzable_asset_types).
 func (c *V1p4beta1AnalyzeIamPolicyCall) AnalysisQueryResourceSelectorFullResourceName(analysisQueryResourceSelectorFullResourceName string) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.resourceSelector.fullResourceName", analysisQueryResourceSelectorFullResourceName)
 	return c
@@ -1297,14 +1291,14 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsAnalyzeServiceAccountImpersonatio
 
 // OptionsExecutionTimeout sets the optional parameter
 // "options.executionTimeout": Amount of time executable has to
-// complete. See JSON representation of
-// [Duration](https://developers.google.com/protocol-buffers/docs/proto3#
-// json). If this field is set with a value less than the RPC deadline,
-// and the execution of your query hasn't finished in the specified
-// execution timeout, you will get a response with partial result.
-// Otherwise, your query's execution will continue until the RPC
-// deadline. If it's not finished until then, you will get a
-// DEADLINE_EXCEEDED error. Default is empty.
+// complete. See JSON representation of Duration
+// (https://developers.google.com/protocol-buffers/docs/proto3#json). If
+// this field is set with a value less than the RPC deadline, and the
+// execution of your query hasn't finished in the specified execution
+// timeout, you will get a response with partial result. Otherwise, your
+// query's execution will continue until the RPC deadline. If it's not
+// finished until then, you will get a DEADLINE_EXCEEDED error. Default
+// is empty.
 func (c *V1p4beta1AnalyzeIamPolicyCall) OptionsExecutionTimeout(optionsExecutionTimeout string) *V1p4beta1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("options.executionTimeout", optionsExecutionTimeout)
 	return c
@@ -1402,7 +1396,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1602,7 +1596,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

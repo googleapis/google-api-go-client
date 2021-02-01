@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -475,21 +475,21 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // to improve the accuracy for specific words and phrases, for example,
 // if specific commands are typically spoken by the user. This can also
 // be used to add additional words to the vocabulary of the recognizer.
-// See [usage
-// limits](https://cloud.google.com/speech-to-text/quotas#content). List
-// items can also include pre-built or custom classes containing groups
-// of words that represent common concepts that occur in natural
-// language. For example, rather than providing a phrase hint for every
-// month of the year (e.g. "i was born in january", "i was born in
-// febuary", ...), use the pre-built `$MONTH` class improves the
-// likelihood of correctly transcribing audio that includes months (e.g.
-// "i was born in $month"). To refer to pre-built classes, use the
-// class' symbol prepended with `$` e.g. `$MONTH`. To refer to custom
-// classes that were defined inline in the request, set the class's
-// `custom_class_id` to a string unique to all class resources and
-// inline classes. Then use the class' id wrapped in $`{...}` e.g.
-// "${my-months}". To refer to custom classes resources, use the class'
-// id wrapped in `${}` (e.g. `${my-months}`).
+// See usage limits
+// (https://cloud.google.com/speech-to-text/quotas#content). List items
+// can also include pre-built or custom classes containing groups of
+// words that represent common concepts that occur in natural language.
+// For example, rather than providing a phrase hint for every month of
+// the year (e.g. "i was born in january", "i was born in febuary",
+// ...), use the pre-built `$MONTH` class improves the likelihood of
+// correctly transcribing audio that includes months (e.g. "i was born
+// in $month"). To refer to pre-built classes, use the class' symbol
+// prepended with `$` e.g. `$MONTH`. To refer to custom classes that
+// were defined inline in the request, set the class's `custom_class_id`
+// to a string unique to all class resources and inline classes. Then
+// use the class' id wrapped in $`{...}` e.g. "${my-months}". To refer
+// to custom classes resources, use the class' id wrapped in `${}` (e.g.
+// `${my-months}`).
 type Phrase struct {
 	// Boost: Hint Boost. Overrides the boost set at the phrase set level.
 	// Positive value will increase the probability that a specific phrase
@@ -605,8 +605,8 @@ func (s *PhraseSet) UnmarshalJSON(data []byte) error {
 // RecognitionAudio: Contains audio data in the encoding specified in
 // the `RecognitionConfig`. Either `content` or `uri` must be supplied.
 // Supplying both or neither returns google.rpc.Code.INVALID_ARGUMENT.
-// See [content
-// limits](https://cloud.google.com/speech-to-text/quotas#content).
+// See content limits
+// (https://cloud.google.com/speech-to-text/quotas#content).
 type RecognitionAudio struct {
 	// Content: The audio data bytes encoded as specified in
 	// `RecognitionConfig`. Note: as with all bytes fields, proto buffers
@@ -619,8 +619,8 @@ type RecognitionAudio struct {
 	// (for example, gzip). Currently, only Google Cloud Storage URIs are
 	// supported, which must be specified in the following format:
 	// `gs://bucket_name/object_name` (other URI formats return
-	// google.rpc.Code.INVALID_ARGUMENT). For more information, see [Request
-	// URIs](https://cloud.google.com/storage/docs/reference-uris).
+	// google.rpc.Code.INVALID_ARGUMENT). For more information, see Request
+	// URIs (https://cloud.google.com/storage/docs/reference-uris).
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -651,16 +651,16 @@ func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
 type RecognitionConfig struct {
 	// Adaptation: Speech adaptation configuration improves the accuracy of
 	// speech recognition. When speech adaptation is set it supersedes the
-	// `speech_contexts` field. For more information, see the [speech
-	// adaptation](https://cloud.google.com/speech-to-text/docs/context-stren
-	// gth) documentation.
+	// `speech_contexts` field. For more information, see the speech
+	// adaptation
+	// (https://cloud.google.com/speech-to-text/docs/context-strength)
+	// documentation.
 	Adaptation *SpeechAdaptation `json:"adaptation,omitempty"`
 
-	// AlternativeLanguageCodes: A list of up to 3 additional
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags,
-	// listing possible alternative languages of the supplied audio. See
-	// [Language
-	// Support](https://cloud.google.com/speech-to-text/docs/languages) for
+	// AlternativeLanguageCodes: A list of up to 3 additional BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags, listing
+	// possible alternative languages of the supplied audio. See Language
+	// Support (https://cloud.google.com/speech-to-text/docs/languages) for
 	// a list of the currently supported language codes. If alternative
 	// languages are listed, recognition result will contain recognition in
 	// the most likely language detected including the main language_code.
@@ -719,23 +719,6 @@ type RecognitionConfig struct {
 	// diarization_config instead.
 	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
 
-	// EnableSpokenEmojis: The spoken emoji behavior for the call If not
-	// set, uses default behavior based on model of choice If 'true', adds
-	// spoken emoji formatting for the request. This will replace spoken
-	// emojis with the corresponding Unicode symbols in the final
-	// transcript. If 'false', spoken emojis are not replaced.
-	EnableSpokenEmojis bool `json:"enableSpokenEmojis,omitempty"`
-
-	// EnableSpokenPunctuation: The spoken punctuation behavior for the call
-	// If not set, uses default behavior based on model of choice e.g.
-	// command_and_search will enable spoken punctuation by default If
-	// 'true', replaces spoken punctuation with the corresponding symbols in
-	// the request. For example, "how are you question mark" becomes "how
-	// are you?". See
-	// https://cloud.google.com/speech-to-text/docs/spoken-punctuation for
-	// support. If 'false', spoken punctuation is not replaced.
-	EnableSpokenPunctuation bool `json:"enableSpokenPunctuation,omitempty"`
-
 	// EnableWordConfidence: If `true`, the top result includes a list of
 	// words and the confidence for those words. If `false`, no word-level
 	// confidence information is returned. The default is `false`.
@@ -788,17 +771,13 @@ type RecognitionConfig struct {
 	// range from 32-320 kbps). When using this encoding,
 	// `sample_rate_hertz` has to match the sample rate of the file being
 	// used.
-	//   "WEBM_OPUS" - Opus encoded audio frames in WebM container
-	// ([OggOpus](https://wiki.xiph.org/OggOpus)). This is a Beta features
-	// and only available in v1p1beta1. `sample_rate_hertz` must be one of
-	// 8000, 12000, 16000, 24000, or 48000.
 	Encoding string `json:"encoding,omitempty"`
 
 	// LanguageCode: Required. The language of the supplied audio as a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-	// Example: "en-US". See [Language
-	// Support](https://cloud.google.com/speech-to-text/docs/languages) for
-	// a list of the currently supported language codes.
+	// BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+	// Example: "en-US". See Language Support
+	// (https://cloud.google.com/speech-to-text/docs/languages) for a list
+	// of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// MaxAlternatives: Maximum number of recognition hypotheses to be
@@ -844,9 +823,9 @@ type RecognitionConfig struct {
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
 	// SpeechContexts: Array of SpeechContext. A means to provide context to
-	// assist the speech recognition. For more information, see [speech
-	// adaptation](https://cloud.google.com/speech-to-text/docs/context-stren
-	// gth).
+	// assist the speech recognition. For more information, see speech
+	// adaptation
+	// (https://cloud.google.com/speech-to-text/docs/context-strength).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
 	// UseEnhanced: Set to true to use an enhanced model for speech
@@ -1161,13 +1140,13 @@ type SpeechContext struct {
 	// can be used to improve the accuracy for specific words and phrases,
 	// for example, if specific commands are typically spoken by the user.
 	// This can also be used to add additional words to the vocabulary of
-	// the recognizer. See [usage
-	// limits](https://cloud.google.com/speech-to-text/quotas#content). List
-	// items can also be set to classes for groups of words that represent
-	// common concepts that occur in natural language. For example, rather
-	// than providing phrase hints for every month of the year, using the
-	// $MONTH class improves the likelihood of correctly transcribing audio
-	// that includes months.
+	// the recognizer. See usage limits
+	// (https://cloud.google.com/speech-to-text/quotas#content). List items
+	// can also be set to classes for groups of words that represent common
+	// concepts that occur in natural language. For example, rather than
+	// providing phrase hints for every month of the year, using the $MONTH
+	// class improves the likelihood of correctly transcribing audio that
+	// includes months.
 	Phrases []string `json:"phrases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Boost") to
@@ -1280,10 +1259,10 @@ type SpeechRecognitionResult struct {
 	// from '1' to 'N'.
 	ChannelTag int64 `json:"channelTag,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -1311,11 +1290,11 @@ func (s *SpeechRecognitionResult) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1482,7 +1461,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1661,7 +1640,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1837,7 +1816,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2011,7 +1990,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2151,9 +2130,8 @@ type SpeechLongrunningrecognizeCall struct {
 // receive results via the google.longrunning.Operations interface.
 // Returns either an `Operation.error` or an `Operation.response` which
 // contains a `LongRunningRecognizeResponse` message. For more
-// information on asynchronous speech recognition, see the
-// [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize)
-// .
+// information on asynchronous speech recognition, see the how-to
+// (https://cloud.google.com/speech-to-text/docs/async-recognize).
 func (r *SpeechService) Longrunningrecognize(longrunningrecognizerequest *LongRunningRecognizeRequest) *SpeechLongrunningrecognizeCall {
 	c := &SpeechLongrunningrecognizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.longrunningrecognizerequest = longrunningrecognizerequest
@@ -2187,7 +2165,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2313,7 +2291,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

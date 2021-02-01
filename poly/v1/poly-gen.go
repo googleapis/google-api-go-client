@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -170,13 +170,13 @@ type UsersLikedassetsService struct {
 }
 
 // Asset: Represents and describes an asset in the Poly library. An
-// asset is a 3D model or scene created using [Tilt
-// Brush](//www.tiltbrush.com), [Blocks](//vr.google.com/blocks/), or
-// any 3D program that produces a file that can be upload to Poly.
+// asset is a 3D model or scene created using Tilt Brush
+// (//www.tiltbrush.com), Blocks (//vr.google.com/blocks/), or any 3D
+// program that produces a file that can be upload to Poly.
 type Asset struct {
 	// AuthorName: The author's publicly visible name. Use this name when
-	// giving credit to the author. For more information, see
-	// [Licensing](/poly/discover/licensing).
+	// giving credit to the author. For more information, see Licensing
+	// (/poly/discover/licensing).
 	AuthorName string `json:"authorName,omitempty"`
 
 	// CreateTime: For published assets, the time when the asset was
@@ -349,9 +349,9 @@ func (s *AssetImportMessage) MarshalJSON() ([]byte, error) {
 // thumbnail file.
 type File struct {
 	// ContentType: The MIME content-type, such as `image/png`. For more
-	// information, see [MIME
-	// types](//developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME
-	// _types).
+	// information, see MIME types
+	// (//developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+	// ).
 	ContentType string `json:"contentType,omitempty"`
 
 	// RelativePath: The path of the resource file relative to the root
@@ -385,9 +385,9 @@ func (s *File) MarshalJSON() ([]byte, error) {
 }
 
 // Format: The same asset can be represented in different formats, for
-// example, a [WaveFront
-// .obj](//en.wikipedia.org/wiki/Wavefront_.obj_file) file with its
-// corresponding .mtl file or a [Khronos glTF](//www.khronos.org/gltf)
+// example, a WaveFront .obj
+// (//en.wikipedia.org/wiki/Wavefront_.obj_file) file with its
+// corresponding .mtl file or a Khronos glTF (//www.khronos.org/gltf)
 // file with its corresponding .glb binary data. A format refers to a
 // specific representation of an asset and contains all information
 // needed to retrieve and describe this representation.
@@ -788,9 +788,9 @@ func (s *PresentationParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Quaternion: A [Quaternion](//en.wikipedia.org/wiki/Quaternion).
-// Please note: if in the response you see "w: 1" and nothing else this
-// is the default value of [0, 0, 0, 1] where x,y, and z are 0.
+// Quaternion: A Quaternion (//en.wikipedia.org/wiki/Quaternion). Please
+// note: if in the response you see "w: 1" and nothing else this is the
+// default value of [0, 0, 0, 1] where x,y, and z are 0.
 type Quaternion struct {
 	// W: The scalar component.
 	W float64 `json:"w,omitempty"`
@@ -1004,7 +1004,7 @@ func (c *AssetsGetCall) Header() http.Header {
 
 func (c *AssetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1219,7 +1219,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1473,7 +1473,7 @@ func (c *UsersAssetsListCall) Header() http.Header {
 
 func (c *UsersAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1707,7 +1707,7 @@ func (c *UsersLikedassetsListCall) Header() http.Header {
 
 func (c *UsersLikedassetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

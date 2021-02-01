@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1874,8 +1874,8 @@ func (s *BuildBazelRemoteExecutionV2PriorityCapabilitiesPriorityRange) MarshalJS
 // `build.bazel.remote.execution.v2.requestmetadata-bin` * contents: the
 // base64 encoded binary `RequestMetadata` message. Note: the gRPC
 // library serializes binary headers encoded in base 64 by default
-// (https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#reques
-// ts). Therefore, if the gRPC library is used to pass/retrieve this
+// (https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#requests).
+// Therefore, if the gRPC library is used to pass/retrieve this
 // metadata, the user may ignore the base64 encoding and assume it is
 // simply serialized as a binary message.
 type BuildBazelRemoteExecutionV2RequestMetadata struct {
@@ -2350,6 +2350,8 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	// failed to run containers with CreateComputeSystem error that involves
 	// an incorrect parameter (more specific version of
 	// DOCKER_CREATE_COMPUTE_SYSTEM_ERROR that is user-caused).
+	//   "DOCKER_TOO_MANY_SYMBOLIC_LINK_LEVELS" - Docker failed to create an
+	// overlay mount because of too many levels of symbolic links.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -2978,8 +2980,8 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest struct
 	// assumed. Examples: Include only pools with more than 100 reserved
 	// workers: `(worker_count > 100) (worker_config.reserved = true)`
 	// Include only pools with a certain label or machines of the
-	// n1-standard family: `worker_config.labels.key1 : * OR
-	// worker_config.machine_type: n1-standard`
+	// e2-standard family: `worker_config.labels.key1 : * OR
+	// worker_config.machine_type: e2-standard`
 	Filter string `json:"filter,omitempty"`
 
 	// Parent: Resource name of the instance. Format:
@@ -3036,39 +3038,6 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsResponse) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDevtoolsRemotebuildexecutionAdminV1alphaSoleTenancyConfig:
-// SoleTenancyConfig specifies information required to host a pool on
-// STNs.
-type GoogleDevtoolsRemotebuildexecutionAdminV1alphaSoleTenancyConfig struct {
-	// NodeType: The sole-tenant node type to host the pool's workers on.
-	NodeType string `json:"nodeType,omitempty"`
-
-	// NodesZone: Zone in which STNs are reserved.
-	NodesZone string `json:"nodesZone,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NodeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NodeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaSoleTenancyConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleDevtoolsRemotebuildexecutionAdminV1alphaSoleTenancyConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest:
 // The request used for `UpdateInstance`.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest struct {
@@ -3085,8 +3054,11 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest struct 
 
 	// UpdateMask: The update mask applies to instance. For the `FieldMask`
 	// definition, see
-	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If an empty update_mask is provided, only the non-default valued field in the worker pool field will be updated. Note that in order to update a field to the default value (zero, false, empty string) an explicit update_mask must be
-	// provided.
+	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+	// If an empty update_mask is provided, only the non-default valued
+	// field in the worker pool field will be updated. Note that in order to
+	// update a field to the default value (zero, false, empty string) an
+	// explicit update_mask must be provided.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instance") to
@@ -3117,8 +3089,11 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateInstanceRequest) Ma
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest struct {
 	// UpdateMask: The update mask applies to worker_pool. For the
 	// `FieldMask` definition, see
-	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If an empty update_mask is provided, only the non-default valued field in the worker pool field will be updated. Note that in order to update a field to the default value (zero, false, empty string) an explicit update_mask must be
-	// provided.
+	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+	// If an empty update_mask is provided, only the non-default valued
+	// field in the worker pool field will be updated. Note that in order to
+	// update a field to the default value (zero, false, empty string) an
+	// explicit update_mask must be provided.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// WorkerPool: Specifies the worker pool to update.
@@ -3157,8 +3132,8 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// See https://cloud.google.com/compute/docs/disks/
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
-	// DiskType: Required. Disk Type to use for the worker. See [Storage
-	// options](https://cloud.google.com/compute/docs/disks/#introduction).
+	// DiskType: Required. Disk Type to use for the worker. See Storage
+	// options (https://cloud.google.com/compute/docs/disks/#introduction).
 	// Currently only `pd-standard` and `pd-ssd` are supported.
 	DiskType string `json:"diskType,omitempty"`
 
@@ -3170,7 +3145,7 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Required. Machine type of the worker, such as
-	// `n1-standard-2`. See
+	// `e2-standard-2`. See
 	// https://cloud.google.com/compute/docs/machine-types for a list of
 	// supported machine types. Note that `f1-micro` and `g1-small` are not
 	// yet supported.
@@ -3181,8 +3156,8 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	MaxConcurrentActions int64 `json:"maxConcurrentActions,omitempty,string"`
 
 	// MinCpuPlatform: Minimum CPU platform to use when creating the worker.
-	// See [CPU
-	// Platforms](https://cloud.google.com/compute/docs/cpu-platforms).
+	// See CPU Platforms
+	// (https://cloud.google.com/compute/docs/cpu-platforms).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// NetworkAccess: Determines the type of network access granted to
@@ -3195,12 +3170,13 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 
 	// Reserved: Determines whether the worker is reserved (equivalent to a
 	// Compute Engine on-demand VM and therefore won't be preempted). See
-	// [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for more
+	// Preemptible VMs (https://cloud.google.com/preemptible-vms/) for more
 	// details.
 	Reserved bool `json:"reserved,omitempty"`
 
-	// SoleTenancy: Sole-tenant node information for pools hosted on STNs.
-	SoleTenancy *GoogleDevtoolsRemotebuildexecutionAdminV1alphaSoleTenancyConfig `json:"soleTenancy,omitempty"`
+	// SoleTenantNodeType: The node type name to be used for sole-tenant
+	// nodes.
+	SoleTenantNodeType string `json:"soleTenantNodeType,omitempty"`
 
 	// VmImage: The name of the image used by each VM.
 	VmImage string `json:"vmImage,omitempty"`
@@ -3966,11 +3942,11 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -4095,7 +4071,7 @@ func (c *ActionResultsGetCall) Header() http.Header {
 
 func (c *ActionResultsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4290,7 +4266,7 @@ func (c *ActionResultsUpdateCall) Header() http.Header {
 
 func (c *ActionResultsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4497,7 +4473,7 @@ func (c *ActionsExecuteCall) Header() http.Header {
 
 func (c *ActionsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4646,7 +4622,7 @@ func (c *BlobsBatchReadCall) Header() http.Header {
 
 func (c *BlobsBatchReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4799,7 +4775,7 @@ func (c *BlobsBatchUpdateCall) Header() http.Header {
 
 func (c *BlobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4945,7 +4921,7 @@ func (c *BlobsFindMissingCall) Header() http.Header {
 
 func (c *BlobsFindMissingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5133,7 +5109,7 @@ func (c *BlobsGetTreeCall) Header() http.Header {
 
 func (c *BlobsGetTreeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5325,7 +5301,7 @@ func (c *OperationsWaitExecutionCall) Header() http.Header {
 
 func (c *OperationsWaitExecutionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5480,7 +5456,7 @@ func (c *V2GetCapabilitiesCall) Header() http.Header {
 
 func (c *V2GetCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

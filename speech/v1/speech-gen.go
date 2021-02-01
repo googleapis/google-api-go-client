@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -406,8 +406,8 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // RecognitionAudio: Contains audio data in the encoding specified in
 // the `RecognitionConfig`. Either `content` or `uri` must be supplied.
 // Supplying both or neither returns google.rpc.Code.INVALID_ARGUMENT.
-// See [content
-// limits](https://cloud.google.com/speech-to-text/quotas#content).
+// See content limits
+// (https://cloud.google.com/speech-to-text/quotas#content).
 type RecognitionAudio struct {
 	// Content: The audio data bytes encoded as specified in
 	// `RecognitionConfig`. Note: as with all bytes fields, proto buffers
@@ -420,8 +420,8 @@ type RecognitionAudio struct {
 	// (for example, gzip). Currently, only Google Cloud Storage URIs are
 	// supported, which must be specified in the following format:
 	// `gs://bucket_name/object_name` (other URI formats return
-	// google.rpc.Code.INVALID_ARGUMENT). For more information, see [Request
-	// URIs](https://cloud.google.com/storage/docs/reference-uris).
+	// google.rpc.Code.INVALID_ARGUMENT). For more information, see Request
+	// URIs (https://cloud.google.com/storage/docs/reference-uris).
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -532,10 +532,10 @@ type RecognitionConfig struct {
 	Encoding string `json:"encoding,omitempty"`
 
 	// LanguageCode: Required. The language of the supplied audio as a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-	// Example: "en-US". See [Language
-	// Support](https://cloud.google.com/speech-to-text/docs/languages) for
-	// a list of the currently supported language codes.
+	// BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+	// Example: "en-US". See Language Support
+	// (https://cloud.google.com/speech-to-text/docs/languages) for a list
+	// of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// MaxAlternatives: Maximum number of recognition hypotheses to be
@@ -581,9 +581,9 @@ type RecognitionConfig struct {
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
 	// SpeechContexts: Array of SpeechContext. A means to provide context to
-	// assist the speech recognition. For more information, see [speech
-	// adaptation](https://cloud.google.com/speech-to-text/docs/context-stren
-	// gth).
+	// assist the speech recognition. For more information, see speech
+	// adaptation
+	// (https://cloud.google.com/speech-to-text/docs/context-strength).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
 	// UseEnhanced: Set to true to use an enhanced model for speech
@@ -848,13 +848,13 @@ type SpeechContext struct {
 	// can be used to improve the accuracy for specific words and phrases,
 	// for example, if specific commands are typically spoken by the user.
 	// This can also be used to add additional words to the vocabulary of
-	// the recognizer. See [usage
-	// limits](https://cloud.google.com/speech-to-text/quotas#content). List
-	// items can also be set to classes for groups of words that represent
-	// common concepts that occur in natural language. For example, rather
-	// than providing phrase hints for every month of the year, using the
-	// $MONTH class improves the likelihood of correctly transcribing audio
-	// that includes months.
+	// the recognizer. See usage limits
+	// (https://cloud.google.com/speech-to-text/quotas#content). List items
+	// can also be set to classes for groups of words that represent common
+	// concepts that occur in natural language. For example, rather than
+	// providing phrase hints for every month of the year, using the $MONTH
+	// class improves the likelihood of correctly transcribing audio that
+	// includes months.
 	Phrases []string `json:"phrases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Phrases") to
@@ -978,11 +978,11 @@ func (s *SpeechRecognitionResult) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1126,7 +1126,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1305,7 +1305,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1481,7 +1481,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1655,7 +1655,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1795,9 +1795,8 @@ type SpeechLongrunningrecognizeCall struct {
 // receive results via the google.longrunning.Operations interface.
 // Returns either an `Operation.error` or an `Operation.response` which
 // contains a `LongRunningRecognizeResponse` message. For more
-// information on asynchronous speech recognition, see the
-// [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize)
-// .
+// information on asynchronous speech recognition, see the how-to
+// (https://cloud.google.com/speech-to-text/docs/async-recognize).
 func (r *SpeechService) Longrunningrecognize(longrunningrecognizerequest *LongRunningRecognizeRequest) *SpeechLongrunningrecognizeCall {
 	c := &SpeechLongrunningrecognizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.longrunningrecognizerequest = longrunningrecognizerequest
@@ -1831,7 +1830,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1957,7 +1956,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

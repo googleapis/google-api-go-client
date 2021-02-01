@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -158,14 +158,14 @@ type PlatformSummary struct {
 	//   "FAILING" - Failing.
 	BetterAdsStatus string `json:"betterAdsStatus,omitempty"`
 
-	// EnforcementTime: The time at which
-	// [enforcement](https://support.google.com/webtools/answer/7308033)
-	// against the site began or will begin on this platform. Not set when
-	// the filter_status is OFF.
+	// EnforcementTime: The time at which enforcement
+	// (https://support.google.com/webtools/answer/7308033) against the site
+	// began or will begin on this platform. Not set when the filter_status
+	// is OFF.
 	EnforcementTime string `json:"enforcementTime,omitempty"`
 
-	// FilterStatus: The site's [enforcement
-	// status](https://support.google.com/webtools/answer/7308033) on this
+	// FilterStatus: The site's enforcement status
+	// (https://support.google.com/webtools/answer/7308033) on this
 	// platform.
 	//
 	// Possible values:
@@ -193,9 +193,9 @@ type PlatformSummary struct {
 
 	// ReportUrl: A link to the full Ad Experience Report for the site on
 	// this platform.. Not set in ViolatingSitesResponse. Note that you must
-	// complete the [Search Console verification
-	// process](https://support.google.com/webmasters/answer/9008080) for
-	// the site before you can access the full report.
+	// complete the Search Console verification process
+	// (https://support.google.com/webmasters/answer/9008080) for the site
+	// before you can access the full report.
 	ReportUrl string `json:"reportUrl,omitempty"`
 
 	// UnderReview: Whether the site is currently under review on this
@@ -353,7 +353,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -493,7 +493,7 @@ func (c *ViolatingSitesListCall) Header() http.Header {
 
 func (c *ViolatingSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

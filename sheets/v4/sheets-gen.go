@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1273,13 +1273,25 @@ type BasicChartSeries struct {
 	// color is also set, this field takes precedence.
 	ColorStyle *ColorStyle `json:"colorStyle,omitempty"`
 
+	// DataLabel: Information about the data labels for this series.
+	DataLabel *DataLabel `json:"dataLabel,omitempty"`
+
 	// LineStyle: The line style of this series. Valid only if the chartType
 	// is AREA, LINE, or SCATTER. COMBO charts are also supported if the
 	// series chart type is AREA or LINE.
 	LineStyle *LineStyle `json:"lineStyle,omitempty"`
 
+	// PointStyle: The style for points associated with this series. Valid
+	// only if the chartType is AREA, LINE, or SCATTER. COMBO charts are
+	// also supported if the series chart type is AREA, LINE, or SCATTER. If
+	// empty, a default point style is used.
+	PointStyle *PointStyle `json:"pointStyle,omitempty"`
+
 	// Series: The data being visualized in this chart series.
 	Series *ChartData `json:"series,omitempty"`
+
+	// StyleOverrides: Style override settings for series data points.
+	StyleOverrides []*BasicSeriesDataPointStyleOverride `json:"styleOverrides,omitempty"`
 
 	// TargetAxis: The minor axis that will specify the range of values for
 	// this series. For example, if charting stocks over time, the "Volume"
@@ -1423,6 +1435,20 @@ type BasicChartSpec struct {
 	// Column charts.
 	ThreeDimensional bool `json:"threeDimensional,omitempty"`
 
+	// TotalDataLabel: Controls whether to display additional data labels on
+	// stacked charts which sum the total value of all stacked values at
+	// each value along the domain axis. These data labels can only be set
+	// when chart_type is one of AREA, BAR, COLUMN, COMBO or STEPPED_AREA
+	// and stacked_type is either STACKED or PERCENT_STACKED. In addition,
+	// for COMBO, this will only be supported if there is only one type of
+	// stackable series type or one type has more series than the others and
+	// each of the other types have no more than one series. For example, if
+	// a chart has two stacked bar series and one area series, the total
+	// data labels will be supported. If it has three bar series and two
+	// area series, total data labels are not allowed. Neither CUSTOM nor
+	// placement can be set on the total_data_label.
+	TotalDataLabel *DataLabel `json:"totalDataLabel,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Axis") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1484,6 +1510,49 @@ type BasicFilter struct {
 
 func (s *BasicFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod BasicFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BasicSeriesDataPointStyleOverride: Style override settings for a
+// single series data point.
+type BasicSeriesDataPointStyleOverride struct {
+	// Color: Color of the series data point. If empty, the series default
+	// is used.
+	Color *Color `json:"color,omitempty"`
+
+	// ColorStyle: Color of the series data point. If empty, the series
+	// default is used. If color is also set, this field takes precedence.
+	ColorStyle *ColorStyle `json:"colorStyle,omitempty"`
+
+	// Index: Zero based index of the series data point.
+	Index int64 `json:"index,omitempty"`
+
+	// PointStyle: Point style of the series data point. Valid only if the
+	// chartType is AREA, LINE, or SCATTER. COMBO charts are also supported
+	// if the series chart type is AREA, LINE, or SCATTER. If empty, the
+	// series default is used.
+	PointStyle *PointStyle `json:"pointStyle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Color") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Color") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BasicSeriesDataPointStyleOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod BasicSeriesDataPointStyleOverride
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2216,9 +2285,9 @@ func (s *BigQueryQuerySpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BigQueryTableSpec: Specifies a BigQuery table definition. Only
-// [native tables](https://cloud.google.com/bigquery/docs/tables-intro)
-// is allowed.
+// BigQueryTableSpec: Specifies a BigQuery table definition. Only native
+// tables (https://cloud.google.com/bigquery/docs/tables-intro) is
+// allowed.
 type BigQueryTableSpec struct {
 	// DatasetId: The BigQuery dataset id.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -4129,6 +4198,78 @@ func (s *DataFilterValueRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DataLabel: Settings for one set of data labels. Data labels are
+// annotations that appear next to a set of data, such as the points on
+// a line chart, and provide additional information about what the data
+// represents, such as a text representation of the value behind that
+// point on the graph.
+type DataLabel struct {
+	// CustomLabelData: Data to use for custom labels. Only used if type is
+	// set to CUSTOM. This data must be the same length as the series or
+	// other element this data label is applied to. In addition, if the
+	// series is split into multiple source ranges, this source data must
+	// come from the next column in the source data. For example, if the
+	// series is B2:B4,E6:E8 then this data must come from C2:C4,F6:F8.
+	CustomLabelData *ChartData `json:"customLabelData,omitempty"`
+
+	// Placement: The placement of the data label relative to the labeled
+	// data.
+	//
+	// Possible values:
+	//   "DATA_LABEL_PLACEMENT_UNSPECIFIED" - The positioning is determined
+	// automatically by the renderer.
+	//   "CENTER" - Center within a bar or column, both horizontally and
+	// vertically.
+	//   "LEFT" - To the left of a data point.
+	//   "RIGHT" - To the right of a data point.
+	//   "ABOVE" - Above a data point.
+	//   "BELOW" - Below a data point.
+	//   "INSIDE_END" - Inside a bar or column at the end (top if positive,
+	// bottom if negative).
+	//   "INSIDE_BASE" - Inside a bar or column at the base.
+	//   "OUTSIDE_END" - Outside a bar or column at the end.
+	Placement string `json:"placement,omitempty"`
+
+	// TextFormat: The text format used for the data label.
+	TextFormat *TextFormat `json:"textFormat,omitempty"`
+
+	// Type: The type of the data label.
+	//
+	// Possible values:
+	//   "DATA_LABEL_TYPE_UNSPECIFIED" - The data label type is not
+	// specified and will be interpreted depending on the context of the
+	// data label within the chart.
+	//   "NONE" - The data label is not displayed.
+	//   "DATA" - The data label is displayed using values from the series
+	// data.
+	//   "CUSTOM" - The data label is displayed using values from a custom
+	// data source indicated by customLabelData.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomLabelData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomLabelData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod DataLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DataSource: Information about an external data source in the
 // spreadsheet.
 type DataSource struct {
@@ -4377,9 +4518,8 @@ func (s *DataSourceObjectReferences) MarshalJSON() ([]byte, error) {
 // a query.
 type DataSourceParameter struct {
 	// Name: Named parameter. Must be a legitimate identifier for the
-	// DataSource that supports it. For example, [BigQuery
-	// identifier](https://cloud.google.com/bigquery/docs/reference/standard-
-	// sql/lexical#identifiers).
+	// DataSource that supports it. For example, BigQuery identifier
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical#identifiers).
 	Name string `json:"name,omitempty"`
 
 	// NamedRangeId: ID of a NamedRange. Its size must be 1x1.
@@ -5921,6 +6061,9 @@ func (s *Editors) MarshalJSON() ([]byte, error) {
 
 // EmbeddedChart: A chart embedded in a sheet.
 type EmbeddedChart struct {
+	// Border: The border of the chart.
+	Border *EmbeddedObjectBorder `json:"border,omitempty"`
+
 	// ChartId: The ID of the chart.
 	ChartId int64 `json:"chartId,omitempty"`
 
@@ -5930,7 +6073,7 @@ type EmbeddedChart struct {
 	// Spec: The specification of the chart.
 	Spec *ChartSpec `json:"spec,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ChartId") to
+	// ForceSendFields is a list of field names (e.g. "Border") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -5938,8 +6081,8 @@ type EmbeddedChart struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ChartId") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Border") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -5949,6 +6092,38 @@ type EmbeddedChart struct {
 
 func (s *EmbeddedChart) MarshalJSON() ([]byte, error) {
 	type NoMethod EmbeddedChart
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EmbeddedObjectBorder: A border along an embedded object.
+type EmbeddedObjectBorder struct {
+	// Color: The color of the border.
+	Color *Color `json:"color,omitempty"`
+
+	// ColorStyle: The color of the border. If color is also set, this field
+	// takes precedence.
+	ColorStyle *ColorStyle `json:"colorStyle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Color") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Color") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EmbeddedObjectBorder) MarshalJSON() ([]byte, error) {
+	type NoMethod EmbeddedObjectBorder
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6268,8 +6443,12 @@ type FindReplaceRequest struct {
 
 	// SearchByRegex: True if the find value is a regex. The regular
 	// expression and replacement should follow Java regex rules at
-	// https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html. The replacement string is allowed to refer to capturing groups. For example, if one cell has the contents "Google Sheets" and another has "Google Docs", then searching for "o.* (.*)" with a replacement of "$1 Rocks" would change the contents of the cells to "GSheets Rocks" and "GDocs Rocks"
-	// respectively.
+	// https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html.
+	// The replacement string is allowed to refer to capturing groups. For
+	// example, if one cell has the contents "Google Sheets" and another
+	// has "Google Docs", then searching for "o.* (.*)" with a
+	// replacement of "$1 Rocks" would change the contents of the cells to
+	// "GSheets Rocks" and "GDocs Rocks" respectively.
 	SearchByRegex bool `json:"searchByRegex,omitempty"`
 
 	// SheetId: The sheet to find/replace over.
@@ -7367,9 +7546,9 @@ func (s *NamedRange) MarshalJSON() ([]byte, error) {
 type NumberFormat struct {
 	// Pattern: Pattern string used for formatting. If not set, a default
 	// pattern based on the user's locale will be used if necessary for the
-	// given type. See the [Date and Number Formats
-	// guide](/sheets/api/guides/formats) for more information about the
-	// supported patterns.
+	// given type. See the Date and Number Formats guide
+	// (/sheets/api/guides/formats) for more information about the supported
+	// patterns.
 	Pattern string `json:"pattern,omitempty"`
 
 	// Type: The type of the number format. When writing, this field must be
@@ -8160,6 +8339,63 @@ func (s *PivotValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PointStyle: The style of a point on the chart.
+type PointStyle struct {
+	// Shape: The point shape. If empty or unspecified, a default shape is
+	// used.
+	//
+	// Possible values:
+	//   "POINT_SHAPE_UNSPECIFIED" - Default value.
+	//   "CIRCLE" - A circle shape.
+	//   "DIAMOND" - A diamond shape.
+	//   "HEXAGON" - A hexagon shape.
+	//   "PENTAGON" - A pentagon shape.
+	//   "SQUARE" - A square shape.
+	//   "STAR" - A star shape.
+	//   "TRIANGLE" - A triangle shape.
+	//   "X_MARK" - An x-mark shape.
+	Shape string `json:"shape,omitempty"`
+
+	// Size: The point size. If empty, a default size is used.
+	Size float64 `json:"size,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Shape") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Shape") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PointStyle) MarshalJSON() ([]byte, error) {
+	type NoMethod PointStyle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PointStyle) UnmarshalJSON(data []byte) error {
+	type NoMethod PointStyle
+	var s1 struct {
+		Size gensupport.JSONFloat64 `json:"size"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Size = float64(s1.Size)
+	return nil
+}
+
 // ProtectedRange: A protected range.
 type ProtectedRange struct {
 	// Description: The description of this protected range.
@@ -8589,6 +8825,9 @@ type Request struct {
 
 	// UpdateDimensionProperties: Updates dimensions' properties.
 	UpdateDimensionProperties *UpdateDimensionPropertiesRequest `json:"updateDimensionProperties,omitempty"`
+
+	// UpdateEmbeddedObjectBorder: Updates an embedded object's border.
+	UpdateEmbeddedObjectBorder *UpdateEmbeddedObjectBorderRequest `json:"updateEmbeddedObjectBorder,omitempty"`
 
 	// UpdateEmbeddedObjectPosition: Updates an embedded object's (e.g.
 	// chart, image) position.
@@ -10581,6 +10820,43 @@ func (s *UpdateDimensionPropertiesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateEmbeddedObjectBorderRequest: Updates an embedded object's
+// border property.
+type UpdateEmbeddedObjectBorderRequest struct {
+	// Border: The border that applies to the embedded object.
+	Border *EmbeddedObjectBorder `json:"border,omitempty"`
+
+	// Fields: The fields that should be updated. At least one field must be
+	// specified. The root `border` is implied and should not be specified.
+	// A single "*" can be used as short-hand for listing every field.
+	Fields string `json:"fields,omitempty"`
+
+	// ObjectId: The ID of the embedded object to update.
+	ObjectId int64 `json:"objectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Border") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Border") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateEmbeddedObjectBorderRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateEmbeddedObjectBorderRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateEmbeddedObjectPositionRequest: Update an embedded object's
 // position (such as a moving or resizing a chart or image).
 type UpdateEmbeddedObjectPositionRequest struct {
@@ -11151,6 +11427,9 @@ type WaterfallChartSeries struct {
 	// Data: The data being visualized in this series.
 	Data *ChartData `json:"data,omitempty"`
 
+	// DataLabel: Information about the data labels for this series.
+	DataLabel *DataLabel `json:"dataLabel,omitempty"`
+
 	// HideTrailingSubtotal: True to hide the subtotal column from the end
 	// of the series. By default, a subtotal column will appear at the end
 	// of each series. Setting this field to true will hide that subtotal
@@ -11217,6 +11496,12 @@ type WaterfallChartSpec struct {
 	// axis) value will be stacked vertically.
 	//   "SEQUENTIAL" - Series will spread out along the horizontal axis.
 	StackedType string `json:"stackedType,omitempty"`
+
+	// TotalDataLabel: Controls whether to display additional data labels on
+	// stacked charts which sum the total value of all stacked values at
+	// each value along the domain axis. stacked_type must be STACKED and
+	// neither CUSTOM nor placement can be set on the total_data_label.
+	TotalDataLabel *DataLabel `json:"totalDataLabel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConnectorLineStyle")
 	// to unconditionally include in API requests. By default, fields with
@@ -11301,7 +11586,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11441,7 +11726,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11605,7 +11890,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11766,7 +12051,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11920,7 +12205,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12071,7 +12356,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12215,7 +12500,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12334,11 +12619,11 @@ type SpreadsheetsValuesAppendCall struct {
 // Append: Appends values to a spreadsheet. The input range is used to
 // search for existing data and find a "table" within that range. Values
 // will be appended to the next row of the table, starting with the
-// first column of the table. See the
-// [guide](/sheets/api/guides/values#appending_values) and [sample
-// code](/sheets/api/samples/writing#append_values) for specific details
-// of how tables are detected and data is appended. The caller must
-// specify the spreadsheet ID, range, and a valueInputOption. The
+// first column of the table. See the guide
+// (/sheets/api/guides/values#appending_values) and sample code
+// (/sheets/api/samples/writing#append_values) for specific details of
+// how tables are detected and data is appended. The caller must specify
+// the spreadsheet ID, range, and a valueInputOption. The
 // `valueInputOption` only controls how the input data will be added to
 // the sheet (column-wise or row-wise), it does not influence what cell
 // the data starts being written to.
@@ -12462,7 +12747,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12675,7 +12960,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12820,7 +13105,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13040,7 +13325,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13230,7 +13515,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13374,7 +13659,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13517,7 +13802,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13664,7 +13949,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13886,7 +14171,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14153,7 +14438,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

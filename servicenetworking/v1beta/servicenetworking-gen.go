@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -285,7 +285,7 @@ type AddSubnetworkRequest struct {
 	// range.
 	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
 
-	// Region: Required. The name of a [region](/compute/docs/regions-zones)
+	// Region: Required. The name of a region (/compute/docs/regions-zones)
 	// for the subnet, such `europe-west1`.
 	Region string `json:"region,omitempty"`
 
@@ -298,9 +298,9 @@ type AddSubnetworkRequest struct {
 	RequestedAddress string `json:"requestedAddress,omitempty"`
 
 	// Subnetwork: Required. A name for the new subnet. For information
-	// about the naming requirements, see
-	// [subnetwork](/compute/docs/reference/rest/v1/subnetworks) in the
-	// Compute API documentation.
+	// about the naming requirements, see subnetwork
+	// (/compute/docs/reference/rest/v1/subnetworks) in the Compute API
+	// documentation.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// SubnetworkUsers: A list of members that are granted the
@@ -370,7 +370,7 @@ type Api struct {
 	// is empty, the major version is derived from the package name, as
 	// outlined below. If the field is not empty, the version in the package
 	// name will be verified to be consistent with what is provided here.
-	// The versioning schema uses [semantic versioning](http://semver.org)
+	// The versioning schema uses semantic versioning (http://semver.org)
 	// where the major version number indicates a breaking change and the
 	// minor version an additive, non-breaking change. Both version numbers
 	// are signals to users what to expect from different versions, and
@@ -405,20 +405,20 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 }
 
 // AuthProvider: Configuration for an authentication provider, including
-// support for [JSON Web Token
-// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32)
-// .
+// support for JSON Web Token (JWT)
+// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 type AuthProvider struct {
-	// Audiences: The list of JWT
-	// [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-toke
-	// n-32#section-4.1.3). that are allowed to access. A JWT containing any
-	// of these audiences will be accepted. When this setting is absent,
-	// JWTs with audiences: -
+	// Audiences: The list of JWT audiences
+	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+	// that are allowed to access. A JWT containing any of these audiences
+	// will be accepted. When this setting is absent, JWTs with audiences: -
 	// "https://[service.name]/[google.protobuf.Api.name]" -
 	// "https://[service.name]/" will be accepted. For example, if no
 	// audiences are in the setting, LibraryService API will accept JWTs
 	// with the following audiences: -
-	// https://library-example.googleapis.com/google.example.library.v1.LibraryService - https://library-example.googleapis.com/ Example: audiences: bookstore_android.apps.googleusercontent.com,
+	// https://library-example.googleapis.com/google.example.library.v1.LibraryService
+	// - https://library-example.googleapis.com/ Example: audiences:
+	// bookstore_android.apps.googleusercontent.com,
 	// bookstore_web.apps.googleusercontent.com
 	Audiences string `json:"audiences,omitempty"`
 
@@ -432,18 +432,20 @@ type AuthProvider struct {
 	Id string `json:"id,omitempty"`
 
 	// Issuer: Identifies the principal that issued the JWT. See
-	// https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1 Usually a URL or an email address. Example: https://securetoken.google.com Example:
+	// https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
+	// Usually a URL or an email address. Example:
+	// https://securetoken.google.com Example:
 	// 1234567-compute@developer.gserviceaccount.com
 	Issuer string `json:"issuer,omitempty"`
 
 	// JwksUri: URL of the provider's public key set to validate signature
-	// of the JWT. See [OpenID
-	// Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#
-	// ProviderMetadata). Optional if the key set document: - can be
-	// retrieved from [OpenID
-	// Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
-	//  of the issuer. - can be inferred from the email domain of the issuer
-	// (e.g. a Google service account). Example:
+	// of the JWT. See OpenID Discovery
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+	// Optional if the key set document: - can be retrieved from OpenID
+	// Discovery
+	// (https://openid.net/specs/openid-connect-discovery-1_0.html) of the
+	// issuer. - can be inferred from the email domain of the issuer (e.g. a
+	// Google service account). Example:
 	// https://www.googleapis.com/oauth2/v1/certs
 	JwksUri string `json:"jwksUri,omitempty"`
 
@@ -482,19 +484,18 @@ func (s *AuthProvider) MarshalJSON() ([]byte, error) {
 }
 
 // AuthRequirement: User-defined authentication requirements, including
-// support for [JSON Web Token
-// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32)
-// .
+// support for JSON Web Token (JWT)
+// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 type AuthRequirement struct {
 	// Audiences: NOTE: This will be deprecated soon, once
 	// AuthProvider.audiences is implemented and accepted in all the runtime
-	// components. The list of JWT
-	// [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-toke
-	// n-32#section-4.1.3). that are allowed to access. A JWT containing any
-	// of these audiences will be accepted. When this setting is absent,
-	// only JWTs with audience "https://Service_name/API_name" will be
-	// accepted. For example, if no audiences are in the setting,
-	// LibraryService API will only accept JWTs with the following audience
+	// components. The list of JWT audiences
+	// (https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
+	// that are allowed to access. A JWT containing any of these audiences
+	// will be accepted. When this setting is absent, only JWTs with
+	// audience "https://Service_name/API_name" will be accepted. For
+	// example, if no audiences are in the setting, LibraryService API will
+	// only accept JWTs with the following audience
 	// "https://library-example.googleapis.com/google.example.library.v1.Libr
 	// aryService". Example: audiences:
 	// bookstore_android.apps.googleusercontent.com,
@@ -695,7 +696,9 @@ type BackendRule struct {
 	// https://example.cloudfunctions.net/getUser Requests to the following
 	// request paths will call the backend at the translated path: Request
 	// path: /api/company/widgetworks/user/johndoe Translated:
-	// https://example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe Request path: /api/company/widgetworks/user/johndoe?timezone=EST Translated:
+	// https://example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe
+	// Request path: /api/company/widgetworks/user/johndoe?timezone=EST
+	// Translated:
 	// https://example.cloudfunctions.net/getUser?timezone=EST&cid=widgetworks&uid=johndoe
 	//   "APPEND_PATH_TO_ADDRESS" - The request path will be appended to the
 	// backend address. # Examples Given the following operation config:
@@ -717,8 +720,8 @@ type BackendRule struct {
 	// for improved performance. Configuring this field to non-default
 	// values is only supported for secure HTTP backends. This field will be
 	// ignored for all other backends. See
-	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids for more details on the supported
-	// values.
+	// https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
+	// for more details on the supported values.
 	Protocol string `json:"protocol,omitempty"`
 
 	// Selector: Selects the methods to which this rule applies. Refer to
@@ -868,9 +871,12 @@ type Connection struct {
 
 	// ReservedPeeringRanges: The name of one or more allocated IP address
 	// ranges for this service producer of type `PEERING`. Note that
-	// invoking this method with a different range when connection is
-	// already established will not modify already provisioned service
-	// producer subnetworks.
+	// invoking CreateConnection method with a different range when
+	// connection is already established will not modify already provisioned
+	// service producer subnetworks. If CreateConnection method is invoked
+	// repeatedly to reconnect when peering connection had been disconnected
+	// on the consumer side, leaving this field empty will restore
+	// previously allocated IP ranges.
 	ReservedPeeringRanges []string `json:"reservedPeeringRanges,omitempty"`
 
 	// Service: Output only. The name of the peering service that's
@@ -945,6 +951,11 @@ type ConsumerConfig struct {
 	// ReservedRanges: Output only. The reserved ranges associated with this
 	// private service access connection.
 	ReservedRanges []*GoogleCloudServicenetworkingV1ConsumerConfigReservedRange `json:"reservedRanges,omitempty"`
+
+	// VpcScReferenceArchitectureEnabled: Output only. Indicates whether the
+	// VPC Service Controls reference architecture is configured for the
+	// producer VPC host network.
+	VpcScReferenceArchitectureEnabled bool `json:"vpcScReferenceArchitectureEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ConsumerExportCustomRoutes") to unconditionally include in API
@@ -1202,6 +1213,11 @@ func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeleteConnectionMetadata: Metadata provided through GetOperation
+// request for the LRO generated by Delete Connection API
+type DeleteConnectionMetadata struct {
+}
+
 // DeletePeeredDnsDomainMetadata: Metadata provided through GetOperation
 // request for the LRO generated by DeletePeeredDnsDomain API.
 type DeletePeeredDnsDomainMetadata struct {
@@ -1412,16 +1428,17 @@ func (s *DocumentationRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Endpoint: `Endpoint` describes a network endpoint that serves a set
-// of APIs. A service may expose any number of endpoints, and all
-// endpoints share the same service configuration, such as quota
-// configuration and monitoring configuration. Example service
-// configuration: name: library-example.googleapis.com endpoints: #
-// Below entry makes 'google.example.library.v1.Library' # API be served
-// from endpoint address library-example.googleapis.com. # It also
-// allows HTTP OPTIONS calls to be passed to the backend, for # it to
-// decide whether the subsequent cross-origin request is # allowed to
-// proceed. - name: library-example.googleapis.com allow_cors: true
+// Endpoint: `Endpoint` describes a network endpoint of a service that
+// serves a set of APIs. It is commonly known as a service endpoint. A
+// service may expose any number of service endpoints, and all service
+// endpoints share the same service definition, such as quota limits and
+// monitoring metrics. Example service configuration: name:
+// library-example.googleapis.com endpoints: # Below entry makes
+// 'google.example.library.v1.Library' # API be served from endpoint
+// address library-example.googleapis.com. # It also allows HTTP OPTIONS
+// calls to be passed to the backend, for # it to decide whether the
+// subsequent cross-origin request is # allowed to proceed. - name:
+// library-example.googleapis.com allow_cors: true
 type Endpoint struct {
 	// Aliases: DEPRECATED: This field is no longer supported. Instead of
 	// using aliases, please specify multiple google.api.Endpoint for each
@@ -1429,9 +1446,9 @@ type Endpoint struct {
 	// hosted on.
 	Aliases []string `json:"aliases,omitempty"`
 
-	// AllowCors: Allowing
-	// [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing),
-	// aka cross-domain traffic, would allow the backends served from this
+	// AllowCors: Allowing CORS
+	// (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), aka
+	// cross-domain traffic, would allow the backends served from this
 	// endpoint to receive and respond to HTTP OPTIONS requests. The
 	// response will be used by the browser to determine whether the
 	// subsequent cross-origin request is allowed to proceed.
@@ -1441,10 +1458,10 @@ type Endpoint struct {
 	Name string `json:"name,omitempty"`
 
 	// Target: The specification of an Internet routable address of API
-	// frontend that will handle requests to this [API
-	// Endpoint](https://cloud.google.com/apis/design/glossary). It should
-	// be either a valid IPv4 address or a fully-qualified domain name. For
-	// example, "8.8.8.8" or "myservice.appspot.com".
+	// frontend that will handle requests to this API Endpoint
+	// (https://cloud.google.com/apis/design/glossary). It should be either
+	// a valid IPv4 address or a fully-qualified domain name. For example,
+	// "8.8.8.8" or "myservice.appspot.com".
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aliases") to
@@ -1673,6 +1690,58 @@ func (s *GoogleCloudServicenetworkingV1ConsumerConfigReservedRange) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudServicenetworkingV1betaConnection: Represents a private
+// connection resource. A private connection is implemented as a VPC
+// Network Peering connection between a service producer's VPC network
+// and a service consumer's VPC network.
+type GoogleCloudServicenetworkingV1betaConnection struct {
+	// Network: The name of service consumer's VPC network that's connected
+	// with service producer network, in the following format:
+	// `projects/{project}/global/networks/{network}`. `{project}` is a
+	// project number, such as in `12345` that includes the VPC service
+	// consumer's VPC network. `{network}` is the name of the service
+	// consumer's VPC network.
+	Network string `json:"network,omitempty"`
+
+	// Peering: Output only. The name of the VPC Network Peering connection
+	// that was created by the service producer.
+	Peering string `json:"peering,omitempty"`
+
+	// ReservedPeeringRanges: The name of one or more allocated IP address
+	// ranges for this service producer of type `PEERING`. Note that
+	// invoking this method with a different range when connection is
+	// already established will not modify already provisioned service
+	// producer subnetworks.
+	ReservedPeeringRanges []string `json:"reservedPeeringRanges,omitempty"`
+
+	// Service: Output only. The name of the peering service that's
+	// associated with this connection, in the following format:
+	// `services/{service name}`.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Network") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Network") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudServicenetworkingV1betaConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudServicenetworkingV1betaConnection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudServicenetworkingV1betaSubnetwork: Represents a subnet
 // that was created or discovered by a private access management
 // service.
@@ -1759,33 +1828,32 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HttpRule: # gRPC Transcoding gRPC Transcoding is a feature for
 // mapping between a gRPC method and one or more HTTP REST endpoints. It
 // allows developers to build a single API service that supports both
-// gRPC APIs and REST APIs. Many systems, including [Google
-// APIs](https://github.com/googleapis/googleapis), [Cloud
-// Endpoints](https://cloud.google.com/endpoints), [gRPC
-// Gateway](https://github.com/grpc-ecosystem/grpc-gateway), and
-// [Envoy](https://github.com/envoyproxy/envoy) proxy support this
-// feature and use it for large scale production services. `HttpRule`
-// defines the schema of the gRPC/REST mapping. The mapping specifies
-// how different portions of the gRPC request message are mapped to the
-// URL path, URL query parameters, and HTTP request body. It also
-// controls how the gRPC response message is mapped to the HTTP response
-// body. `HttpRule` is typically specified as an `google.api.http`
-// annotation on the gRPC method. Each mapping specifies a URL path
-// template and an HTTP method. The path template may refer to one or
-// more fields in the gRPC request message, as long as each field is a
-// non-repeated field with a primitive (non-message) type. The path
-// template controls how fields of the request message are mapped to the
-// URL path. Example: service Messaging { rpc
-// GetMessage(GetMessageRequest) returns (Message) { option
-// (google.api.http) = { get: "/v1/{name=messages/*}" }; } } message
-// GetMessageRequest { string name = 1; // Mapped to URL path. } message
-// Message { string text = 1; // The resource content. } This enables an
-// HTTP REST to gRPC mapping as below: HTTP | gRPC -----|----- `GET
-// /v1/messages/123456` | `GetMessage(name: "messages/123456")` Any
-// fields in the request message which are not bound by the path
-// template automatically become HTTP query parameters if there is no
-// HTTP request body. For example: service Messaging { rpc
-// GetMessage(GetMessageRequest) returns (Message) { option
+// gRPC APIs and REST APIs. Many systems, including Google APIs
+// (https://github.com/googleapis/googleapis), Cloud Endpoints
+// (https://cloud.google.com/endpoints), gRPC Gateway
+// (https://github.com/grpc-ecosystem/grpc-gateway), and Envoy
+// (https://github.com/envoyproxy/envoy) proxy support this feature and
+// use it for large scale production services. `HttpRule` defines the
+// schema of the gRPC/REST mapping. The mapping specifies how different
+// portions of the gRPC request message are mapped to the URL path, URL
+// query parameters, and HTTP request body. It also controls how the
+// gRPC response message is mapped to the HTTP response body. `HttpRule`
+// is typically specified as an `google.api.http` annotation on the gRPC
+// method. Each mapping specifies a URL path template and an HTTP
+// method. The path template may refer to one or more fields in the gRPC
+// request message, as long as each field is a non-repeated field with a
+// primitive (non-message) type. The path template controls how fields
+// of the request message are mapped to the URL path. Example: service
+// Messaging { rpc GetMessage(GetMessageRequest) returns (Message) {
+// option (google.api.http) = { get: "/v1/{name=messages/*}" }; } }
+// message GetMessageRequest { string name = 1; // Mapped to URL path. }
+// message Message { string text = 1; // The resource content. } This
+// enables an HTTP REST to gRPC mapping as below: HTTP | gRPC
+// -----|----- `GET /v1/messages/123456` | `GetMessage(name:
+// "messages/123456")` Any fields in the request message which are not
+// bound by the path template automatically become HTTP query parameters
+// if there is no HTTP request body. For example: service Messaging {
+// rpc GetMessage(GetMessageRequest) returns (Message) { option
 // (google.api.http) = { get:"/v1/messages/{message_id}" }; } } message
 // GetMessageRequest { message SubMessage { string subfield = 1; }
 // string message_id = 1; // Mapped to URL path. int64 revision = 2; //
@@ -1865,16 +1933,16 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // variable is expanded into a URL path on the client side, all
 // characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The server
 // side does the reverse decoding. Such variables show up in the
-// [Discovery
-// Document](https://developers.google.com/discovery/v1/reference/apis)
-// as `{var}`. If a variable contains multiple path segments, such as
+// Discovery Document
+// (https://developers.google.com/discovery/v1/reference/apis) as
+// `{var}`. If a variable contains multiple path segments, such as
 // "{var=foo/*}" or "{var=**}", when such a variable is expanded
 // into a URL path on the client side, all characters except
 // `[-_.~/0-9a-zA-Z]` are percent-encoded. The server side does the
 // reverse decoding, except "%2F" and "%2f" are left unchanged. Such
-// variables show up in the [Discovery
-// Document](https://developers.google.com/discovery/v1/reference/apis)
-// as `{+var}`. ## Using gRPC API Service Configuration gRPC API Service
+// variables show up in the Discovery Document
+// (https://developers.google.com/discovery/v1/reference/apis) as
+// `{+var}`. ## Using gRPC API Service Configuration gRPC API Service
 // Configuration (service config) is a configuration language for
 // configuring a gRPC service to become a user-facing product. The
 // service config is simply the YAML representation of the
@@ -1890,26 +1958,26 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // example.v1.Messaging.GetMessage get:
 // /v1/messages/{message_id}/{sub.subfield} ## Special notes When gRPC
 // Transcoding is used to map a gRPC to JSON REST endpoints, the proto
-// to JSON conversion must follow the [proto3
-// specification](https://developers.google.com/protocol-buffers/docs/pro
-// to3#json). While the single segment variable follows the semantics of
-// [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple
-// String Expansion, the multi segment variable **does not** follow RFC
-// 6570 Section 3.2.3 Reserved Expansion. The reason is that the
-// Reserved Expansion does not expand special characters like `?` and
-// `#`, which would lead to invalid URLs. As the result, gRPC
-// Transcoding uses a custom encoding for multi segment variables. The
-// path variables **must not** refer to any repeated or mapped field,
-// because client libraries are not capable of handling such variable
-// expansion. The path variables **must not** capture the leading "/"
-// character. The reason is that the most common use case "{var}" does
-// not capture the leading "/" character. For consistency, all path
-// variables must share the same behavior. Repeated message fields must
-// not be mapped to URL query parameters, because no client library can
-// support such complicated mapping. If an API needs to use a JSON array
-// for request or response body, it can map the request or response body
-// to a repeated field. However, some gRPC Transcoding implementations
-// may not support this feature.
+// to JSON conversion must follow the proto3 specification
+// (https://developers.google.com/protocol-buffers/docs/proto3#json).
+// While the single segment variable follows the semantics of RFC 6570
+// (https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String
+// Expansion, the multi segment variable **does not** follow RFC 6570
+// Section 3.2.3 Reserved Expansion. The reason is that the Reserved
+// Expansion does not expand special characters like `?` and `#`, which
+// would lead to invalid URLs. As the result, gRPC Transcoding uses a
+// custom encoding for multi segment variables. The path variables
+// **must not** refer to any repeated or mapped field, because client
+// libraries are not capable of handling such variable expansion. The
+// path variables **must not** capture the leading "/" character. The
+// reason is that the most common use case "{var}" does not capture the
+// leading "/" character. For consistency, all path variables must share
+// the same behavior. Repeated message fields must not be mapped to URL
+// query parameters, because no client library can support such
+// complicated mapping. If an API needs to use a JSON array for request
+// or response body, it can map the request or response body to a
+// repeated field. However, some gRPC Transcoding implementations may
+// not support this feature.
 type HttpRule struct {
 	// AdditionalBindings: Additional HTTP bindings for the selector. Nested
 	// bindings must not contain an `additional_bindings` field themselves
@@ -2063,7 +2131,7 @@ func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
 // list peering states for the given service and consumer project.
 type ListConnectionsResponse struct {
 	// Connections: The list of Connections.
-	Connections []*Connection `json:"connections,omitempty"`
+	Connections []*GoogleCloudServicenetworkingV1betaConnection `json:"connections,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2377,11 +2445,11 @@ type MetricDescriptor struct {
 	// Unit: The units in which the metric value is reported. It is only
 	// applicable if the `value_type` is `INT64`, `DOUBLE`, or
 	// `DISTRIBUTION`. The `unit` defines the representation of the stored
-	// metric values. Different systems may scale the values to be more
-	// easily displayed (so a value of `0.02KBy` _might_ be displayed as
-	// `20By`, and a value of `3523KBy` _might_ be displayed as `3.5MBy`).
-	// However, if the `unit` is `KBy`, then the value of the metric is
-	// always in thousands of bytes, no matter how it may be displayed.. If
+	// metric values. Different systems might scale the values to be more
+	// easily displayed (so a value of `0.02kBy` _might_ be displayed as
+	// `20By`, and a value of `3523kBy` _might_ be displayed as `3.5MBy`).
+	// However, if the `unit` is `kBy`, then the value of the metric is
+	// always in thousands of bytes, no matter how it might be displayed. If
 	// you want a custom metric to record the exact number of CPU-seconds
 	// used by a job, you can create an `INT64 CUMULATIVE` metric whose
 	// `unit` is `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the
@@ -2390,8 +2458,8 @@ type MetricDescriptor struct {
 	// granular way, you can create a `DOUBLE CUMULATIVE` metric whose
 	// `unit` is `ks{CPU}`, and then write the value `12.005` (which is
 	// `12005/1000`), or use `Kis{CPU}` and write `11.723` (which is
-	// `12005/1024`). The supported units are a subset of [The Unified Code
-	// for Units of Measure](http://unitsofmeasure.org/ucum.html) standard:
+	// `12005/1024`). The supported units are a subset of The Unified Code
+	// for Units of Measure (https://unitsofmeasure.org/ucum.html) standard:
 	// **Basic units (UNIT)** * `bit` bit * `By` byte * `s` second * `min`
 	// minute * `h` hour * `d` day * `1` dimensionless **Prefixes (PREFIX)**
 	// * `k` kilo (10^3) * `M` mega (10^6) * `G` giga (10^9) * `T` tera
@@ -2414,11 +2482,11 @@ type MetricDescriptor struct {
 	// equivalent to `1`. For examples, `{request}/s == 1/s`,
 	// `By{transmitted}/s == By/s`. * `NAME` is a sequence of non-blank
 	// printable ASCII characters not containing `{` or `}`. * `1`
-	// represents a unitary [dimensionless
-	// unit](https://en.wikipedia.org/wiki/Dimensionless_quantity) of 1,
-	// such as in `1/s`. It is typically used when none of the basic units
-	// are appropriate. For example, "new users per day" can be represented
-	// as `1/d` or `{new-users}/d` (and a metric value `5` would mean "5 new
+	// represents a unitary dimensionless unit
+	// (https://en.wikipedia.org/wiki/Dimensionless_quantity) of 1, such as
+	// in `1/s`. It is typically used when none of the basic units are
+	// appropriate. For example, "new users per day" can be represented as
+	// `1/d` or `{new-users}/d` (and a metric value `5` would mean "5 new
 	// users). Alternatively, "thousands of page views per day" would be
 	// represented as `1000/d` or `k1/d` or `k{page_views}/d` (and a metric
 	// value of `5.3` would mean "5300 page views per day"). * `%`
@@ -3466,7 +3534,8 @@ type Service struct {
 	// Billing: Billing configuration.
 	Billing *Billing `json:"billing,omitempty"`
 
-	// ConfigVersion: This field is obsolete. Its value must be set to `3`.
+	// ConfigVersion: Deprecated. The service config compiler always sets
+	// this field to `3`.
 	ConfigVersion int64 `json:"configVersion,omitempty"`
 
 	// Context: Context configuration.
@@ -3643,11 +3712,11 @@ func (s *SourceInfo) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -3702,6 +3771,9 @@ type Subnetwork struct {
 	// OutsideAllocation: This is a discovered subnet that is not within the
 	// current consumer allocated ranges.
 	OutsideAllocation bool `json:"outsideAllocation,omitempty"`
+
+	// Region: GCP region where the subnetwork is located.
+	Region string `json:"region,omitempty"`
 
 	// SecondaryIpRanges: List of secondary IP ranges in this subnetwork.
 	SecondaryIpRanges []*SecondaryIpRange `json:"secondaryIpRanges,omitempty"`
@@ -3906,16 +3978,21 @@ type UpdateDnsRecordSetMetadata struct {
 type Usage struct {
 	// ProducerNotificationChannel: The full resource name of a channel used
 	// for sending notifications to the service producer. Google Service
-	// Management currently only supports [Google Cloud
-	// Pub/Sub](https://cloud.google.com/pubsub) as a notification channel.
-	// To use Google Cloud Pub/Sub as the channel, this must be the name of
-	// a Cloud Pub/Sub topic that uses the Cloud Pub/Sub topic name format
+	// Management currently only supports Google Cloud Pub/Sub
+	// (https://cloud.google.com/pubsub) as a notification channel. To use
+	// Google Cloud Pub/Sub as the channel, this must be the name of a Cloud
+	// Pub/Sub topic that uses the Cloud Pub/Sub topic name format
 	// documented in https://cloud.google.com/pubsub/docs/overview.
 	ProducerNotificationChannel string `json:"producerNotificationChannel,omitempty"`
 
 	// Requirements: Requirements that must be satisfied before a consumer
 	// project can use the service. Each requirement is of the form /; for
-	// example 'serviceusage.googleapis.com/billing-enabled'.
+	// example 'serviceusage.googleapis.com/billing-enabled'. For Google
+	// APIs, a Terms of Service requirement must be included here. Google
+	// Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
+	// Other Google APIs should include
+	// "serviceusage.googleapis.com/tos/universal". Additional ToS can be
+	// included based on the business needs.
 	Requirements []string `json:"requirements,omitempty"`
 
 	// Rules: A list of usage rules that apply to individual API methods.
@@ -4060,7 +4137,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4205,7 +4282,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4352,7 +4429,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4450,21 +4527,21 @@ func (c *ServicesSearchRangeCall) Do(opts ...googleapi.CallOption) (*Operation, 
 // method id "servicenetworking.services.updateConnections":
 
 type ServicesUpdateConnectionsCall struct {
-	s          *APIService
-	name       string
-	connection *Connection
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                                            *APIService
+	name                                         string
+	googlecloudservicenetworkingv1betaconnection *GoogleCloudServicenetworkingV1betaConnection
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
 }
 
 // UpdateConnections: Updates the allocated ranges that are assigned to
 // a connection. The response from the `get` operation will be of type
 // `Connection` if the operation successfully completes.
-func (r *ServicesService) UpdateConnections(name string, connection *Connection) *ServicesUpdateConnectionsCall {
+func (r *ServicesService) UpdateConnections(name string, googlecloudservicenetworkingv1betaconnection *GoogleCloudServicenetworkingV1betaConnection) *ServicesUpdateConnectionsCall {
 	c := &ServicesUpdateConnectionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.connection = connection
+	c.googlecloudservicenetworkingv1betaconnection = googlecloudservicenetworkingv1betaconnection
 	return c
 }
 
@@ -4510,13 +4587,13 @@ func (c *ServicesUpdateConnectionsCall) Header() http.Header {
 
 func (c *ServicesUpdateConnectionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.connection)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudservicenetworkingv1betaconnection)
 	if err != nil {
 		return nil, err
 	}
@@ -4603,7 +4680,7 @@ func (c *ServicesUpdateConnectionsCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   },
 	//   "path": "v1beta/{+name}/connections",
 	//   "request": {
-	//     "$ref": "Connection"
+	//     "$ref": "GoogleCloudServicenetworkingV1betaConnection"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -4619,12 +4696,12 @@ func (c *ServicesUpdateConnectionsCall) Do(opts ...googleapi.CallOption) (*Opera
 // method id "servicenetworking.services.connections.create":
 
 type ServicesConnectionsCreateCall struct {
-	s          *APIService
-	parent     string
-	connection *Connection
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                                            *APIService
+	parent                                       string
+	googlecloudservicenetworkingv1betaconnection *GoogleCloudServicenetworkingV1betaConnection
+	urlParams_                                   gensupport.URLParams
+	ctx_                                         context.Context
+	header_                                      http.Header
 }
 
 // Create: Creates a private connection that establishes a VPC Network
@@ -4636,10 +4713,10 @@ type ServicesConnectionsCreateCall struct {
 // services in the service producer's organization, so it only needs to
 // be invoked once. The response from the `get` operation will be of
 // type `Connection` if the operation successfully completes.
-func (r *ServicesConnectionsService) Create(parent string, connection *Connection) *ServicesConnectionsCreateCall {
+func (r *ServicesConnectionsService) Create(parent string, googlecloudservicenetworkingv1betaconnection *GoogleCloudServicenetworkingV1betaConnection) *ServicesConnectionsCreateCall {
 	c := &ServicesConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.connection = connection
+	c.googlecloudservicenetworkingv1betaconnection = googlecloudservicenetworkingv1betaconnection
 	return c
 }
 
@@ -4670,13 +4747,13 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.connection)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudservicenetworkingv1betaconnection)
 	if err != nil {
 		return nil, err
 	}
@@ -4752,7 +4829,7 @@ func (c *ServicesConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   },
 	//   "path": "v1beta/{+parent}/connections",
 	//   "request": {
-	//     "$ref": "Connection"
+	//     "$ref": "GoogleCloudServicenetworkingV1betaConnection"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -4833,7 +4910,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

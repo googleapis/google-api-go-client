@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -323,9 +323,9 @@ type GoogleCloudVideointelligenceV1Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API
+	// (https://developers.google.com/knowledge-graph/).
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -468,10 +468,16 @@ func (s *GoogleCloudVideointelligenceV1FaceAnnotation) MarshalJSON() ([]byte, er
 // GoogleCloudVideointelligenceV1FaceDetectionAnnotation: Face detection
 // annotation.
 type GoogleCloudVideointelligenceV1FaceDetectionAnnotation struct {
+	// Thumbnail: The thumbnail of a person's face.
+	Thumbnail string `json:"thumbnail,omitempty"`
+
+	// Tracks: The face tracks with attributes.
+	Tracks []*GoogleCloudVideointelligenceV1Track `json:"tracks,omitempty"`
+
 	// Version: Feature version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Version") to
+	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -479,7 +485,7 @@ type GoogleCloudVideointelligenceV1FaceDetectionAnnotation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Version") to include in
+	// NullFields is a list of field names (e.g. "Thumbnail") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1082,10 +1088,10 @@ type GoogleCloudVideointelligenceV1SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -1350,8 +1356,8 @@ type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -1412,8 +1418,8 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -1776,9 +1782,9 @@ type GoogleCloudVideointelligenceV1beta2Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API
+	// (https://developers.google.com/knowledge-graph/).
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -1922,10 +1928,16 @@ func (s *GoogleCloudVideointelligenceV1beta2FaceAnnotation) MarshalJSON() ([]byt
 // GoogleCloudVideointelligenceV1beta2FaceDetectionAnnotation: Face
 // detection annotation.
 type GoogleCloudVideointelligenceV1beta2FaceDetectionAnnotation struct {
+	// Thumbnail: The thumbnail of a person's face.
+	Thumbnail string `json:"thumbnail,omitempty"`
+
+	// Tracks: The face tracks with attributes.
+	Tracks []*GoogleCloudVideointelligenceV1beta2Track `json:"tracks,omitempty"`
+
 	// Version: Feature version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Version") to
+	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1933,7 +1945,7 @@ type GoogleCloudVideointelligenceV1beta2FaceDetectionAnnotation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Version") to include in
+	// NullFields is a list of field names (e.g. "Thumbnail") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2537,10 +2549,10 @@ type GoogleCloudVideointelligenceV1beta2SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -2806,8 +2818,8 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -2868,8 +2880,8 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -3232,9 +3244,9 @@ type GoogleCloudVideointelligenceV1p1beta1Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API
+	// (https://developers.google.com/knowledge-graph/).
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -3378,10 +3390,16 @@ func (s *GoogleCloudVideointelligenceV1p1beta1FaceAnnotation) MarshalJSON() ([]b
 // GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation: Face
 // detection annotation.
 type GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation struct {
+	// Thumbnail: The thumbnail of a person's face.
+	Thumbnail string `json:"thumbnail,omitempty"`
+
+	// Tracks: The face tracks with attributes.
+	Tracks []*GoogleCloudVideointelligenceV1p1beta1Track `json:"tracks,omitempty"`
+
 	// Version: Feature version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Version") to
+	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3389,7 +3407,7 @@ type GoogleCloudVideointelligenceV1p1beta1FaceDetectionAnnotation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Version") to include in
+	// NullFields is a list of field names (e.g. "Thumbnail") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3995,10 +4013,10 @@ type GoogleCloudVideointelligenceV1p1beta1SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p1beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -4264,8 +4282,8 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -4326,8 +4344,8 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p1beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -4569,12 +4587,12 @@ type GoogleCloudVideointelligenceV1p2beta1AnnotateVideoRequest struct {
 	// unset.
 	InputContent string `json:"inputContent,omitempty"`
 
-	// InputUri: Input video location. Currently, only [Cloud
-	// Storage](https://cloud.google.com/storage/) URIs are supported. URIs
-	// must be specified in the following format: `gs://bucket-id/object-id`
-	// (other URI formats return google.rpc.Code.INVALID_ARGUMENT). For more
-	// information, see [Request
-	// URIs](https://cloud.google.com/storage/docs/request-endpoints). To
+	// InputUri: Input video location. Currently, only Cloud Storage
+	// (https://cloud.google.com/storage/) URIs are supported. URIs must be
+	// specified in the following format: `gs://bucket-id/object-id` (other
+	// URI formats return google.rpc.Code.INVALID_ARGUMENT). For more
+	// information, see Request URIs
+	// (https://cloud.google.com/storage/docs/request-endpoints). To
 	// identify multiple videos, a video URI may include wildcards in the
 	// `object-id`. Supported wildcards: '*' to match 0 or more characters;
 	// '?' to match 1 character. If unset, the input video should be
@@ -4589,12 +4607,12 @@ type GoogleCloudVideointelligenceV1p2beta1AnnotateVideoRequest struct {
 	LocationId string `json:"locationId,omitempty"`
 
 	// OutputUri: Optional. Location where the output (in JSON format)
-	// should be stored. Currently, only [Cloud
-	// Storage](https://cloud.google.com/storage/) URIs are supported. These
-	// must be specified in the following format: `gs://bucket-id/object-id`
-	// (other URI formats return google.rpc.Code.INVALID_ARGUMENT). For more
-	// information, see [Request
-	// URIs](https://cloud.google.com/storage/docs/request-endpoints).
+	// should be stored. Currently, only Cloud Storage
+	// (https://cloud.google.com/storage/) URIs are supported. These must be
+	// specified in the following format: `gs://bucket-id/object-id` (other
+	// URI formats return google.rpc.Code.INVALID_ARGUMENT). For more
+	// information, see Request URIs
+	// (https://cloud.google.com/storage/docs/request-endpoints).
 	OutputUri string `json:"outputUri,omitempty"`
 
 	// VideoContext: Additional video context and/or feature-specific
@@ -4769,9 +4787,9 @@ type GoogleCloudVideointelligenceV1p2beta1Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API
+	// (https://developers.google.com/knowledge-graph/).
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -4945,10 +4963,16 @@ func (s *GoogleCloudVideointelligenceV1p2beta1FaceAnnotation) MarshalJSON() ([]b
 // GoogleCloudVideointelligenceV1p2beta1FaceDetectionAnnotation: Face
 // detection annotation.
 type GoogleCloudVideointelligenceV1p2beta1FaceDetectionAnnotation struct {
+	// Thumbnail: The thumbnail of a person's face.
+	Thumbnail string `json:"thumbnail,omitempty"`
+
+	// Tracks: The face tracks with attributes.
+	Tracks []*GoogleCloudVideointelligenceV1p2beta1Track `json:"tracks,omitempty"`
+
 	// Version: Feature version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Version") to
+	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4956,7 +4980,7 @@ type GoogleCloudVideointelligenceV1p2beta1FaceDetectionAnnotation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Version") to include in
+	// NullFields is a list of field names (e.g. "Thumbnail") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -5729,8 +5753,8 @@ type GoogleCloudVideointelligenceV1p2beta1SpeechContext struct {
 	// them. This can be used to improve the accuracy for specific words and
 	// phrases, for example, if specific commands are typically spoken by
 	// the user. This can also be used to add additional words to the
-	// vocabulary of the recognizer. See [usage
-	// limits](https://cloud.google.com/speech/limits#content).
+	// vocabulary of the recognizer. See usage limits
+	// (https://cloud.google.com/speech/limits#content).
 	Phrases []string `json:"phrases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Phrases") to
@@ -5822,10 +5846,10 @@ type GoogleCloudVideointelligenceV1p2beta1SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -5895,10 +5919,10 @@ type GoogleCloudVideointelligenceV1p2beta1SpeechTranscriptionConfig struct {
 	FilterProfanity bool `json:"filterProfanity,omitempty"`
 
 	// LanguageCode: Required. *Required* The language of the supplied audio
-	// as a [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
-	// tag. Example: "en-US". See [Language
-	// Support](https://cloud.google.com/speech/docs/languages) for a list
-	// of the currently supported language codes.
+	// as a BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
+	// tag. Example: "en-US". See Language Support
+	// (https://cloud.google.com/speech/docs/languages) for a list of the
+	// currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// MaxAlternatives: Optional. Maximum number of recognition hypotheses
@@ -6213,8 +6237,8 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -6275,8 +6299,8 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p2beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -6803,9 +6827,9 @@ type GoogleCloudVideointelligenceV1p3beta1Entity struct {
 	// Description: Textual description, e.g., `Fixed-gear bicycle`.
 	Description string `json:"description,omitempty"`
 
-	// EntityId: Opaque entity ID. Some IDs may be available in [Google
-	// Knowledge Graph Search
-	// API](https://developers.google.com/knowledge-graph/).
+	// EntityId: Opaque entity ID. Some IDs may be available in Google
+	// Knowledge Graph Search API
+	// (https://developers.google.com/knowledge-graph/).
 	EntityId string `json:"entityId,omitempty"`
 
 	// LanguageCode: Language code for `description` in BCP-47 format.
@@ -6949,10 +6973,16 @@ func (s *GoogleCloudVideointelligenceV1p3beta1FaceAnnotation) MarshalJSON() ([]b
 // GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation: Face
 // detection annotation.
 type GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation struct {
+	// Thumbnail: The thumbnail of a person's face.
+	Thumbnail string `json:"thumbnail,omitempty"`
+
+	// Tracks: The face tracks with attributes.
+	Tracks []*GoogleCloudVideointelligenceV1p3beta1Track `json:"tracks,omitempty"`
+
 	// Version: Feature version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Version") to
+	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6960,7 +6990,7 @@ type GoogleCloudVideointelligenceV1p3beta1FaceDetectionAnnotation struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Version") to include in
+	// NullFields is a list of field names (e.g. "Thumbnail") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -7612,10 +7642,10 @@ type GoogleCloudVideointelligenceV1p3beta1SpeechTranscription struct {
 	// the most probable, as ranked by the recognizer.
 	Alternatives []*GoogleCloudVideointelligenceV1p3beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
-	// LanguageCode: Output only. The
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
-	// of the language in this result. This language code was detected to
-	// have the most likelihood of being spoken in the audio.
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
@@ -7970,8 +8000,8 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 	//   "PERSON_DETECTION" - Person detection.
 	Feature string `json:"feature,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// ProgressPercent: Approximate percentage processed thus far.
@@ -8035,8 +8065,8 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 	// exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p3beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in [Cloud
-	// Storage](https://cloud.google.com/storage/).
+	// InputUri: Video file location in Cloud Storage
+	// (https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// LogoRecognitionAnnotations: Annotations for list of logos detected,
@@ -8287,11 +8317,11 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc).
-// Each `Status` message contains three pieces of data: error code,
-// error message, and error details. You can find out more about this
-// error model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -8377,7 +8407,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

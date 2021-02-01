@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -183,9 +183,9 @@ type AudioConfig struct {
 	// EffectsProfileId: Optional. Input only. An identifier which selects
 	// 'audio effects' profiles that are applied on (post synthesized) text
 	// to speech. Effects are applied on top of each other in the order they
-	// are given. See [audio
-	// profiles](https://cloud.google.com/text-to-speech/docs/audio-profiles)
-	//  for current supported profile ids.
+	// are given. See audio profiles
+	// (https://cloud.google.com/text-to-speech/docs/audio-profiles) for
+	// current supported profile ids.
 	EffectsProfileId []string `json:"effectsProfileId,omitempty"`
 
 	// Pitch: Optional. Input only. Speaking pitch, in the range [-20.0,
@@ -302,8 +302,8 @@ func (s *ListVoicesResponse) MarshalJSON() ([]byte, error) {
 type SynthesisInput struct {
 	// Ssml: The SSML document to be synthesized. The SSML document must be
 	// valid and well-formed. Otherwise the RPC will fail and return
-	// google.rpc.Code.INVALID_ARGUMENT. For more information, see
-	// [SSML](https://cloud.google.com/text-to-speech/docs/ssml).
+	// google.rpc.Code.INVALID_ARGUMENT. For more information, see SSML
+	// (https://cloud.google.com/text-to-speech/docs/ssml).
 	Ssml string `json:"ssml,omitempty"`
 
 	// Text: The raw text to be synthesized.
@@ -473,7 +473,7 @@ func (s *Timepoint) UnmarshalJSON(data []byte) error {
 // Voice: Description of a voice supported by the TTS service.
 type Voice struct {
 	// LanguageCodes: The languages that this voice supports, expressed as
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags
+	// BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags
 	// (e.g. "en-US", "es-419", "cmn-tw").
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 
@@ -526,9 +526,9 @@ func (s *Voice) MarshalJSON() ([]byte, error) {
 // synthesis request.
 type VoiceSelectionParams struct {
 	// LanguageCode: Required. The language (and potentially also the
-	// region) of the voice expressed as a
-	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag,
-	// e.g. "en-US". This should not include a script tag (e.g. use "cmn-cn"
+	// region) of the voice expressed as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag, e.g.
+	// "en-US". This should not include a script tag (e.g. use "cmn-cn"
 	// rather than "cmn-Hant-cn"), because the script will be inferred from
 	// the input provided in the SynthesisInput. The TTS service will use
 	// this parameter to help choose an appropriate voice. Note that the TTS
@@ -631,7 +631,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -729,7 +729,7 @@ func (r *VoicesService) List() *VoicesListCall {
 }
 
 // LanguageCode sets the optional parameter "languageCode": Recommended.
-// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+// BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
 // If specified, the ListVoices call will only return voices that can be
 // used to synthesize this language_code. E.g. when specifying "en-NZ",
 // you will get supported "en-\*" voices; when specifying "no", you will
@@ -778,7 +778,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

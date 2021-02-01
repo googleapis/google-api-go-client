@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -262,6 +262,52 @@ func (s *DatabaseConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values * A month and day value,
+// with a zero year, such as an anniversary * A year on its own, with
+// zero month and day values * A year and month value, with a zero day,
+// such as a credit card expiration date Related types are
+// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -272,6 +318,37 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionConfig: The encryption options for the Composer environment
+// and its dependencies.
+type EncryptionConfig struct {
+	// KmsKeyName: Optional. Customer-managed Encryption Key available
+	// through Google's Key Management Service. Cannot be updated. If not
+	// specified, Google-managed key will be used.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Environment: An environment for running orchestration tasks.
@@ -353,8 +430,8 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 // EnvironmentConfig: Configuration information for an environment.
 type EnvironmentConfig struct {
 	// AirflowUri: Output only. The URI of the Apache Airflow Web UI hosted
-	// within this environment (see [Airflow web
-	// interface](/composer/docs/how-to/accessing/airflow-web-interface)).
+	// within this environment (see Airflow web interface
+	// (/composer/docs/how-to/accessing/airflow-web-interface)).
 	AirflowUri string `json:"airflowUri,omitempty"`
 
 	// DagGcsPrefix: Output only. The Cloud Storage prefix of the DAGs for
@@ -368,9 +445,25 @@ type EnvironmentConfig struct {
 	// instance used internally by Apache Airflow software.
 	DatabaseConfig *DatabaseConfig `json:"databaseConfig,omitempty"`
 
+	// EncryptionConfig: Optional. The encryption options for the Composer
+	// environment and its dependencies. Cannot be updated.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
 	// this environment.
 	GkeCluster string `json:"gkeCluster,omitempty"`
+
+	// MaintenanceWindow: Optional. The maintenance window is the period
+	// when Cloud Composer components may undergo maintenance. It is defined
+	// so that maintenance is not executed during peak hours or critical
+	// time periods. The system will not be under maintenance for every
+	// occurrence of this window, but when maintenance is planned, it will
+	// be scheduled during the window. The maintenance window period must
+	// encompass at least 12 hours per week. This may be split into multiple
+	// chunks, each with a size of at least 4 hours. If this value is
+	// omitted, Cloud Composer components may be subject to maintenance at
+	// any time.
+	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 
 	// NodeConfig: The configuration used for the Kubernetes Engine cluster.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
@@ -426,8 +519,8 @@ type IPAllocationPolicy struct {
 	// IP addresses to pods in the cluster. This field is applicable only
 	// when `use_ip_aliases` is true. Set to blank to have GKE choose a
 	// range with the default size. Set to /netmask (e.g. `/14`) to have GKE
-	// choose a range with a specific netmask. Set to a
-	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// choose a range with a specific netmask. Set to a CIDR
+	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use. Specify `cluster_secondary_range_name` or
@@ -444,8 +537,8 @@ type IPAllocationPolicy struct {
 	// IP addresses in this cluster. This field is applicable only when
 	// `use_ip_aliases` is true. Set to blank to have GKE choose a range
 	// with the default size. Set to /netmask (e.g. `/14`) to have GKE
-	// choose a range with a specific netmask. Set to a
-	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// choose a range with a specific netmask. Set to a CIDR
+	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use. Specify `services_secondary_range_name` or
@@ -490,6 +583,10 @@ func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 
 // ImageVersion: Image Version information
 type ImageVersion struct {
+	// CreationDisabled: Whether it is impossible to create an environment
+	// with the image version.
+	CreationDisabled bool `json:"creationDisabled,omitempty"`
+
 	// ImageVersionId: The string identifier of the ImageVersion, in the
 	// form: "composer-x.y.z-airflow-a.b(.c)"
 	ImageVersionId string `json:"imageVersionId,omitempty"`
@@ -498,10 +595,17 @@ type ImageVersion struct {
 	// during environment creation if no input ImageVersion is specified.
 	IsDefault bool `json:"isDefault,omitempty"`
 
+	// ReleaseDate: The date of the version release.
+	ReleaseDate *Date `json:"releaseDate,omitempty"`
+
 	// SupportedPythonVersions: supported python versions
 	SupportedPythonVersions []string `json:"supportedPythonVersions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ImageVersionId") to
+	// UpgradeDisabled: Whether it is impossible to upgrade an environment
+	// running with the image version.
+	UpgradeDisabled bool `json:"upgradeDisabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationDisabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -509,7 +613,7 @@ type ImageVersion struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ImageVersionId") to
+	// NullFields is a list of field names (e.g. "CreationDisabled") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -636,6 +740,51 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MaintenanceWindow: The configuration settings for Cloud Composer
+// maintenance window. The following example: {
+// "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-01T07:00:00Z"
+// "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" } would define a maintenance
+// window between 01 and 07 hours UTC during each Tuesday and Wednesday.
+type MaintenanceWindow struct {
+	// EndTime: Required. Maintenance window end time. It is used only to
+	// calculate the duration of the maintenance window. The value for
+	// end_time must be in the future, relative to `start_time`.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Recurrence: Required. Maintenance window recurrence. Format is a
+	// subset of RFC-5545 (https://tools.ietf.org/html/rfc5545) `RRULE`. The
+	// only allowed values for `FREQ` field are `FREQ=DAILY` and
+	// `FREQ=WEEKLY;BYDAY=...` Example values: `FREQ=WEEKLY;BYDAY=TU,WE`,
+	// `FREQ=DAILY`.
+	Recurrence string `json:"recurrence,omitempty"`
+
+	// StartTime: Required. Start time of the first recurrence of the
+	// maintenance window.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeConfig: The configuration information for the Kubernetes Engine
 // nodes running the Apache Airflow software.
 type NodeConfig struct {
@@ -647,26 +796,25 @@ type NodeConfig struct {
 	// GKE cluster.
 	IpAllocationPolicy *IPAllocationPolicy `json:"ipAllocationPolicy,omitempty"`
 
-	// Location: Optional. The Compute Engine
-	// [zone](/compute/docs/regions-zones) in which to deploy the VMs used
-	// to run the Apache Airflow software, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example: "projects/{projectId}/zones/{zoneId}". This `location` must
-	// belong to the enclosing environment's project and location. If both
-	// this field and `nodeConfig.machineType` are specified,
-	// `nodeConfig.machineType` must belong to this `location`; if both are
-	// unspecified, the service will pick a zone in the Compute Engine
-	// region corresponding to the Cloud Composer location, and propagate
-	// that choice to both fields. If only one field (`location` or
-	// `nodeConfig.machineType`) is specified, the location information from
-	// the specified field will be propagated to the unspecified field.
+	// Location: Optional. The Compute Engine zone
+	// (/compute/docs/regions-zones) in which to deploy the VMs used to run
+	// the Apache Airflow software, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
+	// "projects/{projectId}/zones/{zoneId}". This `location` must belong to
+	// the enclosing environment's project and location. If both this field
+	// and `nodeConfig.machineType` are specified, `nodeConfig.machineType`
+	// must belong to this `location`; if both are unspecified, the service
+	// will pick a zone in the Compute Engine region corresponding to the
+	// Cloud Composer location, and propagate that choice to both fields. If
+	// only one field (`location` or `nodeConfig.machineType`) is specified,
+	// the location information from the specified field will be propagated
+	// to the unspecified field.
 	Location string `json:"location,omitempty"`
 
-	// MachineType: Optional. The Compute Engine [machine
-	// type](/compute/docs/machine-types) used for cluster instances,
-	// specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example:
+	// MachineType: Optional. The Compute Engine machine type
+	// (/compute/docs/machine-types) used for cluster instances, specified
+	// as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
 	// "projects/{projectId}/zones/{zoneId}/machineTypes/{machineTypeId}".
 	// The `machineType` must belong to the enclosing environment's project
 	// and location. If both this field and `nodeConfig.location` are
@@ -676,20 +824,32 @@ type NodeConfig struct {
 	// Composer location, and propagate that choice to both fields. If
 	// exactly one of this field and `nodeConfig.location` is specified, the
 	// location information from the specified field will be propagated to
-	// the unspecified field. The `machineTypeId` must not be a [shared-core
-	// machine type](/compute/docs/machine-types#sharedcore). If this field
+	// the unspecified field. The `machineTypeId` must not be a shared-core
+	// machine type (/compute/docs/machine-types#sharedcore). If this field
 	// is unspecified, the `machineTypeId` defaults to "n1-standard-1".
 	MachineType string `json:"machineType,omitempty"`
 
+	// MaxPodsPerNode: Optional. The maximum number of pods per node in the
+	// Cloud Composer GKE cluster. The value must be between 8 and 110 and
+	// it can be set only if the environment is VPC-native. The default
+	// value is 32. Values of this field will be propagated both to the
+	// `default-pool` node pool of the newly created GKE cluster, and to the
+	// default "Maximum Pods per Node" value which is used for newly created
+	// node pools if their value is not explicitly set during node pool
+	// creation. For more information, see [Optimizing IP address
+	// allocation]
+	// (https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr).
+	// Cannot be updated.
+	MaxPodsPerNode int64 `json:"maxPodsPerNode,omitempty"`
+
 	// Network: Optional. The Compute Engine network to be used for machine
-	// communications, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example: "projects/{projectId}/global/networks/{networkId}". If
-	// unspecified, the default network in the environment's project is
-	// used. If a [Custom Subnet
-	// Network](/vpc/docs/vpc#vpc_networks_and_subnets) is provided,
-	// `nodeConfig.subnetwork` must also be provided. For [Shared
-	// VPC](/vpc/docs/shared-vpc) subnetwork requirements, see
+	// communications, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
+	// "projects/{projectId}/global/networks/{networkId}". If unspecified,
+	// the default network in the environment's project is used. If a Custom
+	// Subnet Network (/vpc/docs/vpc#vpc_networks_and_subnets) is provided,
+	// `nodeConfig.subnetwork` must also be provided. For Shared VPC
+	// (/vpc/docs/shared-vpc) subnetwork requirements, see
 	// `nodeConfig.subnetwork`.
 	Network string `json:"network,omitempty"`
 
@@ -706,9 +866,8 @@ type NodeConfig struct {
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Subnetwork: Optional. The Compute Engine subnetwork to be used for
-	// machine communications, specified as a [relative resource
-	// name](/apis/design/resource_names#relative_resource_name). For
-	// example:
+	// machine communications, specified as a relative resource name
+	// (/apis/design/resource_names#relative_resource_name). For example:
 	// "projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}"
 	// If a subnetwork is provided, `nodeConfig.network` must also be
 	// provided, and the subnetwork must belong to the enclosing
@@ -717,8 +876,8 @@ type NodeConfig struct {
 
 	// Tags: Optional. The list of instance tags applied to all node VMs.
 	// Tags are used to identify valid sources or targets for network
-	// firewalls. Each tag within the list must comply with
-	// [RFC1035](https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
+	// firewalls. Each tag within the list must comply with RFC1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
@@ -826,8 +985,8 @@ type OperationMetadata struct {
 	//   "UPDATE" - A resource update operation.
 	OperationType string `json:"operationType,omitempty"`
 
-	// Resource: Output only. The resource being operated on, as a [relative
-	// resource name]( /apis/design/resource_names#relative_resource_name).
+	// Resource: Output only. The resource being operated on, as a relative
+	// resource name ( /apis/design/resource_names#relative_resource_name).
 	Resource string `json:"resource,omitempty"`
 
 	// ResourceUuid: Output only. The UUID of the resource being operated
@@ -964,6 +1123,10 @@ func (s *PrivateEnvironmentConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RestartWebServerRequest: Restart Airflow web server.
+type RestartWebServerRequest struct {
+}
+
 // SoftwareConfig: Specifies the selection and configuration of software
 // inside the environment.
 type SoftwareConfig struct {
@@ -975,12 +1138,11 @@ type SoftwareConfig struct {
 	// brackets ("]"). The property name must not be empty and must not
 	// contain an equals sign ("=") or semicolon (";"). Section and property
 	// names must not contain a period ("."). Apache Airflow configuration
-	// property names must be written in
-	// [snake_case](https://en.wikipedia.org/wiki/Snake_case). Property
-	// values can contain any character, and can be written in any
-	// lower/upper case format. Certain Apache Airflow configuration
-	// property values are
-	// [blocked](/composer/docs/concepts/airflow-configurations), and cannot
+	// property names must be written in snake_case
+	// (https://en.wikipedia.org/wiki/Snake_case). Property values can
+	// contain any character, and can be written in any lower/upper case
+	// format. Certain Apache Airflow configuration property values are
+	// blocked (/composer/docs/concepts/airflow-configurations), and cannot
 	// be overridden.
 	AirflowConfigOverrides map[string]string `json:"airflowConfigOverrides,omitempty"`
 
@@ -1003,16 +1165,16 @@ type SoftwareConfig struct {
 	// `composer-([0-9]+\.[0-9]+\.[0-9]+|latest)-airflow-[0-9]+\.[0-9]+(\.[0-
 	// 9]+.*)?`. When used as input, the server also checks if the provided
 	// version is supported and denies the request for an unsupported
-	// version. The Cloud Composer portion of the version is a [semantic
-	// version](https://semver.org) or `latest`. When the patch version is
+	// version. The Cloud Composer portion of the version is a semantic
+	// version (https://semver.org) or `latest`. When the patch version is
 	// omitted, the current Cloud Composer patch version is selected. When
 	// `latest` is provided instead of an explicit version number, the
 	// server replaces `latest` with the current Cloud Composer version and
 	// stores that version number in the same field. The portion of the
 	// image version that follows *airflow-* is an official Apache Airflow
-	// repository [release
-	// name](https://github.com/apache/incubator-airflow/releases). See also
-	// [Version List](/composer/docs/concepts/versioning/composer-versions).
+	// repository release name
+	// (https://github.com/apache/incubator-airflow/releases). See also
+	// Version List (/composer/docs/concepts/versioning/composer-versions).
 	ImageVersion string `json:"imageVersion,omitempty"`
 
 	// PypiPackages: Optional. Custom Python Package Index (PyPI) packages
@@ -1056,11 +1218,11 @@ func (s *SoftwareConfig) MarshalJSON() ([]byte, error) {
 
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
+// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
 // `Status` message contains three pieces of data: error code, error
 // message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
 type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -1208,7 +1370,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1346,7 +1508,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1487,7 +1649,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1645,7 +1807,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1899,7 +2061,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1999,6 +2161,146 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "composer.projects.locations.environments.restartWebServer":
+
+type ProjectsLocationsEnvironmentsRestartWebServerCall struct {
+	s                       *Service
+	name                    string
+	restartwebserverrequest *RestartWebServerRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// RestartWebServer: Restart Airflow web server.
+func (r *ProjectsLocationsEnvironmentsService) RestartWebServer(name string, restartwebserverrequest *RestartWebServerRequest) *ProjectsLocationsEnvironmentsRestartWebServerCall {
+	c := &ProjectsLocationsEnvironmentsRestartWebServerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.restartwebserverrequest = restartwebserverrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsRestartWebServerCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsRestartWebServerCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.restartwebserverrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:restartWebServer")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.restartWebServer" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Restart Airflow web server.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/environments/{environmentsId}:restartWebServer",
+	//   "httpMethod": "POST",
+	//   "id": "composer.projects.locations.environments.restartWebServer",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the environment to restart the web server for, in the form: \"projects/{projectId}/locations/{locationId}/environments/{environmentId}\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/environments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:restartWebServer",
+	//   "request": {
+	//     "$ref": "RestartWebServerRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "composer.projects.locations.imageVersions.list":
 
 type ProjectsLocationsImageVersionsListCall struct {
@@ -2014,6 +2316,14 @@ type ProjectsLocationsImageVersionsListCall struct {
 func (r *ProjectsLocationsImageVersionsService) List(parent string) *ProjectsLocationsImageVersionsListCall {
 	c := &ProjectsLocationsImageVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// IncludePastReleases sets the optional parameter
+// "includePastReleases": Whether or not image versions from old
+// releases should be included.
+func (c *ProjectsLocationsImageVersionsListCall) IncludePastReleases(includePastReleases bool) *ProjectsLocationsImageVersionsListCall {
+	c.urlParams_.Set("includePastReleases", fmt.Sprint(includePastReleases))
 	return c
 }
 
@@ -2068,7 +2378,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2138,6 +2448,11 @@ func (c *ProjectsLocationsImageVersionsListCall) Do(opts ...googleapi.CallOption
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "includePastReleases": {
+	//       "description": "Whether or not image versions from old releases should be included.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of image_versions to return.",
 	//       "format": "int32",
@@ -2236,7 +2551,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2379,7 +2694,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2553,7 +2868,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -246,17 +246,15 @@ func (s *AndroidInfo) MarshalJSON() ([]byte, error) {
 // Dynamic Link.
 type CreateManagedShortLinkRequest struct {
 	// DynamicLinkInfo: Information about the Dynamic Link to be shortened.
-	// [Learn
-	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
-	// ortener).
+	// Learn more
+	// (https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 	DynamicLinkInfo *DynamicLinkInfo `json:"dynamicLinkInfo,omitempty"`
 
 	// LongDynamicLink: Full long Dynamic Link URL with desired query
 	// parameters specified. For example,
 	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=com.sample"
-	// , [Learn
-	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
-	// ortener).
+	// , Learn more
+	// (https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
 
 	// Name: Link name to associate with the link. It's used for marketer to
@@ -341,17 +339,15 @@ func (s *CreateManagedShortLinkResponse) MarshalJSON() ([]byte, error) {
 // Link.
 type CreateShortDynamicLinkRequest struct {
 	// DynamicLinkInfo: Information about the Dynamic Link to be shortened.
-	// [Learn
-	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
-	// ortener).
+	// Learn more
+	// (https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 	DynamicLinkInfo *DynamicLinkInfo `json:"dynamicLinkInfo,omitempty"`
 
 	// LongDynamicLink: Full long Dynamic Link URL with desired query
 	// parameters specified. For example,
 	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=com.sample"
-	// , [Learn
-	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
-	// ortener).
+	// , Learn more
+	// (https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
 
 	// SdkVersion: Google SDK version. Version takes the form
@@ -564,21 +560,18 @@ func (s *DynamicLinkEventStat) MarshalJSON() ([]byte, error) {
 // DynamicLinkInfo: Information about a Dynamic Link.
 type DynamicLinkInfo struct {
 	// AnalyticsInfo: Parameters used for tracking. See all tracking
-	// parameters in the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
-	// manually).
+	// parameters in the documentation
+	// (https://firebase.google.com/docs/dynamic-links/create-manually).
 	AnalyticsInfo *AnalyticsInfo `json:"analyticsInfo,omitempty"`
 
 	// AndroidInfo: Android related information. See Android related
-	// parameters in the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
-	// manually).
+	// parameters in the documentation
+	// (https://firebase.google.com/docs/dynamic-links/create-manually).
 	AndroidInfo *AndroidInfo `json:"androidInfo,omitempty"`
 
 	// DesktopInfo: Desktop related information. See desktop related
-	// parameters in the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
-	// manually).
+	// parameters in the documentation
+	// (https://firebase.google.com/docs/dynamic-links/create-manually).
 	DesktopInfo *DesktopInfo `json:"desktopInfo,omitempty"`
 
 	// DomainUriPrefix: E.g. https://maps.app.goo.gl,
@@ -589,23 +582,23 @@ type DynamicLinkInfo struct {
 	DomainUriPrefix string `json:"domainUriPrefix,omitempty"`
 
 	// DynamicLinkDomain: Dynamic Links domain that the project owns, e.g.
-	// abcd.app.goo.gl [Learn
-	// more](https://firebase.google.com/docs/dynamic-links/android/receive)
-	// on how to set up Dynamic Link domain associated with your Firebase
+	// abcd.app.goo.gl Learn more
+	// (https://firebase.google.com/docs/dynamic-links/android/receive) on
+	// how to set up Dynamic Link domain associated with your Firebase
 	// project. Required if missing domain_uri_prefix.
 	DynamicLinkDomain string `json:"dynamicLinkDomain,omitempty"`
 
 	// IosInfo: iOS related information. See iOS related parameters in the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
-	// manually).
+	// documentation
+	// (https://firebase.google.com/docs/dynamic-links/create-manually).
 	IosInfo *IosInfo `json:"iosInfo,omitempty"`
 
 	// Link: The link your app will open, You can specify any URL your app
 	// can handle. This link must be a well-formatted URL, be properly
 	// URL-encoded, and use the HTTP or HTTPS scheme. See 'link' parameters
-	// in the
-	// [documentation](https://firebase.google.com/docs/dynamic-links/create-
-	// manually). Required.
+	// in the documentation
+	// (https://firebase.google.com/docs/dynamic-links/create-manually).
+	// Required.
 	Link string `json:"link,omitempty"`
 
 	// NavigationInfo: Information of navigation behavior of a Firebase
@@ -1061,14 +1054,13 @@ func (s *GetIosReopenAttributionResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePlayAnalytics: Parameters for Google Play Campaign
-// Measurements. [Learn
-// more](https://developers.google.com/analytics/devguides/collection/and
-// roid/v4/campaigns#campaign-params)
+// Measurements. Learn more
+// (https://developers.google.com/analytics/devguides/collection/android/v4/campaigns#campaign-params)
 type GooglePlayAnalytics struct {
-	// Gclid: [AdWords autotagging
-	// parameter](https://support.google.com/analytics/answer/1033981?hl=en);
-	//  used to measure Google AdWords ads. This value is generated
-	// dynamically and should never be modified.
+	// Gclid: AdWords autotagging parameter
+	// (https://support.google.com/analytics/answer/1033981?hl=en); used to
+	// measure Google AdWords ads. This value is generated dynamically and
+	// should never be modified.
 	Gclid string `json:"gclid,omitempty"`
 
 	// UtmCampaign: Campaign name; used for keyword analysis to identify a
@@ -1430,7 +1422,7 @@ func (c *ManagedShortLinksCreateCall) Header() http.Header {
 
 func (c *ManagedShortLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1561,7 +1553,7 @@ func (c *ShortLinksCreateCall) Header() http.Header {
 
 func (c *ShortLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1713,7 +1705,7 @@ func (c *V1GetLinkStatsCall) Header() http.Header {
 
 func (c *V1GetLinkStatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1857,7 +1849,7 @@ func (c *V1InstallAttributionCall) Header() http.Header {
 
 func (c *V1InstallAttributionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1984,7 +1976,7 @@ func (c *V1ReopenAttributionCall) Header() http.Header {
 
 func (c *V1ReopenAttributionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

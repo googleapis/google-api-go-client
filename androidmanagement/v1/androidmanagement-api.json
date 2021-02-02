@@ -114,6 +114,11 @@
           "id": "androidmanagement.enterprises.create",
           "parameterOrder": [],
           "parameters": {
+            "agreementAccepted": {
+              "description": "This feature is not generally available yet. Whether the managed Google Play Agreement is presented and agreed.",
+              "location": "query",
+              "type": "boolean"
+            },
             "enterpriseToken": {
               "description": "The enterprise token appended to the callback URL.",
               "location": "query",
@@ -141,6 +146,31 @@
             "https://www.googleapis.com/auth/androidmanagement"
           ]
         },
+        "delete": {
+          "description": "This feature is not generally available yet. Deletes an enterprise.",
+          "flatPath": "v1/enterprises/{enterprisesId}",
+          "httpMethod": "DELETE",
+          "id": "androidmanagement.enterprises.delete",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "This feature is not generally available yet. The name of the enterprise in the form enterprises/{enterpriseId}.",
+              "location": "path",
+              "pattern": "^enterprises/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "response": {
+            "$ref": "Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidmanagement"
+          ]
+        },
         "get": {
           "description": "Gets an enterprise.",
           "flatPath": "v1/enterprises/{enterprisesId}",
@@ -161,6 +191,51 @@
           "path": "v1/{+name}",
           "response": {
             "$ref": "Enterprise"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidmanagement"
+          ]
+        },
+        "list": {
+          "description": "This feature is not generally available yet. Lists enterprises that are managed by an EMM. Only partial views are returned.",
+          "flatPath": "v1/enterprises",
+          "httpMethod": "GET",
+          "id": "androidmanagement.enterprises.list",
+          "parameterOrder": [],
+          "parameters": {
+            "pageSize": {
+              "description": "This feature is not generally available yet. The requested page size. The actual page size may be fixed to a min or max value.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "This feature is not generally available yet. A token identifying a page of results returned by the server.",
+              "location": "query",
+              "type": "string"
+            },
+            "projectId": {
+              "description": "Required. This feature is not generally available yet. The ID of the Cloud project of the EMM the enterprises belongs to.",
+              "location": "query",
+              "type": "string"
+            },
+            "view": {
+              "description": "This feature is not generally available yet. View that specify that partial response should be returned.",
+              "enum": [
+                "ENTERPRISE_VIEW_UNSPECIFIED",
+                "BASIC"
+              ],
+              "enumDescriptions": [
+                "This feature is not generally available yet. The API will default to the BASIC view for the List method.",
+                "This feature is not generally available yet. Includes name and enterprise_display_name fields."
+              ],
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1/enterprises",
+          "response": {
+            "$ref": "ListEnterprisesResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/androidmanagement"
@@ -1116,7 +1191,7 @@
           "type": "array"
         },
         "autoUpdateMode": {
-          "description": "This feature is not generally available.",
+          "description": "This feature is not generally available yet.",
           "enum": [
             "AUTO_UPDATE_MODE_UNSPECIFIED",
             "AUTO_UPDATE_DEFAULT",
@@ -1124,10 +1199,10 @@
             "AUTO_UPDATE_HIGH_PRIORITY"
           ],
           "enumDescriptions": [
-            "This feature is not generally available.",
-            "This feature is not generally available.",
-            "This feature is not generally available.",
-            "This feature is not generally available."
+            "This feature is not generally available yet.",
+            "This feature is not generally available yet.",
+            "This feature is not generally available yet.",
+            "This feature is not generally available yet."
           ],
           "type": "string"
         },
@@ -1514,6 +1589,41 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ContactInfo": {
+      "description": "Contact details for LaForge enterprises.",
+      "id": "ContactInfo",
+      "properties": {
+        "contactEmail": {
+          "description": "Email address for a point of contact, which will be used to send important announcements related to managed Google Play.",
+          "type": "string"
+        },
+        "dataProtectionOfficerEmail": {
+          "description": "The email of the data protection officer. The email is validated but not verified.",
+          "type": "string"
+        },
+        "dataProtectionOfficerName": {
+          "description": "The name of the data protection officer.",
+          "type": "string"
+        },
+        "dataProtectionOfficerPhone": {
+          "description": "The phone number of the data protection officer The phone number is validated but not verified.",
+          "type": "string"
+        },
+        "euRepresentativeEmail": {
+          "description": "The email of the EU representative. The email is validated but not verified.",
+          "type": "string"
+        },
+        "euRepresentativeName": {
+          "description": "The name of the EU representative.",
+          "type": "string"
+        },
+        "euRepresentativePhone": {
+          "description": "The phone number of the EU representative. The phone number is validated but not verified.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1941,6 +2051,10 @@
           "description": "Deprecated and unused.",
           "type": "boolean"
         },
+        "contactInfo": {
+          "$ref": "ContactInfo",
+          "description": "This feature is not generally available yet. The enterprise contact info of an EMM owned enterprise"
+        },
         "enabledNotificationTypes": {
           "description": "The types of Google Pub/Sub notifications enabled for the enterprise.",
           "items": {
@@ -2333,6 +2447,24 @@
         },
         "nextPageToken": {
           "description": "If there are more results, a token to retrieve next page of results.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListEnterprisesResponse": {
+      "description": "This feature is not generally available yet. Response to a request to list enterprises.",
+      "id": "ListEnterprisesResponse",
+      "properties": {
+        "enterprises": {
+          "description": "This feature is not generally available yet. The list of enterprises.",
+          "items": {
+            "$ref": "Enterprise"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "This feature is not generally available yet. If there are more results, a token to retrieve next page of results.",
           "type": "string"
         }
       },

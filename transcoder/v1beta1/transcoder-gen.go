@@ -325,7 +325,9 @@ type AnimationFade struct {
 
 	// Xy: Normalized coordinates based on output video resolution. Valid
 	// values: `0.0`–`1.0`. `xy` is the upper-left coordinate of the
-	// overlay object.
+	// overlay object. For example, use the x and y coordinates {0,0} to
+	// position the top-left corner of the overlay animation in the top-left
+	// corner of the output video.
 	Xy *NormalizedCoordinate `json:"xy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTimeOffset") to
@@ -359,7 +361,9 @@ type AnimationStatic struct {
 
 	// Xy: Normalized coordinates based on output video resolution. Valid
 	// values: `0.0`–`1.0`. `xy` is the upper-left coordinate of the
-	// overlay object.
+	// overlay object. For example, use the x and y coordinates {0,0} to
+	// position the top-left corner of the overlay animation in the top-left
+	// corner of the output video.
 	Xy *NormalizedCoordinate `json:"xy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "StartTimeOffset") to
@@ -975,8 +979,8 @@ func (s *FailureDetail) MarshalJSON() ([]byte, error) {
 
 // Image: Overlaid jpeg image.
 type Image struct {
-	// Alpha: Target image opacity. Valid values: `1` (solid, default), `0`
-	// (transparent).
+	// Alpha: Target image opacity. Valid values: `1.0` (solid, default) to
+	// `0.0` (transparent).
 	Alpha float64 `json:"alpha,omitempty"`
 
 	// Resolution: Normalized image resolution, based on output video
@@ -1035,8 +1039,9 @@ type Input struct {
 	// PreprocessingConfig: Preprocessing configurations.
 	PreprocessingConfig *PreprocessingConfig `json:"preprocessingConfig,omitempty"`
 
-	// Uri: URI of the media. It must be stored in Cloud Storage. Example
-	// `gs://bucket/inputs/file.mp4`. If empty the value will be populated
+	// Uri: URI of the media. Input files must be at least 5 seconds in
+	// duration and stored in Cloud Storage (for example,
+	// `gs://bucket/inputs/file.mp4`). If empty, the value will be populated
 	// from `Job.input_uri`.
 	Uri string `json:"uri,omitempty"`
 
@@ -1086,9 +1091,9 @@ type Job struct {
 
 	// InputUri: Input only. Specify the `input_uri` to populate empty `uri`
 	// fields in each element of `Job.config.inputs` or
-	// `JobTemplate.config.inputs` when using template. URI of the media. It
-	// must be stored in Cloud Storage. For example,
-	// `gs://bucket/inputs/file.mp4`.
+	// `JobTemplate.config.inputs` when using template. URI of the media.
+	// Input files must be at least 5 seconds in duration and stored in
+	// Cloud Storage (for example, `gs://bucket/inputs/file.mp4`).
 	InputUri string `json:"inputUri,omitempty"`
 
 	// Name: The resource name of the job. Format:
@@ -1512,6 +1517,58 @@ func (s *NormalizedCoordinate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// OperationMetadata: Represents the metadata of the long-running
+// operation.
+type OperationMetadata struct {
+	// ApiVersion: [Output only] API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CancelRequested: [Output only] Identifies whether the user has
+	// requested cancellation of the operation. Operations that have
+	// successfully been cancelled have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	CancelRequested bool `json:"cancelRequested,omitempty"`
+
+	// CreateTime: [Output only] The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: [Output only] The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StatusDetail: [Output only] Human-readable status of the operation,
+	// if any.
+	StatusDetail string `json:"statusDetail,omitempty"`
+
+	// Target: [Output only] Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: [Output only] Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OriginUri: The origin URI.
 type OriginUri struct {
 	// Dash: Dash manifest URI. If multiple Dash manifests are created, only
@@ -1771,7 +1828,9 @@ type SegmentSettings struct {
 	IndividualSegments bool `json:"individualSegments,omitempty"`
 
 	// SegmentDuration: Duration of the segments in seconds. The default is
-	// "6.0s".
+	// "6.0s". Note that `segmentDuration` must be greater than or equal
+	// to `gopDuration` (#videostream), and `segmentDuration` must be
+	// divisible by `gopDuration` (#videostream).
 	SegmentDuration string `json:"segmentDuration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IndividualSegments")
@@ -2022,18 +2081,20 @@ type VideoStream struct {
 	// an output FPS that is divisible by the input FPS, and smaller or
 	// equal to the target FPS. The following table shows the computed video
 	// FPS given the target FPS (in parenthesis) and input FPS (in the first
-	// column): | | (30) | (60) | (25) | (50) |
+	// column): ``` | | (30) | (60) | (25) | (50) |
 	// |--------|--------|--------|------|------| | 240 | Fail | Fail | Fail
 	// | Fail | | 120 | 30 | 60 | 20 | 30 | | 100 | 25 | 50 | 20 | 30 | | 50
 	// | 25 | 50 | 20 | 30 | | 60 | 30 | 60 | 20 | 30 | | 59.94 | 29.97 |
 	// 59.94 | 20 | 30 | | 48 | 24 | 48 | 20 | 30 | | 30 | 30 | 30 | 20 | 30
 	// | | 25 | 25 | 25 | 20 | 30 | | 24 | 24 | 24 | 20 | 30 | | 23.976 |
 	// 23.976 | 23.976 | 20 | 30 | | 15 | 15 | 15 | 20 | 30 | | 12 | 12 | 12
-	// | 20 | 30 | | 10 | 10 | 10 | 20 | 30 |
+	// | 20 | 30 | | 10 | 10 | 10 | 20 | 30 | ```
 	FrameRate float64 `json:"frameRate,omitempty"`
 
 	// GopDuration: Select the GOP size based on the specified duration. The
-	// default is "3s".
+	// default is "3s". Note that `gopDuration` must be less than or equal
+	// to `segmentDuration` (#SegmentSettings), and `segmentDuration`
+	// (#SegmentSettings) must be divisible by `gopDuration`.
 	GopDuration string `json:"gopDuration,omitempty"`
 
 	// GopFrameCount: Select the GOP size based on the specified frame
@@ -2190,7 +2251,7 @@ func (c *ProjectsLocationsJobTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2333,7 +2394,7 @@ func (c *ProjectsLocationsJobTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2474,7 +2535,7 @@ func (c *ProjectsLocationsJobTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2633,7 +2694,7 @@ func (c *ProjectsLocationsJobTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2800,7 +2861,7 @@ func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2938,7 +2999,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3079,7 +3140,7 @@ func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3238,7 +3299,7 @@ func (c *ProjectsLocationsJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

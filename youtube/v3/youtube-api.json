@@ -1336,66 +1336,6 @@
             "https://www.googleapis.com/auth/youtube.force-ssl"
           ]
         },
-        "control": {
-          "description": "Slate and recording control of the live broadcast. Support actions: slate on/off, recording start/stop/pause/resume. Design doc: goto/yt-api-liveBroadcast-control",
-          "flatPath": "youtube/v3/liveBroadcasts/control",
-          "httpMethod": "POST",
-          "id": "youtube.liveBroadcasts.control",
-          "parameterOrder": [
-            "id",
-            "part"
-          ],
-          "parameters": {
-            "displaySlate": {
-              "description": "Whether display or hide slate.",
-              "location": "query",
-              "type": "boolean"
-            },
-            "id": {
-              "description": "Broadcast to operate.",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            },
-            "offsetTimeMs": {
-              "description": "The exact time when the actions (e.g. slate on) are executed. It is an offset from the first frame of the monitor stream. If not set, it means \"now\" or ASAP. This field should not be set if the monitor stream is disabled, otherwise an error will be returned.",
-              "format": "uint64",
-              "location": "query",
-              "type": "string"
-            },
-            "onBehalfOfContentOwner": {
-              "description": "*Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwner* parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-              "location": "query",
-              "type": "string"
-            },
-            "onBehalfOfContentOwnerChannel": {
-              "description": "This parameter can only be used in a properly authorized request. *Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
-              "location": "query",
-              "type": "string"
-            },
-            "part": {
-              "description": "The *part* parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
-              "location": "query",
-              "repeated": true,
-              "required": true,
-              "type": "string"
-            },
-            "walltime": {
-              "description": "The wall clock time at which the action should be executed. Only one of offset_time_ms and walltime may be set at a time.",
-              "format": "google-datetime",
-              "location": "query",
-              "type": "string"
-            }
-          },
-          "path": "youtube/v3/liveBroadcasts/control",
-          "response": {
-            "$ref": "LiveBroadcast"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/youtube",
-            "https://www.googleapis.com/auth/youtube.force-ssl"
-          ]
-        },
         "delete": {
           "description": "Delete a given broadcast.",
           "flatPath": "youtube/v3/liveBroadcasts",
@@ -3824,7 +3764,7 @@
       }
     }
   },
-  "revision": "20210126",
+  "revision": "20210130",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {

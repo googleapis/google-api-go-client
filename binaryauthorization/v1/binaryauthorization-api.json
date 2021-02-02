@@ -520,9 +520,38 @@
           }
         }
       }
+    },
+    "systempolicy": {
+      "methods": {
+        "getPolicy": {
+          "description": "Gets the current system policy in the specified location.",
+          "flatPath": "v1/locations/{locationsId}/policy",
+          "httpMethod": "GET",
+          "id": "binaryauthorization.systempolicy.getPolicy",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The resource name, in the format `locations/*/policy`. Note that the system policy is not associated with a project.",
+              "location": "path",
+              "pattern": "^locations/[^/]+/policy$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        }
+      }
     }
   },
-  "revision": "20210122",
+  "revision": "20210129",
   "rootUrl": "https://binaryauthorization.googleapis.com/",
   "schemas": {
     "AdmissionRule": {

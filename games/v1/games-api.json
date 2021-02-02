@@ -1256,7 +1256,7 @@
       }
     }
   },
-  "revision": "20210121",
+  "revision": "20210128",
   "rootUrl": "https://games.googleapis.com/",
   "schemas": {
     "AchievementDefinition": {
@@ -3119,7 +3119,8 @@
           "type": "integer"
         },
         "mimeType": {
-          "description": "The MIME type of the image.",
+          "description": "Output only. The MIME type of the image.",
+          "readOnly": true,
           "type": "string"
         },
         "resourceId": {

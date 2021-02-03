@@ -264,7 +264,7 @@
       }
     }
   },
-  "revision": "20210109",
+  "revision": "20210131",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1beta1AllUpdatesRule": {
@@ -342,7 +342,7 @@
         },
         "specifiedAmount": {
           "$ref": "GoogleTypeMoney",
-          "description": "A specified amount to use as the budget. `currency_code` is optional. If specified, it must match the currency of the billing account. The `currency_code` is provided on output."
+          "description": "A specified amount to use as the budget. `currency_code` is optional. If specified when creating a budget, it must match the currency of the billing account. If specified when updating a budget, it must match the existing budget currency_code. The `currency_code` is provided on output."
         }
       },
       "type": "object"

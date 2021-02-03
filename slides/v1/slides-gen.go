@@ -306,6 +306,76 @@ func (s *AutoText) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Autofit: The autofit properties of a Shape.
+type Autofit struct {
+	// AutofitType: The autofit type of the shape. If unspecified, the
+	// autofit type is inherited from a parent placeholder if it exists. The
+	// field will be automatically set to NONE if a request is made that may
+	// affect text fitting within its bounding text box. In this case the
+	// font_scale will be applied to the font_size and the
+	// line_spacing_reduction will be applied to the line_spacing. Both
+	// properties would also be reset to default values.
+	//
+	// Possible values:
+	//   "AUTOFIT_TYPE_UNSPECIFIED" - The autofit type is unspecified.
+	//   "NONE" - Do not autofit.
+	//   "TEXT_AUTOFIT" - Shrink text on overflow to fit shape.
+	//   "SHAPE_AUTOFIT" - Resize shape to fit text.
+	AutofitType string `json:"autofitType,omitempty"`
+
+	// FontScale: The font scale applied to the shape. For shapes with
+	// autofit_type NONE or SHAPE_AUTOFIT, this value will be the default
+	// value of 1. For TEXT_AUTOFIT, this value multiplied by the font_size
+	// will give the font size that is rendered in the editor. This property
+	// is read-only.
+	FontScale float64 `json:"fontScale,omitempty"`
+
+	// LineSpacingReduction: The line spacing reduction applied to the
+	// shape. For shapes with autofit_type NONE or SHAPE_AUTOFIT, this value
+	// will be the default value of 0. For TEXT_AUTOFIT, this value
+	// subtracted from the line_spacing will give the line spacing that is
+	// rendered in the editor. This property is read-only.
+	LineSpacingReduction float64 `json:"lineSpacingReduction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutofitType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutofitType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Autofit) MarshalJSON() ([]byte, error) {
+	type NoMethod Autofit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Autofit) UnmarshalJSON(data []byte) error {
+	type NoMethod Autofit
+	var s1 struct {
+		FontScale            gensupport.JSONFloat64 `json:"fontScale"`
+		LineSpacingReduction gensupport.JSONFloat64 `json:"lineSpacingReduction"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FontScale = float64(s1.FontScale)
+	s.LineSpacingReduction = float64(s1.LineSpacingReduction)
+	return nil
+}
+
 // BatchUpdatePresentationRequest: Request message for
 // PresentationsService.BatchUpdatePresentation.
 type BatchUpdatePresentationRequest struct {
@@ -4845,6 +4915,10 @@ func (s *ShapeBackgroundFill) MarshalJSON() ([]byte, error) {
 // on the shape are automatically deactivated by requests that can
 // impact how text fits in the shape.
 type ShapeProperties struct {
+	// Autofit: The autofit properties of the shape. This property is only
+	// set for shapes that allow text.
+	Autofit *Autofit `json:"autofit,omitempty"`
+
 	// ContentAlignment: The alignment of the content in the shape. If
 	// unspecified, the alignment is inherited from a parent placeholder if
 	// it exists. If the shape has no parent, the default alignment matches
@@ -4886,7 +4960,7 @@ type ShapeProperties struct {
 	// the Slides editor.
 	ShapeBackgroundFill *ShapeBackgroundFill `json:"shapeBackgroundFill,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ContentAlignment") to
+	// ForceSendFields is a list of field names (e.g. "Autofit") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4894,13 +4968,12 @@ type ShapeProperties struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ContentAlignment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Autofit") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -7090,7 +7163,7 @@ func (c *PresentationsBatchUpdateCall) Header() http.Header {
 
 func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7236,7 +7309,7 @@ func (c *PresentationsCreateCall) Header() http.Header {
 
 func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7374,7 +7447,7 @@ func (c *PresentationsGetCall) Header() http.Header {
 
 func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7525,7 +7598,7 @@ func (c *PresentationsPagesGetCall) Header() http.Header {
 
 func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7714,7 +7787,7 @@ func (c *PresentationsPagesGetThumbnailCall) Header() http.Header {
 
 func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

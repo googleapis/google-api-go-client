@@ -282,7 +282,7 @@
       }
     }
   },
-  "revision": "20201208",
+  "revision": "20210201",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -754,6 +754,13 @@
           "description": "Specifies the API Level on which the application is designed to run.",
           "format": "int32",
           "type": "integer"
+        },
+        "usesPermission": {
+          "description": "Permissions declared to be used by the application",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

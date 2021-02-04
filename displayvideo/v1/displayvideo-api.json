@@ -6249,7 +6249,7 @@
       }
     }
   },
-  "revision": "20210127",
+  "revision": "20210202",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -8324,7 +8324,7 @@
             "SDF version 4.2",
             "SDF version 5.",
             "SDF version 5.1",
-            "SDF version 5.2;",
+            "SDF version 5.2",
             "SDF version 5.3"
           ],
           "type": "string"
@@ -9760,19 +9760,19 @@
             "United.",
             "Yieldlab.",
             "Yieldmo.",
-            "UnrulyX",
-            "Open8",
+            "UnrulyX.",
+            "Open8.",
             "Triton.",
-            "TripleLift",
-            "Taboola",
+            "TripleLift.",
+            "Taboola.",
             "InMobi.",
-            "Smaato",
+            "Smaato.",
             "Aja.",
             "Supership.",
             "Nexstar Digital.",
             "Waze.",
             "SoundCast.",
-            "Sharethrough"
+            "Sharethrough."
           ],
           "type": "string"
         },
@@ -9916,19 +9916,19 @@
             "United.",
             "Yieldlab.",
             "Yieldmo.",
-            "UnrulyX",
-            "Open8",
+            "UnrulyX.",
+            "Open8.",
             "Triton.",
-            "TripleLift",
-            "Taboola",
+            "TripleLift.",
+            "Taboola.",
             "InMobi.",
-            "Smaato",
+            "Smaato.",
             "Aja.",
             "Supership.",
             "Nexstar Digital.",
             "Waze.",
             "SoundCast.",
-            "Sharethrough"
+            "Sharethrough."
           ],
           "type": "string"
         },
@@ -10073,19 +10073,19 @@
             "United.",
             "Yieldlab.",
             "Yieldmo.",
-            "UnrulyX",
-            "Open8",
+            "UnrulyX.",
+            "Open8.",
             "Triton.",
-            "TripleLift",
-            "Taboola",
+            "TripleLift.",
+            "Taboola.",
             "InMobi.",
-            "Smaato",
+            "Smaato.",
             "Aja.",
             "Supership.",
             "Nexstar Digital.",
             "Waze.",
             "SoundCast.",
-            "Sharethrough"
+            "Sharethrough."
           ],
           "readOnly": true,
           "type": "string"
@@ -10966,8 +10966,8 @@
           ],
           "enumDescriptions": [
             "Insertion order type is not specified or is unknown.",
-            "RTB Video type IO.",
-            "Video Over the top type IO."
+            "Real-time bidding.",
+            "Over-the-top."
           ],
           "type": "string"
         },
@@ -11458,19 +11458,19 @@
             "United.",
             "Yieldlab.",
             "Yieldmo.",
-            "UnrulyX",
-            "Open8",
+            "UnrulyX.",
+            "Open8.",
             "Triton.",
-            "TripleLift",
-            "Taboola",
+            "TripleLift.",
+            "Taboola.",
             "InMobi.",
-            "Smaato",
+            "Smaato.",
             "Aja.",
             "Supership.",
             "Nexstar Digital.",
             "Waze.",
             "SoundCast.",
-            "Sharethrough"
+            "Sharethrough."
           ],
           "type": "string"
         },
@@ -11839,8 +11839,8 @@
             "Video ads that drive installs of an app.",
             "Display ads served on mobile app inventory.",
             "Video ads served on mobile app inventory.",
-            "Rtb Audio ads sold for a variety of environments.",
-            "Over the top ads present in OTT IOs. This type is only applicable to line items with an insertion order of insertion_order_type `OVER_THE_TOP`"
+            "RTB Audio ads sold for a variety of environments.",
+            "Over-the-top ads present in OTT insertion orders. This type is only applicable to line items with an insertion order of insertion_order_type `OVER_THE_TOP`."
           ],
           "type": "string"
         },
@@ -13316,12 +13316,12 @@
       "id": "PerformanceGoal",
       "properties": {
         "performanceGoalAmountMicros": {
-          "description": "The goal amount, in micros of the advertiser's currency. Applicable when performance_goal_type is one of: * `PERFORMANCE_GOAL_TYPE_CPM` * `PERFORMANCE_GOAL_TYPE_CPC` * `PERFORMANCE_GOAL_TYPE_CPA` * `PERFORMANCE_GOAL_TYPE_CPIAVC` * `PERFORMANCE_GOAL_TYPE_VCPM` For example 1500000 represents 1.5 standard units of the currency.",
+          "description": "The goal amount, in micros of the advertiser's currency. Applicable when performance_goal_type is one of: * `PERFORMANCE_GOAL_TYPE_CPM` * `PERFORMANCE_GOAL_TYPE_CPC` * `PERFORMANCE_GOAL_TYPE_CPA` * `PERFORMANCE_GOAL_TYPE_CPIAVC` For example 1500000 represents 1.5 standard units of the currency.",
           "format": "int64",
           "type": "string"
         },
         "performanceGoalPercentageMicros": {
-          "description": "The decimal representation of the goal percentage in micros. Applicable when performance_goal_type is one of: * `PERFORMANCE_GOAL_TYPE_CTR` * `PERFORMANCE_GOAL_TYPE_VIEWABILITY` * `PERFORMANCE_GOAL_TYPE_CVR_CLICKS` * `PERFORMANCE_GOAL_TYPE_CVR_IMPRESSIONS` * `PERFORMANCE_GOAL_TYPE_VTR` * `PERFORMANCE_GOAL_TYPE_AUDIO_COMPLETION_RATE` * `PERFORMANCE_GOAL_TYPE_VIDEO_COMPLETION_RATE` For example, 70000 represents 7% (decimal 0.07).",
+          "description": "The decimal representation of the goal percentage in micros. Applicable when performance_goal_type is one of: * `PERFORMANCE_GOAL_TYPE_CTR` * `PERFORMANCE_GOAL_TYPE_VIEWABILITY` For example, 70000 represents 7% (decimal 0.07).",
           "format": "int64",
           "type": "string"
         },
@@ -13614,7 +13614,7 @@
             "SDF version 4.2",
             "SDF version 5.",
             "SDF version 5.1",
-            "SDF version 5.2;",
+            "SDF version 5.2",
             "SDF version 5.3"
           ],
           "type": "string"
@@ -13668,7 +13668,7 @@
             "SDF version 4.2",
             "SDF version 5.",
             "SDF version 5.1",
-            "SDF version 5.2;",
+            "SDF version 5.2",
             "SDF version 5.3"
           ],
           "type": "string"

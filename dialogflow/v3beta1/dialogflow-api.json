@@ -763,6 +763,221 @@
                     }
                   },
                   "resources": {
+                    "experiments": {
+                      "methods": {
+                        "create": {
+                          "description": "Creates an Experiment in the specified Environment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments",
+                          "httpMethod": "POST",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.create",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "parent": {
+                              "description": "Required. The Agent to create an Environment for. Format: `projects//locations//agents//environments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+parent}/experiments",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "delete": {
+                          "description": "Deletes the specified Experiment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
+                          "httpMethod": "DELETE",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.delete",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The name of the Environment to delete. Format: `projects//locations//agents//environments//experiments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}",
+                          "response": {
+                            "$ref": "GoogleProtobufEmpty"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "get": {
+                          "description": "Retrieves the specified Experiment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
+                          "httpMethod": "GET",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.get",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The name of the Environment. Format: `projects//locations//agents//environments//experiments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}",
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "list": {
+                          "description": "Returns the list of all experiments in the specified Environment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments",
+                          "httpMethod": "GET",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.list",
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "parameters": {
+                            "pageSize": {
+                              "description": "The maximum number of items to return in a single page. By default 20 and at most 100.",
+                              "format": "int32",
+                              "location": "query",
+                              "type": "integer"
+                            },
+                            "pageToken": {
+                              "description": "The next_page_token value returned from a previous list request.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "parent": {
+                              "description": "Required. The Environment to list all environments for. Format: `projects//locations//agents//environments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+parent}/experiments",
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1ListExperimentsResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "patch": {
+                          "description": "Updates the specified Experiment.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}",
+                          "httpMethod": "PATCH",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.patch",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "The name of the experiment. Format: projects//locations//agents//environments//experiments/..",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "updateMask": {
+                              "description": "Required. The mask to control which fields get updated.",
+                              "format": "google-fieldmask",
+                              "location": "query",
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "start": {
+                          "description": "Starts the specified Experiment. This rpc only changes the state of experiment from PENDING to RUNNING.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}:start",
+                          "httpMethod": "POST",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.start",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. Resource name of the experiment to start. Format: `projects//locations//agents//environments//experiments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}:start",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1StartExperimentRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        },
+                        "stop": {
+                          "description": "Stops the specified Experiment. This rpc only changes the state of experiment from RUNNING to DONE.",
+                          "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}/experiments/{experimentsId}:stop",
+                          "httpMethod": "POST",
+                          "id": "dialogflow.projects.locations.agents.environments.experiments.stop",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. Resource name of the experiment to stop. Format: `projects//locations//agents//environments//experiments/`.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/environments/[^/]+/experiments/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v3beta1/{+name}:stop",
+                          "request": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1StopExperimentRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
+                          ]
+                        }
+                      }
+                    },
                     "sessions": {
                       "methods": {
                         "detectIntent": {
@@ -3192,7 +3407,7 @@
       }
     }
   },
-  "revision": "20210124",
+  "revision": "20210130",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -3491,7 +3706,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
+          "description": "Indicates whether the parameter content should be redacted in log. If redaction is enabled, the parameter content will be replaced by parameter name during logging. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         },
         "required": {
@@ -3842,7 +4057,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
+          "description": "Indicates whether the parameter content should be redacted in log. If redaction is enabled, the parameter content will be replaced by parameter name during logging. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         }
       },
@@ -3921,7 +4136,7 @@
           "type": "array"
         },
         "transitionRoutes": {
-          "description": "A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evalauted in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.",
+          "description": "A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evalauted in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.",
           "items": {
             "$ref": "GoogleCloudDialogflowCxV3TransitionRoute"
           },
@@ -4320,7 +4535,7 @@
           "type": "array"
         },
         "environment": {
-          "description": "Optional. Environment where the test was run. If not set, it indicates the draft environment.",
+          "description": "Environment where the test was run. If not set, it indicates the draft environment.",
           "type": "string"
         },
         "name": {
@@ -4527,6 +4742,15 @@
       "description": "Represents intent information communicated to the webhook.",
       "id": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfo",
       "properties": {
+        "confidence": {
+          "description": "The confidence of the matched intent. Values range from 0.0 (completely uncertain) to 1.0 (completely certain).",
+          "format": "float",
+          "type": "number"
+        },
+        "displayName": {
+          "description": "Always present. The display name of the last matched intent.",
+          "type": "string"
+        },
         "lastMatchedIntent": {
           "description": "Always present. The unique identifier of the last matched intent. Format: `projects//locations//agents//intents/`.",
           "type": "string"
@@ -5019,6 +5243,10 @@
         "name": {
           "description": "The unique identifier of the entity type. Required for EntityTypes.UpdateEntityType. Format: `projects//locations//agents//entityTypes/`.",
           "type": "string"
+        },
+        "redact": {
+          "description": "Indicates whether parameters of the entity type should be redacted in log. If redaction is enabled, page parameters and intent parameters referring to the entity type will be replaced by parameter name during logging.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -5129,6 +5357,222 @@
       "properties": {
         "event": {
           "description": "Name of the event.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1Experiment": {
+      "description": "Represents an experiment in an environment.",
+      "id": "GoogleCloudDialogflowCxV3beta1Experiment",
+      "properties": {
+        "createTime": {
+          "description": "Creation time of this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "definition": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentDefinition",
+          "description": "The definition of the experiment."
+        },
+        "description": {
+          "description": "The human-readable description of the experiment.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. The human-readable name of the experiment (unique in an environment). Limit of 64 characters.",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "End time of this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "experimentLength": {
+          "description": "Maximum number of days to run the experiment.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "lastUpdateTime": {
+          "description": "Last update time of this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the experiment. Format: projects//locations//agents//environments//experiments/..",
+          "type": "string"
+        },
+        "result": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResult",
+          "description": "Inference result of the experiment."
+        },
+        "startTime": {
+          "description": "Start time of this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "The current state of the experiment. Transition triggered by Expriments.StartExperiment: PENDING-\u003eRUNNING. Transition triggered by Expriments.CancelExperiment: PENDING-\u003eCANCELLED or RUNNING-\u003eCANCELLED.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "DRAFT",
+            "RUNNING",
+            "DONE"
+          ],
+          "enumDescriptions": [
+            "State unspecified.",
+            "The experiment is created but not started yet.",
+            "The experiment is running.",
+            "The experiment is done."
+          ],
+          "type": "string"
+        },
+        "variantsHistory": {
+          "description": "The history of updates to the experiment variants.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1VariantsHistory"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentDefinition": {
+      "description": "Definition of the experiment.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentDefinition",
+      "properties": {
+        "condition": {
+          "description": "The condition defines which subset of sessions are selected for this experiment. If not specified, all sessions are eligible. E.g. \"query_input.language_code=en\" See the [conditions reference](https://cloud.google.com/dialogflow/cx/docs/reference/condition).",
+          "type": "string"
+        },
+        "versionVariants": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1VersionVariants",
+          "description": "The flow versions as the variants of this experiment."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentResult": {
+      "description": "The inference result which includes an objective metric to optimize and the confidence interval.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentResult",
+      "properties": {
+        "lastUpdateTime": {
+          "description": "The last time the experiment's stats data was updated. Will have default value if stats have never been computed for this experiment.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "versionMetrics": {
+          "description": "Version variants and metrics.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval": {
+      "description": "A confidence interval is a range of possible values for the experiment objective you are trying to measure.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval",
+      "properties": {
+        "confidenceLevel": {
+          "description": "The confidence level used to construct the interval, i.e. there is X% chance that the true value is within this interval.",
+          "format": "double",
+          "type": "number"
+        },
+        "lowerBound": {
+          "description": "Lower bound of the interval.",
+          "format": "double",
+          "type": "number"
+        },
+        "ratio": {
+          "description": "The percent change between an experiment metric's value and the value for its control.",
+          "format": "double",
+          "type": "number"
+        },
+        "upperBound": {
+          "description": "Upper bound of the interval.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentResultMetric": {
+      "description": "Metric and corresponding confidence intervals.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentResultMetric",
+      "properties": {
+        "confidenceInterval": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResultConfidenceInterval",
+          "description": "The probability that the treatment is better than all other treatments in the experiment"
+        },
+        "count": {
+          "description": "Count value of a metric.",
+          "format": "double",
+          "type": "number"
+        },
+        "countType": {
+          "description": "Count-based metric type. Only one of type or count_type is specified in each Metric.",
+          "enum": [
+            "COUNT_TYPE_UNSPECIFIED",
+            "TOTAL_NO_MATCH_COUNT",
+            "TOTAL_TURN_COUNT",
+            "AVERAGE_TURN_COUNT"
+          ],
+          "enumDescriptions": [
+            "Count type unspecified.",
+            "Total number of occurrences of a 'NO_MATCH'.",
+            "Total number of turn counts.",
+            "Average turn count in a session."
+          ],
+          "type": "string"
+        },
+        "ratio": {
+          "description": "Ratio value of a metric.",
+          "format": "double",
+          "type": "number"
+        },
+        "type": {
+          "description": "Ratio-based metric type. Only one of type or count_type is specified in each Metric.",
+          "enum": [
+            "METRIC_UNSPECIFIED",
+            "CONTAINED_SESSION_NO_CALLBACK_RATE",
+            "LIVE_AGENT_HANDOFF_RATE",
+            "CALLBACK_SESSION_RATE",
+            "ABANDONED_SESSION_RATE",
+            "SESSION_END_RATE"
+          ],
+          "enumDescriptions": [
+            "Metric unspecified.",
+            "Percentage of contained sessions without user calling back in 24 hours.",
+            "Percentage of sessions that were handed to a human agent.",
+            "Percentage of sessions with the same user calling back.",
+            "Percentage of sessions where user hung up.",
+            "Percentage of sessions reached Dialogflow 'END_PAGE' or 'END_SESSION'."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics": {
+      "description": "Version variant and associated metrics.",
+      "id": "GoogleCloudDialogflowCxV3beta1ExperimentResultVersionMetrics",
+      "properties": {
+        "metrics": {
+          "description": "The metrics and corresponding confidence intervals in the inference result.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResultMetric"
+          },
+          "type": "array"
+        },
+        "sessionCount": {
+          "description": "Number of sessions that were allocated to this version.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "version": {
+          "description": "The name of the flow Version. Format: `projects//locations//agents//flows//versions/`.",
           "type": "string"
         }
       },
@@ -5311,7 +5755,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
+          "description": "Indicates whether the parameter content should be redacted in log. If redaction is enabled, the parameter content will be replaced by parameter name during logging. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         },
         "required": {
@@ -5755,7 +6199,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
+          "description": "Indicates whether the parameter content should be redacted in log. If redaction is enabled, the parameter content will be replaced by parameter name during logging. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         }
       },
@@ -5843,6 +6287,24 @@
           "description": "The list of environments. There will be a maximum number of items returned based on the page_size field in the request. The list may in some cases be empty or contain fewer entries than page_size even if this isn't the last page.",
           "items": {
             "$ref": "GoogleCloudDialogflowCxV3beta1Environment"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no more results in the list.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ListExperimentsResponse": {
+      "description": "The response message for Experiments.ListExperiments.",
+      "id": "GoogleCloudDialogflowCxV3beta1ListExperimentsResponse",
+      "properties": {
+        "experiments": {
+          "description": "The list of experiments. There will be a maximum number of items returned based on the page_size field in the request. The list may in some cases be empty or contain fewer entries than page_size even if this isn't the last page.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1Experiment"
           },
           "type": "array"
         },
@@ -6276,7 +6738,7 @@
           "type": "array"
         },
         "transitionRoutes": {
-          "description": "A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evalauted in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.",
+          "description": "A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evalauted in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.",
           "items": {
             "$ref": "GoogleCloudDialogflowCxV3beta1TransitionRoute"
           },
@@ -6908,6 +7370,18 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1StartExperimentRequest": {
+      "description": "The request message for Experiments.StartExperiment.",
+      "id": "GoogleCloudDialogflowCxV3beta1StartExperimentRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1StopExperimentRequest": {
+      "description": "The request message for Experiments.StopExperiment.",
+      "id": "GoogleCloudDialogflowCxV3beta1StopExperimentRequest",
+      "properties": {},
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1SynthesizeSpeechConfig": {
       "description": "Configuration of how speech should be synthesized.",
       "id": "GoogleCloudDialogflowCxV3beta1SynthesizeSpeechConfig",
@@ -7015,7 +7489,7 @@
           "type": "array"
         },
         "environment": {
-          "description": "Optional. Environment where the test was run. If not set, it indicates the draft environment.",
+          "description": "Environment where the test was run. If not set, it indicates the draft environment.",
           "type": "string"
         },
         "name": {
@@ -7358,6 +7832,22 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1VariantsHistory": {
+      "description": "The history of variants update.",
+      "id": "GoogleCloudDialogflowCxV3beta1VariantsHistory",
+      "properties": {
+        "updateTime": {
+          "description": "Update time of the variants.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "versionVariants": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1VersionVariants",
+          "description": "The flow versions as the variants."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1Version": {
       "description": "Represents a version of a flow.",
       "id": "GoogleCloudDialogflowCxV3beta1Version",
@@ -7400,6 +7890,40 @@
             "Version training failed."
           ],
           "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1VersionVariants": {
+      "description": "A list of flow version variants.",
+      "id": "GoogleCloudDialogflowCxV3beta1VersionVariants",
+      "properties": {
+        "variants": {
+          "description": "A list of flow version variants.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1VersionVariantsVariant"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1VersionVariantsVariant": {
+      "description": "A single flow version with specified traffic allocation.",
+      "id": "GoogleCloudDialogflowCxV3beta1VersionVariantsVariant",
+      "properties": {
+        "isControlGroup": {
+          "description": "Whether the variant is for the control group.",
+          "type": "boolean"
+        },
+        "trafficAllocation": {
+          "description": "Percentage of the traffic which should be routed to this version of flow. Traffic allocation for a single flow must sum up to 1.0.",
+          "format": "float",
+          "type": "number"
+        },
+        "version": {
+          "description": "The name of the flow version. Format: `projects//locations//agents//flows//versions/`.",
           "type": "string"
         }
       },
@@ -7543,6 +8067,15 @@
       "description": "Represents intent information communicated to the webhook.",
       "id": "GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo",
       "properties": {
+        "confidence": {
+          "description": "The confidence of the matched intent. Values range from 0.0 (completely uncertain) to 1.0 (completely certain).",
+          "format": "float",
+          "type": "number"
+        },
+        "displayName": {
+          "description": "Always present. The display name of the last matched intent.",
+          "type": "string"
+        },
         "lastMatchedIntent": {
           "description": "Always present. The unique identifier of the last matched intent. Format: `projects//locations//agents//intents/`.",
           "type": "string"

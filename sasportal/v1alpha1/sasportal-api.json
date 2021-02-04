@@ -145,7 +145,7 @@
               "type": "integer"
             },
             "pageToken": {
-              "description": "A pagination token returned from a previous call to ListCustomers method that indicates where this listing should continue from.",
+              "description": "A pagination token returned from a previous call to ListCustomers that indicates where this listing should continue from.",
               "location": "query",
               "type": "string"
             }
@@ -283,6 +283,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of deployments to return in the response.",
                   "format": "int32",
@@ -290,7 +295,7 @@
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+                  "description": "A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.",
                   "location": "query",
                   "type": "string"
                 },
@@ -442,7 +447,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+                      "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
                       "location": "query",
                       "type": "string"
                     },
@@ -595,7 +600,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+                  "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
                   "location": "query",
                   "type": "string"
                 },
@@ -835,6 +840,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of nodes to return in the response.",
                   "format": "int32",
@@ -842,7 +852,7 @@
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
+                  "description": "A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.",
                   "location": "query",
                   "type": "string"
                 },
@@ -965,6 +975,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of deployments to return in the response.",
                       "format": "int32",
@@ -972,7 +987,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+                      "description": "A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1062,7 +1077,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+                      "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1134,6 +1149,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of nodes to return in the response.",
                       "format": "int32",
@@ -1141,7 +1161,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
+                      "description": "A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1373,7 +1393,7 @@
     "installer": {
       "methods": {
         "generateSecret": {
-          "description": "Generates a secret to be used with the ValidateInstaller method",
+          "description": "Generates a secret to be used with the ValidateInstaller.",
           "flatPath": "v1alpha1/installer:generateSecret",
           "httpMethod": "POST",
           "id": "sasportal.installer.generateSecret",
@@ -1500,6 +1520,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of deployments to return in the response.",
                   "format": "int32",
@@ -1507,7 +1532,7 @@
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+                  "description": "A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1659,7 +1684,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+                      "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
                       "location": "query",
                       "type": "string"
                     },
@@ -1812,7 +1837,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+                  "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2052,6 +2077,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "The maximum number of nodes to return in the response.",
                   "format": "int32",
@@ -2059,7 +2089,7 @@
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
+                  "description": "A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2182,6 +2212,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of deployments to return in the response.",
                       "format": "int32",
@@ -2189,7 +2224,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+                      "description": "A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2279,7 +2314,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+                      "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2351,6 +2386,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "filter": {
+                      "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "description": "The maximum number of nodes to return in the response.",
                       "format": "int32",
@@ -2358,7 +2398,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
+                      "description": "A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2443,7 +2483,7 @@
       }
     }
   },
-  "revision": "20210118",
+  "revision": "20210202",
   "rootUrl": "https://sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -2465,16 +2505,16 @@
       "type": "object"
     },
     "SasPortalCreateSignedDeviceRequest": {
-      "description": "Request for CreateSignedDevice method.",
+      "description": "Request for CreateSignedDevice.",
       "id": "SasPortalCreateSignedDeviceRequest",
       "properties": {
         "encodedDevice": {
-          "description": "Required. JSON Web Token signed using a CPI private key. Payload must be the JSON encoding of the [Device]. The user_id field must be set.",
+          "description": "Required. JSON Web Token signed using a CPI private key. Payload must be the JSON encoding of the device. The user_id field must be set.",
           "format": "byte",
           "type": "string"
         },
         "installerId": {
-          "description": "Required. Unique installer id (cpiId) from the Certified Professional Installers database.",
+          "description": "Required. Unique installer id (CPI ID) from the Certified Professional Installers database.",
           "type": "string"
         }
       },
@@ -2547,7 +2587,7 @@
           "type": "string"
         },
         "sasUserIds": {
-          "description": "User id used by the devices belonging to this deployment. Each deployment should be associated with one unique user_id.",
+          "description": "User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.",
           "items": {
             "type": "string"
           },
@@ -2618,7 +2658,7 @@
       "id": "SasPortalDeviceAirInterface",
       "properties": {
         "radioTechnology": {
-          "description": "This field specifies the radio access technology that is used for the CBSD. Conditional",
+          "description": "Conditional. This field specifies the radio access technology that is used for the CBSD.",
           "enum": [
             "RADIO_TECHNOLOGY_UNSPECIFIED",
             "E_UTRA",
@@ -2644,7 +2684,7 @@
           "type": "string"
         },
         "supportedSpec": {
-          "description": "This field is related to the radioTechnology field and provides the air interface specification that the CBSD is compliant with at the time of registration. Optional",
+          "description": "Optional. This field is related to the `radioTechnology` and provides the air interface specification that the CBSD is compliant with at the time of registration.",
           "type": "string"
         }
       },
@@ -2681,7 +2721,7 @@
           "description": "Installation parameters for the device."
         },
         "isSigned": {
-          "description": "Output-only. Whether the configuration has been signed by a CPI.",
+          "description": "Output only. Whether the configuration has been signed by a CPI.",
           "type": "boolean"
         },
         "measurementCapabilities": {
@@ -2720,7 +2760,7 @@
           "type": "string"
         },
         "updateTime": {
-          "description": "Output-only. The last time the device configuration was edited.",
+          "description": "Output only. The last time the device configuration was edited.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -2763,7 +2803,7 @@
           "type": "string"
         },
         "maxEirp": {
-          "description": "Maximum Equivalent Isotropically Radiated Power (EIRP) permitted by the grant. The maximum EIRP is in units of dBm/MHz. The value of maxEirp represents the average (RMS) EIRP that would be measured by the procedure defined in FCC part 96.41(e)(3).",
+          "description": "Maximum Equivalent Isotropically Radiated Power (EIRP) permitted by the grant. The maximum EIRP is in units of dBm/MHz. The value of `maxEirp` represents the average (RMS) EIRP that would be measured by the procedure defined in FCC part 96.41(e)(3).",
           "format": "double",
           "type": "number"
         },
@@ -2876,17 +2916,17 @@
       "type": "object"
     },
     "SasPortalGenerateSecretRequest": {
-      "description": "Request for GenerateSecret method] [spectrum.sas.portal.v1alpha1.DeviceManager.GenerateSecret].",
+      "description": "Request for GenerateSecret.",
       "id": "SasPortalGenerateSecretRequest",
       "properties": {},
       "type": "object"
     },
     "SasPortalGenerateSecretResponse": {
-      "description": "Response for GenerateSecret method.",
+      "description": "Response for GenerateSecret.",
       "id": "SasPortalGenerateSecretResponse",
       "properties": {
         "secret": {
-          "description": "The secret generated by the string and used by [ValidateInstaller] method.",
+          "description": "The secret generated by the string and used by ValidateInstaller.",
           "type": "string"
         }
       },
@@ -2941,7 +2981,7 @@
           "type": "integer"
         },
         "height": {
-          "description": "Device antenna height in meters. When the heightType parameter value is \"AGL\", the antenna height should be given relative to ground level. When the heightType parameter value is \"AMSL\", it is given with respect to WGS84 datum.",
+          "description": "Device antenna height in meters. When the `heightType` parameter value is \"AGL\", the antenna height should be given relative to ground level. When the `heightType` parameter value is \"AMSL\", it is given with respect to WGS84 datum.",
           "format": "double",
           "type": "number"
         },
@@ -2965,7 +3005,7 @@
           "type": "number"
         },
         "indoorDeployment": {
-          "description": "Whether the device antenna is indoor or not. True: indoor. False: outdoor.",
+          "description": "Whether the device antenna is indoor or not. `true`: indoor. `false`: outdoor.",
           "type": "boolean"
         },
         "latitude": {
@@ -2974,7 +3014,7 @@
           "type": "number"
         },
         "longitude": {
-          "description": "Longitude of the device antenna location. in degrees relative to the WGS 84 datum. The allowed range is from -180.000000 to +180.000000. Positive values represent longitudes east of the prime meridian; negative values west of the prime meridian.",
+          "description": "Longitude of the device antenna location in degrees relative to the WGS 84 datum. The allowed range is from -180.000000 to +180.000000. Positive values represent longitudes east of the prime meridian; negative values west of the prime meridian.",
           "format": "double",
           "type": "number"
         },
@@ -2998,14 +3038,14 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to ListCustomers method that indicates from where listing should continue. If the field is missing or empty, it means there are no more customers.",
+          "description": "A pagination token returned from a previous call to ListCustomers that indicates from where listing should continue. If the field is missing or empty, it means there are no more customers.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "SasPortalListDeploymentsResponse": {
-      "description": "Response for ListDeployments method.",
+      "description": "Response for ListDeployments.",
       "id": "SasPortalListDeploymentsResponse",
       "properties": {
         "deployments": {
@@ -3016,14 +3056,14 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to ListDeployments method that indicates from where listing should continue. If the field is missing or empty, it means there is no more deployments.",
+          "description": "A pagination token returned from a previous call to ListDeployments that indicates from where listing should continue. If the field is missing or empty, it means there are no more deployments.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "SasPortalListDevicesResponse": {
-      "description": "Response for ListDevices method.",
+      "description": "Response for ListDevices.",
       "id": "SasPortalListDevicesResponse",
       "properties": {
         "devices": {
@@ -3034,18 +3074,18 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to ListDevices method that indicates from where listing should continue. If the field is missing or empty, it means there is no more devices.",
+          "description": "A pagination token returned from a previous call to ListDevices that indicates from where listing should continue. If the field is missing or empty, it means there is no more devices.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "SasPortalListNodesResponse": {
-      "description": "Response for ListNodes method.",
+      "description": "Response for ListNodes.",
       "id": "SasPortalListNodesResponse",
       "properties": {
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to ListNodes method that indicates from where listing should continue. If the field is missing or empty, it means there is no more nodes.",
+          "description": "A pagination token returned from a previous call to ListNodes that indicates from where listing should continue. If the field is missing or empty, it means there is no more nodes.",
           "type": "string"
         },
         "nodes": {
@@ -3059,33 +3099,33 @@
       "type": "object"
     },
     "SasPortalMoveDeploymentRequest": {
-      "description": "Request for MoveDeployment method.",
+      "description": "Request for MoveDeployment.",
       "id": "SasPortalMoveDeploymentRequest",
       "properties": {
         "destination": {
-          "description": "Required. The name of the new parent resource Node or Customer to reparent the deployment under.",
+          "description": "Required. The name of the new parent resource node or customer to reparent the deployment under.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "SasPortalMoveDeviceRequest": {
-      "description": "Request for MoveDevice method.",
+      "description": "Request for MoveDevice.",
       "id": "SasPortalMoveDeviceRequest",
       "properties": {
         "destination": {
-          "description": "Required. The name of the new parent resource (Node or Customer) to reparent the device under.",
+          "description": "Required. The name of the new parent resource node or customer to reparent the device under.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "SasPortalMoveNodeRequest": {
-      "description": "Request for MoveNode method.",
+      "description": "Request for MoveNode.",
       "id": "SasPortalMoveNodeRequest",
       "properties": {
         "destination": {
-          "description": "Required. The name of the new parent resource node or Customer) to reparent the node under.",
+          "description": "Required. The name of the new parent resource node or customer to reparent the node under.",
           "type": "string"
         }
       },
@@ -3153,13 +3193,14 @@
       "id": "SasPortalPolicy",
       "properties": {
         "assignments": {
+          "description": "List of assignments",
           "items": {
             "$ref": "SasPortalAssignment"
           },
           "type": "array"
         },
         "etag": {
-          "description": "The [etag] is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the [etag] in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An [etag] is returned in the response to [GetPolicy], and systems are expected to put that etag in the request to [SetPolicy] to ensure that their change will be applied to the same version of the policy. If no [etag] is provided in the call to [SetPolicy], then the existing policy is overwritten blindly.",
+          "description": "The etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a policy from overwriting each other. It is strongly suggested that systems make use of the etag in the read-modify-write cycle to perform policy updates in order to avoid race conditions: An etag is returned in the response to GetPolicy, and systems are expected to put that etag in the request to SetPolicy to ensure that their change will be applied to the same version of the policy. If no etag is provided in the call to GetPolicy, then the existing policy is overwritten blindly.",
           "format": "byte",
           "type": "string"
         }
@@ -3182,7 +3223,7 @@
       "type": "object"
     },
     "SasPortalSignDeviceRequest": {
-      "description": "Request for SignDevice method.",
+      "description": "Request for SignDevice.",
       "id": "SasPortalSignDeviceRequest",
       "properties": {
         "device": {
@@ -3252,7 +3293,7 @@
       "type": "object"
     },
     "SasPortalUpdateSignedDeviceRequest": {
-      "description": "Request for UpdateSignedDevice method.",
+      "description": "Request for UpdateSignedDevice.",
       "id": "SasPortalUpdateSignedDeviceRequest",
       "properties": {
         "encodedDevice": {
@@ -3268,7 +3309,7 @@
       "type": "object"
     },
     "SasPortalValidateInstallerRequest": {
-      "description": "Request for ValidateInstaller method.",
+      "description": "Request for ValidateInstaller.",
       "id": "SasPortalValidateInstallerRequest",
       "properties": {
         "encodedSecret": {
@@ -3276,18 +3317,18 @@
           "type": "string"
         },
         "installerId": {
-          "description": "Required. Unique installer id (cpiId) from the Certified Professional Installers database.",
+          "description": "Required. Unique installer id (CPI ID) from the Certified Professional Installers database.",
           "type": "string"
         },
         "secret": {
-          "description": "Required. Secret returned by the GenerateSecret method.",
+          "description": "Required. Secret returned by the GenerateSecret.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "SasPortalValidateInstallerResponse": {
-      "description": "Response for ValidateInstaller method] [spectrum.sas.portal.v1alpha1.DeviceManager.ValidateInstaller].",
+      "description": "Response for ValidateInstaller.",
       "id": "SasPortalValidateInstallerResponse",
       "properties": {},
       "type": "object"

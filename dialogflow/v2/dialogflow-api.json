@@ -2065,7 +2065,7 @@
       }
     }
   },
-  "revision": "20210118",
+  "revision": "20210130",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -2364,7 +2364,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
+          "description": "Indicates whether the parameter content should be redacted in log. If redaction is enabled, the parameter content will be replaced by parameter name during logging. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         },
         "required": {
@@ -2715,7 +2715,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
+          "description": "Indicates whether the parameter content should be redacted in log. If redaction is enabled, the parameter content will be replaced by parameter name during logging. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         }
       },
@@ -2794,7 +2794,7 @@
           "type": "array"
         },
         "transitionRoutes": {
-          "description": "A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evalauted in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.",
+          "description": "A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evalauted in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.",
           "items": {
             "$ref": "GoogleCloudDialogflowCxV3TransitionRoute"
           },
@@ -3193,7 +3193,7 @@
           "type": "array"
         },
         "environment": {
-          "description": "Optional. Environment where the test was run. If not set, it indicates the draft environment.",
+          "description": "Environment where the test was run. If not set, it indicates the draft environment.",
           "type": "string"
         },
         "name": {
@@ -3400,6 +3400,15 @@
       "description": "Represents intent information communicated to the webhook.",
       "id": "GoogleCloudDialogflowCxV3WebhookRequestIntentInfo",
       "properties": {
+        "confidence": {
+          "description": "The confidence of the matched intent. Values range from 0.0 (completely uncertain) to 1.0 (completely certain).",
+          "format": "float",
+          "type": "number"
+        },
+        "displayName": {
+          "description": "Always present. The display name of the last matched intent.",
+          "type": "string"
+        },
         "lastMatchedIntent": {
           "description": "Always present. The unique identifier of the last matched intent. Format: `projects//locations//agents//intents/`.",
           "type": "string"
@@ -3788,7 +3797,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
+          "description": "Indicates whether the parameter content should be redacted in log. If redaction is enabled, the parameter content will be replaced by parameter name during logging. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         },
         "required": {
@@ -4139,7 +4148,7 @@
           "type": "boolean"
         },
         "redact": {
-          "description": "Indicates whether the parameter content should be redacted in text and audio. If the flag is set to true, the parameter content will be replaced by parameter name in both request and response. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
+          "description": "Indicates whether the parameter content should be redacted in log. If redaction is enabled, the parameter content will be replaced by parameter name during logging. Note: the parameter content is subject to redaction if either parameter level redaction or entity type level redaction is enabled.",
           "type": "boolean"
         }
       },
@@ -4218,7 +4227,7 @@
           "type": "array"
         },
         "transitionRoutes": {
-          "description": "A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evalauted in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.",
+          "description": "A list of transitions for the transition rules of this page. They route the conversation to another page in the same flow, or another flow. When we are in a certain page, the TransitionRoutes are evalauted in the following order: * TransitionRoutes defined in the page with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in flow with intent specified. * TransitionRoutes defined in the transition route groups with intent specified. * TransitionRoutes defined in the page with only condition specified. * TransitionRoutes defined in the transition route groups with only condition specified.",
           "items": {
             "$ref": "GoogleCloudDialogflowCxV3beta1TransitionRoute"
           },
@@ -4617,7 +4626,7 @@
           "type": "array"
         },
         "environment": {
-          "description": "Optional. Environment where the test was run. If not set, it indicates the draft environment.",
+          "description": "Environment where the test was run. If not set, it indicates the draft environment.",
           "type": "string"
         },
         "name": {
@@ -4824,6 +4833,15 @@
       "description": "Represents intent information communicated to the webhook.",
       "id": "GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo",
       "properties": {
+        "confidence": {
+          "description": "The confidence of the matched intent. Values range from 0.0 (completely uncertain) to 1.0 (completely certain).",
+          "format": "float",
+          "type": "number"
+        },
+        "displayName": {
+          "description": "Always present. The display name of the last matched intent.",
+          "type": "string"
+        },
         "lastMatchedIntent": {
           "description": "Always present. The unique identifier of the last matched intent. Format: `projects//locations//agents//intents/`.",
           "type": "string"

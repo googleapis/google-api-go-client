@@ -406,7 +406,7 @@
       }
     }
   },
-  "revision": "20210109",
+  "revision": "20210126",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "AllowedIpRange": {
@@ -461,6 +461,17 @@
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "EncryptionConfig": {
+      "description": "The encryption options for the Cloud Composer environment and its dependencies.",
+      "id": "EncryptionConfig",
+      "properties": {
+        "kmsKeyName": {
+          "description": "Optional. Customer-managed Encryption Key available through Google's Key Management Service. Cannot be updated. If not specified, Google-managed key will be used.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "Environment": {
@@ -534,6 +545,10 @@
         "databaseConfig": {
           "$ref": "DatabaseConfig",
           "description": "Optional. The configuration settings for Cloud SQL instance used internally by Apache Airflow software."
+        },
+        "encryptionConfig": {
+          "$ref": "EncryptionConfig",
+          "description": "Optional. The encryption options for the Cloud Composer environment and its dependencies. Cannot be updated."
         },
         "gkeCluster": {
           "description": "Output only. The Kubernetes Engine cluster used to run this environment.",
@@ -704,7 +719,7 @@
           "type": "string"
         },
         "network": {
-          "description": "Optional. The Compute Engine network to be used for machine communications, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: \"projects/{projectId}/global/networks/{networkId}\". [Shared VPC](/vpc/docs/shared-vpc) is not currently supported. The network must belong to the environment's project. If unspecified, the \"default\" network ID in the environment's project is used. If a [Custom Subnet Network](/vpc/docs/vpc#vpc_networks_and_subnets) is provided, `nodeConfig.subnetwork` must also be provided.",
+          "description": "Optional. The Compute Engine network to be used for machine communications, specified as a [relative resource name](/apis/design/resource_names#relative_resource_name). For example: \"projects/{projectId}/global/networks/{networkId}\". If unspecified, the \"default\" network ID in the environment's project is used. If a [Custom Subnet Network](/vpc/docs/vpc#vpc_networks_and_subnets) is provided, `nodeConfig.subnetwork` must also be provided. For [Shared VPC](/vpc/docs/shared-vpc) subnetwork requirements, see `nodeConfig.subnetwork`.",
           "type": "string"
         },
         "oauthScopes": {

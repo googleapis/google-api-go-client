@@ -2161,6 +2161,10 @@ func (s *BuildBazelSemverSemVer) MarshalJSON() ([]byte, error) {
 // contains the various duration metrics tracked when a bot performs a
 // command.
 type GoogleDevtoolsRemotebuildbotCommandDurations struct {
+	// CmWaitForAssignment: The time spent waiting for Container Manager to
+	// assign an asynchronous container for execution.
+	CmWaitForAssignment string `json:"cmWaitForAssignment,omitempty"`
+
 	// DockerPrep: The time spent preparing the command to be run in a
 	// Docker container (includes pulling the Docker image, if necessary).
 	DockerPrep string `json:"dockerPrep,omitempty"`
@@ -2200,20 +2204,21 @@ type GoogleDevtoolsRemotebuildbotCommandDurations struct {
 	// begins.
 	UploadStartTime string `json:"uploadStartTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DockerPrep") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CmWaitForAssignment")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DockerPrep") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CmWaitForAssignment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2242,6 +2247,10 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 
 	// NumWarnings: The number of warnings reported.
 	NumWarnings uint64 `json:"numWarnings,omitempty,string"`
+
+	// UsedAsyncContainer: Indicates whether an asynchronous container was
+	// used for execution.
+	UsedAsyncContainer bool `json:"usedAsyncContainer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DockerCacheHit") to
 	// unconditionally include in API requests. By default, fields with
@@ -2352,6 +2361,8 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	// DOCKER_CREATE_COMPUTE_SYSTEM_ERROR that is user-caused).
 	//   "DOCKER_TOO_MANY_SYMBOLIC_LINK_LEVELS" - Docker failed to create an
 	// overlay mount because of too many levels of symbolic links.
+	//   "LOCAL_CONTAINER_MANAGER_NOT_RUNNING" - The local Container Manager
+	// is not running.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -4071,7 +4082,7 @@ func (c *ActionResultsGetCall) Header() http.Header {
 
 func (c *ActionResultsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4266,7 +4277,7 @@ func (c *ActionResultsUpdateCall) Header() http.Header {
 
 func (c *ActionResultsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4473,7 +4484,7 @@ func (c *ActionsExecuteCall) Header() http.Header {
 
 func (c *ActionsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4622,7 +4633,7 @@ func (c *BlobsBatchReadCall) Header() http.Header {
 
 func (c *BlobsBatchReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4775,7 +4786,7 @@ func (c *BlobsBatchUpdateCall) Header() http.Header {
 
 func (c *BlobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4921,7 +4932,7 @@ func (c *BlobsFindMissingCall) Header() http.Header {
 
 func (c *BlobsFindMissingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5109,7 +5120,7 @@ func (c *BlobsGetTreeCall) Header() http.Header {
 
 func (c *BlobsGetTreeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5301,7 +5312,7 @@ func (c *OperationsWaitExecutionCall) Header() http.Header {
 
 func (c *OperationsWaitExecutionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5456,7 +5467,7 @@ func (c *V2GetCapabilitiesCall) Header() http.Header {
 
 func (c *V2GetCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

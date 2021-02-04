@@ -307,7 +307,7 @@
       }
     }
   },
-  "revision": "20210126",
+  "revision": "20210202",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -910,6 +910,11 @@
       "description": "CommandDuration contains the various duration metrics tracked when a bot performs a command.",
       "id": "GoogleDevtoolsRemotebuildbotCommandDurations",
       "properties": {
+        "cmWaitForAssignment": {
+          "description": "The time spent waiting for Container Manager to assign an asynchronous container for execution.",
+          "format": "google-duration",
+          "type": "string"
+        },
         "dockerPrep": {
           "description": "The time spent preparing the command to be run in a Docker container (includes pulling the Docker image, if necessary).",
           "format": "google-duration",
@@ -994,6 +999,10 @@
           "description": "The number of warnings reported.",
           "format": "uint64",
           "type": "string"
+        },
+        "usedAsyncContainer": {
+          "description": "Indicates whether an asynchronous container was used for execution.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -1043,7 +1052,8 @@
             "DOCKER_CREATE_RUNTIME_PERMISSION_DENIED",
             "DOCKER_CREATE_PROCESS_FILE_NOT_FOUND",
             "DOCKER_CREATE_COMPUTE_SYSTEM_INCORRECT_PARAMETER_ERROR",
-            "DOCKER_TOO_MANY_SYMBOLIC_LINK_LEVELS"
+            "DOCKER_TOO_MANY_SYMBOLIC_LINK_LEVELS",
+            "LOCAL_CONTAINER_MANAGER_NOT_RUNNING"
           ],
           "enumDescriptions": [
             "The command succeeded.",
@@ -1084,7 +1094,8 @@
             "Docker failed to create OCI runtime because of permission denied.",
             "Docker failed to create process because of file not found.",
             "Docker failed to run containers with CreateComputeSystem error that involves an incorrect parameter (more specific version of DOCKER_CREATE_COMPUTE_SYSTEM_ERROR that is user-caused).",
-            "Docker failed to create an overlay mount because of too many levels of symbolic links."
+            "Docker failed to create an overlay mount because of too many levels of symbolic links.",
+            "The local Container Manager is not running."
           ],
           "type": "string"
         },

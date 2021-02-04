@@ -320,6 +320,37 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EncryptionConfig: The encryption options for the Cloud Composer
+// environment and its dependencies.
+type EncryptionConfig struct {
+	// KmsKeyName: Optional. Customer-managed Encryption Key available
+	// through Google's Key Management Service. Cannot be updated. If not
+	// specified, Google-managed key will be used.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Environment: An environment for running orchestration tasks.
 type Environment struct {
 	// Config: Configuration parameters for this environment.
@@ -413,6 +444,10 @@ type EnvironmentConfig struct {
 	// DatabaseConfig: Optional. The configuration settings for Cloud SQL
 	// instance used internally by Apache Airflow software.
 	DatabaseConfig *DatabaseConfig `json:"databaseConfig,omitempty"`
+
+	// EncryptionConfig: Optional. The encryption options for the Cloud
+	// Composer environment and its dependencies. Cannot be updated.
+	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
 	// this environment.
@@ -735,12 +770,12 @@ type NodeConfig struct {
 	// Network: Optional. The Compute Engine network to be used for machine
 	// communications, specified as a relative resource name
 	// (/apis/design/resource_names#relative_resource_name). For example:
-	// "projects/{projectId}/global/networks/{networkId}". Shared VPC
-	// (/vpc/docs/shared-vpc) is not currently supported. The network must
-	// belong to the environment's project. If unspecified, the "default"
-	// network ID in the environment's project is used. If a Custom Subnet
-	// Network (/vpc/docs/vpc#vpc_networks_and_subnets) is provided,
-	// `nodeConfig.subnetwork` must also be provided.
+	// "projects/{projectId}/global/networks/{networkId}". If unspecified,
+	// the "default" network ID in the environment's project is used. If a
+	// Custom Subnet Network (/vpc/docs/vpc#vpc_networks_and_subnets) is
+	// provided, `nodeConfig.subnetwork` must also be provided. For Shared
+	// VPC (/vpc/docs/shared-vpc) subnetwork requirements, see
+	// `nodeConfig.subnetwork`.
 	Network string `json:"network,omitempty"`
 
 	// OauthScopes: Optional. The set of Google API scopes to be made
@@ -1257,7 +1292,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1395,7 +1430,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1536,7 +1571,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1694,7 +1729,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1937,7 +1972,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2114,7 +2149,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2287,7 +2322,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2430,7 +2465,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2604,7 +2639,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210202")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

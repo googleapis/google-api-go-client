@@ -1,5 +1,17 @@
 # Changes
 
+## [0.39.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.38.0...v0.39.0) (2021-02-04)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#855](https://www.github.com/googleapis/google-api-go-client/issues/855) [#854](https://www.github.com/googleapis/google-api-go-client/issues/854) [#853](https://www.github.com/googleapis/google-api-go-client/issues/853) [#851](https://www.github.com/googleapis/google-api-go-client/issues/851) [#850](https://www.github.com/googleapis/google-api-go-client/issues/850) [#848](https://www.github.com/googleapis/google-api-go-client/issues/848)
+
+
+### Bug Fixes
+
+* **transport:** expand OS environment variables in cert provider command ([#852](https://www.github.com/googleapis/google-api-go-client/issues/852)) ([be6c56a](https://www.github.com/googleapis/google-api-go-client/commit/be6c56a1948a57eb0300613a70ef608330ca36e0))
+
 ## [0.38.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.37.0...v0.38.0) (2021-01-29)
 
 

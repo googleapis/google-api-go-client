@@ -445,6 +445,12 @@ func (r *UserinfoService) Get() *UserinfoGetCall {
 	return c
 }
 
+// AccessToken sets the optional parameter "access_token":
+func (c *UserinfoGetCall) AccessToken(accessToken string) *UserinfoGetCall {
+	c.urlParams_.Set("access_token", accessToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.

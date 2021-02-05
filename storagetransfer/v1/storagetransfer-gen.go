@@ -171,7 +171,8 @@ type TransferOperationsService struct {
 // AwsAccessKey: AWS access key (see AWS Security Credentials
 // (https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)).
 // For information on our data retention policy for user credentials,
-// see User credentials (data-retention#user-credentials).
+// see User credentials
+// (/storage-transfer/docs/data-retention#user-credentials).
 type AwsAccessKey struct {
 	// AccessKeyId: Required. AWS access key ID.
 	AccessKeyId string `json:"accessKeyId,omitempty"`
@@ -211,7 +212,7 @@ type AwsS3Data struct {
 	// API requests to the AWS S3 bucket. Permissions on the bucket must be
 	// granted to the access ID of the AWS access key. For information on
 	// our data retention policy for user credentials, see User credentials
-	// (data-retention#user-credentials).
+	// (/storage-transfer/docs/data-retention#user-credentials).
 	AwsAccessKey *AwsAccessKey `json:"awsAccessKey,omitempty"`
 
 	// BucketName: Required. S3 Bucket name (see Creating a bucket
@@ -258,7 +259,7 @@ type AzureBlobStorageData struct {
 	// AzureCredentials: Required. Input only. Credentials used to
 	// authenticate API requests to Azure. For information on our data
 	// retention policy for user credentials, see User credentials
-	// (data-retention#user-credentials).
+	// (/storage-transfer/docs/data-retention#user-credentials).
 	AzureCredentials *AzureCredentials `json:"azureCredentials,omitempty"`
 
 	// Container: Required. The container to transfer from the Azure Storage
@@ -299,7 +300,7 @@ func (s *AzureBlobStorageData) MarshalJSON() ([]byte, error) {
 
 // AzureCredentials: Azure credentials For information on our data
 // retention policy for user credentials, see User credentials
-// (data-retention#user-credentials).
+// (/storage-transfer/docs/data-retention#user-credentials).
 type AzureCredentials struct {
 	// SasToken: Required. Azure shared access signature. (see Grant limited
 	// access to Azure Storage resources using shared access signatures
@@ -823,34 +824,48 @@ func (s *NotificationConfig) MarshalJSON() ([]byte, error) {
 // `LastModified` field of S3 objects, and the `Last-Modified` header of
 // Azure blobs.
 type ObjectConditions struct {
-	// ExcludePrefixes: `exclude_prefixes` must follow the requirements
-	// described for include_prefixes. The max size of `exclude_prefixes` is
-	// 1000.
+	// ExcludePrefixes: If you specify `exclude_prefixes`, Storage Transfer
+	// Service uses the items in the `exclude_prefixes` array to determine
+	// which objects to exclude from a transfer. Objects must not start with
+	// one of the matching `exclude_prefixes` for inclusion in a transfer.
+	// The following are requirements of `exclude_prefixes`: * Each
+	// exclude-prefix can contain any sequence of Unicode characters, to a
+	// max length of 1024 bytes when UTF8-encoded, and must not contain
+	// Carriage Return or Line Feed characters. Wildcard matching and
+	// regular expression matching are not supported. * Each exclude-prefix
+	// must omit the leading slash. For example, to exclude the object
+	// `s3://my-aws-bucket/logs/y=2015/requests.gz`, specify the
+	// exclude-prefix as `logs/y=2015/requests.gz`. * None of the
+	// exclude-prefix values can be empty, if specified. * Each
+	// exclude-prefix must exclude a distinct portion of the object
+	// namespace. No exclude-prefix may be a prefix of another
+	// exclude-prefix. * If include_prefixes is specified, then each
+	// exclude-prefix must start with the value of a path explicitly
+	// included by `include_prefixes`. The max size of `exclude_prefixes` is
+	// 1000. For more information, see Filtering objects from transfers
+	// (/storage-transfer/docs/filtering-objects-from-transfers).
 	ExcludePrefixes []string `json:"excludePrefixes,omitempty"`
 
-	// IncludePrefixes: If `include_prefixes` is specified, objects that
-	// satisfy the object conditions must have names that start with one of
-	// the `include_prefixes` and that do not start with any of the
-	// exclude_prefixes. If `include_prefixes` is not specified, all objects
-	// except those that have names starting with one of the
-	// `exclude_prefixes` must satisfy the object conditions. Requirements:
-	// * Each include-prefix and exclude-prefix can contain any sequence of
-	// Unicode characters, to a max length of 1024 bytes when UTF8-encoded,
-	// and must not contain Carriage Return or Line Feed characters.
-	// Wildcard matching and regular expression matching are not supported.
-	// * Each include-prefix and exclude-prefix must omit the leading slash.
-	// For example, to include the `requests.gz` object in a transfer from
-	// `s3://my-aws-bucket/logs/y=2015/requests.gz`, specify the include
-	// prefix as `logs/y=2015/requests.gz`. * None of the include-prefix or
-	// the exclude-prefix values can be empty, if specified. * Each
+	// IncludePrefixes: If you specify `include_prefixes`, Storage Transfer
+	// Service uses the items in the `include_prefixes` array to determine
+	// which objects to include in a transfer. Objects must start with one
+	// of the matching `include_prefixes` for inclusion in the transfer. If
+	// exclude_prefixes is specified, objects must not start with any of the
+	// `exclude_prefixes` specified for inclusion in the transfer. The
+	// following are requirements of `include_prefixes`: * Each
+	// include-prefix can contain any sequence of Unicode characters, to a
+	// max length of 1024 bytes when UTF8-encoded, and must not contain
+	// Carriage Return or Line Feed characters. Wildcard matching and
+	// regular expression matching are not supported. * Each include-prefix
+	// must omit the leading slash. For example, to include the object
+	// `s3://my-aws-bucket/logs/y=2015/requests.gz`, specify the
+	// include-prefix as `logs/y=2015/requests.gz`. * None of the
+	// include-prefix values can be empty, if specified. * Each
 	// include-prefix must include a distinct portion of the object
 	// namespace. No include-prefix may be a prefix of another
-	// include-prefix. * Each exclude-prefix must exclude a distinct portion
-	// of the object namespace. No exclude-prefix may be a prefix of another
-	// exclude-prefix. * If `include_prefixes` is specified, then each
-	// exclude-prefix must start with the value of a path explicitly
-	// included by `include_prefixes`. The max size of `include_prefixes` is
-	// 1000.
+	// include-prefix. The max size of `include_prefixes` is 1000. For more
+	// information, see Filtering objects from transfers
+	// (/storage-transfer/docs/filtering-objects-from-transfers).
 	IncludePrefixes []string `json:"includePrefixes,omitempty"`
 
 	// LastModifiedBefore: If specified, only objects with a "last
@@ -1596,7 +1611,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1728,7 +1743,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1865,7 +1880,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2029,7 +2044,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2195,7 +2210,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2353,7 +2368,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2504,7 +2519,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2663,7 +2678,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2837,7 +2852,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2977,7 +2992,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -519,9 +519,10 @@ type AuthorizationInfo struct {
 	// Permission: The required IAM permission.
 	Permission string `json:"permission,omitempty"`
 
-	// Resource: The resource being accessed, as a REST-style string. For
-	// example:
-	// bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
+	// Resource: The resource being accessed, as a REST-style or cloud
+	// resource string. For example:
+	// bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID or
+	// projects/PROJECTID/datasets/DATASETID
 	Resource string `json:"resource,omitempty"`
 
 	// ResourceAttributes: Resource attributes used in IAM condition
@@ -559,6 +560,9 @@ type CheckRequest struct {
 	// Attributes: Describes attributes about the operation being executed
 	// by the service.
 	Attributes *AttributeContext `json:"attributes,omitempty"`
+
+	// Flags: Optional. Contains a comma-separated list of flags.
+	Flags string `json:"flags,omitempty"`
 
 	// Resources: Describes the resources and the policies applied to each
 	// resource.
@@ -1325,7 +1329,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1477,7 +1481,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210203")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210204")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

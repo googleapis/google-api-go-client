@@ -14,7 +14,7 @@
   "canonicalName": "networkconnectivity",
   "description": "The Network Connectivity API will be home to various services which provide information pertaining to network connectivity.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/",
+  "documentationLink": "https://cloud.google.com/network-connectivity/docs",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1029,7 +1029,7 @@
       }
     }
   },
-  "revision": "20210128",
+  "revision": "20210129",
   "rootUrl": "https://networkconnectivity.googleapis.com/",
   "schemas": {
     "AttributeValue": {

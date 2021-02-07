@@ -2444,7 +2444,7 @@
       }
     }
   },
-  "revision": "20210106",
+  "revision": "20210131",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -3323,6 +3323,21 @@
         },
         "serviceKmsKeyName": {
           "description": "If set, contains the Cloud KMS key identifier used to encrypt data at rest, AKA a Customer Managed Encryption Key (CMEK). Format: projects/PROJECT_ID/locations/LOCATION/keyRings/KEY_RING/cryptoKeys/KEY",
+          "type": "string"
+        },
+        "shuffleMode": {
+          "description": "Output only. The shuffle mode used for the job.",
+          "enum": [
+            "SHUFFLE_MODE_UNSPECIFIED",
+            "VM_BASED",
+            "SERVICE_BASED"
+          ],
+          "enumDescriptions": [
+            "Shuffle mode information is not available.",
+            "Shuffle is done on the worker VMs.",
+            "Shuffle is done on the service side."
+          ],
+          "readOnly": true,
           "type": "string"
         },
         "tempStoragePrefix": {
@@ -5459,6 +5474,10 @@
       "properties": {
         "containerImage": {
           "description": "A docker container image that resides in Google Container Registry.",
+          "type": "string"
+        },
+        "environmentId": {
+          "description": "Environment ID for the Beam runner API proto Environment that corresponds to the current SDK Harness.",
           "type": "string"
         },
         "useSingleCorePerContainer": {

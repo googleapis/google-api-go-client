@@ -197,7 +197,7 @@
       }
     }
   },
-  "revision": "20210123",
+  "revision": "20210130",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -475,7 +475,7 @@
           "type": "string"
         },
         "resource": {
-          "description": "The resource being accessed, as a REST-style string. For example: bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID",
+          "description": "The resource being accessed, as a REST-style or cloud resource string. For example: bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID or projects/PROJECTID/datasets/DATASETID",
           "type": "string"
         },
         "resourceAttributes": {

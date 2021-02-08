@@ -3298,7 +3298,7 @@
       }
     }
   },
-  "revision": "20210113",
+  "revision": "20210203",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7788,7 +7788,7 @@
           "type": "string"
         },
         "quantity": {
-          "description": "The quantity to return and refund.",
+          "description": "The quantity to return and refund. Quantity is required.",
           "format": "uint32",
           "type": "integer"
         },

@@ -179,8 +179,8 @@ type SubscriptionsService struct {
 // Address: JSON template for address of a customer.
 type Address struct {
 	// AddressLine1: A customer's physical address. An address can be
-	// composed of one to three lines. The addressline2 and addressLine3 are
-	// optional.
+	// composed of one to three lines. The `addressline2` and `addressLine3`
+	// are optional.
 	AddressLine1 string `json:"addressLine1,omitempty"`
 
 	// AddressLine2: Line 2 of the address.
@@ -192,28 +192,28 @@ type Address struct {
 	// ContactName: The customer contact's name. This is required.
 	ContactName string `json:"contactName,omitempty"`
 
-	// CountryCode: For countryCode information, see the ISO 3166 country
+	// CountryCode: For `countryCode` information, see the ISO 3166 country
 	// code elements. Verify that country is approved for resale of Google
 	// products. This property is required when creating a new customer.
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// Kind: Identifies the resource as a customer address. Value:
-	// customers#address
+	// `customers#address`
 	Kind string `json:"kind,omitempty"`
 
-	// Locality: An example of a locality value is the city of San
-	// Francisco.
+	// Locality: An example of a `locality` value is the city of `San
+	// Francisco`.
 	Locality string `json:"locality,omitempty"`
 
 	// OrganizationName: The company or company division name. This is
 	// required.
 	OrganizationName string `json:"organizationName,omitempty"`
 
-	// PostalCode: A postalCode example is a postal zip code such as 94043.
-	// This property is required when creating a new customer.
+	// PostalCode: A `postalCode` example is a postal zip code such as
+	// `94043`. This property is required when creating a new customer.
 	PostalCode string `json:"postalCode,omitempty"`
 
-	// Region: An example of a region value is CA for the state of
+	// Region: An example of a `region` value is `CA` for the state of
 	// California.
 	Region string `json:"region,omitempty"`
 
@@ -243,32 +243,33 @@ func (s *Address) MarshalJSON() ([]byte, error) {
 // ChangePlanRequest: JSON template for the ChangePlan rpc request.
 type ChangePlanRequest struct {
 	// DealCode: Google-issued code (100 char max) for discounted pricing on
-	// subscription plans. Deal code must be included in changePlan request
-	// in order to receive discounted rate. This property is optional. If a
-	// deal code has already been added to a subscription, this property may
-	// be left empty and the existing discounted rate will still apply (if
-	// not empty, only provide the deal code that is already present on the
-	// subscription). If a deal code has never been added to a subscription
-	// and this property is left blank, regular pricing will apply.
+	// subscription plans. Deal code must be included in `changePlan`
+	// request in order to receive discounted rate. This property is
+	// optional. If a deal code has already been added to a subscription,
+	// this property may be left empty and the existing discounted rate will
+	// still apply (if not empty, only provide the deal code that is already
+	// present on the subscription). If a deal code has never been added to
+	// a subscription and this property is left blank, regular pricing will
+	// apply.
 	DealCode string `json:"dealCode,omitempty"`
 
 	// Kind: Identifies the resource as a subscription change plan request.
-	// Value: subscriptions#changePlanRequest
+	// Value: `subscriptions#changePlanRequest`
 	Kind string `json:"kind,omitempty"`
 
-	// PlanName: The planName property is required. This is the name of the
-	// subscription's payment plan. For more information about the Google
-	// payment plans, see API concepts. Possible values are: -
-	// ANNUAL_MONTHLY_PAY - The annual commitment plan with monthly payments
-	// *Caution: *ANNUAL_MONTHLY_PAY is returned as ANNUAL in all API
-	// responses. - ANNUAL_YEARLY_PAY - The annual commitment plan with
-	// yearly payments - FLEXIBLE - The flexible plan - TRIAL - The 30-day
-	// free trial plan
+	// PlanName: The `planName` property is required. This is the name of
+	// the subscription's payment plan. For more information about the
+	// Google payment plans, see API concepts. Possible values are: -
+	// `ANNUAL_MONTHLY_PAY` - The annual commitment plan with monthly
+	// payments *Caution: *`ANNUAL_MONTHLY_PAY` is returned as `ANNUAL` in
+	// all API responses. - `ANNUAL_YEARLY_PAY` - The annual commitment plan
+	// with yearly payments - `FLEXIBLE` - The flexible plan - `TRIAL` - The
+	// 30-day free trial plan
 	PlanName string `json:"planName,omitempty"`
 
 	// PurchaseOrderId: This is an optional property. This purchase order
 	// (PO) information is for resellers to use for their company tracking
-	// usage. If a purchaseOrderId value is given it appears in the API
+	// usage. If a `purchaseOrderId` value is given it appears in the API
 	// responses and shows up in the invoice. The property accepts up to 80
 	// plain text characters.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
@@ -300,18 +301,21 @@ func (s *ChangePlanRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Customer: JSON template for a customer.
+// Customer: When a Google customer's account is registered with a
+// reseller, the customer's subscriptions for Google services are
+// managed by this reseller. A customer is described by a primary domain
+// name and a physical address.
 type Customer struct {
 	// AlternateEmail: Like the "Customer email" in the reseller tools, this
 	// email is the secondary contact used if something happens to the
 	// customer's service such as service outage or a security issue. This
 	// property is required when creating a new customer and should not use
-	// the same domain as customerDomain .
+	// the same domain as `customerDomain`.
 	AlternateEmail string `json:"alternateEmail,omitempty"`
 
 	// CustomerDomain: The customer's primary domain name string.
-	// customerDomain is required when creating a new customer. Do not
-	// include the www prefix in the domain when adding a customer.
+	// `customerDomain` is required when creating a new customer. Do not
+	// include the `www` prefix in the domain when adding a customer.
 	CustomerDomain string `json:"customerDomain,omitempty"`
 
 	// CustomerDomainVerified: Whether the customer's primary domain has
@@ -324,7 +328,8 @@ type Customer struct {
 	// generated by Google.
 	CustomerId string `json:"customerId,omitempty"`
 
-	// Kind: Identifies the resource as a customer. Value: reseller#customer
+	// Kind: Identifies the resource as a customer. Value:
+	// `reseller#customer`
 	Kind string `json:"kind,omitempty"`
 
 	// PhoneNumber: Customer contact phone number. Must start with "+"
@@ -375,12 +380,12 @@ func (s *Customer) MarshalJSON() ([]byte, error) {
 // RenewalSettings: JSON template for a subscription renewal settings.
 type RenewalSettings struct {
 	// Kind: Identifies the resource as a subscription renewal setting.
-	// Value: subscriptions#renewalSettings
+	// Value: `subscriptions#renewalSettings`
 	Kind string `json:"kind,omitempty"`
 
 	// RenewalType: Renewal settings for the annual commitment plan. For
 	// more detailed information, see renewal options in the administrator
-	// help center. When renewing a subscription, the renewalType is a
+	// help center. When renewing a subscription, the `renewalType` is a
 	// required property.
 	RenewalType string `json:"renewalType,omitempty"`
 
@@ -480,19 +485,21 @@ func (s *ResellernotifyResource) MarshalJSON() ([]byte, error) {
 // Seats: JSON template for subscription seats.
 type Seats struct {
 	// Kind: Identifies the resource as a subscription seat setting. Value:
-	// subscriptions#seats
+	// `subscriptions#seats`
 	Kind string `json:"kind,omitempty"`
 
 	// LicensedNumberOfSeats: Read-only field containing the current number
 	// of users that are assigned a license for the product defined in
-	// skuId. This field's value is equivalent to the numerical count of
+	// `skuId`. This field's value is equivalent to the numerical count of
 	// users returned by the Enterprise License Manager API method:
-	// listForProductAndSku
+	// `listForProductAndSku`
+	// (/admin-sdk/licensing/v1/reference/licenseAssignments/listForProductAn
+	// dSku).
 	LicensedNumberOfSeats int64 `json:"licensedNumberOfSeats,omitempty"`
 
 	// MaximumNumberOfSeats: This is a required property and is exclusive to
-	// subscriptions with FLEXIBLE or TRIAL plans. This property sets the
-	// maximum number of licensed users allowed on a subscription. This
+	// subscriptions with `FLEXIBLE` or `TRIAL` plans. This property sets
+	// the maximum number of licensed users allowed on a subscription. This
 	// quantity can be increased up to the maximum limit defined in the
 	// reseller's contract. The minimum quantity is the current number of
 	// users in the customer account. *Note: *G Suite subscriptions
@@ -500,13 +507,13 @@ type Seats struct {
 	MaximumNumberOfSeats int64 `json:"maximumNumberOfSeats,omitempty"`
 
 	// NumberOfSeats: This is a required property and is exclusive to
-	// subscriptions with ANNUAL_MONTHLY_PAY and ANNUAL_YEARLY_PAY plans.
-	// This property sets the maximum number of licenses assignable to users
-	// on a subscription. The reseller can add more licenses, but once set,
-	// the numberOfSeats cannot be reduced until renewal. The reseller is
-	// invoiced based on the numberOfSeats value regardless of how many of
-	// these user licenses are assigned. *Note: *G Suite subscriptions
-	// automatically assign a license to every user.
+	// subscriptions with `ANNUAL_MONTHLY_PAY` and `ANNUAL_YEARLY_PAY`
+	// plans. This property sets the maximum number of licenses assignable
+	// to users on a subscription. The reseller can add more licenses, but
+	// once set, the `numberOfSeats` cannot be reduced until renewal. The
+	// reseller is invoiced based on the `numberOfSeats` value regardless of
+	// how many of these user licenses are assigned. *Note: *G Suite
+	// subscriptions automatically assign a license to every user.
 	NumberOfSeats int64 `json:"numberOfSeats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -538,9 +545,9 @@ type Subscription struct {
 	// method for a subscription.
 	BillingMethod string `json:"billingMethod,omitempty"`
 
-	// CreationTime: The creationTime property is the date when subscription
-	// was created. It is in milliseconds using the Epoch format. See an
-	// example Epoch converter.
+	// CreationTime: The `creationTime` property is the date when
+	// subscription was created. It is in milliseconds using the Epoch
+	// format. See an example Epoch converter.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
 	// CustomerDomain: Primary domain name of the customer
@@ -553,24 +560,24 @@ type Subscription struct {
 	CustomerId string `json:"customerId,omitempty"`
 
 	// DealCode: Google-issued code (100 char max) for discounted pricing on
-	// subscription plans. Deal code must be included in insert requests in
-	// order to receive discounted rate. This property is optional, regular
-	// pricing applies if left empty.
+	// subscription plans. Deal code must be included in `insert` requests
+	// in order to receive discounted rate. This property is optional,
+	// regular pricing applies if left empty.
 	DealCode string `json:"dealCode,omitempty"`
 
 	// Kind: Identifies the resource as a Subscription. Value:
-	// reseller#subscription
+	// `reseller#subscription`
 	Kind string `json:"kind,omitempty"`
 
-	// Plan: The plan property is required. In this version of the API, the
-	// G Suite plans are the flexible plan, annual commitment plan, and the
-	// 30-day free trial plan. For more information about the API"s payment
-	// plans, see the API concepts.
+	// Plan: The `plan` property is required. In this version of the API,
+	// the G Suite plans are the flexible plan, annual commitment plan, and
+	// the 30-day free trial plan. For more information about the API"s
+	// payment plans, see the API concepts.
 	Plan *SubscriptionPlan `json:"plan,omitempty"`
 
 	// PurchaseOrderId: This is an optional property. This purchase order
 	// (PO) information is for resellers to use for their company tracking
-	// usage. If a purchaseOrderId value is given it appears in the API
+	// usage. If a `purchaseOrderId` value is given it appears in the API
 	// responses and shows up in the invoice. The property accepts up to 80
 	// plain text characters.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
@@ -590,7 +597,7 @@ type Subscription struct {
 	// licenses in the plan.
 	Seats *Seats `json:"seats,omitempty"`
 
-	// SkuId: A required property. The skuId is a unique system identifier
+	// SkuId: A required property. The `skuId` is a unique system identifier
 	// for a product's SKU assigned to a customer in the subscription. For
 	// products and SKUs available in this version of the API, see Product
 	// and SKU IDs.
@@ -605,25 +612,26 @@ type Subscription struct {
 	// Status: This is an optional property.
 	Status string `json:"status,omitempty"`
 
-	// SubscriptionId: The subscriptionId is the subscription identifier and
-	// is unique for each customer. This is a required property. Since a
-	// subscriptionId changes when a subscription is updated, we recommend
+	// SubscriptionId: The `subscriptionId` is the subscription identifier
+	// and is unique for each customer. This is a required property. Since a
+	// `subscriptionId` changes when a subscription is updated, we recommend
 	// not using this ID as a key for persistent data. Use the
-	// subscriptionId as described in retrieve all reseller subscriptions.
+	// `subscriptionId` as described in retrieve all reseller subscriptions.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
 
 	// SuspensionReasons: Read-only field containing an enumerable of all
 	// the current suspension reasons for a subscription. It is possible for
 	// a subscription to have many concurrent, overlapping suspension
-	// reasons. A subscription's STATUS is SUSPENDED until all pending
+	// reasons. A subscription's `STATUS` is `SUSPENDED` until all pending
 	// suspensions are removed. Possible options include: -
-	// PENDING_TOS_ACCEPTANCE - The customer has not logged in and accepted
-	// the G Suite Resold Terms of Services. - RENEWAL_WITH_TYPE_CANCEL -
-	// The customer's commitment ended and their service was cancelled at
-	// the end of their term. - RESELLER_INITIATED - A manual suspension
-	// invoked by a Reseller. - TRIAL_ENDED - The customer's trial expired
-	// without a plan selected. - OTHER - The customer is suspended for an
-	// internal Google reason (e.g. abuse or otherwise).
+	// `PENDING_TOS_ACCEPTANCE` - The customer has not logged in and
+	// accepted the G Suite Resold Terms of Services. -
+	// `RENEWAL_WITH_TYPE_CANCEL` - The customer's commitment ended and
+	// their service was cancelled at the end of their term. -
+	// `RESELLER_INITIATED` - A manual suspension invoked by a Reseller. -
+	// `TRIAL_ENDED` - The customer's trial expired without a plan selected.
+	// - `OTHER` - The customer is suspended for an internal Google reason
+	// (e.g. abuse or otherwise).
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
 
 	// TransferInfo: Read-only transfer related information for the
@@ -663,37 +671,37 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SubscriptionPlan: The plan property is required. In this version of
+// SubscriptionPlan: The `plan` property is required. In this version of
 // the API, the G Suite plans are the flexible plan, annual commitment
 // plan, and the 30-day free trial plan. For more information about the
 // API"s payment plans, see the API concepts.
 type SubscriptionPlan struct {
 	// CommitmentInterval: In this version of the API, annual commitment
-	// plan's interval is one year. *Note: *When billingMethod value is
-	// OFFLINE, the subscription property object plan.commitmentInterval is
-	// omitted in all API responses.
+	// plan's interval is one year. *Note: *When `billingMethod` value is
+	// `OFFLINE`, the subscription property object `plan.commitmentInterval`
+	// is omitted in all API responses.
 	CommitmentInterval *SubscriptionPlanCommitmentInterval `json:"commitmentInterval,omitempty"`
 
-	// IsCommitmentPlan: The isCommitmentPlan property's boolean value
-	// identifies the plan as an annual commitment plan: - true — The
-	// subscription's plan is an annual commitment plan. - false — The
+	// IsCommitmentPlan: The `isCommitmentPlan` property's boolean value
+	// identifies the plan as an annual commitment plan: - `true` — The
+	// subscription's plan is an annual commitment plan. - `false` — The
 	// plan is not an annual commitment plan.
 	IsCommitmentPlan bool `json:"isCommitmentPlan,omitempty"`
 
-	// PlanName: The planName property is required. This is the name of the
-	// subscription's plan. For more information about the Google payment
-	// plans, see the API concepts. Possible values are: -
-	// ANNUAL_MONTHLY_PAY — The annual commitment plan with monthly
-	// payments. *Caution: *ANNUAL_MONTHLY_PAY is returned as ANNUAL in all
-	// API responses. - ANNUAL_YEARLY_PAY — The annual commitment plan
-	// with yearly payments - FLEXIBLE — The flexible plan - TRIAL — The
-	// 30-day free trial plan. A subscription in trial will be suspended
-	// after the 30th free day if no payment plan is assigned. Calling
-	// changePlan will assign a payment plan to a trial but will not
-	// activate the plan. A trial will automatically begin its assigned
+	// PlanName: The `planName` property is required. This is the name of
+	// the subscription's plan. For more information about the Google
+	// payment plans, see the API concepts. Possible values are: -
+	// `ANNUAL_MONTHLY_PAY` — The annual commitment plan with monthly
+	// payments. *Caution: *`ANNUAL_MONTHLY_PAY` is returned as `ANNUAL` in
+	// all API responses. - `ANNUAL_YEARLY_PAY` — The annual commitment
+	// plan with yearly payments - `FLEXIBLE` — The flexible plan -
+	// `TRIAL` — The 30-day free trial plan. A subscription in trial will
+	// be suspended after the 30th free day if no payment plan is assigned.
+	// Calling `changePlan` will assign a payment plan to a trial but will
+	// not activate the plan. A trial will automatically begin its assigned
 	// payment plan after its 30th free day or immediately after calling
-	// startPaidService. - FREE — The free plan is exclusive to the Cloud
-	// Identity SKU and does not incur any billing.
+	// `startPaidService`. - `FREE` — The free plan is exclusive to the
+	// Cloud Identity SKU and does not incur any billing.
 	PlanName string `json:"planName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommitmentInterval")
@@ -722,15 +730,15 @@ func (s *SubscriptionPlan) MarshalJSON() ([]byte, error) {
 
 // SubscriptionPlanCommitmentInterval: In this version of the API,
 // annual commitment plan's interval is one year. *Note: *When
-// billingMethod value is OFFLINE, the subscription property object
-// plan.commitmentInterval is omitted in all API responses.
+// `billingMethod` value is `OFFLINE`, the subscription property object
+// `plan.commitmentInterval` is omitted in all API responses.
 type SubscriptionPlanCommitmentInterval struct {
-	// EndTime: An annual commitment plan's interval's endTime in
+	// EndTime: An annual commitment plan's interval's `endTime` in
 	// milliseconds using the UNIX Epoch format. See an example Epoch
 	// converter.
 	EndTime int64 `json:"endTime,omitempty,string"`
 
-	// StartTime: An annual commitment plan's interval's startTime in
+	// StartTime: An annual commitment plan's interval's `startTime` in
 	// milliseconds using UNIX Epoch format. See an example Epoch converter.
 	StartTime int64 `json:"startTime,omitempty,string"`
 
@@ -802,8 +810,8 @@ func (s *SubscriptionTransferInfo) MarshalJSON() ([]byte, error) {
 // see the API concepts.
 type SubscriptionTrialSettings struct {
 	// IsInTrial: Determines if a subscription's plan is in a 30-day free
-	// trial or not: - true — The plan is in trial. - false — The plan
-	// is not in trial.
+	// trial or not: - `true` — The plan is in trial. - `false` — The
+	// plan is not in trial.
 	IsInTrial bool `json:"isInTrial,omitempty"`
 
 	// TrialEndTime: Date when the trial ends. The value is in milliseconds
@@ -833,7 +841,10 @@ func (s *SubscriptionTrialSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subscriptions: JSON template for a subscription list.
+// Subscriptions: A subscription manages the relationship of a Google
+// customer's payment plan with a product's SKU, user licenses, 30-day
+// free trial status, and renewal options. A primary role of a reseller
+// is to manage the Google customer's subscriptions.
 type Subscriptions struct {
 	// Kind: Identifies the resource as a collection of subscriptions.
 	// Value: reseller#subscriptions
@@ -885,7 +896,12 @@ type CustomersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a customer account.
+// Get: Get a customer account. Use this operation to see a customer
+// account already in your reseller management, or to see the minimal
+// account information for an existing customer that you do not manage.
+// For more information about the API response for existing customers,
+// see retrieving a customer account
+// (/admin-sdk/reseller/v1/how-tos/manage_customers#get_customer).
 func (r *CustomersService) Get(customerId string) *CustomersGetCall {
 	c := &CustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -929,7 +945,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -991,7 +1007,7 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a customer account.",
+	//   "description": "Get a customer account. Use this operation to see a customer account already in your reseller management, or to see the minimal account information for an existing customer that you do not manage. For more information about the API response for existing customers, see [retrieving a customer account](/admin-sdk/reseller/v1/how-tos/manage_customers#get_customer).",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
 	//   "httpMethod": "GET",
 	//   "id": "reseller.customers.get",
@@ -1000,7 +1016,7 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1028,7 +1044,24 @@ type CustomersInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Order a new customer's account.
+// Insert: Order a new customer's account. Before ordering a new
+// customer account, establish whether the customer account already
+// exists using the `customers.get`
+// (/admin-sdk/reseller/v1/reference/customers/get) If the customer
+// account exists as a direct Google account or as a resold customer
+// account from another reseller, use the `customerAuthToken\` as
+// described in order a resold account for an existing customer
+// (/admin-sdk/reseller/v1/how-tos/manage_customers#create_existing_custo
+// mer). For more information about ordering a new customer account, see
+// order a new customer account
+// (/admin-sdk/reseller/v1/how-tos/manage_customers#create_customer).
+// After creating a new customer account, you must provision a user as
+// an administrator. The customer's administrator is required to sign in
+// to the Admin console and sign the G Suite via Reseller agreement to
+// activate the account. Resellers are prohibited from signing the G
+// Suite via Reseller agreement on the customer's behalf. For more
+// information, see order a new customer account
+// (/admin-sdk/reseller/v1/how-tos/manage_customers#tos).
 func (r *CustomersService) Insert(customer *Customer) *CustomersInsertCall {
 	c := &CustomersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
@@ -1036,12 +1069,12 @@ func (r *CustomersService) Insert(customer *Customer) *CustomersInsertCall {
 }
 
 // CustomerAuthToken sets the optional parameter "customerAuthToken":
-// The customerAuthToken query string is required when creating a resold
-// account that transfers a direct customer's subscription or transfers
-// another reseller customer's subscription to your reseller management.
-// This is a hexadecimal authentication token needed to complete the
-// subscription transfer. For more information, see the administrator
-// help center.
+// The `customerAuthToken` query string is required when creating a
+// resold account that transfers a direct customer's subscription or
+// transfers another reseller customer's subscription to your reseller
+// management. This is a hexadecimal authentication token needed to
+// complete the subscription transfer. For more information, see the
+// administrator help center.
 func (c *CustomersInsertCall) CustomerAuthToken(customerAuthToken string) *CustomersInsertCall {
 	c.urlParams_.Set("customerAuthToken", customerAuthToken)
 	return c
@@ -1074,7 +1107,7 @@ func (c *CustomersInsertCall) Header() http.Header {
 
 func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1135,14 +1168,14 @@ func (c *CustomersInsertCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Order a new customer's account.",
+	//   "description": "Order a new customer's account. Before ordering a new customer account, establish whether the customer account already exists using the [`customers.get`](/admin-sdk/reseller/v1/reference/customers/get) If the customer account exists as a direct Google account or as a resold customer account from another reseller, use the `customerAuthToken\\` as described in [order a resold account for an existing customer](/admin-sdk/reseller/v1/how-tos/manage_customers#create_existing_customer). For more information about ordering a new customer account, see [order a new customer account](/admin-sdk/reseller/v1/how-tos/manage_customers#create_customer). After creating a new customer account, you must provision a user as an administrator. The customer's administrator is required to sign in to the Admin console and sign the G Suite via Reseller agreement to activate the account. Resellers are prohibited from signing the G Suite via Reseller agreement on the customer's behalf. For more information, see [order a new customer account](/admin-sdk/reseller/v1/how-tos/manage_customers#tos).",
 	//   "flatPath": "apps/reseller/v1/customers",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.customers.insert",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerAuthToken": {
-	//       "description": "The customerAuthToken query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
+	//       "description": "The `customerAuthToken` query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1172,8 +1205,8 @@ type CustomersPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Patch a customer account's settings via Apiary Patch
-// Orchestration
+// Patch: Update a customer account's settings. This method supports
+// patch semantics.
 func (r *CustomersService) Patch(customerId string, customer *Customer) *CustomersPatchCall {
 	c := &CustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1208,7 +1241,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1272,7 +1305,7 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*Customer, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Patch a customer account's settings via Apiary Patch Orchestration",
+	//   "description": "Update a customer account's settings. This method supports patch semantics.",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "reseller.customers.patch",
@@ -1281,7 +1314,7 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*Customer, error)
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1312,7 +1345,9 @@ type CustomersUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Update a customer account's settings.
+// Update: Update a customer account's settings. For more information,
+// see update a customer's settings
+// (/admin-sdk/reseller/v1/how-tos/manage_customers#update_customer).
 func (r *CustomersService) Update(customerId string, customer *Customer) *CustomersUpdateCall {
 	c := &CustomersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1347,7 +1382,7 @@ func (c *CustomersUpdateCall) Header() http.Header {
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1411,7 +1446,7 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a customer account's settings.",
+	//   "description": "Update a customer account's settings. For more information, see [update a customer's settings](/admin-sdk/reseller/v1/how-tos/manage_customers#update_customer).",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
 	//   "httpMethod": "PUT",
 	//   "id": "reseller.customers.update",
@@ -1420,7 +1455,7 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1494,7 +1529,7 @@ func (c *ResellernotifyGetwatchdetailsCall) Header() http.Header {
 
 func (c *ResellernotifyGetwatchdetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1622,7 +1657,7 @@ func (c *ResellernotifyRegisterCall) Header() http.Header {
 
 func (c *ResellernotifyRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1751,7 +1786,7 @@ func (c *ResellernotifyUnregisterCall) Header() http.Header {
 
 func (c *ResellernotifyUnregisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1842,7 +1877,9 @@ type SubscriptionsActivateCall struct {
 }
 
 // Activate: Activates a subscription previously suspended by the
-// reseller
+// reseller. If you did not suspend the customer subscription and it is
+// suspended for any other reason, such as for abuse or a pending ToS
+// acceptance, this call will not reactivate the customer subscription.
 func (r *SubscriptionsService) Activate(customerId string, subscriptionId string) *SubscriptionsActivateCall {
 	c := &SubscriptionsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1877,7 +1914,7 @@ func (c *SubscriptionsActivateCall) Header() http.Header {
 
 func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1937,7 +1974,7 @@ func (c *SubscriptionsActivateCall) Do(opts ...googleapi.CallOption) (*Subscript
 	}
 	return ret, nil
 	// {
-	//   "description": "Activates a subscription previously suspended by the reseller",
+	//   "description": "Activates a subscription previously suspended by the reseller. If you did not suspend the customer subscription and it is suspended for any other reason, such as for abuse or a pending ToS acceptance, this call will not reactivate the customer subscription.",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/activate",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.activate",
@@ -1947,13 +1984,13 @@ func (c *SubscriptionsActivateCall) Do(opts ...googleapi.CallOption) (*Subscript
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "This is a required property. The subscriptionId is the subscription identifier and is unique for each customer. Since a subscriptionId changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the subscriptionId can be found using the retrieve all reseller subscriptions method.",
+	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1984,7 +2021,11 @@ type SubscriptionsChangePlanCall struct {
 
 // ChangePlan: Update a subscription plan. Use this method to update a
 // plan for a 30-day trial or a flexible plan subscription to an annual
-// commitment plan with monthly or yearly payments.
+// commitment plan with monthly or yearly payments. How a plan is
+// updated differs depending on the plan and the products. For more
+// information, see the description in manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscripti
+// on_plan).
 func (r *SubscriptionsService) ChangePlan(customerId string, subscriptionId string, changeplanrequest *ChangePlanRequest) *SubscriptionsChangePlanCall {
 	c := &SubscriptionsChangePlanCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2020,7 +2061,7 @@ func (c *SubscriptionsChangePlanCall) Header() http.Header {
 
 func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2085,7 +2126,7 @@ func (c *SubscriptionsChangePlanCall) Do(opts ...googleapi.CallOption) (*Subscri
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a subscription plan. Use this method to update a plan for a 30-day trial or a flexible plan subscription to an annual commitment plan with monthly or yearly payments.",
+	//   "description": "Update a subscription plan. Use this method to update a plan for a 30-day trial or a flexible plan subscription to an annual commitment plan with monthly or yearly payments. How a plan is updated differs depending on the plan and the products. For more information, see the description in [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscription_plan).",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changePlan",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.changePlan",
@@ -2095,13 +2136,13 @@ func (c *SubscriptionsChangePlanCall) Do(opts ...googleapi.CallOption) (*Subscri
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "This is a required property. The subscriptionId is the subscription identifier and is unique for each customer. Since a subscriptionId changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the subscriptionId can be found using the retrieve all reseller subscriptions method.",
+	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2134,7 +2175,9 @@ type SubscriptionsChangeRenewalSettingsCall struct {
 }
 
 // ChangeRenewalSettings: Update a user license's renewal settings. This
-// is applicable for accounts with annual commitment plans only.
+// is applicable for accounts with annual commitment plans only. For
+// more information, see the description in manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_renewal).
 func (r *SubscriptionsService) ChangeRenewalSettings(customerId string, subscriptionId string, renewalsettings *RenewalSettings) *SubscriptionsChangeRenewalSettingsCall {
 	c := &SubscriptionsChangeRenewalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2170,7 +2213,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Header() http.Header {
 
 func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2235,7 +2278,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a user license's renewal settings. This is applicable for accounts with annual commitment plans only.",
+	//   "description": "Update a user license's renewal settings. This is applicable for accounts with annual commitment plans only. For more information, see the description in [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_renewal).",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.changeRenewalSettings",
@@ -2245,13 +2288,13 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "This is a required property. The subscriptionId is the subscription identifier and is unique for each customer. Since a subscriptionId changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the subscriptionId can be found using the retrieve all reseller subscriptions method.",
+	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2283,7 +2326,11 @@ type SubscriptionsChangeSeatsCall struct {
 	header_        http.Header
 }
 
-// ChangeSeats: Update a subscription's user license settings.
+// ChangeSeats: Update a subscription's user license settings. For more
+// information about updating an annual commitment plan or a flexible
+// plan subscription’s licenses, see Manage Subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscripti
+// on_seat).
 func (r *SubscriptionsService) ChangeSeats(customerId string, subscriptionId string, seats *Seats) *SubscriptionsChangeSeatsCall {
 	c := &SubscriptionsChangeSeatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2319,7 +2366,7 @@ func (c *SubscriptionsChangeSeatsCall) Header() http.Header {
 
 func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2384,7 +2431,7 @@ func (c *SubscriptionsChangeSeatsCall) Do(opts ...googleapi.CallOption) (*Subscr
 	}
 	return ret, nil
 	// {
-	//   "description": "Update a subscription's user license settings.",
+	//   "description": "Update a subscription's user license settings. For more information about updating an annual commitment plan or a flexible plan subscription’s licenses, see [Manage Subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscription_seat).",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeSeats",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.changeSeats",
@@ -2394,13 +2441,13 @@ func (c *SubscriptionsChangeSeatsCall) Do(opts ...googleapi.CallOption) (*Subscr
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "This is a required property. The subscriptionId is the subscription identifier and is unique for each customer. Since a subscriptionId changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the subscriptionId can be found using the retrieve all reseller subscriptions method.",
+	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2467,7 +2514,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2513,13 +2560,13 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "deletionType": {
-	//       "description": "The deletionType query string enables the cancellation, downgrade, or suspension of a subscription.",
+	//       "description": "The `deletionType` query string enables the cancellation, downgrade, or suspension of a subscription.",
 	//       "enum": [
 	//         "deletion_type_undefined",
 	//         "cancel",
@@ -2535,7 +2582,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "This is a required property. The subscriptionId is the subscription identifier and is unique for each customer. Since a subscriptionId changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the subscriptionId can be found using the retrieve all reseller subscriptions method.",
+	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2561,7 +2608,13 @@ type SubscriptionsGetCall struct {
 	header_        http.Header
 }
 
-// Get: Get a specific subscription.
+// Get: Get a specific subscription. The `subscriptionId` can be found
+// using the Retrieve all reseller subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_all_subscript
+// ions) method. For more information about retrieving a specific
+// subscription, see the information descrived in manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_subscription)
+// .
 func (r *SubscriptionsService) Get(customerId string, subscriptionId string) *SubscriptionsGetCall {
 	c := &SubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2606,7 +2659,7 @@ func (c *SubscriptionsGetCall) Header() http.Header {
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2669,7 +2722,7 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a specific subscription.",
+	//   "description": "Get a specific subscription. The `subscriptionId` can be found using the [Retrieve all reseller subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_all_subscriptions) method. For more information about retrieving a specific subscription, see the information descrived in [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_subscription).",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
 	//   "httpMethod": "GET",
 	//   "id": "reseller.subscriptions.get",
@@ -2679,13 +2732,13 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "This is a required property. The subscriptionId is the subscription identifier and is unique for each customer. Since a subscriptionId changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the subscriptionId can be found using the retrieve all reseller subscriptions method.",
+	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2714,7 +2767,22 @@ type SubscriptionsInsertCall struct {
 	header_      http.Header
 }
 
-// Insert: Create or transfer a subscription.
+// Insert: Create or transfer a subscription. Create a subscription for
+// a customer's account that you ordered using the Order a new customer
+// account (/admin-sdk/reseller/v1/reference/customers/insert.html)
+// method. For more information about creating a subscription for
+// different payment plans, see manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#create_subscripti
+// on).\ If you did not order the customer's account using the customer
+// insert method, use the customer's `customerAuthToken` when creating a
+// subscription for that customer. If transferring a G Suite
+// subscription with an associated Google Drive or Google Vault
+// subscription, use the batch operation
+// (/admin-sdk/reseller/v1/how-tos/batch.html) to transfer all of these
+// subscriptions. For more information, see how to transfer
+// subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscr
+// iption).
 func (r *SubscriptionsService) Insert(customerId string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2723,12 +2791,12 @@ func (r *SubscriptionsService) Insert(customerId string, subscription *Subscript
 }
 
 // CustomerAuthToken sets the optional parameter "customerAuthToken":
-// The customerAuthToken query string is required when creating a resold
-// account that transfers a direct customer's subscription or transfers
-// another reseller customer's subscription to your reseller management.
-// This is a hexadecimal authentication token needed to complete the
-// subscription transfer. For more information, see the administrator
-// help center.
+// The `customerAuthToken` query string is required when creating a
+// resold account that transfers a direct customer's subscription or
+// transfers another reseller customer's subscription to your reseller
+// management. This is a hexadecimal authentication token needed to
+// complete the subscription transfer. For more information, see the
+// administrator help center.
 func (c *SubscriptionsInsertCall) CustomerAuthToken(customerAuthToken string) *SubscriptionsInsertCall {
 	c.urlParams_.Set("customerAuthToken", customerAuthToken)
 	return c
@@ -2761,7 +2829,7 @@ func (c *SubscriptionsInsertCall) Header() http.Header {
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2825,7 +2893,7 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Create or transfer a subscription.",
+	//   "description": "Create or transfer a subscription. Create a subscription for a customer's account that you ordered using the [Order a new customer account](/admin-sdk/reseller/v1/reference/customers/insert.html) method. For more information about creating a subscription for different payment plans, see [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#create_subscription).\\ If you did not order the customer's account using the customer insert method, use the customer's `customerAuthToken` when creating a subscription for that customer. If transferring a G Suite subscription with an associated Google Drive or Google Vault subscription, use the [batch operation](/admin-sdk/reseller/v1/how-tos/batch.html) to transfer all of these subscriptions. For more information, see how to [transfer subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscription).",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.insert",
@@ -2834,12 +2902,12 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 	//   ],
 	//   "parameters": {
 	//     "customerAuthToken": {
-	//       "description": "The customerAuthToken query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
+	//       "description": "The `customerAuthToken` query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2871,19 +2939,22 @@ type SubscriptionsListCall struct {
 
 // List: List of subscriptions managed by the reseller. The list can be
 // all subscriptions, all of a customer's subscriptions, or all of a
-// customer's transferable subscriptions.
+// customer's transferable subscriptions. Optionally, this method can
+// filter the response by a `customerNamePrefix`. For more information,
+// see manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions).
 func (r *SubscriptionsService) List() *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // CustomerAuthToken sets the optional parameter "customerAuthToken":
-// The customerAuthToken query string is required when creating a resold
-// account that transfers a direct customer's subscription or transfers
-// another reseller customer's subscription to your reseller management.
-// This is a hexadecimal authentication token needed to complete the
-// subscription transfer. For more information, see the administrator
-// help center.
+// The `customerAuthToken` query string is required when creating a
+// resold account that transfers a direct customer's subscription or
+// transfers another reseller customer's subscription to your reseller
+// management. This is a hexadecimal authentication token needed to
+// complete the subscription transfer. For more information, see the
+// administrator help center.
 func (c *SubscriptionsListCall) CustomerAuthToken(customerAuthToken string) *SubscriptionsListCall {
 	c.urlParams_.Set("customerAuthToken", customerAuthToken)
 	return c
@@ -2891,8 +2962,8 @@ func (c *SubscriptionsListCall) CustomerAuthToken(customerAuthToken string) *Sub
 
 // CustomerId sets the optional parameter "customerId": Either the
 // customer's primary domain name or the customer's unique identifier.
-// If using the domain name, we do not recommend using a customerId as a
-// key for persistent data. If the domain name for a customerId is
+// If using the domain name, we do not recommend using a `customerId` as
+// a key for persistent data. If the domain name for a `customerId` is
 // changed, the Google system automatically updates.
 func (c *SubscriptionsListCall) CustomerId(customerId string) *SubscriptionsListCall {
 	c.urlParams_.Set("customerId", customerId)
@@ -2902,20 +2973,21 @@ func (c *SubscriptionsListCall) CustomerId(customerId string) *SubscriptionsList
 // CustomerNamePrefix sets the optional parameter "customerNamePrefix":
 // When retrieving all of your subscriptions and filtering for specific
 // customers, you can enter a prefix for a customer name. Using an
-// example customer group that includes exam.com, example20.com and
-// example.com: - exa -- Returns all customer names that start with
-// 'exa' which could include exam.com, example20.com, and example.com. A
-// name prefix is similar to using a regular expression's asterisk,
-// exa*. - example -- Returns example20.com and example.com.
+// example customer group that includes `exam.com`, `example20.com` and
+// `example.com`: - `exa` -- Returns all customer names that start with
+// 'exa' which could include `exam.com`, `example20.com`, and
+// `example.com`. A name prefix is similar to using a regular
+// expression's asterisk, exa*. - `example` -- Returns `example20.com`
+// and `example.com`.
 func (c *SubscriptionsListCall) CustomerNamePrefix(customerNamePrefix string) *SubscriptionsListCall {
 	c.urlParams_.Set("customerNamePrefix", customerNamePrefix)
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": When retrieving
-// a large list, the maxResults is the maximum number of results per
-// page. The nextPageToken value takes you to the next page. The default
-// is 20.
+// a large list, the `maxResults` is the maximum number of results per
+// page. The `nextPageToken` value takes you to the next page. The
+// default is 20.
 func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -2965,7 +3037,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3024,29 +3096,29 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*Subscriptions
 	}
 	return ret, nil
 	// {
-	//   "description": "List of subscriptions managed by the reseller. The list can be all subscriptions, all of a customer's subscriptions, or all of a customer's transferable subscriptions.",
+	//   "description": "List of subscriptions managed by the reseller. The list can be all subscriptions, all of a customer's subscriptions, or all of a customer's transferable subscriptions. Optionally, this method can filter the response by a `customerNamePrefix`. For more information, see [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions).",
 	//   "flatPath": "apps/reseller/v1/subscriptions",
 	//   "httpMethod": "GET",
 	//   "id": "reseller.subscriptions.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerAuthToken": {
-	//       "description": "The customerAuthToken query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
+	//       "description": "The `customerAuthToken` query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "customerNamePrefix": {
-	//       "description": "When retrieving all of your subscriptions and filtering for specific customers, you can enter a prefix for a customer name. Using an example customer group that includes exam.com, example20.com and example.com: - exa -- Returns all customer names that start with 'exa' which could include exam.com, example20.com, and example.com. A name prefix is similar to using a regular expression's asterisk, exa*. - example -- Returns example20.com and example.com. ",
+	//       "description": "When retrieving all of your subscriptions and filtering for specific customers, you can enter a prefix for a customer name. Using an example customer group that includes `exam.com`, `example20.com` and `example.com`: - `exa` -- Returns all customer names that start with 'exa' which could include `exam.com`, `example20.com`, and `example.com`. A name prefix is similar to using a regular expression's asterisk, exa*. - `example` -- Returns `example20.com` and `example.com`. ",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "When retrieving a large list, the maxResults is the maximum number of results per page. The nextPageToken value takes you to the next page. The default is 20.",
+	//       "description": "When retrieving a large list, the `maxResults` is the maximum number of results per page. The `nextPageToken` value takes you to the next page. The default is 20.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -3104,7 +3176,10 @@ type SubscriptionsStartPaidServiceCall struct {
 }
 
 // StartPaidService: Immediately move a 30-day free trial subscription
-// to a paid service subscription.
+// to a paid service subscription. This method is only applicable if a
+// payment plan has already been set up for the 30-day trial
+// subscription. For more information, see manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#paid_service).
 func (r *SubscriptionsService) StartPaidService(customerId string, subscriptionId string) *SubscriptionsStartPaidServiceCall {
 	c := &SubscriptionsStartPaidServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -3139,7 +3214,7 @@ func (c *SubscriptionsStartPaidServiceCall) Header() http.Header {
 
 func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3199,7 +3274,7 @@ func (c *SubscriptionsStartPaidServiceCall) Do(opts ...googleapi.CallOption) (*S
 	}
 	return ret, nil
 	// {
-	//   "description": "Immediately move a 30-day free trial subscription to a paid service subscription.",
+	//   "description": "Immediately move a 30-day free trial subscription to a paid service subscription. This method is only applicable if a payment plan has already been set up for the 30-day trial subscription. For more information, see [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#paid_service).",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.startPaidService",
@@ -3209,13 +3284,13 @@ func (c *SubscriptionsStartPaidServiceCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "This is a required property. The subscriptionId is the subscription identifier and is unique for each customer. Since a subscriptionId changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the subscriptionId can be found using the retrieve all reseller subscriptions method.",
+	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3243,7 +3318,17 @@ type SubscriptionsSuspendCall struct {
 	header_        http.Header
 }
 
-// Suspend: Suspends an active subscription.
+// Suspend: Suspends an active subscription. You can use this method to
+// suspend a paid subscription that is currently in the `ACTIVE` state.
+// * For `FLEXIBLE` subscriptions, billing is paused. * For
+// `ANNUAL_MONTHLY_PAY` or `ANNUAL_YEARLY_PAY` subscriptions: *
+// Suspending the subscription does not change the renewal date that was
+// originally committed to. * A suspended subscription does not renew.
+// If you activate the subscription after the original renewal date, a
+// new annual subscription will be created, starting on the day of
+// activation. We strongly encourage you to suspend subscriptions only
+// for short periods of time as suspensions over 60 days may result in
+// the subscription being cancelled.
 func (r *SubscriptionsService) Suspend(customerId string, subscriptionId string) *SubscriptionsSuspendCall {
 	c := &SubscriptionsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -3278,7 +3363,7 @@ func (c *SubscriptionsSuspendCall) Header() http.Header {
 
 func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3338,7 +3423,7 @@ func (c *SubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Subscripti
 	}
 	return ret, nil
 	// {
-	//   "description": "Suspends an active subscription.",
+	//   "description": "Suspends an active subscription. You can use this method to suspend a paid subscription that is currently in the `ACTIVE` state. * For `FLEXIBLE` subscriptions, billing is paused. * For `ANNUAL_MONTHLY_PAY` or `ANNUAL_YEARLY_PAY` subscriptions: * Suspending the subscription does not change the renewal date that was originally committed to. * A suspended subscription does not renew. If you activate the subscription after the original renewal date, a new annual subscription will be created, starting on the day of activation. We strongly encourage you to suspend subscriptions only for short periods of time as suspensions over 60 days may result in the subscription being cancelled.",
 	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/suspend",
 	//   "httpMethod": "POST",
 	//   "id": "reseller.subscriptions.suspend",
@@ -3348,13 +3433,13 @@ func (c *SubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Subscripti
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a customerId as a key for persistent data. If the domain name for a customerId is changed, the Google system automatically updates.",
+	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "subscriptionId": {
-	//       "description": "This is a required property. The subscriptionId is the subscription identifier and is unique for each customer. Since a subscriptionId changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the subscriptionId can be found using the retrieve all reseller subscriptions method.",
+	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

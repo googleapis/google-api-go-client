@@ -1004,7 +1004,7 @@
       }
     }
   },
-  "revision": "20210127",
+  "revision": "20210201",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {
@@ -3133,7 +3133,7 @@
           "type": "boolean"
         },
         "adjustVolumeDisabled": {
-          "description": "Whether adjusting the master volume is disabled.",
+          "description": "Whether adjusting the master volume is disabled. Also mutes the device.",
           "type": "boolean"
         },
         "advancedSecurityOverrides": {

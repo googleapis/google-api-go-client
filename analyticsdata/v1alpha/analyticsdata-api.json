@@ -248,7 +248,7 @@
       }
     }
   },
-  "revision": "20210120",
+  "revision": "20210205",
   "rootUrl": "https://analyticsdata.googleapis.com/",
   "schemas": {
     "BatchRunPivotReportsRequest": {
@@ -935,7 +935,7 @@
           "type": "array"
         },
         "limit": {
-          "description": "The number of rows to return in this pivot. If unspecified, 10 rows are returned. If -1, all rows are returned.",
+          "description": "The number of rows to return in this pivot. If the `limit` parameter is unspecified, up to 10,000 rows are returned. The API returns a maximum of 100,000 rows per request, no matter how many you ask for.",
           "format": "int64",
           "type": "string"
         },
@@ -1001,7 +1001,7 @@
           "type": "array"
         },
         "rowCount": {
-          "description": "The cardinality of the pivot as if offset = 0 and limit = -1. The total number of rows for this pivot's fields regardless of how the parameters offset and limit are specified in the request.",
+          "description": "The cardinality of the pivot. The total number of rows for this pivot's fields regardless of how the parameters `offset` and `limit` are specified in the request.",
           "format": "int32",
           "type": "integer"
         }
@@ -1242,7 +1242,7 @@
           "type": "array"
         },
         "limit": {
-          "description": "The number of rows to return. If unspecified, 10 rows are returned. If -1, all rows are returned.",
+          "description": "The number of rows to return. If the `limit` parameter is unspecified, 10,000 rows are returned. The API returns a maximum of 100,000 rows per request, no matter how many you ask for.",
           "format": "int64",
           "type": "string"
         },
@@ -1389,7 +1389,7 @@
           "type": "boolean"
         },
         "limit": {
-          "description": "The number of rows to return. If unspecified, 10 rows are returned. If -1, all rows are returned. To learn more about this pagination parameter, see [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).",
+          "description": "The number of rows to return. If the `limit` parameter is unspecified, 10,000 rows are returned. The API returns a maximum of 100,000 rows per request, no matter how many you ask for.",
           "format": "int64",
           "type": "string"
         },
@@ -1426,7 +1426,7 @@
           "type": "array"
         },
         "offset": {
-          "description": "The row count of the start row. The first row is counted as row 0. To learn more about this pagination parameter, see [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).",
+          "description": "The row count of the start row. The first row is counted as row 0.",
           "format": "int64",
           "type": "string"
         },

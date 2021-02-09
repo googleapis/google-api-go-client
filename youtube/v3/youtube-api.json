@@ -3764,7 +3764,7 @@
       }
     }
   },
-  "revision": "20210130",
+  "revision": "20210206",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -9217,7 +9217,7 @@
       "type": "object"
     },
     "PlaylistItemSnippet": {
-      "description": "Basic details about a playlist, including title, description and thumbnails. Basic details of a YouTube Playlist item provided by the author. Next ID: 13",
+      "description": "Basic details about a playlist, including title, description and thumbnails. Basic details of a YouTube Playlist item provided by the author. Next ID: 15",
       "id": "PlaylistItemSnippet",
       "properties": {
         "channelId": {
@@ -9256,6 +9256,14 @@
         },
         "title": {
           "description": "The item's title.",
+          "type": "string"
+        },
+        "videoOwnerChannelId": {
+          "description": "Channel id for the channel this video belongs to.",
+          "type": "string"
+        },
+        "videoOwnerChannelTitle": {
+          "description": "Channel title for the channel this video belongs to.",
           "type": "string"
         }
       },

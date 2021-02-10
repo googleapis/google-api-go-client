@@ -928,12 +928,6 @@ type Filter struct {
 	// InListFilter: A filter for in list values.
 	InListFilter *InListFilter `json:"inListFilter,omitempty"`
 
-	// NullFilter: A filter for null values. If True, a null dimension value
-	// is matched by this filter. Null filter is commonly used inside a NOT
-	// filter expression. For example, a NOT expression of a null filter
-	// removes rows when a dimension is null.
-	NullFilter bool `json:"nullFilter,omitempty"`
-
 	// NumericFilter: A filter for numeric or date values.
 	NumericFilter *NumericFilter `json:"numericFilter,omitempty"`
 
@@ -1468,9 +1462,10 @@ type Pivot struct {
 	FieldNames []string `json:"fieldNames,omitempty"`
 
 	// Limit: The number of rows to return in this pivot. If the `limit`
-	// parameter is unspecified, up to 10,000 rows are returned. The API
-	// returns a maximum of 100,000 rows per request, no matter how many you
-	// ask for.
+	// parameter is unspecified, up to 10,000 rows are returned. The product
+	// of the `limit` for each `pivot` in a `RunPivotReportRequest` must not
+	// exceed 100,000. For example, a two pivot request with `limit: 1000`
+	// in each pivot will fail because the product is `1,000,000`.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregate the metrics by dimensions in this pivot
@@ -2375,7 +2370,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2513,7 +2508,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2653,7 +2648,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2780,7 +2775,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2910,7 +2905,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3042,7 +3037,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

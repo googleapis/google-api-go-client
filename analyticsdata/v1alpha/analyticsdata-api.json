@@ -248,7 +248,7 @@
       }
     }
   },
-  "revision": "20210205",
+  "revision": "20210206",
   "rootUrl": "https://analyticsdata.googleapis.com/",
   "schemas": {
     "BatchRunPivotReportsRequest": {
@@ -603,10 +603,6 @@
           "$ref": "InListFilter",
           "description": "A filter for in list values."
         },
-        "nullFilter": {
-          "description": "A filter for null values. If True, a null dimension value is matched by this filter. Null filter is commonly used inside a NOT filter expression. For example, a NOT expression of a null filter removes rows when a dimension is null.",
-          "type": "boolean"
-        },
         "numericFilter": {
           "$ref": "NumericFilter",
           "description": "A filter for numeric or date values."
@@ -935,7 +931,7 @@
           "type": "array"
         },
         "limit": {
-          "description": "The number of rows to return in this pivot. If the `limit` parameter is unspecified, up to 10,000 rows are returned. The API returns a maximum of 100,000 rows per request, no matter how many you ask for.",
+          "description": "The number of rows to return in this pivot. If the `limit` parameter is unspecified, up to 10,000 rows are returned. The product of the `limit` for each `pivot` in a `RunPivotReportRequest` must not exceed 100,000. For example, a two pivot request with `limit: 1000` in each pivot will fail because the product is `1,000,000`.",
           "format": "int64",
           "type": "string"
         },

@@ -79,5 +79,5 @@ svc, err := storage.NewService(ctx, option.WithTokenSource(tokenSource))
 
 ## More information
 
-For some more information related to all of the generated client please read through our
+For some more information related to all of the generated clients please read through our
 [package documentation](https://pkg.go.dev/google.golang.org/api#section-documentation).

@@ -2115,26 +2115,34 @@ func (s *Orientation) MarshalJSON() ([]byte, error) {
 // ProvidedSoftwareCatalog: The currently provided software environment
 // on the devices under test.
 type ProvidedSoftwareCatalog struct {
+	// AndroidxOrchestratorVersion: A string representing the current
+	// version of AndroidX Test Orchestrator that is used in the
+	// environment. The package is available at
+	// https://maven.google.com/web/index.html#androidx.test:orchestrator.
+	AndroidxOrchestratorVersion string `json:"androidxOrchestratorVersion,omitempty"`
+
 	// OrchestratorVersion: A string representing the current version of
-	// Android Test Orchestrator that is provided by TestExecutionService.
-	// Example: "1.0.2 beta".
+	// Android Test Orchestrator that is used in the environment. The
+	// package is available at
+	// https://maven.google.com/web/index.html#com.android.support.test:orchestrator.
 	OrchestratorVersion string `json:"orchestratorVersion,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OrchestratorVersion")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AndroidxOrchestratorVersion") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OrchestratorVersion") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "AndroidxOrchestratorVersion") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3268,7 +3276,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3401,7 +3409,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3555,7 +3563,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3713,7 +3721,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3875,7 +3883,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210208")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

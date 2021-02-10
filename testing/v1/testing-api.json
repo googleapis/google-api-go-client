@@ -282,7 +282,7 @@
       }
     }
   },
-  "revision": "20210201",
+  "revision": "20210204",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1468,8 +1468,12 @@
       "description": "The currently provided software environment on the devices under test.",
       "id": "ProvidedSoftwareCatalog",
       "properties": {
+        "androidxOrchestratorVersion": {
+          "description": "A string representing the current version of AndroidX Test Orchestrator that is used in the environment. The package is available at https://maven.google.com/web/index.html#androidx.test:orchestrator.",
+          "type": "string"
+        },
         "orchestratorVersion": {
-          "description": "A string representing the current version of Android Test Orchestrator that is provided by TestExecutionService. Example: \"1.0.2 beta\".",
+          "description": "A string representing the current version of Android Test Orchestrator that is used in the environment. The package is available at https://maven.google.com/web/index.html#com.android.support.test:orchestrator.",
           "type": "string"
         }
       },

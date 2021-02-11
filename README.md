@@ -38,7 +38,7 @@ func main() {
 These are auto-generated Go libraries from the Google Discovery Service's JSON description files.
 
 Due to the auto-generated nature of this collection of libraries they may contain breaking changes from one release to
-the next.
+the next. The generator itself and the code it produces are considered beta for this reason.
 
 These client libraries are officially supported by Google.  However, the libraries are considered complete and are in
 maintenance mode. This means that we will address critical bugs and security issues but will not add any new features.
@@ -47,9 +47,6 @@ If you're working with Google Cloud Platform APIs such as Datastore or Pub/Sub, 
 [Cloud Client Libraries for Go](https://github.com/googleapis/google-cloud-go) instead. These are the new and idiomatic
 Go libraries targeted specifically at Google Cloud Platform Services.
 
-The generator itself and the code it produces are beta. Some clients are in alpha/beta and indicated as such in the
-import path (e.g., "google.golang.org/api/someapi/v1alpha").
-
 ## Authorization
 
 By default, each API will use [Google Application Default Credentials](https://developers.google.com/identity/protocols/application-default-credentials)
@@ -57,7 +54,8 @@ for authorization credentials used in calling the API endpoints. This will allow
 environments without requiring explicit configuration.
 
 ```go
-client, err := storage.NewService(ctx)
+// import "google.golang.org/api/sheets/v4"
+client, err := sheets.NewService(ctx)
 ```
 
 To authorize using a [JSON key file](https://cloud.google.com/iam/docs/managing-service-account-keys), pass
@@ -65,7 +63,7 @@ To authorize using a [JSON key file](https://cloud.google.com/iam/docs/managing-
 function of the desired package. For example:
 
 ```go
-client, err := storage.NewService(ctx, option.WithCredentialsFile("path/to/keyfile.json"))
+client, err := sheets.NewService(ctx, option.WithCredentialsFile("path/to/keyfile.json"))
 ```
 
 You can exert more control over authorization by using the [`golang.org/x/oauth2`](https://pkg.go.dev/golang.org/x/oauth2)
@@ -74,7 +72,7 @@ to the `NewService` function:
 
 ```go
 tokenSource := ...
-svc, err := storage.NewService(ctx, option.WithTokenSource(tokenSource))
+svc, err := sheets.NewService(ctx, option.WithTokenSource(tokenSource))
 ```
 
 ## More information

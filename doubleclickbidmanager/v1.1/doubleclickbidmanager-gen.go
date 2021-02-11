@@ -524,7 +524,6 @@ type FilterPair struct {
 	//   "FILTER_VIDEO_RATING_TIER"
 	//   "FILTER_VIDEO_FORMAT_SUPPORT"
 	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
-	//   "FILTER_VIDEO_VPAID_SUPPORT"
 	//   "FILTER_VIDEO_CREATIVE_DURATION"
 	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
@@ -937,7 +936,6 @@ type Parameters struct {
 	//   "FILTER_VIDEO_RATING_TIER"
 	//   "FILTER_VIDEO_FORMAT_SUPPORT"
 	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
-	//   "FILTER_VIDEO_VPAID_SUPPORT"
 	//   "FILTER_VIDEO_CREATIVE_DURATION"
 	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
@@ -1626,6 +1624,14 @@ type Parameters struct {
 	//   "METRIC_TARGET_RATING_POINTS"
 	//   "METRIC_PROVISIONAL_IMPRESSIONS"
 	//   "METRIC_VENDOR_BLOCKED_ADS"
+	//   "METRIC_GRP_CORRECTED_VIEWABLE_IMPRESSIONS"
+	//   "METRIC_GRP_CORRECTED_VIEWABLE_IMPRESSIONS_SHARE_PERCENT"
+	//   "METRIC_VIEWABLE_GROSS_RATING_POINTS"
+	//
+	// "METRIC_VIRTUAL_PEOPLE_AVERAGE_VIEWABLE_IMPRESSION_FREQUENCY_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_PERCENT"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_SHARE_PERCENT"
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Options: Additional query options.
@@ -1824,7 +1830,6 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_VIDEO_RATING_TIER"
 	//   "FILTER_VIDEO_FORMAT_SUPPORT"
 	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
-	//   "FILTER_VIDEO_VPAID_SUPPORT"
 	//   "FILTER_VIDEO_CREATIVE_DURATION"
 	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
@@ -2775,7 +2780,7 @@ func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2901,7 +2906,7 @@ func (c *LineitemsUploadlineitemsCall) Header() http.Header {
 
 func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3034,7 +3039,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3167,7 +3172,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3280,7 +3285,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3437,7 +3442,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3599,7 +3604,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3741,7 +3746,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3906,7 +3911,7 @@ func (c *SdfDownloadCall) Header() http.Header {
 
 func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210209")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

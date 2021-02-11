@@ -2484,7 +2484,7 @@
       }
     }
   },
-  "revision": "20210131",
+  "revision": "20210209",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -2615,6 +2615,13 @@
         "fccId": {
           "description": "The FCC identifier of the device.",
           "type": "string"
+        },
+        "grantRangeAllowlists": {
+          "description": "Only ranges within the allowlists are available for new grants.",
+          "items": {
+            "$ref": "SasPortalFrequencyRange"
+          },
+          "type": "array"
         },
         "grants": {
           "description": "Output only. Grants held by the device.",

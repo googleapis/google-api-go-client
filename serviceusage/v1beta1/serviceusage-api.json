@@ -959,7 +959,7 @@
       }
     }
   },
-  "revision": "20210126",
+  "revision": "20210209",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "AdminQuotaPolicy": {
@@ -1349,6 +1349,13 @@
       "properties": {
         "consumerQuotaLimits": {
           "description": "The consumer quota for each quota limit defined on the metric.",
+          "items": {
+            "$ref": "ConsumerQuotaLimit"
+          },
+          "type": "array"
+        },
+        "descendantConsumerQuotaLimits": {
+          "description": "The quota limits targeting the descendant containers of the consumer in request. If the consumer in request is of type `organizations` or `folders`, the field will list per-project limits in the metric; if the consumer in request is of type `project`, the field will be empty. The `quota_buckets` field of each descendant consumer quota limit will not be populated.",
           "items": {
             "$ref": "ConsumerQuotaLimit"
           },

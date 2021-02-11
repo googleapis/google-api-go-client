@@ -3764,7 +3764,7 @@
       }
     }
   },
-  "revision": "20210206",
+  "revision": "20210210",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -9395,6 +9395,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "thumbnailVideoId": {
+          "description": "Note: if the playlist has a custom thumbnail, this field will not be populated. The video id selected by the user that will be used as the thumbnail of this playlist. This field defaults to the first publicly viewable video in the playlist, if: 1. The user has never selected a video to be the thumbnail of the playlist. 2. The user selects a video to be the thumbnail, and then removes that video from the playlist. 3. The user selects a non-owned video to be the thumbnail, but that video becomes private, or gets deleted.",
+          "type": "string"
         },
         "thumbnails": {
           "$ref": "ThumbnailDetails",

@@ -578,7 +578,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
+                          "description": "Output only. The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                           "required": true,
@@ -1808,7 +1808,7 @@
       }
     }
   },
-  "revision": "20201210",
+  "revision": "20210205",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1999,14 +1999,12 @@
           "enum": [
             "INTEGRATED_SYSTEM_UNSPECIFIED",
             "BIGQUERY",
-            "CLOUD_PUBSUB",
-            "DPMS"
+            "CLOUD_PUBSUB"
           ],
           "enumDescriptions": [
             "Default unknown system.",
             "BigQuery.",
-            "Cloud Pub/Sub.",
-            "Dataproc Metastore - Managed Hive Metastore."
+            "Cloud Pub/Sub."
           ],
           "readOnly": true,
           "type": "string"
@@ -2016,7 +2014,8 @@
           "type": "string"
         },
         "name": {
-          "description": "The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
+          "description": "Output only. The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
+          "readOnly": true,
           "type": "string"
         },
         "schema": {

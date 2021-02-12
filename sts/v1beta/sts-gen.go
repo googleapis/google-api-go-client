@@ -335,7 +335,10 @@ type V1betaTokenCall struct {
 // Token: Exchanges a credential for a Google OAuth 2.0 access token.
 // The token asserts an external identity within a workload identity
 // pool, or it applies a Credential Access Boundary to a Google access
-// token.
+// token. When you call this method, do not send the `Authorization`
+// HTTP header in the request. This method does not require the
+// `Authorization` header, and using the header can cause the request to
+// fail.
 func (r *V1betaService) Token(googleidentitystsv1betaexchangetokenrequest *GoogleIdentityStsV1betaExchangeTokenRequest) *V1betaTokenCall {
 	c := &V1betaTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleidentitystsv1betaexchangetokenrequest = googleidentitystsv1betaexchangetokenrequest
@@ -369,7 +372,7 @@ func (c *V1betaTokenCall) Header() http.Header {
 
 func (c *V1betaTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -432,7 +435,7 @@ func (c *V1betaTokenCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV1
 	}
 	return ret, nil
 	// {
-	//   "description": "Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within a workload identity pool, or it applies a Credential Access Boundary to a Google access token.",
+	//   "description": "Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within a workload identity pool, or it applies a Credential Access Boundary to a Google access token. When you call this method, do not send the `Authorization` HTTP header in the request. This method does not require the `Authorization` header, and using the header can cause the request to fail.",
 	//   "flatPath": "v1beta/token",
 	//   "httpMethod": "POST",
 	//   "id": "sts.token",

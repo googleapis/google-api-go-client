@@ -808,7 +808,7 @@ type Request struct {
 	// Size: The HTTP request size in bytes. If unknown, it must be -1.
 	Size int64 `json:"size,omitempty,string"`
 
-	// Time: The timestamp when the `destination` service receives the first
+	// Time: The timestamp when the `destination` service receives the last
 	// byte of the request.
 	Time string `json:"time,omitempty"`
 
@@ -1083,6 +1083,12 @@ func (s *ResourceLocation) MarshalJSON() ([]byte, error) {
 // Response: This message defines attributes for a typical network
 // response. It generally models semantics of an HTTP response.
 type Response struct {
+	// BackendLatency: The length of time it takes the backend service to
+	// fully respond to a request. Measured from when the destination
+	// service starts to send the request to the backend until when the
+	// destination service receives the complete response from the backend.
+	BackendLatency string `json:"backendLatency,omitempty"`
+
 	// Code: The HTTP response status code, such as `200` and `404`.
 	Code int64 `json:"code,omitempty,string"`
 
@@ -1094,11 +1100,11 @@ type Response struct {
 	// Size: The HTTP response size in bytes. If unknown, it must be -1.
 	Size int64 `json:"size,omitempty,string"`
 
-	// Time: The timestamp when the `destination` service generates the
-	// first byte of the response.
+	// Time: The timestamp when the `destination` service sends the last
+	// byte of the response.
 	Time string `json:"time,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Code") to
+	// ForceSendFields is a list of field names (e.g. "BackendLatency") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1106,12 +1112,13 @@ type Response struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BackendLatency") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1329,7 +1336,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1481,7 +1488,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210210")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

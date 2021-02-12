@@ -259,7 +259,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. Full resource name of Product, such as `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`. If the caller does not have permission to delete the Product, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Product to delete does not exist, a NOT_FOUND error is returned. The Product to delete can neither be a Product.Type.COLLECTION Product member nor a Product.Type.PRIMARY Product with more than one variants. Otherwise, an INVALID_ARGUMENT error is returned.",
+                              "description": "Required. Full resource name of Product, such as `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`. If the caller does not have permission to delete the Product, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Product to delete does not exist, a NOT_FOUND error is returned. The Product to delete can neither be a Product.Type.COLLECTION Product member nor a Product.Type.PRIMARY Product with more than one variants. Otherwise, an INVALID_ARGUMENT error is returned. All inventory information for the named Product will be deleted.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/branches/[^/]+/products/.*$",
                               "required": true,
@@ -706,7 +706,7 @@
       }
     }
   },
-  "revision": "20210129",
+  "revision": "20210205",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -1247,7 +1247,7 @@
           "type": "integer"
         },
         "availableTime": {
-          "description": "The timestamp when this Product becomes available recommendation and search.",
+          "description": "The timestamp when this Product becomes available for recommendation.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -1267,7 +1267,7 @@
           "type": "string"
         },
         "images": {
-          "description": "Product images for the product. A maximum of 300 images are allowed. Google Merchant Center property [image_link](https://support.google.com/merchants/answer/6324350). Schema.org property [Product.image](https://schema.org/image).",
+          "description": "Product images for the product.Highly recommended to put the main image to the first. A maximum of 300 images are allowed. Google Merchant Center property [image_link](https://support.google.com/merchants/answer/6324350). Schema.org property [Product.image](https://schema.org/image).",
           "items": {
             "$ref": "GoogleCloudRetailV2Image"
           },

@@ -528,7 +528,7 @@
       }
     }
   },
-  "revision": "20210121",
+  "revision": "20210209",
   "rootUrl": "https://memcache.googleapis.com/",
   "schemas": {
     "ApplyParametersRequest": {
@@ -809,6 +809,10 @@
       "properties": {
         "exclude": {
           "description": "Optional. Exclude instance from maintenance. When true, rollout service will not attempt maintenance on the instance. Rollout service will include the instance in reported rollout progress as not attempted.",
+          "type": "boolean"
+        },
+        "isRollback": {
+          "description": "Optional. If the update call is triggered from rollback, set the value as true.",
           "type": "boolean"
         },
         "maintenancePolicies": {

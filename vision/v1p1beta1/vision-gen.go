@@ -2732,6 +2732,10 @@ type GoogleCloudVisionV1p1beta1ImageContext struct {
 	// ProductSearchParams: Parameters for product search.
 	ProductSearchParams *GoogleCloudVisionV1p1beta1ProductSearchParams `json:"productSearchParams,omitempty"`
 
+	// TextDetectionParams: Parameters for text detection and document text
+	// detection.
+	TextDetectionParams *GoogleCloudVisionV1p1beta1TextDetectionParams `json:"textDetectionParams,omitempty"`
+
 	// WebDetectionParams: Parameters for web detection.
 	WebDetectionParams *GoogleCloudVisionV1p1beta1WebDetectionParams `json:"webDetectionParams,omitempty"`
 
@@ -3965,6 +3969,40 @@ type GoogleCloudVisionV1p1beta1TextAnnotationTextProperty struct {
 
 func (s *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVisionV1p1beta1TextAnnotationTextProperty
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p1beta1TextDetectionParams: Parameters for text
+// detections. This is used to control TEXT_DETECTION and
+// DOCUMENT_TEXT_DETECTION features.
+type GoogleCloudVisionV1p1beta1TextDetectionParams struct {
+	// EnableTextDetectionConfidenceScore: By default, Cloud Vision API only
+	// includes confidence score for DOCUMENT_TEXT_DETECTION result. Set the
+	// flag to true to include confidence score for TEXT_DETECTION as well.
+	EnableTextDetectionConfidenceScore bool `json:"enableTextDetectionConfidenceScore,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableTextDetectionConfidenceScore") to unconditionally include in
+	// API requests. By default, fields with empty values are omitted from
+	// API requests. However, any non-pointer, non-interface field appearing
+	// in ForceSendFields will be sent to the server regardless of whether
+	// the field is empty or not. This may be used to include empty fields
+	// in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EnableTextDetectionConfidenceScore") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1TextDetectionParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1TextDetectionParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13354,7 +13392,7 @@ func (c *FilesAnnotateCall) Header() http.Header {
 
 func (c *FilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13488,7 +13526,7 @@ func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13614,7 +13652,7 @@ func (c *ImagesAnnotateCall) Header() http.Header {
 
 func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13748,7 +13786,7 @@ func (c *ImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13881,7 +13919,7 @@ func (c *ProjectsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14030,7 +14068,7 @@ func (c *ProjectsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14171,7 +14209,7 @@ func (c *ProjectsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14320,7 +14358,7 @@ func (c *ProjectsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14466,7 +14504,7 @@ func (c *ProjectsLocationsFilesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14615,7 +14653,7 @@ func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14756,7 +14794,7 @@ func (c *ProjectsLocationsImagesAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14905,7 +14943,7 @@ func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) Header() http.Header {
 
 func (c *ProjectsLocationsImagesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210211")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

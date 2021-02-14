@@ -905,10 +905,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule struct {
 
 	// ScheduleDeadlineTime: schedule_deadline_time is the time deadline any
 	// schedule start time cannot go beyond, including reschedule. It's
-	// normally the initial schedule start time plus a week. If the
-	// reschedule type is next window, simply take this value as start time.
-	// If reschedule type is IMMEDIATELY or BY_TIME, current or selected
-	// time cannot go beyond this deadline.
+	// normally the initial schedule start time plus maintenance window
+	// length (1 day or 1 week). Maintenance cannot be scheduled to start
+	// beyond this deadline.
 	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
 
 	// StartTime: The scheduled start time for the maintenance.
@@ -947,6 +946,10 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// service will include the instance in reported rollout progress as not
 	// attempted.
 	Exclude bool `json:"exclude,omitempty"`
+
+	// IsRollback: Optional. If the update call is triggered from rollback,
+	// set the value as true.
+	IsRollback bool `json:"isRollback,omitempty"`
 
 	// MaintenancePolicies: Optional. The MaintenancePolicies that have been
 	// attached to the instance. The key must be of the type name of the
@@ -1021,6 +1024,47 @@ type GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata struct {
 
 func (s *GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility:
+// PerSliSloEligibility is a mapping from an SLI name to eligibility.
+type GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility struct {
+	// Eligibilities: An entry in the eligibilities map specifies an
+	// eligibility for a particular SLI for the given instance. The SLI key
+	// in the name must be a valid SLI name specified in the Eligibility
+	// Exporter binary flags otherwise an error will be emitted by
+	// Eligibility Exporter and the oncaller will be alerted. If an SLI has
+	// been defined in the binary flags but the eligibilities map does not
+	// contain it, the corresponding SLI time series will not be emitted by
+	// the Eligibility Exporter. This ensures a smooth rollout and
+	// compatibility between the data produced by different versions of the
+	// Eligibility Exporters. If eligibilities map contains a key for an SLI
+	// which has not been declared in the binary flags, there will be an
+	// error message emitted in the Eligibility Exporter log and the metric
+	// for the SLI in question will not be emitted.
+	Eligibilities map[string]GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility `json:"eligibilities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Eligibilities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Eligibilities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1122,8 +1166,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion struct {
 	Reason string `json:"reason,omitempty"`
 
 	// SliName: Name of an SLI that this exclusion applies to. Can be left
-	// empty, signaling that the instance should be excluded from all SLIs
-	// defined in the service SLO configuration.
+	// empty, signaling that the instance should be excluded from all SLIs.
 	SliName string `json:"sliName,omitempty"`
 
 	// StartTime: Start time of the exclusion. No alignment (e.g. to a full
@@ -1157,7 +1200,9 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion) MarshalJSO
 // SloMetadata contains resources required for proper SLO classification
 // of the instance.
 type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
-	// Eligibility: Optional. User-defined instance eligibility.
+	// Eligibility: Optional. Global per-instance SLI eligibility which
+	// applies to all defined SLIs. Exactly one of 'eligibility' and
+	// 'per_sli_eligibility' fields must be used.
 	Eligibility *GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility `json:"eligibility,omitempty"`
 
 	// Exclusions: List of SLO exclusion windows. When multiple entries in
@@ -1179,6 +1224,11 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
 	// Eligibility Exporter and published in the form of per node metric to
 	// Monarch.
 	Nodes []*GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata `json:"nodes,omitempty"`
+
+	// PerSliEligibility: Optional. Multiple per-instance SLI eligibilities
+	// which apply for individual SLIs. Exactly one of 'eligibility' and
+	// 'per_sli_eligibility' fields must be used.
+	PerSliEligibility *GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility `json:"perSliEligibility,omitempty"`
 
 	// Tier: Name of the SLO tier the Instance belongs to. This name will be
 	// expected to match the tiers specified in the service SLO
@@ -1321,15 +1371,15 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListSQLIntegrationsResponse: ListSQLIntegrationsResponse is the
-// response message for ListSQLIntegrations method.
-type ListSQLIntegrationsResponse struct {
+// ListSqlIntegrationsResponse: ListSqlIntegrationsResponse is the
+// response message for ListSqlIntegrations method.
+type ListSqlIntegrationsResponse struct {
 	// NextPageToken: Token to retrieve the next page of results, or empty
 	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// SqlIntegrations: A list of SQLIntegrations of a domain.
-	SqlIntegrations []*SQLIntegration `json:"sqlIntegrations,omitempty"`
+	// SqlIntegrations: A list of SqlIntegrations of a domain.
+	SqlIntegrations []*SqlIntegration `json:"sqlIntegrations,omitempty"`
 
 	// Unreachable: A list of locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
@@ -1355,8 +1405,8 @@ type ListSQLIntegrationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSQLIntegrationsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListSQLIntegrationsResponse
+func (s *ListSqlIntegrationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSqlIntegrationsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1788,61 +1838,6 @@ func (s *ResetAdminPasswordResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SQLIntegration: Represents the SQL instance integrated with AD.
-type SQLIntegration struct {
-	// CreateTime: Output only. The time sql integration was created.
-	// Synthetic field is populated automatically by CCFE.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// Name: The unique name of the sql integration in the form of
-	// `projects/{project_id}/locations/global/domains/{domain_name}/sqlInteg
-	// rations/{sql_integration}`
-	Name string `json:"name,omitempty"`
-
-	// SqlInstance: The full resource name of an integrated sql instance
-	// TODO(b/161918255) Add resource type annotation post CloudSQL API fix.
-	SqlInstance string `json:"sqlInstance,omitempty"`
-
-	// State: Output only. The current state of the sql integration.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not Set
-	//   "CREATING" - The sqlIntegration is being created.
-	//   "DELETING" - The sqlIntegration is being deleted.
-	//   "READY" - The sqlIntegration is ready.
-	State string `json:"state,omitempty"`
-
-	// UpdateTime: Output only. The time sql integration was updated.
-	// Synthetic field is populated automatically by CCFE.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SQLIntegration) MarshalJSON() ([]byte, error) {
-	type NoMethod SQLIntegration
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Schedule: Configure the schedule.
 type Schedule struct {
 	// Day: Allows to define schedule that runs specified day of the week.
@@ -1915,6 +1910,62 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlIntegration: Represents the Sql instance integrated with AD.
+type SqlIntegration struct {
+	// CreateTime: Output only. The time sql integration was created.
+	// Synthetic field is populated automatically by CCFE.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Name: The unique name of the sql integration in the form of
+	// `projects/{project_id}/locations/global/domains/{domain_name}/sqlInteg
+	// rations/{sql_integration}`
+	Name string `json:"name,omitempty"`
+
+	// SqlInstance: The full resource name of an integrated sql instance
+	// Reference to:
+	// http://google3/google/cloud/sql/v1/cloud_sql_resources.proto?l=351&rcl=354416019
+	SqlInstance string `json:"sqlInstance,omitempty"`
+
+	// State: Output only. The current state of the sql integration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not Set
+	//   "CREATING" - The sqlIntegration is being created.
+	//   "DELETING" - The sqlIntegration is being deleted.
+	//   "READY" - The sqlIntegration is ready.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. The time sql integration was updated.
+	// Synthetic field is populated automatically by CCFE.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlIntegration) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlIntegration
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2315,7 +2366,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2481,7 +2532,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2653,7 +2704,7 @@ func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsAttachTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2806,7 +2857,7 @@ func (c *ProjectsLocationsGlobalDomainsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2949,7 +3000,7 @@ func (c *ProjectsLocationsGlobalDomainsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3081,7 +3132,7 @@ func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsDetachTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3230,7 +3281,7 @@ func (c *ProjectsLocationsGlobalDomainsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3390,7 +3441,7 @@ func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3575,7 +3626,7 @@ func (c *ProjectsLocationsGlobalDomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3762,7 +3813,7 @@ func (c *ProjectsLocationsGlobalDomainsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3908,7 +3959,7 @@ func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) Header() http.Heade
 
 func (c *ProjectsLocationsGlobalDomainsReconfigureTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4048,7 +4099,7 @@ func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsResetAdminPasswordCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4190,7 +4241,7 @@ func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4335,7 +4386,7 @@ func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4477,7 +4528,7 @@ func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalDomainsValidateTrustCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4626,7 +4677,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4651,13 +4702,13 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) doRequest(alt str
 }
 
 // Do executes the "managedidentities.projects.locations.global.domains.sqlIntegrations.get" call.
-// Exactly one of *SQLIntegration or error will be non-nil. Any non-2xx
+// Exactly one of *SqlIntegration or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
-// *SQLIntegration.ServerResponse.Header or (if a response was returned
+// *SqlIntegration.ServerResponse.Header or (if a response was returned
 // at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) Do(opts ...googleapi.CallOption) (*SQLIntegration, error) {
+func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) Do(opts ...googleapi.CallOption) (*SqlIntegration, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4676,7 +4727,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) Do(opts ...google
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &SQLIntegration{
+	ret := &SqlIntegration{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4697,7 +4748,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. SQLIntegration resource name using the form: `projects/{project_id}/locations/global/domains/*/sqlIntegrations/{name}`",
+	//       "description": "Required. SqlIntegration resource name using the form: `projects/{project_id}/locations/global/domains/*/sqlIntegrations/{name}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+/sqlIntegrations/[^/]+$",
 	//       "required": true,
@@ -4706,7 +4757,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsGetCall) Do(opts ...google
 	//   },
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
-	//     "$ref": "SQLIntegration"
+	//     "$ref": "SqlIntegration"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4726,7 +4777,7 @@ type ProjectsLocationsGlobalDomainsSqlIntegrationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists SQLIntegrations in a given domain.
+// List: Lists SqlIntegrations in a given domain.
 func (r *ProjectsLocationsGlobalDomainsSqlIntegrationsService) List(parent string) *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall {
 	c := &ProjectsLocationsGlobalDomainsSqlIntegrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4735,7 +4786,7 @@ func (r *ProjectsLocationsGlobalDomainsSqlIntegrationsService) List(parent strin
 
 // Filter sets the optional parameter "filter": Filter specifying
 // constraints of a list operation. For example,
-// `SQLIntegration.name="sql".
+// `SqlIntegration.name="sql".
 func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Filter(filter string) *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4804,7 +4855,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Header() http.He
 
 func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4829,13 +4880,13 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) doRequest(alt st
 }
 
 // Do executes the "managedidentities.projects.locations.global.domains.sqlIntegrations.list" call.
-// Exactly one of *ListSQLIntegrationsResponse or error will be non-nil.
+// Exactly one of *ListSqlIntegrationsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListSQLIntegrationsResponse.ServerResponse.Header or (if a response
+// *ListSqlIntegrationsResponse.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googleapi.CallOption) (*ListSQLIntegrationsResponse, error) {
+func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googleapi.CallOption) (*ListSqlIntegrationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4854,7 +4905,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &ListSQLIntegrationsResponse{
+	ret := &ListSqlIntegrationsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4866,7 +4917,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists SQLIntegrations in a given domain.",
+	//   "description": "Lists SqlIntegrations in a given domain.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/global/domains/{domainsId}/sqlIntegrations",
 	//   "httpMethod": "GET",
 	//   "id": "managedidentities.projects.locations.global.domains.sqlIntegrations.list",
@@ -4875,7 +4926,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter specifying constraints of a list operation. For example, `SQLIntegration.name=\"sql\"`.",
+	//       "description": "Optional. Filter specifying constraints of a list operation. For example, `SqlIntegration.name=\"sql\"`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4896,7 +4947,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the SQLIntegrations using the form: `projects/{project_id}/locations/global/domains/*`",
+	//       "description": "Required. The resource name of the SqlIntegrations using the form: `projects/{project_id}/locations/global/domains/*`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/domains/[^/]+$",
 	//       "required": true,
@@ -4905,7 +4956,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googl
 	//   },
 	//   "path": "v1beta1/{+parent}/sqlIntegrations",
 	//   "response": {
-	//     "$ref": "ListSQLIntegrationsResponse"
+	//     "$ref": "ListSqlIntegrationsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4917,7 +4968,7 @@ func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Do(opts ...googl
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Pages(ctx context.Context, f func(*ListSQLIntegrationsResponse) error) error {
+func (c *ProjectsLocationsGlobalDomainsSqlIntegrationsListCall) Pages(ctx context.Context, f func(*ListSqlIntegrationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -4990,7 +5041,7 @@ func (c *ProjectsLocationsGlobalOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5131,7 +5182,7 @@ func (c *ProjectsLocationsGlobalOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5274,7 +5325,7 @@ func (c *ProjectsLocationsGlobalOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5448,7 +5499,7 @@ func (c *ProjectsLocationsGlobalOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlobalOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

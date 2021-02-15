@@ -4912,7 +4912,7 @@
       }
     }
   },
-  "revision": "20210130",
+  "revision": "20210209",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -6225,6 +6225,10 @@
           "description": "Custom data set in QueryParameters.payload.",
           "type": "object"
         },
+        "sentimentAnalysisResult": {
+          "$ref": "GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult",
+          "description": "The sentiment analysis result of the current user request. The field is filled when sentiment analysis is configured to be enabled for the request."
+        },
         "sessionInfo": {
           "$ref": "GoogleCloudDialogflowCxV3SessionInfo",
           "description": "Information about session status."
@@ -6281,6 +6285,23 @@
         "resolvedValue": {
           "description": "Always present. Structured value for the parameter extracted from user utterance.",
           "type": "any"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult": {
+      "description": "Represents the result of sentiment analysis.",
+      "id": "GoogleCloudDialogflowCxV3WebhookRequestSentimentAnalysisResult",
+      "properties": {
+        "magnitude": {
+          "description": "A non-negative number in the [0, +inf) range, which represents the absolute magnitude of sentiment, regardless of score (positive or negative).",
+          "format": "float",
+          "type": "number"
+        },
+        "score": {
+          "description": "Sentiment score between -1.0 (negative sentiment) and 1.0 (positive sentiment).",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -7658,6 +7679,10 @@
           "description": "Custom data set in QueryParameters.payload.",
           "type": "object"
         },
+        "sentimentAnalysisResult": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult",
+          "description": "The sentiment analysis result of the current user request. The field is filled when sentiment analysis is configured to be enabled for the request."
+        },
         "sessionInfo": {
           "$ref": "GoogleCloudDialogflowCxV3beta1SessionInfo",
           "description": "Information about session status."
@@ -7714,6 +7739,23 @@
         "resolvedValue": {
           "description": "Always present. Structured value for the parameter extracted from user utterance.",
           "type": "any"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult": {
+      "description": "Represents the result of sentiment analysis.",
+      "id": "GoogleCloudDialogflowCxV3beta1WebhookRequestSentimentAnalysisResult",
+      "properties": {
+        "magnitude": {
+          "description": "A non-negative number in the [0, +inf) range, which represents the absolute magnitude of sentiment, regardless of score (positive or negative).",
+          "format": "float",
+          "type": "number"
+        },
+        "score": {
+          "description": "Sentiment score between -1.0 (negative sentiment) and 1.0 (positive sentiment).",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"

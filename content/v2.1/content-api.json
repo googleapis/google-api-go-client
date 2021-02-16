@@ -4158,6 +4158,38 @@
         }
       }
     },
+    "reports": {
+      "methods": {
+        "search": {
+          "description": "Retrieves merchant performance mertrics matching the search query and optionally segmented by selected dimensions.",
+          "flatPath": "content/v2.1/{merchantId}/reports/search",
+          "httpMethod": "POST",
+          "id": "content.reports.search",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. Id of the merchant making the call. Must be a standalone account or an MCA subaccount.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "content/v2.1/{merchantId}/reports/search",
+          "request": {
+            "$ref": "SearchRequest"
+          },
+          "response": {
+            "$ref": "SearchResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        }
+      }
+    },
     "repricingrules": {
       "methods": {
         "create": {
@@ -5022,7 +5054,7 @@
       }
     }
   },
-  "revision": "20210210",
+  "revision": "20210211",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -8011,6 +8043,28 @@
         },
         "reasonCode": {
           "description": "Code of the rejection reason.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Metrics": {
+      "description": "Performance metrics. Values are only set for metrics requested explicitly in the request's search query.",
+      "id": "Metrics",
+      "properties": {
+        "clicks": {
+          "description": "Number of clicks.",
+          "format": "int64",
+          "type": "string"
+        },
+        "ctr": {
+          "description": "Number of clicks merchant's products receive (clicks) divided by the number of times the products are shown (impressions).",
+          "format": "double",
+          "type": "number"
+        },
+        "impressions": {
+          "description": "Number of times merchant's products are shown.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -11972,6 +12026,21 @@
       },
       "type": "object"
     },
+    "ReportRow": {
+      "description": "Result row returned from the search query.",
+      "id": "ReportRow",
+      "properties": {
+        "metrics": {
+          "$ref": "Metrics",
+          "description": "Metrics requested by the merchant in the query. Metric values are only set for metrics requested explicitly in the query."
+        },
+        "segments": {
+          "$ref": "Segments",
+          "description": "Segmentation dimensions requested by the merchant in the query. Dimension values are only set for dimensions requested explicitly in the query."
+        }
+      },
+      "type": "object"
+    },
     "RepricingProductReport": {
       "description": "Resource that represents a daily Repricing product report. Each report contains stats for a single type of Repricing rule for a single product on a given day. If there are multiple rules of the same type for the product on that day, the report lists all the rules by rule ids, combines the stats, and paginates the results by date. To retrieve the stats of a particular rule, provide the rule_id in the request.",
       "id": "RepricingProductReport",
@@ -12762,6 +12831,77 @@
             "$ref": "Value"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SearchRequest": {
+      "description": "Request message for the ReportService.Search method.",
+      "id": "SearchRequest",
+      "properties": {
+        "pageSize": {
+          "description": "Number of ReportRows to retrieve in a single page. Defaults to the maximum of 1000. Values above 1000 are coerced to 1000.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "pageToken": {
+          "description": "Token of the page to retrieve. If not specified, the first page of results is returned. In order to request the next page of results, the value obtained from `next_page_token` in the previous response should be used.",
+          "type": "string"
+        },
+        "query": {
+          "description": "Required. Search query that defines performance metrics to retrieve and dimensions according to which the metrics are to be segmented. ",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SearchResponse": {
+      "description": "Response message for the ReportService.Search method.",
+      "id": "SearchResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token which can be sent as `page_token` to retrieve the next page. If omitted, there are no subsequent pages.",
+          "type": "string"
+        },
+        "results": {
+          "description": "Rows that matched the search query.",
+          "items": {
+            "$ref": "ReportRow"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Segments": {
+      "description": "Dimensions according to which metrics are segmented in the response. Values of product dimensions, e.g., offer id, reflect the state of a product at the time of the corresponding event, e.g., impression or order. Segment fields cannot be selected in queries without also selecting at least one metric field. Values are only set for dimensions requested explicitly in the request's search query.",
+      "id": "Segments",
+      "properties": {
+        "date": {
+          "$ref": "Date",
+          "description": "Date in the merchant timezone to which metrics apply."
+        },
+        "offerId": {
+          "description": "Merchant-provided id of the product.",
+          "type": "string"
+        },
+        "program": {
+          "description": "Program to which metrics apply, e.g., Free Product Listing.",
+          "enum": [
+            "PROGRAM_UNSPECIFIED",
+            "SHOPPING_ADS",
+            "FREE_PRODUCT_LISTING",
+            "FREE_LOCAL_PRODUCT_LISTING",
+            "BUY_ON_GOOGLE_LISTING"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "Shopping Ads.",
+            "Free Product Listing.",
+            "Free Local Product Listing.",
+            "Buy on Google Listing."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

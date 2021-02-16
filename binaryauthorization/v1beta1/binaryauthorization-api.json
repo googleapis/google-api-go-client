@@ -551,11 +551,11 @@
       }
     }
   },
-  "revision": "20210129",
+  "revision": "20210212",
   "rootUrl": "https://binaryauthorization.googleapis.com/",
   "schemas": {
     "AdmissionRule": {
-      "description": "An admission rule specifies either that all container images used in a pod creation request must be attested to by one or more attestors, that all pod creations will be allowed, or that all pod creations will be denied. Images matching an admission whitelist pattern are exempted from admission rules and will never block a pod creation.",
+      "description": "An admission rule specifies either that all container images used in a pod creation request must be attested to by one or more attestors, that all pod creations will be allowed, or that all pod creations will be denied. Images matching an admission allowlist pattern are exempted from admission rules and will never block a pod creation.",
       "id": "AdmissionRule",
       "properties": {
         "enforcementMode": {
@@ -599,7 +599,7 @@
       "type": "object"
     },
     "AdmissionWhitelistPattern": {
-      "description": "An admission whitelist pattern exempts images from checks by admission rules.",
+      "description": "An admission allowlist pattern exempts images from checks by admission rules.",
       "id": "AdmissionWhitelistPattern",
       "properties": {
         "namePattern": {

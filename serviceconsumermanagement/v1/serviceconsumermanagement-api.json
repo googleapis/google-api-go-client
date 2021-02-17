@@ -542,7 +542,7 @@
       }
     }
   },
-  "revision": "20210131",
+  "revision": "20210213",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -2679,6 +2679,10 @@
         },
         "name": {
           "description": "Default identity resource name. An example name would be: `services/serviceconsumermanagement.googleapis.com/projects/123/defaultIdentity`",
+          "type": "string"
+        },
+        "tag": {
+          "description": "The Default Identity tag. If specified when creating the account, the tag must be present in activation_grants. If not specified when creating the account, the tag is set to the tag specified in activation_grants.",
           "type": "string"
         },
         "uniqueId": {

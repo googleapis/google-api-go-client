@@ -1783,6 +1783,11 @@
             "orgUnitPath"
           ],
           "parameters": {
+            "allowPlus": {
+              "description": "Parses org unit path without url decode to allow for plus in ou name",
+              "location": "query",
+              "type": "boolean"
+            },
             "customerId": {
               "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
@@ -1812,6 +1817,11 @@
             "orgUnitPath"
           ],
           "parameters": {
+            "allowPlus": {
+              "description": "Parses org unit path without url decode to allow for plus in ou name",
+              "location": "query",
+              "type": "boolean"
+            },
             "customerId": {
               "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
@@ -1918,6 +1928,11 @@
             "orgUnitPath"
           ],
           "parameters": {
+            "allowPlus": {
+              "description": "Parses org unit path without url decode to allow for plus in ou name",
+              "location": "query",
+              "type": "boolean"
+            },
             "customerId": {
               "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
@@ -1953,6 +1968,11 @@
             "orgUnitPath"
           ],
           "parameters": {
+            "allowPlus": {
+              "description": "Parses org unit path without url decode to allow for plus in ou name",
+              "location": "query",
+              "type": "boolean"
+            },
             "customerId": {
               "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
               "location": "path",
@@ -4139,7 +4159,7 @@
       }
     }
   },
-  "revision": "20210105",
+  "revision": "20210216",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4186,7 +4206,7 @@
       "type": "object"
     },
     "Asp": {
-      "description": "An application-specific password (ASP) is used with applications that do not accept a verification code when logging into the application on certain devices. The ASP access code is used instead of the login and password you commonly use when accessing an application through a browser. For more information about ASPs and how to create one, see the [help center](//http://support.google.com/a/bin/answer.py?amp;answer=1032419).",
+      "description": "An application-specific password (ASP) is used with applications that do not accept a verification code when logging into the application on certain devices. The ASP access code is used instead of the login and password you commonly use when accessing an application through a browser. For more information about ASPs and how to create one, see the [help center](https://support.google.com/a/answer/2537800#asp).",
       "id": "Asp",
       "properties": {
         "codeId": {
@@ -4195,7 +4215,7 @@
           "type": "integer"
         },
         "creationTime": {
-          "description": "The time when the ASP was created. Expressed in [Unix time](http://en.wikipedia.org/wiki/Epoch_time) format.",
+          "description": "The time when the ASP was created. Expressed in [Unix time](https://en.wikipedia.org/wiki/Epoch_time) format.",
           "format": "int64",
           "type": "string"
         },
@@ -4209,7 +4229,7 @@
           "type": "string"
         },
         "lastTimeUsed": {
-          "description": "The time when the ASP was last used. Expressed in [Unix time](http://en.wikipedia.org/wiki/Epoch_time) format.",
+          "description": "The time when the ASP was last used. Expressed in [Unix time](https://en.wikipedia.org/wiki/Epoch_time) format.",
           "format": "int64",
           "type": "string"
         },
@@ -4530,7 +4550,7 @@
       "type": "object"
     },
     "ChromeOsDevice": {
-      "description": "Google Chrome devices run on the [Chrome OS](http://support.google.com/chromeos). For more information about common API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-chrome-devices).",
+      "description": "Google Chrome devices run on the [Chrome OS](https://support.google.com/chromeos). For more information about common API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-chrome-devices).",
       "id": "ChromeOsDevice",
       "properties": {
         "activeTimeRanges": {
@@ -4570,7 +4590,7 @@
           "type": "string"
         },
         "bootMode": {
-          "description": "The boot mode for the device. The possible values are: * `Verified`: The device is running a valid version of the Chrome OS. * `Dev`: The devices's developer hardware switch is enabled. When booted, the device has a command line shell. For an example of a developer switch, see the [Chromebook developer information](http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).",
+          "description": "The boot mode for the device. The possible values are: * `Verified`: The device is running a valid version of the Chrome OS. * `Dev`: The devices's developer hardware switch is enabled. When booted, the device has a command line shell. For an example of a developer switch, see the [Chromebook developer information](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).",
           "type": "string"
         },
         "cpuStatusReports": {
@@ -4744,7 +4764,7 @@
           "type": "string"
         },
         "notes": {
-          "description": "Notes about this device added by the administrator. This property can be [searched](http://support.google.com/chromeos/a/bin/answer.py?answer=1698333) with the [list](/admin-sdk/directory/v1/reference/chromeosdevices/list) method's `query` parameter. Maximum length is 500 characters. Empty values are allowed.",
+          "description": "Notes about this device added by the administrator. This property can be [searched](https://support.google.com/chrome/a/answer/1698333) with the [list](/admin-sdk/directory/v1/reference/chromeosdevices/list) method's `query` parameter. Maximum length is 500 characters. Empty values are allowed.",
           "type": "string"
         },
         "orderNumber": {
@@ -4752,7 +4772,7 @@
           "type": "string"
         },
         "orgUnitPath": {
-          "description": "The full parent path with the organizational unit's name associated with the device. Path names are case insensitive. If the parent organizational unit is the top-level organization, it is represented as a forward slash, `/`. This property can be [updated](/admin-sdk/directory/v1/guides/manage-chrome-devices#update_chrome_device) using the API. For more information about how to create an organizational structure for your device, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=182433).",
+          "description": "The full parent path with the organizational unit's name associated with the device. Path names are case insensitive. If the parent organizational unit is the top-level organization, it is represented as a forward slash, `/`. This property can be [updated](/admin-sdk/directory/v1/guides/manage-chrome-devices#update_chrome_device) using the API. For more information about how to create an organizational structure for your device, see the [administration help center](https://support.google.com/a/answer/182433).",
           "type": "string"
         },
         "osVersion": {
@@ -4943,7 +4963,7 @@
           "type": "string"
         },
         "phoneNumber": {
-          "description": "The customer's contact phone number in [E.164](http://en.wikipedia.org/wiki/E.164) format.",
+          "description": "The customer's contact phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format.",
           "type": "string"
         },
         "postalAddress": {
@@ -4973,7 +4993,7 @@
           "type": "string"
         },
         "countryCode": {
-          "description": "This is a required property. For `countryCode` information see the [ISO 3166 country code elements](http://www.iso.org/iso/country_codes.htm).",
+          "description": "This is a required property. For `countryCode` information see the [ISO 3166 country code elements](https://www.iso.org/iso/country_codes.htm).",
           "type": "string"
         },
         "locality": {
@@ -5205,7 +5225,7 @@
       "id": "Domains",
       "properties": {
         "creationTime": {
-          "description": "Creation time of the domain. Expressed in [Unix time](http://en.wikipedia.org/wiki/Epoch_time) format. (Read-only).",
+          "description": "Creation time of the domain. Expressed in [Unix time](https://en.wikipedia.org/wiki/Epoch_time) format. (Read-only).",
           "format": "int64",
           "type": "string"
         },
@@ -5375,7 +5395,7 @@
               "directory.groups.insert"
             ]
           },
-          "description": "The group's email address. If your account has multiple domains, select the appropriate domain for the email address. The `email` must be unique. This property is required when creating a group. Group email addresses are subject to the same character usage rules as usernames, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=33386) for the details.",
+          "description": "The group's email address. If your account has multiple domains, select the appropriate domain for the email address. The `email` must be unique. This property is required when creating a group. Group email addresses are subject to the same character usage rules as usernames, see the [help center](https://support.google.com/a/answer/9193374) for details.",
           "type": "string"
         },
         "etag": {
@@ -5457,7 +5477,7 @@
           "type": "string"
         },
         "role": {
-          "description": "The member's role in a group. The API returns an error for cycles in group memberships. For example, if `group1` is a member of `group2`, `group2` cannot be a member of `group1`. For more information about a member's role, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=167094).",
+          "description": "The member's role in a group. The API returns an error for cycles in group memberships. For example, if `group1` is a member of `group2`, `group2` cannot be a member of `group1`. For more information about a member's role, see the [administration help center](https://support.google.com/a/answer/167094).",
           "type": "string"
         },
         "status": {
@@ -5510,7 +5530,7 @@
       "type": "object"
     },
     "MobileDevice": {
-      "description": "Google Workspace Mobile Management includes Android, [Google Sync](http://support.google.com/a/bin/answer.py?answer=135937), and iOS devices. For more information about common group mobile device API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-mobile-devices.html).",
+      "description": "Google Workspace Mobile Management includes Android, [Google Sync](https://support.google.com/a/answer/135937), and iOS devices. For more information about common group mobile device API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-mobile-devices.html).",
       "id": "MobileDevice",
       "properties": {
         "adbStatus": {
@@ -5530,7 +5550,7 @@
                 "type": "string"
               },
               "permission": {
-                "description": "The list of permissions of this application. These can be either a standard Android permission or one defined by the application, and are found in an application's [Android manifest](http://developer.android.com/guide/topics/manifest/uses-permission-element.html). Examples of a Calendar application's permissions are `READ_CALENDAR`, or `MANAGE_ACCOUNTS`.",
+                "description": "The list of permissions of this application. These can be either a standard Android permission or one defined by the application, and are found in an application's [Android manifest](https://developer.android.com/guide/topics/manifest/uses-permission-element.html). Examples of a Calendar application's permissions are `READ_CALENDAR`, or `MANAGE_ACCOUNTS`.",
                 "items": {
                   "type": "string"
                 },
@@ -5764,7 +5784,7 @@
       "id": "OrgUnit",
       "properties": {
         "blockInheritance": {
-          "description": "Determines if a sub-organizational unit can inherit the settings of the parent organization. The default value is `false`, meaning a sub-organizational unit inherits the settings of the nearest parent organizational unit. For more information on inheritance and users in an organization structure, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=182442\u0026topic=1227584\u0026ctx=topic).",
+          "description": "Determines if a sub-organizational unit can inherit the settings of the parent organization. The default value is `false`, meaning a sub-organizational unit inherits the settings of the nearest parent organizational unit. For more information on inheritance and users in an organization structure, see the [administration help center](https://support.google.com/a/answer/4352075).",
           "type": "boolean"
         },
         "description": {
@@ -5794,7 +5814,7 @@
           "type": "string"
         },
         "orgUnitPath": {
-          "description": "The full path to the organizational unit. The `orgUnitPath` is a derived property. When listed, it is derived from `parentOrgunitPath` and organizational unit's `name`. For example, for an organizational unit named 'apps' under parent organization '/engineering', the orgUnitPath is '/engineering/apps'. In order to edit an `orgUnitPath`, either update the name of the organization or the `parentOrgunitPath`. A user's organizational unit determines which Google Workspace services the user has access to. If the user is moved to a new organization, the user's access changes. For more information about organization structures, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=182433\u0026topic=1227584\u0026ctx=topic). For more information about moving a user to a different organization, see [Update a user](/admin-sdk/directory/v1/guides/manage-users.html#update_user).",
+          "description": "The full path to the organizational unit. The `orgUnitPath` is a derived property. When listed, it is derived from `parentOrgunitPath` and organizational unit's `name`. For example, for an organizational unit named 'apps' under parent organization '/engineering', the orgUnitPath is '/engineering/apps'. In order to edit an `orgUnitPath`, either update the name of the organization or the `parentOrgunitPath`. A user's organizational unit determines which Google Workspace services the user has access to. If the user is moved to a new organization, the user's access changes. For more information about organization structures, see the [administration help center](https://support.google.com/a/answer/4352075). For more information about moving a user to a different organization, see [Update a user](/admin-sdk/directory/v1/guides/manage-users.html#update_user).",
           "type": "string"
         },
         "parentOrgUnitId": {
@@ -6345,7 +6365,7 @@
           "type": "any"
         },
         "hashFunction": {
-          "description": "Stores the hash format of the password property. We recommend sending the `password` property value as a base 16 bit hexadecimal-encoded hash value. Set the `hashFunction` values as either the [SHA-1](http://wikipedia.org/wiki/SHA-1), [MD5](http://wikipedia.org/wiki/MD5), or [crypt](https://en.wikipedia.org/wiki/Crypt_(C)) hash format.",
+          "description": "Stores the hash format of the password property. We recommend sending the `password` property value as a base 16 bit hexadecimal-encoded hash value. Set the `hashFunction` values as either the [SHA-1](https://wikipedia.org/wiki/SHA-1), [MD5](https://wikipedia.org/wiki/MD5), or [crypt](https://en.wikipedia.org/wiki/Crypt_\\(C\\)) hash format.",
           "type": "string"
         },
         "id": {
@@ -6357,11 +6377,11 @@
           "type": "any"
         },
         "includeInGlobalAddressList": {
-          "description": "Indicates if the user's profile is visible in the Google Workspace global address list when the contact sharing feature is enabled for the domain. For more information about excluding user profiles, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=1285988).",
+          "description": "Indicates if the user's profile is visible in the Google Workspace global address list when the contact sharing feature is enabled for the domain. For more information about excluding user profiles, see the [administration help center](https://support.google.com/a/answer/1285988).",
           "type": "boolean"
         },
         "ipWhitelisted": {
-          "description": "If `true`, the user's IP address is [white listed](http://support.google.com/a/bin/answer.py?answer=60752).",
+          "description": "If `true`, the user's IP address is [whitelisted](https://support.google.com/a/answer/60752).",
           "type": "boolean"
         },
         "isAdmin": {
@@ -6370,7 +6390,7 @@
           "type": "boolean"
         },
         "isDelegatedAdmin": {
-          "description": "Output only. Indicates if the user is a delegated administrator. Delegated administrators are supported by the API but cannot create or undelete users, or make users administrators. These requests are ignored by the API service. Roles and privileges for administrators are assigned using the [Admin console](http://support.google.com/a/bin/answer.py?answer=33325).",
+          "description": "Output only. Indicates if the user is a delegated administrator. Delegated administrators are supported by the API but cannot create or undelete users, or make users administrators. These requests are ignored by the API service. Roles and privileges for administrators are assigned using the [Admin console](https://support.google.com/a/answer/33325).",
           "readOnly": true,
           "type": "boolean"
         },
@@ -6420,7 +6440,7 @@
               "directory.users.insert"
             ]
           },
-          "description": "Holds the given and family names of the user, and the read-only `fullName` value. The maximum number of characters in the `givenName` and in the `familyName` values is 60. In addition, name values support unicode/UTF-8 characters, and can contain spaces, letters (a-z), numbers (0-9), dashes (-), forward slashes (/), and periods (.). For more information about character usage rules, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=33386). Maximum allowed data size for this field is 1Kb."
+          "description": "Holds the given and family names of the user, and the read-only `fullName` value. The maximum number of characters in the `givenName` and in the `familyName` values is 60. In addition, name values support unicode/UTF-8 characters, and can contain spaces, letters (a-z), numbers (0-9), dashes (-), forward slashes (/), and periods (.). For more information about character usage rules, see the [administration help center](https://support.google.com/a/answer/9193374). Maximum allowed data size for this field is 1Kb."
         },
         "nonEditableAliases": {
           "description": "Output only. List of the user's non-editable alias email addresses. These are typically outside the account's primary domain or sub-domain.",
@@ -6456,7 +6476,7 @@
           "type": "any"
         },
         "posixAccounts": {
-          "description": "A list of [POSIX](http://www.opengroup.org/austin/papers/posix_faq.html) account information for the user.",
+          "description": "A list of [POSIX](https://www.opengroup.org/austin/papers/posix_faq.html) account information for the user.",
           "type": "any"
         },
         "primaryEmail": {
@@ -6905,7 +6925,7 @@
               "directory.users.photos.update"
             ]
           },
-          "description": "The user photo's upload data in [web-safe Base64](https://code.google.com/p/stringencoders/wiki/WebSafeBase64) format in bytes. This means: * The slash (/) character is replaced with the underscore (_) character. * The plus sign (+) character is replaced with the hyphen (-) character. * The equals sign (=) character is replaced with the asterisk (*). * For padding, the period (.) character is used instead of the RFC-4648 baseURL definition which uses the equals sign (=) for padding. This is done to simplify URL-parsing. * Whatever the size of the photo being uploaded, the API downsizes it to 96x96 pixels.",
+          "description": "The user photo's upload data in [web-safe Base64](https://en.wikipedia.org/wiki/Base64#URL_applications) format in bytes. This means: * The slash (/) character is replaced with the underscore (_) character. * The plus sign (+) character is replaced with the hyphen (-) character. * The equals sign (=) character is replaced with the asterisk (*). * For padding, the period (.) character is used instead of the RFC-4648 baseURL definition which uses the equals sign (=) for padding. This is done to simplify URL-parsing. * Whatever the size of the photo being uploaded, the API downsizes it to 96x96 pixels.",
           "format": "byte",
           "type": "string"
         },

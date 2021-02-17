@@ -974,6 +974,10 @@ type Metadata struct {
 	// Pipeline: The pipeline this operation represents.
 	Pipeline *Pipeline `json:"pipeline,omitempty"`
 
+	// PubSubTopic: The name of the Cloud Pub/Sub topic where notifications
+	// of operation status changes are sent.
+	PubSubTopic string `json:"pubSubTopic,omitempty"`
+
 	// StartTime: The first time at which resources were allocated to
 	// execute the pipeline.
 	StartTime string `json:"startTime,omitempty"`
@@ -1364,6 +1368,12 @@ type RunPipelineRequest struct {
 
 	// Pipeline: Required. The description of the pipeline to run.
 	Pipeline *Pipeline `json:"pipeline,omitempty"`
+
+	// PubSubTopic: The name of an existing Pub/Sub topic. The server will
+	// publish messages to this topic whenever the status of the operation
+	// changes. The Life Sciences Service Agent account must have publisher
+	// permissions to the specified topic or notifications will not be sent.
+	PubSubTopic string `json:"pubSubTopic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
@@ -1822,7 +1832,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1988,7 +1998,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2166,7 +2176,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2319,7 +2329,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2495,7 +2505,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2678,7 +2688,7 @@ func (c *ProjectsLocationsPipelinesRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -668,13 +668,13 @@ func (s *Aliases) MarshalJSON() ([]byte, error) {
 // of the login and password you commonly use when accessing an
 // application through a browser. For more information about ASPs and
 // how to create one, see the help center
-// (//http://support.google.com/a/bin/answer.py?amp;answer=1032419).
+// (https://support.google.com/a/answer/2537800#asp).
 type Asp struct {
 	// CodeId: The unique ID of the ASP.
 	CodeId int64 `json:"codeId,omitempty"`
 
 	// CreationTime: The time when the ASP was created. Expressed in Unix
-	// time (http://en.wikipedia.org/wiki/Epoch_time) format.
+	// time (https://en.wikipedia.org/wiki/Epoch_time) format.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
 	// Etag: ETag of the ASP.
@@ -685,7 +685,7 @@ type Asp struct {
 	Kind string `json:"kind,omitempty"`
 
 	// LastTimeUsed: The time when the ASP was last used. Expressed in Unix
-	// time (http://en.wikipedia.org/wiki/Epoch_time) format.
+	// time (https://en.wikipedia.org/wiki/Epoch_time) format.
 	LastTimeUsed int64 `json:"lastTimeUsed,omitempty,string"`
 
 	// Name: The name of the application that the user, represented by their
@@ -1162,7 +1162,7 @@ func (s *Channel) MarshalJSON() ([]byte, error) {
 }
 
 // ChromeOsDevice: Google Chrome devices run on the Chrome OS
-// (http://support.google.com/chromeos). For more information about
+// (https://support.google.com/chromeos). For more information about
 // common API tasks, see the Developer's Guide
 // (/admin-sdk/directory/v1/guides/manage-chrome-devices).
 type ChromeOsDevice struct {
@@ -1191,7 +1191,7 @@ type ChromeOsDevice struct {
 	// `Dev`: The devices's developer hardware switch is enabled. When
 	// booted, the device has a command line shell. For an example of a
 	// developer switch, see the Chromebook developer information
-	// (http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).
+	// (https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).
 	BootMode string `json:"bootMode,omitempty"`
 
 	// CpuStatusReports: Reports of CPU utilization and temperature
@@ -1274,8 +1274,7 @@ type ChromeOsDevice struct {
 
 	// Notes: Notes about this device added by the administrator. This
 	// property can be searched
-	// (http://support.google.com/chromeos/a/bin/answer.py?answer=1698333)
-	// with the list
+	// (https://support.google.com/chrome/a/answer/1698333) with the list
 	// (/admin-sdk/directory/v1/reference/chromeosdevices/list) method's
 	// `query` parameter. Maximum length is 500 characters. Empty values are
 	// allowed.
@@ -1292,7 +1291,7 @@ type ChromeOsDevice struct {
 	// (/admin-sdk/directory/v1/guides/manage-chrome-devices#update_chrome_de
 	// vice) using the API. For more information about how to create an
 	// organizational structure for your device, see the administration help
-	// center (http://support.google.com/a/bin/answer.py?answer=182433).
+	// center (https://support.google.com/a/answer/182433).
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 
 	// OsVersion: The Chrome device's operating system version.
@@ -1787,7 +1786,7 @@ type Customer struct {
 	Language string `json:"language,omitempty"`
 
 	// PhoneNumber: The customer's contact phone number in E.164
-	// (http://en.wikipedia.org/wiki/E.164) format.
+	// (https://en.wikipedia.org/wiki/E.164) format.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 
 	// PostalAddress: The customer's postal address information.
@@ -1837,7 +1836,7 @@ type CustomerPostalAddress struct {
 
 	// CountryCode: This is a required property. For `countryCode`
 	// information see the ISO 3166 country code elements
-	// (http://www.iso.org/iso/country_codes.htm).
+	// (https://www.iso.org/iso/country_codes.htm).
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// Locality: Name of the locality. An example of a locality value is the
@@ -2182,7 +2181,7 @@ func (s *DomainAliases) MarshalJSON() ([]byte, error) {
 
 type Domains struct {
 	// CreationTime: Creation time of the domain. Expressed in Unix time
-	// (http://en.wikipedia.org/wiki/Epoch_time) format. (Read-only).
+	// (https://en.wikipedia.org/wiki/Epoch_time) format. (Read-only).
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
 	// DomainAliases: List of domain alias objects. (Read-only)
@@ -2433,9 +2432,8 @@ type Group struct {
 	// domains, select the appropriate domain for the email address. The
 	// `email` must be unique. This property is required when creating a
 	// group. Group email addresses are subject to the same character usage
-	// rules as usernames, see the administration help center
-	// (http://support.google.com/a/bin/answer.py?answer=33386) for the
-	// details.
+	// rules as usernames, see the help center
+	// (https://support.google.com/a/answer/9193374) for details.
 	Email string `json:"email,omitempty"`
 
 	// Etag: ETag of the resource.
@@ -2558,7 +2556,7 @@ type Member struct {
 	// cycles in group memberships. For example, if `group1` is a member of
 	// `group2`, `group2` cannot be a member of `group1`. For more
 	// information about a member's role, see the administration help center
-	// (http://support.google.com/a/bin/answer.py?answer=167094).
+	// (https://support.google.com/a/answer/167094).
 	Role string `json:"role,omitempty"`
 
 	// Status: Status of member (Immutable)
@@ -2670,8 +2668,7 @@ func (s *MembersHasMember) MarshalJSON() ([]byte, error) {
 }
 
 // MobileDevice: Google Workspace Mobile Management includes Android,
-// Google Sync
-// (http://support.google.com/a/bin/answer.py?answer=135937), and iOS
+// Google Sync (https://support.google.com/a/answer/135937), and iOS
 // devices. For more information about common group mobile device API
 // tasks, see the Developer's Guide
 // (/admin-sdk/directory/v1/guides/manage-mobile-devices.html).
@@ -2880,7 +2877,7 @@ type MobileDeviceApplications struct {
 	// Permission: The list of permissions of this application. These can be
 	// either a standard Android permission or one defined by the
 	// application, and are found in an application's Android manifest
-	// (http://developer.android.com/guide/topics/manifest/uses-permission-element.html).
+	// (https://developer.android.com/guide/topics/manifest/uses-permission-element.html).
 	// Examples of a Calendar application's permissions are `READ_CALENDAR`,
 	// or `MANAGE_ACCOUNTS`.
 	Permission []string `json:"permission,omitempty"`
@@ -2994,7 +2991,7 @@ type OrgUnit struct {
 	// the nearest parent organizational unit. For more information on
 	// inheritance and users in an organization structure, see the
 	// administration help center
-	// (http://support.google.com/a/bin/answer.py?answer=182442&topic=1227584&ctx=topic).
+	// (https://support.google.com/a/answer/4352075).
 	BlockInheritance bool `json:"blockInheritance,omitempty"`
 
 	// Description: Description of the organizational unit.
@@ -3025,10 +3022,9 @@ type OrgUnit struct {
 	// which Google Workspace services the user has access to. If the user
 	// is moved to a new organization, the user's access changes. For more
 	// information about organization structures, see the administration
-	// help center
-	// (http://support.google.com/a/bin/answer.py?answer=182433&topic=1227584&ctx=topic).
-	// For more information about moving a user to a different organization,
-	// see Update a user
+	// help center (https://support.google.com/a/answer/4352075). For more
+	// information about moving a user to a different organization, see
+	// Update a user
 	// (/admin-sdk/directory/v1/guides/manage-users.html#update_user).
 	OrgUnitPath string `json:"orgUnitPath,omitempty"`
 
@@ -3822,9 +3818,9 @@ type User struct {
 	// HashFunction: Stores the hash format of the password property. We
 	// recommend sending the `password` property value as a base 16 bit
 	// hexadecimal-encoded hash value. Set the `hashFunction` values as
-	// either the SHA-1 (http://wikipedia.org/wiki/SHA-1), MD5
-	// (http://wikipedia.org/wiki/MD5), or crypt
-	// (https://en.wikipedia.org/wiki/Crypt_(C)) hash format.
+	// either the SHA-1 (https://wikipedia.org/wiki/SHA-1), MD5
+	// (https://wikipedia.org/wiki/MD5), or crypt
+	// (https://en.wikipedia.org/wiki/Crypt_\(C\)) hash format.
 	HashFunction string `json:"hashFunction,omitempty"`
 
 	// Id: The unique ID for the user. A user `id` can be used as a user
@@ -3841,11 +3837,11 @@ type User struct {
 	// visible in the Google Workspace global address list when the contact
 	// sharing feature is enabled for the domain. For more information about
 	// excluding user profiles, see the administration help center
-	// (http://support.google.com/a/bin/answer.py?answer=1285988).
+	// (https://support.google.com/a/answer/1285988).
 	IncludeInGlobalAddressList bool `json:"includeInGlobalAddressList,omitempty"`
 
-	// IpWhitelisted: If `true`, the user's IP address is white listed
-	// (http://support.google.com/a/bin/answer.py?answer=60752).
+	// IpWhitelisted: If `true`, the user's IP address is whitelisted
+	// (https://support.google.com/a/answer/60752).
 	IpWhitelisted bool `json:"ipWhitelisted,omitempty"`
 
 	// IsAdmin: Output only. Indicates a user with super admininistrator
@@ -3865,7 +3861,7 @@ type User struct {
 	// cannot create or undelete users, or make users administrators. These
 	// requests are ignored by the API service. Roles and privileges for
 	// administrators are assigned using the Admin console
-	// (http://support.google.com/a/bin/answer.py?answer=33325).
+	// (https://support.google.com/a/answer/33325).
 	IsDelegatedAdmin bool `json:"isDelegatedAdmin,omitempty"`
 
 	// IsEnforcedIn2Sv: Output only. Is 2-step verification enforced
@@ -3907,8 +3903,8 @@ type User struct {
 	// (a-z), numbers (0-9), dashes (-), forward slashes (/), and periods
 	// (.). For more information about character usage rules, see the
 	// administration help center
-	// (http://support.google.com/a/bin/answer.py?answer=33386). Maximum
-	// allowed data size for this field is 1Kb.
+	// (https://support.google.com/a/answer/9193374). Maximum allowed data
+	// size for this field is 1Kb.
 	Name *UserName `json:"name,omitempty"`
 
 	// NonEditableAliases: Output only. List of the user's non-editable
@@ -3936,7 +3932,7 @@ type User struct {
 	Phones interface{} `json:"phones,omitempty"`
 
 	// PosixAccounts: A list of POSIX
-	// (http://www.opengroup.org/austin/papers/posix_faq.html) account
+	// (https://www.opengroup.org/austin/papers/posix_faq.html) account
 	// information for the user.
 	PosixAccounts interface{} `json:"posixAccounts,omitempty"`
 
@@ -4591,8 +4587,8 @@ type UserPhoto struct {
 	MimeType string `json:"mimeType,omitempty"`
 
 	// PhotoData: The user photo's upload data in web-safe Base64
-	// (https://code.google.com/p/stringencoders/wiki/WebSafeBase64) format
-	// in bytes. This means: * The slash (/) character is replaced with the
+	// (https://en.wikipedia.org/wiki/Base64#URL_applications) format in
+	// bytes. This means: * The slash (/) character is replaced with the
 	// underscore (_) character. * The plus sign (+) character is replaced
 	// with the hyphen (-) character. * The equals sign (=) character is
 	// replaced with the asterisk (*). * For padding, the period (.)
@@ -5000,7 +4996,7 @@ func (c *AspsDeleteCall) Header() http.Header {
 
 func (c *AspsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5123,7 +5119,7 @@ func (c *AspsGetCall) Header() http.Header {
 
 func (c *AspsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5275,7 +5271,7 @@ func (c *AspsListCall) Header() http.Header {
 
 func (c *AspsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5407,7 +5403,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5522,7 +5518,7 @@ func (c *ChromeosdevicesActionCall) Header() http.Header {
 
 func (c *ChromeosdevicesActionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5666,7 +5662,7 @@ func (c *ChromeosdevicesGetCall) Header() http.Header {
 
 func (c *ChromeosdevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5914,7 +5910,7 @@ func (c *ChromeosdevicesListCall) Header() http.Header {
 
 func (c *ChromeosdevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6150,7 +6146,7 @@ func (c *ChromeosdevicesMoveDevicesToOuCall) Header() http.Header {
 
 func (c *ChromeosdevicesMoveDevicesToOuCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6286,7 +6282,7 @@ func (c *ChromeosdevicesPatchCall) Header() http.Header {
 
 func (c *ChromeosdevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6465,7 +6461,7 @@ func (c *ChromeosdevicesUpdateCall) Header() http.Header {
 
 func (c *ChromeosdevicesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6629,7 +6625,7 @@ func (c *CustomerDevicesChromeosIssueCommandCall) Header() http.Header {
 
 func (c *CustomerDevicesChromeosIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6791,7 +6787,7 @@ func (c *CustomerDevicesChromeosCommandsGetCall) Header() http.Header {
 
 func (c *CustomerDevicesChromeosCommandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6952,7 +6948,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7087,7 +7083,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7226,7 +7222,7 @@ func (c *CustomersUpdateCall) Header() http.Header {
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7365,7 +7361,7 @@ func (c *DomainAliasesDeleteCall) Header() http.Header {
 
 func (c *DomainAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7487,7 +7483,7 @@ func (c *DomainAliasesGetCall) Header() http.Header {
 
 func (c *DomainAliasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7630,7 +7626,7 @@ func (c *DomainAliasesInsertCall) Header() http.Header {
 
 func (c *DomainAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7785,7 +7781,7 @@ func (c *DomainAliasesListCall) Header() http.Header {
 
 func (c *DomainAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7925,7 +7921,7 @@ func (c *DomainsDeleteCall) Header() http.Header {
 
 func (c *DomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8047,7 +8043,7 @@ func (c *DomainsGetCall) Header() http.Header {
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8190,7 +8186,7 @@ func (c *DomainsInsertCall) Header() http.Header {
 
 func (c *DomainsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8338,7 +8334,7 @@ func (c *DomainsListCall) Header() http.Header {
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8471,7 +8467,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8583,7 +8579,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8716,7 +8712,7 @@ func (c *GroupsInsertCall) Header() http.Header {
 
 func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8926,7 +8922,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9133,7 +9129,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9272,7 +9268,7 @@ func (c *GroupsUpdateCall) Header() http.Header {
 
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9411,7 +9407,7 @@ func (c *GroupsAliasesDeleteCall) Header() http.Header {
 
 func (c *GroupsAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9522,7 +9518,7 @@ func (c *GroupsAliasesInsertCall) Header() http.Header {
 
 func (c *GroupsAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9670,7 +9666,7 @@ func (c *GroupsAliasesListCall) Header() http.Header {
 
 func (c *GroupsAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9805,7 +9801,7 @@ func (c *MembersDeleteCall) Header() http.Header {
 
 func (c *MembersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9928,7 +9924,7 @@ func (c *MembersGetCall) Header() http.Header {
 
 func (c *MembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10085,7 +10081,7 @@ func (c *MembersHasMemberCall) Header() http.Header {
 
 func (c *MembersHasMemberCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10230,7 +10226,7 @@ func (c *MembersInsertCall) Header() http.Header {
 
 func (c *MembersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10409,7 +10405,7 @@ func (c *MembersListCall) Header() http.Header {
 
 func (c *MembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10594,7 +10590,7 @@ func (c *MembersPatchCall) Header() http.Header {
 
 func (c *MembersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10744,7 +10740,7 @@ func (c *MembersUpdateCall) Header() http.Header {
 
 func (c *MembersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10895,7 +10891,7 @@ func (c *MobiledevicesActionCall) Header() http.Header {
 
 func (c *MobiledevicesActionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11015,7 +11011,7 @@ func (c *MobiledevicesDeleteCall) Header() http.Header {
 
 func (c *MobiledevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11150,7 +11146,7 @@ func (c *MobiledevicesGetCall) Header() http.Header {
 
 func (c *MobiledevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11386,7 +11382,7 @@ func (c *MobiledevicesListCall) Header() http.Header {
 
 func (c *MobiledevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11592,6 +11588,13 @@ func (r *OrgunitsService) Delete(customerId string, orgUnitPath string) *Orgunit
 	return c
 }
 
+// AllowPlus sets the optional parameter "allowPlus": Parses org unit
+// path without url decode to allow for plus in ou name
+func (c *OrgunitsDeleteCall) AllowPlus(allowPlus bool) *OrgunitsDeleteCall {
+	c.urlParams_.Set("allowPlus", fmt.Sprint(allowPlus))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11619,7 +11622,7 @@ func (c *OrgunitsDeleteCall) Header() http.Header {
 
 func (c *OrgunitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11663,6 +11666,11 @@ func (c *OrgunitsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     "orgUnitPath"
 	//   ],
 	//   "parameters": {
+	//     "allowPlus": {
+	//       "description": "Parses org unit path without url decode to allow for plus in ou name",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "customerId": {
 	//       "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
 	//       "location": "path",
@@ -11705,6 +11713,13 @@ func (r *OrgunitsService) Get(customerId string, orgUnitPath string) *OrgunitsGe
 	return c
 }
 
+// AllowPlus sets the optional parameter "allowPlus": Parses org unit
+// path without url decode to allow for plus in ou name
+func (c *OrgunitsGetCall) AllowPlus(allowPlus bool) *OrgunitsGetCall {
+	c.urlParams_.Set("allowPlus", fmt.Sprint(allowPlus))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -11742,7 +11757,7 @@ func (c *OrgunitsGetCall) Header() http.Header {
 
 func (c *OrgunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11814,6 +11829,11 @@ func (c *OrgunitsGetCall) Do(opts ...googleapi.CallOption) (*OrgUnit, error) {
 	//     "orgUnitPath"
 	//   ],
 	//   "parameters": {
+	//     "allowPlus": {
+	//       "description": "Parses org unit path without url decode to allow for plus in ou name",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "customerId": {
 	//       "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
 	//       "location": "path",
@@ -11886,7 +11906,7 @@ func (c *OrgunitsInsertCall) Header() http.Header {
 
 func (c *OrgunitsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12054,7 +12074,7 @@ func (c *OrgunitsListCall) Header() http.Header {
 
 func (c *OrgunitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12186,6 +12206,13 @@ func (r *OrgunitsService) Patch(customerId string, orgUnitPath string, orgunit *
 	return c
 }
 
+// AllowPlus sets the optional parameter "allowPlus": Parses org unit
+// path without url decode to allow for plus in ou name
+func (c *OrgunitsPatchCall) AllowPlus(allowPlus bool) *OrgunitsPatchCall {
+	c.urlParams_.Set("allowPlus", fmt.Sprint(allowPlus))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12213,7 +12240,7 @@ func (c *OrgunitsPatchCall) Header() http.Header {
 
 func (c *OrgunitsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12287,6 +12314,11 @@ func (c *OrgunitsPatchCall) Do(opts ...googleapi.CallOption) (*OrgUnit, error) {
 	//     "orgUnitPath"
 	//   ],
 	//   "parameters": {
+	//     "allowPlus": {
+	//       "description": "Parses org unit path without url decode to allow for plus in ou name",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "customerId": {
 	//       "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
 	//       "location": "path",
@@ -12336,6 +12368,13 @@ func (r *OrgunitsService) Update(customerId string, orgUnitPath string, orgunit 
 	return c
 }
 
+// AllowPlus sets the optional parameter "allowPlus": Parses org unit
+// path without url decode to allow for plus in ou name
+func (c *OrgunitsUpdateCall) AllowPlus(allowPlus bool) *OrgunitsUpdateCall {
+	c.urlParams_.Set("allowPlus", fmt.Sprint(allowPlus))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12363,7 +12402,7 @@ func (c *OrgunitsUpdateCall) Header() http.Header {
 
 func (c *OrgunitsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12437,6 +12476,11 @@ func (c *OrgunitsUpdateCall) Do(opts ...googleapi.CallOption) (*OrgUnit, error) 
 	//     "orgUnitPath"
 	//   ],
 	//   "parameters": {
+	//     "allowPlus": {
+	//       "description": "Parses org unit path without url decode to allow for plus in ou name",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "customerId": {
 	//       "description": "The unique ID for the customer's Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account's `customerId`. The `customerId` is also returned as part of the [Users resource](/admin-sdk/directory/v1/reference/users).",
 	//       "location": "path",
@@ -12520,7 +12564,7 @@ func (c *PrivilegesListCall) Header() http.Header {
 
 func (c *PrivilegesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12655,7 +12699,7 @@ func (c *ResourcesBuildingsDeleteCall) Header() http.Header {
 
 func (c *ResourcesBuildingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12777,7 +12821,7 @@ func (c *ResourcesBuildingsGetCall) Header() http.Header {
 
 func (c *ResourcesBuildingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12937,7 +12981,7 @@ func (c *ResourcesBuildingsInsertCall) Header() http.Header {
 
 func (c *ResourcesBuildingsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13117,7 +13161,7 @@ func (c *ResourcesBuildingsListCall) Header() http.Header {
 
 func (c *ResourcesBuildingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13305,7 +13349,7 @@ func (c *ResourcesBuildingsPatchCall) Header() http.Header {
 
 func (c *ResourcesBuildingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13489,7 +13533,7 @@ func (c *ResourcesBuildingsUpdateCall) Header() http.Header {
 
 func (c *ResourcesBuildingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13654,7 +13698,7 @@ func (c *ResourcesCalendarsDeleteCall) Header() http.Header {
 
 func (c *ResourcesCalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13776,7 +13820,7 @@ func (c *ResourcesCalendarsGetCall) Header() http.Header {
 
 func (c *ResourcesCalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13919,7 +13963,7 @@ func (c *ResourcesCalendarsInsertCall) Header() http.Header {
 
 func (c *ResourcesCalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14111,7 +14155,7 @@ func (c *ResourcesCalendarsListCall) Header() http.Header {
 
 func (c *ResourcesCalendarsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14292,7 +14336,7 @@ func (c *ResourcesCalendarsPatchCall) Header() http.Header {
 
 func (c *ResourcesCalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14443,7 +14487,7 @@ func (c *ResourcesCalendarsUpdateCall) Header() http.Header {
 
 func (c *ResourcesCalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14590,7 +14634,7 @@ func (c *ResourcesFeaturesDeleteCall) Header() http.Header {
 
 func (c *ResourcesFeaturesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14712,7 +14756,7 @@ func (c *ResourcesFeaturesGetCall) Header() http.Header {
 
 func (c *ResourcesFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14855,7 +14899,7 @@ func (c *ResourcesFeaturesInsertCall) Header() http.Header {
 
 func (c *ResourcesFeaturesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15017,7 +15061,7 @@ func (c *ResourcesFeaturesListCall) Header() http.Header {
 
 func (c *ResourcesFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15188,7 +15232,7 @@ func (c *ResourcesFeaturesPatchCall) Header() http.Header {
 
 func (c *ResourcesFeaturesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15337,7 +15381,7 @@ func (c *ResourcesFeaturesRenameCall) Header() http.Header {
 
 func (c *ResourcesFeaturesRenameCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15458,7 +15502,7 @@ func (c *ResourcesFeaturesUpdateCall) Header() http.Header {
 
 func (c *ResourcesFeaturesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15605,7 +15649,7 @@ func (c *RoleAssignmentsDeleteCall) Header() http.Header {
 
 func (c *RoleAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15727,7 +15771,7 @@ func (c *RoleAssignmentsGetCall) Header() http.Header {
 
 func (c *RoleAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15870,7 +15914,7 @@ func (c *RoleAssignmentsInsertCall) Header() http.Header {
 
 func (c *RoleAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16048,7 +16092,7 @@ func (c *RoleAssignmentsListCall) Header() http.Header {
 
 func (c *RoleAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16227,7 +16271,7 @@ func (c *RolesDeleteCall) Header() http.Header {
 
 func (c *RolesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16349,7 +16393,7 @@ func (c *RolesGetCall) Header() http.Header {
 
 func (c *RolesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16492,7 +16536,7 @@ func (c *RolesInsertCall) Header() http.Header {
 
 func (c *RolesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16654,7 +16698,7 @@ func (c *RolesListCall) Header() http.Header {
 
 func (c *RolesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16825,7 +16869,7 @@ func (c *RolesPatchCall) Header() http.Header {
 
 func (c *RolesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16974,7 +17018,7 @@ func (c *RolesUpdateCall) Header() http.Header {
 
 func (c *RolesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17121,7 +17165,7 @@ func (c *SchemasDeleteCall) Header() http.Header {
 
 func (c *SchemasDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17243,7 +17287,7 @@ func (c *SchemasGetCall) Header() http.Header {
 
 func (c *SchemasGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17386,7 +17430,7 @@ func (c *SchemasInsertCall) Header() http.Header {
 
 func (c *SchemasInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17534,7 +17578,7 @@ func (c *SchemasListCall) Header() http.Header {
 
 func (c *SchemasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17671,7 +17715,7 @@ func (c *SchemasPatchCall) Header() http.Header {
 
 func (c *SchemasPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17820,7 +17864,7 @@ func (c *SchemasUpdateCall) Header() http.Header {
 
 func (c *SchemasUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17967,7 +18011,7 @@ func (c *TokensDeleteCall) Header() http.Header {
 
 func (c *TokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18089,7 +18133,7 @@ func (c *TokensGetCall) Header() http.Header {
 
 func (c *TokensGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18241,7 +18285,7 @@ func (c *TokensListCall) Header() http.Header {
 
 func (c *TokensListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18373,7 +18417,7 @@ func (c *TwoStepVerificationTurnOffCall) Header() http.Header {
 
 func (c *TwoStepVerificationTurnOffCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18474,7 +18518,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18625,7 +18669,7 @@ func (c *UsersGetCall) Header() http.Header {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18797,7 +18841,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19046,7 +19090,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19297,7 +19341,7 @@ func (c *UsersMakeAdminCall) Header() http.Header {
 
 func (c *UsersMakeAdminCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19412,7 +19456,7 @@ func (c *UsersPatchCall) Header() http.Header {
 
 func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19551,7 +19595,7 @@ func (c *UsersSignOutCall) Header() http.Header {
 
 func (c *UsersSignOutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19654,7 +19698,7 @@ func (c *UsersUndeleteCall) Header() http.Header {
 
 func (c *UsersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19768,7 +19812,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20027,7 +20071,7 @@ func (c *UsersWatchCall) Header() http.Header {
 
 func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20281,7 +20325,7 @@ func (c *UsersAliasesDeleteCall) Header() http.Header {
 
 func (c *UsersAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20393,7 +20437,7 @@ func (c *UsersAliasesInsertCall) Header() http.Header {
 
 func (c *UsersAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20542,7 +20586,7 @@ func (c *UsersAliasesListCall) Header() http.Header {
 
 func (c *UsersAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20690,7 +20734,7 @@ func (c *UsersAliasesWatchCall) Header() http.Header {
 
 func (c *UsersAliasesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20845,7 +20889,7 @@ func (c *UsersPhotosDeleteCall) Header() http.Header {
 
 func (c *UsersPhotosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20957,7 +21001,7 @@ func (c *UsersPhotosGetCall) Header() http.Header {
 
 func (c *UsersPhotosGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21093,7 +21137,7 @@ func (c *UsersPhotosPatchCall) Header() http.Header {
 
 func (c *UsersPhotosPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21232,7 +21276,7 @@ func (c *UsersPhotosUpdateCall) Header() http.Header {
 
 func (c *UsersPhotosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21369,7 +21413,7 @@ func (c *VerificationCodesGenerateCall) Header() http.Header {
 
 func (c *VerificationCodesGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21471,7 +21515,7 @@ func (c *VerificationCodesInvalidateCall) Header() http.Header {
 
 func (c *VerificationCodesInvalidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21584,7 +21628,7 @@ func (c *VerificationCodesListCall) Header() http.Header {
 
 func (c *VerificationCodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210215")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

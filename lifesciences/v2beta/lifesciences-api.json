@@ -312,7 +312,7 @@
       }
     }
   },
-  "revision": "20210109",
+  "revision": "20210206",
   "rootUrl": "https://lifesciences.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -764,6 +764,10 @@
           "$ref": "Pipeline",
           "description": "The pipeline this operation represents."
         },
+        "pubSubTopic": {
+          "description": "The name of the Cloud Pub/Sub topic where notifications of operation status changes are sent.",
+          "type": "string"
+        },
         "startTime": {
           "description": "The first time at which resources were allocated to execute the pipeline.",
           "format": "google-datetime",
@@ -967,6 +971,10 @@
         "pipeline": {
           "$ref": "Pipeline",
           "description": "Required. The description of the pipeline to run."
+        },
+        "pubSubTopic": {
+          "description": "The name of an existing Pub/Sub topic. The server will publish messages to this topic whenever the status of the operation changes. The Life Sciences Service Agent account must have publisher permissions to the specified topic or notifications will not be sent.",
+          "type": "string"
         }
       },
       "type": "object"

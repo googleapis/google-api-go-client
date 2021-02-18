@@ -1816,7 +1816,7 @@
       }
     }
   },
-  "revision": "20201231",
+  "revision": "20210212",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -1852,7 +1852,7 @@
           "description": "User specified security marks. These marks are entirely managed by the user and come from the SecurityMarks resource that belongs to the asset."
         },
         "updateTime": {
-          "description": "The time at which the asset was last updated, added, or deleted in Security Command Center.",
+          "description": "The time at which the asset was last updated or added in Cloud SCC.",
           "format": "google-datetime",
           "type": "string"
         }

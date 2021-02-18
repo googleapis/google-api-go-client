@@ -329,6 +329,46 @@ func (s *ListExecutionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Position: Position contains source position information about the
+// stack trace element such as line number, column number and length of
+// the code block in bytes.
+type Position struct {
+	// Column: The source code column position (of the line) the current
+	// instruction was generated from.
+	Column int64 `json:"column,omitempty,string"`
+
+	// Length: The length in bytes of text in this character group, e.g.
+	// digits of a number, string length, or AST (abstract syntax tree)
+	// node.
+	Length int64 `json:"length,omitempty,string"`
+
+	// Line: The source code line number the current instruction was
+	// generated from.
+	Line int64 `json:"line,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Position) MarshalJSON() ([]byte, error) {
+	type NoMethod Position
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StackTrace: A collection of stack elements (frames) where an error
 // occurred.
 type StackTrace struct {
@@ -359,15 +399,12 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 }
 
 // StackTraceElement: A single stack element (frame) where an error
-// occurred.
+// occurred. This field currently only exists in v1Beta. We will need to
+// roll this change out to V1 after the feature is thoroughly tested.
+// TODO(b/178540475)
 type StackTraceElement struct {
-	// Column: The source code column position (of the line) the current
-	// instruction was generated from.
-	Column int64 `json:"column,omitempty,string"`
-
-	// Line: The source code line number the current instruction was
-	// generated from.
-	Line int64 `json:"line,omitempty,string"`
+	// Position: The source position information of the stacktrace element.
+	Position *Position `json:"position,omitempty"`
 
 	// Routine: The routine where the error occurred.
 	Routine string `json:"routine,omitempty"`
@@ -375,7 +412,7 @@ type StackTraceElement struct {
 	// Step: The step the error occurred at.
 	Step string `json:"step,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Column") to
+	// ForceSendFields is a list of field names (e.g. "Position") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -383,8 +420,8 @@ type StackTraceElement struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Column") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Position") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -444,7 +481,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -585,7 +622,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -749,7 +786,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -947,7 +984,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210216")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210217")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

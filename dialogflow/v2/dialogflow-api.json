@@ -857,7 +857,7 @@
                           ],
                           "parameters": {
                             "session": {
-                              "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview). Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
+                              "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment (`Environment ID` might be referred to as environment name at some places). If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview). Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
                               "location": "path",
                               "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                               "required": true,
@@ -1523,7 +1523,7 @@
                   ],
                   "parameters": {
                     "session": {
-                      "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment. If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview). Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
+                      "description": "Required. The name of the session this query is sent to. Format: `projects//agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `Environment ID` is not specified, we assume default 'draft' environment (`Environment ID` might be referred to as environment name at some places). If `User ID` is not specified, we are using \"-\". It's up to the API caller to choose an appropriate `Session ID` and `User Id`. They can be a random number or some type of user and session identifiers (preferably hashed). The length of the `Session ID` and `User ID` must not exceed 36 characters. For more information, see the [API interactions guide](https://cloud.google.com/dialogflow/docs/api-overview). Note: Always use agent versions for production traffic. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                       "required": true,
@@ -2065,7 +2065,7 @@
       }
     }
   },
-  "revision": "20210209",
+  "revision": "20210218",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -2156,7 +2156,7 @@
       "properties": {
         "currentPage": {
           "$ref": "GoogleCloudDialogflowCxV3Page",
-          "description": "The Page on which the utterance was spoken. Only some fields such as name and displayname will be set."
+          "description": "The Page on which the utterance was spoken. Only name and displayName will be set."
         },
         "diagnosticInfo": {
           "additionalProperties": {
@@ -2195,7 +2195,7 @@
         },
         "triggeredIntent": {
           "$ref": "GoogleCloudDialogflowCxV3Intent",
-          "description": "The Intent that triggered the response. Only some fields such as name and displayname will be set."
+          "description": "The Intent that triggered the response. Only name and displayName will be set."
         }
       },
       "type": "object"
@@ -3610,7 +3610,7 @@
       "properties": {
         "currentPage": {
           "$ref": "GoogleCloudDialogflowCxV3beta1Page",
-          "description": "The Page on which the utterance was spoken. Only some fields such as name and displayname will be set."
+          "description": "The Page on which the utterance was spoken. Only name and displayName will be set."
         },
         "diagnosticInfo": {
           "additionalProperties": {
@@ -3649,7 +3649,7 @@
         },
         "triggeredIntent": {
           "$ref": "GoogleCloudDialogflowCxV3beta1Intent",
-          "description": "The Intent that triggered the response. Only some fields such as name and displayname will be set."
+          "description": "The Intent that triggered the response. Only name and displayName will be set."
         }
       },
       "type": "object"

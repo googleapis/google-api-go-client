@@ -2576,12 +2576,14 @@
                           "enum": [
                             "COVERAGE_TYPE_UNSPECIFIED",
                             "INTENT",
-                            "PAGE_TRANSITION"
+                            "PAGE_TRANSITION",
+                            "TRANSITION_ROUTE_GROUP"
                           ],
                           "enumDescriptions": [
                             "Should never be used.",
                             "Intent coverage.",
-                            "Page transition coverage"
+                            "Page transition coverage.",
+                            "Transition route group coverage."
                           ],
                           "location": "query",
                           "type": "string"
@@ -2798,32 +2800,22 @@
                     },
                     "run": {
                       "description": "Kicks off a test case run.",
-                      "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases:run",
+                      "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases/{testCasesId}:run",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.testCases.run",
                       "parameterOrder": [
-                        "projectsId",
-                        "locationsId",
-                        "agentsId"
+                        "name"
                       ],
                       "parameters": {
-                        "agentsId": {
+                        "name": {
+                          "description": "Required. Format of test case name to run: `projects//locations/ /agents//testCases/`.",
                           "location": "path",
-                          "required": true,
-                          "type": "string"
-                        },
-                        "locationsId": {
-                          "location": "path",
-                          "required": true,
-                          "type": "string"
-                        },
-                        "projectsId": {
-                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/agents/[^/]+/testCases/[^/]+$",
                           "required": true,
                           "type": "string"
                         }
                       },
-                      "path": "v3/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases:run",
+                      "path": "v3/{+name}:run",
                       "request": {
                         "$ref": "GoogleCloudDialogflowCxV3RunTestCaseRequest"
                       },
@@ -3407,7 +3399,7 @@
       }
     }
   },
-  "revision": "20210209",
+  "revision": "20210218",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3Agent": {
@@ -3567,9 +3559,13 @@
           "$ref": "GoogleCloudDialogflowCxV3IntentCoverage",
           "description": "Intent coverage."
         },
+        "routeGroupCoverage": {
+          "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverage",
+          "description": "Transition route group coverage."
+        },
         "transitionCoverage": {
           "$ref": "GoogleCloudDialogflowCxV3TransitionCoverage",
-          "description": "Transition coverage."
+          "description": "Transition (excluding transition route groups) coverage."
         }
       },
       "type": "object"
@@ -3618,7 +3614,7 @@
       "properties": {
         "currentPage": {
           "$ref": "GoogleCloudDialogflowCxV3Page",
-          "description": "The Page on which the utterance was spoken. Only some fields such as name and displayname will be set."
+          "description": "The Page on which the utterance was spoken. Only name and displayName will be set."
         },
         "diagnosticInfo": {
           "additionalProperties": {
@@ -3657,7 +3653,7 @@
         },
         "triggeredIntent": {
           "$ref": "GoogleCloudDialogflowCxV3Intent",
-          "description": "The Intent that triggered the response. Only some fields such as name and displayname will be set."
+          "description": "The Intent that triggered the response. Only name and displayName will be set."
         }
       },
       "type": "object"
@@ -5777,10 +5773,6 @@
         "environment": {
           "description": "Optional. Environment name. If not set, draft environment is assumed. Format: `projects//locations//agents//environments/`.",
           "type": "string"
-        },
-        "name": {
-          "description": "Required. Format of test case name to run: `projects//locations/ /agents//testCases/`.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -6170,7 +6162,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3TransitionCoverage": {
-      "description": "Transition coverage represents the percentage of all possible transitions present within any of a parent's test cases.",
+      "description": "Transition coverage represents the percentage of all possible page transitions (page-level transition routes and event handlers, excluding transition route groups) present within any of a parent's test cases.",
       "id": "GoogleCloudDialogflowCxV3TransitionCoverage",
       "properties": {
         "coverageScore": {
@@ -6189,7 +6181,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3TransitionCoverageTransition": {
-      "description": "A transition in the agent's graph.",
+      "description": "A transition in a page.",
       "id": "GoogleCloudDialogflowCxV3TransitionCoverageTransition",
       "properties": {
         "covered": {
@@ -6285,6 +6277,63 @@
             "$ref": "GoogleCloudDialogflowCxV3TransitionRoute"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverage": {
+      "description": "Transition route group coverage represents the percentage of all possible transition routes present within any of a parent's test cases. The results are grouped by the transition route group.",
+      "id": "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverage",
+      "properties": {
+        "coverageScore": {
+          "description": "The percent of transition routes in all the transition route groups that are covered.",
+          "format": "float",
+          "type": "number"
+        },
+        "coverages": {
+          "description": "Transition route group coverages.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverageCoverage"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverageCoverage": {
+      "description": "Coverage result message for one transition route group.",
+      "id": "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverageCoverage",
+      "properties": {
+        "coverageScore": {
+          "description": "The percent of transition routes in the transition route group that are covered.",
+          "format": "float",
+          "type": "number"
+        },
+        "routeGroup": {
+          "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroup",
+          "description": "Transition route group metadata. Only name and displayName will be set."
+        },
+        "transitions": {
+          "description": "The list of transition routes and coverage in the transition route group.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverageCoverageTransition"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverageCoverageTransition": {
+      "description": "A transition coverage in a transition route group.",
+      "id": "GoogleCloudDialogflowCxV3TransitionRouteGroupCoverageCoverageTransition",
+      "properties": {
+        "covered": {
+          "description": "Whether or not the transition route is covered by at least one of the agent's test cases.",
+          "type": "boolean"
+        },
+        "transitionRoute": {
+          "$ref": "GoogleCloudDialogflowCxV3TransitionRoute",
+          "description": "Intent route or condition route."
         }
       },
       "type": "object"
@@ -6844,7 +6893,7 @@
       "properties": {
         "currentPage": {
           "$ref": "GoogleCloudDialogflowCxV3beta1Page",
-          "description": "The Page on which the utterance was spoken. Only some fields such as name and displayname will be set."
+          "description": "The Page on which the utterance was spoken. Only name and displayName will be set."
         },
         "diagnosticInfo": {
           "additionalProperties": {
@@ -6883,7 +6932,7 @@
         },
         "triggeredIntent": {
           "$ref": "GoogleCloudDialogflowCxV3beta1Intent",
-          "description": "The Intent that triggered the response. Only some fields such as name and displayname will be set."
+          "description": "The Intent that triggered the response. Only name and displayName will be set."
         }
       },
       "type": "object"

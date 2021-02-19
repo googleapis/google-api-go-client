@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"go.opencensus.io/plugin/ochttp"
+	"golang.org/x/net/http2"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/googleapi/transport"
 	"google.golang.org/api/internal"
@@ -173,6 +174,13 @@ func defaultBaseTransport(ctx context.Context, clientCertSource cert.Source) htt
 		trans.TLSClientConfig = &tls.Config{
 			GetClientCertificate: clientCertSource,
 		}
+	}
+
+	// If possible, configure http2 transport in order to use ReadIdleTimeout
+	// setting.
+	http2Trans, err := http2.ConfigureTransports(trans)
+	if err == nil {
+		http2Trans.ReadIdleTimeout = time.Second * 15
 	}
 
 	return trans

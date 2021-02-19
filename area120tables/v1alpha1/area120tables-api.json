@@ -576,7 +576,7 @@
       }
     }
   },
-  "revision": "20210213",
+  "revision": "20210217",
   "rootUrl": "https://area120tables.googleapis.com/",
   "schemas": {
     "BatchCreateRowsRequest": {
@@ -815,8 +815,18 @@
       "description": "A single row in a table.",
       "id": "Row",
       "properties": {
+        "createTime": {
+          "description": "Time when the row was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "name": {
           "description": "The resource name of the row. Row names have the form `tables/{table}/rows/{row}`. The name is ignored when creating a row.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Time when the row was last updated.",
+          "format": "google-datetime",
           "type": "string"
         },
         "values": {
@@ -840,12 +850,22 @@
           },
           "type": "array"
         },
+        "createTime": {
+          "description": "Time when the table was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "displayName": {
           "description": "The human readable title of the table.",
           "type": "string"
         },
         "name": {
           "description": "The resource name of the table. Table names have the form `tables/{table}`.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Time when the table was last updated excluding updates to individual rows",
+          "format": "google-datetime",
           "type": "string"
         }
       },
@@ -883,6 +903,11 @@
       "description": "A single workspace.",
       "id": "Workspace",
       "properties": {
+        "createTime": {
+          "description": "Time when the workspace was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "displayName": {
           "description": "The human readable title of the workspace.",
           "type": "string"
@@ -897,6 +922,11 @@
             "$ref": "Table"
           },
           "type": "array"
+        },
+        "updateTime": {
+          "description": "Time when the workspace was last updated.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"

@@ -21,7 +21,7 @@
           "description": "See and download your exact date of birth"
         },
         "https://www.googleapis.com/auth/user.emails.read": {
-          "description": "View your email addresses"
+          "description": "See and download all of your Google Account email addresses"
         },
         "https://www.googleapis.com/auth/user.gender.read": {
           "description": "See your gender"
@@ -1015,7 +1015,7 @@
       }
     }
   },
-  "revision": "20210120",
+  "revision": "20210218",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

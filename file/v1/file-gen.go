@@ -596,10 +596,9 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule struct {
 
 	// ScheduleDeadlineTime: schedule_deadline_time is the time deadline any
 	// schedule start time cannot go beyond, including reschedule. It's
-	// normally the initial schedule start time plus a week. If the
-	// reschedule type is next window, simply take this value as start time.
-	// If reschedule type is IMMEDIATELY or BY_TIME, current or selected
-	// time cannot go beyond this deadline.
+	// normally the initial schedule start time plus maintenance window
+	// length (1 day or 1 week). Maintenance cannot be scheduled to start
+	// beyond this deadline.
 	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
 
 	// StartTime: The scheduled start time for the maintenance.
@@ -638,6 +637,10 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// service will include the instance in reported rollout progress as not
 	// attempted.
 	Exclude bool `json:"exclude,omitempty"`
+
+	// IsRollback: Optional. If the update call is triggered from rollback,
+	// set the value as true.
+	IsRollback bool `json:"isRollback,omitempty"`
 
 	// MaintenancePolicies: Optional. The MaintenancePolicies that have been
 	// attached to the instance. The key must be of the type name of the
@@ -712,6 +715,47 @@ type GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata struct {
 
 func (s *GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility:
+// PerSliSloEligibility is a mapping from an SLI name to eligibility.
+type GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility struct {
+	// Eligibilities: An entry in the eligibilities map specifies an
+	// eligibility for a particular SLI for the given instance. The SLI key
+	// in the name must be a valid SLI name specified in the Eligibility
+	// Exporter binary flags otherwise an error will be emitted by
+	// Eligibility Exporter and the oncaller will be alerted. If an SLI has
+	// been defined in the binary flags but the eligibilities map does not
+	// contain it, the corresponding SLI time series will not be emitted by
+	// the Eligibility Exporter. This ensures a smooth rollout and
+	// compatibility between the data produced by different versions of the
+	// Eligibility Exporters. If eligibilities map contains a key for an SLI
+	// which has not been declared in the binary flags, there will be an
+	// error message emitted in the Eligibility Exporter log and the metric
+	// for the SLI in question will not be emitted.
+	Eligibilities map[string]GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility `json:"eligibilities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Eligibilities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Eligibilities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -813,8 +857,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion struct {
 	Reason string `json:"reason,omitempty"`
 
 	// SliName: Name of an SLI that this exclusion applies to. Can be left
-	// empty, signaling that the instance should be excluded from all SLIs
-	// defined in the service SLO configuration.
+	// empty, signaling that the instance should be excluded from all SLIs.
 	SliName string `json:"sliName,omitempty"`
 
 	// StartTime: Start time of the exclusion. No alignment (e.g. to a full
@@ -848,7 +891,9 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion) MarshalJSO
 // SloMetadata contains resources required for proper SLO classification
 // of the instance.
 type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
-	// Eligibility: Optional. User-defined instance eligibility.
+	// Eligibility: Optional. Global per-instance SLI eligibility which
+	// applies to all defined SLIs. Exactly one of 'eligibility' and
+	// 'per_sli_eligibility' fields must be used.
 	Eligibility *GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility `json:"eligibility,omitempty"`
 
 	// Exclusions: List of SLO exclusion windows. When multiple entries in
@@ -870,6 +915,11 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
 	// Eligibility Exporter and published in the form of per node metric to
 	// Monarch.
 	Nodes []*GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata `json:"nodes,omitempty"`
+
+	// PerSliEligibility: Optional. Multiple per-instance SLI eligibilities
+	// which apply for individual SLIs. Exactly one of 'eligibility' and
+	// 'per_sli_eligibility' fields must be used.
+	PerSliEligibility *GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility `json:"perSliEligibility,omitempty"`
 
 	// Tier: Name of the SLO tier the Instance belongs to. This name will be
 	// expected to match the tiers specified in the service SLO
@@ -1825,7 +1875,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1999,7 +2049,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2187,7 +2237,7 @@ func (c *ProjectsLocationsBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2330,7 +2380,7 @@ func (c *ProjectsLocationsBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2471,7 +2521,7 @@ func (c *ProjectsLocationsBackupsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2644,7 +2694,7 @@ func (c *ProjectsLocationsBackupsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2829,7 +2879,7 @@ func (c *ProjectsLocationsBackupsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2986,7 +3036,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3129,7 +3179,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3270,7 +3320,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3443,7 +3493,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3629,7 +3679,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3778,7 +3828,7 @@ func (c *ProjectsLocationsInstancesRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3927,7 +3977,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4068,7 +4118,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4211,7 +4261,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4385,7 +4435,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210219")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

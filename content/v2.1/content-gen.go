@@ -141,6 +141,7 @@ func New(client *http.Client) (*APIService, error) {
 	s.Repricingrules = NewRepricingrulesService(s)
 	s.Returnaddress = NewReturnaddressService(s)
 	s.Returnpolicy = NewReturnpolicyService(s)
+	s.Returnpolicyonline = NewReturnpolicyonlineService(s)
 	s.Settlementreports = NewSettlementreportsService(s)
 	s.Settlementtransactions = NewSettlementtransactionsService(s)
 	s.Shippingsettings = NewShippingsettingsService(s)
@@ -201,6 +202,8 @@ type APIService struct {
 	Returnaddress *ReturnaddressService
 
 	Returnpolicy *ReturnpolicyService
+
+	Returnpolicyonline *ReturnpolicyonlineService
 
 	Settlementreports *SettlementreportsService
 
@@ -486,6 +489,15 @@ func NewReturnpolicyService(s *APIService) *ReturnpolicyService {
 }
 
 type ReturnpolicyService struct {
+	s *APIService
+}
+
+func NewReturnpolicyonlineService(s *APIService) *ReturnpolicyonlineService {
+	rs := &ReturnpolicyonlineService{s: s}
+	return rs
+}
+
+type ReturnpolicyonlineService struct {
 	s *APIService
 }
 
@@ -1488,9 +1500,9 @@ type AccountsCustomBatchRequestEntryLinkRequest struct {
 	LinkedAccountId string `json:"linkedAccountId,omitempty"`
 
 	// Services: Provided services. Acceptable values are: -
-	// "shoppingAdsProductManagement" - "shoppingAdsOther" -
+	// "shoppingAdsProductManagement" -
 	// "shoppingActionsProductManagement" -
-	// "shoppingActionsOrderManagement" - "shoppingActionsOther"
+	// "shoppingActionsOrderManagement"
 	Services []string `json:"services,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -5193,6 +5205,40 @@ type ListRepricingRulesResponse struct {
 
 func (s *ListRepricingRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRepricingRulesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListReturnPolicyOnlineResponse: Response message for the
+// `ListReturnPolicyOnline` method.
+type ListReturnPolicyOnlineResponse struct {
+	// ReturnPolicies: The retrieved return policies.
+	ReturnPolicies []*ReturnPolicyOnline `json:"returnPolicies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ReturnPolicies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReturnPolicies") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListReturnPolicyOnlineResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListReturnPolicyOnlineResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12543,7 +12589,9 @@ type RepricingRule struct {
 	// the rule type is TYPE_COGS_BASED.
 	CogsBasedRule *RepricingRuleCostOfGoodsSaleRule `json:"cogsBasedRule,omitempty"`
 
-	// CountryCode: Required. Immutable. CLDR country code (e.g. "US").
+	// CountryCode: Required. Immutable. CLDR country code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml)
+	// (e.g. "US").
 	CountryCode string `json:"countryCode,omitempty"`
 
 	// EffectiveTimePeriod: Required. Time period when the rule should take
@@ -13202,6 +13250,257 @@ func (s *ReturnPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReturnPolicyOnline: Return policy online object. This is currently
+// used to represent return policies for ads and free listings programs.
+type ReturnPolicyOnline struct {
+	// Countries: The countries of sale where the return policy is
+	// applicable. The values must be a valid 2 letter ISO 3166 code, e.g.
+	// "US".
+	Countries []string `json:"countries,omitempty"`
+
+	// ItemConditions: The item conditions that are accepted for returns.
+	// This is required to not be empty unless the type of return policy is
+	// noReturns.
+	//
+	// Possible values:
+	//   "ITEM_CONDITION_UNSPECIFIED" - Default value. This value is unused.
+	//   "NEW" - New.
+	//   "USED" - Used.
+	ItemConditions []string `json:"itemConditions,omitempty"`
+
+	// Label: The unique user-defined label of the return policy. The same
+	// label cannot be used in different return policies for the same
+	// country. Policies with the label 'default' will apply to all
+	// products, unless a product specifies a return_policy_label attribute.
+	Label string `json:"label,omitempty"`
+
+	// Name: The name of the policy as shown in Merchant Center.
+	Name string `json:"name,omitempty"`
+
+	// Policy: The return policy.
+	Policy *ReturnPolicyOnlinePolicy `json:"policy,omitempty"`
+
+	// RestockingFee: The restocking fee that applies to all return reason
+	// categories. This would be treated as a free restocking fee if the
+	// value is not set.
+	RestockingFee *ReturnPolicyOnlineRestockingFee `json:"restockingFee,omitempty"`
+
+	// ReturnMethods: The return methods of how customers can return an
+	// item. This value is required to not be empty unless the type of
+	// return policy is noReturns.
+	//
+	// Possible values:
+	//   "RETURN_METHOD_UNSPECIFIED" - Default value. This value is unused.
+	//   "BY_MAIL" - By mail.
+	//   "IN_STORE" - In store.
+	//   "AT_A_KIOSK" - At a kiosk.
+	ReturnMethods []string `json:"returnMethods,omitempty"`
+
+	// ReturnPolicyId: Output only. Return policy ID generated by Google.
+	ReturnPolicyId string `json:"returnPolicyId,omitempty"`
+
+	// ReturnPolicyUri: The return policy uri. This can used by Google to do
+	// a sanity check for the policy.
+	ReturnPolicyUri string `json:"returnPolicyUri,omitempty"`
+
+	// ReturnReasonCategoryInfo: The return reason category information.
+	// This required to not be empty unless the type of return policy is
+	// noReturns.
+	ReturnReasonCategoryInfo []*ReturnPolicyOnlineReturnReasonCategoryInfo `json:"returnReasonCategoryInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Countries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Countries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReturnPolicyOnline) MarshalJSON() ([]byte, error) {
+	type NoMethod ReturnPolicyOnline
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReturnPolicyOnlinePolicy: The available policies.
+type ReturnPolicyOnlinePolicy struct {
+	// Days: The number of days items can be returned after delivery, where
+	// one day is defined to be 24 hours after the delivery timestamp.
+	// Required for `numberOfDaysAfterDelivery` returns.
+	Days int64 `json:"days,omitempty,string"`
+
+	// Type: Policy type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "NUMBER_OF_DAYS_AFTER_DELIVERY" - Number of days after a return is
+	// delivered.
+	//   "NO_RETURNS" - No returns.
+	//   "LIFETIME_RETURNS" - Life time returns.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Days") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Days") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReturnPolicyOnlinePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ReturnPolicyOnlinePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReturnPolicyOnlineRestockingFee: The restocking fee. This can either
+// be a fixed fee or a micro percent.
+type ReturnPolicyOnlineRestockingFee struct {
+	// FixedFee: Fixed restocking fee.
+	FixedFee *PriceAmount `json:"fixedFee,omitempty"`
+
+	// MicroPercent: Percent of total price in micros. 15,000,000 means 15%
+	// of the total price would be charged.
+	MicroPercent int64 `json:"microPercent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FixedFee") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FixedFee") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReturnPolicyOnlineRestockingFee) MarshalJSON() ([]byte, error) {
+	type NoMethod ReturnPolicyOnlineRestockingFee
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReturnPolicyOnlineReturnReasonCategoryInfo: The return reason
+// category info wrapper.
+type ReturnPolicyOnlineReturnReasonCategoryInfo struct {
+	// ReturnLabelSource: The corresponding return label source.
+	//
+	// Possible values:
+	//   "RETURN_LABEL_SOURCE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "DOWNLOAD_AND_PRINT" - Download and print the label.
+	//   "IN_THE_BOX" - Label in the box.
+	//   "CUSTOMER_RESPONSIBILITY" - Customers' responsibility to get the
+	// label.
+	ReturnLabelSource string `json:"returnLabelSource,omitempty"`
+
+	// ReturnReasonCategory: The return reason category.
+	//
+	// Possible values:
+	//   "RETURN_REASON_CATEGORY_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "BUYER_REMORSE" - Buyer remorse.
+	//   "ITEM_DEFECT" - Item defect.
+	ReturnReasonCategory string `json:"returnReasonCategory,omitempty"`
+
+	// ReturnShippingFee: The corresponding return shipping fee. This is
+	// only applicable when returnLabelSource is not the customer's
+	// responsibility.
+	ReturnShippingFee *ReturnPolicyOnlineReturnShippingFee `json:"returnShippingFee,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReturnLabelSource")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReturnLabelSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReturnPolicyOnlineReturnReasonCategoryInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ReturnPolicyOnlineReturnReasonCategoryInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReturnPolicyOnlineReturnShippingFee: The return shipping fee. This
+// can either be a fixed fee or a boolean to indicate that the customer
+// pays the actual shipping cost.
+type ReturnPolicyOnlineReturnShippingFee struct {
+	// FixedFee: Fixed return shipping fee amount. This value is only
+	// applicable when type is FIXED. We will treat the return shipping fee
+	// as free if type is FIXED and this value is not set.
+	FixedFee *PriceAmount `json:"fixedFee,omitempty"`
+
+	// Type: Type of return shipping fee.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "FIXED" - The return shipping fee is a fixed value.
+	//   "CUSTOMER_PAYING_ACTUAL_FEE" - Customer will pay the actual return
+	// shipping fee.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FixedFee") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FixedFee") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReturnPolicyOnlineReturnShippingFee) MarshalJSON() ([]byte, error) {
+	type NoMethod ReturnPolicyOnlineReturnShippingFee
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ReturnPolicyPolicy struct {
 	// LastReturnDate: Required. Last day for returning the items. In ISO
 	// 8601 format. When specifying the return window like this, set the
@@ -13792,9 +14091,8 @@ type SearchRequest struct {
 	// response should be used.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// Query: Required. Search query that defines performance metrics to
-	// retrieve and dimensions according to which the metrics are to be
-	// segmented.
+	// Query: Required. Query that defines performance metrics to retrieve
+	// and dimensions according to which the metrics are to be segmented.
 	Query string `json:"query,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
@@ -14233,7 +14531,8 @@ type SettlementTransactionTransaction struct {
 	// "reversalRefund" - "issueRelatedRefundAndReplacement" -
 	// "returnLabelShippingFeeTransaction" -
 	// "reversalIssueRelatedRefundAndReplacement" -
-	// "reversalReturnLabelShippingFeeTransaction"
+	// "reversalReturnLabelShippingFeeTransaction" -
+	// "lumpSumCorrectionTransaction"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PostDate") to
@@ -15534,7 +15833,7 @@ func (c *AccountsAuthinfoCall) Header() http.Header {
 
 func (c *AccountsAuthinfoCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15665,7 +15964,7 @@ func (c *AccountsClaimwebsiteCall) Header() http.Header {
 
 func (c *AccountsClaimwebsiteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15810,7 +16109,7 @@ func (c *AccountsCustombatchCall) Header() http.Header {
 
 func (c *AccountsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15944,7 +16243,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16086,7 +16385,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16243,7 +16542,7 @@ func (c *AccountsInsertCall) Header() http.Header {
 
 func (c *AccountsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16386,7 +16685,7 @@ func (c *AccountsLinkCall) Header() http.Header {
 
 func (c *AccountsLinkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16577,7 +16876,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16789,7 +17088,7 @@ func (c *AccountsListlinksCall) Header() http.Header {
 
 func (c *AccountsListlinksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16968,7 +17267,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17120,7 +17419,7 @@ func (c *AccountsUpdatelabelsCall) Header() http.Header {
 
 func (c *AccountsUpdatelabelsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17269,7 +17568,7 @@ func (c *AccountsLabelsCreateCall) Header() http.Header {
 
 func (c *AccountsLabelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17410,7 +17709,7 @@ func (c *AccountsLabelsDeleteCall) Header() http.Header {
 
 func (c *AccountsLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17551,7 +17850,7 @@ func (c *AccountsLabelsListCall) Header() http.Header {
 
 func (c *AccountsLabelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17720,7 +18019,7 @@ func (c *AccountsLabelsPatchCall) Header() http.Header {
 
 func (c *AccountsLabelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17869,7 +18168,7 @@ func (c *AccountsReturncarrierCreateCall) Header() http.Header {
 
 func (c *AccountsReturncarrierCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18009,7 +18308,7 @@ func (c *AccountsReturncarrierDeleteCall) Header() http.Header {
 
 func (c *AccountsReturncarrierDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18131,7 +18430,7 @@ func (c *AccountsReturncarrierListCall) Header() http.Header {
 
 func (c *AccountsReturncarrierListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18268,7 +18567,7 @@ func (c *AccountsReturncarrierPatchCall) Header() http.Header {
 
 func (c *AccountsReturncarrierPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18416,7 +18715,7 @@ func (c *AccountstatusesCustombatchCall) Header() http.Header {
 
 func (c *AccountstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18564,7 +18863,7 @@ func (c *AccountstatusesGetCall) Header() http.Header {
 
 func (c *AccountstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18747,7 +19046,7 @@ func (c *AccountstatusesListCall) Header() http.Header {
 
 func (c *AccountstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18919,7 +19218,7 @@ func (c *AccounttaxCustombatchCall) Header() http.Header {
 
 func (c *AccounttaxCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19057,7 +19356,7 @@ func (c *AccounttaxGetCall) Header() http.Header {
 
 func (c *AccounttaxGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19225,7 +19524,7 @@ func (c *AccounttaxListCall) Header() http.Header {
 
 func (c *AccounttaxListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19395,7 +19694,7 @@ func (c *AccounttaxUpdateCall) Header() http.Header {
 
 func (c *AccounttaxUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19547,7 +19846,7 @@ func (c *CollectionsCreateCall) Header() http.Header {
 
 func (c *CollectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19687,7 +19986,7 @@ func (c *CollectionsDeleteCall) Header() http.Header {
 
 func (c *CollectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19810,7 +20109,7 @@ func (c *CollectionsGetCall) Header() http.Header {
 
 func (c *CollectionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19981,7 +20280,7 @@ func (c *CollectionsListCall) Header() http.Header {
 
 func (c *CollectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20160,7 +20459,7 @@ func (c *CollectionstatusesGetCall) Header() http.Header {
 
 func (c *CollectionstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20329,7 +20628,7 @@ func (c *CollectionstatusesListCall) Header() http.Header {
 
 func (c *CollectionstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20507,7 +20806,7 @@ func (c *CssesGetCall) Header() http.Header {
 
 func (c *CssesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20678,7 +20977,7 @@ func (c *CssesListCall) Header() http.Header {
 
 func (c *CssesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20848,7 +21147,7 @@ func (c *CssesUpdatelabelsCall) Header() http.Header {
 
 func (c *CssesUpdatelabelsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20996,7 +21295,7 @@ func (c *DatafeedsCustombatchCall) Header() http.Header {
 
 func (c *DatafeedsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21124,7 +21423,7 @@ func (c *DatafeedsDeleteCall) Header() http.Header {
 
 func (c *DatafeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21239,7 +21538,7 @@ func (c *DatafeedsFetchnowCall) Header() http.Header {
 
 func (c *DatafeedsFetchnowCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21392,7 +21691,7 @@ func (c *DatafeedsGetCall) Header() http.Header {
 
 func (c *DatafeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21537,7 +21836,7 @@ func (c *DatafeedsInsertCall) Header() http.Header {
 
 func (c *DatafeedsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21701,7 +22000,7 @@ func (c *DatafeedsListCall) Header() http.Header {
 
 func (c *DatafeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21872,7 +22171,7 @@ func (c *DatafeedsUpdateCall) Header() http.Header {
 
 func (c *DatafeedsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22020,7 +22319,7 @@ func (c *DatafeedstatusesCustombatchCall) Header() http.Header {
 
 func (c *DatafeedstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22180,7 +22479,7 @@ func (c *DatafeedstatusesGetCall) Header() http.Header {
 
 func (c *DatafeedstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22358,7 +22657,7 @@ func (c *DatafeedstatusesListCall) Header() http.Header {
 
 func (c *DatafeedstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22524,7 +22823,7 @@ func (c *LiasettingsCustombatchCall) Header() http.Header {
 
 func (c *LiasettingsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22662,7 +22961,7 @@ func (c *LiasettingsGetCall) Header() http.Header {
 
 func (c *LiasettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22818,7 +23117,7 @@ func (c *LiasettingsGetaccessiblegmbaccountsCall) Header() http.Header {
 
 func (c *LiasettingsGetaccessiblegmbaccountsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22988,7 +23287,7 @@ func (c *LiasettingsListCall) Header() http.Header {
 
 func (c *LiasettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23163,7 +23462,7 @@ func (c *LiasettingsListposdataprovidersCall) Header() http.Header {
 
 func (c *LiasettingsListposdataprovidersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23288,7 +23587,7 @@ func (c *LiasettingsRequestgmbaccessCall) Header() http.Header {
 
 func (c *LiasettingsRequestgmbaccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23440,7 +23739,7 @@ func (c *LiasettingsRequestinventoryverificationCall) Header() http.Header {
 
 func (c *LiasettingsRequestinventoryverificationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23596,7 +23895,7 @@ func (c *LiasettingsSetinventoryverificationcontactCall) Header() http.Header {
 
 func (c *LiasettingsSetinventoryverificationcontactCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23784,7 +24083,7 @@ func (c *LiasettingsSetposdataproviderCall) Header() http.Header {
 
 func (c *LiasettingsSetposdataproviderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23947,7 +24246,7 @@ func (c *LiasettingsUpdateCall) Header() http.Header {
 
 func (c *LiasettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24095,7 +24394,7 @@ func (c *LocalinventoryCustombatchCall) Header() http.Header {
 
 func (c *LocalinventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24226,7 +24525,7 @@ func (c *LocalinventoryInsertCall) Header() http.Header {
 
 func (c *LocalinventoryInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24377,7 +24676,7 @@ func (c *OrderinvoicesCreatechargeinvoiceCall) Header() http.Header {
 
 func (c *OrderinvoicesCreatechargeinvoiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24533,7 +24832,7 @@ func (c *OrderinvoicesCreaterefundinvoiceCall) Header() http.Header {
 
 func (c *OrderinvoicesCreaterefundinvoiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24723,7 +25022,7 @@ func (c *OrderreportsListdisbursementsCall) Header() http.Header {
 
 func (c *OrderreportsListdisbursementsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24943,7 +25242,7 @@ func (c *OrderreportsListtransactionsCall) Header() http.Header {
 
 func (c *OrderreportsListtransactionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25131,7 +25430,7 @@ func (c *OrderreturnsAcknowledgeCall) Header() http.Header {
 
 func (c *OrderreturnsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25279,7 +25578,7 @@ func (c *OrderreturnsCreateorderreturnCall) Header() http.Header {
 
 func (c *OrderreturnsCreateorderreturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25431,7 +25730,7 @@ func (c *OrderreturnsGetCall) Header() http.Header {
 
 func (c *OrderreturnsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25708,7 +26007,7 @@ func (c *OrderreturnsListCall) Header() http.Header {
 
 func (c *OrderreturnsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25969,7 +26268,7 @@ func (c *OrderreturnsProcessCall) Header() http.Header {
 
 func (c *OrderreturnsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26119,7 +26418,7 @@ func (c *OrdersAcknowledgeCall) Header() http.Header {
 
 func (c *OrdersAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26268,7 +26567,7 @@ func (c *OrdersAdvancetestorderCall) Header() http.Header {
 
 func (c *OrdersAdvancetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26410,7 +26709,7 @@ func (c *OrdersCancelCall) Header() http.Header {
 
 func (c *OrdersCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26560,7 +26859,7 @@ func (c *OrdersCancellineitemCall) Header() http.Header {
 
 func (c *OrdersCancellineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26711,7 +27010,7 @@ func (c *OrdersCanceltestorderbycustomerCall) Header() http.Header {
 
 func (c *OrdersCanceltestorderbycustomerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26860,7 +27159,7 @@ func (c *OrdersCreatetestorderCall) Header() http.Header {
 
 func (c *OrdersCreatetestorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27002,7 +27301,7 @@ func (c *OrdersCreatetestreturnCall) Header() http.Header {
 
 func (c *OrdersCreatetestreturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27161,7 +27460,7 @@ func (c *OrdersGetCall) Header() http.Header {
 
 func (c *OrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27315,7 +27614,7 @@ func (c *OrdersGetbymerchantorderidCall) Header() http.Header {
 
 func (c *OrdersGetbymerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27478,7 +27777,7 @@ func (c *OrdersGettestordertemplateCall) Header() http.Header {
 
 func (c *OrdersGettestordertemplateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27654,7 +27953,7 @@ func (c *OrdersInstorerefundlineitemCall) Header() http.Header {
 
 func (c *OrdersInstorerefundlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27885,7 +28184,7 @@ func (c *OrdersListCall) Header() http.Header {
 
 func (c *OrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28106,7 +28405,7 @@ func (c *OrdersRefunditemCall) Header() http.Header {
 
 func (c *OrdersRefunditemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28256,7 +28555,7 @@ func (c *OrdersRefundorderCall) Header() http.Header {
 
 func (c *OrdersRefundorderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28406,7 +28705,7 @@ func (c *OrdersRejectreturnlineitemCall) Header() http.Header {
 
 func (c *OrdersRejectreturnlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28564,7 +28863,7 @@ func (c *OrdersReturnrefundlineitemCall) Header() http.Header {
 
 func (c *OrdersReturnrefundlineitemCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28720,7 +29019,7 @@ func (c *OrdersSetlineitemmetadataCall) Header() http.Header {
 
 func (c *OrdersSetlineitemmetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28871,7 +29170,7 @@ func (c *OrdersShiplineitemsCall) Header() http.Header {
 
 func (c *OrdersShiplineitemsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29022,7 +29321,7 @@ func (c *OrdersUpdatelineitemshippingdetailsCall) Header() http.Header {
 
 func (c *OrdersUpdatelineitemshippingdetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29175,7 +29474,7 @@ func (c *OrdersUpdatemerchantorderidCall) Header() http.Header {
 
 func (c *OrdersUpdatemerchantorderidCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29327,7 +29626,7 @@ func (c *OrdersUpdateshipmentCall) Header() http.Header {
 
 func (c *OrdersUpdateshipmentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29475,7 +29774,7 @@ func (c *OrdertrackingsignalsCreateCall) Header() http.Header {
 
 func (c *OrdertrackingsignalsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29613,7 +29912,7 @@ func (c *PosCustombatchCall) Header() http.Header {
 
 func (c *PosCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29742,7 +30041,7 @@ func (c *PosDeleteCall) Header() http.Header {
 
 func (c *PosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29876,7 +30175,7 @@ func (c *PosGetCall) Header() http.Header {
 
 func (c *PosGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30030,7 +30329,7 @@ func (c *PosInsertCall) Header() http.Header {
 
 func (c *PosInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30181,7 +30480,7 @@ func (c *PosInventoryCall) Header() http.Header {
 
 func (c *PosInventoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30341,7 +30640,7 @@ func (c *PosListCall) Header() http.Header {
 
 func (c *PosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30487,7 +30786,7 @@ func (c *PosSaleCall) Header() http.Header {
 
 func (c *PosSaleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30635,7 +30934,7 @@ func (c *ProductsCustombatchCall) Header() http.Header {
 
 func (c *ProductsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30769,7 +31068,7 @@ func (c *ProductsDeleteCall) Header() http.Header {
 
 func (c *ProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30898,7 +31197,7 @@ func (c *ProductsGetCall) Header() http.Header {
 
 func (c *ProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31050,7 +31349,7 @@ func (c *ProductsInsertCall) Header() http.Header {
 
 func (c *ProductsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31222,7 +31521,7 @@ func (c *ProductsListCall) Header() http.Header {
 
 func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31388,7 +31687,7 @@ func (c *ProductstatusesCustombatchCall) Header() http.Header {
 
 func (c *ProductstatusesCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31535,7 +31834,7 @@ func (c *ProductstatusesGetCall) Header() http.Header {
 
 func (c *ProductstatusesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31717,7 +32016,7 @@ func (c *ProductstatusesListCall) Header() http.Header {
 
 func (c *ProductstatusesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31947,7 +32246,7 @@ func (c *ProductstatusesRepricingreportsListCall) Header() http.Header {
 
 func (c *ProductstatusesRepricingreportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32148,7 +32447,7 @@ func (c *PubsubnotificationsettingsGetCall) Header() http.Header {
 
 func (c *PubsubnotificationsettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32285,7 +32584,7 @@ func (c *PubsubnotificationsettingsUpdateCall) Header() http.Header {
 
 func (c *PubsubnotificationsettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32424,7 +32723,7 @@ func (c *RegionalinventoryCustombatchCall) Header() http.Header {
 
 func (c *RegionalinventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32556,7 +32855,7 @@ func (c *RegionalinventoryInsertCall) Header() http.Header {
 
 func (c *RegionalinventoryInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32711,7 +33010,7 @@ func (c *RegionsCreateCall) Header() http.Header {
 
 func (c *RegionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32857,7 +33156,7 @@ func (c *RegionsDeleteCall) Header() http.Header {
 
 func (c *RegionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32980,7 +33279,7 @@ func (c *RegionsGetCall) Header() http.Header {
 
 func (c *RegionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33150,7 +33449,7 @@ func (c *RegionsListCall) Header() http.Header {
 
 func (c *RegionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33326,7 +33625,7 @@ func (c *RegionsPatchCall) Header() http.Header {
 
 func (c *RegionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33481,7 +33780,7 @@ func (c *ReportsSearchCall) Header() http.Header {
 
 func (c *ReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33649,7 +33948,7 @@ func (c *RepricingrulesCreateCall) Header() http.Header {
 
 func (c *RepricingrulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33794,7 +34093,7 @@ func (c *RepricingrulesDeleteCall) Header() http.Header {
 
 func (c *RepricingrulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33917,7 +34216,7 @@ func (c *RepricingrulesGetCall) Header() http.Header {
 
 func (c *RepricingrulesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34033,7 +34332,9 @@ func (r *RepricingrulesService) List(merchantId int64) *RepricingrulesListCall {
 }
 
 // CountryCode sets the optional parameter "countryCode": CLDR country
-// code (e.g. "US"), used as a filter on repricing rules.
+// code
+// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml)
+// (e.g. "US"), used as a filter on repricing rules.
 func (c *RepricingrulesListCall) CountryCode(countryCode string) *RepricingrulesListCall {
 	c.urlParams_.Set("countryCode", countryCode)
 	return c
@@ -34103,7 +34404,7 @@ func (c *RepricingrulesListCall) Header() http.Header {
 
 func (c *RepricingrulesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34174,7 +34475,7 @@ func (c *RepricingrulesListCall) Do(opts ...googleapi.CallOption) (*ListRepricin
 	//   ],
 	//   "parameters": {
 	//     "countryCode": {
-	//       "description": "CLDR country code (e.g. \"US\"), used as a filter on repricing rules.",
+	//       "description": "[CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) (e.g. \"US\"), used as a filter on repricing rules.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -34287,7 +34588,7 @@ func (c *RepricingrulesPatchCall) Header() http.Header {
 
 func (c *RepricingrulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34483,7 +34784,7 @@ func (c *RepricingrulesRepricingreportsListCall) Header() http.Header {
 
 func (c *RepricingrulesRepricingreportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34667,7 +34968,7 @@ func (c *ReturnaddressCustombatchCall) Header() http.Header {
 
 func (c *ReturnaddressCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34795,7 +35096,7 @@ func (c *ReturnaddressDeleteCall) Header() http.Header {
 
 func (c *ReturnaddressDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34918,7 +35219,7 @@ func (c *ReturnaddressGetCall) Header() http.Header {
 
 func (c *ReturnaddressGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35061,7 +35362,7 @@ func (c *ReturnaddressInsertCall) Header() http.Header {
 
 func (c *ReturnaddressInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35232,7 +35533,7 @@ func (c *ReturnaddressListCall) Header() http.Header {
 
 func (c *ReturnaddressListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35403,7 +35704,7 @@ func (c *ReturnpolicyCustombatchCall) Header() http.Header {
 
 func (c *ReturnpolicyCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35531,7 +35832,7 @@ func (c *ReturnpolicyDeleteCall) Header() http.Header {
 
 func (c *ReturnpolicyDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35654,7 +35955,7 @@ func (c *ReturnpolicyGetCall) Header() http.Header {
 
 func (c *ReturnpolicyGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35797,7 +36098,7 @@ func (c *ReturnpolicyInsertCall) Header() http.Header {
 
 func (c *ReturnpolicyInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35946,7 +36247,7 @@ func (c *ReturnpolicyListCall) Header() http.Header {
 
 func (c *ReturnpolicyListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36035,6 +36336,706 @@ func (c *ReturnpolicyListCall) Do(opts ...googleapi.CallOption) (*ReturnpolicyLi
 
 }
 
+// method id "content.returnpolicyonline.create":
+
+type ReturnpolicyonlineCreateCall struct {
+	s                  *APIService
+	merchantId         int64
+	returnpolicyonline *ReturnPolicyOnline
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new return policy.
+func (r *ReturnpolicyonlineService) Create(merchantId int64, returnpolicyonline *ReturnPolicyOnline) *ReturnpolicyonlineCreateCall {
+	c := &ReturnpolicyonlineCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.returnpolicyonline = returnpolicyonline
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReturnpolicyonlineCreateCall) Fields(s ...googleapi.Field) *ReturnpolicyonlineCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReturnpolicyonlineCreateCall) Context(ctx context.Context) *ReturnpolicyonlineCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReturnpolicyonlineCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReturnpolicyonlineCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.returnpolicyonline)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "content/v2.1/{merchantId}/returnpolicyonline")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.returnpolicyonline.create" call.
+// Exactly one of *ReturnPolicyOnline or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ReturnPolicyOnline.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ReturnpolicyonlineCreateCall) Do(opts ...googleapi.CallOption) (*ReturnPolicyOnline, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReturnPolicyOnline{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new return policy.",
+	//   "flatPath": "content/v2.1/{merchantId}/returnpolicyonline",
+	//   "httpMethod": "POST",
+	//   "id": "content.returnpolicyonline.create",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "content/v2.1/{merchantId}/returnpolicyonline",
+	//   "request": {
+	//     "$ref": "ReturnPolicyOnline"
+	//   },
+	//   "response": {
+	//     "$ref": "ReturnPolicyOnline"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.returnpolicyonline.delete":
+
+type ReturnpolicyonlineDeleteCall struct {
+	s              *APIService
+	merchantId     int64
+	returnPolicyId string
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Delete: Deletes an existing return policy.
+func (r *ReturnpolicyonlineService) Delete(merchantId int64, returnPolicyId string) *ReturnpolicyonlineDeleteCall {
+	c := &ReturnpolicyonlineDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.returnPolicyId = returnPolicyId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReturnpolicyonlineDeleteCall) Fields(s ...googleapi.Field) *ReturnpolicyonlineDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReturnpolicyonlineDeleteCall) Context(ctx context.Context) *ReturnpolicyonlineDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReturnpolicyonlineDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReturnpolicyonlineDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":     strconv.FormatInt(c.merchantId, 10),
+		"returnPolicyId": c.returnPolicyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.returnpolicyonline.delete" call.
+func (c *ReturnpolicyonlineDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an existing return policy.",
+	//   "flatPath": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "content.returnpolicyonline.delete",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "returnPolicyId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "returnPolicyId": {
+	//       "description": "Required. The id of the return policy to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.returnpolicyonline.get":
+
+type ReturnpolicyonlineGetCall struct {
+	s              *APIService
+	merchantId     int64
+	returnPolicyId string
+	urlParams_     gensupport.URLParams
+	ifNoneMatch_   string
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Get: Gets an existing return policy.
+func (r *ReturnpolicyonlineService) Get(merchantId int64, returnPolicyId string) *ReturnpolicyonlineGetCall {
+	c := &ReturnpolicyonlineGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.returnPolicyId = returnPolicyId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReturnpolicyonlineGetCall) Fields(s ...googleapi.Field) *ReturnpolicyonlineGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ReturnpolicyonlineGetCall) IfNoneMatch(entityTag string) *ReturnpolicyonlineGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReturnpolicyonlineGetCall) Context(ctx context.Context) *ReturnpolicyonlineGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReturnpolicyonlineGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReturnpolicyonlineGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":     strconv.FormatInt(c.merchantId, 10),
+		"returnPolicyId": c.returnPolicyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.returnpolicyonline.get" call.
+// Exactly one of *ReturnPolicyOnline or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ReturnPolicyOnline.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ReturnpolicyonlineGetCall) Do(opts ...googleapi.CallOption) (*ReturnPolicyOnline, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReturnPolicyOnline{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an existing return policy.",
+	//   "flatPath": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+	//   "httpMethod": "GET",
+	//   "id": "content.returnpolicyonline.get",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "returnPolicyId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "returnPolicyId": {
+	//       "description": "Required. The id of the return policy to retrieve.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+	//   "response": {
+	//     "$ref": "ReturnPolicyOnline"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.returnpolicyonline.list":
+
+type ReturnpolicyonlineListCall struct {
+	s            *APIService
+	merchantId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all existing return policies.
+func (r *ReturnpolicyonlineService) List(merchantId int64) *ReturnpolicyonlineListCall {
+	c := &ReturnpolicyonlineListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReturnpolicyonlineListCall) Fields(s ...googleapi.Field) *ReturnpolicyonlineListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ReturnpolicyonlineListCall) IfNoneMatch(entityTag string) *ReturnpolicyonlineListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReturnpolicyonlineListCall) Context(ctx context.Context) *ReturnpolicyonlineListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReturnpolicyonlineListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReturnpolicyonlineListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "content/v2.1/{merchantId}/returnpolicyonline")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.returnpolicyonline.list" call.
+// Exactly one of *ListReturnPolicyOnlineResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListReturnPolicyOnlineResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ReturnpolicyonlineListCall) Do(opts ...googleapi.CallOption) (*ListReturnPolicyOnlineResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListReturnPolicyOnlineResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all existing return policies.",
+	//   "flatPath": "content/v2.1/{merchantId}/returnpolicyonline",
+	//   "httpMethod": "GET",
+	//   "id": "content.returnpolicyonline.list",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "content/v2.1/{merchantId}/returnpolicyonline",
+	//   "response": {
+	//     "$ref": "ListReturnPolicyOnlineResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.returnpolicyonline.patch":
+
+type ReturnpolicyonlinePatchCall struct {
+	s                  *APIService
+	merchantId         int64
+	returnPolicyId     string
+	returnpolicyonline *ReturnPolicyOnline
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch: Updates an existing return policy.
+func (r *ReturnpolicyonlineService) Patch(merchantId int64, returnPolicyId string, returnpolicyonline *ReturnPolicyOnline) *ReturnpolicyonlinePatchCall {
+	c := &ReturnpolicyonlinePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.returnPolicyId = returnPolicyId
+	c.returnpolicyonline = returnpolicyonline
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ReturnpolicyonlinePatchCall) Fields(s ...googleapi.Field) *ReturnpolicyonlinePatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ReturnpolicyonlinePatchCall) Context(ctx context.Context) *ReturnpolicyonlinePatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ReturnpolicyonlinePatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReturnpolicyonlinePatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.returnpolicyonline)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId":     strconv.FormatInt(c.merchantId, 10),
+		"returnPolicyId": c.returnPolicyId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.returnpolicyonline.patch" call.
+// Exactly one of *ReturnPolicyOnline or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ReturnPolicyOnline.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ReturnpolicyonlinePatchCall) Do(opts ...googleapi.CallOption) (*ReturnPolicyOnline, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReturnPolicyOnline{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing return policy.",
+	//   "flatPath": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "content.returnpolicyonline.patch",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "returnPolicyId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "returnPolicyId": {
+	//       "description": "Required. The id of the return policy to update.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+	//   "request": {
+	//     "$ref": "ReturnPolicyOnline"
+	//   },
+	//   "response": {
+	//     "$ref": "ReturnPolicyOnline"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
 // method id "content.settlementreports.get":
 
 type SettlementreportsGetCall struct {
@@ -36092,7 +37093,7 @@ func (c *SettlementreportsGetCall) Header() http.Header {
 
 func (c *SettlementreportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36277,7 +37278,7 @@ func (c *SettlementreportsListCall) Header() http.Header {
 
 func (c *SettlementreportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36489,7 +37490,7 @@ func (c *SettlementtransactionsListCall) Header() http.Header {
 
 func (c *SettlementtransactionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36670,7 +37671,7 @@ func (c *ShippingsettingsCustombatchCall) Header() http.Header {
 
 func (c *ShippingsettingsCustombatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36809,7 +37810,7 @@ func (c *ShippingsettingsGetCall) Header() http.Header {
 
 func (c *ShippingsettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -36963,7 +37964,7 @@ func (c *ShippingsettingsGetsupportedcarriersCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedcarriersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37109,7 +38110,7 @@ func (c *ShippingsettingsGetsupportedholidaysCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedholidaysCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37256,7 +38257,7 @@ func (c *ShippingsettingsGetsupportedpickupservicesCall) Header() http.Header {
 
 func (c *ShippingsettingsGetsupportedpickupservicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37418,7 +38419,7 @@ func (c *ShippingsettingsListCall) Header() http.Header {
 
 func (c *ShippingsettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -37588,7 +38589,7 @@ func (c *ShippingsettingsUpdateCall) Header() http.Header {
 
 func (c *ShippingsettingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210220")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

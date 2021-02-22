@@ -4296,7 +4296,7 @@
           ],
           "parameters": {
             "countryCode": {
-              "description": "CLDR country code (e.g. \"US\"), used as a filter on repricing rules.",
+              "description": "[CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) (e.g. \"US\"), used as a filter on repricing rules.",
               "location": "query",
               "type": "string"
             },
@@ -4716,6 +4716,159 @@
         }
       }
     },
+    "returnpolicyonline": {
+      "methods": {
+        "create": {
+          "description": "Creates a new return policy.",
+          "flatPath": "content/v2.1/{merchantId}/returnpolicyonline",
+          "httpMethod": "POST",
+          "id": "content.returnpolicyonline.create",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "content/v2.1/{merchantId}/returnpolicyonline",
+          "request": {
+            "$ref": "ReturnPolicyOnline"
+          },
+          "response": {
+            "$ref": "ReturnPolicyOnline"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "delete": {
+          "description": "Deletes an existing return policy.",
+          "flatPath": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+          "httpMethod": "DELETE",
+          "id": "content.returnpolicyonline.delete",
+          "parameterOrder": [
+            "merchantId",
+            "returnPolicyId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "returnPolicyId": {
+              "description": "Required. The id of the return policy to delete.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "get": {
+          "description": "Gets an existing return policy.",
+          "flatPath": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+          "httpMethod": "GET",
+          "id": "content.returnpolicyonline.get",
+          "parameterOrder": [
+            "merchantId",
+            "returnPolicyId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "returnPolicyId": {
+              "description": "Required. The id of the return policy to retrieve.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+          "response": {
+            "$ref": "ReturnPolicyOnline"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "list": {
+          "description": "Lists all existing return policies.",
+          "flatPath": "content/v2.1/{merchantId}/returnpolicyonline",
+          "httpMethod": "GET",
+          "id": "content.returnpolicyonline.list",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "content/v2.1/{merchantId}/returnpolicyonline",
+          "response": {
+            "$ref": "ListReturnPolicyOnlineResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "patch": {
+          "description": "Updates an existing return policy.",
+          "flatPath": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+          "httpMethod": "PATCH",
+          "id": "content.returnpolicyonline.patch",
+          "parameterOrder": [
+            "merchantId",
+            "returnPolicyId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The id of the merchant for which to retrieve the return policy online object.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "returnPolicyId": {
+              "description": "Required. The id of the return policy to update.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "content/v2.1/{merchantId}/returnpolicyonline/{returnPolicyId}",
+          "request": {
+            "$ref": "ReturnPolicyOnline"
+          },
+          "response": {
+            "$ref": "ReturnPolicyOnline"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        }
+      }
+    },
     "settlementreports": {
       "methods": {
         "get": {
@@ -5054,7 +5207,7 @@
       }
     }
   },
-  "revision": "20210211",
+  "revision": "20210220",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5688,7 +5841,7 @@
           "type": "string"
         },
         "services": {
-          "description": "Provided services. Acceptable values are: - \"`shoppingAdsProductManagement`\" - \"`shoppingAdsOther`\" - \"`shoppingActionsProductManagement`\" - \"`shoppingActionsOrderManagement`\" - \"`shoppingActionsOther`\" ",
+          "description": "Provided services. Acceptable values are: - \"`shoppingAdsProductManagement`\" - \"`shoppingActionsProductManagement`\" - \"`shoppingActionsOrderManagement`\" ",
           "items": {
             "type": "string"
           },
@@ -7774,6 +7927,20 @@
           "description": "The rules from the specified merchant.",
           "items": {
             "$ref": "RepricingRule"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListReturnPolicyOnlineResponse": {
+      "description": "Response message for the `ListReturnPolicyOnline` method.",
+      "id": "ListReturnPolicyOnlineResponse",
+      "properties": {
+        "returnPolicies": {
+          "description": "The retrieved return policies.",
+          "items": {
+            "$ref": "ReturnPolicyOnline"
           },
           "type": "array"
         }
@@ -12127,7 +12294,7 @@
           "description": "The rule definition for TYPE_COGS_BASED. Required when the rule type is TYPE_COGS_BASED."
         },
         "countryCode": {
-          "description": "Required. Immutable. CLDR country code (e.g. \"US\").",
+          "description": "Required. Immutable. [CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) (e.g. \"US\").",
           "type": "string"
         },
         "effectiveTimePeriod": {
@@ -12520,6 +12687,198 @@
       },
       "type": "object"
     },
+    "ReturnPolicyOnline": {
+      "description": "Return policy online object. This is currently used to represent return policies for ads and free listings programs.",
+      "id": "ReturnPolicyOnline",
+      "properties": {
+        "countries": {
+          "description": "The countries of sale where the return policy is applicable. The values must be a valid 2 letter ISO 3166 code, e.g. \"US\".",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "itemConditions": {
+          "description": "The item conditions that are accepted for returns. This is required to not be empty unless the type of return policy is noReturns.",
+          "items": {
+            "enum": [
+              "ITEM_CONDITION_UNSPECIFIED",
+              "NEW",
+              "USED"
+            ],
+            "enumDescriptions": [
+              "Default value. This value is unused.",
+              "New.",
+              "Used."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "label": {
+          "description": "The unique user-defined label of the return policy. The same label cannot be used in different return policies for the same country. Policies with the label 'default' will apply to all products, unless a product specifies a return_policy_label attribute.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the policy as shown in Merchant Center.",
+          "type": "string"
+        },
+        "policy": {
+          "$ref": "ReturnPolicyOnlinePolicy",
+          "description": "The return policy."
+        },
+        "restockingFee": {
+          "$ref": "ReturnPolicyOnlineRestockingFee",
+          "description": "The restocking fee that applies to all return reason categories. This would be treated as a free restocking fee if the value is not set."
+        },
+        "returnMethods": {
+          "description": "The return methods of how customers can return an item. This value is required to not be empty unless the type of return policy is noReturns.",
+          "items": {
+            "enum": [
+              "RETURN_METHOD_UNSPECIFIED",
+              "BY_MAIL",
+              "IN_STORE",
+              "AT_A_KIOSK"
+            ],
+            "enumDescriptions": [
+              "Default value. This value is unused.",
+              "By mail.",
+              "In store.",
+              "At a kiosk."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "returnPolicyId": {
+          "description": "Output only. Return policy ID generated by Google.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "returnPolicyUri": {
+          "description": "The return policy uri. This can used by Google to do a sanity check for the policy.",
+          "type": "string"
+        },
+        "returnReasonCategoryInfo": {
+          "description": "The return reason category information. This required to not be empty unless the type of return policy is noReturns.",
+          "items": {
+            "$ref": "ReturnPolicyOnlineReturnReasonCategoryInfo"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ReturnPolicyOnlinePolicy": {
+      "description": "The available policies.",
+      "id": "ReturnPolicyOnlinePolicy",
+      "properties": {
+        "days": {
+          "description": "The number of days items can be returned after delivery, where one day is defined to be 24 hours after the delivery timestamp. Required for `numberOfDaysAfterDelivery` returns.",
+          "format": "int64",
+          "type": "string"
+        },
+        "type": {
+          "description": "Policy type.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "NUMBER_OF_DAYS_AFTER_DELIVERY",
+            "NO_RETURNS",
+            "LIFETIME_RETURNS"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "Number of days after a return is delivered.",
+            "No returns.",
+            "Life time returns."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReturnPolicyOnlineRestockingFee": {
+      "description": "The restocking fee. This can either be a fixed fee or a micro percent.",
+      "id": "ReturnPolicyOnlineRestockingFee",
+      "properties": {
+        "fixedFee": {
+          "$ref": "PriceAmount",
+          "description": "Fixed restocking fee."
+        },
+        "microPercent": {
+          "description": "Percent of total price in micros. 15,000,000 means 15% of the total price would be charged.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ReturnPolicyOnlineReturnReasonCategoryInfo": {
+      "description": "The return reason category info wrapper.",
+      "id": "ReturnPolicyOnlineReturnReasonCategoryInfo",
+      "properties": {
+        "returnLabelSource": {
+          "description": "The corresponding return label source.",
+          "enum": [
+            "RETURN_LABEL_SOURCE_UNSPECIFIED",
+            "DOWNLOAD_AND_PRINT",
+            "IN_THE_BOX",
+            "CUSTOMER_RESPONSIBILITY"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "Download and print the label.",
+            "Label in the box.",
+            "Customers' responsibility to get the label."
+          ],
+          "type": "string"
+        },
+        "returnReasonCategory": {
+          "description": "The return reason category.",
+          "enum": [
+            "RETURN_REASON_CATEGORY_UNSPECIFIED",
+            "BUYER_REMORSE",
+            "ITEM_DEFECT"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "Buyer remorse.",
+            "Item defect."
+          ],
+          "type": "string"
+        },
+        "returnShippingFee": {
+          "$ref": "ReturnPolicyOnlineReturnShippingFee",
+          "description": "The corresponding return shipping fee. This is only applicable when returnLabelSource is not the customer's responsibility."
+        }
+      },
+      "type": "object"
+    },
+    "ReturnPolicyOnlineReturnShippingFee": {
+      "description": "The return shipping fee. This can either be a fixed fee or a boolean to indicate that the customer pays the actual shipping cost.",
+      "id": "ReturnPolicyOnlineReturnShippingFee",
+      "properties": {
+        "fixedFee": {
+          "$ref": "PriceAmount",
+          "description": "Fixed return shipping fee amount. This value is only applicable when type is FIXED. We will treat the return shipping fee as free if type is FIXED and this value is not set."
+        },
+        "type": {
+          "description": "Type of return shipping fee.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "FIXED",
+            "CUSTOMER_PAYING_ACTUAL_FEE"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "The return shipping fee is a fixed value.",
+            "Customer will pay the actual return shipping fee."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ReturnPolicyPolicy": {
       "id": "ReturnPolicyPolicy",
       "properties": {
@@ -12849,7 +13208,7 @@
           "type": "string"
         },
         "query": {
-          "description": "Required. Search query that defines performance metrics to retrieve and dimensions according to which the metrics are to be segmented. ",
+          "description": "Required. Query that defines performance metrics to retrieve and dimensions according to which the metrics are to be segmented. ",
           "type": "string"
         }
       },
@@ -13100,7 +13459,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of the transaction that occurred. Acceptable values are: - \"`order`\" - \"`reversal`\" - \"`orderRefund`\" - \"`reversalRefund`\" - \"`issueRelatedRefundAndReplacement`\" - \"`returnLabelShippingFeeTransaction`\" - \"`reversalIssueRelatedRefundAndReplacement`\" - \"`reversalReturnLabelShippingFeeTransaction`\" ",
+          "description": "The type of the transaction that occurred. Acceptable values are: - \"`order`\" - \"`reversal`\" - \"`orderRefund`\" - \"`reversalRefund`\" - \"`issueRelatedRefundAndReplacement`\" - \"`returnLabelShippingFeeTransaction`\" - \"`reversalIssueRelatedRefundAndReplacement`\" - \"`reversalReturnLabelShippingFeeTransaction`\" - \"`lumpSumCorrectionTransaction`\" ",
           "type": "string"
         }
       },

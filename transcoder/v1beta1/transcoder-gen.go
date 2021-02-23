@@ -401,13 +401,13 @@ type Audio struct {
 	LowBoost bool `json:"lowBoost,omitempty"`
 
 	// Lufs: Specify audio loudness normalization in loudness units relative
-	// to full scale (LUFS). Enter a value between -24 and 0, where -24 is
-	// the Advanced Television Systems Committee (ATSC A/85), -23 is the EU
-	// R128 broadcast standard, -19 is the prior standard for online mono
-	// audio, -18 is the ReplayGain standard, -16 is the prior standard for
-	// stereo audio, -14 is the new online audio standard recommended by
-	// Spotify, as well as Amazon Echo, and 0 disables normalization. The
-	// default is 0.
+	// to full scale (LUFS). Enter a value between -24 and 0 (the default),
+	// where: * -24 is the Advanced Television Systems Committee (ATSC A/85)
+	// standard * -23 is the EU R128 broadcast standard * -19 is the prior
+	// standard for online mono audio * -18 is the ReplayGain standard * -16
+	// is the prior standard for stereo audio * -14 is the new online audio
+	// standard recommended by Spotify, as well as Amazon Echo * 0 disables
+	// normalization
 	Lufs float64 `json:"lufs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HighBoost") to
@@ -1665,6 +1665,48 @@ func (s *Overlay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Pad: Pad filter configuration for the input video. The padded input
+// video is scaled after padding with black to match the output
+// resolution.
+type Pad struct {
+	// BottomPixels: The number of pixels to add to the bottom. The default
+	// is 0.
+	BottomPixels int64 `json:"bottomPixels,omitempty"`
+
+	// LeftPixels: The number of pixels to add to the left. The default is
+	// 0.
+	LeftPixels int64 `json:"leftPixels,omitempty"`
+
+	// RightPixels: The number of pixels to add to the right. The default is
+	// 0.
+	RightPixels int64 `json:"rightPixels,omitempty"`
+
+	// TopPixels: The number of pixels to add to the top. The default is 0.
+	TopPixels int64 `json:"topPixels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BottomPixels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BottomPixels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Pad) MarshalJSON() ([]byte, error) {
+	type NoMethod Pad
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PreprocessingConfig: Preprocessing configurations.
 type PreprocessingConfig struct {
 	// Audio: Audio preprocessing configuration.
@@ -1681,6 +1723,9 @@ type PreprocessingConfig struct {
 
 	// Denoise: Denoise preprocessing configuration.
 	Denoise *Denoise `json:"denoise,omitempty"`
+
+	// Pad: Specify the video pad filter configuration.
+	Pad *Pad `json:"pad,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Audio") to
 	// unconditionally include in API requests. By default, fields with
@@ -1881,6 +1926,12 @@ type SpriteSheet struct {
 	// Interval: Starting from `0s`, create sprites at regular intervals.
 	// Specify the interval value in seconds.
 	Interval string `json:"interval,omitempty"`
+
+	// Quality: The quality of the generated sprite sheet. Enter a value
+	// between 1 and 100, where 1 is the lowest quality and 100 is the
+	// highest quality. The default is 100. A high quality value corresponds
+	// to a low image data compression ratio.
+	Quality int64 `json:"quality,omitempty"`
 
 	// RowCount: The maximum number of rows per sprite sheet. When the
 	// sprite sheet is full, a new sprite sheet is created. The default is
@@ -2251,7 +2302,7 @@ func (c *ProjectsLocationsJobTemplatesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2394,7 +2445,7 @@ func (c *ProjectsLocationsJobTemplatesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2535,7 +2586,7 @@ func (c *ProjectsLocationsJobTemplatesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2694,7 +2745,7 @@ func (c *ProjectsLocationsJobTemplatesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2861,7 +2912,7 @@ func (c *ProjectsLocationsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2999,7 +3050,7 @@ func (c *ProjectsLocationsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3140,7 +3191,7 @@ func (c *ProjectsLocationsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3299,7 +3350,7 @@ func (c *ProjectsLocationsJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

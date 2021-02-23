@@ -1354,7 +1354,7 @@
       }
     }
   },
-  "revision": "20210211",
+  "revision": "20210218",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {
@@ -2535,6 +2535,10 @@
       "description": "The payment plan for the Offer. Describes how to make a payment.",
       "id": "GoogleCloudChannelV1Plan",
       "properties": {
+        "billingAccount": {
+          "description": "Reseller Billing account that will be charged when this offer is transacted. Only present for GCP offers.",
+          "type": "string"
+        },
         "paymentCycle": {
           "$ref": "GoogleCloudChannelV1Period",
           "description": "Describes how frequently the reseller will be billed, such as once per month."

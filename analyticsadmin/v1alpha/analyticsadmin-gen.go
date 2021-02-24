@@ -1949,7 +1949,7 @@ func (c *AccountSummariesListCall) Header() http.Header {
 
 func (c *AccountSummariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2113,7 +2113,7 @@ func (c *AccountsDeleteCall) Header() http.Header {
 
 func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2254,7 +2254,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2401,7 +2401,7 @@ func (c *AccountsGetDataSharingSettingsCall) Header() http.Header {
 
 func (c *AccountsGetDataSharingSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2578,7 +2578,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2715,7 +2715,8 @@ func (r *AccountsService) Patch(name string, googleanalyticsadminv1alphaaccount 
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
@@ -2750,7 +2751,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2831,7 +2832,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAd
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2895,7 +2896,7 @@ func (c *AccountsProvisionAccountTicketCall) Header() http.Header {
 
 func (c *AccountsProvisionAccountTicketCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3031,7 +3032,7 @@ func (c *AccountsUserLinksAuditCall) Header() http.Header {
 
 func (c *AccountsUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3197,7 +3198,7 @@ func (c *AccountsUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3341,7 +3342,7 @@ func (c *AccountsUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3499,7 +3500,7 @@ func (c *AccountsUserLinksBatchGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3644,7 +3645,7 @@ func (c *AccountsUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *AccountsUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3798,7 +3799,7 @@ func (c *AccountsUserLinksCreateCall) Header() http.Header {
 
 func (c *AccountsUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3942,7 +3943,7 @@ func (c *AccountsUserLinksDeleteCall) Header() http.Header {
 
 func (c *AccountsUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4083,7 +4084,7 @@ func (c *AccountsUserLinksGetCall) Header() http.Header {
 
 func (c *AccountsUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4248,7 +4249,7 @@ func (c *AccountsUserLinksListCall) Header() http.Header {
 
 func (c *AccountsUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4418,7 +4419,7 @@ func (c *AccountsUserLinksPatchCall) Header() http.Header {
 
 func (c *AccountsUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4558,7 +4559,7 @@ func (c *PropertiesCreateCall) Header() http.Header {
 
 func (c *PropertiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4691,7 +4692,7 @@ func (c *PropertiesDeleteCall) Header() http.Header {
 
 func (c *PropertiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4832,7 +4833,7 @@ func (c *PropertiesGetCall) Header() http.Header {
 
 func (c *PropertiesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5024,7 +5025,7 @@ func (c *PropertiesListCall) Header() http.Header {
 
 func (c *PropertiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5166,7 +5167,8 @@ func (r *PropertiesService) Patch(name string, googleanalyticsadminv1alphaproper
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesPatchCall) UpdateMask(updateMask string) *PropertiesPatchCall {
@@ -5201,7 +5203,7 @@ func (c *PropertiesPatchCall) Header() http.Header {
 
 func (c *PropertiesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5282,7 +5284,7 @@ func (c *PropertiesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalytics
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5353,7 +5355,7 @@ func (c *PropertiesAndroidAppDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5493,7 +5495,7 @@ func (c *PropertiesAndroidAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5634,7 +5636,7 @@ func (c *PropertiesAndroidAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5803,7 +5805,7 @@ func (c *PropertiesAndroidAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5948,7 +5950,8 @@ func (r *PropertiesAndroidAppDataStreamsService) Patch(name string, googleanalyt
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesAndroidAppDataStreamsPatchCall) UpdateMask(updateMask string) *PropertiesAndroidAppDataStreamsPatchCall {
@@ -5983,7 +5986,7 @@ func (c *PropertiesAndroidAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesAndroidAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6065,7 +6068,7 @@ func (c *PropertiesAndroidAppDataStreamsPatchCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6132,7 +6135,7 @@ func (c *PropertiesFirebaseLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6271,7 +6274,7 @@ func (c *PropertiesFirebaseLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6433,7 +6436,7 @@ func (c *PropertiesFirebaseLinksListCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6577,7 +6580,8 @@ func (r *PropertiesFirebaseLinksService) Patch(name string, googleanalyticsadmin
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesFirebaseLinksPatchCall) UpdateMask(updateMask string) *PropertiesFirebaseLinksPatchCall {
@@ -6612,7 +6616,7 @@ func (c *PropertiesFirebaseLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesFirebaseLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6693,7 +6697,7 @@ func (c *PropertiesFirebaseLinksPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6759,7 +6763,7 @@ func (c *PropertiesGoogleAdsLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6899,7 +6903,7 @@ func (c *PropertiesGoogleAdsLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7059,7 +7063,7 @@ func (c *PropertiesGoogleAdsLinksListCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7203,7 +7207,8 @@ func (r *PropertiesGoogleAdsLinksService) Patch(name string, googleanalyticsadmi
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesGoogleAdsLinksPatchCall) UpdateMask(updateMask string) *PropertiesGoogleAdsLinksPatchCall {
@@ -7238,7 +7243,7 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesGoogleAdsLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7320,7 +7325,7 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7391,7 +7396,7 @@ func (c *PropertiesIosAppDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7531,7 +7536,7 @@ func (c *PropertiesIosAppDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7672,7 +7677,7 @@ func (c *PropertiesIosAppDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7841,7 +7846,7 @@ func (c *PropertiesIosAppDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7986,7 +7991,8 @@ func (r *PropertiesIosAppDataStreamsService) Patch(name string, googleanalyticsa
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesIosAppDataStreamsPatchCall) UpdateMask(updateMask string) *PropertiesIosAppDataStreamsPatchCall {
@@ -8021,7 +8027,7 @@ func (c *PropertiesIosAppDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesIosAppDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8103,7 +8109,7 @@ func (c *PropertiesIosAppDataStreamsPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8175,7 +8181,7 @@ func (c *PropertiesUserLinksAuditCall) Header() http.Header {
 
 func (c *PropertiesUserLinksAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8341,7 +8347,7 @@ func (c *PropertiesUserLinksBatchCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8485,7 +8491,7 @@ func (c *PropertiesUserLinksBatchDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8643,7 +8649,7 @@ func (c *PropertiesUserLinksBatchGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8788,7 +8794,7 @@ func (c *PropertiesUserLinksBatchUpdateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8942,7 +8948,7 @@ func (c *PropertiesUserLinksCreateCall) Header() http.Header {
 
 func (c *PropertiesUserLinksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9086,7 +9092,7 @@ func (c *PropertiesUserLinksDeleteCall) Header() http.Header {
 
 func (c *PropertiesUserLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9227,7 +9233,7 @@ func (c *PropertiesUserLinksGetCall) Header() http.Header {
 
 func (c *PropertiesUserLinksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9392,7 +9398,7 @@ func (c *PropertiesUserLinksListCall) Header() http.Header {
 
 func (c *PropertiesUserLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9562,7 +9568,7 @@ func (c *PropertiesUserLinksPatchCall) Header() http.Header {
 
 func (c *PropertiesUserLinksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9704,7 +9710,7 @@ func (c *PropertiesWebDataStreamsCreateCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9844,7 +9850,7 @@ func (c *PropertiesWebDataStreamsDeleteCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9985,7 +9991,7 @@ func (c *PropertiesWebDataStreamsGetCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10134,7 +10140,7 @@ func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) Header() ht
 
 func (c *PropertiesWebDataStreamsGetEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10283,7 +10289,7 @@ func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsGetGlobalSiteTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10452,7 +10458,7 @@ func (c *PropertiesWebDataStreamsListCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10596,7 +10602,8 @@ func (r *PropertiesWebDataStreamsService) Patch(name string, googleanalyticsadmi
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesWebDataStreamsPatchCall) UpdateMask(updateMask string) *PropertiesWebDataStreamsPatchCall {
@@ -10631,7 +10638,7 @@ func (c *PropertiesWebDataStreamsPatchCall) Header() http.Header {
 
 func (c *PropertiesWebDataStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10713,7 +10720,7 @@ func (c *PropertiesWebDataStreamsPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10755,7 +10762,8 @@ func (r *PropertiesWebDataStreamsService) UpdateEnhancedMeasurementSettings(name
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to be updated. Omitted fields will not be updated. To
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
 // replace the entire entity, use one path with the string "*" to match
 // all fields.
 func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) UpdateMask(updateMask string) *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall {
@@ -10790,7 +10798,7 @@ func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Header()
 
 func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10873,7 +10881,7 @@ func (c *PropertiesWebDataStreamsUpdateEnhancedMeasurementSettingsCall) Do(opts 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The list of fields to be updated. Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -288,38 +288,52 @@ type ProjectsLocationsReplaysResultsService struct {
 	s *Service
 }
 
-// GoogleCloudPolicysimulatorV1beta1AccessStateDiff: The difference in
-// AccessState between baseline and simulated policies. If either
-// AccessState cannot be fully evaluated, i.e. the AccessState is one of
-// the UNKNOWN_* values, the explanation why full evaluation was not
-// possible is in the ExplainedAccess message.
+// GoogleCloudPolicysimulatorV1beta1AccessStateDiff: A summary and
+// comparison of the member's access under the current (baseline)
+// policies and the proposed (simulated) policies for a single access
+// tuple.
 type GoogleCloudPolicysimulatorV1beta1AccessStateDiff struct {
-	// AccessChange: A single value interpretation of the difference between
-	// baseline and simulated.
+	// AccessChange: How the member's access, specified in the AccessState
+	// field, changed between the current (baseline) policies and proposed
+	// (simulated) policies.
 	//
 	// Possible values:
-	//   "ACCESS_CHANGE_TYPE_UNSPECIFIED" - Reserved
-	//   "NO_CHANGE" - The two ExplainedAccesses are equal. This includes
-	// the case where both baseline and simulated are UNKNOWN, but the
-	// unknown information is equivalent.
-	//   "UNKNOWN_CHANGE" - The baseline and simulated accesses are both
-	// UNKNOWN, but the unknown information differs between them.
-	//   "ACCESS_REVOKED" - The baseline access state is GRANTED and the
-	// simulated access state is NOT_GRANTED
-	//   "ACCESS_GAINED" - The baseline access state is NOT_GRANTED and the
-	// simulated access state is GRANTED.
-	//   "ACCESS_MAYBE_REVOKED" - The baseline access state is GRANTED and
-	// the simulated access state is UNKNOWN.
-	//   "ACCESS_MAYBE_GAINED" - The baseline state is NOT_GRANTED and the
-	// simulated state is UNKNOWN.
+	//   "ACCESS_CHANGE_TYPE_UNSPECIFIED" - The access change is
+	// unspecified.
+	//   "NO_CHANGE" - The member's access did not change. This includes the
+	// case where both baseline and simulated are UNKNOWN, but the unknown
+	// information is equivalent.
+	//   "UNKNOWN_CHANGE" - The member's access under both the current
+	// policies and the proposed policies is `UNKNOWN`, but the unknown
+	// information differs between them.
+	//   "ACCESS_REVOKED" - The member had access under the current policies
+	// (`GRANTED`), but will no longer have access after the proposed
+	// changes (`NOT_GRANTED`).
+	//   "ACCESS_GAINED" - The member did not have access under the current
+	// policies (`NOT_GRANTED`), but will have access after the proposed
+	// changes (`GRANTED`).
+	//   "ACCESS_MAYBE_REVOKED" - This result can occur for the following
+	// reasons: * The member had access under the current policies
+	// (`GRANTED`), but their access after the proposed changes is
+	// `UNKNOWN`. * The member's access under the current policies is
+	// `UNKNOWN`, but they will not have access after the proposed changes
+	// (`NOT_GRANTED`).
+	//   "ACCESS_MAYBE_GAINED" - This result can occur for the following
+	// reasons: * The member did not have access under the current policies
+	// (`NOT_GRANTED`), but their access after the proposed changes is
+	// `UNKNOWN`. * The member's access under the current policies is
+	// `UNKNOWN`, but they will have access after the proposed changes
+	// (`GRANTED`).
 	AccessChange string `json:"accessChange,omitempty"`
 
-	// Baseline: The explained access when replayed against the baseline
-	// policies.
+	// Baseline: The results of evaluating the access tuple under the
+	// current (baseline) policies. If the AccessState couldn't be fully
+	// evaluated, this field explains why.
 	Baseline *GoogleCloudPolicysimulatorV1beta1ExplainedAccess `json:"baseline,omitempty"`
 
-	// Simulated: The explained access when replayed against the simulated
-	// policies.
+	// Simulated: The results of evaluating the access tuple under the
+	// proposed (simulated) policies. If the AccessState couldn't be fully
+	// evaluated, this field explains why.
 	Simulated *GoogleCloudPolicysimulatorV1beta1ExplainedAccess `json:"simulated,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessChange") to
@@ -408,19 +422,20 @@ type GoogleCloudPolicysimulatorV1beta1BindingExplanation struct {
 	// TroubleshootIamPolicyResponse.
 	//
 	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - Reserved for future use.
+	//   "ACCESS_STATE_UNSPECIFIED" - The access state is not specified.
 	//   "GRANTED" - The member has the permission.
 	//   "NOT_GRANTED" - The member does not have the permission.
 	//   "UNKNOWN_CONDITIONAL" - The member has the permission only if a
 	// condition expression evaluates to `true`.
-	//   "UNKNOWN_INFO_DENIED" - The Simulator user does not have access to
-	// all of the policies that Policy Troubleshooter needs to evaluate.
+	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
+	// have access to all of the policies that Policy Simulator needs to
+	// evaluate.
 	Access string `json:"access,omitempty"`
 
 	// Condition: A condition expression that prevents this binding from
 	// granting access unless the expression evaluates to `true`. To learn
 	// about IAM Conditions, see
-	// http://cloud.google.com/iam/help/conditions/overview.
+	// https://cloud.google.com/iam/docs/conditions-overview.
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 
 	// Memberships: Indicates whether each member in the binding includes
@@ -428,9 +443,9 @@ type GoogleCloudPolicysimulatorV1beta1BindingExplanation struct {
 	// Each key identifies a member in the binding, and each value indicates
 	// whether the member in the binding includes the member in the request.
 	// For example, suppose that a binding includes the following members: *
-	// `user:alice@example.com` * `group:product-eng@example.com` You want
-	// to troubleshoot access for `user:bob@example.com`. This user is a
-	// member of the group `group:product-eng@example.com`. For the first
+	// `user:alice@example.com` * `group:product-eng@example.com` The member
+	// in the replayed access tuple is `user:bob@example.com`. This user is
+	// a member of the group `group:product-eng@example.com`. For the first
 	// member in the binding, the key is `user:alice@example.com`, and the
 	// `membership` field in the value is set to `MEMBERSHIP_NOT_INCLUDED`.
 	// For the second member in the binding, the key is
@@ -460,13 +475,14 @@ type GoogleCloudPolicysimulatorV1beta1BindingExplanation struct {
 	// contains the specified permission.
 	//
 	// Possible values:
-	//   "ROLE_PERMISSION_UNSPECIFIED" - Reserved for future use.
+	//   "ROLE_PERMISSION_UNSPECIFIED" - The inclusion of the permission is
+	// not specified.
 	//   "ROLE_PERMISSION_INCLUDED" - The permission is included in the
 	// role.
 	//   "ROLE_PERMISSION_NOT_INCLUDED" - The permission is not included in
 	// the role.
-	//   "ROLE_PERMISSION_UNKNOWN_INFO_DENIED" - The Simulator user is not
-	// allowed to access the binding.
+	//   "ROLE_PERMISSION_UNKNOWN_INFO_DENIED" - The user who created the
+	// Replay is not allowed to access the binding.
 	RolePermission string `json:"rolePermission,omitempty"`
 
 	// RolePermissionRelevance: The relevance of the permission's existence,
@@ -511,16 +527,16 @@ type GoogleCloudPolicysimulatorV1beta1BindingExplanationAnnotatedMembership stru
 	// Membership: Indicates whether the binding includes the member.
 	//
 	// Possible values:
-	//   "MEMBERSHIP_UNSPECIFIED" - Reserved for future use.
+	//   "MEMBERSHIP_UNSPECIFIED" - The membership is not specified.
 	//   "MEMBERSHIP_INCLUDED" - The binding includes the member. The member
 	// can be included directly or indirectly. For example: * A member is
 	// included directly if that member is listed in the binding. * A member
-	// is included indirectly if that member is in a Google group or G Suite
-	// domain that is listed in the binding.
+	// is included indirectly if that member is in a Google group or Google
+	// Workspace domain that is listed in the binding.
 	//   "MEMBERSHIP_NOT_INCLUDED" - The binding does not include the
 	// member.
-	//   "MEMBERSHIP_UNKNOWN_INFO_DENIED" - The Simulator user is not
-	// allowed to access the binding.
+	//   "MEMBERSHIP_UNKNOWN_INFO_DENIED" - The user who created the Replay
+	// is not allowed to access the binding.
 	//   "MEMBERSHIP_UNKNOWN_UNSUPPORTED" - The member is an unsupported
 	// type. Only Google Accounts and service accounts are supported.
 	Membership string `json:"membership,omitempty"`
@@ -560,29 +576,32 @@ func (s *GoogleCloudPolicysimulatorV1beta1BindingExplanationAnnotatedMembership)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPolicysimulatorV1beta1ExplainedAccess: Details about how
-// the set of Explained Policies resulted in the Access State.
+// GoogleCloudPolicysimulatorV1beta1ExplainedAccess: Details about how a
+// set of policies, listed in ExplainedPolicy, resulted in a certain
+// AccessState when replaying an access tuple.
 type GoogleCloudPolicysimulatorV1beta1ExplainedAccess struct {
-	// AccessState: The overall access state for the included set of
-	// policies.
+	// AccessState: Whether the member in the access tuple has permission to
+	// access the resource in the access tuple under the given policies.
 	//
 	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - Reserved for future use.
+	//   "ACCESS_STATE_UNSPECIFIED" - The access state is not specified.
 	//   "GRANTED" - The member has the permission.
 	//   "NOT_GRANTED" - The member does not have the permission.
 	//   "UNKNOWN_CONDITIONAL" - The member has the permission only if a
 	// condition expression evaluates to `true`.
-	//   "UNKNOWN_INFO_DENIED" - The Simulator user does not have access to
-	// all of the policies that Policy Troubleshooter needs to evaluate.
+	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
+	// have access to all of the policies that Policy Simulator needs to
+	// evaluate.
 	AccessState string `json:"accessState,omitempty"`
 
-	// Errors: The list of problems encountered when explaining this access.
-	// This list provides the reason why UNKNOWN information in `policies`
-	// was unknown.
+	// Errors: If the AccessState is `UNKNOWN`, this field contains a list
+	// of errors explaining why the result is `UNKNOWN`. If the
+	// `AccessState` is `GRANTED` or `NOT_GRANTED`, this field is omitted.
 	Errors []*GoogleRpcStatus `json:"errors,omitempty"`
 
-	// Policies: The set of policies causing an UNKNOWN AccessState, if any.
-	// If the Access is GRANTED or NOT_GRANTED, this list will be empty.
+	// Policies: If the AccessState is `UNKNOWN`, this field contains the
+	// policies that led to that result. If the `AccessState` is `GRANTED`
+	// or `NOT_GRANTED`, this field is omitted.
 	Policies []*GoogleCloudPolicysimulatorV1beta1ExplainedPolicy `json:"policies,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessState") to
@@ -620,37 +639,39 @@ type GoogleCloudPolicysimulatorV1beta1ExplainedPolicy struct {
 	// TroubleshootIamPolicyResponse.
 	//
 	// Possible values:
-	//   "ACCESS_STATE_UNSPECIFIED" - Reserved for future use.
+	//   "ACCESS_STATE_UNSPECIFIED" - The access state is not specified.
 	//   "GRANTED" - The member has the permission.
 	//   "NOT_GRANTED" - The member does not have the permission.
 	//   "UNKNOWN_CONDITIONAL" - The member has the permission only if a
 	// condition expression evaluates to `true`.
-	//   "UNKNOWN_INFO_DENIED" - The Simulator user does not have access to
-	// all of the policies that Policy Troubleshooter needs to evaluate.
+	//   "UNKNOWN_INFO_DENIED" - The user who created the Replay does not
+	// have access to all of the policies that Policy Simulator needs to
+	// evaluate.
 	Access string `json:"access,omitempty"`
 
 	// BindingExplanations: Details about how each binding in the policy
 	// affects the member's ability, or inability, to use the permission for
-	// the resource. If the Simulator user does not have access to the
-	// policy, this field is omitted.
+	// the resource. If the user who created the Replay does not have access
+	// to the policy, this field is omitted.
 	BindingExplanations []*GoogleCloudPolicysimulatorV1beta1BindingExplanation `json:"bindingExplanations,omitempty"`
 
 	// FullResourceName: The full resource name that identifies the
 	// resource. For example,
 	// `//compute.googleapis.com/projects/my-project/zones/us-central1-a/inst
-	// ances/my-instance`. If the Simulator user does not have access to the
-	// policy, this field is omitted. For examples of full resource names
-	// for Google Cloud services, see
+	// ances/my-instance`. If the user who created the Replay does not have
+	// access to the policy, this field is omitted. For examples of full
+	// resource names for Google Cloud services, see
 	// https://cloud.google.com/iam/help/troubleshooter/full-resource-names.
 	FullResourceName string `json:"fullResourceName,omitempty"`
 
-	// Policy: The IAM policy attached to the resource. If the Simulator
-	// user does not have access to the policy, this field is empty.
+	// Policy: The IAM policy attached to the resource. If the user who
+	// created the Replay does not have access to the policy, this field is
+	// empty.
 	Policy *GoogleIamV1Policy `json:"policy,omitempty"`
 
 	// Relevance: The relevance of this policy to the overall determination
-	// in the TroubleshootIamPolicyResponse. If the Simulator user does not
-	// have access to the policy, this field is omitted.
+	// in the TroubleshootIamPolicyResponse. If the user who created the
+	// Replay does not have access to the policy, this field is omitted.
 	//
 	// Possible values:
 	//   "HEURISTIC_RELEVANCE_UNSPECIFIED" - Reserved for future use.
@@ -684,15 +705,15 @@ func (s *GoogleCloudPolicysimulatorV1beta1ExplainedPolicy) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse: The
-// results of a replay.
+// GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse: Response
+// message for Simulator.ListReplayResults.
 type GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token that you can use to retrieve the next page of
+	// ReplayResult objects. If this field is omitted, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ReplayResults: The results of running a replay.
+	// ReplayResults: The results of running a Replay.
 	ReplayResults []*GoogleCloudPolicysimulatorV1beta1ReplayResult `json:"replayResults,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -722,16 +743,17 @@ func (s *GoogleCloudPolicysimulatorV1beta1ListReplayResultsResponse) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPolicysimulatorV1beta1Replay: A Replay of Accesses against
-// a simulated state.
+// GoogleCloudPolicysimulatorV1beta1Replay: A resource describing a
+// `Replay`, or simulation.
 type GoogleCloudPolicysimulatorV1beta1Replay struct {
-	// Config: Required. The configuration used for the replay.
+	// Config: Required. The configuration used for the `Replay`.
 	Config *GoogleCloudPolicysimulatorV1beta1ReplayConfig `json:"config,omitempty"`
 
-	// Name: The resource name of the replay. The replay id is randomly
-	// generated on creation. Format is
-	// `PARENT/locations/{location}/replays/{replay}` where PARENT is a
-	// project, folder, or organization. Example:
+	// Name: Output only. The resource name of the `Replay`, which has the
+	// following format:
+	// `{projects|folders|organizations}/{resource-id}/locations/global/repla
+	// ys/{replay-id}`, where `{resource-id}` is the ID of the project,
+	// folder, or organization that owns the Replay. Example:
 	// `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d
 	// 7d-8e03-479ce1833c36`
 	Name string `json:"name,omitempty"`
@@ -740,15 +762,14 @@ type GoogleCloudPolicysimulatorV1beta1Replay struct {
 	// log entries.
 	ResultsSummary *GoogleCloudPolicysimulatorV1beta1ReplayResultsSummary `json:"resultsSummary,omitempty"`
 
-	// State: Output only. The current state of the replay.
-	// https://aip.dev/216
+	// State: Output only. The current state of the `Replay`.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Reserved.
-	//   "PENDING" - Replay has not started yet.
-	//   "RUNNING" - Replay is currently running.
-	//   "SUCCEEDED" - Replay has successfully completed.
-	//   "FAILED" - Replay has finished with an error.
+	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "PENDING" - The `Replay` has not started yet.
+	//   "RUNNING" - The `Replay` is currently running.
+	//   "SUCCEEDED" - The `Replay` has successfully completed.
+	//   "FAILED" - The `Replay` has finished with an error.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -779,23 +800,29 @@ func (s *GoogleCloudPolicysimulatorV1beta1Replay) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudPolicysimulatorV1beta1ReplayConfig: The configuration used
-// for the replay.
+// for a Replay.
 type GoogleCloudPolicysimulatorV1beta1ReplayConfig struct {
-	// LogSource: The logs to use as input for the replay.
+	// LogSource: The logs to use as input for the Replay.
 	//
 	// Possible values:
-	//   "LOG_SOURCE_UNSPECIFIED" - An unspecified log source. Replay will
-	// default to using RECENT_ACCESSES.
-	//   "RECENT_ACCESSES" - Retrieves the 5000 most recent accesses from
-	// the last 90 days from an internal log source. Note that the log
-	// freshness (i.e. the date of the newest log entry) may be up to 7 days
-	// stale. In other words, an access attempt that only occurred within
-	// the past 7 days may not be captured by the replay.
+	//   "LOG_SOURCE_UNSPECIFIED" - An unspecified log source. If the log
+	// source is unspecified, the Replay defaults to using
+	// `RECENT_ACCESSES`.
+	//   "RECENT_ACCESSES" - All access logs from the last 90 days. These
+	// logs may not include logs from the most recent 7 days.
 	LogSource string `json:"logSource,omitempty"`
 
-	// PolicyOverlay: The policy overlay used during the replay. Keys are
-	// full resource names and the values are the policies to apply on these
-	// resources in the simulated state.
+	// PolicyOverlay: A mapping of the resources that you want to simulate
+	// policies for and the policies that you want to simulate. Keys are the
+	// full resource names for the resources. For example,
+	// `//cloudresourcemanager.googleapis.com/projects/my-project`. For
+	// examples of full resource names for Google Cloud services, see
+	// https://cloud.google.com/iam/help/troubleshooter/full-resource-names.
+	// Values are Policy objects representing the policies that you want to
+	// simulate. Replays automatically take into account any IAM policies
+	// inherited through the resource hierarchy, and any policies set on
+	// descendant resources. You do not need to include these policies in
+	// the policy overlay.
 	PolicyOverlay map[string]GoogleIamV1Policy `json:"policyOverlay,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LogSource") to
@@ -821,11 +848,16 @@ func (s *GoogleCloudPolicysimulatorV1beta1ReplayConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPolicysimulatorV1beta1ReplayDiff: A successful replay of
-// an AccessTuple that resulted in a difference between baseline and
-// simulated.
+// GoogleCloudPolicysimulatorV1beta1ReplayDiff: The difference between
+// the results of evaluating an access tuple under the current
+// (baseline) policies and under the proposed (simulated) policies. This
+// difference explains how a member's access could change if the
+// proposed policies were applied.
 type GoogleCloudPolicysimulatorV1beta1ReplayDiff struct {
-	// AccessDiff: The difference in AccessState between replays.
+	// AccessDiff: A summary and comparison of the member's access under the
+	// current (baseline) policies and the proposed (simulated) policies for
+	// a single access tuple. The evaluation of the member's access is
+	// reported in the AccessState field.
 	AccessDiff *GoogleCloudPolicysimulatorV1beta1AccessStateDiff `json:"accessDiff,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessDiff") to
@@ -852,7 +884,7 @@ func (s *GoogleCloudPolicysimulatorV1beta1ReplayDiff) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata: Metadata
-// about a ReplayAccessLogs operation.
+// about a Replay operation.
 type GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata struct {
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
@@ -883,26 +915,37 @@ func (s *GoogleCloudPolicysimulatorV1beta1ReplayOperationMetadata) MarshalJSON()
 // GoogleCloudPolicysimulatorV1beta1ReplayResult: The result of
 // replaying a single access tuple against a simulated state.
 type GoogleCloudPolicysimulatorV1beta1ReplayResult struct {
-	// AccessTuple: The access replayed.
+	// AccessTuple: The access tuple that was replayed. This field includes
+	// information about the member, resource, and permission that were
+	// involved in the access attempt.
 	AccessTuple *GoogleCloudPolicysimulatorV1beta1AccessTuple `json:"accessTuple,omitempty"`
 
-	// Diff: The tuple was successfully replayed and had a difference.
+	// Diff: The difference between the member's access under the current
+	// (baseline) policies and the member's access under the proposed
+	// (simulated) policies. This field is only included for access tuples
+	// that were successfully replayed and had different results under the
+	// current policies and the proposed policies.
 	Diff *GoogleCloudPolicysimulatorV1beta1ReplayDiff `json:"diff,omitempty"`
 
-	// Error: The tuple was not successfully replayed.
+	// Error: The error that caused the access tuple replay to fail. This
+	// field is only included for access tuples that were not replayed
+	// successfully.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
-	// LastSeenDate: The late date this access was seen in the logs.
+	// LastSeenDate: The latest date this access tuple was seen in the logs.
 	LastSeenDate *GoogleTypeDate `json:"lastSeenDate,omitempty"`
 
-	// Name: The resource name of the replay result. Format is
-	// `PARENT/locations/{location}/replays/{replay}/results/{replay_result}`
-	//  where PARENT is a project, folder, or organization. Example:
+	// Name: The resource name of the `ReplayResult`, in the following
+	// format:
+	// `{projects|folders|organizations}/{resource-id}/locations/global/repla
+	// ys/{replay-id}/results/{replay-result-id}`, where `{resource-id}` is
+	// the ID of the project, folder, or organization that owns the Replay.
+	// Example:
 	// `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d
 	// 7d-8e03-479ce1833c36/results/1234`
 	Name string `json:"name,omitempty"`
 
-	// Parent: The replay the access tuple was included in.
+	// Parent: The Replay that the access tuple was included in.
 	Parent string `json:"parent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessTuple") to
@@ -931,25 +974,24 @@ func (s *GoogleCloudPolicysimulatorV1beta1ReplayResult) MarshalJSON() ([]byte, e
 // GoogleCloudPolicysimulatorV1beta1ReplayResultsSummary: Summary
 // statistics about the replayed log entries.
 type GoogleCloudPolicysimulatorV1beta1ReplayResultsSummary struct {
-	// DifferenceCount: Number of replayed log entries with a difference
+	// DifferenceCount: The number of replayed log entries with a difference
 	// between baseline and simulated policies.
 	DifferenceCount int64 `json:"differenceCount,omitempty"`
 
-	// ErrorCount: Number of log entries with an error during replay.
+	// ErrorCount: The number of log entries that could not be replayed.
 	ErrorCount int64 `json:"errorCount,omitempty"`
 
-	// LogCount: Number of log entries replayed. log_count ==
-	// unchanged_count + difference_count + error_count
+	// LogCount: The total number of log entries replayed.
 	LogCount int64 `json:"logCount,omitempty"`
 
-	// NewestDate: Date of newest log entry replayed.
+	// NewestDate: The date of the newest log entry replayed.
 	NewestDate *GoogleTypeDate `json:"newestDate,omitempty"`
 
-	// OldestDate: Date of oldest log entry replayed.
+	// OldestDate: The date of the oldest log entry replayed.
 	OldestDate *GoogleTypeDate `json:"oldestDate,omitempty"`
 
-	// UnchangedCount: Number of replayed log entries with no difference
-	// between baseline and simulated
+	// UnchangedCount: The number of replayed log entries with no difference
+	// between baseline and simulated policies.
 	UnchangedCount int64 `json:"unchangedCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DifferenceCount") to
@@ -1506,13 +1548,7 @@ type FoldersLocationsReplaysCreateCall struct {
 	header_                                 http.Header
 }
 
-// Create: Create a replay using the given ReplayConfig. The parent of
-// the replay must contain all resources in the overlay. For example, if
-// the overlay contains: ``` ReplayConfig { policy_overlay = map = {
-// "//cloudresourcemanager.googleapis.com/projects/project-1": ...,
-// "//cloudresourcemanager.googleapis.com/projects/project-2": ..., }
-// ``` Then, the parent used for CreateReplay must be the organization
-// or a folder that contains both projects as children.
+// Create: Creates and starts a Replay using the given ReplayConfig.
 func (r *FoldersLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *FoldersLocationsReplaysCreateCall {
 	c := &FoldersLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1547,7 +1583,7 @@ func (c *FoldersLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1611,7 +1647,7 @@ func (c *FoldersLocationsReplaysCreateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a replay using the given ReplayConfig. The parent of the replay must contain all resources in the overlay. For example, if the overlay contains: ``` ReplayConfig { policy_overlay = map = { \"//cloudresourcemanager.googleapis.com/projects/project-1\": ..., \"//cloudresourcemanager.googleapis.com/projects/project-2\": ..., } ``` Then, the parent used for CreateReplay must be the organization or a folder that contains both projects as children.",
+	//   "description": "Creates and starts a Replay using the given ReplayConfig.",
 	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/replays",
 	//   "httpMethod": "POST",
 	//   "id": "policysimulator.folders.locations.replays.create",
@@ -1620,7 +1656,7 @@ func (c *FoldersLocationsReplaysCreateCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource where this Replay will be created. This must be a project, folder, or organization with included location. Example: `projects/my-example-project/locations/global`",
+	//       "description": "Required. The parent resource where this Replay will be created. This resource must be a project, folder, or organization with a location. Example: `projects/my-example-project/locations/global`",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -1652,7 +1688,8 @@ type FoldersLocationsReplaysGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the specified Replay.
+// Get: Gets the specified Replay. Each `Replay` is available for at
+// least 7 days.
 func (r *FoldersLocationsReplaysService) Get(name string) *FoldersLocationsReplaysGetCall {
 	c := &FoldersLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1696,7 +1733,7 @@ func (c *FoldersLocationsReplaysGetCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1759,7 +1796,7 @@ func (c *FoldersLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the specified Replay.",
+	//   "description": "Gets the specified Replay. Each `Replay` is available for at least 7 days.",
 	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/replays/{replaysId}",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.folders.locations.replays.get",
@@ -1768,7 +1805,7 @@ func (c *FoldersLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the replay to retrieve. Format is `PARENT/locations/{location}/replays/{replay}` where PARENT is a project, folder, or organization. Example: `projects/my-example-project/locations/{location}/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
+	//       "description": "Required. The name of the Replay to retrieve, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}`, where `{resource-id}` is the ID of the project, folder, or organization that owns the `Replay`. Example: `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/replays/[^/]+$",
 	//       "required": true,
@@ -1797,7 +1834,7 @@ type FoldersLocationsReplaysResultsListCall struct {
 	header_      http.Header
 }
 
-// List: List the results of running a replay
+// List: Lists the results of running a Replay.
 func (r *FoldersLocationsReplaysResultsService) List(parent string) *FoldersLocationsReplaysResultsListCall {
 	c := &FoldersLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1805,19 +1842,18 @@ func (r *FoldersLocationsReplaysResultsService) List(parent string) *FoldersLoca
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of `ReplayResults` to return. If unspecified, at most 5000 `Replays`
-// will be returned. The maximum value is 5000; values above 5000 will
-// be coerced to 5000.
+// of ReplayResult objects to return. Defaults to 5000. The maximum
+// value is 5000; values above 5000 are rounded down to 5000.
 func (c *FoldersLocationsReplaysResultsListCall) PageSize(pageSize int64) *FoldersLocationsReplaysResultsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListReplayResults` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListReplayResults` must match the call that provided the
-// page token.
+// received from a previous Simulator.ListReplayResults call. Provide
+// this token to retrieve the next page of results. When paginating, all
+// other parameters provided to [Simulator.ListReplayResults[] must
+// match the call that provided the page token.
 func (c *FoldersLocationsReplaysResultsListCall) PageToken(pageToken string) *FoldersLocationsReplaysResultsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1860,7 +1896,7 @@ func (c *FoldersLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *FoldersLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1925,7 +1961,7 @@ func (c *FoldersLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "List the results of running a replay",
+	//   "description": "Lists the results of running a Replay.",
 	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/replays/{replaysId}/results",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.folders.locations.replays.results.list",
@@ -1934,18 +1970,18 @@ func (c *FoldersLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of `ReplayResults` to return. If unspecified, at most 5000 `Replays` will be returned. The maximum value is 5000; values above 5000 will be coerced to 5000.",
+	//       "description": "The maximum number of ReplayResult objects to return. Defaults to 5000. The maximum value is 5000; values above 5000 are rounded down to 5000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListReplayResults` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListReplayResults` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous Simulator.ListReplayResults call. Provide this token to retrieve the next page of results. When paginating, all other parameters provided to [Simulator.ListReplayResults[] must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The replay we are listing results for.",
+	//       "description": "Required. The Replay whose results are listed, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}` Example: `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/replays/[^/]+$",
 	//       "required": true,
@@ -2041,7 +2077,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2220,7 +2256,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2351,13 +2387,7 @@ type OrganizationsLocationsReplaysCreateCall struct {
 	header_                                 http.Header
 }
 
-// Create: Create a replay using the given ReplayConfig. The parent of
-// the replay must contain all resources in the overlay. For example, if
-// the overlay contains: ``` ReplayConfig { policy_overlay = map = {
-// "//cloudresourcemanager.googleapis.com/projects/project-1": ...,
-// "//cloudresourcemanager.googleapis.com/projects/project-2": ..., }
-// ``` Then, the parent used for CreateReplay must be the organization
-// or a folder that contains both projects as children.
+// Create: Creates and starts a Replay using the given ReplayConfig.
 func (r *OrganizationsLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *OrganizationsLocationsReplaysCreateCall {
 	c := &OrganizationsLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2392,7 +2422,7 @@ func (c *OrganizationsLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2456,7 +2486,7 @@ func (c *OrganizationsLocationsReplaysCreateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a replay using the given ReplayConfig. The parent of the replay must contain all resources in the overlay. For example, if the overlay contains: ``` ReplayConfig { policy_overlay = map = { \"//cloudresourcemanager.googleapis.com/projects/project-1\": ..., \"//cloudresourcemanager.googleapis.com/projects/project-2\": ..., } ``` Then, the parent used for CreateReplay must be the organization or a folder that contains both projects as children.",
+	//   "description": "Creates and starts a Replay using the given ReplayConfig.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/replays",
 	//   "httpMethod": "POST",
 	//   "id": "policysimulator.organizations.locations.replays.create",
@@ -2465,7 +2495,7 @@ func (c *OrganizationsLocationsReplaysCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource where this Replay will be created. This must be a project, folder, or organization with included location. Example: `projects/my-example-project/locations/global`",
+	//       "description": "Required. The parent resource where this Replay will be created. This resource must be a project, folder, or organization with a location. Example: `projects/my-example-project/locations/global`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2497,7 +2527,8 @@ type OrganizationsLocationsReplaysGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the specified Replay.
+// Get: Gets the specified Replay. Each `Replay` is available for at
+// least 7 days.
 func (r *OrganizationsLocationsReplaysService) Get(name string) *OrganizationsLocationsReplaysGetCall {
 	c := &OrganizationsLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2541,7 +2572,7 @@ func (c *OrganizationsLocationsReplaysGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2604,7 +2635,7 @@ func (c *OrganizationsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the specified Replay.",
+	//   "description": "Gets the specified Replay. Each `Replay` is available for at least 7 days.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/replays/{replaysId}",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.organizations.locations.replays.get",
@@ -2613,7 +2644,7 @@ func (c *OrganizationsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the replay to retrieve. Format is `PARENT/locations/{location}/replays/{replay}` where PARENT is a project, folder, or organization. Example: `projects/my-example-project/locations/{location}/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
+	//       "description": "Required. The name of the Replay to retrieve, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}`, where `{resource-id}` is the ID of the project, folder, or organization that owns the `Replay`. Example: `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/replays/[^/]+$",
 	//       "required": true,
@@ -2642,7 +2673,7 @@ type OrganizationsLocationsReplaysResultsListCall struct {
 	header_      http.Header
 }
 
-// List: List the results of running a replay
+// List: Lists the results of running a Replay.
 func (r *OrganizationsLocationsReplaysResultsService) List(parent string) *OrganizationsLocationsReplaysResultsListCall {
 	c := &OrganizationsLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2650,19 +2681,18 @@ func (r *OrganizationsLocationsReplaysResultsService) List(parent string) *Organ
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of `ReplayResults` to return. If unspecified, at most 5000 `Replays`
-// will be returned. The maximum value is 5000; values above 5000 will
-// be coerced to 5000.
+// of ReplayResult objects to return. Defaults to 5000. The maximum
+// value is 5000; values above 5000 are rounded down to 5000.
 func (c *OrganizationsLocationsReplaysResultsListCall) PageSize(pageSize int64) *OrganizationsLocationsReplaysResultsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListReplayResults` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListReplayResults` must match the call that provided the
-// page token.
+// received from a previous Simulator.ListReplayResults call. Provide
+// this token to retrieve the next page of results. When paginating, all
+// other parameters provided to [Simulator.ListReplayResults[] must
+// match the call that provided the page token.
 func (c *OrganizationsLocationsReplaysResultsListCall) PageToken(pageToken string) *OrganizationsLocationsReplaysResultsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2705,7 +2735,7 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2770,7 +2800,7 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "List the results of running a replay",
+	//   "description": "Lists the results of running a Replay.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/replays/{replaysId}/results",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.organizations.locations.replays.results.list",
@@ -2779,18 +2809,18 @@ func (c *OrganizationsLocationsReplaysResultsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of `ReplayResults` to return. If unspecified, at most 5000 `Replays` will be returned. The maximum value is 5000; values above 5000 will be coerced to 5000.",
+	//       "description": "The maximum number of ReplayResult objects to return. Defaults to 5000. The maximum value is 5000; values above 5000 are rounded down to 5000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListReplayResults` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListReplayResults` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous Simulator.ListReplayResults call. Provide this token to retrieve the next page of results. When paginating, all other parameters provided to [Simulator.ListReplayResults[] must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The replay we are listing results for.",
+	//       "description": "Required. The Replay whose results are listed, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}` Example: `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/replays/[^/]+$",
 	//       "required": true,
@@ -2840,13 +2870,7 @@ type ProjectsLocationsReplaysCreateCall struct {
 	header_                                 http.Header
 }
 
-// Create: Create a replay using the given ReplayConfig. The parent of
-// the replay must contain all resources in the overlay. For example, if
-// the overlay contains: ``` ReplayConfig { policy_overlay = map = {
-// "//cloudresourcemanager.googleapis.com/projects/project-1": ...,
-// "//cloudresourcemanager.googleapis.com/projects/project-2": ..., }
-// ``` Then, the parent used for CreateReplay must be the organization
-// or a folder that contains both projects as children.
+// Create: Creates and starts a Replay using the given ReplayConfig.
 func (r *ProjectsLocationsReplaysService) Create(parent string, googlecloudpolicysimulatorv1beta1replay *GoogleCloudPolicysimulatorV1beta1Replay) *ProjectsLocationsReplaysCreateCall {
 	c := &ProjectsLocationsReplaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2881,7 +2905,7 @@ func (c *ProjectsLocationsReplaysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2945,7 +2969,7 @@ func (c *ProjectsLocationsReplaysCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a replay using the given ReplayConfig. The parent of the replay must contain all resources in the overlay. For example, if the overlay contains: ``` ReplayConfig { policy_overlay = map = { \"//cloudresourcemanager.googleapis.com/projects/project-1\": ..., \"//cloudresourcemanager.googleapis.com/projects/project-2\": ..., } ``` Then, the parent used for CreateReplay must be the organization or a folder that contains both projects as children.",
+	//   "description": "Creates and starts a Replay using the given ReplayConfig.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/replays",
 	//   "httpMethod": "POST",
 	//   "id": "policysimulator.projects.locations.replays.create",
@@ -2954,7 +2978,7 @@ func (c *ProjectsLocationsReplaysCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource where this Replay will be created. This must be a project, folder, or organization with included location. Example: `projects/my-example-project/locations/global`",
+	//       "description": "Required. The parent resource where this Replay will be created. This resource must be a project, folder, or organization with a location. Example: `projects/my-example-project/locations/global`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2986,7 +3010,8 @@ type ProjectsLocationsReplaysGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get the specified Replay.
+// Get: Gets the specified Replay. Each `Replay` is available for at
+// least 7 days.
 func (r *ProjectsLocationsReplaysService) Get(name string) *ProjectsLocationsReplaysGetCall {
 	c := &ProjectsLocationsReplaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3030,7 +3055,7 @@ func (c *ProjectsLocationsReplaysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3093,7 +3118,7 @@ func (c *ProjectsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the specified Replay.",
+	//   "description": "Gets the specified Replay. Each `Replay` is available for at least 7 days.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/replays/{replaysId}",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.projects.locations.replays.get",
@@ -3102,7 +3127,7 @@ func (c *ProjectsLocationsReplaysGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the replay to retrieve. Format is `PARENT/locations/{location}/replays/{replay}` where PARENT is a project, folder, or organization. Example: `projects/my-example-project/locations/{location}/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
+	//       "description": "Required. The name of the Replay to retrieve, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}`, where `{resource-id}` is the ID of the project, folder, or organization that owns the `Replay`. Example: `projects/my-example-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/replays/[^/]+$",
 	//       "required": true,
@@ -3131,7 +3156,7 @@ type ProjectsLocationsReplaysResultsListCall struct {
 	header_      http.Header
 }
 
-// List: List the results of running a replay
+// List: Lists the results of running a Replay.
 func (r *ProjectsLocationsReplaysResultsService) List(parent string) *ProjectsLocationsReplaysResultsListCall {
 	c := &ProjectsLocationsReplaysResultsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3139,19 +3164,18 @@ func (r *ProjectsLocationsReplaysResultsService) List(parent string) *ProjectsLo
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of `ReplayResults` to return. If unspecified, at most 5000 `Replays`
-// will be returned. The maximum value is 5000; values above 5000 will
-// be coerced to 5000.
+// of ReplayResult objects to return. Defaults to 5000. The maximum
+// value is 5000; values above 5000 are rounded down to 5000.
 func (c *ProjectsLocationsReplaysResultsListCall) PageSize(pageSize int64) *ProjectsLocationsReplaysResultsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListReplayResults` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListReplayResults` must match the call that provided the
-// page token.
+// received from a previous Simulator.ListReplayResults call. Provide
+// this token to retrieve the next page of results. When paginating, all
+// other parameters provided to [Simulator.ListReplayResults[] must
+// match the call that provided the page token.
 func (c *ProjectsLocationsReplaysResultsListCall) PageToken(pageToken string) *ProjectsLocationsReplaysResultsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3194,7 +3218,7 @@ func (c *ProjectsLocationsReplaysResultsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReplaysResultsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210222")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3259,7 +3283,7 @@ func (c *ProjectsLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "List the results of running a replay",
+	//   "description": "Lists the results of running a Replay.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/replays/{replaysId}/results",
 	//   "httpMethod": "GET",
 	//   "id": "policysimulator.projects.locations.replays.results.list",
@@ -3268,18 +3292,18 @@ func (c *ProjectsLocationsReplaysResultsListCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of `ReplayResults` to return. If unspecified, at most 5000 `Replays` will be returned. The maximum value is 5000; values above 5000 will be coerced to 5000.",
+	//       "description": "The maximum number of ReplayResult objects to return. Defaults to 5000. The maximum value is 5000; values above 5000 are rounded down to 5000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListReplayResults` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListReplayResults` must match the call that provided the page token.",
+	//       "description": "A page token, received from a previous Simulator.ListReplayResults call. Provide this token to retrieve the next page of results. When paginating, all other parameters provided to [Simulator.ListReplayResults[] must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The replay we are listing results for.",
+	//       "description": "Required. The Replay whose results are listed, in the following format: `{projects|folders|organizations}/{resource-id}/locations/global/replays/{replay-id}` Example: `projects/my-project/locations/global/replays/506a5f7f-38ce-4d7d-8e03-479ce1833c36`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/replays/[^/]+$",
 	//       "required": true,

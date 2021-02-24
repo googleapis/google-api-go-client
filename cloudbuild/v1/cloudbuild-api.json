@@ -819,7 +819,7 @@
       }
     }
   },
-  "revision": "20210128",
+  "revision": "20210218",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1318,7 +1318,7 @@
           "type": "boolean"
         },
         "filename": {
-          "description": "Path, from the source root, to a file whose contents is used for the template.",
+          "description": "Path, from the source root, to the build configuration file (i.e. cloudbuild.yaml).",
           "type": "string"
         },
         "github": {

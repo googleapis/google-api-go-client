@@ -436,6 +436,39 @@
           "scopes": [
             "https://www.googleapis.com/auth/contacts.other.readonly"
           ]
+        },
+        "search": {
+          "description": "Provides a list of contacts in the authenticated user's other contacts that matches the search query.",
+          "flatPath": "v1/otherContacts:search",
+          "httpMethod": "GET",
+          "id": "people.otherContacts.search",
+          "parameterOrder": [],
+          "parameters": {
+            "pageSize": {
+              "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "query": {
+              "description": "Required. The plain-text query for the request. The query is used to match prefix phrases of the fields on a person. For example, a person with name \"foo name\" matches queries such as \"f\", \"fo\", \"foo\", \"foo n\", \"nam\", etc., but not \"oo n\".",
+              "location": "query",
+              "type": "string"
+            },
+            "readMask": {
+              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * names * phoneNumbers",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1/otherContacts:search",
+          "response": {
+            "$ref": "SearchResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/contacts.other.readonly"
+          ]
         }
       }
     },
@@ -758,6 +791,40 @@
             "https://www.googleapis.com/auth/directory.readonly"
           ]
         },
+        "searchContacts": {
+          "description": "Provides a list of contacts in the authenticated user's grouped contacts that matches the search query.",
+          "flatPath": "v1/people:searchContacts",
+          "httpMethod": "GET",
+          "id": "people.people.searchContacts",
+          "parameterOrder": [],
+          "parameters": {
+            "pageSize": {
+              "description": "Optional. The number of results to return.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "query": {
+              "description": "Required. The plain-text query for the request. The query is used to match prefix phrases of the fields on a person. For example, a person with name \"foo name\" matches queries such as \"f\", \"fo\", \"foo\", \"foo n\", \"nam\", etc., but not \"oo n\".",
+              "location": "query",
+              "type": "string"
+            },
+            "readMask": {
+              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1/people:searchContacts",
+          "response": {
+            "$ref": "SearchResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/contacts",
+            "https://www.googleapis.com/auth/contacts.readonly"
+          ]
+        },
         "searchDirectoryPeople": {
           "description": "Provides a list of domain profiles and domain contacts in the authenticated user's domain directory that match the search query.",
           "flatPath": "v1/people:searchDirectoryPeople",
@@ -1015,7 +1082,7 @@
       }
     }
   },
-  "revision": "20210218",
+  "revision": "20210222",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -2675,6 +2742,31 @@
           "description": "The total number of items in the list without pagination.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "SearchResponse": {
+      "description": "The response to a search request for the authenticated user, given a query.",
+      "id": "SearchResponse",
+      "properties": {
+        "results": {
+          "description": "The results of the request.",
+          "items": {
+            "$ref": "SearchResult"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SearchResult": {
+      "description": "A result of a search query.",
+      "id": "SearchResult",
+      "properties": {
+        "person": {
+          "$ref": "Person",
+          "description": "The matched Person."
         }
       },
       "type": "object"

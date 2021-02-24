@@ -69,7 +69,7 @@
           "description": "View user aliases on your domain"
         },
         "https://www.googleapis.com/auth/admin.directory.user.readonly": {
-          "description": "View users on your domain"
+          "description": "See info about users on your domain"
         },
         "https://www.googleapis.com/auth/admin.directory.user.security": {
           "description": "Manage data access permissions for users on your domain"
@@ -4159,7 +4159,7 @@
       }
     }
   },
-  "revision": "20210216",
+  "revision": "20210223",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {

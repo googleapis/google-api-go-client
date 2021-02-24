@@ -2500,7 +2500,7 @@
       }
     }
   },
-  "revision": "20210126",
+  "revision": "20210223",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -4613,7 +4613,8 @@
             "DISAPPROVAL_REASON",
             "POLICY_TOPIC",
             "ATP_VENDOR",
-            "VENDOR_DOMAIN"
+            "VENDOR_DOMAIN",
+            "GVL_ID"
           ],
           "enumDescriptions": [
             "A placeholder for an undefined status. This value will never be returned in responses.",
@@ -4624,7 +4625,8 @@
             "Indicates that the detail ID refers to a disapproval reason; see DisapprovalReason enum in [snippet-status-report-proto](https://developers.google.com/authorized-buyers/rtb/downloads/snippet-status-report-proto).",
             "Indicates that the detail ID refers to a policy topic.",
             "Indicates that the detail ID refers to an ad technology provider (ATP); see [providers] (https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv). This namespace is different from the `VENDOR` detail type; see [ad technology providers](https://support.google.com/admanager/answer/9012903) for more information.",
-            "Indicates that the detail string refers the domain of an unknown vendor."
+            "Indicates that the detail string refers the domain of an unknown vendor.",
+            "Indicates that the detail ID refers an IAB GVL ID which Google did not detect in the latest TCF Vendor List. See [Global Vendor List] (https://vendor-list.consensu.org/v2/vendor-list.json)"
           ],
           "type": "string"
         },

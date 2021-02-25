@@ -1380,7 +1380,7 @@ func (c *ProjectsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1556,7 +1556,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1702,7 +1702,7 @@ func (c *ProjectsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1849,7 +1849,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsBatchTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1989,7 +1989,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsLocationsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2139,7 +2139,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2310,7 +2310,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2487,7 +2487,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2660,7 +2660,7 @@ func (c *ProjectsLocationsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2802,7 +2802,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2942,7 +2942,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3085,7 +3085,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3270,7 +3270,7 @@ func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3452,7 +3452,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3594,7 +3594,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3738,7 +3738,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3913,7 +3913,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4051,9 +4051,9 @@ type ProjectsLocationsOperationsWaitCall struct {
 	header_              http.Header
 }
 
-// Wait: Waits for the specified long-running operation until it is done
-// or reaches at most a specified timeout, returning the latest state.
-// If the operation is already done, the latest state is immediately
+// Wait: Waits until the specified long-running operation is done or
+// reaches at most a specified timeout, returning the latest state. If
+// the operation is already done, the latest state is immediately
 // returned. If the timeout specified is greater than the default
 // HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does
 // not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
@@ -4095,7 +4095,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210223")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4159,7 +4159,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Waits for the specified long-running operation until it is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
+	//   "description": "Waits until the specified long-running operation is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
 	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:wait",
 	//   "httpMethod": "POST",
 	//   "id": "translate.projects.locations.operations.wait",

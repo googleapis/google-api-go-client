@@ -1670,7 +1670,7 @@
       }
     }
   },
-  "revision": "20210215",
+  "revision": "20210219",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1923,7 +1923,7 @@
           "type": "array"
         },
         "timeSeriesId": {
-          "description": "The id to indicate different time series.",
+          "description": "The time_series_id value for this time series. It will be one of the unique values from the time_series_id_column specified during ARIMA model training. Only present when time_series_id_column training option was used.",
           "type": "string"
         }
       },
@@ -2032,7 +2032,7 @@
           "type": "array"
         },
         "timeSeriesId": {
-          "description": "The id to indicate different time series.",
+          "description": "The time_series_id value for this time series. It will be one of the unique values from the time_series_id_column specified during ARIMA model training. Only present when time_series_id_column training option was used.",
           "type": "string"
         }
       },
@@ -3159,6 +3159,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "parquetOptions": {
+          "$ref": "ParquetOptions",
+          "description": "Additional properties to set if sourceFormat is set to Parquet."
+        },
         "schema": {
           "$ref": "TableSchema",
           "description": "[Optional] The schema for the data. Schema is required for CSV and JSON formats. Schema is disallowed for Google Cloud Bigtable, Cloud Datastore backups, and Avro formats."
@@ -3615,6 +3619,10 @@
         "nullMarker": {
           "description": "[Optional] Specifies a string that represents a null value in a CSV file. For example, if you specify \"\\N\", BigQuery interprets \"\\N\" as a null value when loading a CSV file. The default value is the empty string. If you set this property to a custom value, BigQuery throws an error if an empty string is present for all data types except for STRING and BYTE. For STRING and BYTE columns, BigQuery interprets the empty string as an empty value.",
           "type": "string"
+        },
+        "parquetOptions": {
+          "$ref": "ParquetOptions",
+          "description": "[Optional] Options to configure parquet support."
         },
         "projectionFields": {
           "description": "If sourceFormat is set to \"DATASTORE_BACKUP\", indicates which entity properties to load into BigQuery from a Cloud Datastore backup. Property names are case sensitive and must be top-level properties. If no properties are specified, BigQuery loads all properties. If any named property isn't found in the Cloud Datastore backup, an invalid error is returned in the job result.",
@@ -4532,6 +4540,20 @@
             "$ref": "ConfusionMatrix"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ParquetOptions": {
+      "id": "ParquetOptions",
+      "properties": {
+        "enableListInference": {
+          "description": "[Optional] Indicates whether to use schema inference specifically for Parquet LIST logical type.",
+          "type": "boolean"
+        },
+        "enumAsString": {
+          "description": "[Optional] Indicates whether to infer Parquet ENUM logical type as STRING instead of BYTES by default.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -6314,7 +6336,7 @@
           "type": "string"
         },
         "timeSeriesIdColumn": {
-          "description": "The id column that will be used to indicate different time series to forecast in parallel.",
+          "description": "The time series id column that was used during ARIMA model training.",
           "type": "string"
         },
         "timeSeriesTimestampColumn": {

@@ -986,6 +986,74 @@
         }
       }
     },
+    "buyongoogleprograms": {
+      "methods": {
+        "get": {
+          "description": "Retrieves a status of BoG program for your Merchant Center account.",
+          "flatPath": "content/v2.1/{merchantId}/buyongoogleprograms/{regionCode}",
+          "httpMethod": "GET",
+          "id": "content.buyongoogleprograms.get",
+          "parameterOrder": [
+            "merchantId",
+            "regionCode"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The ID of the account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "regionCode": {
+              "description": "The Program region code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only US is available.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "content/v2.1/{merchantId}/buyongoogleprograms/{regionCode}",
+          "response": {
+            "$ref": "BuyOnGoogleProgramStatus"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "onboard": {
+          "description": "Onboards BoG in your Merchant Center account. By using this method, you agree to the Terms of Service.",
+          "flatPath": "content/v2.1/{merchantId}/buyongoogleprograms/{regionCode}/onboard",
+          "httpMethod": "POST",
+          "id": "content.buyongoogleprograms.onboard",
+          "parameterOrder": [
+            "merchantId",
+            "regionCode"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "Required. The ID of the account.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "regionCode": {
+              "description": "The program region code [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). Currently only US is available.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "content/v2.1/{merchantId}/buyongoogleprograms/{regionCode}/onboard",
+          "request": {
+            "$ref": "OnboardBuyOnGoogleProgramRequest"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        }
+      }
+    },
     "collections": {
       "methods": {
         "create": {
@@ -5207,7 +5275,7 @@
       }
     }
   },
-  "revision": "20210220",
+  "revision": "20210224",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6221,6 +6289,41 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BuyOnGoogleProgramStatus": {
+      "description": "Response message for the GetProgramStatus method.",
+      "id": "BuyOnGoogleProgramStatus",
+      "properties": {
+        "customerServicePendingEmail": {
+          "description": "The customer service pending email.",
+          "type": "string"
+        },
+        "customerServiceVerifiedEmail": {
+          "description": "The customer service verified email.",
+          "type": "string"
+        },
+        "participationStage": {
+          "description": "The current participation stage for the program.",
+          "enum": [
+            "PROGRAM_PARTICIPATION_STAGE_UNSPECIFIED",
+            "NOT_ELIGIBLE",
+            "ELIGIBLE",
+            "ONBOARDING",
+            "ACTIVE",
+            "PAUSED"
+          ],
+          "enumDescriptions": [
+            "Default value when participation stage is not set.",
+            "Merchant is not eligible for onboarding to a given program in a specific region code.",
+            "Merchant is eligible for onboarding to a given program in a specific region code.",
+            "Merchant is onboarding to a given program in a specific region code.",
+            "Merchant's program participation is active for a specific region code.",
+            "Participation has been paused."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -8277,6 +8380,17 @@
         "taxAmount": {
           "$ref": "Price",
           "description": "Tax value, present only for countries where price attribute excludes tax (e.g. US). No tax is referenced as 0 value with the corresponding `currency`."
+        }
+      },
+      "type": "object"
+    },
+    "OnboardBuyOnGoogleProgramRequest": {
+      "description": "Request message for the OnboardProgram method.",
+      "id": "OnboardBuyOnGoogleProgramRequest",
+      "properties": {
+        "customerServiceEmail": {
+          "description": "The customer service email.",
+          "type": "string"
         }
       },
       "type": "object"

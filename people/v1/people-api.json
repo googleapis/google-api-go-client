@@ -1082,7 +1082,7 @@
       }
     }
   },
-  "revision": "20210222",
+  "revision": "20210223",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -1500,7 +1500,7 @@
       "type": "object"
     },
     "DeleteContactPhotoResponse": {
-      "description": "The response for deleteing a contact's photo.",
+      "description": "The response for deleting a contact's photo.",
       "id": "DeleteContactPhotoResponse",
       "properties": {
         "person": {

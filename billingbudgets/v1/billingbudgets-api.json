@@ -270,7 +270,7 @@
       }
     }
   },
-  "revision": "20210213",
+  "revision": "20210220",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1Budget": {
@@ -333,7 +333,7 @@
       "properties": {
         "endDate": {
           "$ref": "GoogleTypeDate",
-          "description": "Optional. The end date of the time period. If unset, specifies to track all usage incurred since the start_date."
+          "description": "Optional. The end date of the time period. Budgets with elapsed end date won't be processed. If unset, specifies to track all usage incurred since the start_date."
         },
         "startDate": {
           "$ref": "GoogleTypeDate",
@@ -378,7 +378,7 @@
             "INCLUDE_SPECIFIED_CREDITS"
           ],
           "enumDescriptions": [
-            "This is an invalid value.",
+            "",
             "All types of credit are subtracted from the gross cost to determine the spend for threshold calculations.",
             "All types of credit are added to the net cost to determine the spend for threshold calculations.",
             "Credit types specified in the credit_types field are subtracted from the gross cost to determine the spend for threshold calculations."

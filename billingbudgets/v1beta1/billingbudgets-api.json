@@ -264,7 +264,7 @@
       }
     }
   },
-  "revision": "20210213",
+  "revision": "20210220",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1beta1AllUpdatesRule": {
@@ -364,7 +364,7 @@
       "properties": {
         "endDate": {
           "$ref": "GoogleTypeDate",
-          "description": "Optional. The end date of the time period. If unset, specifies to track all usage incurred since the start_date."
+          "description": "Optional. The end date of the time period. Budgets with elapsed end date won't be processed. If unset, specifies to track all usage incurred since the start_date."
         },
         "startDate": {
           "$ref": "GoogleTypeDate",

@@ -3367,7 +3367,7 @@
       }
     }
   },
-  "revision": "20210131",
+  "revision": "20210220",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -4509,7 +4509,7 @@
         },
         "deidentifyConfig": {
           "$ref": "GooglePrivacyDlpV2DeidentifyConfig",
-          "description": "///////////// // The core content of the template // ///////////////"
+          "description": "The core content of the template."
         },
         "description": {
           "description": "Short description (max 256 chars).",

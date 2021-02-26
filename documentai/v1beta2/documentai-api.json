@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20210211",
+  "revision": "20210222",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
@@ -675,10 +675,10 @@
           "description": "The state of human review on the processing request.",
           "enum": [
             "STATE_UNSPECIFIED",
-            "HUMAN_REVIEW_SKIPPED",
-            "HUMAN_REVIEW_VALIDATION_PASSED",
-            "HUMAN_REVIEW_IN_PROGRESS",
-            "HUMAN_REVIEW_ERROR"
+            "SKIPPED",
+            "VALIDATION_PASSED",
+            "IN_PROGRESS",
+            "ERROR"
           ],
           "enumDescriptions": [
             "Human review state is unspecified. Most likely due to an internal error.",
@@ -896,6 +896,10 @@
         "addressValue": {
           "$ref": "GoogleTypePostalAddress",
           "description": "Postal address. See also: https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto"
+        },
+        "booleanValue": {
+          "description": "Boolean value. Can be used for entities with binary values, or for checkboxes.",
+          "type": "boolean"
         },
         "dateValue": {
           "$ref": "GoogleTypeDate",
@@ -2073,6 +2077,10 @@
         "addressValue": {
           "$ref": "GoogleTypePostalAddress",
           "description": "Postal address. See also: https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto"
+        },
+        "booleanValue": {
+          "description": "Boolean value. Can be used for entities with binary values, or for checkboxes.",
+          "type": "boolean"
         },
         "dateValue": {
           "$ref": "GoogleTypeDate",
@@ -3358,10 +3366,10 @@
           "description": "The state of human review on the processing request.",
           "enum": [
             "STATE_UNSPECIFIED",
-            "HUMAN_REVIEW_SKIPPED",
-            "HUMAN_REVIEW_VALIDATION_PASSED",
-            "HUMAN_REVIEW_IN_PROGRESS",
-            "HUMAN_REVIEW_ERROR"
+            "SKIPPED",
+            "VALIDATION_PASSED",
+            "IN_PROGRESS",
+            "ERROR"
           ],
           "enumDescriptions": [
             "Human review state is unspecified. Most likely due to an internal error.",

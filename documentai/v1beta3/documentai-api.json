@@ -365,7 +365,7 @@
       }
     }
   },
-  "revision": "20210211",
+  "revision": "20210222",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
@@ -748,10 +748,10 @@
           "description": "The state of human review on the processing request.",
           "enum": [
             "STATE_UNSPECIFIED",
-            "HUMAN_REVIEW_SKIPPED",
-            "HUMAN_REVIEW_VALIDATION_PASSED",
-            "HUMAN_REVIEW_IN_PROGRESS",
-            "HUMAN_REVIEW_ERROR"
+            "SKIPPED",
+            "VALIDATION_PASSED",
+            "IN_PROGRESS",
+            "ERROR"
           ],
           "enumDescriptions": [
             "Human review state is unspecified. Most likely due to an internal error.",
@@ -969,6 +969,10 @@
         "addressValue": {
           "$ref": "GoogleTypePostalAddress",
           "description": "Postal address. See also: https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto"
+        },
+        "booleanValue": {
+          "description": "Boolean value. Can be used for entities with binary values, or for checkboxes.",
+          "type": "boolean"
         },
         "dateValue": {
           "$ref": "GoogleTypeDate",
@@ -2122,6 +2126,10 @@
           "$ref": "GoogleTypePostalAddress",
           "description": "Postal address. See also: https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto"
         },
+        "booleanValue": {
+          "description": "Boolean value. Can be used for entities with binary values, or for checkboxes.",
+          "type": "boolean"
+        },
         "dateValue": {
           "$ref": "GoogleTypeDate",
           "description": "Date value. Includes year, month, day. See also: https://github.com/googleapis/googleapis/blob/master/google/type/date.proto"
@@ -3113,6 +3121,21 @@
       },
       "type": "object"
     },
+    "GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig": {
+      "description": "The common config to specify a set of documents used as input.",
+      "id": "GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig",
+      "properties": {
+        "gcsDocuments": {
+          "$ref": "GoogleCloudDocumentaiV1beta3GcsDocuments",
+          "description": "The set of documents individually specified on Cloud Storage."
+        },
+        "gcsPrefix": {
+          "$ref": "GoogleCloudDocumentaiV1beta3GcsPrefix",
+          "description": "The set of documents that match the specified Cloud Storage [gcs_prefix]."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDocumentaiV1beta3BatchProcessMetadata": {
       "description": "The long running operation metadata for batch process method.",
       "id": "GoogleCloudDocumentaiV1beta3BatchProcessMetadata",
@@ -3206,7 +3229,7 @@
           "type": "array"
         },
         "inputDocuments": {
-          "$ref": "GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig",
+          "$ref": "GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig",
           "description": "The input documents for batch process."
         },
         "outputConfig": {
@@ -3457,6 +3480,10 @@
         "addressValue": {
           "$ref": "GoogleTypePostalAddress",
           "description": "Postal address. See also: https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto"
+        },
+        "booleanValue": {
+          "description": "Boolean value. Can be used for entities with binary values, or for checkboxes.",
+          "type": "boolean"
         },
         "dateValue": {
           "$ref": "GoogleTypeDate",
@@ -4303,6 +4330,46 @@
       },
       "type": "object"
     },
+    "GoogleCloudDocumentaiV1beta3GcsDocument": {
+      "description": "Specifies a document stored on Cloud Storage.",
+      "id": "GoogleCloudDocumentaiV1beta3GcsDocument",
+      "properties": {
+        "gcsUri": {
+          "description": "The Cloud Storage object uri.",
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "An IANA MIME type (RFC6838) of the content.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta3GcsDocuments": {
+      "description": "Specifies a set of documents on Cloud Storage.",
+      "id": "GoogleCloudDocumentaiV1beta3GcsDocuments",
+      "properties": {
+        "documents": {
+          "description": "The list of documents.",
+          "items": {
+            "$ref": "GoogleCloudDocumentaiV1beta3GcsDocument"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta3GcsPrefix": {
+      "description": "Specifies all documents on Cloud Storage with a common prefix.",
+      "id": "GoogleCloudDocumentaiV1beta3GcsPrefix",
+      "properties": {
+        "gcsUriPrefix": {
+          "description": "The URI prefix.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDocumentaiV1beta3HumanReviewStatus": {
       "description": "The status of human review on a processed document.",
       "id": "GoogleCloudDocumentaiV1beta3HumanReviewStatus",
@@ -4315,10 +4382,10 @@
           "description": "The state of human review on the processing request.",
           "enum": [
             "STATE_UNSPECIFIED",
-            "HUMAN_REVIEW_SKIPPED",
-            "HUMAN_REVIEW_VALIDATION_PASSED",
-            "HUMAN_REVIEW_IN_PROGRESS",
-            "HUMAN_REVIEW_ERROR"
+            "SKIPPED",
+            "VALIDATION_PASSED",
+            "IN_PROGRESS",
+            "ERROR"
           ],
           "enumDescriptions": [
             "Human review state is unspecified. Most likely due to an internal error.",

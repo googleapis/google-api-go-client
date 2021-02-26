@@ -1141,12 +1141,11 @@ type TransferConfig struct {
 	EmailPreferences *EmailPreferences `json:"emailPreferences,omitempty"`
 
 	// Name: The resource name of the transfer config. Transfer config names
-	// have the form of
+	// have the form
 	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`
-	// . The name is automatically generated based on the config_id
-	// specified in CreateTransferConfigRequest along with project_id and
-	// region. If config_id is not provided, usually a uuid, even though it
-	// is not guaranteed or required, will be generated for config_id.
+	// . Where `config_id` is usually a uuid, even though it is not
+	// guaranteed or required. The name is ignored when creating a transfer
+	// config.
 	Name string `json:"name,omitempty"`
 
 	// NextRunTime: Output only. Next time when data transfer will run.
@@ -1175,13 +1174,13 @@ type TransferConfig struct {
 	// State: Output only. State of the most recently updated transfer run.
 	//
 	// Possible values:
-	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
 	//   "PENDING" - Data transfer is scheduled and is waiting to be picked
-	// up by data transfer backend.
-	//   "RUNNING" - Data transfer is in progress.
-	//   "SUCCEEDED" - Data transfer completed successfully.
-	//   "FAILED" - Data transfer failed.
-	//   "CANCELLED" - Data transfer is cancelled.
+	// up by data transfer backend (2).
+	//   "RUNNING" - Data transfer is in progress (3).
+	//   "SUCCEEDED" - Data transfer completed successfully (4).
+	//   "FAILED" - Data transfer failed (5).
+	//   "CANCELLED" - Data transfer is cancelled (6).
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Output only. Data transfer modification time. Ignored by
@@ -1316,13 +1315,13 @@ type TransferRun struct {
 	// State: Data transfer run state. Ignored for input requests.
 	//
 	// Possible values:
-	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
 	//   "PENDING" - Data transfer is scheduled and is waiting to be picked
-	// up by data transfer backend.
-	//   "RUNNING" - Data transfer is in progress.
-	//   "SUCCEEDED" - Data transfer completed successfully.
-	//   "FAILED" - Data transfer failed.
-	//   "CANCELLED" - Data transfer is cancelled.
+	// up by data transfer backend (2).
+	//   "RUNNING" - Data transfer is in progress (3).
+	//   "SUCCEEDED" - Data transfer completed successfully (4).
+	//   "FAILED" - Data transfer failed (5).
+	//   "CANCELLED" - Data transfer is cancelled (6).
 	State string `json:"state,omitempty"`
 
 	// UpdateTime: Output only. Last time the data transfer run state was
@@ -1411,7 +1410,7 @@ func (c *ProjectsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1564,7 +1563,7 @@ func (c *ProjectsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1730,7 +1729,7 @@ func (c *ProjectsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1909,7 +1908,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2078,7 +2077,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2258,7 +2257,7 @@ func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesCheckValidCredsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2411,7 +2410,7 @@ func (c *ProjectsLocationsDataSourcesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2577,7 +2576,7 @@ func (c *ProjectsLocationsDataSourcesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2790,7 +2789,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2944,7 +2943,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3086,7 +3085,7 @@ func (c *ProjectsLocationsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3259,7 +3258,7 @@ func (c *ProjectsLocationsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3487,7 +3486,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3565,7 +3564,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config. Transfer config names have the form of `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. The name is automatically generated based on the config_id specified in CreateTransferConfigRequest along with project_id and region. If config_id is not provided, usually a uuid, even though it is not guaranteed or required, will be generated for config_id.",
+	//       "description": "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -3652,7 +3651,7 @@ func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) Header() http.Header 
 
 func (c *ProjectsLocationsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3796,7 +3795,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Header() http.Head
 
 func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3935,7 +3934,7 @@ func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4077,7 +4076,7 @@ func (c *ProjectsLocationsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4220,13 +4219,13 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) RunAttempt(runAttempt str
 // transfer runs with requested states are returned.
 //
 // Possible values:
-//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
 //   "PENDING" - Data transfer is scheduled and is waiting to be picked
-// up by data transfer backend.
-//   "RUNNING" - Data transfer is in progress.
-//   "SUCCEEDED" - Data transfer completed successfully.
-//   "FAILED" - Data transfer failed.
-//   "CANCELLED" - Data transfer is cancelled.
+// up by data transfer backend (2).
+//   "RUNNING" - Data transfer is in progress (3).
+//   "SUCCEEDED" - Data transfer completed successfully (4).
+//   "FAILED" - Data transfer failed (5).
+//   "CANCELLED" - Data transfer is cancelled (6).
 func (c *ProjectsLocationsTransferConfigsRunsListCall) States(states ...string) *ProjectsLocationsTransferConfigsRunsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
 	return c
@@ -4269,7 +4268,7 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4381,12 +4380,12 @@ func (c *ProjectsLocationsTransferConfigsRunsListCall) Do(opts ...googleapi.Call
 	//         "CANCELLED"
 	//       ],
 	//       "enumDescriptions": [
-	//         "State placeholder.",
-	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend.",
-	//         "Data transfer is in progress.",
-	//         "Data transfer completed successfully.",
-	//         "Data transfer failed.",
-	//         "Data transfer is cancelled."
+	//         "State placeholder (0).",
+	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend (2).",
+	//         "Data transfer is in progress (3).",
+	//         "Data transfer completed successfully (4).",
+	//         "Data transfer failed (5).",
+	//         "Data transfer is cancelled (6)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -4515,7 +4514,7 @@ func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) Header() http
 
 func (c *ProjectsLocationsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4746,7 +4745,7 @@ func (c *ProjectsTransferConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4900,7 +4899,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5042,7 +5041,7 @@ func (c *ProjectsTransferConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5215,7 +5214,7 @@ func (c *ProjectsTransferConfigsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5443,7 +5442,7 @@ func (c *ProjectsTransferConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5521,7 +5520,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config. Transfer config names have the form of `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. The name is automatically generated based on the config_id specified in CreateTransferConfigRequest along with project_id and region. If config_id is not provided, usually a uuid, even though it is not guaranteed or required, will be generated for config_id.",
+	//       "description": "The resource name of the transfer config. Transfer config names have the form `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`. Where `config_id` is usually a uuid, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5608,7 +5607,7 @@ func (c *ProjectsTransferConfigsScheduleRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsScheduleRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5752,7 +5751,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsStartManualRunsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5891,7 +5890,7 @@ func (c *ProjectsTransferConfigsRunsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6033,7 +6032,7 @@ func (c *ProjectsTransferConfigsRunsGetCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6176,13 +6175,13 @@ func (c *ProjectsTransferConfigsRunsListCall) RunAttempt(runAttempt string) *Pro
 // transfer runs with requested states are returned.
 //
 // Possible values:
-//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
+//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder (0).
 //   "PENDING" - Data transfer is scheduled and is waiting to be picked
-// up by data transfer backend.
-//   "RUNNING" - Data transfer is in progress.
-//   "SUCCEEDED" - Data transfer completed successfully.
-//   "FAILED" - Data transfer failed.
-//   "CANCELLED" - Data transfer is cancelled.
+// up by data transfer backend (2).
+//   "RUNNING" - Data transfer is in progress (3).
+//   "SUCCEEDED" - Data transfer completed successfully (4).
+//   "FAILED" - Data transfer failed (5).
+//   "CANCELLED" - Data transfer is cancelled (6).
 func (c *ProjectsTransferConfigsRunsListCall) States(states ...string) *ProjectsTransferConfigsRunsListCall {
 	c.urlParams_.SetMulti("states", append([]string{}, states...))
 	return c
@@ -6225,7 +6224,7 @@ func (c *ProjectsTransferConfigsRunsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6337,12 +6336,12 @@ func (c *ProjectsTransferConfigsRunsListCall) Do(opts ...googleapi.CallOption) (
 	//         "CANCELLED"
 	//       ],
 	//       "enumDescriptions": [
-	//         "State placeholder.",
-	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend.",
-	//         "Data transfer is in progress.",
-	//         "Data transfer completed successfully.",
-	//         "Data transfer failed.",
-	//         "Data transfer is cancelled."
+	//         "State placeholder (0).",
+	//         "Data transfer is scheduled and is waiting to be picked up by data transfer backend (2).",
+	//         "Data transfer is in progress (3).",
+	//         "Data transfer completed successfully (4).",
+	//         "Data transfer failed (5).",
+	//         "Data transfer is cancelled (6)."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6471,7 +6470,7 @@ func (c *ProjectsTransferConfigsRunsTransferLogsListCall) Header() http.Header {
 
 func (c *ProjectsTransferConfigsRunsTransferLogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210225")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

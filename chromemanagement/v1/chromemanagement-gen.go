@@ -77,8 +77,20 @@ const apiVersion = "v1"
 const basePath = "https://chromemanagement.googleapis.com/"
 const mtlsBasePath = "https://chromemanagement.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// See reports about devices and Chrome browsers managed within your
+	// organization
+	ChromeManagementReportsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.reports.readonly"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/chrome.management.reports.readonly",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
@@ -529,7 +541,7 @@ func (c *CustomersReportsCountChromeVersionsCall) Header() http.Header {
 
 func (c *CustomersReportsCountChromeVersionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210226")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210227")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -633,7 +645,10 @@ func (c *CustomersReportsCountChromeVersionsCall) Do(opts ...googleapi.CallOptio
 	//   "path": "v1/{+customer}/reports:countChromeVersions",
 	//   "response": {
 	//     "$ref": "GoogleChromeManagementV1CountChromeVersionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.reports.readonly"
+	//   ]
 	// }
 
 }
@@ -753,7 +768,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Header() http.Header {
 
 func (c *CustomersReportsCountInstalledAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210226")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210227")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -862,7 +877,10 @@ func (c *CustomersReportsCountInstalledAppsCall) Do(opts ...googleapi.CallOption
 	//   "path": "v1/{+customer}/reports:countInstalledApps",
 	//   "response": {
 	//     "$ref": "GoogleChromeManagementV1CountInstalledAppsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.reports.readonly"
+	//   ]
 	// }
 
 }
@@ -1004,7 +1022,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Header() http.Header {
 
 func (c *CustomersReportsFindInstalledAppDevicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210226")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210227")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1140,7 +1158,10 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Do(opts ...googleapi.CallO
 	//   "path": "v1/{+customer}/reports:findInstalledAppDevices",
 	//   "response": {
 	//     "$ref": "GoogleChromeManagementV1FindInstalledAppDevicesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.reports.readonly"
+	//   ]
 	// }
 
 }

@@ -497,6 +497,38 @@
         }
       },
       "resources": {
+        "credentials": {
+          "methods": {
+            "create": {
+              "description": "Uploads credentials for the Merchant Center account. If credentials already exist for this Merchant Center account and purpose, this method updates them.",
+              "flatPath": "content/v2.1/accounts/{accountId}/credentials",
+              "httpMethod": "POST",
+              "id": "content.accounts.credentials.create",
+              "parameterOrder": [
+                "accountId"
+              ],
+              "parameters": {
+                "accountId": {
+                  "description": "Required. The merchant id of the account these credentials belong to.",
+                  "format": "int64",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "content/v2.1/accounts/{accountId}/credentials",
+              "request": {
+                "$ref": "AccountCredentials"
+              },
+              "response": {
+                "$ref": "AccountCredentials"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/content"
+              ]
+            }
+          }
+        },
         "labels": {
           "methods": {
             "create": {
@@ -1021,7 +1053,7 @@
           ]
         },
         "onboard": {
-          "description": "Onboards BoG in your Merchant Center account. By using this method, you agree to the Terms of Service.",
+          "description": "Onboards BoG in your Merchant Center account. By using this method, you agree to the [Terms of Service](https://merchants.google.com/mc/termsofservice/transactions/US/latest).",
           "flatPath": "content/v2.1/{merchantId}/buyongoogleprograms/{regionCode}/onboard",
           "httpMethod": "POST",
           "id": "content.buyongoogleprograms.onboard",
@@ -5275,7 +5307,7 @@
       }
     }
   },
-  "revision": "20210224",
+  "revision": "20210226",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5414,6 +5446,34 @@
         },
         "phoneNumber": {
           "description": "The phone number of the business.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AccountCredentials": {
+      "description": "Credentials allowing Google to call a partner's API on behalf of a merchant.",
+      "id": "AccountCredentials",
+      "properties": {
+        "accessToken": {
+          "description": "An OAuth access token.",
+          "type": "string"
+        },
+        "expiresIn": {
+          "description": "The amount of time, in seconds, after which the access token is no longer valid.",
+          "format": "int64",
+          "type": "string"
+        },
+        "purpose": {
+          "description": "Indicates to Google how Google should use these OAuth tokens.",
+          "enum": [
+            "ACCOUNT_CREDENTIALS_PURPOSE_UNSPECIFIED",
+            "SHOPIFY_ORDER_MANAGEMENT"
+          ],
+          "enumDescriptions": [
+            "Unknown purpose.",
+            "The credentials allow Google to manage Shopify orders on behalf of the merchant."
+          ],
           "type": "string"
         }
       },

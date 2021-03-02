@@ -308,33 +308,33 @@ func (s *AutoText) MarshalJSON() ([]byte, error) {
 
 // Autofit: The autofit properties of a Shape.
 type Autofit struct {
-	// AutofitType: The autofit type of the shape. If unspecified, the
-	// autofit type is inherited from a parent placeholder if it exists. The
-	// field will be automatically set to NONE if a request is made that may
-	// affect text fitting within its bounding text box. In this case the
-	// font_scale will be applied to the font_size and the
-	// line_spacing_reduction will be applied to the line_spacing. Both
-	// properties would also be reset to default values.
+	// AutofitType: The autofit type of the shape. If the autofit type is
+	// AUTOFIT_TYPE_UNSPECIFIED, the autofit type is inherited from a parent
+	// placeholder if it exists. The field is automatically set to NONE if a
+	// request is made that might affect text fitting within its bounding
+	// text box. In this case the font_scale is applied to the font_size and
+	// the line_spacing_reduction is applied to the line_spacing. Both
+	// properties are also reset to default values.
 	//
 	// Possible values:
 	//   "AUTOFIT_TYPE_UNSPECIFIED" - The autofit type is unspecified.
 	//   "NONE" - Do not autofit.
-	//   "TEXT_AUTOFIT" - Shrink text on overflow to fit shape.
-	//   "SHAPE_AUTOFIT" - Resize shape to fit text.
+	//   "TEXT_AUTOFIT" - Shrink text on overflow to fit the shape.
+	//   "SHAPE_AUTOFIT" - Resize the shape to fit the text.
 	AutofitType string `json:"autofitType,omitempty"`
 
 	// FontScale: The font scale applied to the shape. For shapes with
-	// autofit_type NONE or SHAPE_AUTOFIT, this value will be the default
-	// value of 1. For TEXT_AUTOFIT, this value multiplied by the font_size
-	// will give the font size that is rendered in the editor. This property
-	// is read-only.
+	// autofit_type NONE or SHAPE_AUTOFIT, this value is the default value
+	// of 1. For TEXT_AUTOFIT, this value multiplied by the font_size gives
+	// the font size that is rendered in the editor. This property is
+	// read-only.
 	FontScale float64 `json:"fontScale,omitempty"`
 
 	// LineSpacingReduction: The line spacing reduction applied to the
 	// shape. For shapes with autofit_type NONE or SHAPE_AUTOFIT, this value
-	// will be the default value of 0. For TEXT_AUTOFIT, this value
-	// subtracted from the line_spacing will give the line spacing that is
-	// rendered in the editor. This property is read-only.
+	// is the default value of 0. For TEXT_AUTOFIT, this value subtracted
+	// from the line_spacing gives the line spacing that is rendered in the
+	// editor. This property is read-only.
 	LineSpacingReduction float64 `json:"lineSpacingReduction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutofitType") to
@@ -7163,7 +7163,7 @@ func (c *PresentationsBatchUpdateCall) Header() http.Header {
 
 func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210301")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7309,7 +7309,7 @@ func (c *PresentationsCreateCall) Header() http.Header {
 
 func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210301")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7447,7 +7447,7 @@ func (c *PresentationsGetCall) Header() http.Header {
 
 func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210301")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7598,7 +7598,7 @@ func (c *PresentationsPagesGetCall) Header() http.Header {
 
 func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210301")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7787,7 +7787,7 @@ func (c *PresentationsPagesGetThumbnailCall) Header() http.Header {
 
 func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210228")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210301")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

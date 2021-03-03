@@ -2822,6 +2822,31 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
+            "getTraceConfig": {
+              "description": "Get distributed trace configuration in an environment.",
+              "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig",
+              "httpMethod": "GET",
+              "id": "apigee.organizations.environments.getTraceConfig",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the trace configuration. Use the following structure in your request: \"organizations/*/environments/*/traceConfig\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GoogleCloudApigeeV1TraceConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "setIamPolicy": {
               "description": "Sets the IAM policy on an environment, if the policy already exists it will be replaced. For more information, see [Manage users, roles, and permissions using the API](https://cloud.google.com/apigee/docs/api-platform/system-administration/manage-users-roles). You must have the `apigee.environments.setIamPolicy` permission to call this API.",
               "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:setIamPolicy",
@@ -3021,6 +3046,40 @@
               },
               "response": {
                 "$ref": "GoogleCloudApigeeV1Environment"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "updateTraceConfig": {
+              "description": "Updates the trace configurations in an environment. Note that the repeated fields have replace semantics when included in the field mask and that they will be overwritten by the value of the fields in the request body.",
+              "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig",
+              "httpMethod": "PATCH",
+              "id": "apigee.organizations.environments.updateTraceConfig",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the trace configuration. Use the following structure in your request: \"organizations/*/environments/*/traceConfig\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "List of fields to be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudApigeeV1TraceConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudApigeeV1TraceConfig"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
@@ -4887,6 +4946,162 @@
                   ]
                 }
               }
+            },
+            "traceConfig": {
+              "resources": {
+                "overrides": {
+                  "methods": {
+                    "create": {
+                      "description": "Creates a trace configuration override. The response contains a system-generated UUID, that can be used to view, update, or delete the configuration override. Use the List API to view the existing trace configuration overrides.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides",
+                      "httpMethod": "POST",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. Parent resource of the trace configuration override. Use the following structure in your request. \"organizations/*/environments/*/traceConfig\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/overrides",
+                      "request": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a distributed trace configuration override.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides/{overridesId}",
+                      "httpMethod": "DELETE",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Name of the trace configuration override. Use the following structure in your request: \"organizations/*/environments/*/traceConfig/overrides/*\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig/overrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleProtobufEmpty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "get": {
+                      "description": "Gets a trace configuration override.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides/{overridesId}",
+                      "httpMethod": "GET",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Name of the trace configuration override. Use the following structure in your request: \"organizations/*/environments/*/traceConfig/overrides/*\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig/overrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists all of the distributed trace configuration overrides in an environment.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides",
+                      "httpMethod": "GET",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Maximum number of trace configuration overrides to return. If not specified, the maximum number returned is 25. The maximum number cannot exceed 100.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "A page token, returned from a previous `ListTraceConfigOverrides` call. Token value that can be used to retrieve the subsequent page. When paginating, all other parameters provided to `ListTraceConfigOverrides` must match those specified in the call to obtain the page token.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent resource of the trace configuration override. Use the following structure in your request: \"organizations/*/environments/*/traceConfig\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/overrides",
+                      "response": {
+                        "$ref": "GoogleCloudApigeeV1ListTraceConfigOverridesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "patch": {
+                      "description": "Updates a distributed trace configuration override. Note that the repeated fields have replace semantics when included in the field mask and that they will be overwritten by the value of the fields in the request body.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides/{overridesId}",
+                      "httpMethod": "PATCH",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Name of the trace configuration override. Use the following structure in your request: \"organizations/*/environments/*/traceConfig/overrides/*\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig/overrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "List of fields to be updated.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -6446,7 +6661,7 @@
       }
     }
   },
-  "revision": "20210219",
+  "revision": "20210302",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -9212,6 +9427,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudApigeeV1ListTraceConfigOverridesResponse": {
+      "description": "Response for ListTraceConfigOverrides.",
+      "id": "GoogleCloudApigeeV1ListTraceConfigOverridesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token value that can be passed as `page_token` to retrieve the next page of content.",
+          "type": "string"
+        },
+        "traceConfigOverrides": {
+          "description": "List all trace configuration overrides in an environment.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudApigeeV1Metadata": {
       "description": "This message type encapsulates additional information about query execution.",
       "id": "GoogleCloudApigeeV1Metadata",
@@ -10715,6 +10948,80 @@
         "trustStore": {
           "description": "Name of the keystore or keystore reference containing trusted certificates for the server in the following format: `organizations/{org}/environments/{env}/keystores/{keystore}` or `organizations/{org}/environments/{env}/references/{reference}`",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1TraceConfig": {
+      "description": "TraceConfig defines the configurations in an environment of distributed trace.",
+      "id": "GoogleCloudApigeeV1TraceConfig",
+      "properties": {
+        "endpoint": {
+          "description": "Required. Endpoint of the exporter.",
+          "type": "string"
+        },
+        "exporter": {
+          "description": "Required. Exporter that is used to view the distributed trace captured using OpenCensus. An exporter sends traces to any backend that is capable of consuming them. Recorded spans can be exported by registered exporters.",
+          "enum": [
+            "EXPORTER_UNSPECIFIED",
+            "JAEGER",
+            "CLOUD_TRACE"
+          ],
+          "enumDescriptions": [
+            "Exporter unspecified",
+            "Jaeger exporter",
+            "Cloudtrace exporter"
+          ],
+          "type": "string"
+        },
+        "samplingConfig": {
+          "$ref": "GoogleCloudApigeeV1TraceSamplingConfig",
+          "description": "Distributed trace configuration for all API proxies in an environment. You can also override the configuration for a specific API proxy using the distributed trace configuration overrides API."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1TraceConfigOverride": {
+      "description": "A representation of a configuration override.",
+      "id": "GoogleCloudApigeeV1TraceConfigOverride",
+      "properties": {
+        "apiProxy": {
+          "description": "ID of the API proxy that will have its trace configuration overridden.",
+          "type": "string"
+        },
+        "name": {
+          "description": "ID of the trace configuration override specified as a system-generated UUID.",
+          "type": "string"
+        },
+        "samplingConfig": {
+          "$ref": "GoogleCloudApigeeV1TraceSamplingConfig",
+          "description": "Trace configuration to override."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1TraceSamplingConfig": {
+      "description": "TraceSamplingConfig represents the detail settings of distributed tracing. Only the fields that are defined in the distributed trace configuration can be overridden using the distribute trace configuration override APIs.",
+      "id": "GoogleCloudApigeeV1TraceSamplingConfig",
+      "properties": {
+        "sampler": {
+          "description": "Sampler of distributed tracing. OFF is the default value.",
+          "enum": [
+            "SAMPLER_UNSPECIFIED",
+            "OFF",
+            "PROBABILITY"
+          ],
+          "enumDescriptions": [
+            "Sampler unspecified.",
+            "OFF means distributed trace is disabled, or the sampling probability is 0.",
+            "PROBABILITY means traces are captured on a probability that defined by sampling_rate. The sampling rate is limited to 0 to 0.5 when this is set."
+          ],
+          "type": "string"
+        },
+        "samplingRate": {
+          "description": "Field sampling rate. This value is only applicable when using the PROBABILITY sampler. The supported values are \u003e 0 and \u003c= 0.5.",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"

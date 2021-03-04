@@ -1562,8 +1562,8 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 	// task execution.
 	//
 	// Possible values:
-	//   "NONE" - Container Manager is disabled or not running for this
-	// execution.
+	//   "CONFIG_NONE" - Container Manager is disabled or not running for
+	// this execution.
 	//   "CONFIG_MATCH" - Container Manager is enabled and there was a
 	// matching container available for use during execution.
 	//   "CONFIG_MISMATCH" - Container Manager is enabled, but there was no
@@ -1585,6 +1585,28 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 
 	// NumWarnings: The number of warnings reported.
 	NumWarnings uint64 `json:"numWarnings,omitempty,string"`
+
+	// OutputLocation: Indicates whether output files and/or output
+	// directories were found relative to the execution root or to the user
+	// provided work directory or both or none.
+	//
+	// Possible values:
+	//   "LOCATION_UNDEFINED" - Location is set to LOCATION_UNDEFINED for
+	// tasks where the working directorty is not specified or is identical
+	// to the execution root directory.
+	//   "LOCATION_NONE" - No output files or directories were found neither
+	// relative to the execution root directory nor relative to the working
+	// directory.
+	//   "LOCATION_EXEC_ROOT_RELATIVE" - Output files or directories were
+	// found relative to the execution root directory but not relative to
+	// the working directory.
+	//   "LOCATION_WORKING_DIR_RELATIVE" - Output files or directories were
+	// found relative to the working directory but not relative to the
+	// execution root directory.
+	//   "LOCATION_EXEC_ROOT_AND_WORKING_DIR_RELATIVE" - Output files or
+	// directories were found both relative to the execution root directory
+	// and relative to the working directory.
+	OutputLocation string `json:"outputLocation,omitempty"`
 
 	// UsedAsyncContainer: Indicates whether an asynchronous container was
 	// used for execution.
@@ -1700,6 +1722,8 @@ type GoogleDevtoolsRemotebuildbotCommandStatus struct {
 	// overlay mount because of too many levels of symbolic links.
 	//   "LOCAL_CONTAINER_MANAGER_NOT_RUNNING" - The local Container Manager
 	// is not running.
+	//   "DOCKER_IMAGE_VPCSC_PERMISSION_DENIED" - Docker failed because a
+	// request was denied by the organization's policy.
 	Code string `json:"code,omitempty"`
 
 	// Message: The error message.
@@ -3442,7 +3466,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3635,7 +3659,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3824,7 +3848,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3965,7 +3989,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4136,7 +4160,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4320,7 +4344,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

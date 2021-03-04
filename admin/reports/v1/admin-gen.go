@@ -259,10 +259,10 @@ type Activity struct {
 	Id *ActivityId `json:"id,omitempty"`
 
 	// IpAddress: IP address of the user doing the action. This is the
-	// Internet Protocol (IP) address of the user when logging into G Suite
-	// which may or may not reflect the user's physical location. For
-	// example, the IP address can be the user's proxy server's address or a
-	// virtual private network (VPN) address. The API supports IPv4 and
+	// Internet Protocol (IP) address of the user when logging into Google
+	// Workspace, which may or may not reflect the user's physical location.
+	// For example, the IP address can be the user's proxy server's address
+	// or a virtual private network (VPN) address. The API supports IPv4 and
 	// IPv6.
 	IpAddress string `json:"ipAddress,omitempty"`
 
@@ -312,8 +312,8 @@ type ActivityActor struct {
 	// identifier for robot accounts.
 	Key string `json:"key,omitempty"`
 
-	// ProfileId: The unique G Suite profile ID of the actor. May be absent
-	// if the actor is not a G Suite user.
+	// ProfileId: The unique Google Workspace profile ID of the actor. May
+	// be absent if the actor is not a Google Workspace user.
 	ProfileId string `json:"profileId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerType") to
@@ -341,11 +341,11 @@ func (s *ActivityActor) MarshalJSON() ([]byte, error) {
 
 type ActivityEvents struct {
 	// Name: Name of the event. This is the specific name of the activity
-	// reported by the API. And each `eventName` is related to a specific G
-	// Suite service or feature which the API organizes into types of
-	// events. For `eventName` request parameters in general: - If no
-	// `eventName` is given, the report returns all possible instances of an
-	// `eventName`. - When you request an `eventName`, the API's response
+	// reported by the API. And each `eventName` is related to a specific
+	// Google Workspace service or feature which the API organizes into
+	// types of events. For `eventName` request parameters in general: - If
+	// no `eventName` is given, the report returns all possible instances of
+	// an `eventName`. - When you request an `eventName`, the API's response
 	// returns all activities which contain that `eventName`. It is possible
 	// that the returned activities will have other `eventName` properties
 	// in addition to the one requested. For more information about
@@ -358,7 +358,7 @@ type ActivityEvents struct {
 	// for various applications above in `applicationName`.
 	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
 
-	// Type: Type of event. The G Suite service or feature that an
+	// Type: Type of event. The Google Workspace service or feature that an
 	// administrator changes is identified in the `type` property which
 	// identifies an event using the `eventName` property. For a full list
 	// of the API's `type` categories, see the list of event names for
@@ -505,7 +505,7 @@ type ActivityId struct {
 	// `applicationName`.
 	ApplicationName string `json:"applicationName,omitempty"`
 
-	// CustomerId: The unique identifier for a G suite account.
+	// CustomerId: The unique identifier for a Google Workspace account.
 	CustomerId string `json:"customerId,omitempty"`
 
 	// Time: Time of occurrence of the activity. This is in UNIX epoch time
@@ -710,7 +710,7 @@ type UsageReportEntity struct {
 	// than "Objects".
 	EntityId string `json:"entityId,omitempty"`
 
-	// ProfileId: Output only. The user's immutable G Suite profile
+	// ProfileId: Output only. The user's immutable Google Workspace profile
 	// identifier.
 	ProfileId string `json:"profileId,omitempty"`
 
@@ -973,8 +973,8 @@ func (c *ActivitiesListCall) EndTime(endTime string) *ActivitiesListCall {
 
 // EventName sets the optional parameter "eventName": The name of the
 // event being queried by the API. Each `eventName` is related to a
-// specific G Suite service or feature which the API organizes into
-// types of events. An example is the Google Calendar events in the
+// specific Google Workspace service or feature which the API organizes
+// into types of events. An example is the Google Calendar events in the
 // Admin console application's reports. The Calendar Settings `type`
 // structure has all of the Calendar `eventName` activities reported by
 // the API. When an administrator changes a Calendar setting, the API
@@ -1114,7 +1114,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1218,11 +1218,11 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
-	//         "The G Suite Access Transparency activity reports return information about different types of Access Transparency activity events.",
+	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
 	//         "The Admin console application's activity reports return account information about different types of administrator activity events.",
-	//         "The G Suite Calendar application's activity reports return information about various Calendar activity events.",
+	//         "The Google Calendar application's activity reports return information about various Calendar activity events.",
 	//         "The Chat activity reports return information about various Chat activity events.",
-	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for G Suite Business customers.",
+	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for Google Workspace Business and Enterprise customers.",
 	//         "The Google Cloud Platform application's activity reports return information about various GCP activity events.",
 	//         "The Google+ application's activity reports return information about various Google+ activity events.",
 	//         "The Google Groups application's activity reports return information about various Groups activity events.",
@@ -1257,7 +1257,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "eventName": {
-	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific G Suite service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
+	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific Google Workspace service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1301,7 +1301,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique G Suite profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1403,8 +1403,8 @@ func (c *ActivitiesWatchCall) EndTime(endTime string) *ActivitiesWatchCall {
 
 // EventName sets the optional parameter "eventName": The name of the
 // event being queried by the API. Each `eventName` is related to a
-// specific G Suite service or feature which the API organizes into
-// types of events. An example is the Google Calendar events in the
+// specific Google Workspace service or feature which the API organizes
+// into types of events. An example is the Google Calendar events in the
 // Admin console application's reports. The Calendar Settings `type`
 // structure has all of the Calendar `eventName` activities reported by
 // the API. When an administrator changes a Calendar setting, the API
@@ -1534,7 +1534,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1640,11 +1640,11 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
-	//         "The G Suite Access Transparency activity reports return information about different types of Access Transparency activity events.",
+	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
 	//         "The Admin console application's activity reports return account information about different types of administrator activity events.",
-	//         "The G Suite Calendar application's activity reports return information about various Calendar activity events.",
+	//         "The Google Calendar application's activity reports return information about various Calendar activity events.",
 	//         "The Chat activity reports return information about various Chat activity events.",
-	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for G Suite Business customers.",
+	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for Google Workspace Business and Google Workspace Enterprise customers.",
 	//         "The Google Cloud Platform application's activity reports return information about various GCP activity events.",
 	//         "The Google+ application's activity reports return information about various Google+ activity events.",
 	//         "The Google Groups application's activity reports return information about various Groups activity events.",
@@ -1679,7 +1679,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "eventName": {
-	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific G Suite service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
+	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific Google Workspace service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1723,7 +1723,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique G Suite profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1787,7 +1787,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1937,7 +1937,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2197,7 +2197,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2524,7 +2524,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210302")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210303")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2649,7 +2649,7 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique G Suite profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

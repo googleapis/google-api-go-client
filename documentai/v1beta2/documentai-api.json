@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20210222",
+  "revision": "20210226",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
@@ -451,6 +451,23 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata": {
+      "description": "The long running operation metadata for set default processor version method.",
+      "id": "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse": {
+      "description": "Response message for set default processor version method.",
+      "id": "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata": {

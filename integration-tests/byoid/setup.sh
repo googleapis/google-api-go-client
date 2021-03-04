@@ -1,4 +1,8 @@
 #!/bin/bash
+# Copyright 2021 Google LLC.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
 # This file is a mostly common setup file to ensure all BYOID integration tests
 # are set up in a consistent fashion.
 # It assumes that the current user has the relevant permissions to run each of

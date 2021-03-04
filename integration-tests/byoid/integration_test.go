@@ -59,6 +59,7 @@ type keyFile struct {
 	ClientID    string `json:"client_id"`
 }
 
+// TestMain contains all of the setup code that needs to be run once before any of the tests are run
 func TestMain(m *testing.M) {
 	keyFileName := os.Getenv(envCredentials)
 	if keyFileName == "" {

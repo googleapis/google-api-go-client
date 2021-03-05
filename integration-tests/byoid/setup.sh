@@ -40,7 +40,7 @@ gcloud config set project $project_id
 gcloud beta iam workload-identity-pools create $pool_id \
     --location="global" \
     --description="Test pool" \
-    --display-name="Test pool for Java"
+    --display-name="Test pool for Go"
 
 # Create the OIDC Provider.
 gcloud beta iam workload-identity-pools providers create-oidc $oidc_provider_id \

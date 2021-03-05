@@ -69,8 +69,17 @@ func TestMain(m *testing.M) {
 		log.Fatalf("Please set %s to the OIDC Audience", envAudienceOIDC)
 	}
 
-	clientID = getClientID(keyFileName)
-	oidcToken = generateGoogleToken(keyFileName)
+	var err error
+
+	clientID, err = getClientID(keyFileName)
+	if err != nil {
+		log.Fatalf("Error getting Client ID: %v", err)
+	}
+
+	oidcToken, err = generateGoogleToken(keyFileName)
+	if err != nil {
+		log.Fatalf("Error generating Google token: %v", err)
+	}
 
 	// This line runs all of our individual tests
 	os.Exit(m.Run())
@@ -82,10 +91,10 @@ type keyFile struct {
 	ClientID    string `json:"client_id"`
 }
 
-func getClientID(keyFileName string) string {
+func getClientID(keyFileName string) (string, error) {
 	kf, err := os.Open(keyFileName)
 	if err != nil {
-		log.Fatalf("Failed to open file '%s': %v", keyFileName, err)
+		return "", err
 	}
 	defer kf.Close()
 
@@ -93,24 +102,24 @@ func getClientID(keyFileName string) string {
 	var keyFileSettings keyFile
 	err = decoder.Decode(&keyFileSettings)
 	if err != nil {
-		log.Fatalf("Keyfile '%s' stored in improper format: %v", keyFileName, err)
+		return "", err
 	}
 
-	return fmt.Sprintf("projects/-/serviceAccounts/%s", keyFileSettings.ClientEmail)
+	return fmt.Sprintf("projects/-/serviceAccounts/%s", keyFileSettings.ClientEmail), nil
 }
 
-func generateGoogleToken(keyFileName string) string {
+func generateGoogleToken(keyFileName string) (string, error) {
 	ts, err := idtoken.NewTokenSource(context.Background(), oidcAudience, option.WithCredentialsFile(keyFileName))
 	if err != nil {
-		log.Fatalf("Unable to generate a Google token source: %v", err)
+		return "", nil
 	}
 
 	token, err := ts.Token()
 	if err != nil {
-		log.Fatalf("Unable to retrieve Google token: %v", err)
+		return "", nil
 	}
 
-	return token.AccessToken
+	return token.AccessToken, nil
 }
 
 // testBYOID makes sure that the default credentials works for
@@ -119,7 +128,7 @@ func generateGoogleToken(keyFileName string) string {
 //
 // In each test we will set up whatever preconditions we need,
 // and then use this function.
-func testBYOID(t *testing.T, c config, env map[string]string) {
+func testBYOID(t *testing.T, c config) {
 	t.Helper()
 
 	// Set up config file.
@@ -134,17 +143,6 @@ func testBYOID(t *testing.T, c config, env map[string]string) {
 		t.Errorf("Error writing to config file: %v", err)
 	}
 	configFile.Close()
-
-	// Set up our environment variables.
-	if env == nil {
-		env = make(map[string]string)
-	}
-	env["GOOGLE_APPLICATION_CREDENTIALS"] = configFile.Name()
-	for key, value := range env {
-		oldValue := os.Getenv(key)
-		os.Setenv(key, value)
-		defer os.Setenv(key, oldValue)
-	}
 
 	// Once the default credentials are obtained,
 	// we should be able to access Google Cloud resources.
@@ -202,5 +200,5 @@ func TestFileBasedCredentials(t *testing.T) {
 		CredentialSource: credentialSource{
 			File: tokenFile.Name(),
 		},
-	}, nil)
+	})
 }

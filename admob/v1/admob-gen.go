@@ -1481,7 +1481,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1582,9 +1582,9 @@ type AccountsListCall struct {
 	header_      http.Header
 }
 
-// List: List the AdMob publisher account accessible with the client
-// credential. Currently, all credentials have access to at most one
-// AdMob account.
+// List: Lists the AdMob publisher account that was most recently signed
+// in to from the AdMob UI. For more information, see
+// https://support.google.com/admob/answer/10243672.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1643,7 +1643,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1702,7 +1702,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	}
 	return ret, nil
 	// {
-	//   "description": "List the AdMob publisher account accessible with the client credential. Currently, all credentials have access to at most one AdMob account.",
+	//   "description": "Lists the AdMob publisher account that was most recently signed in to from the AdMob UI. For more information, see https://support.google.com/admob/answer/10243672.",
 	//   "flatPath": "v1/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "admob.accounts.list",
@@ -1802,7 +1802,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1946,7 +1946,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

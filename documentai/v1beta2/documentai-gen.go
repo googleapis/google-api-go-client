@@ -537,6 +537,42 @@ func (s *GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) Marshal
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
+// long running operation metadata for set default processor version
+// method.
+type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse:
+// Response message for set default processor version method.
+type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse struct {
+}
+
 // GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata: The
 // metadata that represents a processor version being created.
 type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata struct {
@@ -906,15 +942,15 @@ type GoogleCloudDocumentaiV1HumanReviewStatus struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Human review state is unspecified. Most
 	// likely due to an internal error.
-	//   "HUMAN_REVIEW_SKIPPED" - Human review is skipped for the document.
-	// This can happen because human review is not enabled on the processor
-	// or the processing request has been set to skip this document.
-	//   "HUMAN_REVIEW_VALIDATION_PASSED" - Human review validation is
-	// triggered and passed, so no review is needed.
-	//   "HUMAN_REVIEW_IN_PROGRESS" - Human review validation is triggered
-	// and the document is under review.
-	//   "HUMAN_REVIEW_ERROR" - Some error happened during triggering human
-	// review, see the [state_message] for details.
+	//   "SKIPPED" - Human review is skipped for the document. This can
+	// happen because human review is not enabled on the processor or the
+	// processing request has been set to skip this document.
+	//   "VALIDATION_PASSED" - Human review validation is triggered and
+	// passed, so no review is needed.
+	//   "IN_PROGRESS" - Human review validation is triggered and the
+	// document is under review.
+	//   "ERROR" - Some error happened during triggering human review, see
+	// the [state_message] for details.
 	State string `json:"state,omitempty"`
 
 	// StateMessage: A message providing more details about the human review
@@ -1241,6 +1277,10 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	// AddressValue: Postal address. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto
 	AddressValue *GoogleTypePostalAddress `json:"addressValue,omitempty"`
+
+	// BooleanValue: Boolean value. Can be used for entities with binary
+	// values, or for checkboxes.
+	BooleanValue bool `json:"booleanValue,omitempty"`
 
 	// DateValue: Date value. Includes year, month, day. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/date.proto
@@ -3156,6 +3196,10 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	// AddressValue: Postal address. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto
 	AddressValue *GoogleTypePostalAddress `json:"addressValue,omitempty"`
+
+	// BooleanValue: Boolean value. Can be used for entities with binary
+	// values, or for checkboxes.
+	BooleanValue bool `json:"booleanValue,omitempty"`
 
 	// DateValue: Date value. Includes year, month, day. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/date.proto
@@ -5292,15 +5336,15 @@ type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Human review state is unspecified. Most
 	// likely due to an internal error.
-	//   "HUMAN_REVIEW_SKIPPED" - Human review is skipped for the document.
-	// This can happen because human review is not enabled on the processor
-	// or the processing request has been set to skip this document.
-	//   "HUMAN_REVIEW_VALIDATION_PASSED" - Human review validation is
-	// triggered and passed, so no review is needed.
-	//   "HUMAN_REVIEW_IN_PROGRESS" - Human review validation is triggered
-	// and the document is under review.
-	//   "HUMAN_REVIEW_ERROR" - Some error happened during triggering human
-	// review, see the [state_message] for details.
+	//   "SKIPPED" - Human review is skipped for the document. This can
+	// happen because human review is not enabled on the processor or the
+	// processing request has been set to skip this document.
+	//   "VALIDATION_PASSED" - Human review validation is triggered and
+	// passed, so no review is needed.
+	//   "IN_PROGRESS" - Human review validation is triggered and the
+	// document is under review.
+	//   "ERROR" - Some error happened during triggering human review, see
+	// the [state_message] for details.
 	State string `json:"state,omitempty"`
 
 	// StateMessage: A message providing more details about the human review
@@ -6015,7 +6059,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6155,7 +6199,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6297,7 +6341,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6437,7 +6481,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6589,7 +6633,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6735,7 +6779,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

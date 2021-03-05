@@ -434,7 +434,7 @@
       }
     }
   },
-  "revision": "20210211",
+  "revision": "20210218",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -1047,7 +1047,7 @@
         },
         "schedule": {
           "$ref": "Schedule",
-          "description": "Schedule specification."
+          "description": "Specifies schedule for the transfer job. This is an optional field. When the field is not set, the job will never execute a transfer, unless you invoke RunTransferJob or update the job to have a non-empty schedule."
         },
         "status": {
           "description": "Status of the job. This value MUST be specified for `CreateTransferJobRequests`. **Note:** The effect of the new job status takes place during a subsequent job run. For example, if you change the job status from ENABLED to DISABLED, and an operation spawned by the transfer is running, the status change would not affect the current operation.",
@@ -1206,10 +1206,10 @@
         },
         "transferJob": {
           "$ref": "TransferJob",
-          "description": "Required. The job to update. `transferJob` is expected to specify only four fields: description, transfer_spec, notification_config, and status. An `UpdateTransferJobRequest` that specifies other fields will be rejected with the error INVALID_ARGUMENT. Updating a job satus to DELETED requires `storagetransfer.jobs.delete` permissions."
+          "description": "Required. The job to update. `transferJob` is expected to specify only four fields: description, transfer_spec, notification_config, and status. An `UpdateTransferJobRequest` that specifies other fields are rejected with the error INVALID_ARGUMENT. Updating a job satus to DELETED requires `storagetransfer.jobs.delete` permissions."
         },
         "updateTransferJobFieldMask": {
-          "description": "The field mask of the fields in `transferJob` that are to be updated in this request. Fields in `transferJob` that can be updated are: description, transfer_spec, notification_config, and status. To update the `transfer_spec` of the job, a complete transfer specification must be provided. An incomplete specification missing any required fields will be rejected with the error INVALID_ARGUMENT.",
+          "description": "The field mask of the fields in `transferJob` that are to be updated in this request. Fields in `transferJob` that can be updated are: description, transfer_spec, notification_config, and status. To update the `transfer_spec` of the job, a complete transfer specification must be provided. An incomplete specification missing any required fields is rejected with the error INVALID_ARGUMENT.",
           "format": "google-fieldmask",
           "type": "string"
         }

@@ -310,7 +310,7 @@ type Change struct {
 
 	// Status: Status of the operation (output only). A status of "done"
 	// means that the request to update the authoritative servers has been
-	// sent but the servers might not be updated yet.
+	// sent, but the servers might not be updated yet.
 	//
 	// Possible values:
 	//   "pending"
@@ -425,11 +425,11 @@ type DnsKey struct {
 	Id string `json:"id,omitempty"`
 
 	// IsActive: Active keys are used to sign subsequent changes to the
-	// ManagedZone. Inactive keys will still be present as DNSKEY Resource
+	// ManagedZone. Inactive keys are still present as DNSKEY Resource
 	// Records for the use of resolvers validating existing signatures.
 	IsActive bool `json:"isActive,omitempty"`
 
-	// KeyLength: Length of the key in bits. Specified at creation time,
+	// KeyLength: Length of the key in bits. Specified at creation time, and
 	// then immutable.
 	KeyLength int64 `json:"keyLength,omitempty"`
 
@@ -450,7 +450,7 @@ type DnsKey struct {
 	// Type: One of "KEY_SIGNING" or "ZONE_SIGNING". Keys of type
 	// KEY_SIGNING have the Secure Entry Point flag set and, when active,
 	// are used to sign only resource record sets of type DNSKEY. Otherwise,
-	// the Secure Entry Point flag is cleared and this key is used to sign
+	// the Secure Entry Point flag is cleared, and this key is used to sign
 	// only resource record sets of other types. Immutable after creation
 	// time.
 	//
@@ -668,8 +668,8 @@ type ManagedZone struct {
 
 	// NameServerSet: Optionally specifies the NameServerSet for this
 	// ManagedZone. A NameServerSet is a set of DNS name servers that all
-	// host the same ManagedZones. Most users will leave this field unset.
-	// If you need to use this field, please reach out to your account team.
+	// host the same ManagedZones. Most users leave this field unset. If you
+	// need to use this field, contact your account team.
 	NameServerSet string `json:"nameServerSet,omitempty"`
 
 	// NameServers: Delegate your managed_zone to these virtual name
@@ -693,7 +693,7 @@ type ManagedZone struct {
 	ReverseLookupConfig *ManagedZoneReverseLookupConfig `json:"reverseLookupConfig,omitempty"`
 
 	// ServiceDirectoryConfig: This field links to the associated service
-	// directory namespace. This field should not be set for public zones or
+	// directory namespace. Do not set this field for public zones or
 	// forwarding zones.
 	ServiceDirectoryConfig *ManagedZoneServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
 
@@ -814,10 +814,10 @@ func (s *ManagedZoneForwardingConfig) MarshalJSON() ([]byte, error) {
 
 type ManagedZoneForwardingConfigNameServerTarget struct {
 	// ForwardingPath: Forwarding path for this NameServerTarget. If unset
-	// or set to DEFAULT, Cloud DNS makes forwarding decisions based on
-	// address ranges; that is, RFC1918 addresses go to the VPC, non-RFC1918
-	// addresses go to the internet. When set to PRIVATE, Cloud DNS always
-	// sends queries through VPC for this target.
+	// or set to DEFAULT, Cloud DNS makes forwarding decisions based on IP
+	// address ranges; that is, RFC1918 addresses go to the VPC network,
+	// non-RFC1918 addresses go to the internet. When set to PRIVATE, Cloud
+	// DNS always sends queries through the VPC network for this target.
 	//
 	// Possible values:
 	//   "default" - Cloud DNS makes forwarding decisions based on address
@@ -1009,7 +1009,7 @@ type ManagedZonePrivateVisibilityConfigNetwork struct {
 	Kind string `json:"kind,omitempty"`
 
 	// NetworkUrl: The fully qualified URL of the VPC network to bind to.
-	// This should be formatted like
+	// Format this URL like
 	// https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
 	NetworkUrl string `json:"networkUrl,omitempty"`
 
@@ -1096,7 +1096,7 @@ func (s *ManagedZoneServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
 
 type ManagedZoneServiceDirectoryConfigNamespace struct {
 	// DeletionTime: The time that the namespace backing this zone was
-	// deleted, empty string if it still exists. This is in RFC3339 text
+	// deleted; an empty string if it still exists. This is in RFC3339 text
 	// format. Output only.
 	DeletionTime string `json:"deletionTime,omitempty"`
 
@@ -1440,7 +1440,7 @@ type Policy struct {
 	// EnableInboundForwarding: Allows networks bound to this policy to
 	// receive DNS queries sent by VMs or applications over VPN connections.
 	// When enabled, a virtual IP address is allocated from each of the
-	// sub-networks that are bound to this policy.
+	// subnetworks that are bound to this policy.
 	EnableInboundForwarding bool `json:"enableInboundForwarding,omitempty"`
 
 	// EnableLogging: Controls whether logging is enabled for the networks
@@ -1523,18 +1523,18 @@ func (s *PolicyAlternativeNameServerConfig) MarshalJSON() ([]byte, error) {
 
 type PolicyAlternativeNameServerConfigTargetNameServer struct {
 	// ForwardingPath: Forwarding path for this TargetNameServer. If unset
-	// or set to DEFAULT, Cloud DNS makes forwarding decision based on
-	// address ranges; that is, RFC1918 addresses go to the VPC, non-RFC1918
-	// addresses go to the internet. When set to PRIVATE, Cloud DNS always
-	// sends queries through VPC for this target.
+	// or set to DEFAULT, Cloud DNS makes forwarding decisions based on
+	// address ranges; that is, RFC1918 addresses go to the VPC network,
+	// non-RFC1918 addresses go to the internet. When set to PRIVATE, Cloud
+	// DNS always sends queries through the VPC network for this target.
 	//
 	// Possible values:
-	//   "default" - Cloud DNS will make forwarding decision based on
-	// address ranges; that is, RFC1918 addresses forward to the target
-	// through the VPC and non-RFC1918 addresses forward to the target
-	// through the internet
-	//   "private" - Cloud DNS will always forward to this target through
-	// the VPC.
+	//   "default" - Cloud DNS makes forwarding decision based on IP address
+	// ranges; that is, RFC1918 addresses forward to the target through the
+	// VPC and non-RFC1918 addresses forward to the target through the
+	// internet
+	//   "private" - Cloud DNS always forwards to this target through the
+	// VPC.
 	ForwardingPath string `json:"forwardingPath,omitempty"`
 
 	// Ipv4Address: IPv4 address to forward to.
@@ -1730,7 +1730,7 @@ func (s *Quota) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ResourceRecordSet: A unit of data that will be returned by the DNS
+// ResourceRecordSet: A unit of data that is returned by the DNS
 // servers.
 type ResourceRecordSet struct {
 	Kind string `json:"kind,omitempty"`
@@ -2059,8 +2059,8 @@ type ResponsePolicyRule struct {
 	// a wildcard to exempt a subset of the wildcard ResponsePolicyRule from
 	// the ResponsePolicy behavior and e.g., query the public internet
 	// instead. For instance, if these rules exist: *.example.com -> 1.2.3.4
-	// foo.example.com -> PASSTHRU Then a query for 'foo.example.com' will
-	// skip the wildcard.
+	// foo.example.com -> PASSTHRU Then a query for 'foo.example.com' skips
+	// the wildcard.
 	Behavior string `json:"behavior,omitempty"`
 
 	// DnsName: The DNS name (wildcard or exact) to apply this rule to. Must
@@ -2300,7 +2300,7 @@ func (c *ChangesCreateCall) Header() http.Header {
 
 func (c *ChangesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2475,7 +2475,7 @@ func (c *ChangesGetCall) Header() http.Header {
 
 func (c *ChangesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2677,7 +2677,7 @@ func (c *ChangesListCall) Header() http.Header {
 
 func (c *ChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2902,7 +2902,7 @@ func (c *DnsKeysGetCall) Header() http.Header {
 
 func (c *DnsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3101,7 +3101,7 @@ func (c *DnsKeysListCall) Header() http.Header {
 
 func (c *DnsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3305,7 +3305,7 @@ func (c *ManagedZoneOperationsGetCall) Header() http.Header {
 
 func (c *ManagedZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3501,7 +3501,7 @@ func (c *ManagedZoneOperationsListCall) Header() http.Header {
 
 func (c *ManagedZoneOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3702,7 +3702,7 @@ func (c *ManagedZonesCreateCall) Header() http.Header {
 
 func (c *ManagedZonesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3856,7 +3856,7 @@ func (c *ManagedZonesDeleteCall) Header() http.Header {
 
 func (c *ManagedZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3993,7 +3993,7 @@ func (c *ManagedZonesGetCall) Header() http.Header {
 
 func (c *ManagedZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4176,7 +4176,7 @@ func (c *ManagedZonesListCall) Header() http.Header {
 
 func (c *ManagedZonesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4361,7 +4361,7 @@ func (c *ManagedZonesPatchCall) Header() http.Header {
 
 func (c *ManagedZonesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4525,7 +4525,7 @@ func (c *ManagedZonesUpdateCall) Header() http.Header {
 
 func (c *ManagedZonesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4643,7 +4643,7 @@ type PoliciesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new Policy
+// Create: Creates a new Policy.
 func (r *PoliciesService) Create(project string, policy *Policy) *PoliciesCreateCall {
 	c := &PoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4687,7 +4687,7 @@ func (c *PoliciesCreateCall) Header() http.Header {
 
 func (c *PoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4751,7 +4751,7 @@ func (c *PoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Policy",
+	//   "description": "Creates a new Policy.",
 	//   "flatPath": "dns/v1beta2/projects/{project}/policies",
 	//   "httpMethod": "POST",
 	//   "id": "dns.policies.create",
@@ -4797,7 +4797,7 @@ type PoliciesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a previously created Policy. Fails if the policy is
+// Delete: Deletes a previously created Policy. Fails if the policy is
 // still being referenced by a network.
 func (r *PoliciesService) Delete(project string, policy string) *PoliciesDeleteCall {
 	c := &PoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4842,7 +4842,7 @@ func (c *PoliciesDeleteCall) Header() http.Header {
 
 func (c *PoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4877,7 +4877,7 @@ func (c *PoliciesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a previously created Policy. Fails if the policy is still being referenced by a network.",
+	//   "description": "Deletes a previously created Policy. Fails if the policy is still being referenced by a network.",
 	//   "flatPath": "dns/v1beta2/projects/{project}/policies/{policy}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dns.policies.delete",
@@ -4979,7 +4979,7 @@ func (c *PoliciesGetCall) Header() http.Header {
 
 func (c *PoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5154,7 +5154,7 @@ func (c *PoliciesListCall) Header() http.Header {
 
 func (c *PoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5334,7 +5334,7 @@ func (c *PoliciesPatchCall) Header() http.Header {
 
 func (c *PoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5498,7 +5498,7 @@ func (c *PoliciesUpdateCall) Header() http.Header {
 
 func (c *PoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5669,7 +5669,7 @@ func (c *ProjectsGetCall) Header() http.Header {
 
 func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5822,7 +5822,7 @@ func (c *ProjectsManagedZonesRrsetsCreateCall) Header() http.Header {
 
 func (c *ProjectsManagedZonesRrsetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5988,7 +5988,7 @@ func (c *ProjectsManagedZonesRrsetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsManagedZonesRrsetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6145,7 +6145,7 @@ func (c *ProjectsManagedZonesRrsetsGetCall) Header() http.Header {
 
 func (c *ProjectsManagedZonesRrsetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6326,7 +6326,7 @@ func (c *ProjectsManagedZonesRrsetsPatchCall) Header() http.Header {
 
 func (c *ProjectsManagedZonesRrsetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6461,7 +6461,7 @@ type ResourceRecordSetsListCall struct {
 	header_      http.Header
 }
 
-// List: Enumerate ResourceRecordSets that you have created but not yet
+// List: Enumerates ResourceRecordSets that you have created but not yet
 // deleted.
 func (r *ResourceRecordSetsService) List(project string, managedZone string) *ResourceRecordSetsListCall {
 	c := &ResourceRecordSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6538,7 +6538,7 @@ func (c *ResourceRecordSetsListCall) Header() http.Header {
 
 func (c *ResourceRecordSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6601,7 +6601,7 @@ func (c *ResourceRecordSetsListCall) Do(opts ...googleapi.CallOption) (*Resource
 	}
 	return ret, nil
 	// {
-	//   "description": "Enumerate ResourceRecordSets that you have created but not yet deleted.",
+	//   "description": "Enumerates ResourceRecordSets that you have created but not yet deleted.",
 	//   "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}/rrsets",
 	//   "httpMethod": "GET",
 	//   "id": "dns.resourceRecordSets.list",
@@ -6734,7 +6734,7 @@ func (c *ResponsePoliciesCreateCall) Header() http.Header {
 
 func (c *ResponsePoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6844,7 +6844,7 @@ type ResponsePoliciesDeleteCall struct {
 	header_        http.Header
 }
 
-// Delete: Delete a previously created Response Policy. Will fail if the
+// Delete: Delete a previously created Response Policy. Fails if the
 // response policy is non-empty or still being referenced by a network.
 func (r *ResponsePoliciesService) Delete(project string, responsePolicy string) *ResponsePoliciesDeleteCall {
 	c := &ResponsePoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6889,7 +6889,7 @@ func (c *ResponsePoliciesDeleteCall) Header() http.Header {
 
 func (c *ResponsePoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6924,7 +6924,7 @@ func (c *ResponsePoliciesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Delete a previously created Response Policy. Will fail if the response policy is non-empty or still being referenced by a network.",
+	//   "description": "Delete a previously created Response Policy. Fails if the response policy is non-empty or still being referenced by a network.",
 	//   "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dns.responsePolicies.delete",
@@ -7026,7 +7026,7 @@ func (c *ResponsePoliciesGetCall) Header() http.Header {
 
 func (c *ResponsePoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7201,7 +7201,7 @@ func (c *ResponsePoliciesListCall) Header() http.Header {
 
 func (c *ResponsePoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7381,7 +7381,7 @@ func (c *ResponsePoliciesPatchCall) Header() http.Header {
 
 func (c *ResponsePoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7545,7 +7545,7 @@ func (c *ResponsePoliciesUpdateCall) Header() http.Header {
 
 func (c *ResponsePoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7709,7 +7709,7 @@ func (c *ResponsePolicyRulesCreateCall) Header() http.Header {
 
 func (c *ResponsePolicyRulesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7873,7 +7873,7 @@ func (c *ResponsePolicyRulesDeleteCall) Header() http.Header {
 
 func (c *ResponsePolicyRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8020,7 +8020,7 @@ func (c *ResponsePolicyRulesGetCall) Header() http.Header {
 
 func (c *ResponsePolicyRulesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8205,7 +8205,7 @@ func (c *ResponsePolicyRulesListCall) Header() http.Header {
 
 func (c *ResponsePolicyRulesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8395,7 +8395,7 @@ func (c *ResponsePolicyRulesPatchCall) Header() http.Header {
 
 func (c *ResponsePolicyRulesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8569,7 +8569,7 @@ func (c *ResponsePolicyRulesUpdateCall) Header() http.Header {
 
 func (c *ResponsePolicyRulesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

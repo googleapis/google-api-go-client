@@ -398,22 +398,24 @@ type ProjectsLocationsServicesNlpService struct {
 
 // ActivateConsentRequest: Activates the latest revision of the
 // specified Consent by committing a new revision with `state` updated
-// to `ACTIVE`. If the latest revision of the given consent is in the
-// `ACTIVE` state, no new revision is committed.
+// to `ACTIVE`. If the latest revision of the given Consent is in the
+// `ACTIVE` state, no new revision is committed. A FAILED_PRECONDITION
+// error occurs if the latest revision of the given consent is in the
+// `REJECTED` or `REVOKED` state.
 type ActivateConsentRequest struct {
-	// ConsentArtifact: Required. The resource name of the consent artifact
-	// that contains proof of the end user's consent, of the form
+	// ConsentArtifact: Required. The resource name of the Consent artifact
+	// that contains documentation of the user's consent, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
-	// `. If the draft consent had a consent artifact, this consent artifact
+	// `. If the draft Consent had a Consent artifact, this Consent artifact
 	// overwrites it.
 	ConsentArtifact string `json:"consentArtifact,omitempty"`
 
-	// ExpireTime: Timestamp in UTC of when this consent is considered
+	// ExpireTime: Timestamp in UTC of when this Consent is considered
 	// expired.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Ttl: The time to live for this consent from when it is marked as
+	// Ttl: The time to live for this Consent from when it is marked as
 	// active.
 	Ttl string `json:"ttl,omitempty"`
 
@@ -480,7 +482,7 @@ type AnalyzeEntitiesResponse struct {
 	Entities []*Entity `json:"entities,omitempty"`
 
 	// EntityMentions: entity_mentions contains all the annotated medical
-	// entities that were were mentioned in the provided document.
+	// entities that were mentioned in the provided document.
 	EntityMentions []*EntityMention `json:"entityMentions,omitempty"`
 
 	// Relationships: relationships contains all the binary relationships
@@ -699,11 +701,11 @@ type ArchiveUserDataMappingResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Attribute: An attribute value for a consent or data mapping. Each
-// Attribute must have a corresponding AttributeDefinition in the
+// Attribute: An attribute value for a Consent or User data mapping.
+// Each Attribute must have a corresponding AttributeDefinition in the
 // consent store that defines the default and allowed values.
 type Attribute struct {
-	// AttributeDefinitionId: Indicates the name of an attribute defined at
+	// AttributeDefinitionId: Indicates the name of an attribute defined in
 	// the consent store.
 	AttributeDefinitionId string `json:"attributeDefinitionId,omitempty"`
 
@@ -752,30 +754,32 @@ type AttributeDefinition struct {
 	// Possible values:
 	//   "CATEGORY_UNSPECIFIED" - No category specified. This option is
 	// invalid.
-	//   "RESOURCE" - Specify when this attribute captures properties of
-	// data resources. For example, data anonymity or data type.
-	//   "REQUEST" - Specify when this attribute captures properties of
-	// access requests. For example, requester's role or requester's
+	//   "RESOURCE" - Specify this category when this attribute describes
+	// the properties of resources. For example, data anonymity or data
+	// type.
+	//   "REQUEST" - Specify this category when this attribute describes the
+	// properties of requests. For example, requester's role or requester's
 	// organization.
 	Category string `json:"category,omitempty"`
 
-	// ConsentDefaultValues: Default values of the attribute in consents. If
-	// no default values are specified, it defaults to an empty value.
+	// ConsentDefaultValues: Optional. Default values of the attribute in
+	// Consents. If no default values are specified, it defaults to an empty
+	// value.
 	ConsentDefaultValues []string `json:"consentDefaultValues,omitempty"`
 
-	// DataMappingDefaultValue: Default value of the attribute in user data
-	// mappings. If no default value is specified, it defaults to an empty
-	// value. This field is only applicable to attributes of the category
-	// `RESOURCE`.
+	// DataMappingDefaultValue: Optional. Default value of the attribute in
+	// User data mappings. If no default value is specified, it defaults to
+	// an empty value. This field is only applicable to attributes of the
+	// category `RESOURCE`.
 	DataMappingDefaultValue string `json:"dataMappingDefaultValue,omitempty"`
 
-	// Description: A description of the attribute.
+	// Description: Optional. A description of the attribute.
 	Description string `json:"description,omitempty"`
 
-	// Name: Resource name of the attribute definition, of the form
+	// Name: Resource name of the Attribute definition, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/attributeDefinitions/{attribute_defini
-	// tion_id}`.
+	// tion_id}`. Cannot be changed after creation.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1077,26 +1081,30 @@ func (s *CharacterMaskConfig) MarshalJSON() ([]byte, error) {
 }
 
 // CheckDataAccessRequest: Checks if a particular data_id of a User data
-// mapping in the given Consent store is consented for a given use.
+// mapping in the given consent store is consented for a given use.
 type CheckDataAccessRequest struct {
-	// ConsentList: The Consents to evaluate the access request against.
-	// They must have the same `user_id` as the data to check access for,
-	// exist in the current `consent_store`, and can have a `state` of
-	// either `ACTIVE` or `DRAFT`. A maximum of 100 consents can be provided
-	// here. If unspecified, all `ACTIVE` unexpired consents in the current
-	// `consent_store` will be evaluated.
+	// ConsentList: Optional. Specific Consents to evaluate the access
+	// request against. These Consents must have the same `user_id` as the
+	// evaluated User data mapping, must exist in the current
+	// `consent_store`, and have a `state` of either `ACTIVE` or `DRAFT`. A
+	// maximum of 100 Consents can be provided here. If no selection is
+	// specified, the access request is evaluated against all `ACTIVE`
+	// unexpired Consents with the same `user_id` as the evaluated User data
+	// mapping.
 	ConsentList *ConsentList `json:"consentList,omitempty"`
 
-	// DataId: The unique identifier of the data to check access for. It
-	// must exist in the given `consent_store`.
+	// DataId: Required. The unique identifier of the resource to check
+	// access for. This identifier must correspond to a User data mapping in
+	// the given consent store.
 	DataId string `json:"dataId,omitempty"`
 
 	// RequestAttributes: The values of request attributes associated with
 	// this access request.
 	RequestAttributes map[string]string `json:"requestAttributes,omitempty"`
 
-	// ResponseView: The view for CheckDataAccessResponse. If unspecified,
-	// defaults to `BASIC` and returns `consented` as `TRUE` or `FALSE`.
+	// ResponseView: Optional. The view for CheckDataAccessResponse. If
+	// unspecified, defaults to `BASIC` and returns `consented` as `TRUE` or
+	// `FALSE`.
 	//
 	// Possible values:
 	//   "RESPONSE_VIEW_UNSPECIFIED" - No response view specified. The API
@@ -1104,7 +1112,7 @@ type CheckDataAccessRequest struct {
 	//   "BASIC" - Only the `consented` field is populated in
 	// CheckDataAccessResponse.
 	//   "FULL" - All fields within CheckDataAccessResponse are populated.
-	// When set to `FULL`, all `ACTIVE` consents are evaluated even if a
+	// When set to `FULL`, all `ACTIVE` Consents are evaluated even if a
 	// matching policy is found during evaluation.
 	ResponseView string `json:"responseView,omitempty"`
 
@@ -1132,13 +1140,14 @@ func (s *CheckDataAccessRequest) MarshalJSON() ([]byte, error) {
 }
 
 // CheckDataAccessResponse: Checks if a particular data_id of a User
-// data mapping in the given Consent store is consented for a given use.
+// data mapping in the given consent store is consented for a given use.
 type CheckDataAccessResponse struct {
 	// ConsentDetails: The resource names of all evaluated Consents mapped
 	// to their evaluation.
 	ConsentDetails map[string]ConsentEvaluation `json:"consentDetails,omitempty"`
 
-	// Consented: Whether the requested data is consented for the given use.
+	// Consented: Whether the requested resource is consented for the given
+	// use.
 	Consented bool `json:"consented,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1197,67 +1206,70 @@ func (s *CloudHealthcareSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Consent: Represents an end user's consent.
+// Consent: Represents a user's consent.
 type Consent struct {
-	// ConsentArtifact: Required. The resource name of the consent artifact
+	// ConsentArtifact: Required. The resource name of the Consent artifact
 	// that contains proof of the end user's consent, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
 	// `.
 	ConsentArtifact string `json:"consentArtifact,omitempty"`
 
-	// ExpireTime: Timestamp in UTC of when this consent is considered
+	// ExpireTime: Timestamp in UTC of when this Consent is considered
 	// expired.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Metadata: User-supplied key-value pairs used to organize consent
-	// resources. Metadata keys must: - be between 1 and 63 characters long
-	// - have a UTF-8 encoding of maximum 128 bytes - begin with a letter -
-	// consist of up to 63 characters including lowercase letters, numeric
-	// characters, underscores, and dashes Metadata values must be: - be
-	// between 1 and 63 characters long - have a UTF-8 encoding of maximum
-	// 128 bytes - consist of up to 63 characters including lowercase
-	// letters, numeric characters, underscores, and dashes No more than 64
-	// metadata entries can be associated with a given consent.
+	// Metadata: Optional. User-supplied key-value pairs used to organize
+	// Consent resources. Metadata keys must: - be between 1 and 63
+	// characters long - have a UTF-8 encoding of maximum 128 bytes - begin
+	// with a letter - consist of up to 63 characters including lowercase
+	// letters, numeric characters, underscores, and dashes Metadata values
+	// must be: - be between 1 and 63 characters long - have a UTF-8
+	// encoding of maximum 128 bytes - consist of up to 63 characters
+	// including lowercase letters, numeric characters, underscores, and
+	// dashes No more than 64 metadata entries can be associated with a
+	// given consent.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Name: Resource name of the Consent, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-	// onsentStores/{consent_store_id}/consents/{consent_id}`.
+	// onsentStores/{consent_store_id}/consents/{consent_id}`. Cannot be
+	// changed after creation.
 	Name string `json:"name,omitempty"`
 
-	// Policies: Represents an end user's consent in terms of the resources
-	// that can be accessed and under what conditions.
+	// Policies: Optional. Represents a user's consent in terms of the
+	// resources that can be accessed and under what conditions.
 	Policies []*GoogleCloudHealthcareV1beta1ConsentPolicy `json:"policies,omitempty"`
 
 	// RevisionCreateTime: Output only. The timestamp that the revision was
 	// created.
 	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
 
-	// RevisionId: Output only. The revision ID of the consent. The format
+	// RevisionId: Output only. The revision ID of the Consent. The format
 	// is an 8-character hexadecimal string. Refer to a specific revision of
 	// a Consent by appending `@{revision_id}` to the Consent's resource
 	// name.
 	RevisionId string `json:"revisionId,omitempty"`
 
-	// State: Indicates the current state of this consent.
+	// State: Required. Indicates the current state of this Consent.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - No state specified.
-	//   "ACTIVE" - The consent is active and is considered when evaluating
+	//   "ACTIVE" - The Consent is active and is considered when evaluating
+	// a user's consent on resources.
+	//   "ARCHIVED" - When a Consent is updated, the current version is
+	// archived and a new one is created with its state set to the updated
+	// Consent's previous state.
+	//   "REVOKED" - A revoked Consent is not considered when evaluating a
 	// user's consent on resources.
-	//   "ARCHIVED" - When a consent is updated, the current version is
-	// archived and a new one is created with active state.
-	//   "REVOKED" - A revoked consent is not considered when evaluating
-	// user's consent on resources.
-	//   "DRAFT" - A draft consent is not considered when evaluating user's
-	// consent on resources unless explicitly asked.
-	//   "REJECTED" - When a draft consent is rejected by end user, it
-	// should be stored back with rejected state. A rejected consent is not
-	// considered when evaluating user's consent on resources.
+	//   "DRAFT" - A draft Consent is not considered when evaluating a
+	// user's consent on resources unless explicitly specified.
+	//   "REJECTED" - When a draft Consent is rejected by a user, it is set
+	// to a rejected state. A rejected Consent is not considered when
+	// evaluating a user's consent on resources.
 	State string `json:"state,omitempty"`
 
-	// Ttl: Input only. The time to live for this consent from when it is
+	// Ttl: Input only. The time to live for this Consent from when it is
 	// created.
 	Ttl string `json:"ttl,omitempty"`
 
@@ -1292,35 +1304,36 @@ func (s *Consent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConsentArtifact: Proof of an end user's consent.
+// ConsentArtifact: Documentation of a user's consent.
 type ConsentArtifact struct {
-	// ConsentContentScreenshots: Screenshots of the consent content.
+	// ConsentContentScreenshots: Optional. Screenshots, PDFs, or other
+	// binary information documenting the user's consent.
 	ConsentContentScreenshots []*Image `json:"consentContentScreenshots,omitempty"`
 
-	// ConsentContentVersion: An string indicating the version of the
-	// consent content.
+	// ConsentContentVersion: Optional. An string indicating the version of
+	// the consent information shown to the user.
 	ConsentContentVersion string `json:"consentContentVersion,omitempty"`
 
-	// GuardianSignature: A signature from guardian.
+	// GuardianSignature: Optional. A signature from a guardian.
 	GuardianSignature *Signature `json:"guardianSignature,omitempty"`
 
-	// Metadata: Metadata associated with the consent artifact. For example,
-	// the consent locale or user agent version.
+	// Metadata: Optional. Metadata associated with the Consent artifact.
+	// For example, the consent locale or user agent version.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Name: Resource name of the Consent artifact, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
-	// `.
+	// `. Cannot be changed after creation.
 	Name string `json:"name,omitempty"`
 
 	// UserId: Required. User's UUID provided by the client.
 	UserId string `json:"userId,omitempty"`
 
-	// UserSignature: User's signature.
+	// UserSignature: Optional. User's signature.
 	UserSignature *Signature `json:"userSignature,omitempty"`
 
-	// WitnessSignature: A signature from a witness.
+	// WitnessSignature: Optional. A signature from a witness.
 	WitnessSignature *Signature `json:"witnessSignature,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1359,18 +1372,18 @@ type ConsentEvaluation struct {
 	// Possible values:
 	//   "EVALUATION_RESULT_UNSPECIFIED" - No evaluation result specified.
 	// This option is invalid.
-	//   "NOT_APPLICABLE" - The consent is not applicable to the requested
-	// access determination. For example, it does not belong to the end user
-	// who owns the data for which the access determination is requested, or
-	// it has a `state` of `REVOKED`.
-	//   "NO_MATCHING_POLICY" - The consent does not have a policy with
-	// matching `resource_attributes` as the data.
-	//   "NO_SATISFIED_POLICY" - The consent has at least one policy with
-	// matching `resource_attributes` as the data, but none with a satisfied
-	// `authorization_rule`.
-	//   "HAS_SATISFIED_POLICY" - The consent has at least one policy with
-	// matching `resource_attributes` as the data and a satisfied
-	// `authorization_rule`.
+	//   "NOT_APPLICABLE" - The Consent is not applicable to the requested
+	// access determination. For example, the Consent does not apply to the
+	// user for which the access determination is requested, or it has a
+	// `state` of `REVOKED`.
+	//   "NO_MATCHING_POLICY" - The Consent does not have a policy that
+	// matches the `resource_attributes` of the evaluated resource.
+	//   "NO_SATISFIED_POLICY" - The Consent has at least one policy that
+	// matches the `resource_attributes` of the evaluated resource, but no
+	// `authorization_rule` was satisfied.
+	//   "HAS_SATISFIED_POLICY" - The Consent has at least one policy that
+	// matches the `resource_attributes` of the evaluated resource, and at
+	// least one `authorization_rule` was satisfied.
 	EvaluationResult string `json:"evaluationResult,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EvaluationResult") to
@@ -1428,30 +1441,32 @@ func (s *ConsentList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConsentStore: Represents a Consent store.
+// ConsentStore: Represents a consent store.
 type ConsentStore struct {
-	// DefaultConsentTtl: Default time to live for consents in this store.
-	// Must be at least 24 hours. Updating this field will not affect the
-	// expiration time of existing consents.
+	// DefaultConsentTtl: Optional. Default time to live for Consents
+	// created in this store. Must be at least 24 hours. Updating this field
+	// will not affect the expiration time of existing consents.
 	DefaultConsentTtl string `json:"defaultConsentTtl,omitempty"`
 
-	// EnableConsentCreateOnUpdate: If true, UpdateConsent creates the
-	// consent if it does not already exist.
+	// EnableConsentCreateOnUpdate: Optional. If `true`, UpdateConsent
+	// creates the Consent if it does not already exist. If unspecified,
+	// defaults to `false`.
 	EnableConsentCreateOnUpdate bool `json:"enableConsentCreateOnUpdate,omitempty"`
 
-	// Labels: User-supplied key-value pairs used to organize Consent
-	// stores. Label keys must be between 1 and 63 characters long, have a
-	// UTF-8 encoding of maximum 128 bytes, and must conform to the
-	// following PCRE regular expression: \p{Ll}\p{Lo}{0,62} Label values
+	// Labels: Optional. User-supplied key-value pairs used to organize
+	// consent stores. Label keys must be between 1 and 63 characters long,
+	// have a UTF-8 encoding of maximum 128 bytes, and must conform to the
+	// following PCRE regular expression: \p{Ll}\p{Lo}{0,62}. Label values
 	// must be between 1 and 63 characters long, have a UTF-8 encoding of
 	// maximum 128 bytes, and must conform to the following PCRE regular
-	// expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64 labels can be
-	// associated with a given store.
+	// expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63}. No more than 64 labels can
+	// be associated with a given store. For more information:
+	// https://cloud.google.com/healthcare/docs/how-tos/labeling-resources
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Resource name of the Consent store, of the form
+	// Name: Resource name of the consent store, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
-	// onsentStores/{consent_store_id}`.
+	// onsentStores/{consent_store_id}`. Cannot be changed after creation.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2226,45 +2241,50 @@ func (s *EvaluateAnnotationStoreRequest) MarshalJSON() ([]byte, error) {
 type EvaluateAnnotationStoreResponse struct {
 }
 
-// EvaluateUserConsentsRequest: Evaluate an end user's Consents for all
-// matching User data mappings.
+// EvaluateUserConsentsRequest: Evaluate a user's Consents for all
+// matching User data mappings. Note: User data mappings are indexed
+// asynchronously, causing slight delays between the time mappings are
+// created or updated and when they are included in EvaluateUserConsents
+// results.
 type EvaluateUserConsentsRequest struct {
-	// ConsentList: The Consents to evaluate the access request against.
-	// They must have the same `user_id` as the data to check access for,
-	// exist in the current `consent_store`, and can have a `state` of
-	// either `ACTIVE` or `DRAFT`. A maximum of 100 consents can be provided
-	// here. If unspecified, all `ACTIVE` unexpired consents in the current
+	// ConsentList: Optional. Specific Consents to evaluate the access
+	// request against. These Consents must have the same `user_id` as the
+	// User data mappings being evalauted, must exist in the current
+	// `consent_store`, and must have a `state` of either `ACTIVE` or
+	// `DRAFT`. A maximum of 100 Consents can be provided here. If
+	// unspecified, all `ACTIVE` unexpired Consents in the current
 	// `consent_store` will be evaluated.
 	ConsentList *ConsentList `json:"consentList,omitempty"`
 
-	// PageSize: Limit on the number of user data mappings to return in a
-	// single response. If not specified, 100 is used. May not be larger
-	// than 1000.
+	// PageSize: Optional. Limit on the number of User data mappings to
+	// return in a single response. If not specified, 100 is used. May not
+	// be larger than 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
-	// PageToken: Token to retrieve the next page of results to get the
-	// first page.
+	// PageToken: Optional. Token to retrieve the next page of results, or
+	// empty to get the first page.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// RequestAttributes: The values of request attributes associated with
-	// this access request.
+	// RequestAttributes: Required. The values of request attributes
+	// associated with this access request.
 	RequestAttributes map[string]string `json:"requestAttributes,omitempty"`
 
-	// ResourceAttributes: The values of resources attributes associated
-	// with the type of data being requested. If no values are specified,
-	// then all data types are queried.
+	// ResourceAttributes: Optional. The values of resource attributes
+	// associated with the resources being requested. If no values are
+	// specified, then all resources are queried.
 	ResourceAttributes map[string]string `json:"resourceAttributes,omitempty"`
 
-	// ResponseView: The view for EvaluateUserConsentsResponse. If
+	// ResponseView: Optional. The view for EvaluateUserConsentsResponse. If
 	// unspecified, defaults to `BASIC` and returns `consented` as `TRUE` or
 	// `FALSE`.
 	//
 	// Possible values:
 	//   "RESPONSE_VIEW_UNSPECIFIED" - No response view specified. The API
 	// will default to the BASIC view.
-	//   "BASIC" - Only the `consented` field is populated in the response.
+	//   "BASIC" - Only the `data_id` and `consented` fields are populated
+	// in the response.
 	//   "FULL" - All fields within the response are populated. When set to
-	// `FULL`, all `ACTIVE` consents are evaluated even if a matching policy
+	// `FULL`, all `ACTIVE` Consents are evaluated even if a matching policy
 	// is found during evaluation.
 	ResponseView string `json:"responseView,omitempty"`
 
@@ -2294,11 +2314,9 @@ func (s *EvaluateUserConsentsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EvaluateUserConsentsResponse: Evaluate an end user's Consents for all
-// matching User data mappings.
 type EvaluateUserConsentsResponse struct {
-	// NextPageToken: Token to retrieve the next page of results or empty if
-	// there are no more results in the list. This token is valid for 72
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list. This token is valid for 72
 	// hours after it is created.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -3253,19 +3271,20 @@ func (s *GoogleCloudHealthcareV1beta1ConsentGcsDestination) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudHealthcareV1beta1ConsentPolicy: Represents an end user's
+// GoogleCloudHealthcareV1beta1ConsentPolicy: Represents a user's
 // consent in terms of the resources that can be accessed and under what
 // conditions.
 type GoogleCloudHealthcareV1beta1ConsentPolicy struct {
-	// AuthorizationRule: The request conditions to meet to grant access. In
-	// addition to any supported comparison operators, authorization rules
-	// may have `IN` operator as well as at most 10 logical operators that
-	// are limited to `AND` (`&&`), `OR` (`||`).
+	// AuthorizationRule: Required. The request conditions to meet to grant
+	// access. In addition to any supported comparison operators,
+	// authorization rules may have `IN` operator as well as at most 10
+	// logical operators that are limited to `AND` (`&&`), `OR` (`||`).
 	AuthorizationRule *Expr `json:"authorizationRule,omitempty"`
 
-	// ResourceAttributes: The data resources that this policy applies to. A
-	// data resource is a match if it matches all the attributes listed
-	// here.
+	// ResourceAttributes: The resources that this policy applies to. A
+	// resource is a match if it matches all the attributes listed here. If
+	// empty, this policy applies to all User data mappings for the given
+	// user.
 	ResourceAttributes []*Attribute `json:"resourceAttributes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthorizationRule")
@@ -4507,16 +4526,14 @@ func (s *ListAnnotationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListAttributeDefinitionsResponse: Lists the Attribute definitions in
-// the given Consent store.
 type ListAttributeDefinitionsResponse struct {
-	// AttributeDefinitions: The returned attribute definitions. The maximum
+	// AttributeDefinitions: The returned Attribute definitions. The maximum
 	// number of attributes returned is determined by the value of page_size
 	// in the ListAttributeDefinitionsRequest.
 	AttributeDefinitions []*AttributeDefinition `json:"attributeDefinitions,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results or empty if
-	// there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4548,16 +4565,14 @@ func (s *ListAttributeDefinitionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListConsentArtifactsResponse: Lists the Consent artifacts in the
-// given Consent store.
 type ListConsentArtifactsResponse struct {
-	// ConsentArtifacts: The returned consent artifacts. The maximum number
+	// ConsentArtifacts: The returned Consent artifacts. The maximum number
 	// of artifacts returned is determined by the value of page_size in the
 	// ListConsentArtifactsRequest.
 	ConsentArtifacts []*ConsentArtifact `json:"consentArtifacts,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results or empty if
-	// there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4588,16 +4603,14 @@ func (s *ListConsentArtifactsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListConsentRevisionsResponse: Lists the revisions of the given
-// Consent in reverse chronological order.
 type ListConsentRevisionsResponse struct {
-	// Consents: The returned consent revisions. The maximum number of
+	// Consents: The returned Consent revisions. The maximum number of
 	// revisions returned is determined by the value of `page_size` in the
 	// ListConsentRevisionsRequest.
 	Consents []*Consent `json:"consents,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results or empty if
-	// there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4627,16 +4640,14 @@ func (s *ListConsentRevisionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListConsentStoresResponse: Lists the Consent stores in the given
-// dataset.
 type ListConsentStoresResponse struct {
-	// ConsentStores: The returned Consent stores. The maximum number of
+	// ConsentStores: The returned consent stores. The maximum number of
 	// stores returned is determined by the value of page_size in the
 	// ListConsentStoresRequest.
 	ConsentStores []*ConsentStore `json:"consentStores,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results or empty if
-	// there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4666,15 +4677,14 @@ func (s *ListConsentStoresResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListConsentsResponse: Lists the Consents in the given Consent store.
 type ListConsentsResponse struct {
-	// Consents: The returned consents. The maximum number of consents
+	// Consents: The returned Consents. The maximum number of Consents
 	// returned is determined by the value of page_size in the
 	// ListConsentsRequest.
 	Consents []*Consent `json:"consents,omitempty"`
 
-	// NextPageToken: Token to retrieve the next page of results or empty if
-	// there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4963,15 +4973,13 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListUserDataMappingsResponse: Lists the User data mappings in the
-// given Consent store.
 type ListUserDataMappingsResponse struct {
-	// NextPageToken: Token to retrieve the next page of results or empty if
-	// there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// UserDataMappings: The returned user data mappings. The maximum number
-	// of user data mappings returned is determined by the value of
+	// UserDataMappings: The returned User data mappings. The maximum number
+	// of User data mappings returned is determined by the value of
 	// page_size in the ListUserDataMappingsRequest.
 	UserDataMappings []*UserDataMapping `json:"userDataMappings,omitempty"`
 
@@ -5536,7 +5544,7 @@ func (s *ProgressCounter) MarshalJSON() ([]byte, error) {
 }
 
 // QueryAccessibleDataRequest: Queries all data_ids that are consented
-// for a given use in the given Consent store and writes them to a
+// for a given use in the given consent store and writes them to a
 // specified destination. The returned Operation includes a progress
 // counter for the number of User data mappings processed. Errors are
 // logged to Cloud Logging (see [Viewing logs]
@@ -5552,9 +5560,9 @@ type QueryAccessibleDataRequest struct {
 	// this access request.
 	RequestAttributes map[string]string `json:"requestAttributes,omitempty"`
 
-	// ResourceAttributes: The values of resources attributes associated
-	// with the type of data being requested. If no values are specified,
-	// then all data types are included in the output.
+	// ResourceAttributes: Optional. The values of resource attributes
+	// associated with the type of resources being requested. If no values
+	// are specified, then all resource types are included in the output.
 	ResourceAttributes map[string]string `json:"resourceAttributes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
@@ -5589,15 +5597,15 @@ type RedactConfig struct {
 
 // RejectConsentRequest: Rejects the latest revision of the specified
 // Consent by committing a new revision with `state` updated to
-// `REJECTED`. If the latest revision of the given consent is in the
+// `REJECTED`. If the latest revision of the given Consent is in the
 // `REJECTED` state, no new revision is committed.
 type RejectConsentRequest struct {
-	// ConsentArtifact: The resource name of the consent artifact that
-	// contains proof of the end user's rejection of the draft consent, of
-	// the form
+	// ConsentArtifact: Optional. The resource name of the Consent artifact
+	// that contains documentation of the user's rejection of the draft
+	// Consent, of the form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
-	// `. If the draft consent had a consent artifact, this consent artifact
+	// `. If the draft Consent had a Consent artifact, this Consent artifact
 	// overwrites it.
 	ConsentArtifact string `json:"consentArtifact,omitempty"`
 
@@ -5694,11 +5702,10 @@ type Result struct {
 	// to their evaluation.
 	ConsentDetails map[string]ConsentEvaluation `json:"consentDetails,omitempty"`
 
-	// Consented: Whether the requested data is consented for the given use.
+	// Consented: Whether the resource is consented for the given use.
 	Consented bool `json:"consented,omitempty"`
 
-	// DataId: The unique identifier of the data the consents were checked
-	// for.
+	// DataId: The unique identifier of the evaluated resource.
 	DataId string `json:"dataId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsentDetails") to
@@ -5727,11 +5734,11 @@ func (s *Result) MarshalJSON() ([]byte, error) {
 
 // RevokeConsentRequest: Revokes the latest revision of the specified
 // Consent by committing a new revision with `state` updated to
-// `REVOKED`. If the latest revision of the given consent is in the
+// `REVOKED`. If the latest revision of the given Consent is in the
 // `REVOKED` state, no new revision is committed.
 type RevokeConsentRequest struct {
-	// ConsentArtifact: The resource name of the consent artifact that
-	// contains proof of the end user's revocation of the consent, of the
+	// ConsentArtifact: Optional. The resource name of the Consent artifact
+	// that contains proof of the user's revocation of the Consent, of the
 	// form
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 	// onsentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}
@@ -6146,17 +6153,17 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // Signature: User signature.
 type Signature struct {
-	// Image: An image of the user's signature.
+	// Image: Optional. An image of the user's signature.
 	Image *Image `json:"image,omitempty"`
 
-	// Metadata: Metadata associated with the user's signature. For example,
-	// the user's name or the user's title.
+	// Metadata: Optional. Metadata associated with the user's signature.
+	// For example, the user's name or the user's title.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// SignatureTime: Timestamp of the signature.
+	// SignatureTime: Optional. Timestamp of the signature.
 	SignatureTime string `json:"signatureTime,omitempty"`
 
-	// UserId: User's UUID provided by the client.
+	// UserId: Required. User's UUID provided by the client.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
@@ -6495,18 +6502,17 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UserDataMapping: Maps a user data entry to its end user and
+// UserDataMapping: Maps a resource to the associated user and
 // Attributes.
 type UserDataMapping struct {
-	// ArchiveTime: Output only. Indicates the time when this data mapping
-	// was archived.
+	// ArchiveTime: Output only. Indicates the time when this mapping was
+	// archived.
 	ArchiveTime string `json:"archiveTime,omitempty"`
 
-	// Archived: Output only. Indicates whether this data mapping is
-	// archived.
+	// Archived: Output only. Indicates whether this mapping is archived.
 	Archived bool `json:"archived,omitempty"`
 
-	// DataId: Required. A unique identifier for the mapped data.
+	// DataId: Required. A unique identifier for the mapped resource.
 	DataId string `json:"dataId,omitempty"`
 
 	// Name: Resource name of the User data mapping, of the form
@@ -6515,12 +6521,11 @@ type UserDataMapping struct {
 	// }`.
 	Name string `json:"name,omitempty"`
 
-	// ResourceAttributes: Attributes of end user data. Each attribute can
-	// have exactly one value specified. Only explicitly set attributes are
-	// displayed here. Attribute definitions with defaults set implicitly
-	// apply to these User data mappings. Attributes listed here must be
-	// single valued, that is, exactly one value is specified for the field
-	// "values" in each Attribute.
+	// ResourceAttributes: Attributes of the resource. Only explicitly set
+	// attributes are displayed here. Attribute definitions with defaults
+	// set implicitly apply to these User data mappings. Attributes listed
+	// here must be single valued, that is, exactly one value is specified
+	// for the field "values" in each Attribute.
 	ResourceAttributes []*Attribute `json:"resourceAttributes,omitempty"`
 
 	// UserId: Required. User's UUID provided by the client.
@@ -6740,7 +6745,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6906,7 +6911,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7089,7 +7094,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7242,7 +7247,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7382,7 +7387,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7523,7 +7528,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7683,7 +7688,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7848,7 +7853,7 @@ func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8023,7 +8028,7 @@ func (c *ProjectsLocationsDatasetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8171,7 +8176,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8316,7 +8321,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8464,7 +8469,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8608,7 +8613,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8745,7 +8750,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresEvaluateCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresEvaluateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8890,7 +8895,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9040,7 +9045,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9200,7 +9205,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9346,7 +9351,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresImportCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9543,7 +9548,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresListCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9723,7 +9728,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9871,7 +9876,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10016,7 +10021,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall) Header
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10158,7 +10163,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsCreateCall) Header(
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10297,7 +10302,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsDeleteCall) Header(
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10438,7 +10443,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsGetCall) Header() h
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10627,7 +10632,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsListCall) Header() 
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10822,7 +10827,7 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall) Header()
 
 func (c *ProjectsLocationsDatasetsAnnotationStoresAnnotationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10934,7 +10939,8 @@ type ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall struct {
 }
 
 // CheckDataAccess: Checks if a particular data_id of a User data
-// mapping in the given Consent store is consented for a given use.
+// mapping in the specified consent store is consented for the specified
+// use.
 func (r *ProjectsLocationsDatasetsConsentStoresService) CheckDataAccess(consentStore string, checkdataaccessrequest *CheckDataAccessRequest) *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall {
 	c := &ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.consentStore = consentStore
@@ -10969,7 +10975,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11033,7 +11039,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Checks if a particular data_id of a User data mapping in the given Consent store is consented for a given use.",
+	//   "description": "Checks if a particular data_id of a User data mapping in the specified consent store is consented for the specified use.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}:checkDataAccess",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.checkDataAccess",
@@ -11042,7 +11048,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "consentStore": {
-	//       "description": "Name of the Consent store where the requested data_id is stored, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`.",
+	//       "description": "Required. Name of the consent store where the requested data_id is stored, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -11074,7 +11080,7 @@ type ProjectsLocationsDatasetsConsentStoresCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new Consent store in the parent dataset. Attempting
+// Create: Creates a new consent store in the parent dataset. Attempting
 // to create a consent store with the same ID as an existing store fails
 // with an ALREADY_EXISTS error.
 func (r *ProjectsLocationsDatasetsConsentStoresService) Create(parent string, consentstore *ConsentStore) *ProjectsLocationsDatasetsConsentStoresCreateCall {
@@ -11084,9 +11090,10 @@ func (r *ProjectsLocationsDatasetsConsentStoresService) Create(parent string, co
 	return c
 }
 
-// ConsentStoreId sets the optional parameter "consentStoreId": The ID
-// of the consent store to create. The string must match the following
-// regex: `[\p{L}\p{N}_\-\.]{1,256}`.
+// ConsentStoreId sets the optional parameter "consentStoreId":
+// Required. The ID of the consent store to create. The string must
+// match the following regex: `[\p{L}\p{N}_\-\.]{1,256}`. Cannot be
+// changed after creation.
 func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) ConsentStoreId(consentStoreId string) *ProjectsLocationsDatasetsConsentStoresCreateCall {
 	c.urlParams_.Set("consentStoreId", consentStoreId)
 	return c
@@ -11119,7 +11126,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11183,7 +11190,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Consent store in the parent dataset. Attempting to create a consent store with the same ID as an existing store fails with an ALREADY_EXISTS error.",
+	//   "description": "Creates a new consent store in the parent dataset. Attempting to create a consent store with the same ID as an existing store fails with an ALREADY_EXISTS error.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.create",
@@ -11192,12 +11199,12 @@ func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "consentStoreId": {
-	//       "description": "The ID of the consent store to create. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+	//       "description": "Required. The ID of the consent store to create. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`. Cannot be changed after creation.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The name of the dataset this Consent store belongs to.",
+	//       "description": "Required. The name of the dataset this consent store belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
 	//       "required": true,
@@ -11228,8 +11235,8 @@ type ProjectsLocationsDatasetsConsentStoresDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified Consent store and removes all consent
-// data in the specified consent store.
+// Delete: Deletes the specified consent store and removes all the
+// consent store's data.
 func (r *ProjectsLocationsDatasetsConsentStoresService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11263,7 +11270,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11322,7 +11329,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified Consent store and removes all consent data in the specified consent store.",
+	//   "description": "Deletes the specified consent store and removes all the consent store's data.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.delete",
@@ -11331,7 +11338,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Consent store to delete.",
+	//       "description": "Required. The resource name of the consent store to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -11360,11 +11367,11 @@ type ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall struct {
 	header_                     http.Header
 }
 
-// EvaluateUserConsents: Evaluates the end user's Consents for all
-// matching User data mappings. Note: User data mappings are indexed
-// asynchronously, so there might be a slight delay between the time a
-// mapping is created or updated and when it is included in the results
-// of EvaluateUserConsents.
+// EvaluateUserConsents: Evaluates the user's Consents for all matching
+// User data mappings. Note: User data mappings are indexed
+// asynchronously, which can cause a slight delay between the time
+// mappings are created or updated and when they are included in
+// EvaluateUserConsents results.
 func (r *ProjectsLocationsDatasetsConsentStoresService) EvaluateUserConsents(consentStore string, evaluateuserconsentsrequest *EvaluateUserConsentsRequest) *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall {
 	c := &ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.consentStore = consentStore
@@ -11399,7 +11406,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11463,7 +11470,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Do(opts
 	}
 	return ret, nil
 	// {
-	//   "description": "Evaluates the end user's Consents for all matching User data mappings. Note: User data mappings are indexed asynchronously, so there might be a slight delay between the time a mapping is created or updated and when it is included in the results of EvaluateUserConsents.",
+	//   "description": "Evaluates the user's Consents for all matching User data mappings. Note: User data mappings are indexed asynchronously, which can cause a slight delay between the time mappings are created or updated and when they are included in EvaluateUserConsents results.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}:evaluateUserConsents",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.evaluateUserConsents",
@@ -11472,7 +11479,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "consentStore": {
-	//       "description": "Name of the Consent store to retrieve user data mappings from.",
+	//       "description": "Required. Name of the consent store to retrieve User data mappings from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -11525,7 +11532,7 @@ type ProjectsLocationsDatasetsConsentStoresGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified Consent store.
+// Get: Gets the specified consent store.
 func (r *ProjectsLocationsDatasetsConsentStoresService) Get(name string) *ProjectsLocationsDatasetsConsentStoresGetCall {
 	c := &ProjectsLocationsDatasetsConsentStoresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11569,7 +11576,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11631,7 +11638,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified Consent store.",
+	//   "description": "Gets the specified consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.get",
@@ -11640,7 +11647,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Consent store to get.",
+	//       "description": "Required. The resource name of the consent store to get.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -11729,7 +11736,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11835,7 +11842,7 @@ type ProjectsLocationsDatasetsConsentStoresListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Consent stores in the given dataset.
+// List: Lists the consent stores in the specified dataset.
 func (r *ProjectsLocationsDatasetsConsentStoresService) List(parent string) *ProjectsLocationsDatasetsConsentStoresListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11867,14 +11874,14 @@ func (r *ProjectsLocationsDatasetsConsentStoresService) List(parent string) *Pro
 // treated as special, it's just another part of the character string to
 // be matched. You can prepend the `NOT` operator to an expression to
 // negate it. Only filtering on labels is supported. For example,
-// `labels.key=value`.
+// `filter=labels.key=value`.
 func (c *ProjectsLocationsDatasetsConsentStoresListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Limit on the number
-// of Consent stores to return in a single response. If not specified,
+// of consent stores to return in a single response. If not specified,
 // 100 is used. May not be larger than 1000.
 func (c *ProjectsLocationsDatasetsConsentStoresListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -11882,7 +11889,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) PageSize(pageSize int64
 }
 
 // PageToken sets the optional parameter "pageToken": Token to retrieve
-// the next page of results or empty to get the first page.
+// the next page of results, or empty to get the first page.
 func (c *ProjectsLocationsDatasetsConsentStoresListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsConsentStoresListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -11925,7 +11932,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11987,7 +11994,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Consent stores in the given dataset.",
+	//   "description": "Lists the consent stores in the specified dataset.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.list",
@@ -11996,18 +12003,18 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts the stores returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. Only filtering on labels is supported. For example, `labels.key=value`.",
+	//       "description": "Optional. Restricts the stores returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. Only filtering on labels is supported. For example, `filter=labels.key=value`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Limit on the number of Consent stores to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "description": "Optional. Limit on the number of consent stores to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token to retrieve the next page of results or empty to get the first page.",
+	//       "description": "Optional. Token to retrieve the next page of results, or empty to get the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12062,7 +12069,7 @@ type ProjectsLocationsDatasetsConsentStoresPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates the specified Consent store.
+// Patch: Updates the specified consent store.
 func (r *ProjectsLocationsDatasetsConsentStoresService) Patch(name string, consentstore *ConsentStore) *ProjectsLocationsDatasetsConsentStoresPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12070,10 +12077,12 @@ func (r *ProjectsLocationsDatasetsConsentStoresService) Patch(name string, conse
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// that applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask that applies to the resource. For the `FieldMask`
+// definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
-// The `labels` field is allowed to be updated.
+// Only the `labels`, `default_consent_ttl`, and
+// `enable_consent_create_on_update` fields are allowed to be updated.
 func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsConsentStoresPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -12106,7 +12115,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12170,7 +12179,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified Consent store.",
+	//   "description": "Updates the specified consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.patch",
@@ -12179,14 +12188,14 @@ func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Consent store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`.",
+	//       "description": "Resource name of the consent store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. Cannot be changed after creation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. The `labels` field is allowed to be updated.",
+	//       "description": "Required. The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `labels`, `default_consent_ttl`, and `enable_consent_create_on_update` fields are allowed to be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -12218,13 +12227,14 @@ type ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall struct {
 }
 
 // QueryAccessibleData: Queries all data_ids that are consented for a
-// given use in the given Consent store and writes them to a specified
-// destination. The returned Operation includes a progress counter for
-// the number of User data mappings processed. Errors are logged to
-// Cloud Logging (see [Viewing logs]
-// (/healthcare/docs/how-tos/logging)). For example, the following
-// sample log entry shows a `failed to evaluate consent policy` error
-// that occurred during a QueryAccessibleData call to consent store
+// specified use in the given consent store and writes them to a
+// specified destination. The returned Operation includes a progress
+// counter for the number of User data mappings processed. Errors are
+// logged to Cloud Logging (see [Viewing logs]
+// (cloud.google.com/healthcare/docs/how-tos/logging)). For example, the
+// following sample log entry shows a `failed to evaluate consent
+// policy` error that occurred during a QueryAccessibleData call to
+// consent store
 // `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 // onsentStores/{consent_store_id}`. ```json jsonPayload: { @type:
 // "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDa
@@ -12276,7 +12286,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12340,7 +12350,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Do(opts 
 	}
 	return ret, nil
 	// {
-	//   "description": "Queries all data_ids that are consented for a given use in the given Consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. Errors are logged to Cloud Logging (see [Viewing logs] (/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. ```json jsonPayload: { @type: \"type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry\" error: { code: 9 message: \"failed to evaluate consent policy\" } resourceName: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}\" } logName: \"projects/{project_id}/logs/healthcare.googleapis.com%2Fquery_accessible_data\" operation: { id: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/operations/{operation_id}\" producer: \"healthcare.googleapis.com/QueryAccessibleData\" } receiveTimestamp: \"TIMESTAMP\" resource: { labels: { consent_store_id: \"{consent_store_id}\" dataset_id: \"{dataset_id}\" location: \"{location_id}\" project_id: \"{project_id}\" } type: \"healthcare_consent_store\" } severity: \"ERROR\" timestamp: \"TIMESTAMP\" ```",
+	//   "description": "Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. Errors are logged to Cloud Logging (see [Viewing logs] (cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. ```json jsonPayload: { @type: \"type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry\" error: { code: 9 message: \"failed to evaluate consent policy\" } resourceName: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}\" } logName: \"projects/{project_id}/logs/healthcare.googleapis.com%2Fquery_accessible_data\" operation: { id: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/operations/{operation_id}\" producer: \"healthcare.googleapis.com/QueryAccessibleData\" } receiveTimestamp: \"TIMESTAMP\" resource: { labels: { consent_store_id: \"{consent_store_id}\" dataset_id: \"{dataset_id}\" location: \"{location_id}\" project_id: \"{project_id}\" } type: \"healthcare_consent_store\" } severity: \"ERROR\" timestamp: \"TIMESTAMP\" ```",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}:queryAccessibleData",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.queryAccessibleData",
@@ -12349,7 +12359,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "consentStore": {
-	//       "description": "Name of the Consent store to retrieve user data mappings from.",
+	//       "description": "Required. Name of the consent store to retrieve User data mappings from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -12418,7 +12428,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12563,7 +12573,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12668,7 +12678,7 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall struct
 	header_             http.Header
 }
 
-// Create: Creates a new Attribute definition in the parent Consent
+// Create: Creates a new Attribute definition in the parent consent
 // store.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Create(parent string, attributedefinition *AttributeDefinition) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12715,7 +12725,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) H
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12779,7 +12789,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Attribute definition in the parent Consent store.",
+	//   "description": "Creates a new Attribute definition in the parent consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/attributeDefinitions",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.create",
@@ -12824,9 +12834,9 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall struct
 	header_    http.Header
 }
 
-// Delete: Deletes the specified Attribute definition. Fails if it is
-// referenced by any User data mapping, or the latest revision of any
-// Consent.
+// Delete: Deletes the specified Attribute definition. Fails if the
+// Attribute definition is referenced by any User data mapping, or the
+// latest revision of any Consent.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12860,7 +12870,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12919,7 +12929,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified Attribute definition. Fails if it is referenced by any User data mapping, or the latest revision of any Consent.",
+	//   "description": "Deletes the specified Attribute definition. Fails if the Attribute definition is referenced by any User data mapping, or the latest revision of any Consent.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/attributeDefinitions/{attributeDefinitionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.delete",
@@ -12928,7 +12938,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) D
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Attribute definition to delete.",
+	//       "description": "Required. The resource name of the Attribute definition to delete. To preserve referential integrity, Attribute definitions referenced by a User data mapping or the latest revision of a Consent cannot be deleted.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/attributeDefinitions/[^/]+$",
 	//       "required": true,
@@ -13001,7 +13011,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Head
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13101,7 +13111,7 @@ type ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Attribute definitions in the given Consent store.
+// List: Lists the Attribute definitions in the specified consent store.
 func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13132,14 +13142,15 @@ func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) List
 // If a boolean operator appears within a quoted string, it is not
 // treated as special, it's just another part of the character string to
 // be matched. You can prepend the `NOT` operator to an expression to
-// negate it. The only field available for filtering is `category`.
+// negate it. The only field available for filtering is `category`. For
+// example, `filter=category=\"REQUEST\".
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Limit on the number
-// of attribute definitions to return in a single response. If not
+// of Attribute definitions to return in a single response. If not
 // specified, 100 is used. May not be larger than 1000.
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -13190,7 +13201,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Hea
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13252,7 +13263,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Do(
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Attribute definitions in the given Consent store.",
+	//   "description": "Lists the Attribute definitions in the specified consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/attributeDefinitions",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.attributeDefinitions.list",
@@ -13261,23 +13272,23 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Do(
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts the attributes returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The only field available for filtering is `category`.",
+	//       "description": "Optional. Restricts the attributes returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The only field available for filtering is `category`. For example, `filter=category=\\\"REQUEST\\\"`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Limit on the number of attribute definitions to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "description": "Optional. Limit on the number of Attribute definitions to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token to retrieve the next page of results or empty to get the first page.",
+	//       "description": "Optional. Token to retrieve the next page of results or empty to get the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the Consent store to retrieve attribute definitions from.",
+	//       "description": "Required. Name of the consent store to retrieve Attribute definitions from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -13335,12 +13346,13 @@ func (r *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsService) Patc
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// that applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask that applies to the resource. For the `FieldMask`
+// definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
-// The `description`, `allowed_values`, `consent_default_values`, and
-// `data_mapping_default_value` fields are allowed to be updated. The
-// updated `allowed_values` must contain all values from the previous
+// Only the `description`, `allowed_values`, `consent_default_values`
+// and `data_mapping_default_value` fields can be updated. The updated
+// `allowed_values` must contain all values from the previous
 // `allowed_values`.
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -13374,7 +13386,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) He
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13447,14 +13459,14 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) Do
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`.",
+	//       "description": "Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/attributeDefinitions/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. The `description`, `allowed_values`, `consent_default_values`, and `data_mapping_default_value` fields are allowed to be updated. The updated `allowed_values` must contain all values from the previous `allowed_values`.",
+	//       "description": "Required. The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `description`, `allowed_values`, `consent_default_values` and `data_mapping_default_value` fields can be updated. The updated `allowed_values` must contain all values from the previous `allowed_values`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -13485,7 +13497,7 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall struct {
 	header_         http.Header
 }
 
-// Create: Creates a new Consent artifact in the parent Consent store.
+// Create: Creates a new Consent artifact in the parent consent store.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Create(parent string, consentartifact *ConsentArtifact) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13520,7 +13532,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13584,7 +13596,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Consent artifact in the parent Consent store.",
+	//   "description": "Creates a new Consent artifact in the parent consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consentArtifacts",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consentArtifacts.create",
@@ -13593,7 +13605,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the Consent store this consent artifact belongs to.",
+	//       "description": "Required. The name of the consent store this Consent artifact belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -13624,8 +13636,8 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified Consent artifact. Fails if it is
-// referenced by the latest revision of any Consent.
+// Delete: Deletes the specified Consent artifact. Fails if the artifact
+// is referenced by the latest revision of any Consent.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13659,7 +13671,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13718,7 +13730,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified Consent artifact. Fails if it is referenced by the latest revision of any Consent.",
+	//   "description": "Deletes the specified Consent artifact. Fails if the artifact is referenced by the latest revision of any Consent.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consentArtifacts/{consentArtifactsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consentArtifacts.delete",
@@ -13727,7 +13739,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the consent artifact to delete.",
+	//       "description": "Required. The resource name of the Consent artifact to delete. To preserve referential integrity, Consent artifacts referenced by the latest revision of a Consent cannot be deleted.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consentArtifacts/[^/]+$",
 	//       "required": true,
@@ -13800,7 +13812,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13871,7 +13883,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the consent artifact to retrieve.",
+	//       "description": "Required. The resource name of the Consent artifact to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consentArtifacts/[^/]+$",
 	//       "required": true,
@@ -13900,7 +13912,7 @@ type ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Consent artifacts in the given Consent store.
+// List: Lists the Consent artifacts in the specified consent store.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13931,9 +13943,10 @@ func (r *ProjectsLocationsDatasetsConsentStoresConsentArtifactsService) List(par
 // If a boolean operator appears within a quoted string, it is not
 // treated as special, it's just another part of the character string to
 // be matched. You can prepend the `NOT` operator to an expression to
-// negate it. The fields available for filtering are: - user_id -
-// consent_content_version - metadata. For example,
-// `Metadata("key")="value" or `HasMetadata("key")`.
+// negate it. The fields available for filtering are: - user_id. For
+// example, `filter=user_id=\"user123\". - consent_content_version -
+// metadata. For example, `filter=Metadata(\"testkey\")=\"value\" or
+// `filter=HasMetadata(\"testkey\")`.
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -13992,7 +14005,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14054,7 +14067,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Do(opts
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Consent artifacts in the given Consent store.",
+	//   "description": "Lists the Consent artifacts in the specified consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consentArtifacts",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consentArtifacts.list",
@@ -14063,23 +14076,23 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts the artifacts returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - user_id - consent_content_version - metadata. For example, `Metadata(\"key\")=\"value\"` or `HasMetadata(\"key\")`.",
+	//       "description": "Optional. Restricts the artifacts returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - user_id. For example, `filter=user_id=\\\"user123\\\"`. - consent_content_version - metadata. For example, `filter=Metadata(\\\"testkey\\\")=\\\"value\\\"` or `filter=HasMetadata(\\\"testkey\\\")`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Limit on the number of consent artifacts to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "description": "Optional. Limit on the number of consent artifacts to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from the previous List request, if any.",
+	//       "description": "Optional. The next_page_token value returned from the previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the Consent store to retrieve consent artifacts from.",
+	//       "description": "Required. Name of the consent store to retrieve consent artifacts from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -14131,9 +14144,9 @@ type ProjectsLocationsDatasetsConsentStoresConsentsActivateCall struct {
 
 // Activate: Activates the latest revision of the specified Consent by
 // committing a new revision with `state` updated to `ACTIVE`. If the
-// latest revision of the given consent is in the `ACTIVE` state, no new
-// revision is committed. A FAILED_PRECONDITION error occurs if the
-// latest revision of the given consent is in the `REJECTED` or
+// latest revision of the specified Consent is in the `ACTIVE` state, no
+// new revision is committed. A FAILED_PRECONDITION error occurs if the
+// latest revision of the specified consent is in the `REJECTED` or
 // `REVOKED` state.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Activate(name string, activateconsentrequest *ActivateConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14169,7 +14182,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14233,7 +14246,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Do(opts ...
 	}
 	return ret, nil
 	// {
-	//   "description": "Activates the latest revision of the specified Consent by committing a new revision with `state` updated to `ACTIVE`. If the latest revision of the given consent is in the `ACTIVE` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in the `REJECTED` or `REVOKED` state.",
+	//   "description": "Activates the latest revision of the specified Consent by committing a new revision with `state` updated to `ACTIVE`. If the latest revision of the specified Consent is in the `ACTIVE` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified consent is in the `REJECTED` or `REVOKED` state.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:activate",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.activate",
@@ -14242,7 +14255,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the consent to activate, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
+	//       "description": "Required. The resource name of the Consent to activate, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
@@ -14274,7 +14287,7 @@ type ProjectsLocationsDatasetsConsentStoresConsentsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new Consent in the parent Consent store.
+// Create: Creates a new Consent in the parent consent store.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Create(parent string, consent *Consent) *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14309,7 +14322,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14373,7 +14386,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Consent in the parent Consent store.",
+	//   "description": "Creates a new Consent in the parent consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.create",
@@ -14416,7 +14429,7 @@ type ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall struct {
 // Delete: Deletes the Consent and its revisions. To keep a record of
 // the Consent but mark it inactive, see [RevokeConsent]. To delete a
 // revision of a Consent, see [DeleteConsentRevision]. This operation
-// does not delete the related consent artifact.
+// does not delete the related Consent artifact.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Delete(name string) *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14450,7 +14463,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14509,7 +14522,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the Consent and its revisions. To keep a record of the Consent but mark it inactive, see [RevokeConsent]. To delete a revision of a Consent, see [DeleteConsentRevision]. This operation does not delete the related consent artifact.",
+	//   "description": "Deletes the Consent and its revisions. To keep a record of the Consent but mark it inactive, see [RevokeConsent]. To delete a revision of a Consent, see [DeleteConsentRevision]. This operation does not delete the related Consent artifact.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.delete",
@@ -14518,7 +14531,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the consent to delete, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
+	//       "description": "Required. The resource name of the Consent to delete, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
@@ -14582,7 +14595,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14650,7 +14663,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the consent revision to delete, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}@{revision_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is not specified in the name.",
+	//       "description": "Required. The resource name of the Consent revision to delete, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}@{revision_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is not specified in the name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
@@ -14724,7 +14737,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14795,7 +14808,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the consent to retrieve, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. In order to retrieve a previous revision of the consent, also provide the revision ID: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}@{revision_id}`",
+	//       "description": "Required. The resource name of the Consent to retrieve, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. In order to retrieve a previous revision of the Consent, also provide the revision ID: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}@{revision_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
@@ -14824,8 +14837,8 @@ type ProjectsLocationsDatasetsConsentStoresConsentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the Consent in the given Consent store, returning each
-// consent's latest revision.
+// List: Lists the Consent in the given consent store, returning each
+// Consent's latest revision.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14856,16 +14869,18 @@ func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) List(parent stri
 // If a boolean operator appears within a quoted string, it is not
 // treated as special, it's just another part of the character string to
 // be matched. You can prepend the `NOT` operator to an expression to
-// negate it. The fields available for filtering are: - user_id -
-// consent_artifact - state - revision_create_time - metadata. For
-// example, `Metadata("key")="value" or `HasMetadata("key")`.
+// negate it. The fields available for filtering are: - user_id. For
+// example, `filter='user_id="user123"'`. - consent_artifact - state -
+// revision_create_time - metadata. For example,
+// `filter=Metadata(\"testkey\")=\"value\" or
+// `filter=HasMetadata(\"testkey\")`.
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Limit on the number
-// of consents to return in a single response. If not specified, 100 is
+// of Consents to return in a single response. If not specified, 100 is
 // used. May not be larger than 1000.
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresConsentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -14917,7 +14932,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14979,7 +14994,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the Consent in the given Consent store, returning each consent's latest revision.",
+	//   "description": "Lists the Consent in the given consent store, returning each Consent's latest revision.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.list",
@@ -14988,23 +15003,23 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts the consents returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - user_id - consent_artifact - state - revision_create_time - metadata. For example, `Metadata(\"key\")=\"value\"` or `HasMetadata(\"key\")`.",
+	//       "description": "Optional. Restricts the consents returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - user_id. For example, `filter='user_id=\"user123\"'`. - consent_artifact - state - revision_create_time - metadata. For example, `filter=Metadata(\\\"testkey\\\")=\\\"value\\\"` or `filter=HasMetadata(\\\"testkey\\\")`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Limit on the number of consents to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "description": "Optional. Limit on the number of Consents to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The next_page_token value returned from the previous List request, if any.",
+	//       "description": "Optional. The next_page_token value returned from the previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the Consent store to retrieve consents from.",
+	//       "description": "Required. Name of the consent store to retrieve Consents from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -15054,8 +15069,8 @@ type ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall struct {
 	header_      http.Header
 }
 
-// ListRevisions: Lists the revisions of the given Consent in reverse
-// chronological order.
+// ListRevisions: Lists the revisions of the specified Consent in
+// reverse chronological order.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) ListRevisions(name string) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15086,8 +15101,11 @@ func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) ListRevisions(na
 // If a boolean operator appears within a quoted string, it is not
 // treated as special, it's just another part of the character string to
 // be matched. You can prepend the `NOT` operator to an expression to
-// negate it. Fields/functions available for filtering are: - user_id -
-// consent_artifact - state - revision_create_time
+// negate it. Fields/functions available for filtering are: - user_id.
+// For example, `filter='user_id="user123"'`. - consent_artifact - state
+// - revision_create_time - metadata. For example,
+// `filter=Metadata(\"testkey\")=\"value\" or
+// `filter=HasMetadata(\"testkey\")`.
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -15146,7 +15164,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Header
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15208,7 +15226,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Do(opt
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the revisions of the given Consent in reverse chronological order.",
+	//   "description": "Lists the revisions of the specified Consent in reverse chronological order.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:listRevisions",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.listRevisions",
@@ -15217,25 +15235,25 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts the revisions returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. Fields/functions available for filtering are: - user_id - consent_artifact - state - revision_create_time",
+	//       "description": "Optional. Restricts the revisions returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. Fields/functions available for filtering are: - user_id. For example, `filter='user_id=\"user123\"'`. - consent_artifact - state - revision_create_time - metadata. For example, `filter=Metadata(\\\"testkey\\\")=\\\"value\\\"` or `filter=HasMetadata(\\\"testkey\\\")`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the consent to retrieve revisions for.",
+	//       "description": "Required. The resource name of the Consent to retrieve revisions for.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Limit on the number of revisions to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "description": "Optional. Limit on the number of revisions to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token to retrieve the next page of results or empty if there are no more results in the list.",
+	//       "description": "Optional. Token to retrieve the next page of results or empty if there are no more results in the list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15285,8 +15303,8 @@ type ProjectsLocationsDatasetsConsentStoresConsentsPatchCall struct {
 
 // Patch: Updates the latest revision of the specified Consent by
 // committing a new revision with the changes. A FAILED_PRECONDITION
-// error occurs if the latest revision of the given consent is in the
-// `REJECTED` or `REVOKED` state.
+// error occurs if the latest revision of the specified Consent is in
+// the `REJECTED` or `REVOKED` state.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Patch(name string, consent *Consent) *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15294,11 +15312,12 @@ func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Patch(name strin
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// to apply to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask to apply to the resource. For the `FieldMask` definition,
+// see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
-// The `user_id`, `policies`, and `consent_artifact` fields can be
-// updated.
+// Only the `user_id`, `policies`, `consent_artifact`, and `metadata`
+// fields can be updated.
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15331,7 +15350,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15395,7 +15414,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the latest revision of the specified Consent by committing a new revision with the changes. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in the `REJECTED` or `REVOKED` state.",
+	//   "description": "Updates the latest revision of the specified Consent by committing a new revision with the changes. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `REJECTED` or `REVOKED` state.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.patch",
@@ -15404,14 +15423,14 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`.",
+	//       "description": "Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask to apply to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. The `user_id`, `policies`, and `consent_artifact` fields can be updated.",
+	//       "description": "Required. The update mask to apply to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `user_id`, `policies`, `consent_artifact`, and `metadata` fields can be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -15444,10 +15463,10 @@ type ProjectsLocationsDatasetsConsentStoresConsentsRejectCall struct {
 
 // Reject: Rejects the latest revision of the specified Consent by
 // committing a new revision with `state` updated to `REJECTED`. If the
-// latest revision of the given consent is in the `REJECTED` state, no
-// new revision is committed. A FAILED_PRECONDITION error occurs if the
-// latest revision of the given consent is in the `ACTIVE` or `REVOKED`
-// state.
+// latest revision of the specified Consent is in the `REJECTED` state,
+// no new revision is committed. A FAILED_PRECONDITION error occurs if
+// the latest revision of the specified Consent is in the `ACTIVE` or
+// `REVOKED` state.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Reject(name string, rejectconsentrequest *RejectConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsRejectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15482,7 +15501,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15546,7 +15565,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Rejects the latest revision of the specified Consent by committing a new revision with `state` updated to `REJECTED`. If the latest revision of the given consent is in the `REJECTED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in the `ACTIVE` or `REVOKED` state.",
+	//   "description": "Rejects the latest revision of the specified Consent by committing a new revision with `state` updated to `REJECTED`. If the latest revision of the specified Consent is in the `REJECTED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the specified Consent is in the `ACTIVE` or `REVOKED` state.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:reject",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.reject",
@@ -15555,7 +15574,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the consent to reject, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
+	//       "description": "Required. The resource name of the Consent to reject, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
@@ -15589,9 +15608,9 @@ type ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall struct {
 
 // Revoke: Revokes the latest revision of the specified Consent by
 // committing a new revision with `state` updated to `REVOKED`. If the
-// latest revision of the given consent is in the `REVOKED` state, no
-// new revision is committed. A FAILED_PRECONDITION error occurs if the
-// latest revision of the given consent is in `DRAFT` or `REJECTED`
+// latest revision of the specified Consent is in the `REVOKED` state,
+// no new revision is committed. A FAILED_PRECONDITION error occurs if
+// the latest revision of the given consent is in `DRAFT` or `REJECTED`
 // state.
 func (r *ProjectsLocationsDatasetsConsentStoresConsentsService) Revoke(name string, revokeconsentrequest *RevokeConsentRequest) *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall {
 	c := &ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -15627,7 +15646,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15691,7 +15710,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Revokes the latest revision of the specified Consent by committing a new revision with `state` updated to `REVOKED`. If the latest revision of the given consent is in the `REVOKED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in `DRAFT` or `REJECTED` state.",
+	//   "description": "Revokes the latest revision of the specified Consent by committing a new revision with `state` updated to `REVOKED`. If the latest revision of the specified Consent is in the `REVOKED` state, no new revision is committed. A FAILED_PRECONDITION error occurs if the latest revision of the given consent is in `DRAFT` or `REJECTED` state.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/consents/{consentsId}:revoke",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.consents.revoke",
@@ -15700,7 +15719,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the consent to revoke, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
+	//       "description": "Required. The resource name of the Consent to revoke, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. An INVALID_ARGUMENT error occurs if `revision_id` is specified in the name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
 	//       "required": true,
@@ -15767,7 +15786,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Head
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15840,7 +15859,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the user data mapping to archive.",
+	//       "description": "Required. The resource name of the User data mapping to archive.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/userDataMappings/[^/]+$",
 	//       "required": true,
@@ -15872,7 +15891,7 @@ type ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall struct {
 	header_         http.Header
 }
 
-// Create: Creates a new User data mapping in the parent Consent store.
+// Create: Creates a new User data mapping in the parent consent store.
 func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Create(parent string, userdatamapping *UserDataMapping) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall {
 	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15907,7 +15926,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15971,7 +15990,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Do(op
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new User data mapping in the parent Consent store.",
+	//   "description": "Creates a new User data mapping in the parent consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/userDataMappings",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.userDataMappings.create",
@@ -16045,7 +16064,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16113,7 +16132,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the user data mapping to delete.",
+	//       "description": "Required. The resource name of the User data mapping to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/userDataMappings/[^/]+$",
 	//       "required": true,
@@ -16186,7 +16205,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16257,7 +16276,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the user data mapping to retrieve.",
+	//       "description": "Required. The resource name of the User data mapping to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/userDataMappings/[^/]+$",
 	//       "required": true,
@@ -16286,7 +16305,7 @@ type ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the User data mappings in the given Consent store.
+// List: Lists the User data mappings in the specified consent store.
 func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) List(parent string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
 	c := &ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -16318,14 +16337,15 @@ func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) List(par
 // treated as special, it's just another part of the character string to
 // be matched. You can prepend the `NOT` operator to an expression to
 // negate it. The fields available for filtering are: - data_id -
-// user_id - archived - archive_time
+// user_id. For example, `filter=user_id=\"user123\". - archived -
+// archive_time
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Filter(filter string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": Limit on the number
-// of user data mappings to return in a single response. If not
+// of User data mappings to return in a single response. If not
 // specified, 100 is used. May not be larger than 1000.
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -16333,7 +16353,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) PageSiz
 }
 
 // PageToken sets the optional parameter "pageToken": Token to retrieve
-// the next page of results or empty to get the first page.
+// the next page of results, or empty to get the first page.
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16376,7 +16396,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16438,7 +16458,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Do(opts
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the User data mappings in the given Consent store.",
+	//   "description": "Lists the User data mappings in the specified consent store.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}/userDataMappings",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.userDataMappings.list",
@@ -16447,23 +16467,23 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts the user data mappings returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - data_id - user_id - archived - archive_time",
+	//       "description": "Optional. Restricts the user data mappings returned to those matching a filter. The following syntax is available: * A string field value can be written as text inside quotation marks, for example `\"query text\"`. The only valid relational operation for text fields is equality (`=`), where text is searched within the field, rather than having the field be equal to the text. For example, `\"Comment = great\"` returns messages with `great` in the comment field. * A number field value can be written as an integer, a decimal, or an exponential. The valid relational operators for number fields are the equality operator (`=`), along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * A date field value must be written in `yyyy-mm-dd` form. Fields with date and time use the RFC3339 time format. Leading zeros are required for one-digit months and days. The valid relational operators for date fields are the equality operator (`=`) , along with the less than/greater than operators (`\u003c`, `\u003c=`, `\u003e`, `\u003e=`). Note that there is no inequality (`!=`) operator. You can prepend the `NOT` operator to an expression to negate it. * Multiple field query expressions can be combined in one query by adding `AND` or `OR` operators between the expressions. If a boolean operator appears within a quoted string, it is not treated as special, it's just another part of the character string to be matched. You can prepend the `NOT` operator to an expression to negate it. The fields available for filtering are: - data_id - user_id. For example, `filter=user_id=\\\"user123\\\"`. - archived - archive_time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Limit on the number of user data mappings to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
+	//       "description": "Optional. Limit on the number of User data mappings to return in a single response. If not specified, 100 is used. May not be larger than 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token to retrieve the next page of results or empty to get the first page.",
+	//       "description": "Optional. Token to retrieve the next page of results, or empty to get the first page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the Consent store to retrieve user data mappings from.",
+	//       "description": "Required. Name of the consent store to retrieve User data mappings from.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+$",
 	//       "required": true,
@@ -16521,9 +16541,12 @@ func (r *ProjectsLocationsDatasetsConsentStoresUserDataMappingsService) Patch(na
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// that applies to the resource. For the `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// update mask that applies to the resource. For the `FieldMask`
+// definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+// Only the `data_id`, `user_id` and `resource_attributes` fields can be
+// updated.
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -16556,7 +16579,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Header
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16636,7 +16659,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Do(opt
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.",
+	//       "description": "Required. The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `data_id`, `user_id` and `resource_attributes` fields can be updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -16710,7 +16733,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16863,7 +16886,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17002,7 +17025,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17137,7 +17160,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17286,7 +17309,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17446,7 +17469,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17590,7 +17613,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17786,7 +17809,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17966,7 +17989,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18132,7 +18155,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18263,7 +18286,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18394,7 +18417,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Header() http
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18507,7 +18530,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18657,7 +18680,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18772,7 +18795,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18920,7 +18943,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19080,7 +19103,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Header
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19210,7 +19233,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Header() 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19341,7 +19364,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Head
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19472,7 +19495,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Header(
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19593,7 +19616,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Header()
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19711,7 +19734,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Header() h
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19872,7 +19895,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20002,7 +20025,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20133,7 +20156,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20250,7 +20273,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20413,7 +20436,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20545,7 +20568,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20677,7 +20700,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20807,7 +20830,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20939,7 +20962,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21058,7 +21081,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21209,7 +21232,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21348,7 +21371,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21488,7 +21511,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21637,7 +21660,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21797,7 +21820,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21997,7 +22020,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22193,7 +22216,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22373,7 +22396,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22521,7 +22544,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22666,7 +22689,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22873,7 +22896,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) H
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23049,7 +23072,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) Header(
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConceptMapTranslateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23201,7 +23224,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirObservationLastnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23391,7 +23414,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23529,7 +23552,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23687,7 +23710,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourceValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23826,7 +23849,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23947,7 +23970,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24115,7 +24138,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Header() h
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24263,7 +24286,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24400,7 +24423,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24520,7 +24543,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24657,7 +24680,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24825,7 +24848,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24964,7 +24987,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25091,7 +25114,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25243,7 +25266,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25402,7 +25425,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25541,7 +25564,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25665,7 +25688,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25775,7 +25798,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25919,7 +25942,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26058,7 +26081,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26207,7 +26230,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26367,7 +26390,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26533,7 +26556,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26729,7 +26752,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26909,7 +26932,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27057,7 +27080,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27202,7 +27225,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27381,7 +27404,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesBatchGetCall) Header() http
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27548,7 +27571,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27686,7 +27709,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27847,7 +27870,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28012,7 +28035,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28256,7 +28279,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28467,7 +28490,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28622,7 +28645,7 @@ func (c *ProjectsLocationsDatasetsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28773,7 +28796,7 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28947,7 +28970,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29121,7 +29144,7 @@ func (c *ProjectsLocationsServicesNlpAnalyzeEntitiesCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesNlpAnalyzeEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

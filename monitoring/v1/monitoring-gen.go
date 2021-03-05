@@ -1860,10 +1860,11 @@ type ProjectsDashboardsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new custom dashboard.This method requires the
-// monitoring.dashboards.create permission on the specified project. For
-// more information, see Google Cloud IAM
-// (https://cloud.google.com/iam).
+// Create: Creates a new custom dashboard. For examples on how you can
+// use this API to create dashboards, see Managing dashboards by API.
+// This method requires the monitoring.dashboards.create permission on
+// the specified project. For more information about permissions, see
+// Cloud Identity and Access Management.
 func (r *ProjectsDashboardsService) Create(parent string, dashboard *Dashboard) *ProjectsDashboardsCreateCall {
 	c := &ProjectsDashboardsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1898,7 +1899,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1962,7 +1963,7 @@ func (c *ProjectsDashboardsCreateCall) Do(opts ...googleapi.CallOption) (*Dashbo
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new custom dashboard.This method requires the monitoring.dashboards.create permission on the specified project. For more information, see Google Cloud IAM (https://cloud.google.com/iam).",
+	//   "description": "Creates a new custom dashboard. For examples on how you can use this API to create dashboards, see Managing dashboards by API. This method requires the monitoring.dashboards.create permission on the specified project. For more information about permissions, see Cloud Identity and Access Management.",
 	//   "flatPath": "v1/projects/{projectsId}/dashboards",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.dashboards.create",
@@ -2041,7 +2042,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2187,7 +2188,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2353,7 +2354,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2525,7 +2526,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210224")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

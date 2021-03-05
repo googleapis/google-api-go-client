@@ -1262,7 +1262,7 @@
       }
     }
   },
-  "revision": "20210122",
+  "revision": "20210219",
   "rootUrl": "https://notebooks.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1554,6 +1554,10 @@
         },
         "outputNotebookFolder": {
           "description": "Path to the notebook folder to write to. Must be in a Google Cloud Storage bucket path. Format: gs://{project_id}/{folder} Ex: gs://notebook_user/scheduled_notebooks",
+          "type": "string"
+        },
+        "parameters": {
+          "description": "Parameters used within the 'input_notebook_file' notebook.",
           "type": "string"
         },
         "paramsYamlFile": {
@@ -2233,6 +2237,14 @@
           "readOnly": true,
           "type": "string"
         },
+        "recentExecutions": {
+          "description": "Output only. The most recent execution names triggered from this schedule and their corresponding states.",
+          "items": {
+            "$ref": "Execution"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "state": {
           "enum": [
             "STATE_UNSPECIFIED",
@@ -2255,7 +2267,7 @@
           "type": "string"
         },
         "updateTime": {
-          "description": "Output only. TIme the schedule was last updated.",
+          "description": "Output only. Time the schedule was last updated.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
@@ -2524,6 +2536,10 @@
         },
         "targetImage": {
           "description": "Target VM Image. Format: ainotebooks-vm/project/image-name/name.",
+          "type": "string"
+        },
+        "targetVersion": {
+          "description": "Target VM Version, like m63.",
           "type": "string"
         },
         "version": {

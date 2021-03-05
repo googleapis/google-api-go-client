@@ -3,16 +3,16 @@ module google.golang.org/api
 go 1.11
 
 require (
-	cloud.google.com/go v0.74.0
+	cloud.google.com/go v0.78.0
 	github.com/google/go-cmp v0.5.4
 	github.com/googleapis/gax-go/v2 v2.0.5
-	go.opencensus.io v0.22.5
+	go.opencensus.io v0.23.0
 	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5
-	golang.org/x/oauth2 v0.0.0-20210218202405-ba52d332ba99
-	golang.org/x/sync v0.0.0-20201207232520-09787c993a3a
-	golang.org/x/sys v0.0.0-20210104204734-6f8348627aad
-	golang.org/x/tools v0.0.0-20210105154028-b0ab187a4818
+	golang.org/x/oauth2 v0.0.0-20210220000619-9bb904979d93
+	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	golang.org/x/sys v0.0.0-20210303074136-134d130e1a04
+	golang.org/x/tools v0.1.0
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto v0.0.0-20201214200347-8c77b98c765d
-	google.golang.org/grpc v1.34.0
+	google.golang.org/genproto v0.0.0-20210303154014-9728d6b83eeb
+	google.golang.org/grpc v1.36.0
 )

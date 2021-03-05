@@ -33,14 +33,13 @@ import (
 	"os"
 	"testing"
 
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 	"google.golang.org/api/dns/v1"
-	"google.golang.org/api/iamcredentials/v1"
+	"google.golang.org/api/idtoken"
+	"google.golang.org/api/option"
 )
 
 const (
-	envCredentials  = "GOOGLE_APPLICATION_CREDENTIALS"
+	envCredentials  = "GCLOUD_TESTS_GOLANG_KEY"
 	envAudienceOIDC = "GCLOUD_TESTS_GOLANG_AUDIENCE_OIDC"
 	envProject      = "GCLOUD_TESTS_GOLANG_PROJECT_ID"
 )
@@ -52,12 +51,6 @@ var (
 	clientID     string
 	projectID    string
 )
-
-// keyFile is a struct to extract the relevant json fields for our ServiceAccount KeyFile
-type keyFile struct {
-	ClientEmail string `json:"client_email"`
-	ClientID    string `json:"client_id"`
-}
 
 // TestMain contains all of the setup code that needs to be run once before any of the tests are run
 func TestMain(m *testing.M) {
@@ -76,6 +69,20 @@ func TestMain(m *testing.M) {
 		log.Fatalf("Please set %s to the OIDC Audience", envAudienceOIDC)
 	}
 
+	clientID = getClientID(keyFileName)
+	oidcToken = generateGoogleToken(keyFileName)
+
+	// This line runs all of our individual tests
+	os.Exit(m.Run())
+}
+
+// keyFile is a struct to extract the relevant json fields for our ServiceAccount KeyFile
+type keyFile struct {
+	ClientEmail string `json:"client_email"`
+	ClientID    string `json:"client_id"`
+}
+
+func getClientID(keyFileName string) string {
 	kf, err := os.Open(keyFileName)
 	if err != nil {
 		log.Fatalf("Failed to open file '%s': %v", keyFileName, err)
@@ -89,25 +96,21 @@ func TestMain(m *testing.M) {
 		log.Fatalf("Keyfile '%s' stored in improper format: %v", keyFileName, err)
 	}
 
-	clientID = fmt.Sprintf("projects/-/serviceAccounts/%s", keyFileSettings.ClientEmail)
+	return fmt.Sprintf("projects/-/serviceAccounts/%s", keyFileSettings.ClientEmail)
+}
 
-	iam, err := iamcredentials.NewService(context.Background())
+func generateGoogleToken(keyFileName string) string {
+	ts, err := idtoken.NewTokenSource(context.Background(), oidcAudience, option.WithCredentialsFile(keyFileName))
 	if err != nil {
-		log.Fatalf("Unable to access iamcredentials service: %v", err)
+		log.Fatalf("Unable to generate a Google token source: %v", err)
 	}
 
-	idTokenInfo, err := iam.Projects.ServiceAccounts.GenerateIdToken(clientID, &iamcredentials.GenerateIdTokenRequest{
-		Audience:     oidcAudience,
-		IncludeEmail: true,
-	}).Do()
+	token, err := ts.Token()
 	if err != nil {
-		log.Fatalf("Failed to generate ID Token: %v", err)
+		log.Fatalf("Unable to retrieve Google token: %v", err)
 	}
 
-	oidcToken = idTokenInfo.Token
-
-	// This line runs all of our individual tests
-	os.Exit(m.Run())
+	return token.AccessToken
 }
 
 // testBYOID makes sure that the default credentials works for
@@ -143,17 +146,9 @@ func testBYOID(t *testing.T, c config, env map[string]string) {
 		defer os.Setenv(key, oldValue)
 	}
 
-	// If our config file and environment variables were set up correctly,
-	// finding the default credentials should work correctly.
-	credentials, err := google.FindDefaultCredentials(context.Background(), "https://www.googleapis.com/auth/cloud-platform")
-	if err != nil {
-		t.Fatalf("Could not find Default credentials: %v", err)
-	}
-
 	// Once the default credentials are obtained,
 	// we should be able to access Google Cloud resources.
-	client := oauth2.NewClient(context.Background(), credentials.TokenSource)
-	dnsService, err := dns.New(client)
+	dnsService, err := dns.NewService(context.Background(), option.WithCredentialsFile(configFile.Name()))
 	if err != nil {
 		t.Fatalf("Could not establish DNS Service: %v", err)
 	}

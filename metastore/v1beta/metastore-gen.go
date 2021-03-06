@@ -372,12 +372,21 @@ type DatabaseDump struct {
 	//   "MYSQL" - The type of the source database is MySQL.
 	DatabaseType string `json:"databaseType,omitempty"`
 
-	// GcsUri: A Cloud Storage object URI that specifies the source from
-	// which to import metadata. It must begin with gs://.
+	// GcsUri: A Cloud Storage object or folder URI that specifies the
+	// source from which to import metadata. It must begin with gs://.
 	GcsUri string `json:"gcsUri,omitempty"`
 
 	// SourceDatabase: The name of the source database.
 	SourceDatabase string `json:"sourceDatabase,omitempty"`
+
+	// Type: Optional. The type of the database dump. If unspecified,
+	// defaults to MYSQL.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The type of the database dump is unknown.
+	//   "MYSQL" - Database dump is a MySQL dump file.
+	//   "AVRO" - Database dump contains Avro files.
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatabaseType") to
 	// unconditionally include in API requests. By default, fields with
@@ -417,6 +426,15 @@ type Empty struct {
 // ExportMetadataRequest: Request message for
 // DataprocMetastore.ExportMetadata.
 type ExportMetadataRequest struct {
+	// DatabaseDumpType: Optional. The type of the database dump. If
+	// unspecified, defaults to MYSQL.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The type of the database dump is unknown.
+	//   "MYSQL" - Database dump is a MySQL dump file.
+	//   "AVRO" - Database dump contains Avro files.
+	DatabaseDumpType string `json:"databaseDumpType,omitempty"`
+
 	// DestinationGcsFolder: Required. A Cloud Storage URI of a folder that
 	// metadata are exported to, in the format gs:///. A sub-folder
 	// containing exported files will be created below it.
@@ -434,16 +452,15 @@ type ExportMetadataRequest struct {
 	// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
 	RequestId string `json:"requestId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "DestinationGcsFolder") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DatabaseDumpType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DestinationGcsFolder") to
+	// NullFields is a list of field names (e.g. "DatabaseDumpType") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -918,6 +935,14 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 
 // MetadataExport: The details of a metadata export operation.
 type MetadataExport struct {
+	// DatabaseDumpType: Output only. The type of the database dump.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The type of the database dump is unknown.
+	//   "MYSQL" - Database dump is a MySQL dump file.
+	//   "AVRO" - Database dump contains Avro files.
+	DatabaseDumpType string `json:"databaseDumpType,omitempty"`
+
 	// DestinationGcsUri: Output only. A Cloud Storage URI of a folder that
 	// metadata are exported to, in the form of gs:////, where ` is
 	// automatically generated.
@@ -939,15 +964,15 @@ type MetadataExport struct {
 	//   "CANCELLED" - The metadata export is cancelled.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DestinationGcsUri")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "DatabaseDumpType") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DestinationGcsUri") to
+	// NullFields is a list of field names (e.g. "DatabaseDumpType") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1641,7 +1666,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1807,7 +1832,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1980,7 +2005,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2123,7 +2148,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2297,7 +2322,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,7 +2519,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2657,7 +2682,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2794,7 +2819,7 @@ func (c *ProjectsLocationsServicesExportMetadataCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesExportMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2943,7 +2968,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3103,7 +3128,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3288,7 +3313,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3490,7 +3515,7 @@ func (c *ProjectsLocationsServicesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3643,7 +3668,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3788,7 +3813,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3953,7 +3978,7 @@ func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4112,7 +4137,7 @@ func (c *ProjectsLocationsServicesMetadataImportsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4291,7 +4316,7 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsServicesMetadataImportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4494,7 +4519,7 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210304")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210305")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

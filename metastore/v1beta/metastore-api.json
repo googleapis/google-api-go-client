@@ -728,7 +728,7 @@
       }
     }
   },
-  "revision": "20210222",
+  "revision": "20210226",
   "rootUrl": "https://metastore.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -818,11 +818,25 @@
           "type": "string"
         },
         "gcsUri": {
-          "description": "A Cloud Storage object URI that specifies the source from which to import metadata. It must begin with gs://.",
+          "description": "A Cloud Storage object or folder URI that specifies the source from which to import metadata. It must begin with gs://.",
           "type": "string"
         },
         "sourceDatabase": {
           "description": "The name of the source database.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Optional. The type of the database dump. If unspecified, defaults to MYSQL.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "MYSQL",
+            "AVRO"
+          ],
+          "enumDescriptions": [
+            "The type of the database dump is unknown.",
+            "Database dump is a MySQL dump file.",
+            "Database dump contains Avro files."
+          ],
           "type": "string"
         }
       },
@@ -838,6 +852,20 @@
       "description": "Request message for DataprocMetastore.ExportMetadata.",
       "id": "ExportMetadataRequest",
       "properties": {
+        "databaseDumpType": {
+          "description": "Optional. The type of the database dump. If unspecified, defaults to MYSQL.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "MYSQL",
+            "AVRO"
+          ],
+          "enumDescriptions": [
+            "The type of the database dump is unknown.",
+            "Database dump is a MySQL dump file.",
+            "Database dump contains Avro files."
+          ],
+          "type": "string"
+        },
         "destinationGcsFolder": {
           "description": "Required. A Cloud Storage URI of a folder that metadata are exported to, in the format gs:///. A sub-folder containing exported files will be created below it.",
           "type": "string"
@@ -1102,6 +1130,21 @@
       "description": "The details of a metadata export operation.",
       "id": "MetadataExport",
       "properties": {
+        "databaseDumpType": {
+          "description": "Output only. The type of the database dump.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "MYSQL",
+            "AVRO"
+          ],
+          "enumDescriptions": [
+            "The type of the database dump is unknown.",
+            "Database dump is a MySQL dump file.",
+            "Database dump contains Avro files."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "destinationGcsUri": {
           "description": "Output only. A Cloud Storage URI of a folder that metadata are exported to, in the form of gs:////, where ` is automatically generated.",
           "readOnly": true,

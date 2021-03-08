@@ -8,9 +8,10 @@ set -e -x
 
 cd $(dirname $0)/../../..
 
-# Install Go 1.16
 tempdir=$(mktemp -d)
-curl -o /tmp/go.tgz https://dl.google.com/go/go1.16.linux-amd64.tar.gz &&
+sudo apt-get update && sudo apt-get install -y jq
+GOVERSION=$(curl https://golang.org/dl/?mode=json | jq ".[0].version" | sed s/\"//g) &&
+    curl -o /tmp/go.tgz https://dl.google.com/go/${GOVERSION}.linux-amd64.tar.gz &&
     tar -C $tempdir -xzf /tmp/go.tgz &&
     rm /tmp/go.tgz &&
     export PATH=$tempdir/go/bin:$PATH &&

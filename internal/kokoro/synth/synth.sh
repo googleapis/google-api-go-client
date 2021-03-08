@@ -8,9 +8,9 @@ set -e -x
 
 cd $(dirname $0)/../../..
 
-# Install Go 1.15
+# Install Go 1.16
 tempdir=$(mktemp -d)
-curl -o /tmp/go.tgz https://dl.google.com/go/go1.15.1.linux-amd64.tar.gz &&
+curl -o /tmp/go.tgz https://dl.google.com/go/go1.16.linux-amd64.tar.gz &&
     tar -C $tempdir -xzf /tmp/go.tgz &&
     rm /tmp/go.tgz &&
     export PATH=$tempdir/go/bin:$PATH &&

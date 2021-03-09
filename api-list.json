@@ -846,6 +846,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "chromepolicy:v1",
+      "name": "chromepolicy",
+      "version": "v1",
+      "title": "Chrome Policy API",
+      "description": "The Chrome Policy API is a suite of services that allows Chrome administrators to control the policies applied to their managed Chrome OS devices and Chrome browsers.",
+      "discoveryRestUrl": "https://chromepolicy.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "http://developers.google.com/chrome/policy",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "chromeuxreport:v1",
       "name": "chromeuxreport",
       "version": "v1",

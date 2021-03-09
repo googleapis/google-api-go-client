@@ -1,5 +1,12 @@
 # Changes
 
+## [0.41.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.40.0...v0.41.0) (2021-03-09)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#915](https://www.github.com/googleapis/google-api-go-client/issues/915) [#913](https://www.github.com/googleapis/google-api-go-client/issues/913) [#911](https://www.github.com/googleapis/google-api-go-client/issues/911) [#910](https://www.github.com/googleapis/google-api-go-client/issues/910) [#909](https://www.github.com/googleapis/google-api-go-client/issues/909) [#907](https://www.github.com/googleapis/google-api-go-client/issues/907) [#904](https://www.github.com/googleapis/google-api-go-client/issues/904) [#902](https://www.github.com/googleapis/google-api-go-client/issues/902) [#899](https://www.github.com/googleapis/google-api-go-client/issues/899) [#898](https://www.github.com/googleapis/google-api-go-client/issues/898) [#896](https://www.github.com/googleapis/google-api-go-client/issues/896) [#895](https://www.github.com/googleapis/google-api-go-client/issues/895) [#894](https://www.github.com/googleapis/google-api-go-client/issues/894) [#893](https://www.github.com/googleapis/google-api-go-client/issues/893) [#892](https://www.github.com/googleapis/google-api-go-client/issues/892) [#889](https://www.github.com/googleapis/google-api-go-client/issues/889) [#888](https://www.github.com/googleapis/google-api-go-client/issues/888) [#887](https://www.github.com/googleapis/google-api-go-client/issues/887) [#884](https://www.github.com/googleapis/google-api-go-client/issues/884) [#880](https://www.github.com/googleapis/google-api-go-client/issues/880) [#879](https://www.github.com/googleapis/google-api-go-client/issues/879) [#878](https://www.github.com/googleapis/google-api-go-client/issues/878) [#877](https://www.github.com/googleapis/google-api-go-client/issues/877) [#876](https://www.github.com/googleapis/google-api-go-client/issues/876) [#874](https://www.github.com/googleapis/google-api-go-client/issues/874)
+
 ## [0.40.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.39.0...v0.40.0) (2021-02-12)
 
 

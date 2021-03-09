@@ -202,8 +202,12 @@ func (s *AccountWarning) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ActivityRule: Alerts from G Suite Security Center rules service
-// configured by admin.
+// ActionInfo: Metadata related to the action.
+type ActionInfo struct {
+}
+
+// ActivityRule: Alerts from Google Workspace Security Center rules
+// service configured by an admin.
 type ActivityRule struct {
 	// ActionNames: List of action names associated with the rule threshold.
 	ActionNames []string `json:"actionNames,omitempty"`
@@ -1066,22 +1070,22 @@ func (s *GmailMessageInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleOperations: An incident reported by Google Operations for a G
-// Suite application.
+// GoogleOperations: An incident reported by Google Operations for a
+// Google Workspace application.
 type GoogleOperations struct {
 	// AffectedUserEmails: The list of emails which correspond to the users
 	// directly affected by the incident.
 	AffectedUserEmails []string `json:"affectedUserEmails,omitempty"`
 
 	// AttachmentData: Optional. Application-specific data for an incident,
-	// provided when the G Suite application which reported the incident
-	// cannot be completely restored to a valid state.
+	// provided when the Google Workspace application which reported the
+	// incident cannot be completely restored to a valid state.
 	AttachmentData *Attachment `json:"attachmentData,omitempty"`
 
 	// Description: A detailed, freeform incident description.
 	Description string `json:"description,omitempty"`
 
-	// Header: A header to display above the incident message. Typcially
+	// Header: A header to display above the incident message. Typically
 	// used to attach a localized notice on the timeline for followup comms
 	// translations.
 	Header string `json:"header,omitempty"`
@@ -1540,7 +1544,7 @@ func (s *RuleInfo) MarshalJSON() ([]byte, error) {
 }
 
 // RuleViolationInfo: Common alert information about violated rules that
-// are configured by G Suite administrators.
+// are configured by Google Workspace administrators.
 type RuleViolationInfo struct {
 	// DataSource: Source of the data.
 	//
@@ -1585,6 +1589,9 @@ type RuleViolationInfo struct {
 	//   "TRIGGER_UNSPECIFIED" - Trigger is unspecified.
 	//   "DRIVE_SHARE" - A Drive file is shared.
 	Trigger string `json:"trigger,omitempty"`
+
+	// TriggeredActionInfo: Metadata related to the triggered actions.
+	TriggeredActionInfo []*ActionInfo `json:"triggeredActionInfo,omitempty"`
 
 	// TriggeredActionTypes: Actions applied as a consequence of the rule
 	// being triggered.
@@ -1954,7 +1961,7 @@ func (c *AlertsBatchDeleteCall) Header() http.Header {
 
 func (c *AlertsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2079,7 +2086,7 @@ func (c *AlertsBatchUndeleteCall) Header() http.Header {
 
 func (c *AlertsBatchUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2217,7 +2224,7 @@ func (c *AlertsDeleteCall) Header() http.Header {
 
 func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2372,7 +2379,7 @@ func (c *AlertsGetCall) Header() http.Header {
 
 func (c *AlertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2530,7 +2537,7 @@ func (c *AlertsGetMetadataCall) Header() http.Header {
 
 func (c *AlertsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2723,7 +2730,7 @@ func (c *AlertsListCall) Header() http.Header {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2898,7 +2905,7 @@ func (c *AlertsUndeleteCall) Header() http.Header {
 
 func (c *AlertsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3049,7 +3056,7 @@ func (c *AlertsFeedbackCreateCall) Header() http.Header {
 
 func (c *AlertsFeedbackCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3222,7 +3229,7 @@ func (c *AlertsFeedbackListCall) Header() http.Header {
 
 func (c *AlertsFeedbackListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3382,7 +3389,7 @@ func (c *V1beta1GetSettingsCall) Header() http.Header {
 
 func (c *V1beta1GetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3517,7 +3524,7 @@ func (c *V1beta1UpdateSettingsCall) Header() http.Header {
 
 func (c *V1beta1UpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210307")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

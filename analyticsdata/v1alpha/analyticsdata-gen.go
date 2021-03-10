@@ -2134,7 +2134,9 @@ type RunReportRequest struct {
 
 	// Limit: The number of rows to return. If the `limit` parameter is
 	// unspecified, 10,000 rows are returned. The API returns a maximum of
-	// 100,000 rows per request, no matter how many you ask for.
+	// 100,000 rows per request, no matter how many you ask for. To learn
+	// more about this pagination parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregation of metrics. Aggregated metric values
@@ -2159,7 +2161,8 @@ type RunReportRequest struct {
 	Metrics []*Metric `json:"metrics,omitempty"`
 
 	// Offset: The row count of the start row. The first row is counted as
-	// row 0.
+	// row 0. To learn more about this pagination parameter, see Pagination
+	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Offset int64 `json:"offset,omitempty,string"`
 
 	// OrderBys: Specifies how rows are ordered in the response.
@@ -2370,7 +2373,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2508,7 +2511,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2648,7 +2651,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2775,7 +2778,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2905,7 +2908,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3037,7 +3040,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210308")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

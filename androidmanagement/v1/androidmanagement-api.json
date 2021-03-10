@@ -1004,7 +1004,7 @@
       }
     }
   },
-  "revision": "20210208",
+  "revision": "20210309",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdvancedSecurityOverrides": {
@@ -3316,7 +3316,7 @@
           "type": "boolean"
         },
         "installUnknownSourcesAllowed": {
-          "description": "Whether the user is allowed to enable the \"Unknown Sources\" setting, which allows installation of apps from unknown sources.",
+          "description": "This field has no effect.",
           "type": "boolean"
         },
         "keyguardDisabled": {

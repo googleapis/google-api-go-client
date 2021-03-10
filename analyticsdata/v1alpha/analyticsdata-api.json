@@ -248,7 +248,7 @@
       }
     }
   },
-  "revision": "20210206",
+  "revision": "20210308",
   "rootUrl": "https://analyticsdata.googleapis.com/",
   "schemas": {
     "BatchRunPivotReportsRequest": {
@@ -1385,7 +1385,7 @@
           "type": "boolean"
         },
         "limit": {
-          "description": "The number of rows to return. If the `limit` parameter is unspecified, 10,000 rows are returned. The API returns a maximum of 100,000 rows per request, no matter how many you ask for.",
+          "description": "The number of rows to return. If the `limit` parameter is unspecified, 10,000 rows are returned. The API returns a maximum of 100,000 rows per request, no matter how many you ask for. To learn more about this pagination parameter, see [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).",
           "format": "int64",
           "type": "string"
         },
@@ -1422,7 +1422,7 @@
           "type": "array"
         },
         "offset": {
-          "description": "The row count of the start row. The first row is counted as row 0.",
+          "description": "The row count of the start row. The first row is counted as row 0. To learn more about this pagination parameter, see [Pagination](https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).",
           "format": "int64",
           "type": "string"
         },

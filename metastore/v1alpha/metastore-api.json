@@ -728,7 +728,7 @@
       }
     }
   },
-  "revision": "20210226",
+  "revision": "20210305",
   "rootUrl": "https://metastore.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -797,6 +797,17 @@
         "role": {
           "description": "Role that is assigned to members. For example, roles/viewer, roles/editor, or roles/owner.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DataCatalogConfig": {
+      "description": "Specifies how metastore metadata should be integrated with the Data Catalog service.",
+      "id": "DataCatalogConfig",
+      "properties": {
+        "enabled": {
+          "description": "Defines whether the metastore metadata should be synced to Data Catalog. The default value is to disable syncing metastore metadata to Data Catalog.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -1237,7 +1248,12 @@
     "MetadataIntegration": {
       "description": "Specifies how metastore metadata should be integrated with external services.",
       "id": "MetadataIntegration",
-      "properties": {},
+      "properties": {
+        "dataCatalogConfig": {
+          "$ref": "DataCatalogConfig",
+          "description": "The integration config for the Data Catalog service."
+        }
+      },
       "type": "object"
     },
     "MetadataManagementActivity": {

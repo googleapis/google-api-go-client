@@ -161,7 +161,7 @@ const (
 	// View user schemas on your domain
 	AdminDirectoryUserschemaReadonlyScope = "https://www.googleapis.com/auth/admin.directory.userschema.readonly"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -374,10 +374,34 @@ type CustomerDevicesChromeosCommandsService struct {
 
 func NewCustomersService(s *Service) *CustomersService {
 	rs := &CustomersService{s: s}
+	rs.Chrome = NewCustomersChromeService(s)
 	return rs
 }
 
 type CustomersService struct {
+	s *Service
+
+	Chrome *CustomersChromeService
+}
+
+func NewCustomersChromeService(s *Service) *CustomersChromeService {
+	rs := &CustomersChromeService{s: s}
+	rs.Printers = NewCustomersChromePrintersService(s)
+	return rs
+}
+
+type CustomersChromeService struct {
+	s *Service
+
+	Printers *CustomersChromePrintersService
+}
+
+func NewCustomersChromePrintersService(s *Service) *CustomersChromePrintersService {
+	rs := &CustomersChromePrintersService{s: s}
+	return rs
+}
+
+type CustomersChromePrintersService struct {
 	s *Service
 }
 
@@ -756,6 +780,184 @@ type Asps struct {
 
 func (s *Asps) MarshalJSON() ([]byte, error) {
 	type NoMethod Asps
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuxiliaryMessage: Auxiliary message about issues with printers or
+// settings. Example: {message_type:AUXILIARY_MESSAGE_WARNING,
+// field_mask:make_and_model, message:"Given printer is invalid or no
+// longer supported."}
+type AuxiliaryMessage struct {
+	// AuxiliaryMessage: Human readable message in English. Example: "Given
+	// printer is invalid or no longer supported."
+	AuxiliaryMessage string `json:"auxiliaryMessage,omitempty"`
+
+	// FieldMask: Field that this message concerns.
+	FieldMask string `json:"fieldMask,omitempty"`
+
+	// Severity: Message severity
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Message type unspecified.
+	//   "SEVERITY_INFO" - Message of severity: info.
+	//   "SEVERITY_WARNING" - Message of severity: warning.
+	//   "SEVERITY_ERROR" - Message of severity: error.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuxiliaryMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuxiliaryMessage") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuxiliaryMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod AuxiliaryMessage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreatePrintersRequest: Request for adding new printers in batch.
+type BatchCreatePrintersRequest struct {
+	// Requests: A list of Printers to be created. Max 50 at a time.
+	Requests []*CreatePrinterRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreatePrintersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreatePrintersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreatePrintersResponse: Response for adding new printers in
+// batch.
+type BatchCreatePrintersResponse struct {
+	// Failures: A list of create failures. Printer IDs are not populated,
+	// as printer were not created.
+	Failures []*FailureInfo `json:"failures,omitempty"`
+
+	// Printers: A list of successfully created printers with their IDs
+	// populated.
+	Printers []*Printer `json:"printers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Failures") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Failures") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreatePrintersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreatePrintersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeletePrintersRequest: Request for deleting existing printers in
+// batch.
+type BatchDeletePrintersRequest struct {
+	// PrinterIds: A list of Printer.id that should be deleted. Max 100 at a
+	// time.
+	PrinterIds []string `json:"printerIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrinterIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrinterIds") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeletePrintersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeletePrintersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeletePrintersResponse: Response for deleting existing printers
+// in batch.
+type BatchDeletePrintersResponse struct {
+	// FailedPrinters: A list of update failures.
+	FailedPrinters []*FailureInfo `json:"failedPrinters,omitempty"`
+
+	// PrinterIds: A list of Printer.id that were successfully deleted.
+	PrinterIds []string `json:"printerIds,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "FailedPrinters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailedPrinters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDeletePrintersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeletePrintersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1304,6 +1506,10 @@ type ChromeOsDevice struct {
 	// last login time.
 	RecentUsers []*RecentUsers `json:"recentUsers,omitempty"`
 
+	// ScreenshotFiles: List of screenshot files to download. Type is always
+	// "SCREENSHOT_FILE". (Read-only)
+	ScreenshotFiles []*ChromeOsDeviceScreenshotFiles `json:"screenshotFiles,omitempty"`
+
 	// SerialNumber: The Chrome device serial number entered when the device
 	// was enabled. This value is the same as the Admin console's *Serial
 	// Number* in the *Chrome OS Devices* tab.
@@ -1577,6 +1783,42 @@ func (s *ChromeOsDeviceLastKnownNetwork) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ChromeOsDeviceScreenshotFiles struct {
+	// CreateTime: Date and time the file was created
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DownloadUrl: File download URL
+	DownloadUrl string `json:"downloadUrl,omitempty"`
+
+	// Name: File name
+	Name string `json:"name,omitempty"`
+
+	// Type: File type
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeOsDeviceScreenshotFiles) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeOsDeviceScreenshotFiles
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ChromeOsDeviceSystemRamFreeReports struct {
 	// ReportTime: Date and time the report was received.
 	ReportTime string `json:"reportTime,omitempty"`
@@ -1751,6 +1993,40 @@ type ChromeOsMoveDevicesToOu struct {
 
 func (s *ChromeOsMoveDevicesToOu) MarshalJSON() ([]byte, error) {
 	type NoMethod ChromeOsMoveDevicesToOu
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreatePrinterRequest: Request for adding a new printer.
+type CreatePrinterRequest struct {
+	// Parent: Required. The name of the customer. Format:
+	// customers/{customer_id}
+	Parent string `json:"parent,omitempty"`
+
+	// Printer: Required. A printer to create. If you want to place the
+	// printer under particular OU then populate printer.org_unit_id filed.
+	// Otherwise the printer will be placed under root OU.
+	Printer *Printer `json:"printer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreatePrinterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreatePrinterRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2266,6 +2542,144 @@ func (s *Domains2) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For
+// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); } The JSON representation for `Empty` is
+// empty JSON object `{}`.
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// FailureInfo: Info about failures
+type FailureInfo struct {
+	// ErrorCode: Canonical code for why the update failed to apply.
+	//
+	// Possible values:
+	//   "OK" - Not an error; returned on success HTTP Mapping: 200 OK
+	//   "CANCELLED" - The operation was cancelled, typically by the caller.
+	// HTTP Mapping: 499 Client Closed Request
+	//   "UNKNOWN" - Unknown error. For example, this error may be returned
+	// when a `Status` value received from another address space belongs to
+	// an error space that is not known in this address space. Also errors
+	// raised by APIs that do not return enough error information may be
+	// converted to this error. HTTP Mapping: 500 Internal Server Error
+	//   "INVALID_ARGUMENT" - The client specified an invalid argument. Note
+	// that this differs from `FAILED_PRECONDITION`. `INVALID_ARGUMENT`
+	// indicates arguments that are problematic regardless of the state of
+	// the system (e.g., a malformed file name). HTTP Mapping: 400 Bad
+	// Request
+	//   "DEADLINE_EXCEEDED" - The deadline expired before the operation
+	// could complete. For operations that change the state of the system,
+	// this error may be returned even if the operation has completed
+	// successfully. For example, a successful response from a server could
+	// have been delayed long enough for the deadline to expire. HTTP
+	// Mapping: 504 Gateway Timeout
+	//   "NOT_FOUND" - Some requested entity (e.g., file or directory) was
+	// not found. Note to server developers: if a request is denied for an
+	// entire class of users, such as gradual feature rollout or
+	// undocumented allowlist, `NOT_FOUND` may be used. If a request is
+	// denied for some users within a class of users, such as user-based
+	// access control, `PERMISSION_DENIED` must be used. HTTP Mapping: 404
+	// Not Found
+	//   "ALREADY_EXISTS" - The entity that a client attempted to create
+	// (e.g., file or directory) already exists. HTTP Mapping: 409 Conflict
+	//   "PERMISSION_DENIED" - The caller does not have permission to
+	// execute the specified operation. `PERMISSION_DENIED` must not be used
+	// for rejections caused by exhausting some resource (use
+	// `RESOURCE_EXHAUSTED` instead for those errors). `PERMISSION_DENIED`
+	// must not be used if the caller can not be identified (use
+	// `UNAUTHENTICATED` instead for those errors). This error code does not
+	// imply the request is valid or the requested entity exists or
+	// satisfies other pre-conditions. HTTP Mapping: 403 Forbidden
+	//   "UNAUTHENTICATED" - The request does not have valid authentication
+	// credentials for the operation. HTTP Mapping: 401 Unauthorized
+	//   "RESOURCE_EXHAUSTED" - Some resource has been exhausted, perhaps a
+	// per-user quota, or perhaps the entire file system is out of space.
+	// HTTP Mapping: 429 Too Many Requests
+	//   "FAILED_PRECONDITION" - The operation was rejected because the
+	// system is not in a state required for the operation's execution. For
+	// example, the directory to be deleted is non-empty, an rmdir operation
+	// is applied to a non-directory, etc. Service implementors can use the
+	// following guidelines to decide between `FAILED_PRECONDITION`,
+	// `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can
+	// retry just the failing call. (b) Use `ABORTED` if the client should
+	// retry at a higher level (e.g., when a client-specified test-and-set
+	// fails, indicating the client should restart a read-modify-write
+	// sequence). (c) Use `FAILED_PRECONDITION` if the client should not
+	// retry until the system state has been explicitly fixed. E.g., if an
+	// "rmdir" fails because the directory is non-empty,
+	// `FAILED_PRECONDITION` should be returned since the client should not
+	// retry unless the files are deleted from the directory. HTTP Mapping:
+	// 400 Bad Request
+	//   "ABORTED" - The operation was aborted, typically due to a
+	// concurrency issue such as a sequencer check failure or transaction
+	// abort. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 409 Conflict
+	//   "OUT_OF_RANGE" - The operation was attempted past the valid range.
+	// E.g., seeking or reading past end-of-file. Unlike `INVALID_ARGUMENT`,
+	// this error indicates a problem that may be fixed if the system state
+	// changes. For example, a 32-bit file system will generate
+	// `INVALID_ARGUMENT` if asked to read at an offset that is not in the
+	// range [0,2^32-1], but it will generate `OUT_OF_RANGE` if asked to
+	// read from an offset past the current file size. There is a fair bit
+	// of overlap between `FAILED_PRECONDITION` and `OUT_OF_RANGE`. We
+	// recommend using `OUT_OF_RANGE` (the more specific error) when it
+	// applies so that callers who are iterating through a space can easily
+	// look for an `OUT_OF_RANGE` error to detect when they are done. HTTP
+	// Mapping: 400 Bad Request
+	//   "UNIMPLEMENTED" - The operation is not implemented or is not
+	// supported/enabled in this service. HTTP Mapping: 501 Not Implemented
+	//   "INTERNAL" - Internal errors. This means that some invariants
+	// expected by the underlying system have been broken. This error code
+	// is reserved for serious errors. HTTP Mapping: 500 Internal Server
+	// Error
+	//   "UNAVAILABLE" - The service is currently unavailable. This is most
+	// likely a transient condition, which can be corrected by retrying with
+	// a backoff. Note that it is not always safe to retry non-idempotent
+	// operations. See the guidelines above for deciding between
+	// `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping:
+	// 503 Service Unavailable
+	//   "DATA_LOSS" - Unrecoverable data loss or corruption. HTTP Mapping:
+	// 500 Internal Server Error
+	ErrorCode string `json:"errorCode,omitempty"`
+
+	// ErrorMessage: Failure reason message.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// Printer: Failed printers.
+	Printer *Printer `json:"printer,omitempty"`
+
+	// PrinterIds: Ids of failed printers.
+	PrinterIds string `json:"printerIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FailureInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod FailureInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Feature: JSON template for Feature object in Directory API.
 type Feature struct {
 	// Etags: ETag of the resource.
@@ -2521,6 +2935,86 @@ type Groups struct {
 
 func (s *Groups) MarshalJSON() ([]byte, error) {
 	type NoMethod Groups
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPrinterModelsResponse: Response for listing allowed printer
+// models.
+type ListPrinterModelsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PrinterModels: Printer models that are currently allowed to be
+	// configured for ChromeOs. Some printers may be added or removed over
+	// time.
+	PrinterModels []*PrinterModel `json:"printerModels,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPrinterModelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPrinterModelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPrintersResponse: Response for listing printers.
+type ListPrintersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Printers: List of printers. If `org_unit_id` was given in the
+	// request, then only printers visible for this OU will be returned. If
+	// `org_unit_id` was given in the request, then all printers will be
+	// returned.
+	Printers []*Printer `json:"printers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPrintersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPrintersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3099,6 +3593,108 @@ type OrgUnits struct {
 
 func (s *OrgUnits) MarshalJSON() ([]byte, error) {
 	type NoMethod OrgUnits
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Printer: Printer configuration.
+type Printer struct {
+	// AuxiliaryMessages: Output only. Auxiliary messages about issues with
+	// the printer configuration if any.
+	AuxiliaryMessages []*AuxiliaryMessage `json:"auxiliaryMessages,omitempty"`
+
+	// CreateTime: Output only. Time when printer was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Editable. Description of printer.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Editable. Name of printer.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Id: Id of the printer. (During printer creation leave empty)
+	Id string `json:"id,omitempty"`
+
+	// MakeAndModel: Editable. Make and model of printer. e.g. Lexmark
+	// MS610de Value must be in format as seen in ListPrinterModels
+	// response.
+	MakeAndModel string `json:"makeAndModel,omitempty"`
+
+	// Name: The resource name of the Printer object, in the format
+	// customers/{customer-id}/printers/{printer-id} (During printer
+	// creation leave empty)
+	Name string `json:"name,omitempty"`
+
+	// OrgUnitId: Organization Unit that owns this printer (Only can be set
+	// during Printer creation)
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+
+	// Uri: Editable. Printer URI.
+	Uri string `json:"uri,omitempty"`
+
+	// UseDriverlessConfig: Editable. flag to use driverless configuration
+	// or not. If it's set to be true, make_and_model can be ignored
+	UseDriverlessConfig bool `json:"useDriverlessConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AuxiliaryMessages")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuxiliaryMessages") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Printer) MarshalJSON() ([]byte, error) {
+	type NoMethod Printer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrinterModel: Printer manufacturer and model
+type PrinterModel struct {
+	// DisplayName: Display name. eq. "Brother MFC-8840D"
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MakeAndModel: Make and model as represented in "make_and_model" field
+	// in Printer object. eq. "brother mfc-8840d"
+	MakeAndModel string `json:"makeAndModel,omitempty"`
+
+	// Manufacturer: Manufacturer. eq. "Brother"
+	Manufacturer string `json:"manufacturer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrinterModel) MarshalJSON() ([]byte, error) {
+	type NoMethod PrinterModel
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4996,7 +5592,7 @@ func (c *AspsDeleteCall) Header() http.Header {
 
 func (c *AspsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5119,7 +5715,7 @@ func (c *AspsGetCall) Header() http.Header {
 
 func (c *AspsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5271,7 +5867,7 @@ func (c *AspsListCall) Header() http.Header {
 
 func (c *AspsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5403,7 +5999,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5518,7 +6114,7 @@ func (c *ChromeosdevicesActionCall) Header() http.Header {
 
 func (c *ChromeosdevicesActionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5662,7 +6258,7 @@ func (c *ChromeosdevicesGetCall) Header() http.Header {
 
 func (c *ChromeosdevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5910,7 +6506,7 @@ func (c *ChromeosdevicesListCall) Header() http.Header {
 
 func (c *ChromeosdevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6146,7 +6742,7 @@ func (c *ChromeosdevicesMoveDevicesToOuCall) Header() http.Header {
 
 func (c *ChromeosdevicesMoveDevicesToOuCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6282,7 +6878,7 @@ func (c *ChromeosdevicesPatchCall) Header() http.Header {
 
 func (c *ChromeosdevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6461,7 +7057,7 @@ func (c *ChromeosdevicesUpdateCall) Header() http.Header {
 
 func (c *ChromeosdevicesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6625,7 +7221,7 @@ func (c *CustomerDevicesChromeosIssueCommandCall) Header() http.Header {
 
 func (c *CustomerDevicesChromeosIssueCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6787,7 +7383,7 @@ func (c *CustomerDevicesChromeosCommandsGetCall) Header() http.Header {
 
 func (c *CustomerDevicesChromeosCommandsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6948,7 +7544,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7083,7 +7679,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7222,7 +7818,7 @@ func (c *CustomersUpdateCall) Header() http.Header {
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7315,6 +7911,1267 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 
 }
 
+// method id "admin.customers.chrome.printers.batchCreatePrinters":
+
+type CustomersChromePrintersBatchCreatePrintersCall struct {
+	s                          *Service
+	parent                     string
+	batchcreateprintersrequest *BatchCreatePrintersRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchCreatePrinters: Creates printers under given Organization Unit.
+func (r *CustomersChromePrintersService) BatchCreatePrinters(parent string, batchcreateprintersrequest *BatchCreatePrintersRequest) *CustomersChromePrintersBatchCreatePrintersCall {
+	c := &CustomersChromePrintersBatchCreatePrintersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchcreateprintersrequest = batchcreateprintersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersBatchCreatePrintersCall) Fields(s ...googleapi.Field) *CustomersChromePrintersBatchCreatePrintersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersBatchCreatePrintersCall) Context(ctx context.Context) *CustomersChromePrintersBatchCreatePrintersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersBatchCreatePrintersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersBatchCreatePrintersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreateprintersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers:batchCreatePrinters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.batchCreatePrinters" call.
+// Exactly one of *BatchCreatePrintersResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchCreatePrintersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintersBatchCreatePrintersCall) Do(opts ...googleapi.CallOption) (*BatchCreatePrintersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchCreatePrintersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates printers under given Organization Unit.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:batchCreatePrinters",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printers.batchCreatePrinters",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the customer. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers:batchCreatePrinters",
+	//   "request": {
+	//     "$ref": "BatchCreatePrintersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchCreatePrintersResponse"
+	//   }
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.batchDeletePrinters":
+
+type CustomersChromePrintersBatchDeletePrintersCall struct {
+	s                          *Service
+	parent                     string
+	batchdeleteprintersrequest *BatchDeletePrintersRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BatchDeletePrinters: Deletes printers in batch.
+func (r *CustomersChromePrintersService) BatchDeletePrinters(parent string, batchdeleteprintersrequest *BatchDeletePrintersRequest) *CustomersChromePrintersBatchDeletePrintersCall {
+	c := &CustomersChromePrintersBatchDeletePrintersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchdeleteprintersrequest = batchdeleteprintersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersBatchDeletePrintersCall) Fields(s ...googleapi.Field) *CustomersChromePrintersBatchDeletePrintersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersBatchDeletePrintersCall) Context(ctx context.Context) *CustomersChromePrintersBatchDeletePrintersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersBatchDeletePrintersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersBatchDeletePrintersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeleteprintersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers:batchDeletePrinters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.batchDeletePrinters" call.
+// Exactly one of *BatchDeletePrintersResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchDeletePrintersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintersBatchDeletePrintersCall) Do(opts ...googleapi.CallOption) (*BatchDeletePrintersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BatchDeletePrintersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes printers in batch.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:batchDeletePrinters",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printers.batchDeletePrinters",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the customer. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers:batchDeletePrinters",
+	//   "request": {
+	//     "$ref": "BatchDeletePrintersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchDeletePrintersResponse"
+	//   }
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.create":
+
+type CustomersChromePrintersCreateCall struct {
+	s          *Service
+	parent     string
+	printer    *Printer
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a printer under given Organization Unit.
+func (r *CustomersChromePrintersService) Create(parent string, printer *Printer) *CustomersChromePrintersCreateCall {
+	c := &CustomersChromePrintersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.printer = printer
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersCreateCall) Fields(s ...googleapi.Field) *CustomersChromePrintersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersCreateCall) Context(ctx context.Context) *CustomersChromePrintersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.printer)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.create" call.
+// Exactly one of *Printer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Printer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintersCreateCall) Do(opts ...googleapi.CallOption) (*Printer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Printer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a printer under given Organization Unit.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers",
+	//   "httpMethod": "POST",
+	//   "id": "admin.customers.chrome.printers.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the customer. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers",
+	//   "request": {
+	//     "$ref": "Printer"
+	//   },
+	//   "response": {
+	//     "$ref": "Printer"
+	//   }
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.delete":
+
+type CustomersChromePrintersDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a `Printer`.
+func (r *CustomersChromePrintersService) Delete(name string) *CustomersChromePrintersDeleteCall {
+	c := &CustomersChromePrintersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersDeleteCall) Fields(s ...googleapi.Field) *CustomersChromePrintersDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersDeleteCall) Context(ctx context.Context) *CustomersChromePrintersDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a `Printer`.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "admin.customers.chrome.printers.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the printer to be updated. Format: customers/{customer_id}/chrome/printers/{printer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   }
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.get":
+
+type CustomersChromePrintersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a `Printer` resource (printer's config).
+func (r *CustomersChromePrintersService) Get(name string) *CustomersChromePrintersGetCall {
+	c := &CustomersChromePrintersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersGetCall) Fields(s ...googleapi.Field) *CustomersChromePrintersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersChromePrintersGetCall) IfNoneMatch(entityTag string) *CustomersChromePrintersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersGetCall) Context(ctx context.Context) *CustomersChromePrintersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.get" call.
+// Exactly one of *Printer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Printer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintersGetCall) Do(opts ...googleapi.CallOption) (*Printer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Printer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a `Printer` resource (printer's config).",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+	//   "httpMethod": "GET",
+	//   "id": "admin.customers.chrome.printers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the printer to retrieve. Format: customers/{customer_id}/chrome/printers/{printer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "response": {
+	//     "$ref": "Printer"
+	//   }
+	// }
+
+}
+
+// method id "admin.customers.chrome.printers.list":
+
+type CustomersChromePrintersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List printers configs.
+func (r *CustomersChromePrintersService) List(parent string) *CustomersChromePrintersListCall {
+	c := &CustomersChromePrintersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Search query. Search
+// syntax is shared between this api and Admin Console printers pages.
+func (c *CustomersChromePrintersListCall) Filter(filter string) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": Organization Unit
+// that we want to list the printers for. When org_unit is not present
+// in the request then all printers of the customer are returned (or
+// filtered). When org_unit is present in the request then only printers
+// available to this OU will be returned (owned or inherited). You may
+// see if printer is owned or inherited for this OU by looking at
+// Printer.org_unit_id.
+func (c *CustomersChromePrintersListCall) OrgUnitId(orgUnitId string) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of objects to return. The service may return fewer than this value.
+func (c *CustomersChromePrintersListCall) PageSize(pageSize int64) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous call.
+func (c *CustomersChromePrintersListCall) PageToken(pageToken string) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersListCall) Fields(s ...googleapi.Field) *CustomersChromePrintersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersChromePrintersListCall) IfNoneMatch(entityTag string) *CustomersChromePrintersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersListCall) Context(ctx context.Context) *CustomersChromePrintersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.list" call.
+// Exactly one of *ListPrintersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListPrintersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintersListCall) Do(opts ...googleapi.CallOption) (*ListPrintersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPrintersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List printers configs.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers",
+	//   "httpMethod": "GET",
+	//   "id": "admin.customers.chrome.printers.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Search query. Search syntax is shared between this api and Admin Console printers pages.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orgUnitId": {
+	//       "description": "Organization Unit that we want to list the printers for. When org_unit is not present in the request then all printers of the customer are returned (or filtered). When org_unit is present in the request then only printers available to this OU will be returned (owned or inherited). You may see if printer is owned or inherited for this OU by looking at Printer.org_unit_id.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of objects to return. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the customer who owns this collection of printers. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers",
+	//   "response": {
+	//     "$ref": "ListPrintersResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersChromePrintersListCall) Pages(ctx context.Context, f func(*ListPrintersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "admin.customers.chrome.printers.listPrinterModels":
+
+type CustomersChromePrintersListPrinterModelsCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListPrinterModels: Lists the supported printer models.
+func (r *CustomersChromePrintersService) ListPrinterModels(parent string) *CustomersChromePrintersListPrinterModelsCall {
+	c := &CustomersChromePrintersListPrinterModelsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filer to list only
+// models by a given manufacturer in format: "manufacturer:Brother".
+// Search syntax is shared between this api and Admin Console printers
+// pages.
+func (c *CustomersChromePrintersListPrinterModelsCall) Filter(filter string) *CustomersChromePrintersListPrinterModelsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of objects to return. The service may return fewer than this value.
+func (c *CustomersChromePrintersListPrinterModelsCall) PageSize(pageSize int64) *CustomersChromePrintersListPrinterModelsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous call.
+func (c *CustomersChromePrintersListPrinterModelsCall) PageToken(pageToken string) *CustomersChromePrintersListPrinterModelsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersListPrinterModelsCall) Fields(s ...googleapi.Field) *CustomersChromePrintersListPrinterModelsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersChromePrintersListPrinterModelsCall) IfNoneMatch(entityTag string) *CustomersChromePrintersListPrinterModelsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersListPrinterModelsCall) Context(ctx context.Context) *CustomersChromePrintersListPrinterModelsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersListPrinterModelsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersListPrinterModelsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+parent}/chrome/printers:listPrinterModels")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.listPrinterModels" call.
+// Exactly one of *ListPrinterModelsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPrinterModelsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *CustomersChromePrintersListPrinterModelsCall) Do(opts ...googleapi.CallOption) (*ListPrinterModelsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPrinterModelsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the supported printer models.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:listPrinterModels",
+	//   "httpMethod": "GET",
+	//   "id": "admin.customers.chrome.printers.listPrinterModels",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filer to list only models by a given manufacturer in format: \"manufacturer:Brother\". Search syntax is shared between this api and Admin Console printers pages.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of objects to return. The service may return fewer than this value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the customer who owns this collection of printers. Format: customers/{customer_id}",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+parent}/chrome/printers:listPrinterModels",
+	//   "response": {
+	//     "$ref": "ListPrinterModelsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersChromePrintersListPrinterModelsCall) Pages(ctx context.Context, f func(*ListPrinterModelsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "admin.customers.chrome.printers.patch":
+
+type CustomersChromePrintersPatchCall struct {
+	s          *Service
+	name       string
+	printer    *Printer
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a `Printer` resource.
+func (r *CustomersChromePrintersService) Patch(name string, printer *Printer) *CustomersChromePrintersPatchCall {
+	c := &CustomersChromePrintersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.printer = printer
+	return c
+}
+
+// ClearMask sets the optional parameter "clearMask": The list of fields
+// to be cleared. Note, some of the fields are read only and cannot be
+// updated. Values for not specified fields will be patched.
+func (c *CustomersChromePrintersPatchCall) ClearMask(clearMask string) *CustomersChromePrintersPatchCall {
+	c.urlParams_.Set("clearMask", clearMask)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated. Note, some of the fields are read only and
+// cannot be updated. Values for not specified fields will be patched.
+func (c *CustomersChromePrintersPatchCall) UpdateMask(updateMask string) *CustomersChromePrintersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersChromePrintersPatchCall) Fields(s ...googleapi.Field) *CustomersChromePrintersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersChromePrintersPatchCall) Context(ctx context.Context) *CustomersChromePrintersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersChromePrintersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersChromePrintersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.printer)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/directory/v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admin.customers.chrome.printers.patch" call.
+// Exactly one of *Printer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Printer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CustomersChromePrintersPatchCall) Do(opts ...googleapi.CallOption) (*Printer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Printer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a `Printer` resource.",
+	//   "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "admin.customers.chrome.printers.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "clearMask": {
+	//       "description": "The list of fields to be cleared. Note, some of the fields are read only and cannot be updated. Values for not specified fields will be patched.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The resource name of the Printer object, in the format customers/{customer-id}/printers/{printer-id} (During printer creation leave empty)",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The list of fields to be updated. Note, some of the fields are read only and cannot be updated. Values for not specified fields will be patched.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "admin/directory/v1/{+name}",
+	//   "request": {
+	//     "$ref": "Printer"
+	//   },
+	//   "response": {
+	//     "$ref": "Printer"
+	//   }
+	// }
+
+}
+
 // method id "directory.domainAliases.delete":
 
 type DomainAliasesDeleteCall struct {
@@ -7361,7 +9218,7 @@ func (c *DomainAliasesDeleteCall) Header() http.Header {
 
 func (c *DomainAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7483,7 +9340,7 @@ func (c *DomainAliasesGetCall) Header() http.Header {
 
 func (c *DomainAliasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7626,7 +9483,7 @@ func (c *DomainAliasesInsertCall) Header() http.Header {
 
 func (c *DomainAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7781,7 +9638,7 @@ func (c *DomainAliasesListCall) Header() http.Header {
 
 func (c *DomainAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7921,7 +9778,7 @@ func (c *DomainsDeleteCall) Header() http.Header {
 
 func (c *DomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8043,7 +9900,7 @@ func (c *DomainsGetCall) Header() http.Header {
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8186,7 +10043,7 @@ func (c *DomainsInsertCall) Header() http.Header {
 
 func (c *DomainsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8334,7 +10191,7 @@ func (c *DomainsListCall) Header() http.Header {
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8467,7 +10324,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8579,7 +10436,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8712,7 +10569,7 @@ func (c *GroupsInsertCall) Header() http.Header {
 
 func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8922,7 +10779,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9129,7 +10986,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9268,7 +11125,7 @@ func (c *GroupsUpdateCall) Header() http.Header {
 
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9407,7 +11264,7 @@ func (c *GroupsAliasesDeleteCall) Header() http.Header {
 
 func (c *GroupsAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9518,7 +11375,7 @@ func (c *GroupsAliasesInsertCall) Header() http.Header {
 
 func (c *GroupsAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9666,7 +11523,7 @@ func (c *GroupsAliasesListCall) Header() http.Header {
 
 func (c *GroupsAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9801,7 +11658,7 @@ func (c *MembersDeleteCall) Header() http.Header {
 
 func (c *MembersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9924,7 +11781,7 @@ func (c *MembersGetCall) Header() http.Header {
 
 func (c *MembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10081,7 +11938,7 @@ func (c *MembersHasMemberCall) Header() http.Header {
 
 func (c *MembersHasMemberCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10226,7 +12083,7 @@ func (c *MembersInsertCall) Header() http.Header {
 
 func (c *MembersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10405,7 +12262,7 @@ func (c *MembersListCall) Header() http.Header {
 
 func (c *MembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10590,7 +12447,7 @@ func (c *MembersPatchCall) Header() http.Header {
 
 func (c *MembersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10740,7 +12597,7 @@ func (c *MembersUpdateCall) Header() http.Header {
 
 func (c *MembersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10891,7 +12748,7 @@ func (c *MobiledevicesActionCall) Header() http.Header {
 
 func (c *MobiledevicesActionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11011,7 +12868,7 @@ func (c *MobiledevicesDeleteCall) Header() http.Header {
 
 func (c *MobiledevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11146,7 +13003,7 @@ func (c *MobiledevicesGetCall) Header() http.Header {
 
 func (c *MobiledevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11382,7 +13239,7 @@ func (c *MobiledevicesListCall) Header() http.Header {
 
 func (c *MobiledevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11622,7 +13479,7 @@ func (c *OrgunitsDeleteCall) Header() http.Header {
 
 func (c *OrgunitsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11757,7 +13614,7 @@ func (c *OrgunitsGetCall) Header() http.Header {
 
 func (c *OrgunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11906,7 +13763,7 @@ func (c *OrgunitsInsertCall) Header() http.Header {
 
 func (c *OrgunitsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12074,7 +13931,7 @@ func (c *OrgunitsListCall) Header() http.Header {
 
 func (c *OrgunitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12240,7 +14097,7 @@ func (c *OrgunitsPatchCall) Header() http.Header {
 
 func (c *OrgunitsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12402,7 +14259,7 @@ func (c *OrgunitsUpdateCall) Header() http.Header {
 
 func (c *OrgunitsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12564,7 +14421,7 @@ func (c *PrivilegesListCall) Header() http.Header {
 
 func (c *PrivilegesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12699,7 +14556,7 @@ func (c *ResourcesBuildingsDeleteCall) Header() http.Header {
 
 func (c *ResourcesBuildingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12821,7 +14678,7 @@ func (c *ResourcesBuildingsGetCall) Header() http.Header {
 
 func (c *ResourcesBuildingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12981,7 +14838,7 @@ func (c *ResourcesBuildingsInsertCall) Header() http.Header {
 
 func (c *ResourcesBuildingsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13161,7 +15018,7 @@ func (c *ResourcesBuildingsListCall) Header() http.Header {
 
 func (c *ResourcesBuildingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13349,7 +15206,7 @@ func (c *ResourcesBuildingsPatchCall) Header() http.Header {
 
 func (c *ResourcesBuildingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13533,7 +15390,7 @@ func (c *ResourcesBuildingsUpdateCall) Header() http.Header {
 
 func (c *ResourcesBuildingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13698,7 +15555,7 @@ func (c *ResourcesCalendarsDeleteCall) Header() http.Header {
 
 func (c *ResourcesCalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13820,7 +15677,7 @@ func (c *ResourcesCalendarsGetCall) Header() http.Header {
 
 func (c *ResourcesCalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13963,7 +15820,7 @@ func (c *ResourcesCalendarsInsertCall) Header() http.Header {
 
 func (c *ResourcesCalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14155,7 +16012,7 @@ func (c *ResourcesCalendarsListCall) Header() http.Header {
 
 func (c *ResourcesCalendarsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14336,7 +16193,7 @@ func (c *ResourcesCalendarsPatchCall) Header() http.Header {
 
 func (c *ResourcesCalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14487,7 +16344,7 @@ func (c *ResourcesCalendarsUpdateCall) Header() http.Header {
 
 func (c *ResourcesCalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14634,7 +16491,7 @@ func (c *ResourcesFeaturesDeleteCall) Header() http.Header {
 
 func (c *ResourcesFeaturesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14756,7 +16613,7 @@ func (c *ResourcesFeaturesGetCall) Header() http.Header {
 
 func (c *ResourcesFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14899,7 +16756,7 @@ func (c *ResourcesFeaturesInsertCall) Header() http.Header {
 
 func (c *ResourcesFeaturesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15061,7 +16918,7 @@ func (c *ResourcesFeaturesListCall) Header() http.Header {
 
 func (c *ResourcesFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15232,7 +17089,7 @@ func (c *ResourcesFeaturesPatchCall) Header() http.Header {
 
 func (c *ResourcesFeaturesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15381,7 +17238,7 @@ func (c *ResourcesFeaturesRenameCall) Header() http.Header {
 
 func (c *ResourcesFeaturesRenameCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15502,7 +17359,7 @@ func (c *ResourcesFeaturesUpdateCall) Header() http.Header {
 
 func (c *ResourcesFeaturesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15649,7 +17506,7 @@ func (c *RoleAssignmentsDeleteCall) Header() http.Header {
 
 func (c *RoleAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15771,7 +17628,7 @@ func (c *RoleAssignmentsGetCall) Header() http.Header {
 
 func (c *RoleAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15914,7 +17771,7 @@ func (c *RoleAssignmentsInsertCall) Header() http.Header {
 
 func (c *RoleAssignmentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16092,7 +17949,7 @@ func (c *RoleAssignmentsListCall) Header() http.Header {
 
 func (c *RoleAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16271,7 +18128,7 @@ func (c *RolesDeleteCall) Header() http.Header {
 
 func (c *RolesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16393,7 +18250,7 @@ func (c *RolesGetCall) Header() http.Header {
 
 func (c *RolesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16536,7 +18393,7 @@ func (c *RolesInsertCall) Header() http.Header {
 
 func (c *RolesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16698,7 +18555,7 @@ func (c *RolesListCall) Header() http.Header {
 
 func (c *RolesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16869,7 +18726,7 @@ func (c *RolesPatchCall) Header() http.Header {
 
 func (c *RolesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17018,7 +18875,7 @@ func (c *RolesUpdateCall) Header() http.Header {
 
 func (c *RolesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17165,7 +19022,7 @@ func (c *SchemasDeleteCall) Header() http.Header {
 
 func (c *SchemasDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17287,7 +19144,7 @@ func (c *SchemasGetCall) Header() http.Header {
 
 func (c *SchemasGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17430,7 +19287,7 @@ func (c *SchemasInsertCall) Header() http.Header {
 
 func (c *SchemasInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17578,7 +19435,7 @@ func (c *SchemasListCall) Header() http.Header {
 
 func (c *SchemasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17715,7 +19572,7 @@ func (c *SchemasPatchCall) Header() http.Header {
 
 func (c *SchemasPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17864,7 +19721,7 @@ func (c *SchemasUpdateCall) Header() http.Header {
 
 func (c *SchemasUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18011,7 +19868,7 @@ func (c *TokensDeleteCall) Header() http.Header {
 
 func (c *TokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18133,7 +19990,7 @@ func (c *TokensGetCall) Header() http.Header {
 
 func (c *TokensGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18285,7 +20142,7 @@ func (c *TokensListCall) Header() http.Header {
 
 func (c *TokensListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18417,7 +20274,7 @@ func (c *TwoStepVerificationTurnOffCall) Header() http.Header {
 
 func (c *TwoStepVerificationTurnOffCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18518,7 +20375,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18669,7 +20526,7 @@ func (c *UsersGetCall) Header() http.Header {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18841,7 +20698,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19105,7 +20962,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19377,7 +21234,7 @@ func (c *UsersMakeAdminCall) Header() http.Header {
 
 func (c *UsersMakeAdminCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19492,7 +21349,7 @@ func (c *UsersPatchCall) Header() http.Header {
 
 func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19631,7 +21488,7 @@ func (c *UsersSignOutCall) Header() http.Header {
 
 func (c *UsersSignOutCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19734,7 +21591,7 @@ func (c *UsersUndeleteCall) Header() http.Header {
 
 func (c *UsersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19848,7 +21705,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20107,7 +21964,7 @@ func (c *UsersWatchCall) Header() http.Header {
 
 func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20361,7 +22218,7 @@ func (c *UsersAliasesDeleteCall) Header() http.Header {
 
 func (c *UsersAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20473,7 +22330,7 @@ func (c *UsersAliasesInsertCall) Header() http.Header {
 
 func (c *UsersAliasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20622,7 +22479,7 @@ func (c *UsersAliasesListCall) Header() http.Header {
 
 func (c *UsersAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20770,7 +22627,7 @@ func (c *UsersAliasesWatchCall) Header() http.Header {
 
 func (c *UsersAliasesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20925,7 +22782,7 @@ func (c *UsersPhotosDeleteCall) Header() http.Header {
 
 func (c *UsersPhotosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21037,7 +22894,7 @@ func (c *UsersPhotosGetCall) Header() http.Header {
 
 func (c *UsersPhotosGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21173,7 +23030,7 @@ func (c *UsersPhotosPatchCall) Header() http.Header {
 
 func (c *UsersPhotosPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21312,7 +23169,7 @@ func (c *UsersPhotosUpdateCall) Header() http.Header {
 
 func (c *UsersPhotosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21449,7 +23306,7 @@ func (c *VerificationCodesGenerateCall) Header() http.Header {
 
 func (c *VerificationCodesGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21551,7 +23408,7 @@ func (c *VerificationCodesInvalidateCall) Header() http.Header {
 
 func (c *VerificationCodesInvalidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21664,7 +23521,7 @@ func (c *VerificationCodesListCall) Header() http.Header {
 
 func (c *VerificationCodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -399,9 +399,7 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 }
 
 // StackTraceElement: A single stack element (frame) where an error
-// occurred. This field currently only exists in v1Beta. We will need to
-// roll this change out to V1 after the feature is thoroughly tested.
-// TODO(b/178540475)
+// occurred.
 type StackTraceElement struct {
 	// Position: The source position information of the stacktrace element.
 	Position *Position `json:"position,omitempty"`
@@ -481,7 +479,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -622,7 +620,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -786,7 +784,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -984,7 +982,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210309")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

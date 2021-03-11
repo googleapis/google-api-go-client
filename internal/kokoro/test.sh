@@ -4,10 +4,10 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
-# TODO(deklerk) Add integration tests when it's secure to do so. b/64723143
-
 # Fail on any error
 set -eo pipefail
+
+export GCLOUD_TESTS_GOLANG_KEY="${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-service-account"
 
 # Display commands being run
 set -x
@@ -35,7 +35,13 @@ try3 go mod download
 ./internal/kokoro/vet.sh
 
 # Testing the generator itself depends on a generation step
-cd google-api-go-generator; go generate; cd ..
+cd google-api-go-generator
+go generate
+cd ..
 
 # Run tests and tee output to log file, to be pushed to GCS as artifact.
-go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt
+if [[ $KOKORO_JOB_NAME == *"continuous"* ]]; then
+    go test -race -v ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt
+else
+    go test -race -v -short ./... 2>&1 | tee $KOKORO_ARTIFACTS_DIR/$KOKORO_GERRIT_CHANGE_NUMBER.txt
+fi

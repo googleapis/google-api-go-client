@@ -20,13 +20,17 @@ import (
 )
 
 const (
-	envCredentialFile = "API_GO_CLIENT_SA"
-	envTokenAudience  = "API_GO_CLIENT_TOKEN_AUDIENCE"
+	envCredentialFile = "GCLOUD_TESTS_GOLANG_KEY"
+
+	aud = "http://example.com"
 )
 
 func TestNewTokenSource(t *testing.T) {
-	aud := os.Getenv(envTokenAudience)
-	ts, err := idtoken.NewTokenSource(context.Background(), aud, option.WithCredentialsFile(os.Getenv(envCredentialFile)))
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
+	os.Setenv(envCredentialFile, "/Users/codyoss/creds/codyoss-workspace-2b1fb7cd40c0.json")
+	ts, err := idtoken.NewTokenSource(context.Background(), "http://example.com", option.WithCredentialsFile(os.Getenv(envCredentialFile)))
 	if err != nil {
 		t.Fatalf("unable to create TokenSource: %v", err)
 	}
@@ -49,7 +53,10 @@ func TestNewTokenSource(t *testing.T) {
 }
 
 func TestNewClient_WithCredentialFile(t *testing.T) {
-	aud := os.Getenv(envTokenAudience)
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
+	os.Setenv(envCredentialFile, "/Users/codyoss/creds/codyoss-workspace-2b1fb7cd40c0.json")
 	client, err := idtoken.NewClient(context.Background(), aud, option.WithCredentialsFile(os.Getenv(envCredentialFile)))
 	if err != nil {
 		t.Fatalf("unable to create Client: %v", err)
@@ -68,7 +75,9 @@ func TestNewClient_WithCredentialFile(t *testing.T) {
 }
 
 func TestNewClient_WithCredentialJSON(t *testing.T) {
-	aud := os.Getenv(envTokenAudience)
+	if testing.Short() {
+		t.Skip("skipping integration test")
+	}
 	ctx := context.Background()
 	creds, err := google.FindDefaultCredentials(ctx)
 	if err != nil {

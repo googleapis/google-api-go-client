@@ -2877,11 +2877,12 @@ func (s *UpdateMembershipRolesParams) MarshalJSON() ([]byte, error) {
 }
 
 // UserInvitation: The `UserInvitation` resource represents an email
-// sent to an unmanaged user account (an email address that shares the
-// domain of the Google Workspace customer but is not managed by it
-// yet), inviting them to join the customer’s domain. If the user
-// accepts the `UserInvitation`, the account will become a managed
-// account.
+// that can be sent to an unmanaged user account inviting them to join
+// the customer’s Google Workspace or Cloud Identity account. An
+// unmanaged account shares an email address domain with the Google
+// Workspace or Cloud Identity account but is not managed by it yet. If
+// the user accepts the `UserInvitation`, the user account will become
+// managed.
 type UserInvitation struct {
 	// MailsSentCount: Number of invitation emails sent to the user.
 	MailsSentCount int64 `json:"mailsSentCount,omitempty,string"`
@@ -3048,7 +3049,7 @@ func (c *CustomersUserinvitationsCancelCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3152,7 +3153,8 @@ type CustomersUserinvitationsGetCall struct {
 
 // Get: Retrieves a UserInvitation resource. **Note:** New consumer
 // accounts with the customer’s verified domain created within the
-// previous 48 hours will not appear in the result.
+// previous 48 hours will not appear in the result. This delay also
+// applies to newly-verified domains.
 func (r *CustomersUserinvitationsService) Get(name string) *CustomersUserinvitationsGetCall {
 	c := &CustomersUserinvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3196,7 +3198,7 @@ func (c *CustomersUserinvitationsGetCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3258,7 +3260,7 @@ func (c *CustomersUserinvitationsGetCall) Do(opts ...googleapi.CallOption) (*Use
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a UserInvitation resource. **Note:** New consumer accounts with the customer’s verified domain created within the previous 48 hours will not appear in the result.",
+	//   "description": "Retrieves a UserInvitation resource. **Note:** New consumer accounts with the customer’s verified domain created within the previous 48 hours will not appear in the result. This delay also applies to newly-verified domains.",
 	//   "flatPath": "v1beta1/customers/{customersId}/userinvitations/{userinvitationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.customers.userinvitations.get",
@@ -3344,7 +3346,7 @@ func (c *CustomersUserinvitationsIsInvitableUserCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsIsInvitableUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3443,7 +3445,8 @@ type CustomersUserinvitationsListCall struct {
 
 // List: Retrieves a list of UserInvitation resources. **Note:** New
 // consumer accounts with the customer’s verified domain created
-// within the previous 48 hours will not appear in the results.
+// within the previous 48 hours will not appear in the result. This
+// delay also applies to newly-verified domains.
 func (r *CustomersUserinvitationsService) List(parent string) *CustomersUserinvitationsListCall {
 	c := &CustomersUserinvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3526,7 +3529,7 @@ func (c *CustomersUserinvitationsListCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3588,7 +3591,7 @@ func (c *CustomersUserinvitationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a list of UserInvitation resources. **Note:** New consumer accounts with the customer’s verified domain created within the previous 48 hours will not appear in the results.",
+	//   "description": "Retrieves a list of UserInvitation resources. **Note:** New consumer accounts with the customer’s verified domain created within the previous 48 hours will not appear in the result. This delay also applies to newly-verified domains.",
 	//   "flatPath": "v1beta1/customers/{customersId}/userinvitations",
 	//   "httpMethod": "GET",
 	//   "id": "cloudidentity.customers.userinvitations.list",
@@ -3670,7 +3673,8 @@ type CustomersUserinvitationsSendCall struct {
 // creates a `UserInvitation`. **Note:** The `get` and `list` methods
 // have a 48-hour delay where newly-created consumer accounts will not
 // appear in the results. You can still send a `UserInvitation` to those
-// accounts if you know the unmanaged email address.
+// accounts if you know the unmanaged email address and
+// IsInvitableUser==True.
 func (r *CustomersUserinvitationsService) Send(name string, senduserinvitationrequest *SendUserInvitationRequest) *CustomersUserinvitationsSendCall {
 	c := &CustomersUserinvitationsSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3705,7 +3709,7 @@ func (c *CustomersUserinvitationsSendCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3769,7 +3773,7 @@ func (c *CustomersUserinvitationsSendCall) Do(opts ...googleapi.CallOption) (*Op
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends a UserInvitation to email. If the `UserInvitation` does not exist for this request and it is a valid request, the request creates a `UserInvitation`. **Note:** The `get` and `list` methods have a 48-hour delay where newly-created consumer accounts will not appear in the results. You can still send a `UserInvitation` to those accounts if you know the unmanaged email address.",
+	//   "description": "Sends a UserInvitation to email. If the `UserInvitation` does not exist for this request and it is a valid request, the request creates a `UserInvitation`. **Note:** The `get` and `list` methods have a 48-hour delay where newly-created consumer accounts will not appear in the results. You can still send a `UserInvitation` to those accounts if you know the unmanaged email address and IsInvitableUser==True.",
 	//   "flatPath": "v1beta1/customers/{customersId}/userinvitations/{userinvitationsId}:send",
 	//   "httpMethod": "POST",
 	//   "id": "cloudidentity.customers.userinvitations.send",
@@ -3844,7 +3848,7 @@ func (c *DevicesCancelWipeCall) Header() http.Header {
 
 func (c *DevicesCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3982,7 +3986,7 @@ func (c *DevicesCreateCall) Header() http.Header {
 
 func (c *DevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4104,7 +4108,7 @@ func (c *DevicesDeleteCall) Header() http.Header {
 
 func (c *DevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4242,7 +4246,7 @@ func (c *DevicesGetCall) Header() http.Header {
 
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4437,7 +4441,7 @@ func (c *DevicesListCall) Header() http.Header {
 
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4614,7 +4618,7 @@ func (c *DevicesWipeCall) Header() http.Header {
 
 func (c *DevicesWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4751,7 +4755,7 @@ func (c *DevicesDeviceUsersApproveCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4888,7 +4892,7 @@ func (c *DevicesDeviceUsersBlockCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersBlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5027,7 +5031,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5163,7 +5167,7 @@ func (c *DevicesDeviceUsersDeleteCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5301,7 +5305,7 @@ func (c *DevicesDeviceUsersGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5478,7 +5482,7 @@ func (c *DevicesDeviceUsersListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5720,7 +5724,7 @@ func (c *DevicesDeviceUsersLookupCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5902,7 +5906,7 @@ func (c *DevicesDeviceUsersWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6059,7 +6063,7 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6218,7 +6222,7 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6378,7 +6382,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6520,7 +6524,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6662,7 +6666,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6848,7 +6852,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7056,7 +7060,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7199,7 +7203,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7396,7 +7400,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7598,7 +7602,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Header() http.Header {
 
 func (c *GroupsMembershipsCheckTransitiveMembershipCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7741,7 +7745,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7880,7 +7884,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8022,7 +8026,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8185,7 +8189,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetMembershipGraphCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8368,7 +8372,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8583,7 +8587,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8731,7 +8735,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8913,7 +8917,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Header() http.Header {
 
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9115,7 +9119,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Header() http.Header 
 
 func (c *GroupsMembershipsSearchTransitiveMembershipsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

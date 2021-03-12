@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         },
         "https://www.googleapis.com/auth/cloud-platform.read-only": {
           "description": "View your data across Google Cloud Platform services"
@@ -305,7 +305,7 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "Optional. The maximum number of TagBindings to return in the response. This is currently not used by the server and will return the full page even if a size is specified.",
+              "description": "Optional. The maximum number of TagBindings to return in the response. The server allows a maximum of 300 TagBindings to return. If unspecified, the server will use 100 as the default.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -456,13 +456,13 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "Optional. The maximum number of TagKeys to return in the response. This is currently not used by the server and will return the full page even if a size is specified currently.",
+              "description": "Optional. The maximum number of TagKeys to return in the response. The server allows a maximum of 300 TagKeys to return. If unspecified, the server will use 100 as the default.",
               "format": "int32",
               "location": "query",
               "type": "integer"
             },
             "pageToken": {
-              "description": "Optional. A pagination token returned from a previous call to `ListTagKey` that indicates where this listing should continue from. This is currently not used by the server.",
+              "description": "Optional. A pagination token returned from a previous call to `ListTagKey` that indicates where this listing should continue from.",
               "location": "query",
               "type": "string"
             },
@@ -702,13 +702,13 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "Optional. The maximum number of TagValues to return in the response. This is currently not used by the server and will return the full page even if a size is specified currently.",
+              "description": "Optional. The maximum number of TagValues to return in the response. The server allows a maximum of 300 TagValues to return. If unspecified, the server will use 100 as the default.",
               "format": "int32",
               "location": "query",
               "type": "integer"
             },
             "pageToken": {
-              "description": "Optional. A pagination token returned from a previous call to `ListTagValues` that indicates where this listing should continue from. This is currently not used by the server.",
+              "description": "Optional. A pagination token returned from a previous call to `ListTagValues` that indicates where this listing should continue from.",
               "location": "query",
               "type": "string"
             },
@@ -825,7 +825,7 @@
       }
     }
   },
-  "revision": "20210222",
+  "revision": "20210309",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1166,7 +1166,7 @@
       "id": "ListTagBindingsResponse",
       "properties": {
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to `ListTagBindings` that indicates from where listing should continue. This is currently not used, but the server may at any point start supplying a valid token.",
+          "description": "A pagination token returned from a previous call to `ListTagBindings` that indicates from where listing should continue.",
           "type": "string"
         },
         "tagBindings": {
@@ -1184,7 +1184,7 @@
       "id": "ListTagKeysResponse",
       "properties": {
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to `ListTagKeys` that indicates from where listing should continue. This is currently not used, but the server may at any point start supplying a valid token.",
+          "description": "A pagination token returned from a previous call to `ListTagKeys` that indicates from where listing should continue.",
           "type": "string"
         },
         "tagKeys": {

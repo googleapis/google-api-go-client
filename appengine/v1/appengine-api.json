@@ -1594,7 +1594,7 @@
       }
     }
   },
-  "revision": "20210219",
+  "revision": "20210308",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
@@ -3618,6 +3618,10 @@
         },
         "runtimeMainExecutablePath": {
           "description": "The path or name of the app's main executable.",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "The identity that the deployed version will run as. Admin API will use the App Engine Appspot service account as default if this field is neither provided in app.yaml file nor through CLI flag.",
           "type": "string"
         },
         "servingStatus": {

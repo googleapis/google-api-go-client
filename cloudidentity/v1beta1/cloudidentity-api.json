@@ -144,7 +144,7 @@
               }
             },
             "get": {
-              "description": "Retrieves a UserInvitation resource. **Note:** New consumer accounts with the customer’s verified domain created within the previous 48 hours will not appear in the result.",
+              "description": "Retrieves a UserInvitation resource. **Note:** New consumer accounts with the customer’s verified domain created within the previous 48 hours will not appear in the result. This delay also applies to newly-verified domains.",
               "flatPath": "v1beta1/customers/{customersId}/userinvitations/{userinvitationsId}",
               "httpMethod": "GET",
               "id": "cloudidentity.customers.userinvitations.get",
@@ -188,7 +188,7 @@
               }
             },
             "list": {
-              "description": "Retrieves a list of UserInvitation resources. **Note:** New consumer accounts with the customer’s verified domain created within the previous 48 hours will not appear in the results.",
+              "description": "Retrieves a list of UserInvitation resources. **Note:** New consumer accounts with the customer’s verified domain created within the previous 48 hours will not appear in the result. This delay also applies to newly-verified domains.",
               "flatPath": "v1beta1/customers/{customersId}/userinvitations",
               "httpMethod": "GET",
               "id": "cloudidentity.customers.userinvitations.list",
@@ -231,7 +231,7 @@
               }
             },
             "send": {
-              "description": "Sends a UserInvitation to email. If the `UserInvitation` does not exist for this request and it is a valid request, the request creates a `UserInvitation`. **Note:** The `get` and `list` methods have a 48-hour delay where newly-created consumer accounts will not appear in the results. You can still send a `UserInvitation` to those accounts if you know the unmanaged email address.",
+              "description": "Sends a UserInvitation to email. If the `UserInvitation` does not exist for this request and it is a valid request, the request creates a `UserInvitation`. **Note:** The `get` and `list` methods have a 48-hour delay where newly-created consumer accounts will not appear in the results. You can still send a `UserInvitation` to those accounts if you know the unmanaged email address and IsInvitableUser==True.",
               "flatPath": "v1beta1/customers/{customersId}/userinvitations/{userinvitationsId}:send",
               "httpMethod": "POST",
               "id": "cloudidentity.customers.userinvitations.send",
@@ -1336,7 +1336,7 @@
       }
     }
   },
-  "revision": "20210302",
+  "revision": "20210310",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "AndroidAttributes": {
@@ -3176,7 +3176,7 @@
       "type": "object"
     },
     "UserInvitation": {
-      "description": "The `UserInvitation` resource represents an email sent to an unmanaged user account (an email address that shares the domain of the Google Workspace customer but is not managed by it yet), inviting them to join the customer’s domain. If the user accepts the `UserInvitation`, the account will become a managed account.",
+      "description": "The `UserInvitation` resource represents an email that can be sent to an unmanaged user account inviting them to join the customer’s Google Workspace or Cloud Identity account. An unmanaged account shares an email address domain with the Google Workspace or Cloud Identity account but is not managed by it yet. If the user accepts the `UserInvitation`, the user account will become managed.",
       "id": "UserInvitation",
       "properties": {
         "mailsSentCount": {

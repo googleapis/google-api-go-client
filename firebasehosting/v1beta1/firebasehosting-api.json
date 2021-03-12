@@ -150,6 +150,94 @@
         },
         "sites": {
           "methods": {
+            "create": {
+              "description": "Creates a new Site. Sites take several minutes to propagate through Firebase systems.",
+              "flatPath": "v1beta1/projects/{projectsId}/sites",
+              "httpMethod": "POST",
+              "id": "firebasehosting.projects.sites.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The parent Project of a Site, e.g.: `projects/{project-number}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "siteId": {
+                  "description": "Required. Immutable. A globally unique ID to identify the Site. The ID must also be a valid domain name label.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+parent}/sites",
+              "request": {
+                "$ref": "Site"
+              },
+              "response": {
+                "$ref": "Site"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
+              ]
+            },
+            "delete": {
+              "description": "Deletes a Site from the specified parent Project.",
+              "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
+              "httpMethod": "DELETE",
+              "id": "firebasehosting.projects.sites.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The fully qualified resource name of the Site, e.g.: `projects/{project-number}/sites/{site-id}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/sites/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
+              ]
+            },
+            "get": {
+              "description": "Gets the Site identified by the specified resource name.",
+              "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
+              "httpMethod": "GET",
+              "id": "firebasehosting.projects.sites.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The fully qualified resource name of the Site, e.g.: `projects/{project-number}/sites/{site-id}`. As a `site-id` is a globally unique identifier, you can also use the unique sub-collection resource access pattern as well: `projects/-/sites/{site-id}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/sites/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}",
+              "response": {
+                "$ref": "Site"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/firebase",
+                "https://www.googleapis.com/auth/firebase.readonly"
+              ]
+            },
             "getConfig": {
               "description": "Gets the Hosting metadata for a specific site.",
               "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}/config",
@@ -176,6 +264,80 @@
                 "https://www.googleapis.com/auth/cloud-platform.read-only",
                 "https://www.googleapis.com/auth/firebase",
                 "https://www.googleapis.com/auth/firebase.readonly"
+              ]
+            },
+            "list": {
+              "description": "Lists each Site associated with the specified parent Project. Sites are returned in a consistent, but undefined, order to facilitate pagination. Site data might be out of sync by a few seconds. If you require up-to-date data, use GetSite.",
+              "flatPath": "v1beta1/projects/{projectsId}/sites",
+              "httpMethod": "GET",
+              "id": "firebasehosting.projects.sites.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "Optional. The maximum number of sites to return in the response. The server may return fewer Sites at its discretion. If you don't specify a value or specify one that's too large, the server can select its own value.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "Optional. A token from a previous call to `ListSites` that tells the server where to resume listing.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The Project that owns the sites to list, e.g.: `projects/{project-number}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+parent}/sites",
+              "response": {
+                "$ref": "ListSitesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only",
+                "https://www.googleapis.com/auth/firebase",
+                "https://www.googleapis.com/auth/firebase.readonly"
+              ]
+            },
+            "patch": {
+              "description": "Updates attributes of the Site identified by the specified resource name.",
+              "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
+              "httpMethod": "PATCH",
+              "id": "firebasehosting.projects.sites.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Output only. The fully qualified resource name of the Hosting Site, e.g.: `projects/{project-number}/sites/{site-id}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/sites/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "A mask that specifies which Site fields to update.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+name}",
+              "request": {
+                "$ref": "Site"
+              },
+              "response": {
+                "$ref": "Site"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/firebase"
               ]
             },
             "updateConfig": {
@@ -1777,7 +1939,7 @@
       }
     }
   },
-  "revision": "20210303",
+  "revision": "20210311",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -2160,6 +2322,24 @@
       },
       "type": "object"
     },
+    "ListSitesResponse": {
+      "description": "The response from ListSites.",
+      "id": "ListSitesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token returned when the list of results is too large to fit in a single response. If the string is empty, the response is the last or only page of results. Use the token in a follow-up call to `ListSites` to find the next group of Sites. Page tokens are short-lived and should not be stored.",
+          "type": "string"
+        },
+        "sites": {
+          "description": "A list of Site objects from the parent Firebase Project.",
+          "items": {
+            "$ref": "Site"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListVersionFilesResponse": {
       "id": "ListVersionFilesResponse",
       "properties": {
@@ -2445,6 +2625,49 @@
             "Trailing slashes are _added_ to directory indexes as well as to any URL path not ending in a file extension.",
             "Trailing slashes are _removed_ from directory indexes as well as from any URL path not ending in a file extension."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Site": {
+      "description": "A `Site` represents a Firebase Hosting Site.",
+      "id": "Site",
+      "properties": {
+        "appId": {
+          "description": "Optional. The ID of a Web App associated with the Site.",
+          "type": "string"
+        },
+        "defaultUrl": {
+          "description": "Output only. The default URL for this Hosting Site.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. User-specified labels for the Hosting Site.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Output only. The fully qualified resource name of the Hosting Site, e.g.: `projects/{project-number}/sites/{site-id}`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "type": {
+          "description": "Output only. The Hosting site type. There will always be a single DEFAULT_SITE, which is created when Hosting is provisioned. All additional sites are USER_SITE.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "DEFAULT_SITE",
+            "USER_SITE"
+          ],
+          "enumDescriptions": [
+            "Unknown state, likely the result of an error on the backend.",
+            "The default hosting site that is provisioned when a project is created.",
+            "A hosting site that the user created."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },

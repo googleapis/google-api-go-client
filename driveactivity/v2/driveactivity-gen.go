@@ -458,7 +458,7 @@ func (s *ConsolidationStrategy) MarshalJSON() ([]byte, error) {
 
 // Copy: An object was created by copying an existing object.
 type Copy struct {
-	// OriginalObject: The the original object.
+	// OriginalObject: The original object.
 	OriginalObject *TargetReference `json:"originalObject,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OriginalObject") to
@@ -601,7 +601,7 @@ type Domain struct {
 	// LegacyId: An opaque string used to identify this domain.
 	LegacyId string `json:"legacyId,omitempty"`
 
-	// Name: The name of the domain, e.g. "google.com".
+	// Name: The name of the domain, e.g. `google.com`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LegacyId") to
@@ -630,7 +630,7 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 // Drive: Information about a shared drive.
 type Drive struct {
 	// Name: The resource name of the shared drive. The format is
-	// "COLLECTION_ID/DRIVE_ID". Clients should not assume a specific
+	// `COLLECTION_ID/DRIVE_ID`. Clients should not assume a specific
 	// collection ID for this resource name.
 	Name string `json:"name,omitempty"`
 
@@ -776,7 +776,7 @@ type DriveItem struct {
 	// https://developers.google.com/drive/v3/web/mime-types.
 	MimeType string `json:"mimeType,omitempty"`
 
-	// Name: The target Drive item. The format is "items/ITEM_ID".
+	// Name: The target Drive item. The format is `items/ITEM_ID`.
 	Name string `json:"name,omitempty"`
 
 	// Owner: Information about the owner of this Drive item.
@@ -826,7 +826,7 @@ type DriveItemReference struct {
 	// instead.
 	Folder *Folder `json:"folder,omitempty"`
 
-	// Name: The target Drive item. The format is "items/ITEM_ID".
+	// Name: The target Drive item. The format is `items/ITEM_ID`.
 	Name string `json:"name,omitempty"`
 
 	// Title: The title of the Drive item.
@@ -858,7 +858,7 @@ func (s *DriveItemReference) MarshalJSON() ([]byte, error) {
 // DriveReference: A lightweight reference to a shared drive.
 type DriveReference struct {
 	// Name: The resource name of the shared drive. The format is
-	// "COLLECTION_ID/DRIVE_ID". Clients should not assume a specific
+	// `COLLECTION_ID/DRIVE_ID`. Clients should not assume a specific
 	// collection ID for this resource name.
 	Name string `json:"name,omitempty"`
 
@@ -911,7 +911,7 @@ type FileComment struct {
 
 	// LinkToDiscussion: The link to the discussion thread containing this
 	// comment, for example,
-	// "https://docs.google.com/DOCUMENT_ID/edit?disco=THREAD_ID".
+	// `https://docs.google.com/DOCUMENT_ID/edit?disco=THREAD_ID`.
 	LinkToDiscussion string `json:"linkToDiscussion,omitempty"`
 
 	// Parent: The Drive item containing this comment.
@@ -1049,7 +1049,7 @@ type KnownUser struct {
 
 	// PersonName: The identifier for this user that can be used with the
 	// People API to get more information. The format is
-	// "people/ACCOUNT_ID". See https://developers.google.com/people/.
+	// `people/ACCOUNT_ID`. See https://developers.google.com/people/.
 	PersonName string `json:"personName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsCurrentUser") to
@@ -1179,8 +1179,10 @@ type Permission struct {
 	// Group: The group to whom this permission applies.
 	Group *Group `json:"group,omitempty"`
 
-	// Role: Indicates the Google Drive permissions role. The role
-	// determines a user's ability to read, write, and comment on items.
+	// Role: Indicates the Google Drive permissions role
+	// (https://developers.google.com/drive/web/manage-sharing#roles). The
+	// role determines a user's ability to read, write, and comment on
+	// items.
 	//
 	// Possible values:
 	//   "ROLE_UNSPECIFIED" - The role is not available.
@@ -1301,7 +1303,7 @@ func (s *Post) MarshalJSON() ([]byte, error) {
 // activity.
 type QueryDriveActivityRequest struct {
 	// AncestorName: Return activities for this Drive folder and all
-	// children and descendants. The format is "items/ITEM_ID".
+	// children and descendants. The format is `items/ITEM_ID`.
 	AncestorName string `json:"ancestorName,omitempty"`
 
 	// ConsolidationStrategy: Details on how to consolidate related actions
@@ -1312,19 +1314,19 @@ type QueryDriveActivityRequest struct {
 	// Filter: The filtering for items returned from this query request. The
 	// format of the filter string is a sequence of expressions, joined by
 	// an optional "AND", where each expression is of the form "field
-	// operator value". Supported fields: - time: Uses numerical operators
+	// operator value". Supported fields: - `time`: Uses numerical operators
 	// on date values either in terms of milliseconds since Jan 1, 1970 or
-	// in RFC 3339 format. Examples: - time > 1452409200000 AND time <=
-	// 1492812924310 - time >= "2016-01-10T01:02:03-05:00" -
-	// detail.action_detail_case: Uses the "has" operator (:) and either a
+	// in RFC 3339 format. Examples: - `time > 1452409200000 AND time <=
+	// 1492812924310` - `time >= "2016-01-10T01:02:03-05:00" -
+	// `detail.action_detail_case`: Uses the "has" operator (:) and either a
 	// singular value or a list of allowed action types enclosed in
-	// parentheses. Examples: - detail.action_detail_case: RENAME -
-	// detail.action_detail_case:(CREATE EDIT) -
-	// -detail.action_detail_case:MOVE
+	// parentheses. Examples: - `detail.action_detail_case: RENAME` -
+	// `detail.action_detail_case:(CREATE EDIT)` -
+	// `-detail.action_detail_case:MOVE`
 	Filter string `json:"filter,omitempty"`
 
 	// ItemName: Return activities for this Drive item. The format is
-	// "items/ITEM_ID".
+	// `items/ITEM_ID`.
 	ItemName string `json:"itemName,omitempty"`
 
 	// PageSize: The miminum number of activities desired in the response;
@@ -1875,7 +1877,7 @@ func (c *ActivityQueryCall) Header() http.Header {
 
 func (c *ActivityQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210310")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

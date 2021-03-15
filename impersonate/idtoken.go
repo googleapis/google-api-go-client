@@ -79,8 +79,7 @@ type generateIDTokenResponse struct {
 }
 
 type impersonatedIDTokenSource struct {
-	client  *http.Client
-	nowFunc func() time.Time
+	client *http.Client
 
 	targetPrincipal string
 	audience        string
@@ -89,6 +88,7 @@ type impersonatedIDTokenSource struct {
 }
 
 func (i impersonatedIDTokenSource) Token() (*oauth2.Token, error) {
+	now := time.Now()
 	genIDTokenReq := generateIDTokenRequest{
 		Audience:     i.audience,
 		IncludeEmail: i.includeEmail,
@@ -125,13 +125,6 @@ func (i impersonatedIDTokenSource) Token() (*oauth2.Token, error) {
 	return &oauth2.Token{
 		AccessToken: generateIDTokenResp.Token,
 		// Generated ID tokens are good for one hour.
-		Expiry: i.now().Add(1 * time.Hour),
+		Expiry: now.Add(1 * time.Hour),
 	}, nil
-}
-
-func (i impersonatedIDTokenSource) now() time.Time {
-	if i.nowFunc == nil {
-		return time.Now()
-	}
-	return i.nowFunc()
 }

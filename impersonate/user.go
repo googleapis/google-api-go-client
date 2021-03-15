@@ -79,8 +79,7 @@ type exchangeTokenResponse struct {
 }
 
 type userTokenSource struct {
-	client  *http.Client
-	nowFunc func() time.Time
+	client *http.Client
 
 	targetPrincipal string
 	subject         string
@@ -98,7 +97,7 @@ func (u userTokenSource) Token() (*oauth2.Token, error) {
 }
 
 func (u userTokenSource) signJWT() (string, error) {
-	now := u.now()
+	now := time.Now()
 	exp := now.Add(u.lifetime)
 	claims := claimSet{
 		Iss:   u.targetPrincipal,
@@ -147,6 +146,7 @@ func (u userTokenSource) signJWT() (string, error) {
 }
 
 func (u userTokenSource) exchangeToken(signedJWT string) (*oauth2.Token, error) {
+	now := time.Now()
 	v := url.Values{}
 	v.Set("grant_type", "assertion")
 	v.Set("assertion_type", "http://oauth.net/grant_type/jwt/1.0/bearer")
@@ -167,13 +167,6 @@ func (u userTokenSource) exchangeToken(signedJWT string) (*oauth2.Token, error) 
 	return &oauth2.Token{
 		AccessToken: tokenResp.AccessToken,
 		TokenType:   tokenResp.TokenType,
-		Expiry:      u.now().Add(time.Second * time.Duration(tokenResp.ExpiresIn)),
+		Expiry:      now.Add(time.Second * time.Duration(tokenResp.ExpiresIn)),
 	}, nil
-}
-
-func (u userTokenSource) now() time.Time {
-	if u.nowFunc == nil {
-		return time.Now()
-	}
-	return u.nowFunc()
 }

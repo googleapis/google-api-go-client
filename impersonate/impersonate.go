@@ -47,6 +47,8 @@ type Config struct {
 	Subject string
 }
 
+// defaultClientOptions ensures the base credentials will work with the IAM
+// Credentials API if no scope or audience is set by the user.
 func defaultClientOptions() []option.ClientOption {
 	return []option.ClientOption{
 		internaloption.WithDefaultAudience("https://iamcredentials.googleapis.com/"),

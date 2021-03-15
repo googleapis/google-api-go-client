@@ -1502,7 +1502,7 @@ func (c *UsersDataSourcesCreateCall) Header() http.Header {
 
 func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1652,7 +1652,7 @@ func (c *UsersDataSourcesDeleteCall) Header() http.Header {
 
 func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1812,7 +1812,7 @@ func (c *UsersDataSourcesGetCall) Header() http.Header {
 
 func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1995,7 +1995,7 @@ func (c *UsersDataSourcesListCall) Header() http.Header {
 
 func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2161,7 +2161,7 @@ func (c *UsersDataSourcesUpdateCall) Header() http.Header {
 
 func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2346,7 +2346,7 @@ func (c *UsersDataSourcesDataPointChangesListCall) Header() http.Header {
 
 func (c *UsersDataSourcesDataPointChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2522,20 +2522,6 @@ func (r *UsersDataSourcesDatasetsService) Delete(userId string, dataSourceId str
 	return c
 }
 
-// CurrentTimeMillis sets the optional parameter "currentTimeMillis":
-// The client's current time in milliseconds since epoch.
-func (c *UsersDataSourcesDatasetsDeleteCall) CurrentTimeMillis(currentTimeMillis int64) *UsersDataSourcesDatasetsDeleteCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
-	return c
-}
-
-// ModifiedTimeMillis sets the optional parameter "modifiedTimeMillis":
-// When the operation was performed on the client.
-func (c *UsersDataSourcesDatasetsDeleteCall) ModifiedTimeMillis(modifiedTimeMillis int64) *UsersDataSourcesDatasetsDeleteCall {
-	c.urlParams_.Set("modifiedTimeMillis", fmt.Sprint(modifiedTimeMillis))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2563,7 +2549,7 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2609,12 +2595,6 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Do(opts ...googleapi.CallOption) er
 	//     "datasetId"
 	//   ],
 	//   "parameters": {
-	//     "currentTimeMillis": {
-	//       "description": "The client's current time in milliseconds since epoch.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "dataSourceId": {
 	//       "description": "The data stream ID of the data source that created the dataset.",
 	//       "location": "path",
@@ -2625,12 +2605,6 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Do(opts ...googleapi.CallOption) er
 	//       "description": "Dataset identifier that is a composite of the minimum data point start time and maximum data point end time represented as nanoseconds from the epoch. The ID is formatted like: \"startTime-endTime\" where startTime and endTime are 64 bit integers.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modifiedTimeMillis": {
-	//       "description": "When the operation was performed on the client.",
-	//       "format": "int64",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userId": {
@@ -2743,7 +2717,7 @@ func (c *UsersDataSourcesDatasetsGetCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2928,15 +2902,6 @@ func (r *UsersDataSourcesDatasetsService) Patch(userId string, dataSourceId stri
 	return c
 }
 
-// CurrentTimeMillis sets the optional parameter "currentTimeMillis":
-// The client's current time in milliseconds since epoch. Note that the
-// minStartTimeNs and maxEndTimeNs properties in the request body are in
-// nanoseconds instead of milliseconds.
-func (c *UsersDataSourcesDatasetsPatchCall) CurrentTimeMillis(currentTimeMillis int64) *UsersDataSourcesDatasetsPatchCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2964,7 +2929,7 @@ func (c *UsersDataSourcesDatasetsPatchCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3040,12 +3005,6 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*D
 	//     "datasetId"
 	//   ],
 	//   "parameters": {
-	//     "currentTimeMillis": {
-	//       "description": "The client's current time in milliseconds since epoch. Note that the minStartTimeNs and maxEndTimeNs properties in the request body are in nanoseconds instead of milliseconds.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "dataSourceId": {
 	//       "description": "The data stream ID of the data source that created the dataset.",
 	//       "location": "path",
@@ -3159,7 +3118,7 @@ func (c *UsersDatasetAggregateCall) Header() http.Header {
 
 func (c *UsersDatasetAggregateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3292,13 +3251,6 @@ func (r *UsersSessionsService) Delete(userId string, sessionId string) *UsersSes
 	return c
 }
 
-// CurrentTimeMillis sets the optional parameter "currentTimeMillis":
-// The client's current time in milliseconds since epoch.
-func (c *UsersSessionsDeleteCall) CurrentTimeMillis(currentTimeMillis int64) *UsersSessionsDeleteCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3326,7 +3278,7 @@ func (c *UsersSessionsDeleteCall) Header() http.Header {
 
 func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3370,12 +3322,6 @@ func (c *UsersSessionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     "sessionId"
 	//   ],
 	//   "parameters": {
-	//     "currentTimeMillis": {
-	//       "description": "The client's current time in milliseconds since epoch.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "sessionId": {
 	//       "description": "The ID of the session to be deleted.",
 	//       "location": "path",
@@ -3504,7 +3450,7 @@ func (c *UsersSessionsListCall) Header() http.Header {
 
 func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3682,13 +3628,6 @@ func (r *UsersSessionsService) Update(userId string, sessionId string, session *
 	return c
 }
 
-// CurrentTimeMillis sets the optional parameter "currentTimeMillis":
-// The client's current time in milliseconds since epoch.
-func (c *UsersSessionsUpdateCall) CurrentTimeMillis(currentTimeMillis int64) *UsersSessionsUpdateCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3716,7 +3655,7 @@ func (c *UsersSessionsUpdateCall) Header() http.Header {
 
 func (c *UsersSessionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210311")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3790,12 +3729,6 @@ func (c *UsersSessionsUpdateCall) Do(opts ...googleapi.CallOption) (*Session, er
 	//     "sessionId"
 	//   ],
 	//   "parameters": {
-	//     "currentTimeMillis": {
-	//       "description": "The client's current time in milliseconds since epoch.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "sessionId": {
 	//       "description": "The ID of the session to be created.",
 	//       "location": "path",

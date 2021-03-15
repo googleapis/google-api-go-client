@@ -7,7 +7,7 @@
 # Fail on any error
 set -eo pipefail
 
-export GCLOUD_TESTS_GOLANG_KEY="${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-service-account"
+export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/secret_manager/go-cloud-integration-service-account"
 
 # Display commands being run
 set -x

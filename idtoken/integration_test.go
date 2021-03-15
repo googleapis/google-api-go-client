@@ -2,9 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build integration
-
-package idtoken
+package idtoken_test
 
 import (
 	"context"
@@ -20,7 +18,7 @@ import (
 )
 
 const (
-	envCredentialFile = "GCLOUD_TESTS_GOLANG_KEY"
+	envCredentialFile = "GOOGLE_APPLICATION_CREDENTIALS"
 
 	aud = "http://example.com"
 )
@@ -29,7 +27,6 @@ func TestNewTokenSource(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping integration test")
 	}
-	os.Setenv(envCredentialFile, "/Users/codyoss/creds/codyoss-workspace-2b1fb7cd40c0.json")
 	ts, err := idtoken.NewTokenSource(context.Background(), "http://example.com", option.WithCredentialsFile(os.Getenv(envCredentialFile)))
 	if err != nil {
 		t.Fatalf("unable to create TokenSource: %v", err)
@@ -56,7 +53,6 @@ func TestNewClient_WithCredentialFile(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping integration test")
 	}
-	os.Setenv(envCredentialFile, "/Users/codyoss/creds/codyoss-workspace-2b1fb7cd40c0.json")
 	client, err := idtoken.NewClient(context.Background(), aud, option.WithCredentialsFile(os.Getenv(envCredentialFile)))
 	if err != nil {
 		t.Fatalf("unable to create Client: %v", err)

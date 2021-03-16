@@ -456,8 +456,8 @@ type Channel struct {
 	// Labels: Text labels used for extra metadata and/or filtering.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The fully-qualified identifier for the channel, in the format:
-	// sites/ SITE_NAME/channels/CHANNEL_ID
+	// Name: The fully-qualified resource name for the channel, in the
+	// format: sites/ SITE_ID/channels/CHANNEL_ID
 	Name string `json:"name,omitempty"`
 
 	// Release: Output only. The current release for the channel, if any.
@@ -528,7 +528,7 @@ type CloneVersionRequest struct {
 	Include *PathFilter `json:"include,omitempty"`
 
 	// SourceVersion: Required. The unique identifier for the version to be
-	// cloned, in the format: sites/SITE_NAME/versions/VERSION_ID
+	// cloned, in the format: sites/SITE_ID/versions/VERSION_ID
 	SourceVersion string `json:"sourceVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exclude") to
@@ -969,16 +969,14 @@ func (s *ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListSitesResponse: The response from ListSites.
 type ListSitesResponse struct {
-	// NextPageToken: A token returned when the list of results is too large
-	// to fit in a single response. If the string is empty, the response is
-	// the last or only page of results. Use the token in a follow-up call
-	// to `ListSites` to find the next group of Sites. Page tokens are
-	// short-lived and should not be stored.
+	// NextPageToken: The pagination token, if more results exist beyond the
+	// ones in this response. Include this token in your next call to
+	// `ListSites`. Page tokens are short-lived and should not be stored.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Sites: A list of Site objects from the parent Firebase Project.
+	// Sites: A list of Site objects associated with the specified Firebase
+	// project.
 	Sites []*Site `json:"sites,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1209,7 +1207,7 @@ type PopulateVersionFilesResponse struct {
 
 	// UploadUrl: The URL to which the files should be uploaded, in the
 	// format:
-	// "https://upload-firebasehosting.googleapis.com/upload/sites/SITE_NAME
+	// "https://upload-firebasehosting.googleapis.com/upload/sites/SITE_ID
 	// /versions/VERSION_ID/files" Perform a multipart `POST` of the Gzipped
 	// file contents to the URL using a forward slash and the hash of the
 	// file appended to the end.
@@ -1335,8 +1333,8 @@ type Release struct {
 	Message string `json:"message,omitempty"`
 
 	// Name: Output only. The unique identifier for the release, in either
-	// of the following formats: - sites/SITE_NAME/releases/RELEASE_ID -
-	// sites/SITE_NAME/channels/CHANNEL_ID/releases/RELEASE_ID This name is
+	// of the following formats: - sites/SITE_ID/releases/RELEASE_ID -
+	// sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID This name is
 	// provided in the response body when you call `releases.create`
 	// (sites.releases/create) or `channels.releases.create`
 	// (sites.channels.releases/create).
@@ -1524,31 +1522,39 @@ func (s *ServingConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Site: A `Site` represents a Firebase Hosting Site.
+// Site: A `Site` represents a Firebase Hosting site.
 type Site struct {
-	// AppId: Optional. The ID of a Web App associated with the Site.
+	// AppId: Optional. The ID of a Web App
+	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)
+	// associated with the Hosting site.
 	AppId string `json:"appId,omitempty"`
 
-	// DefaultUrl: Output only. The default URL for this Hosting Site.
+	// DefaultUrl: Output only. The default URL for the Hosting site.
 	DefaultUrl string `json:"defaultUrl,omitempty"`
 
-	// Labels: Optional. User-specified labels for the Hosting Site.
+	// Labels: Optional. User-specified labels for the Hosting site.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. The fully qualified resource name of the Hosting
-	// Site, e.g.: `projects/{project-number}/sites/{site-id}`.
+	// Name: Output only. The fully-qualified resource name of the Hosting
+	// site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID
+	// PROJECT_IDENTIFIER: the Firebase project's `ProjectNumber`
+	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number)
+	// ***(recommended)*** or its `ProjectId`
+	// (https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id).
+	// Learn more about using project identifiers in Google's AIP 2510
+	// standard (https://google.aip.dev/cloud/2510).
 	Name string `json:"name,omitempty"`
 
-	// Type: Output only. The Hosting site type. There will always be a
-	// single DEFAULT_SITE, which is created when Hosting is provisioned.
-	// All additional sites are USER_SITE.
+	// Type: Output only. The type of Hosting site. Every Firebase project
+	// has a `DEFAULT_SITE`, which is created when Hosting is provisioned
+	// for the project. All additional sites are `USER_SITE`.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unknown state, likely the result of an error
 	// on the backend.
-	//   "DEFAULT_SITE" - The default hosting site that is provisioned when
-	// a project is created.
-	//   "USER_SITE" - A hosting site that the user created.
+	//   "DEFAULT_SITE" - The default Hosting site that is provisioned when
+	// a Firebase project is created.
+	//   "USER_SITE" - A Hosting site that the user created.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1701,9 +1707,10 @@ type Version struct {
 	// Labels: The labels used for extra metadata and/or filtering.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The fully-qualified identifier for the version, in the format:
-	// sites/ SITE_NAME/versions/VERSION_ID This name is provided in the
-	// response body when you call `CreateVersion` (sites.versions/create).
+	// Name: The fully-qualified resource name for the version, in the
+	// format: sites/ SITE_ID/versions/VERSION_ID This name is provided in
+	// the response body when you call `CreateVersion`
+	// (sites.versions/create).
 	Name string `json:"name,omitempty"`
 
 	// Preview: Deprecated in favor of site channels (sites.channels).
@@ -1867,7 +1874,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1970,8 +1977,9 @@ type ProjectsSitesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new Site. Sites take several minutes to propagate
-// through Firebase systems.
+// Create: Creates a new Hosting Site in the specified parent Firebase
+// project. Note that Hosting sites can take several minutes to
+// propagate through Firebase systems.
 func (r *ProjectsSitesService) Create(parent string, site *Site) *ProjectsSitesCreateCall {
 	c := &ProjectsSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1980,8 +1988,9 @@ func (r *ProjectsSitesService) Create(parent string, site *Site) *ProjectsSitesC
 }
 
 // SiteId sets the optional parameter "siteId": Required. Immutable. A
-// globally unique ID to identify the Site. The ID must also be a valid
-// domain name label.
+// globally unique identifier for the Hosting site. This identifier is
+// used to construct the Firebase-provisioned subdomains for the site,
+// so it must also be a valid domain name label.
 func (c *ProjectsSitesCreateCall) SiteId(siteId string) *ProjectsSitesCreateCall {
 	c.urlParams_.Set("siteId", siteId)
 	return c
@@ -2014,7 +2023,7 @@ func (c *ProjectsSitesCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2078,7 +2087,7 @@ func (c *ProjectsSitesCreateCall) Do(opts ...googleapi.CallOption) (*Site, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new Site. Sites take several minutes to propagate through Firebase systems.",
+	//   "description": "Creates a new Hosting Site in the specified parent Firebase project. Note that Hosting sites can take several minutes to propagate through Firebase systems.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites",
 	//   "httpMethod": "POST",
 	//   "id": "firebasehosting.projects.sites.create",
@@ -2087,14 +2096,14 @@ func (c *ProjectsSitesCreateCall) Do(opts ...googleapi.CallOption) (*Site, error
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent Project of a Site, e.g.: `projects/{project-number}`.",
+	//       "description": "Required. The Firebase project in which to create a Hosting site, in the format: projects/PROJECT_IDENTIFIER Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "siteId": {
-	//       "description": "Required. Immutable. A globally unique ID to identify the Site. The ID must also be a valid domain name label.",
+	//       "description": "Required. Immutable. A globally unique identifier for the Hosting site. This identifier is used to construct the Firebase-provisioned subdomains for the site, so it must also be a valid domain name label.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2124,7 +2133,8 @@ type ProjectsSitesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Site from the specified parent Project.
+// Delete: Deletes the specified Hosting Site from the specified parent
+// Firebase project.
 func (r *ProjectsSitesService) Delete(name string) *ProjectsSitesDeleteCall {
 	c := &ProjectsSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2158,7 +2168,7 @@ func (c *ProjectsSitesDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2217,7 +2227,7 @@ func (c *ProjectsSitesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Site from the specified parent Project.",
+	//   "description": "Deletes the specified Hosting Site from the specified parent Firebase project.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "firebasehosting.projects.sites.delete",
@@ -2226,7 +2236,7 @@ func (c *ProjectsSitesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified resource name of the Site, e.g.: `projects/{project-number}/sites/{site-id}`.",
+	//       "description": "Required. The fully-qualified resource name for the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -2256,7 +2266,7 @@ type ProjectsSitesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the Site identified by the specified resource name.
+// Get: Gets the specified Hosting Site.
 func (r *ProjectsSitesService) Get(nameid string) *ProjectsSitesGetCall {
 	c := &ProjectsSitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -2300,7 +2310,7 @@ func (c *ProjectsSitesGetCall) Header() http.Header {
 
 func (c *ProjectsSitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2362,7 +2372,7 @@ func (c *ProjectsSitesGetCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Site identified by the specified resource name.",
+	//   "description": "Gets the specified Hosting Site.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.projects.sites.get",
@@ -2371,7 +2381,7 @@ func (c *ProjectsSitesGetCall) Do(opts ...googleapi.CallOption) (*Site, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully qualified resource name of the Site, e.g.: `projects/{project-number}/sites/{site-id}`. As a `site-id` is a globally unique identifier, you can also use the unique sub-collection resource access pattern as well: `projects/-/sites/{site-id}`.",
+	//       "description": "Required. The fully-qualified resource name for the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values. Since a SITE_ID is a globally unique identifier, you can also use the unique sub-collection resource access pattern, in the format: projects/-/sites/SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -2447,7 +2457,7 @@ func (c *ProjectsSitesGetConfigCall) Header() http.Header {
 
 func (c *ProjectsSitesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2550,10 +2560,8 @@ type ProjectsSitesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists each Site associated with the specified parent Project.
-// Sites are returned in a consistent, but undefined, order to
-// facilitate pagination. Site data might be out of sync by a few
-// seconds. If you require up-to-date data, use GetSite.
+// List: Lists each Hosting Site associated with the specified parent
+// Firebase project.
 func (r *ProjectsSitesService) List(parent string) *ProjectsSitesListCall {
 	c := &ProjectsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2561,9 +2569,8 @@ func (r *ProjectsSitesService) List(parent string) *ProjectsSitesListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of sites to return in the response. The server may return fewer Sites
-// at its discretion. If you don't specify a value or specify one that's
-// too large, the server can select its own value.
+// of sites to return. The service may return a lower number if fewer
+// sites exist than this maximum number. If unspecified, defaults to 40.
 func (c *ProjectsSitesListCall) PageSize(pageSize int64) *ProjectsSitesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2614,7 +2621,7 @@ func (c *ProjectsSitesListCall) Header() http.Header {
 
 func (c *ProjectsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2676,7 +2683,7 @@ func (c *ProjectsSitesListCall) Do(opts ...googleapi.CallOption) (*ListSitesResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists each Site associated with the specified parent Project. Sites are returned in a consistent, but undefined, order to facilitate pagination. Site data might be out of sync by a few seconds. If you require up-to-date data, use GetSite.",
+	//   "description": "Lists each Hosting Site associated with the specified parent Firebase project.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites",
 	//   "httpMethod": "GET",
 	//   "id": "firebasehosting.projects.sites.list",
@@ -2685,7 +2692,7 @@ func (c *ProjectsSitesListCall) Do(opts ...googleapi.CallOption) (*ListSitesResp
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of sites to return in the response. The server may return fewer Sites at its discretion. If you don't specify a value or specify one that's too large, the server can select its own value.",
+	//       "description": "Optional. The maximum number of sites to return. The service may return a lower number if fewer sites exist than this maximum number. If unspecified, defaults to 40.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2696,7 +2703,7 @@ func (c *ProjectsSitesListCall) Do(opts ...googleapi.CallOption) (*ListSitesResp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The Project that owns the sites to list, e.g.: `projects/{project-number}`.",
+	//       "description": "Required. The Firebase project for which to list sites, in the format: projects/PROJECT_IDENTIFIER Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2742,24 +2749,23 @@ func (c *ProjectsSitesListCall) Pages(ctx context.Context, f func(*ListSitesResp
 
 type ProjectsSitesPatchCall struct {
 	s          *Service
-	name       string
+	nameid     string
 	site       *Site
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
-// Patch: Updates attributes of the Site identified by the specified
-// resource name.
-func (r *ProjectsSitesService) Patch(name string, site *Site) *ProjectsSitesPatchCall {
+// Patch: Updates attributes of the specified Hosting Site.
+func (r *ProjectsSitesService) Patch(nameid string, site *Site) *ProjectsSitesPatchCall {
 	c := &ProjectsSitesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
+	c.nameid = nameid
 	c.site = site
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": A mask that
-// specifies which Site fields to update.
+// UpdateMask sets the optional parameter "updateMask": A set of field
+// names from your Site that you want to update.
 func (c *ProjectsSitesPatchCall) UpdateMask(updateMask string) *ProjectsSitesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2792,7 +2798,7 @@ func (c *ProjectsSitesPatchCall) Header() http.Header {
 
 func (c *ProjectsSitesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2813,7 +2819,7 @@ func (c *ProjectsSitesPatchCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
+		"name": c.nameid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -2856,7 +2862,7 @@ func (c *ProjectsSitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates attributes of the Site identified by the specified resource name.",
+	//   "description": "Updates attributes of the specified Hosting Site.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/sites/{sitesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "firebasehosting.projects.sites.patch",
@@ -2865,14 +2871,14 @@ func (c *ProjectsSitesPatchCall) Do(opts ...googleapi.CallOption) (*Site, error)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The fully qualified resource name of the Hosting Site, e.g.: `projects/{project-number}/sites/{site-id}`.",
+	//       "description": "Output only. The fully-qualified resource name of the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the Firebase project's [`ProjectNumber`](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/projects/api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "A mask that specifies which Site fields to update.",
+	//       "description": "A set of field names from your Site that you want to update.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2949,7 +2955,7 @@ func (c *ProjectsSitesUpdateConfigCall) Header() http.Header {
 
 func (c *ProjectsSitesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3103,7 +3109,7 @@ func (c *ProjectsSitesChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3181,7 +3187,7 @@ func (c *ProjectsSitesChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Cha
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site in which to create this channel, in the format: sites/ SITE_NAME",
+	//       "description": "Required. The site in which to create this channel, in the format: sites/ SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -3207,7 +3213,7 @@ func (c *ProjectsSitesChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Cha
 
 type ProjectsSitesChannelsDeleteCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
@@ -3215,9 +3221,9 @@ type ProjectsSitesChannelsDeleteCall struct {
 
 // Delete: Deletes the specified channel of the specified site. The
 // `live` channel cannot be deleted.
-func (r *ProjectsSitesChannelsService) Delete(nameid string) *ProjectsSitesChannelsDeleteCall {
+func (r *ProjectsSitesChannelsService) Delete(name string) *ProjectsSitesChannelsDeleteCall {
 	c := &ProjectsSitesChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	return c
 }
 
@@ -3248,7 +3254,7 @@ func (c *ProjectsSitesChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3264,7 +3270,7 @@ func (c *ProjectsSitesChannelsDeleteCall) doRequest(alt string) (*http.Response,
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -3316,7 +3322,7 @@ func (c *ProjectsSitesChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully-qualified identifier for the channel, in the format: sites/SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "Required. The fully-qualified resource name for the channel, in the format: sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -3339,7 +3345,7 @@ func (c *ProjectsSitesChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 
 type ProjectsSitesChannelsGetCall struct {
 	s            *Service
-	nameid       string
+	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -3348,9 +3354,9 @@ type ProjectsSitesChannelsGetCall struct {
 
 // Get: Retrieves information for the specified channel of the specified
 // site.
-func (r *ProjectsSitesChannelsService) Get(nameid string) *ProjectsSitesChannelsGetCall {
+func (r *ProjectsSitesChannelsService) Get(name string) *ProjectsSitesChannelsGetCall {
 	c := &ProjectsSitesChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	return c
 }
 
@@ -3391,7 +3397,7 @@ func (c *ProjectsSitesChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3410,7 +3416,7 @@ func (c *ProjectsSitesChannelsGetCall) doRequest(alt string) (*http.Response, er
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -3462,7 +3468,7 @@ func (c *ProjectsSitesChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channe
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully-qualified identifier for the channel, in the format: sites/SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "Required. The fully-qualified resource name for the channel, in the format: sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -3557,7 +3563,7 @@ func (c *ProjectsSitesChannelsListCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3639,7 +3645,7 @@ func (c *ProjectsSitesChannelsListCall) Do(opts ...googleapi.CallOption) (*ListC
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site for which to list channels, in the format: sites/ SITE_NAME",
+	//       "description": "Required. The site for which to list channels, in the format: sites/SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -3685,7 +3691,7 @@ func (c *ProjectsSitesChannelsListCall) Pages(ctx context.Context, f func(*ListC
 
 type ProjectsSitesChannelsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	channel    *Channel
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -3694,9 +3700,9 @@ type ProjectsSitesChannelsPatchCall struct {
 
 // Patch: Updates information for the specified channel of the specified
 // site. Implicitly creates the channel if it doesn't already exist.
-func (r *ProjectsSitesChannelsService) Patch(nameid string, channel *Channel) *ProjectsSitesChannelsPatchCall {
+func (r *ProjectsSitesChannelsService) Patch(name string, channel *Channel) *ProjectsSitesChannelsPatchCall {
 	c := &ProjectsSitesChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.channel = channel
 	return c
 }
@@ -3735,7 +3741,7 @@ func (c *ProjectsSitesChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3756,7 +3762,7 @@ func (c *ProjectsSitesChannelsPatchCall) doRequest(alt string) (*http.Response, 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -3808,7 +3814,7 @@ func (c *ProjectsSitesChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Chan
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully-qualified identifier for the channel, in the format: sites/ SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "The fully-qualified resource name for the channel, in the format: sites/ SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -3857,11 +3863,10 @@ func (r *ProjectsSitesChannelsReleasesService) Create(parent string, release *Re
 }
 
 // VersionName sets the optional parameter "versionName": The unique
-// identifier for a version, in the format: sites/SITE_NAME
-// /versions/VERSION_ID The SITE_NAME in this version identifier must
-// match the SITE_NAME in the `parent` parameter. This query parameter
-// must be empty if the `type` field in the request body is
-// `SITE_DISABLE`.
+// identifier for a version, in the format: sites/SITE_ID/versions/
+// VERSION_ID The SITE_ID in this version identifier must match the
+// SITE_ID in the `parent` parameter. This query parameter must be empty
+// if the `type` field in the request body is `SITE_DISABLE`.
 func (c *ProjectsSitesChannelsReleasesCreateCall) VersionName(versionName string) *ProjectsSitesChannelsReleasesCreateCall {
 	c.urlParams_.Set("versionName", versionName)
 	return c
@@ -3894,7 +3899,7 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3967,14 +3972,14 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "versionName": {
-	//       "description": " The unique identifier for a version, in the format: sites/SITE_NAME /versions/VERSION_ID The SITE_NAME in this version identifier must match the SITE_NAME in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
+	//       "description": " The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4069,7 +4074,7 @@ func (c *ProjectsSitesChannelsReleasesListCall) Header() http.Header {
 
 func (c *ProjectsSitesChannelsReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4151,7 +4156,7 @@ func (c *ProjectsSitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID ",
+	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -4239,7 +4244,7 @@ func (c *ProjectsSitesDomainsCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4378,7 +4383,7 @@ func (c *ProjectsSitesDomainsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4520,7 +4525,7 @@ func (c *ProjectsSitesDomainsGetCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4681,7 +4686,7 @@ func (c *ProjectsSitesDomainsListCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4852,7 +4857,7 @@ func (c *ProjectsSitesDomainsUpdateCall) Header() http.Header {
 
 func (c *ProjectsSitesDomainsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4968,11 +4973,10 @@ func (r *ProjectsSitesReleasesService) Create(parent string, release *Release) *
 }
 
 // VersionName sets the optional parameter "versionName": The unique
-// identifier for a version, in the format: sites/SITE_NAME
-// /versions/VERSION_ID The SITE_NAME in this version identifier must
-// match the SITE_NAME in the `parent` parameter. This query parameter
-// must be empty if the `type` field in the request body is
-// `SITE_DISABLE`.
+// identifier for a version, in the format: sites/SITE_ID/versions/
+// VERSION_ID The SITE_ID in this version identifier must match the
+// SITE_ID in the `parent` parameter. This query parameter must be empty
+// if the `type` field in the request body is `SITE_DISABLE`.
 func (c *ProjectsSitesReleasesCreateCall) VersionName(versionName string) *ProjectsSitesReleasesCreateCall {
 	c.urlParams_.Set("versionName", versionName)
 	return c
@@ -5005,7 +5009,7 @@ func (c *ProjectsSitesReleasesCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5078,14 +5082,14 @@ func (c *ProjectsSitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "versionName": {
-	//       "description": " The unique identifier for a version, in the format: sites/SITE_NAME /versions/VERSION_ID The SITE_NAME in this version identifier must match the SITE_NAME in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
+	//       "description": " The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5180,7 +5184,7 @@ func (c *ProjectsSitesReleasesListCall) Header() http.Header {
 
 func (c *ProjectsSitesReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5262,7 +5266,7 @@ func (c *ProjectsSitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID ",
+	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -5351,7 +5355,7 @@ func (c *ProjectsSitesVersionsCloneCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5424,7 +5428,7 @@ func (c *ProjectsSitesVersionsCloneCall) Do(opts ...googleapi.CallOption) (*Oper
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The target site for the cloned version, in the format: sites/ SITE_NAME",
+	//       "description": "Required. The target site for the cloned version, in the format: sites/ SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -5508,7 +5512,7 @@ func (c *ProjectsSitesVersionsCreateCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5581,7 +5585,7 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site in which to create the version, in the format: sites/ SITE_NAME",
+	//       "description": "Required. The site in which to create the version, in the format: sites/ SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -5618,16 +5622,16 @@ func (c *ProjectsSitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Ver
 
 type ProjectsSitesVersionsDeleteCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
 // Delete: Deletes the specified version.
-func (r *ProjectsSitesVersionsService) Delete(nameid string) *ProjectsSitesVersionsDeleteCall {
+func (r *ProjectsSitesVersionsService) Delete(name string) *ProjectsSitesVersionsDeleteCall {
 	c := &ProjectsSitesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	return c
 }
 
@@ -5658,7 +5662,7 @@ func (c *ProjectsSitesVersionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5674,7 +5678,7 @@ func (c *ProjectsSitesVersionsDeleteCall) doRequest(alt string) (*http.Response,
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -5726,7 +5730,7 @@ func (c *ProjectsSitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully-qualified identifier for the version, in the format: sites/SITE_NAME/versions/VERSION_ID",
+	//       "description": "Required. The fully-qualified resource name for the version, in the format: sites/SITE_ID/versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -5830,7 +5834,7 @@ func (c *ProjectsSitesVersionsListCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5917,7 +5921,7 @@ func (c *ProjectsSitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListV
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site or channel for which to list versions, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID ",
+	//       "description": "Required. The site or channel for which to list versions, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+$",
 	//       "required": true,
@@ -5963,7 +5967,7 @@ func (c *ProjectsSitesVersionsListCall) Pages(ctx context.Context, f func(*ListV
 
 type ProjectsSitesVersionsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	version    *Version
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -5976,9 +5980,9 @@ type ProjectsSitesVersionsPatchCall struct {
 // (../sites.versions#versionstatus) transitions for a version are from
 // `CREATED` to `FINALIZED`. Use `DeleteVersion` (delete) to set the
 // status of a version to `DELETED`.
-func (r *ProjectsSitesVersionsService) Patch(nameid string, version *Version) *ProjectsSitesVersionsPatchCall {
+func (r *ProjectsSitesVersionsService) Patch(name string, version *Version) *ProjectsSitesVersionsPatchCall {
 	c := &ProjectsSitesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.version = version
 	return c
 }
@@ -6020,7 +6024,7 @@ func (c *ProjectsSitesVersionsPatchCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6041,7 +6045,7 @@ func (c *ProjectsSitesVersionsPatchCall) doRequest(alt string) (*http.Response, 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -6093,7 +6097,7 @@ func (c *ProjectsSitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Vers
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully-qualified identifier for the version, in the format: sites/ SITE_NAME/versions/VERSION_ID This name is provided in the response body when you call [`CreateVersion`](sites.versions/create).",
+	//       "description": "The fully-qualified resource name for the version, in the format: sites/ SITE_ID/versions/VERSION_ID This name is provided in the response body when you call [`CreateVersion`](sites.versions/create).",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -6168,7 +6172,7 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6241,7 +6245,7 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The version to which to add files, in the format: sites/SITE_NAME /versions/VERSION_ID",
+	//       "description": "Required. The version to which to add files, in the format: sites/SITE_ID /versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -6350,7 +6354,7 @@ func (c *ProjectsSitesVersionsFilesListCall) Header() http.Header {
 
 func (c *ProjectsSitesVersionsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6432,7 +6436,7 @@ func (c *ProjectsSitesVersionsFilesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The version for which to list files, in the format: sites/ SITE_NAME/versions/VERSION_ID",
+	//       "description": "Required. The version for which to list files, in the format: sites/SITE_ID /versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -6544,7 +6548,7 @@ func (c *SitesGetConfigCall) Header() http.Header {
 
 func (c *SitesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6692,7 +6696,7 @@ func (c *SitesUpdateConfigCall) Header() http.Header {
 
 func (c *SitesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6846,7 +6850,7 @@ func (c *SitesChannelsCreateCall) Header() http.Header {
 
 func (c *SitesChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6924,7 +6928,7 @@ func (c *SitesChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Channel, er
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site in which to create this channel, in the format: sites/ SITE_NAME",
+	//       "description": "Required. The site in which to create this channel, in the format: sites/ SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -6950,7 +6954,7 @@ func (c *SitesChannelsCreateCall) Do(opts ...googleapi.CallOption) (*Channel, er
 
 type SitesChannelsDeleteCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
@@ -6958,9 +6962,9 @@ type SitesChannelsDeleteCall struct {
 
 // Delete: Deletes the specified channel of the specified site. The
 // `live` channel cannot be deleted.
-func (r *SitesChannelsService) Delete(nameid string) *SitesChannelsDeleteCall {
+func (r *SitesChannelsService) Delete(name string) *SitesChannelsDeleteCall {
 	c := &SitesChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	return c
 }
 
@@ -6991,7 +6995,7 @@ func (c *SitesChannelsDeleteCall) Header() http.Header {
 
 func (c *SitesChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7007,7 +7011,7 @@ func (c *SitesChannelsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -7059,7 +7063,7 @@ func (c *SitesChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully-qualified identifier for the channel, in the format: sites/SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "Required. The fully-qualified resource name for the channel, in the format: sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -7082,7 +7086,7 @@ func (c *SitesChannelsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 
 type SitesChannelsGetCall struct {
 	s            *Service
-	nameid       string
+	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -7091,9 +7095,9 @@ type SitesChannelsGetCall struct {
 
 // Get: Retrieves information for the specified channel of the specified
 // site.
-func (r *SitesChannelsService) Get(nameid string) *SitesChannelsGetCall {
+func (r *SitesChannelsService) Get(name string) *SitesChannelsGetCall {
 	c := &SitesChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	return c
 }
 
@@ -7134,7 +7138,7 @@ func (c *SitesChannelsGetCall) Header() http.Header {
 
 func (c *SitesChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7153,7 +7157,7 @@ func (c *SitesChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -7205,7 +7209,7 @@ func (c *SitesChannelsGetCall) Do(opts ...googleapi.CallOption) (*Channel, error
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully-qualified identifier for the channel, in the format: sites/SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "Required. The fully-qualified resource name for the channel, in the format: sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -7300,7 +7304,7 @@ func (c *SitesChannelsListCall) Header() http.Header {
 
 func (c *SitesChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7382,7 +7386,7 @@ func (c *SitesChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChannelsR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site for which to list channels, in the format: sites/ SITE_NAME",
+	//       "description": "Required. The site for which to list channels, in the format: sites/SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -7428,7 +7432,7 @@ func (c *SitesChannelsListCall) Pages(ctx context.Context, f func(*ListChannelsR
 
 type SitesChannelsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	channel    *Channel
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -7437,9 +7441,9 @@ type SitesChannelsPatchCall struct {
 
 // Patch: Updates information for the specified channel of the specified
 // site. Implicitly creates the channel if it doesn't already exist.
-func (r *SitesChannelsService) Patch(nameid string, channel *Channel) *SitesChannelsPatchCall {
+func (r *SitesChannelsService) Patch(name string, channel *Channel) *SitesChannelsPatchCall {
 	c := &SitesChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.channel = channel
 	return c
 }
@@ -7478,7 +7482,7 @@ func (c *SitesChannelsPatchCall) Header() http.Header {
 
 func (c *SitesChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7499,7 +7503,7 @@ func (c *SitesChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -7551,7 +7555,7 @@ func (c *SitesChannelsPatchCall) Do(opts ...googleapi.CallOption) (*Channel, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully-qualified identifier for the channel, in the format: sites/ SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "The fully-qualified resource name for the channel, in the format: sites/ SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -7600,11 +7604,10 @@ func (r *SitesChannelsReleasesService) Create(parent string, release *Release) *
 }
 
 // VersionName sets the optional parameter "versionName": The unique
-// identifier for a version, in the format: sites/SITE_NAME
-// /versions/VERSION_ID The SITE_NAME in this version identifier must
-// match the SITE_NAME in the `parent` parameter. This query parameter
-// must be empty if the `type` field in the request body is
-// `SITE_DISABLE`.
+// identifier for a version, in the format: sites/SITE_ID/versions/
+// VERSION_ID The SITE_ID in this version identifier must match the
+// SITE_ID in the `parent` parameter. This query parameter must be empty
+// if the `type` field in the request body is `SITE_DISABLE`.
 func (c *SitesChannelsReleasesCreateCall) VersionName(versionName string) *SitesChannelsReleasesCreateCall {
 	c.urlParams_.Set("versionName", versionName)
 	return c
@@ -7637,7 +7640,7 @@ func (c *SitesChannelsReleasesCreateCall) Header() http.Header {
 
 func (c *SitesChannelsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7710,14 +7713,14 @@ func (c *SitesChannelsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Rel
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "versionName": {
-	//       "description": " The unique identifier for a version, in the format: sites/SITE_NAME /versions/VERSION_ID The SITE_NAME in this version identifier must match the SITE_NAME in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
+	//       "description": " The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7812,7 +7815,7 @@ func (c *SitesChannelsReleasesListCall) Header() http.Header {
 
 func (c *SitesChannelsReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7894,7 +7897,7 @@ func (c *SitesChannelsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID ",
+	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/channels/[^/]+$",
 	//       "required": true,
@@ -7982,7 +7985,7 @@ func (c *SitesDomainsCreateCall) Header() http.Header {
 
 func (c *SitesDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8121,7 +8124,7 @@ func (c *SitesDomainsDeleteCall) Header() http.Header {
 
 func (c *SitesDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8263,7 +8266,7 @@ func (c *SitesDomainsGetCall) Header() http.Header {
 
 func (c *SitesDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8424,7 +8427,7 @@ func (c *SitesDomainsListCall) Header() http.Header {
 
 func (c *SitesDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8595,7 +8598,7 @@ func (c *SitesDomainsUpdateCall) Header() http.Header {
 
 func (c *SitesDomainsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8711,11 +8714,10 @@ func (r *SitesReleasesService) Create(parent string, release *Release) *SitesRel
 }
 
 // VersionName sets the optional parameter "versionName": The unique
-// identifier for a version, in the format: sites/SITE_NAME
-// /versions/VERSION_ID The SITE_NAME in this version identifier must
-// match the SITE_NAME in the `parent` parameter. This query parameter
-// must be empty if the `type` field in the request body is
-// `SITE_DISABLE`.
+// identifier for a version, in the format: sites/SITE_ID/versions/
+// VERSION_ID The SITE_ID in this version identifier must match the
+// SITE_ID in the `parent` parameter. This query parameter must be empty
+// if the `type` field in the request body is `SITE_DISABLE`.
 func (c *SitesReleasesCreateCall) VersionName(versionName string) *SitesReleasesCreateCall {
 	c.urlParams_.Set("versionName", versionName)
 	return c
@@ -8748,7 +8750,7 @@ func (c *SitesReleasesCreateCall) Header() http.Header {
 
 func (c *SitesReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8821,14 +8823,14 @@ func (c *SitesReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release, er
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID",
+	//       "description": "Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "versionName": {
-	//       "description": " The unique identifier for a version, in the format: sites/SITE_NAME /versions/VERSION_ID The SITE_NAME in this version identifier must match the SITE_NAME in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
+	//       "description": " The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8923,7 +8925,7 @@ func (c *SitesReleasesListCall) Header() http.Header {
 
 func (c *SitesReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9005,7 +9007,7 @@ func (c *SitesReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleasesR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID ",
+	//       "description": "Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -9094,7 +9096,7 @@ func (c *SitesVersionsCloneCall) Header() http.Header {
 
 func (c *SitesVersionsCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9167,7 +9169,7 @@ func (c *SitesVersionsCloneCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The target site for the cloned version, in the format: sites/ SITE_NAME",
+	//       "description": "Required. The target site for the cloned version, in the format: sites/ SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -9251,7 +9253,7 @@ func (c *SitesVersionsCreateCall) Header() http.Header {
 
 func (c *SitesVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9324,7 +9326,7 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The site in which to create the version, in the format: sites/ SITE_NAME",
+	//       "description": "Required. The site in which to create the version, in the format: sites/ SITE_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -9361,16 +9363,16 @@ func (c *SitesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version, er
 
 type SitesVersionsDeleteCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
 }
 
 // Delete: Deletes the specified version.
-func (r *SitesVersionsService) Delete(nameid string) *SitesVersionsDeleteCall {
+func (r *SitesVersionsService) Delete(name string) *SitesVersionsDeleteCall {
 	c := &SitesVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	return c
 }
 
@@ -9401,7 +9403,7 @@ func (c *SitesVersionsDeleteCall) Header() http.Header {
 
 func (c *SitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9417,7 +9419,7 @@ func (c *SitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -9469,7 +9471,7 @@ func (c *SitesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The fully-qualified identifier for the version, in the format: sites/SITE_NAME/versions/VERSION_ID",
+	//       "description": "Required. The fully-qualified resource name for the version, in the format: sites/SITE_ID/versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -9573,7 +9575,7 @@ func (c *SitesVersionsListCall) Header() http.Header {
 
 func (c *SitesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9660,7 +9662,7 @@ func (c *SitesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersionsR
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The site or channel for which to list versions, in either of the following formats: - sites/SITE_NAME - sites/SITE_NAME/channels/CHANNEL_ID ",
+	//       "description": "Required. The site or channel for which to list versions, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID ",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+$",
 	//       "required": true,
@@ -9706,7 +9708,7 @@ func (c *SitesVersionsListCall) Pages(ctx context.Context, f func(*ListVersionsR
 
 type SitesVersionsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	version    *Version
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -9719,9 +9721,9 @@ type SitesVersionsPatchCall struct {
 // (../sites.versions#versionstatus) transitions for a version are from
 // `CREATED` to `FINALIZED`. Use `DeleteVersion` (delete) to set the
 // status of a version to `DELETED`.
-func (r *SitesVersionsService) Patch(nameid string, version *Version) *SitesVersionsPatchCall {
+func (r *SitesVersionsService) Patch(name string, version *Version) *SitesVersionsPatchCall {
 	c := &SitesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.version = version
 	return c
 }
@@ -9763,7 +9765,7 @@ func (c *SitesVersionsPatchCall) Header() http.Header {
 
 func (c *SitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9784,7 +9786,7 @@ func (c *SitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -9836,7 +9838,7 @@ func (c *SitesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Version, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The fully-qualified identifier for the version, in the format: sites/ SITE_NAME/versions/VERSION_ID This name is provided in the response body when you call [`CreateVersion`](sites.versions/create).",
+	//       "description": "The fully-qualified resource name for the version, in the format: sites/ SITE_ID/versions/VERSION_ID This name is provided in the response body when you call [`CreateVersion`](sites.versions/create).",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -9911,7 +9913,7 @@ func (c *SitesVersionsPopulateFilesCall) Header() http.Header {
 
 func (c *SitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9984,7 +9986,7 @@ func (c *SitesVersionsPopulateFilesCall) Do(opts ...googleapi.CallOption) (*Popu
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The version to which to add files, in the format: sites/SITE_NAME /versions/VERSION_ID",
+	//       "description": "Required. The version to which to add files, in the format: sites/SITE_ID /versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
 	//       "required": true,
@@ -10093,7 +10095,7 @@ func (c *SitesVersionsFilesListCall) Header() http.Header {
 
 func (c *SitesVersionsFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210314")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10175,7 +10177,7 @@ func (c *SitesVersionsFilesListCall) Do(opts ...googleapi.CallOption) (*ListVers
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The version for which to list files, in the format: sites/ SITE_NAME/versions/VERSION_ID",
+	//       "description": "Required. The version for which to list files, in the format: sites/SITE_ID /versions/VERSION_ID",
 	//       "location": "path",
 	//       "pattern": "^sites/[^/]+/versions/[^/]+$",
 	//       "required": true,

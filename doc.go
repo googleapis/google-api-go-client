@@ -70,7 +70,7 @@
 // `*googleapis.Error`. This can be useful for getting more information on an
 // error while debugging.
 //  if _, err := svc.FooCall().Do(); err != nil {
-//      gErr, ok := err.(*googleapi.Error); ok {
+//      if gErr, ok := err.(*googleapi.Error); ok {
 //          fmt.Println("Status code: %v", gErr.Code)
 //      }
 //  }

@@ -159,6 +159,10 @@ func (u userTokenSource) exchangeToken(signedJWT string) (*oauth2.Token, error) 
 	if err != nil {
 		return nil, fmt.Errorf("impersonate: unable to read body: %v", err)
 	}
+	if c := rawResp.StatusCode; c < 200 || c > 299 {
+		return nil, fmt.Errorf("impersonate: status code %d: %s", c, body)
+	}
+	
 	var tokenResp exchangeTokenResponse
 	if err := json.Unmarshal(body, &tokenResp); err != nil {
 		return nil, fmt.Errorf("impersonate: unable to parse response: %v", err)

@@ -269,7 +269,7 @@
     "dnsKeys": {
       "methods": {
         "get": {
-          "description": "Fetch the representation of an existing DnsKey.",
+          "description": "Fetches the representation of an existing DnsKey.",
           "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}/dnsKeys/{dnsKeyId}",
           "httpMethod": "GET",
           "id": "dns.dnsKeys.get",
@@ -320,7 +320,7 @@
           ]
         },
         "list": {
-          "description": "Enumerate DnsKeys to a ResourceRecordSet collection.",
+          "description": "Enumerates DnsKeys to a ResourceRecordSet collection.",
           "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}/dnsKeys",
           "httpMethod": "GET",
           "id": "dns.dnsKeys.list",
@@ -483,7 +483,7 @@
     "managedZones": {
       "methods": {
         "create": {
-          "description": "Create a new ManagedZone.",
+          "description": "Creates a new ManagedZone.",
           "flatPath": "dns/v1beta2/projects/{project}/managedZones",
           "httpMethod": "POST",
           "id": "dns.managedZones.create",
@@ -516,7 +516,7 @@
           ]
         },
         "delete": {
-          "description": "Delete a previously created ManagedZone.",
+          "description": "Deletes a previously created ManagedZone.",
           "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}",
           "httpMethod": "DELETE",
           "id": "dns.managedZones.delete",
@@ -550,7 +550,7 @@
           ]
         },
         "get": {
-          "description": "Fetch the representation of an existing ManagedZone.",
+          "description": "Fetches the representation of an existing ManagedZone.",
           "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}",
           "httpMethod": "GET",
           "id": "dns.managedZones.get",
@@ -589,7 +589,7 @@
           ]
         },
         "list": {
-          "description": "Enumerate ManagedZones that have been created but not yet deleted.",
+          "description": "Enumerates ManagedZones that have been created but not yet deleted.",
           "flatPath": "dns/v1beta2/projects/{project}/managedZones",
           "httpMethod": "GET",
           "id": "dns.managedZones.list",
@@ -632,7 +632,7 @@
           ]
         },
         "patch": {
-          "description": "Apply a partial update to an existing ManagedZone.",
+          "description": "Applies a partial update to an existing ManagedZone.",
           "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}",
           "httpMethod": "PATCH",
           "id": "dns.managedZones.patch",
@@ -672,7 +672,7 @@
           ]
         },
         "update": {
-          "description": "Update an existing ManagedZone.",
+          "description": "Updates an existing ManagedZone.",
           "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}",
           "httpMethod": "PUT",
           "id": "dns.managedZones.update",
@@ -860,7 +860,7 @@
           ]
         },
         "patch": {
-          "description": "Apply a partial update to an existing Policy.",
+          "description": "Applies a partial update to an existing Policy.",
           "flatPath": "dns/v1beta2/projects/{project}/policies/{policy}",
           "httpMethod": "PATCH",
           "id": "dns.policies.patch",
@@ -900,7 +900,7 @@
           ]
         },
         "update": {
-          "description": "Update an existing Policy.",
+          "description": "Updates an existing Policy.",
           "flatPath": "dns/v1beta2/projects/{project}/policies/{policy}",
           "httpMethod": "PUT",
           "id": "dns.policies.update",
@@ -982,7 +982,7 @@
             "rrsets": {
               "methods": {
                 "create": {
-                  "description": "Create a new ResourceRecordSet.",
+                  "description": "Creates a new ResourceRecordSet.",
                   "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}/rrsets",
                   "httpMethod": "POST",
                   "id": "dns.projects.managedZones.rrsets.create",
@@ -1022,7 +1022,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Delete a previously created ResourceRecordSet.",
+                  "description": "Deletes a previously created ResourceRecordSet.",
                   "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}/rrsets/{name}/{type}",
                   "httpMethod": "DELETE",
                   "id": "dns.projects.managedZones.rrsets.delete",
@@ -1070,7 +1070,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Fetch the representation of an existing ResourceRecordSet.",
+                  "description": "Fetches the representation of an existing ResourceRecordSet.",
                   "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}/rrsets/{name}/{type}",
                   "httpMethod": "GET",
                   "id": "dns.projects.managedZones.rrsets.get",
@@ -1123,7 +1123,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Apply a partial update to an existing ResourceRecordSet.",
+                  "description": "Applies a partial update to an existing ResourceRecordSet.",
                   "flatPath": "dns/v1beta2/projects/{project}/managedZones/{managedZone}/rrsets/{name}/{type}",
                   "httpMethod": "PATCH",
                   "id": "dns.projects.managedZones.rrsets.patch",
@@ -1277,7 +1277,7 @@
           ]
         },
         "delete": {
-          "description": "Delete a previously created Response Policy. Fails if the response policy is non-empty or still being referenced by a network.",
+          "description": "Deletes a previously created Response Policy. Fails if the response policy is non-empty or still being referenced by a network.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}",
           "httpMethod": "DELETE",
           "id": "dns.responsePolicies.delete",
@@ -1311,7 +1311,7 @@
           ]
         },
         "get": {
-          "description": "Fetch the representation of an existing Response Policy.",
+          "description": "Fetches the representation of an existing Response Policy.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}",
           "httpMethod": "GET",
           "id": "dns.responsePolicies.get",
@@ -1350,7 +1350,7 @@
           ]
         },
         "list": {
-          "description": "Enumerate all Response Policies associated with a project.",
+          "description": "Enumerates all Response Policies associated with a project.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies",
           "httpMethod": "GET",
           "id": "dns.responsePolicies.list",
@@ -1388,7 +1388,7 @@
           ]
         },
         "patch": {
-          "description": "Apply a partial update to an existing Response Policy.",
+          "description": "Applies a partial update to an existing Response Policy.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}",
           "httpMethod": "PATCH",
           "id": "dns.responsePolicies.patch",
@@ -1428,7 +1428,7 @@
           ]
         },
         "update": {
-          "description": "Update an existing Response Policy.",
+          "description": "Updates an existing Response Policy.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}",
           "httpMethod": "PUT",
           "id": "dns.responsePolicies.update",
@@ -1512,7 +1512,7 @@
           ]
         },
         "delete": {
-          "description": "Delete a previously created Response Policy Rule.",
+          "description": "Deletes a previously created Response Policy Rule.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}/rules/{responsePolicyRule}",
           "httpMethod": "DELETE",
           "id": "dns.responsePolicyRules.delete",
@@ -1553,7 +1553,7 @@
           ]
         },
         "get": {
-          "description": "Fetch the representation of an existing Response Policy Rule.",
+          "description": "Fetches the representation of an existing Response Policy Rule.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}/rules/{responsePolicyRule}",
           "httpMethod": "GET",
           "id": "dns.responsePolicyRules.get",
@@ -1599,7 +1599,7 @@
           ]
         },
         "list": {
-          "description": "Enumerate all Response Policy Rules associated with a project.",
+          "description": "Enumerates all Response Policy Rules associated with a project.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}/rules",
           "httpMethod": "GET",
           "id": "dns.responsePolicyRules.list",
@@ -1644,7 +1644,7 @@
           ]
         },
         "patch": {
-          "description": "Apply a partial update to an existing Response Policy Rule.",
+          "description": "Applies a partial update to an existing Response Policy Rule.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}/rules/{responsePolicyRule}",
           "httpMethod": "PATCH",
           "id": "dns.responsePolicyRules.patch",
@@ -1691,7 +1691,7 @@
           ]
         },
         "update": {
-          "description": "Update an existing Response Policy Rule.",
+          "description": "Updates an existing Response Policy Rule.",
           "flatPath": "dns/v1beta2/projects/{project}/responsePolicies/{responsePolicy}/rules/{responsePolicyRule}",
           "httpMethod": "PUT",
           "id": "dns.responsePolicyRules.update",
@@ -1740,7 +1740,7 @@
       }
     }
   },
-  "revision": "20210227",
+  "revision": "20210309",
   "rootUrl": "https://dns.googleapis.com/",
   "schemas": {
     "Change": {

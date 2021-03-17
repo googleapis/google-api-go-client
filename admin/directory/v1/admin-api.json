@@ -2,6 +2,12 @@
   "auth": {
     "oauth2": {
       "scopes": {
+        "https://www.googleapis.com/auth/admin.chrome.printers": {
+          "description": "See, add, edit, and permanently delete the printers that your organization can use with Chrome"
+        },
+        "https://www.googleapis.com/auth/admin.chrome.printers.readonly": {
+          "description": "See the printers that your organization can use with Chrome"
+        },
         "https://www.googleapis.com/auth/admin.directory.customer": {
           "description": "View and manage customer related information"
         },
@@ -812,7 +818,10 @@
                   },
                   "response": {
                     "$ref": "BatchCreatePrintersResponse"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
                 },
                 "batchDeletePrinters": {
                   "description": "Deletes printers in batch.",
@@ -837,7 +846,10 @@
                   },
                   "response": {
                     "$ref": "BatchDeletePrintersResponse"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
                 },
                 "create": {
                   "description": "Creates a printer under given Organization Unit.",
@@ -862,7 +874,10 @@
                   },
                   "response": {
                     "$ref": "Printer"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
                 },
                 "delete": {
                   "description": "Deletes a `Printer`.",
@@ -884,7 +899,10 @@
                   "path": "admin/directory/v1/{+name}",
                   "response": {
                     "$ref": "Empty"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
                 },
                 "get": {
                   "description": "Returns a `Printer` resource (printer's config).",
@@ -906,7 +924,11 @@
                   "path": "admin/directory/v1/{+name}",
                   "response": {
                     "$ref": "Printer"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers",
+                    "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+                  ]
                 },
                 "list": {
                   "description": "List printers configs.",
@@ -949,7 +971,11 @@
                   "path": "admin/directory/v1/{+parent}/chrome/printers",
                   "response": {
                     "$ref": "ListPrintersResponse"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers",
+                    "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+                  ]
                 },
                 "listPrinterModels": {
                   "description": "Lists the supported printer models.",
@@ -987,7 +1013,11 @@
                   "path": "admin/directory/v1/{+parent}/chrome/printers:listPrinterModels",
                   "response": {
                     "$ref": "ListPrinterModelsResponse"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers",
+                    "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+                  ]
                 },
                 "patch": {
                   "description": "Updates a `Printer` resource.",
@@ -1024,7 +1054,10 @@
                   },
                   "response": {
                     "$ref": "Printer"
-                  }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
                 }
               }
             }
@@ -4427,7 +4460,7 @@
       }
     }
   },
-  "revision": "20210309",
+  "revision": "20210316",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {

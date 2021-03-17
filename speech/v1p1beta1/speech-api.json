@@ -524,7 +524,7 @@
       }
     }
   },
-  "revision": "20210218",
+  "revision": "20210311",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ClassItem": {
@@ -688,6 +688,10 @@
         "config": {
           "$ref": "RecognitionConfig",
           "description": "Required. Provides information to the recognizer that specifies how to process the request."
+        },
+        "outputConfig": {
+          "$ref": "TranscriptOutputConfig",
+          "description": "Optional. Specifies an optional destination for the recognition results."
         }
       },
       "type": "object"
@@ -1190,6 +1194,17 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TranscriptOutputConfig": {
+      "description": "Specifies an optional destination for the recognition results.",
+      "id": "TranscriptOutputConfig",
+      "properties": {
+        "gcsUri": {
+          "description": "Specifies a Cloud Storage URI for the recognition results. Must be specified in the format: `gs://bucket_name/object_name`, and the bucket must already exist.",
           "type": "string"
         }
       },

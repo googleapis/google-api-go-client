@@ -967,7 +967,7 @@
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+                      "description": "Requested page size. Must be between `1` and `10000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -3461,7 +3461,7 @@
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+                      "description": "Requested page size. Must be between `1` and `1000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -5456,7 +5456,7 @@
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+                      "description": "Requested page size. Must be between `1` and `10000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -6590,7 +6590,7 @@
       }
     }
   },
-  "revision": "20210304",
+  "revision": "20210312",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {

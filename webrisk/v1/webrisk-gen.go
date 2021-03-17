@@ -117,7 +117,6 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Hashes = NewHashesService(s)
-	s.Operations = NewOperationsService(s)
 	s.Projects = NewProjectsService(s)
 	s.ThreatLists = NewThreatListsService(s)
 	s.Uris = NewUrisService(s)
@@ -130,8 +129,6 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Hashes *HashesService
-
-	Operations *OperationsService
 
 	Projects *ProjectsService
 
@@ -156,17 +153,9 @@ type HashesService struct {
 	s *Service
 }
 
-func NewOperationsService(s *Service) *OperationsService {
-	rs := &OperationsService{s: s}
-	return rs
-}
-
-type OperationsService struct {
-	s *Service
-}
-
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.Operations = NewProjectsOperationsService(s)
 	rs.Submissions = NewProjectsSubmissionsService(s)
 	rs.Uris = NewProjectsUrisService(s)
 	return rs
@@ -175,9 +164,20 @@ func NewProjectsService(s *Service) *ProjectsService {
 type ProjectsService struct {
 	s *Service
 
+	Operations *ProjectsOperationsService
+
 	Submissions *ProjectsSubmissionsService
 
 	Uris *ProjectsUrisService
+}
+
+func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
+	rs := &ProjectsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsOperationsService struct {
+	s *Service
 }
 
 func NewProjectsSubmissionsService(s *Service) *ProjectsSubmissionsService {
@@ -630,6 +630,48 @@ func (s *GoogleCloudWebriskV1Submission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudWebriskV1SubmitUriMetadata: Metadata for the Submit URI
+// long-running operation.
+type GoogleCloudWebriskV1SubmitUriMetadata struct {
+	// CreateTime: Creation time of the operation.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// State: The state of the operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default unspecified state.
+	//   "RUNNING" - The operation is currently running.
+	//   "SUCCEEDED" - The operation finished with a success status.
+	//   "CANCELLED" - The operation was cancelled.
+	//   "FAILED" - The operation finished with a failure status.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Latest update time of the operation.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudWebriskV1SubmitUriMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudWebriskV1SubmitUriMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudWebriskV1SubmitUriRequest: Request to send a potentially
 // malicious URI to WebRisk.
 type GoogleCloudWebriskV1SubmitUriRequest struct {
@@ -973,7 +1015,7 @@ func (c *HashesSearchCall) Header() http.Header {
 
 func (c *HashesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1076,9 +1118,9 @@ func (c *HashesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebrisk
 
 }
 
-// method id "webrisk.operations.cancel":
+// method id "webrisk.projects.operations.cancel":
 
-type OperationsCancelCall struct {
+type ProjectsOperationsCancelCall struct {
 	s                                       *Service
 	name                                    string
 	googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest
@@ -1097,8 +1139,8 @@ type OperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
-func (r *OperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *OperationsCancelCall {
-	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsOperationsService) Cancel(name string, googlelongrunningcanceloperationrequest *GoogleLongrunningCancelOperationRequest) *ProjectsOperationsCancelCall {
+	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.googlelongrunningcanceloperationrequest = googlelongrunningcanceloperationrequest
 	return c
@@ -1107,7 +1149,7 @@ func (r *OperationsService) Cancel(name string, googlelongrunningcanceloperation
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
+func (c *ProjectsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsOperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1115,23 +1157,23 @@ func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCal
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
+func (c *ProjectsOperationsCancelCall) Context(ctx context.Context) *ProjectsOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OperationsCancelCall) Header() http.Header {
+func (c *ProjectsOperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1157,14 +1199,14 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "webrisk.operations.cancel" call.
+// Do executes the "webrisk.projects.operations.cancel" call.
 // Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1196,9 +1238,9 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	return ret, nil
 	// {
 	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v1/operations/{operationsId}:cancel",
+	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
-	//   "id": "webrisk.operations.cancel",
+	//   "id": "webrisk.projects.operations.cancel",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -1206,7 +1248,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	//     "name": {
 	//       "description": "The name of the operation resource to be cancelled.",
 	//       "location": "path",
-	//       "pattern": "^operations/.*$",
+	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1222,9 +1264,9 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 
 }
 
-// method id "webrisk.operations.delete":
+// method id "webrisk.projects.operations.delete":
 
-type OperationsDeleteCall struct {
+type ProjectsOperationsDeleteCall struct {
 	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
@@ -1236,8 +1278,8 @@ type OperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
-func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
-	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDeleteCall {
+	c := &ProjectsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -1245,7 +1287,7 @@ func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCall {
+func (c *ProjectsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsOperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1253,23 +1295,23 @@ func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCal
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OperationsDeleteCall) Context(ctx context.Context) *OperationsDeleteCall {
+func (c *ProjectsOperationsDeleteCall) Context(ctx context.Context) *ProjectsOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OperationsDeleteCall) Header() http.Header {
+func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1290,14 +1332,14 @@ func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "webrisk.operations.delete" call.
+// Do executes the "webrisk.projects.operations.delete" call.
 // Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
 // *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+func (c *ProjectsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1329,9 +1371,9 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	return ret, nil
 	// {
 	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v1/operations/{operationsId}",
+	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "DELETE",
-	//   "id": "webrisk.operations.delete",
+	//   "id": "webrisk.projects.operations.delete",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -1339,7 +1381,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	//     "name": {
 	//       "description": "The name of the operation resource to be deleted.",
 	//       "location": "path",
-	//       "pattern": "^operations/.*$",
+	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1352,9 +1394,9 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 
 }
 
-// method id "webrisk.operations.get":
+// method id "webrisk.projects.operations.get":
 
-type OperationsGetCall struct {
+type ProjectsOperationsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -1366,8 +1408,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
-func (r *OperationsService) Get(name string) *OperationsGetCall {
-	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
+	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -1375,7 +1417,7 @@ func (r *OperationsService) Get(name string) *OperationsGetCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
+func (c *ProjectsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1385,7 +1427,7 @@ func (c *OperationsGetCall) Fields(s ...googleapi.Field) *OperationsGetCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
+func (c *ProjectsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -1393,23 +1435,23 @@ func (c *OperationsGetCall) IfNoneMatch(entityTag string) *OperationsGetCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OperationsGetCall) Context(ctx context.Context) *OperationsGetCall {
+func (c *ProjectsOperationsGetCall) Context(ctx context.Context) *ProjectsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OperationsGetCall) Header() http.Header {
+func (c *ProjectsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1433,14 +1475,14 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "webrisk.operations.get" call.
+// Do executes the "webrisk.projects.operations.get" call.
 // Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *GoogleLongrunningOperation.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1472,9 +1514,9 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning
 	return ret, nil
 	// {
 	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1/operations/{operationsId}",
+	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
 	//   "httpMethod": "GET",
-	//   "id": "webrisk.operations.get",
+	//   "id": "webrisk.projects.operations.get",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -1482,7 +1524,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^operations/.*$",
+	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -1498,9 +1540,9 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning
 
 }
 
-// method id "webrisk.operations.list":
+// method id "webrisk.projects.operations.list":
 
-type OperationsListCall struct {
+type ProjectsOperationsListCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -1519,29 +1561,29 @@ type OperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
-func (r *OperationsService) List(name string) *OperationsListCall {
-	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
+	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
 // Filter sets the optional parameter "filter": The standard list
 // filter.
-func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
+func (c *ProjectsOperationsListCall) Filter(filter string) *ProjectsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The standard list
 // page size.
-func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
+func (c *ProjectsOperationsListCall) PageSize(pageSize int64) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The standard list
 // page token.
-func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
+func (c *ProjectsOperationsListCall) PageToken(pageToken string) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -1549,7 +1591,7 @@ func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
+func (c *ProjectsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -1559,7 +1601,7 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
+func (c *ProjectsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -1567,23 +1609,23 @@ func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
+func (c *ProjectsOperationsListCall) Context(ctx context.Context) *ProjectsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OperationsListCall) Header() http.Header {
+func (c *ProjectsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1594,7 +1636,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -1607,7 +1649,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "webrisk.operations.list" call.
+// Do executes the "webrisk.projects.operations.list" call.
 // Exactly one of *GoogleLongrunningListOperationsResponse or error will
 // be non-nil. Any non-2xx status code is an error. Response headers are
 // in either
@@ -1615,7 +1657,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 // a response was returned at all) in error.(*googleapi.Error).Header.
 // Use googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -1647,9 +1689,9 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	return ret, nil
 	// {
 	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
-	//   "flatPath": "v1/operations",
+	//   "flatPath": "v1/projects/{projectsId}/operations",
 	//   "httpMethod": "GET",
-	//   "id": "webrisk.operations.list",
+	//   "id": "webrisk.projects.operations.list",
 	//   "parameterOrder": [
 	//     "name"
 	//   ],
@@ -1662,7 +1704,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//     "name": {
 	//       "description": "The name of the operation's parent resource.",
 	//       "location": "path",
-	//       "pattern": "^operations$",
+	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1678,7 +1720,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/{+name}",
+	//   "path": "v1/{+name}/operations",
 	//   "response": {
 	//     "$ref": "GoogleLongrunningListOperationsResponse"
 	//   }
@@ -1689,7 +1731,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *OperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+func (c *ProjectsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -1760,7 +1802,7 @@ func (c *ProjectsSubmissionsCreateCall) Header() http.Header {
 
 func (c *ProjectsSubmissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1910,7 +1952,7 @@ func (c *ProjectsUrisSubmitCall) Header() http.Header {
 
 func (c *ProjectsUrisSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2123,7 +2165,7 @@ func (c *ThreatListsComputeDiffCall) Header() http.Header {
 
 func (c *ThreatListsComputeDiffCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2331,7 +2373,7 @@ func (c *UrisSearchCall) Header() http.Header {
 
 func (c *UrisSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210315")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

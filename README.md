@@ -76,6 +76,7 @@ tokenSource := ...
 svc, err := sheets.NewService(ctx, option.WithTokenSource(tokenSource))
 ```
 
+
 ## More information
 
 For some more information related to all of the generated clients please read through our

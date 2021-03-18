@@ -1326,21 +1326,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "cloudshell:v1alpha1",
-      "name": "cloudshell",
-      "version": "v1alpha1",
-      "title": "Cloud Shell API",
-      "description": "Allows users to start, configure, and connect to interactive shell sessions running in the cloud.",
-      "discoveryRestUrl": "https://cloudshell.googleapis.com/$discovery/rest?version=v1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/shell/docs/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "cloudshell:v1",
       "name": "cloudshell",
       "version": "v1",

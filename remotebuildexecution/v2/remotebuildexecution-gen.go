@@ -725,6 +725,17 @@ type BuildBazelRemoteExecutionV2CacheCapabilities struct {
 	// limitation of the protocol in use, e.g. GRPC.
 	MaxBatchTotalSizeBytes int64 `json:"maxBatchTotalSizeBytes,omitempty,string"`
 
+	// SupportedCompressor: Compressors supported by the "compressed-blobs"
+	// bytestream resources. Servers MUST support identity/no-compression,
+	// even if it is not listed here. Note that this does not imply which if
+	// any compressors are supported by the server at the gRPC level.
+	//
+	// Possible values:
+	//   "IDENTITY" - No compression. Servers and clients MUST always
+	// support this, and do not need to advertise it.
+	//   "ZSTD" - Zstandard compression.
+	SupportedCompressor []string `json:"supportedCompressor,omitempty"`
+
 	// SymlinkAbsolutePathStrategy: Whether absolute symlink targets are
 	// supported.
 	//
@@ -1959,10 +1970,28 @@ type BuildBazelRemoteExecutionV2RequestMetadata struct {
 	// Execution API are used in order to compile foo.cc.
 	ActionId string `json:"actionId,omitempty"`
 
+	// ActionMnemonic: A brief description of the kind of action, for
+	// example, CppCompile or GoLink. There is no standard agreed set of
+	// values for this, and they are expected to vary between different
+	// client tools.
+	ActionMnemonic string `json:"actionMnemonic,omitempty"`
+
+	// ConfigurationId: An identifier for the configuration in which the
+	// target was built, e.g. for differentiating building host tools or
+	// different target platforms. There is no expectation that this value
+	// will have any particular structure, or equality across invocations,
+	// though some client tools may offer these guarantees.
+	ConfigurationId string `json:"configurationId,omitempty"`
+
 	// CorrelatedInvocationsId: An identifier to tie multiple tool
 	// invocations together. For example, runs of foo_test, bar_test and
 	// baz_test on a post-submit of a given patch.
 	CorrelatedInvocationsId string `json:"correlatedInvocationsId,omitempty"`
+
+	// TargetId: An identifier for the target which produced this action. No
+	// guarantees are made around how many actions may relate to a single
+	// target.
+	TargetId string `json:"targetId,omitempty"`
 
 	// ToolDetails: The details for the tool invoking the requests.
 	ToolDetails *BuildBazelRemoteExecutionV2ToolDetails `json:"toolDetails,omitempty"`
@@ -4198,7 +4227,7 @@ func (c *ActionResultsGetCall) Header() http.Header {
 
 func (c *ActionResultsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4395,7 +4424,7 @@ func (c *ActionResultsUpdateCall) Header() http.Header {
 
 func (c *ActionResultsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4606,7 +4635,7 @@ func (c *ActionsExecuteCall) Header() http.Header {
 
 func (c *ActionsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4755,7 +4784,7 @@ func (c *BlobsBatchReadCall) Header() http.Header {
 
 func (c *BlobsBatchReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4908,7 +4937,7 @@ func (c *BlobsBatchUpdateCall) Header() http.Header {
 
 func (c *BlobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5054,7 +5083,7 @@ func (c *BlobsFindMissingCall) Header() http.Header {
 
 func (c *BlobsFindMissingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5242,7 +5271,7 @@ func (c *BlobsGetTreeCall) Header() http.Header {
 
 func (c *BlobsGetTreeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5434,7 +5463,7 @@ func (c *OperationsWaitExecutionCall) Header() http.Header {
 
 func (c *OperationsWaitExecutionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5589,7 +5618,7 @@ func (c *V2GetCapabilitiesCall) Header() http.Header {
 
 func (c *V2GetCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

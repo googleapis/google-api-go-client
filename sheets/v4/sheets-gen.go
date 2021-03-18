@@ -1628,7 +1628,7 @@ func (s *BatchClearValuesByDataFilterResponse) MarshalJSON() ([]byte, error) {
 // BatchClearValuesRequest: The request for clearing more than one range
 // of values in a spreadsheet.
 type BatchClearValuesRequest struct {
-	// Ranges: The ranges to clear, in A1 notation.
+	// Ranges: The ranges to clear, in A1 or R1C1 notation.
 	Ranges []string `json:"ranges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Ranges") to
@@ -2619,7 +2619,7 @@ type BubbleChartSpec struct {
 	// fully transparent and 1 is fully opaque.
 	BubbleOpacity float64 `json:"bubbleOpacity,omitempty"`
 
-	// BubbleSizes: The data contianing the bubble sizes. Bubble sizes are
+	// BubbleSizes: The data containing the bubble sizes. Bubble sizes are
 	// used to draw the bubbles at different sizes relative to each other.
 	// If specified, group_ids must also be specified. This field is
 	// optional.
@@ -2653,7 +2653,7 @@ type BubbleChartSpec struct {
 	//   "INSIDE_LEGEND" - The legend is rendered inside the chart area.
 	LegendPosition string `json:"legendPosition,omitempty"`
 
-	// Series: The data contianing the bubble y-values. These values locate
+	// Series: The data containing the bubble y-values. These values locate
 	// the bubbles in the chart vertically.
 	Series *ChartData `json:"series,omitempty"`
 
@@ -7976,7 +7976,7 @@ type PivotGroup struct {
 
 	// RepeatHeadings: True if the headings in this pivot group should be
 	// repeated. This is only valid for row groupings and is ignored by
-	// columns. By default, we minimize repitition of headings by not
+	// columns. By default, we minimize repetition of headings by not
 	// showing higher level headings where they are the same. For example,
 	// even though the third row below corresponds to "Q1 Mar", "Q1" is not
 	// shown because it is redundant with previous rows. Setting
@@ -11586,7 +11586,7 @@ func (c *SpreadsheetsBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11726,7 +11726,7 @@ func (c *SpreadsheetsCreateCall) Header() http.Header {
 
 func (c *SpreadsheetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11890,7 +11890,7 @@ func (c *SpreadsheetsGetCall) Header() http.Header {
 
 func (c *SpreadsheetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12051,7 +12051,7 @@ func (c *SpreadsheetsGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12205,7 +12205,7 @@ func (c *SpreadsheetsDeveloperMetadataGetCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12356,7 +12356,7 @@ func (c *SpreadsheetsDeveloperMetadataSearchCall) Header() http.Header {
 
 func (c *SpreadsheetsDeveloperMetadataSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12500,7 +12500,7 @@ func (c *SpreadsheetsSheetsCopyToCall) Header() http.Header {
 
 func (c *SpreadsheetsSheetsCopyToCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12747,7 +12747,7 @@ func (c *SpreadsheetsValuesAppendCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesAppendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12960,7 +12960,7 @@ func (c *SpreadsheetsValuesBatchClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13105,7 +13105,7 @@ func (c *SpreadsheetsValuesBatchClearByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchClearByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13260,8 +13260,8 @@ func (c *SpreadsheetsValuesBatchGetCall) MajorDimension(majorDimension string) *
 	return c
 }
 
-// Ranges sets the optional parameter "ranges": The A1 notation of the
-// values to retrieve.
+// Ranges sets the optional parameter "ranges": The A1 notation or R1C1
+// notation of the range to retrieve values from.
 func (c *SpreadsheetsValuesBatchGetCall) Ranges(ranges ...string) *SpreadsheetsValuesBatchGetCall {
 	c.urlParams_.SetMulti("ranges", append([]string{}, ranges...))
 	return c
@@ -13325,7 +13325,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13424,7 +13424,7 @@ func (c *SpreadsheetsValuesBatchGetCall) Do(opts ...googleapi.CallOption) (*Batc
 	//       "type": "string"
 	//     },
 	//     "ranges": {
-	//       "description": "The A1 notation of the values to retrieve.",
+	//       "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -13515,7 +13515,7 @@ func (c *SpreadsheetsValuesBatchGetByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchGetByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13659,7 +13659,7 @@ func (c *SpreadsheetsValuesBatchUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13802,7 +13802,7 @@ func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesBatchUpdateByDataFilterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13949,7 +13949,7 @@ func (c *SpreadsheetsValuesClearCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14024,7 +14024,7 @@ func (c *SpreadsheetsValuesClearCall) Do(opts ...googleapi.CallOption) (*ClearVa
 	//   ],
 	//   "parameters": {
 	//     "range": {
-	//       "description": "The A1 notation of the values to clear.",
+	//       "description": "The A1 notation or R1C1 notation of the values to clear.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14171,7 +14171,7 @@ func (c *SpreadsheetsValuesGetCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14272,7 +14272,7 @@ func (c *SpreadsheetsValuesGetCall) Do(opts ...googleapi.CallOption) (*ValueRang
 	//       "type": "string"
 	//     },
 	//     "range": {
-	//       "description": "The A1 notation of the values to retrieve.",
+	//       "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -14438,7 +14438,7 @@ func (c *SpreadsheetsValuesUpdateCall) Header() http.Header {
 
 func (c *SpreadsheetsValuesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

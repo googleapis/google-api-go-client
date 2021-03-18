@@ -1302,10 +1302,28 @@ type BuildBazelRemoteExecutionV2RequestMetadata struct {
 	// Execution API are used in order to compile foo.cc.
 	ActionId string `json:"actionId,omitempty"`
 
+	// ActionMnemonic: A brief description of the kind of action, for
+	// example, CppCompile or GoLink. There is no standard agreed set of
+	// values for this, and they are expected to vary between different
+	// client tools.
+	ActionMnemonic string `json:"actionMnemonic,omitempty"`
+
+	// ConfigurationId: An identifier for the configuration in which the
+	// target was built, e.g. for differentiating building host tools or
+	// different target platforms. There is no expectation that this value
+	// will have any particular structure, or equality across invocations,
+	// though some client tools may offer these guarantees.
+	ConfigurationId string `json:"configurationId,omitempty"`
+
 	// CorrelatedInvocationsId: An identifier to tie multiple tool
 	// invocations together. For example, runs of foo_test, bar_test and
 	// baz_test on a post-submit of a given patch.
 	CorrelatedInvocationsId string `json:"correlatedInvocationsId,omitempty"`
+
+	// TargetId: An identifier for the target which produced this action. No
+	// guarantees are made around how many actions may relate to a single
+	// target.
+	TargetId string `json:"targetId,omitempty"`
 
 	// ToolDetails: The details for the tool invoking the requests.
 	ToolDetails *BuildBazelRemoteExecutionV2ToolDetails `json:"toolDetails,omitempty"`
@@ -3466,7 +3484,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3659,7 +3677,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3848,7 +3866,7 @@ func (c *OperationsCancelCall) Header() http.Header {
 
 func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3989,7 +4007,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4160,7 +4178,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4344,7 +4362,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

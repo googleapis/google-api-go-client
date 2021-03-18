@@ -79,7 +79,7 @@ const mtlsBasePath = "https://workflowexecutions.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -479,7 +479,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -620,7 +620,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -784,7 +784,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -982,7 +982,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210316")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

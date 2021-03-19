@@ -25,8 +25,8 @@ var (
 	oauth2Endpoint         = "https://oauth2.googleapis.com"
 )
 
-// Config for generating impersonated credentials.
-type Config struct {
+// CredentialsConfig for generating impersonated credentials.
+type CredentialsConfig struct {
 	// TargetPrincipal is the email address of the service account to
 	// impersonate. Required.
 	TargetPrincipal string
@@ -37,7 +37,7 @@ type Config struct {
 	// on the next service account in the chain. Optional.
 	Delegates []string
 	// Lifetime is the amount of time until the impersonated token expires. If
-	// unset the tokens lifetime will be one hour and be automatically
+	// unset the token's lifetime will be one hour and be automatically
 	// refreshed. If set the token may have a max lifetime of one hour and will
 	// not be refreshed. Optional.
 	Lifetime time.Duration
@@ -56,10 +56,10 @@ func defaultClientOptions() []option.ClientOption {
 	}
 }
 
-// TokenSource returns an impersonated TokenSource configured with the provided
+// CredentialsTokenSource returns an impersonated CredentialsTokenSource configured with the provided
 // config and using credentials loaded from Application Default Credentials as
 // the base credentials.
-func TokenSource(ctx context.Context, config Config, opts ...option.ClientOption) (oauth2.TokenSource, error) {
+func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts ...option.ClientOption) (oauth2.TokenSource, error) {
 	if config.TargetPrincipal == "" {
 		return nil, fmt.Errorf("impersonate: a target service account must be provided")
 	}
@@ -69,27 +69,32 @@ func TokenSource(ctx context.Context, config Config, opts ...option.ClientOption
 	if config.Lifetime.Seconds() > 3600 {
 		return nil, fmt.Errorf("impersonate: max lifetime is 3600s")
 	}
+
+	var isStaticToken bool
+	// Default to the longest acceptable value of one hour as the token will
+	// be refreshed automatically if not set.
+	lifetime := 3600 * time.Second
+	if config.Lifetime != 0 {
+		lifetime = config.Lifetime
+		// Don't auto-refresh token if a lifetime is configured.
+		isStaticToken = true
+	}
+
 	clientOpts := append(defaultClientOptions(), opts...)
 	client, _, err := htransport.NewClient(ctx, clientOpts...)
 	if err != nil {
 		return nil, err
 	}
 	// If a subject is specified a different auth-flow is initiated to
-	// impersonate as the provided subject(user).
+	// impersonate as the provided subject (user).
 	if config.Subject != "" {
-		return user(ctx, config, client)
+		return user(ctx, config, client, lifetime, isStaticToken)
 	}
 
-	// Default to the longest acceptable value of one hour as the token will
-	// be refreshed automatically if not set.
-	lifetime := "3600s"
-	if config.Lifetime != 0 {
-		lifetime = fmt.Sprintf("%.fs", config.Lifetime.Seconds())
-	}
 	its := impersonatedTokenSource{
 		client:          client,
 		targetPrincipal: config.TargetPrincipal,
-		lifetime:        lifetime,
+		lifetime:        fmt.Sprintf("%.fs", lifetime.Seconds()),
 	}
 
 	its.delegates = make([]string, len(config.Delegates))
@@ -99,8 +104,7 @@ func TokenSource(ctx context.Context, config Config, opts ...option.ClientOption
 	its.scopes = make([]string, len(config.Scopes))
 	copy(its.scopes, config.Scopes)
 
-	// Don't auto-refresh token if a lifetime is configured.
-	if config.Lifetime != 0 {
+	if isStaticToken {
 		tok, err := its.Token()
 		if err != nil {
 			return nil, err

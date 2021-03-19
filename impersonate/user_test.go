@@ -44,7 +44,7 @@ func TestTokenSource_user(t *testing.T) {
 			wantErr:         true,
 		},
 		{
-			name:            "lifetime over max",
+			name:            "works",
 			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 			scopes:          []string{"scope"},
 			subject:         "admin@example.com",
@@ -54,7 +54,8 @@ func TestTokenSource_user(t *testing.T) {
 
 	for _, tt := range tests {
 		userTok := "user-token"
-		t.Run(tt.name, func(t *testing.T) {
+		name := tt.name
+		t.Run(name, func(t *testing.T) {
 			client := &http.Client{
 				Transport: RoundTripFn(func(req *http.Request) *http.Response {
 					if strings.Contains(req.URL.Path, "signJwt") {
@@ -91,7 +92,7 @@ func TestTokenSource_user(t *testing.T) {
 					return nil
 				}),
 			}
-			ts, err := TokenSource(ctx, Config{
+			ts, err := CredentialsTokenSource(ctx, CredentialsConfig{
 				TargetPrincipal: tt.targetPrincipal,
 				Scopes:          tt.scopes,
 				Lifetime:        tt.lifetime,

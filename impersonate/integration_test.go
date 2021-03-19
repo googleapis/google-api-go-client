@@ -39,10 +39,23 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+func validateEnvVars(t *testing.T) {
+	t.Helper()
+	if baseKeyFile == "" ||
+		readerKeyFile == "" ||
+		readerEmail == "" ||
+		writerEmail == "" ||
+		projectID == "" {
+		t.Skip("required environment variable not set, skipping")
+	}
+}
+
 func TestTokenSourceIntegration(t *testing.T) {
 	if !testing.Short() {
 		t.Skip("skipping integration test")
 	}
+	validateEnvVars(t)
+
 	ctx := context.Background()
 	tests := []struct {
 		name        string
@@ -62,8 +75,8 @@ func TestTokenSourceIntegration(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ts, err := impersonate.TokenSource(ctx,
-				impersonate.Config{
+			ts, err := impersonate.CredentialsTokenSource(ctx,
+				impersonate.CredentialsConfig{
 					TargetPrincipal: writerEmail,
 					Scopes:          []string{"https://www.googleapis.com/auth/devstorage.full_control"},
 					Delegates:       tt.delgates,
@@ -94,6 +107,8 @@ func TestIDTokenSourceIntegration(t *testing.T) {
 	if !testing.Short() {
 		t.Skip("skipping integration test")
 	}
+	validateEnvVars(t)
+
 	ctx := context.Background()
 	tests := []struct {
 		name        string
@@ -112,7 +127,8 @@ func TestIDTokenSourceIntegration(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		name := tt.name
+		t.Run(name, func(t *testing.T) {
 			aud := "http://example.com/"
 			ts, err := impersonate.IDTokenSource(ctx,
 				impersonate.IDTokenConfig{

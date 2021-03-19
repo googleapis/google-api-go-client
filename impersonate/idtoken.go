@@ -61,9 +61,8 @@ func IDTokenSource(ctx context.Context, config IDTokenConfig, opts ...option.Cli
 		audience:        config.Audience,
 		includeEmail:    config.IncludeEmail,
 	}
-	its.delegates = make([]string, len(config.Delegates))
-	for i, v := range config.Delegates {
-		its.delegates[i] = formatIAMServiceAccountName(v)
+	for _, v := range config.Delegates {
+		its.delegates = append(its.delegates, formatIAMServiceAccountName(v))
 	}
 	return oauth2.ReuseTokenSource(nil, its), nil
 }

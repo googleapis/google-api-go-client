@@ -19,13 +19,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-func user(ctx context.Context, c Config, client *http.Client) (oauth2.TokenSource, error) {
-	// Default to the longest acceptable value of one hour as the token will
-	// be refreshed automatically if not set.
-	lifetime := 3600 * time.Second
-	if c.Lifetime != 0 {
-		lifetime = c.Lifetime
-	}
+func user(ctx context.Context, c CredentialsConfig, client *http.Client, lifetime time.Duration, isStaticToken bool) (oauth2.TokenSource, error) {
 	u := userTokenSource{
 		client:          client,
 		targetPrincipal: c.TargetPrincipal,
@@ -38,8 +32,7 @@ func user(ctx context.Context, c Config, client *http.Client) (oauth2.TokenSourc
 	}
 	u.scopes = make([]string, len(c.Scopes))
 	copy(u.scopes, c.Scopes)
-	// Don't auto-refresh token if a lifetime is configured.
-	if c.Lifetime != 0 {
+	if isStaticToken {
 		tok, err := u.Token()
 		if err != nil {
 			return nil, err
@@ -162,7 +155,7 @@ func (u userTokenSource) exchangeToken(signedJWT string) (*oauth2.Token, error) 
 	if c := rawResp.StatusCode; c < 200 || c > 299 {
 		return nil, fmt.Errorf("impersonate: status code %d: %s", c, body)
 	}
-	
+
 	var tokenResp exchangeTokenResponse
 	if err := json.Unmarshal(body, &tokenResp); err != nil {
 		return nil, fmt.Errorf("impersonate: unable to parse response: %v", err)

@@ -42,7 +42,8 @@ func TestIDTokenSource(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		name := tt.name
+		t.Run(name, func(t *testing.T) {
 			idTok := "id-token"
 			client := &http.Client{
 				Transport: RoundTripFn(func(req *http.Request) *http.Response {

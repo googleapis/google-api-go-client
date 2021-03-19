@@ -9,7 +9,6 @@ import (
 	"context"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strings"
 	"testing"
@@ -44,7 +43,7 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 			wantErr:         true,
 		},
 		{
-			name:            "lifetime over max",
+			name:            "works",
 			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 			scopes:          []string{"scope"},
 			wantErr:         false,
@@ -52,11 +51,11 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		name := tt.name
+		t.Run(name, func(t *testing.T) {
 			saTok := "sa-token"
 			client := &http.Client{
 				Transport: RoundTripFn(func(req *http.Request) *http.Response {
-					log.Println(req.URL.Path)
 					if strings.Contains(req.URL.Path, "generateAccessToken") {
 						resp := generateAccessTokenResp{
 							AccessToken: saTok,
@@ -69,13 +68,13 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 						return &http.Response{
 							StatusCode: 200,
 							Body:       ioutil.NopCloser(bytes.NewReader(b)),
-							Header:     make(http.Header),
+							Header:     http.Header{},
 						}
 					}
 					return nil
 				}),
 			}
-			ts, err := TokenSource(ctx, Config{
+			ts, err := CredentialsTokenSource(ctx, CredentialsConfig{
 				TargetPrincipal: tt.targetPrincipal,
 				Scopes:          tt.scopes,
 				Lifetime:        tt.lifetime,

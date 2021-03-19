@@ -19,7 +19,7 @@ func ExampleTokenSource_serviceAccount() {
 	ctx := context.Background()
 
 	// Base credentials sourced from ADC or provided client options.
-	ts, err := impersonate.TokenSource(ctx, impersonate.Config{
+	ts, err := impersonate.CredentialsTokenSource(ctx, impersonate.CredentialsConfig{
 		TargetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 		Scopes:          []string{"https://www.googleapis.com/auth/cloud-platform"},
 		// Optionally supply delegates.
@@ -29,7 +29,7 @@ func ExampleTokenSource_serviceAccount() {
 		log.Fatal(err)
 	}
 
-	// Pass an impersonated credential to any function that takes a client
+	// Pass an impersonated credential to any function that takes client
 	// options.
 	client, err := secretmanager.NewService(ctx, option.WithTokenSource(ts))
 	if err != nil {
@@ -45,7 +45,7 @@ func ExampleTokenSource_adminUser() {
 	ctx := context.Background()
 
 	// Base credentials sourced from ADC or provided client options.
-	ts, err := impersonate.TokenSource(ctx, impersonate.Config{
+	ts, err := impersonate.CredentialsTokenSource(ctx, impersonate.CredentialsConfig{
 		TargetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 		Scopes:          []string{"https://www.googleapis.com/auth/cloud-platform"},
 		// Optionally supply delegates.
@@ -57,7 +57,7 @@ func ExampleTokenSource_adminUser() {
 		log.Fatal(err)
 	}
 
-	// Pass an impersonated credential to any function that takes a client
+	// Pass an impersonated credential to any function that takes client
 	// options.
 	client, err := admin.NewService(ctx, option.WithTokenSource(ts))
 	if err != nil {
@@ -84,7 +84,7 @@ func ExampleIDTokenSource() {
 		log.Fatal(err)
 	}
 
-	// Pass an impersonated credential to any function that takes a client
+	// Pass an impersonated credential to any function that takes client
 	// options.
 	client, _, err := transport.NewHTTPClient(ctx, option.WithTokenSource(ts))
 	if err != nil {

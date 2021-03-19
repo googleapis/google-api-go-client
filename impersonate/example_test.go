@@ -15,7 +15,7 @@ import (
 	"google.golang.org/api/transport"
 )
 
-func ExampleTokenSource_serviceAccount() {
+func ExampleCredentialsTokenSource_serviceAccount() {
 	ctx := context.Background()
 
 	// Base credentials sourced from ADC or provided client options.
@@ -41,7 +41,7 @@ func ExampleTokenSource_serviceAccount() {
 	client.Projects.Secrets.Get("...")
 }
 
-func ExampleTokenSource_adminUser() {
+func ExampleCredentialsTokenSource_adminUser() {
 	ctx := context.Background()
 
 	// Base credentials sourced from ADC or provided client options.

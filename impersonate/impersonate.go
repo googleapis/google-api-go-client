@@ -96,10 +96,8 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 		targetPrincipal: config.TargetPrincipal,
 		lifetime:        fmt.Sprintf("%.fs", lifetime.Seconds()),
 	}
-
-	its.delegates = make([]string, len(config.Delegates))
-	for i, v := range config.Delegates {
-		its.delegates[i] = formatIAMServiceAccountName(v)
+	for _, v := range config.Delegates {
+		its.delegates = append(its.delegates, formatIAMServiceAccountName(v))
 	}
 	its.scopes = make([]string, len(config.Scopes))
 	copy(its.scopes, config.Scopes)

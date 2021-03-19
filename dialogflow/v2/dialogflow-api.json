@@ -2644,102 +2644,6 @@
             }
           },
           "resources": {
-            "callMatchers": {
-              "methods": {
-                "create": {
-                  "description": "Creates a call matcher that links incoming SIP calls to the specified conversation if they fulfill specified criteria.",
-                  "flatPath": "v2/projects/{projectsId}/conversations/{conversationsId}/callMatchers",
-                  "httpMethod": "POST",
-                  "id": "dialogflow.projects.conversations.callMatchers.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "Required. Resource identifier of the conversation adding the call matcher. Format: `projects//locations//conversations/`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+parent}/callMatchers",
-                  "request": {
-                    "$ref": "GoogleCloudDialogflowV2CallMatcher"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2CallMatcher"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/dialogflow"
-                  ]
-                },
-                "delete": {
-                  "description": "Requests deletion of a call matcher.",
-                  "flatPath": "v2/projects/{projectsId}/conversations/{conversationsId}/callMatchers/{callMatchersId}",
-                  "httpMethod": "DELETE",
-                  "id": "dialogflow.projects.conversations.callMatchers.delete",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. The unique identifier of the CallMatcher to delete. Format: `projects//locations//conversations//callMatchers/`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+/callMatchers/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+name}",
-                  "response": {
-                    "$ref": "GoogleProtobufEmpty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/dialogflow"
-                  ]
-                },
-                "list": {
-                  "description": "Returns the list of all call matchers in the specified conversation.",
-                  "flatPath": "v2/projects/{projectsId}/conversations/{conversationsId}/callMatchers",
-                  "httpMethod": "GET",
-                  "id": "dialogflow.projects.conversations.callMatchers.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "pageSize": {
-                      "description": "Optional. The maximum number of items to return in a single page. By default 100 and at most 1000.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "Optional. The next_page_token value returned from a previous list request.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. The conversation to list all call matchers from. Format: `projects//locations//conversations/`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2/{+parent}/callMatchers",
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2ListCallMatchersResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/dialogflow"
-                  ]
-                }
-              }
-            },
             "messages": {
               "methods": {
                 "list": {
@@ -5489,102 +5393,6 @@
                 }
               },
               "resources": {
-                "callMatchers": {
-                  "methods": {
-                    "create": {
-                      "description": "Creates a call matcher that links incoming SIP calls to the specified conversation if they fulfill specified criteria.",
-                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversations/{conversationsId}/callMatchers",
-                      "httpMethod": "POST",
-                      "id": "dialogflow.projects.locations.conversations.callMatchers.create",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "Required. Resource identifier of the conversation adding the call matcher. Format: `projects//locations//conversations/`.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/conversations/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v2/{+parent}/callMatchers",
-                      "request": {
-                        "$ref": "GoogleCloudDialogflowV2CreateCallMatcherRequest"
-                      },
-                      "response": {
-                        "$ref": "GoogleCloudDialogflowV2CallMatcher"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/dialogflow"
-                      ]
-                    },
-                    "delete": {
-                      "description": "Requests deletion of a call matcher.",
-                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversations/{conversationsId}/callMatchers/{callMatchersId}",
-                      "httpMethod": "DELETE",
-                      "id": "dialogflow.projects.locations.conversations.callMatchers.delete",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. The unique identifier of the CallMatcher to delete. Format: `projects//locations//conversations//callMatchers/`.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/conversations/[^/]+/callMatchers/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v2/{+name}",
-                      "response": {
-                        "$ref": "GoogleProtobufEmpty"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/dialogflow"
-                      ]
-                    },
-                    "list": {
-                      "description": "Returns the list of all call matchers in the specified conversation.",
-                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/conversations/{conversationsId}/callMatchers",
-                      "httpMethod": "GET",
-                      "id": "dialogflow.projects.locations.conversations.callMatchers.list",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "pageSize": {
-                          "description": "Optional. The maximum number of items to return in a single page. By default 100 and at most 1000.",
-                          "format": "int32",
-                          "location": "query",
-                          "type": "integer"
-                        },
-                        "pageToken": {
-                          "description": "Optional. The next_page_token value returned from a previous list request.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "parent": {
-                          "description": "Required. The conversation to list all call matchers from. Format: `projects//locations//conversations/`.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/conversations/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v2/{+parent}/callMatchers",
-                      "response": {
-                        "$ref": "GoogleCloudDialogflowV2ListCallMatchersResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/dialogflow"
-                      ]
-                    }
-                  }
-                },
                 "messages": {
                   "methods": {
                     "list": {
@@ -6408,7 +6216,7 @@
       }
     }
   },
-  "revision": "20210314",
+  "revision": "20210318",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -9482,10 +9290,6 @@
       "description": "The request message for Participants.AnalyzeContent.",
       "id": "GoogleCloudDialogflowV2AnalyzeContentRequest",
       "properties": {
-        "audioInput": {
-          "$ref": "GoogleCloudDialogflowV2AudioInput",
-          "description": "The natural language speech audio to be processed."
-        },
         "eventInput": {
           "$ref": "GoogleCloudDialogflowV2EventInput",
           "description": "An input event to send to Dialogflow."
@@ -9668,22 +9472,6 @@
         "uri": {
           "description": "The article URI.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2AudioInput": {
-      "description": "Represents the natural language speech audio to be processed.",
-      "id": "GoogleCloudDialogflowV2AudioInput",
-      "properties": {
-        "audio": {
-          "description": "Required. The natural language speech audio to be processed. A single request can contain up to 1 minute of speech audio data. The transcribed text cannot contain more than 256 bytes.",
-          "format": "byte",
-          "type": "string"
-        },
-        "config": {
-          "$ref": "GoogleCloudDialogflowV2InputAudioConfig",
-          "description": "Required. Instructs the speech recognizer how to process the speech audio."
         }
       },
       "type": "object"
@@ -9884,45 +9672,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2CallMatcher": {
-      "description": "Represents a call matcher that describes criteria for matching incoming SIP calls to a conversation. When Dialogflow get a SIP call from a third-party carrier, Dialogflow matches the call to an existing conversation by either: * Extracting the conversation id from the [Call-Info header](https://tools.ietf.org/html/rfc3261#section-20.9), e.g. `Call-Info: ;purpose=Goog-ContactCenter-Conversation`. * Or, if that doesn't work, matching incoming [SIP headers](https://tools.ietf.org/html/rfc3261#section-7.3) against any CallMatcher for the conversation. If an incoming SIP call without valid `Call-Info` header matches to zero or multiple conversations with `CallMatcher`, we reject it. A call matcher contains equality conditions for SIP headers that all have to be fulfilled in order for a SIP call to match. The matched SIP headers consist of well-known headers (`To`, `From`, `Call-ID`) and custom headers. A CallMatcher is only valid if it specifies: * At least 1 custom header, * or at least 2 well-known headers.",
-      "id": "GoogleCloudDialogflowV2CallMatcher",
-      "properties": {
-        "callIdHeader": {
-          "description": "Value of the [`Call-ID` header](https://tools.ietf.org/html/rfc3261#section-8.1.1.4) to match. If empty or unspecified, we don't match to the [`Call-ID` header](https://tools.ietf.org/html/rfc3261#section-8.1.1.4).",
-          "type": "string"
-        },
-        "customHeaders": {
-          "$ref": "GoogleCloudDialogflowV2CallMatcherCustomHeaders",
-          "description": "Custom SIP headers that must match."
-        },
-        "fromHeader": {
-          "description": "Value of the [`From` header](https://tools.ietf.org/html/rfc3261#section-8.1.1.3) to match. If empty or unspecified, we don't match to the [`From` header](https://tools.ietf.org/html/rfc3261#section-8.1.1.3).",
-          "type": "string"
-        },
-        "name": {
-          "description": "Output only. The unique identifier of this call matcher. Format: `projects//locations//conversations//callMatchers/`.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "toHeader": {
-          "description": "Value of the [`To` header](https://tools.ietf.org/html/rfc3261#section-8.1.1.2) to match. If empty or unspecified, we don't match to the [`To` header](https://tools.ietf.org/html/rfc3261#section-8.1.1.2).",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2CallMatcherCustomHeaders": {
-      "description": "Custom SIP headers. See the [description of headers in the RFC](https://tools.ietf.org/html/rfc3261#section-7.3).",
-      "id": "GoogleCloudDialogflowV2CallMatcherCustomHeaders",
-      "properties": {
-        "ciscoGuid": {
-          "description": "Cisco's proprietary `Cisco-Guid` header.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2CompleteConversationRequest": {
       "description": "The request message for Conversations.CompleteConversation.",
       "id": "GoogleCloudDialogflowV2CompleteConversationRequest",
@@ -10088,10 +9837,6 @@
           "$ref": "GoogleCloudDialogflowV2HumanAgentAssistantConfig",
           "description": "Configuration for agent assistance to use with this profile."
         },
-        "humanAgentHandoffConfig": {
-          "$ref": "GoogleCloudDialogflowV2HumanAgentHandoffConfig",
-          "description": "Configuration for connecting to a live agent."
-        },
         "languageCode": {
           "description": "Language which represents the conversationProfile. If unspecified, the default language code en-us applies. Users need to create a ConversationProfile for each language they want to support.",
           "type": "string"
@@ -10121,17 +9866,6 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2CreateCallMatcherRequest": {
-      "description": "The request message for Conversations.CreateCallMatcher.",
-      "id": "GoogleCloudDialogflowV2CreateCallMatcherRequest",
-      "properties": {
-        "callMatcher": {
-          "$ref": "GoogleCloudDialogflowV2CallMatcher",
-          "description": "Required. The call matcher to create."
         }
       },
       "type": "object"
@@ -10580,10 +10314,6 @@
       "description": "Defines the Human Agent Assist to connect to a conversation.",
       "id": "GoogleCloudDialogflowV2HumanAgentAssistantConfig",
       "properties": {
-        "endUserSuggestionConfig": {
-          "$ref": "GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionConfig",
-          "description": "Configuration for agent assistance of end user participant."
-        },
         "humanAgentSuggestionConfig": {
           "$ref": "GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionConfig",
           "description": "Configuration for agent assistance of human agent participant."
@@ -10614,10 +10344,6 @@
       "description": "Configuration for analyses to run on each conversation message.",
       "id": "GoogleCloudDialogflowV2HumanAgentAssistantConfigMessageAnalysisConfig",
       "properties": {
-        "enableEntityExtraction": {
-          "description": "Enable entity extraction in conversation messages on [agent assist stage](https://cloud.google.com/dialogflow/priv/docs/contact-center/basics#stages). If unspecified, defaults to false.",
-          "type": "boolean"
-        },
         "enableSentimentAnalysis": {
           "description": "Enable sentiment analysis in conversation messages on [agent assist stage](https://cloud.google.com/dialogflow/priv/docs/contact-center/basics#stages). If unspecified, defaults to false. Sentiment analysis inspects user input and identifies the prevailing subjective opinion, especially to determine a user's attitude as positive, negative, or neutral: https://cloud.google.com/natural-language/docs/basics#sentiment_analysis For Participants.StreamingAnalyzeContent method, result will be in StreamingAnalyzeContentResponse.message.SentimentAnalysisResult. For Participants.AnalyzeContent method, result will be in AnalyzeContentResponse.message.SentimentAnalysisResult For Conversations.ListMessages method, result will be in ListMessagesResponse.messages.SentimentAnalysisResult If Pub/Sub notification is configured, result will be in ConversationEvent.new_message_payload.SentimentAnalysisResult.",
           "type": "boolean"
@@ -10794,55 +10520,6 @@
             "$ref": "GoogleCloudDialogflowV2SuggestionResult"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2HumanAgentHandoffConfig": {
-      "description": "Defines the hand off to a live agent, typically on which external agent service provider to connect to a conversation.",
-      "id": "GoogleCloudDialogflowV2HumanAgentHandoffConfig",
-      "properties": {
-        "livePersonConfig": {
-          "$ref": "GoogleCloudDialogflowV2HumanAgentHandoffConfigLivePersonConfig",
-          "description": "Uses LivePerson (https://www.liveperson.com)."
-        },
-        "salesforceLiveAgentConfig": {
-          "$ref": "GoogleCloudDialogflowV2HumanAgentHandoffConfigSalesforceLiveAgentConfig",
-          "description": "Uses Salesforce Live Agent."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2HumanAgentHandoffConfigLivePersonConfig": {
-      "description": "Configuration specific to LivePerson (https://www.liveperson.com).",
-      "id": "GoogleCloudDialogflowV2HumanAgentHandoffConfigLivePersonConfig",
-      "properties": {
-        "accountNumber": {
-          "description": "Required. Account number of the LivePerson account to connect. This is the account number you input at the login page.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2HumanAgentHandoffConfigSalesforceLiveAgentConfig": {
-      "description": "Configuration specific to Salesforce Live Agent.",
-      "id": "GoogleCloudDialogflowV2HumanAgentHandoffConfigSalesforceLiveAgentConfig",
-      "properties": {
-        "buttonId": {
-          "description": "Required. Live Agent chat button ID.",
-          "type": "string"
-        },
-        "deploymentId": {
-          "description": "Required. Live Agent deployment ID.",
-          "type": "string"
-        },
-        "endpointDomain": {
-          "description": "Required. Domain of the Live Agent endpoint for this agent. You can find the endpoint URL in the `Live Agent settings` page. For example if URL has the form https://d.la4-c2-phx.salesforceliveagent.com/..., you should fill in d.la4-c2-phx.salesforceliveagent.com.",
-          "type": "string"
-        },
-        "organizationId": {
-          "description": "Required. The organization ID of the Salesforce account.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -11927,24 +11604,6 @@
         },
         "nextPageToken": {
           "description": "A token to retrieve next page of results. Or empty if there are no more results. Pass this value in the ListAnswerRecordsRequest.page_token field in the subsequent call to `ListAnswerRecords` method to retrieve the next page of results.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2ListCallMatchersResponse": {
-      "description": "The response message for Conversations.ListCallMatchers.",
-      "id": "GoogleCloudDialogflowV2ListCallMatchersResponse",
-      "properties": {
-        "callMatchers": {
-          "description": "The list of call matchers. There is a maximum number of items returned based on the page_size field in the request.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2CallMatcher"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results or empty if there are no more results in the list.",
           "type": "string"
         }
       },

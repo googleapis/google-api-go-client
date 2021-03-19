@@ -1700,6 +1700,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/database-migration/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "datamigration:v1",
+      "name": "datamigration",
+      "version": "v1",
+      "title": "Database Migration API",
+      "description": "Manage Cloud Database Migration Service resources on Google Cloud Platform.",
+      "discoveryRestUrl": "https://datamigration.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/database-migration/",
       "preferred": true
     },
     {

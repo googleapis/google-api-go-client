@@ -79,7 +79,7 @@ const mtlsBasePath = "https://run.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -3687,7 +3687,7 @@ func (c *NamespacesAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *NamespacesAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3863,7 +3863,7 @@ func (c *NamespacesConfigurationsGetCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4061,7 +4061,7 @@ func (c *NamespacesConfigurationsListCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4205,6 +4205,14 @@ func (r *NamespacesDomainmappingsService) Create(parent string, domainmapping *D
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *NamespacesDomainmappingsCreateCall) DryRun(dryRun string) *NamespacesDomainmappingsCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4232,7 +4240,7 @@ func (c *NamespacesDomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4304,6 +4312,11 @@ func (c *NamespacesDomainmappingsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -4347,6 +4360,14 @@ func (r *NamespacesDomainmappingsService) Delete(name string) *NamespacesDomainm
 // currently ignores this parameter.
 func (c *NamespacesDomainmappingsDeleteCall) ApiVersion(apiVersion string) *NamespacesDomainmappingsDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *NamespacesDomainmappingsDeleteCall) DryRun(dryRun string) *NamespacesDomainmappingsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -4394,7 +4415,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4463,6 +4484,11 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   "parameters": {
 	//     "apiVersion": {
 	//       "description": "Cloud Run currently ignores this parameter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4550,7 +4576,7 @@ func (c *NamespacesDomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4748,7 +4774,7 @@ func (c *NamespacesDomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4897,6 +4923,14 @@ func (c *NamespacesRevisionsDeleteCall) ApiVersion(apiVersion string) *Namespace
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *NamespacesRevisionsDeleteCall) DryRun(dryRun string) *NamespacesRevisionsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Kind sets the optional parameter "kind": Cloud Run currently ignores
 // this parameter.
 func (c *NamespacesRevisionsDeleteCall) Kind(kind string) *NamespacesRevisionsDeleteCall {
@@ -4941,7 +4975,7 @@ func (c *NamespacesRevisionsDeleteCall) Header() http.Header {
 
 func (c *NamespacesRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5010,6 +5044,11 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Statu
 	//   "parameters": {
 	//     "apiVersion": {
 	//       "description": "Cloud Run currently ignores this parameter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5097,7 +5136,7 @@ func (c *NamespacesRevisionsGetCall) Header() http.Header {
 
 func (c *NamespacesRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5295,7 +5334,7 @@ func (c *NamespacesRevisionsListCall) Header() http.Header {
 
 func (c *NamespacesRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5475,7 +5514,7 @@ func (c *NamespacesRoutesGetCall) Header() http.Header {
 
 func (c *NamespacesRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5673,7 +5712,7 @@ func (c *NamespacesRoutesListCall) Header() http.Header {
 
 func (c *NamespacesRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5817,6 +5856,14 @@ func (r *NamespacesServicesService) Create(parent string, service *Service) *Nam
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *NamespacesServicesCreateCall) DryRun(dryRun string) *NamespacesServicesCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5844,7 +5891,7 @@ func (c *NamespacesServicesCreateCall) Header() http.Header {
 
 func (c *NamespacesServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5916,6 +5963,11 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -5964,6 +6016,14 @@ func (c *NamespacesServicesDeleteCall) ApiVersion(apiVersion string) *Namespaces
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *NamespacesServicesDeleteCall) DryRun(dryRun string) *NamespacesServicesDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Kind sets the optional parameter "kind": Cloud Run currently ignores
 // this parameter.
 func (c *NamespacesServicesDeleteCall) Kind(kind string) *NamespacesServicesDeleteCall {
@@ -6008,7 +6068,7 @@ func (c *NamespacesServicesDeleteCall) Header() http.Header {
 
 func (c *NamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6077,6 +6137,11 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 	//   "parameters": {
 	//     "apiVersion": {
 	//       "description": "Cloud Run currently ignores this parameter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6164,7 +6229,7 @@ func (c *NamespacesServicesGetCall) Header() http.Header {
 
 func (c *NamespacesServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6362,7 +6427,7 @@ func (c *NamespacesServicesListCall) Header() http.Header {
 
 func (c *NamespacesServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6510,6 +6575,14 @@ func (r *NamespacesServicesService) ReplaceService(name string, service *Service
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *NamespacesServicesReplaceServiceCall) DryRun(dryRun string) *NamespacesServicesReplaceServiceCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6537,7 +6610,7 @@ func (c *NamespacesServicesReplaceServiceCall) Header() http.Header {
 
 func (c *NamespacesServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6609,6 +6682,11 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "The name of the service being replaced. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -6700,7 +6778,7 @@ func (c *ProjectsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6840,22 +6918,25 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6898,7 +6979,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6969,7 +7050,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6981,13 +7062,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7093,7 +7174,7 @@ func (c *ProjectsLocationsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7269,7 +7350,7 @@ func (c *ProjectsLocationsConfigurationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7467,7 +7548,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7611,6 +7692,14 @@ func (r *ProjectsLocationsDomainmappingsService) Create(parent string, domainmap
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *ProjectsLocationsDomainmappingsCreateCall) DryRun(dryRun string) *ProjectsLocationsDomainmappingsCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -7638,7 +7727,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7710,6 +7799,11 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Do(opts ...googleapi.CallOpt
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -7753,6 +7847,14 @@ func (r *ProjectsLocationsDomainmappingsService) Delete(name string) *ProjectsLo
 // currently ignores this parameter.
 func (c *ProjectsLocationsDomainmappingsDeleteCall) ApiVersion(apiVersion string) *ProjectsLocationsDomainmappingsDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *ProjectsLocationsDomainmappingsDeleteCall) DryRun(dryRun string) *ProjectsLocationsDomainmappingsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -7800,7 +7902,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7869,6 +7971,11 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   "parameters": {
 	//     "apiVersion": {
 	//       "description": "Cloud Run currently ignores this parameter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7956,7 +8063,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8154,7 +8261,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8303,6 +8410,14 @@ func (c *ProjectsLocationsRevisionsDeleteCall) ApiVersion(apiVersion string) *Pr
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *ProjectsLocationsRevisionsDeleteCall) DryRun(dryRun string) *ProjectsLocationsRevisionsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Kind sets the optional parameter "kind": Cloud Run currently ignores
 // this parameter.
 func (c *ProjectsLocationsRevisionsDeleteCall) Kind(kind string) *ProjectsLocationsRevisionsDeleteCall {
@@ -8347,7 +8462,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8416,6 +8531,11 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   "parameters": {
 	//     "apiVersion": {
 	//       "description": "Cloud Run currently ignores this parameter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8503,7 +8623,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8701,7 +8821,7 @@ func (c *ProjectsLocationsRevisionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8881,7 +9001,7 @@ func (c *ProjectsLocationsRoutesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9079,7 +9199,7 @@ func (c *ProjectsLocationsRoutesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9223,6 +9343,14 @@ func (r *ProjectsLocationsServicesService) Create(parent string, service *Servic
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *ProjectsLocationsServicesCreateCall) DryRun(dryRun string) *ProjectsLocationsServicesCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9250,7 +9378,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9322,6 +9450,11 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -9370,6 +9503,14 @@ func (c *ProjectsLocationsServicesDeleteCall) ApiVersion(apiVersion string) *Pro
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *ProjectsLocationsServicesDeleteCall) DryRun(dryRun string) *ProjectsLocationsServicesDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Kind sets the optional parameter "kind": Cloud Run currently ignores
 // this parameter.
 func (c *ProjectsLocationsServicesDeleteCall) Kind(kind string) *ProjectsLocationsServicesDeleteCall {
@@ -9414,7 +9555,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9483,6 +9624,11 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   "parameters": {
 	//     "apiVersion": {
 	//       "description": "Cloud Run currently ignores this parameter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9570,7 +9716,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9730,7 +9876,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9934,7 +10080,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10082,6 +10228,14 @@ func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *
 	return c
 }
 
+// DryRun sets the optional parameter "dryRun": DryRun is a query string
+// parameter which indicates that the server should run validation
+// without persisting the request.
+func (c *ProjectsLocationsServicesReplaceServiceCall) DryRun(dryRun string) *ProjectsLocationsServicesReplaceServiceCall {
+	c.urlParams_.Set("dryRun", dryRun)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10109,7 +10263,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10181,6 +10335,11 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "DryRun is a query string parameter which indicates that the server should run validation without persisting the request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "The name of the service being replaced. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -10250,7 +10409,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10392,7 +10551,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210317")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210318")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

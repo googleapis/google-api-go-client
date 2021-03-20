@@ -857,7 +857,7 @@
       }
     }
   },
-  "revision": "20210219",
+  "revision": "20210311",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -1457,12 +1457,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "DisableServiceResponse": {
-      "description": "Operation payload for DisableService method.",
-      "id": "DisableServiceResponse",
-      "properties": {},
       "type": "object"
     },
     "Documentation": {

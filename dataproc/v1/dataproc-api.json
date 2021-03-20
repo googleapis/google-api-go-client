@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         }
       }
     }
@@ -2260,7 +2260,7 @@
       }
     }
   },
-  "revision": "20210305",
+  "revision": "20210315",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -4119,7 +4119,9 @@
               "COMPONENT_UNSPECIFIED",
               "ANACONDA",
               "DOCKER",
+              "DRUID",
               "FLINK",
+              "HBASE",
               "HIVE_WEBHCAT",
               "JUPYTER",
               "PRESTO",
@@ -4132,7 +4134,9 @@
               "Unspecified component. Specifying this will cause Cluster creation to fail.",
               "The Anaconda python distribution. The Anaconda component is not supported in the Dataproc 2.0 image. The 2.0 image is pre-installed with Miniconda.",
               "Docker",
+              "The Druid query engine. (beta)",
               "Flink",
+              "HBase. (beta)",
               "The Hive Web HCatalog (the REST service for accessing HCatalog).",
               "The Jupyter Notebook.",
               "The Presto query engine.",

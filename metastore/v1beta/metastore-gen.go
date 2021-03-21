@@ -79,7 +79,7 @@ const mtlsBasePath = "https://metastore.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud Platform data
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -466,9 +466,9 @@ type ExportMetadataRequest struct {
 	//   "AVRO" - Database dump contains Avro files.
 	DatabaseDumpType string `json:"databaseDumpType,omitempty"`
 
-	// DestinationGcsFolder: Required. A Cloud Storage URI of a folder that
-	// metadata are exported to, in the format gs:///. A sub-folder
-	// containing exported files will be created below it.
+	// DestinationGcsFolder: A Cloud Storage URI of a folder, in the format
+	// gs:///. A sub-folder containing exported files will be created below
+	// it.
 	DestinationGcsFolder string `json:"destinationGcsFolder,omitempty"`
 
 	// RequestId: Optional. A request ID. Specify a unique request ID to
@@ -579,8 +579,8 @@ type HiveMetastoreConfig struct {
 	// KerberosConfig: Information used to configure the Hive metastore
 	// service as a service principal in a Kerberos realm. To disable
 	// Kerberos, use the UpdateService method and specify this field's path
-	// ("hive_metastore_config.kerberos_config") in the request's
-	// update_mask while omitting this field from the request's service.
+	// (hive_metastore_config.kerberos_config) in the request's update_mask
+	// while omitting this field from the request's service.
 	KerberosConfig *KerberosConfig `json:"kerberosConfig,omitempty"`
 
 	// Version: Immutable. The Hive metastore schema version.
@@ -658,7 +658,7 @@ type KerberosConfig struct {
 
 	// Principal: A Kerberos principal that exists in the both the keytab
 	// the KDC to authenticate as. A typical principal is of the form
-	// "primary/instance@REALM", but there is no exact format.
+	// primary/instance@REALM, but there is no exact format.
 	Principal string `json:"principal,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Keytab") to
@@ -975,7 +975,7 @@ type MetadataExport struct {
 	DatabaseDumpType string `json:"databaseDumpType,omitempty"`
 
 	// DestinationGcsUri: Output only. A Cloud Storage URI of a folder that
-	// metadata are exported to, in the form of gs:////, where ` is
+	// metadata are exported to, in the form of gs:////, where is
 	// automatically generated.
 	DestinationGcsUri string `json:"destinationGcsUri,omitempty"`
 
@@ -1034,8 +1034,8 @@ type MetadataImport struct {
 
 	// Name: Immutable. The relative resource name of the metadata import,
 	// of the
-	// form:"projects/{project_number}/locations/{location_id}/services/{serv
-	// ice_id}/metadataImports/{metadata_import_id}".
+	// form:projects/{project_number}/locations/{location_id}/services/{servi
+	// ce_id}/metadataImports/{metadata_import_id}.
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. The current state of the metadata import.
@@ -1313,7 +1313,7 @@ type Restore struct {
 	// Backup: Output only. The relative resource name of the metastore
 	// service backup to restore from, in the following
 	// form:projects/{project_id}/locations/{location_id}/services/{service_i
-	// d}/backups/{backup_id}
+	// d}/backups/{backup_id}.
 	Backup string `json:"backup,omitempty"`
 
 	// Details: Output only. The restore details containing the revision of
@@ -1371,8 +1371,8 @@ func (s *Restore) MarshalJSON() ([]byte, error) {
 type Secret struct {
 	// CloudSecret: The relative resource name of a Secret Manager secret
 	// version, in the following
-	// form:"projects/{project_number}/secrets/{secret_id}/versions/{version_
-	// id}".
+	// form:projects/{project_number}/secrets/{secret_id}/versions/{version_i
+	// d}.
 	CloudSecret string `json:"cloudSecret,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudSecret") to
@@ -1435,18 +1435,31 @@ type Service struct {
 
 	// Name: Immutable. The relative resource name of the metastore service,
 	// of the
-	// form:"projects/{project_number}/locations/{location_id}/services/{serv
-	// ice_id}".
+	// form:projects/{project_number}/locations/{location_id}/services/{servi
+	// ce_id}.
 	Name string `json:"name,omitempty"`
 
 	// Network: Immutable. The relative resource name of the VPC network on
 	// which the instance can be accessed. It is specified in the following
-	// form:"projects/{project_number}/global/networks/{network_id}".
+	// form:projects/{project_number}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
 
 	// Port: The TCP port at which the metastore service is reached.
 	// Default: 9083.
 	Port int64 `json:"port,omitempty"`
+
+	// ReleaseChannel: Immutable. The release channel of the service. If
+	// unspecified, defaults to STABLE.
+	//
+	// Possible values:
+	//   "RELEASE_CHANNEL_UNSPECIFIED" - Release channel is not specified.
+	//   "CANARY" - The CANARY release channel contains the newest features,
+	// which may be unstable and subject to unresolved issues with no known
+	// workarounds. Services using the CANARY release channel are not
+	// subject to any SLAs.
+	//   "STABLE" - The STABLE release channel contains features that are
+	// considered stable and have been validated for production use.
+	ReleaseChannel string `json:"releaseChannel,omitempty"`
 
 	// State: Output only. The current state of the metastore service.
 	//
@@ -1723,7 +1736,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1831,22 +1844,25 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the next_page_token field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1889,7 +1905,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1960,7 +1976,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1972,13 +1988,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2062,7 +2078,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2205,7 +2221,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2379,7 +2395,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2576,7 +2592,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2649,7 +2665,7 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The relative resource name of the location in which to create a metastore service, in the following form:\"projects/{project_number}/locations/{location_id}\".",
+	//       "description": "Required. The relative resource name of the location in which to create a metastore service, in the following form:projects/{project_number}/locations/{location_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2739,7 +2755,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2807,7 +2823,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the metastore service to delete, in the following form:\"projects/{project_number}/locations/{location_id}/services/{service_id}\".",
+	//       "description": "Required. The relative resource name of the metastore service to delete, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -2876,7 +2892,7 @@ func (c *ProjectsLocationsServicesExportMetadataCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesExportMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2949,7 +2965,7 @@ func (c *ProjectsLocationsServicesExportMetadataCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to run export, in the following form:\"projects/{project_id}/locations/{location_id}/services/{service_id}",
+	//       "description": "Required. The relative resource name of the metastore service to run export, in the following form:projects/{project_id}/locations/{location_id}/services/{service_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -3025,7 +3041,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3096,7 +3112,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the metastore service to retrieve, in the following form:\"projects/{project_number}/locations/{location_id}/services/{service_id}\".",
+	//       "description": "Required. The relative resource name of the metastore service to retrieve, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -3185,7 +3201,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3306,8 +3322,9 @@ func (c *ProjectsLocationsServicesListCall) Filter(filter string) *ProjectsLocat
 }
 
 // OrderBy sets the optional parameter "orderBy": Specify the ordering
-// of results as described in Sorting Order. If not specified, the
-// results will be sorted in the default order.
+// of results as described in Sorting Order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
+// If not specified, the results will be sorted in the default order.
 func (c *ProjectsLocationsServicesListCall) OrderBy(orderBy string) *ProjectsLocationsServicesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3370,7 +3387,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3446,7 +3463,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specify the ordering of results as described in Sorting Order. If not specified, the results will be sorted in the default order.",
+	//       "description": "Optional. Specify the ordering of results as described in Sorting Order (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not specified, the results will be sorted in the default order.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3462,7 +3479,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative resource name of the location of metastore services to list, in the following form:\"projects/{project_number}/locations/{location_id}\".",
+	//       "description": "Required. The relative resource name of the location of metastore services to list, in the following form:projects/{project_number}/locations/{location_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3572,7 +3589,7 @@ func (c *ProjectsLocationsServicesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3645,7 +3662,7 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The relative resource name of the metastore service, of the form:\"projects/{project_number}/locations/{location_id}/services/{service_id}\".",
+	//       "description": "Immutable. The relative resource name of the metastore service, of the form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -3725,7 +3742,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3870,7 +3887,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4035,7 +4052,7 @@ func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4113,7 +4130,7 @@ func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative resource name of the service in which to create a metastore import, in the following form:\"projects/{project_number}/locations/{location_id}/services/{service_id}\"",
+	//       "description": "Required. The relative resource name of the service in which to create a metastore import, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -4194,7 +4211,7 @@ func (c *ProjectsLocationsServicesMetadataImportsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4265,7 +4282,7 @@ func (c *ProjectsLocationsServicesMetadataImportsGetCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The relative resource name of the metadata import to retrieve, in the following form:\"projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{import_id}\".",
+	//       "description": "Required. The relative resource name of the metadata import to retrieve, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{import_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/metadataImports/[^/]+$",
 	//       "required": true,
@@ -4309,8 +4326,9 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Filter(filter string)
 }
 
 // OrderBy sets the optional parameter "orderBy": Specify the ordering
-// of results as described in Sorting Order. If not specified, the
-// results will be sorted in the default order.
+// of results as described in Sorting Order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
+// If not specified, the results will be sorted in the default order.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) OrderBy(orderBy string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4373,7 +4391,7 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsServicesMetadataImportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4449,7 +4467,7 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Specify the ordering of results as described in Sorting Order. If not specified, the results will be sorted in the default order.",
+	//       "description": "Optional. Specify the ordering of results as described in Sorting Order (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not specified, the results will be sorted in the default order.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4465,7 +4483,7 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative resource name of the service whose metadata imports to list, in the following form:\"projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports\".",
+	//       "description": "Required. The relative resource name of the service whose metadata imports to list, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -4576,7 +4594,7 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Header() http.Header
 
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210319")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210320")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4649,7 +4667,7 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The relative resource name of the metadata import, of the form:\"projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{metadata_import_id}\".",
+	//       "description": "Immutable. The relative resource name of the metadata import, of the form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{metadata_import_id}.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/metadataImports/[^/]+$",
 	//       "required": true,

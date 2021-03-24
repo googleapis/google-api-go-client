@@ -1,5 +1,12 @@
 # Changes
 
+## 0.44.0-impersonate-preview
+
+This is a preview release for the new impersonate package. Please try out the
+new package and open an issue if you have any feedback.
+
+* impersonate: add impersonate pacakge [#927](https://github.com/googleapis/google-api-go-client/pull/927)
+
 ## [0.43.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.42.0...v0.43.0) (2021-03-24)
 
 

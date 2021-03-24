@@ -541,7 +541,7 @@ func (c *CustomersReportsCountChromeVersionsCall) Header() http.Header {
 
 func (c *CustomersReportsCountChromeVersionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -768,7 +768,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Header() http.Header {
 
 func (c *CustomersReportsCountInstalledAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -958,7 +958,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Filter(filter string) *Cus
 }
 
 // OrderBy sets the optional parameter "orderBy": Field used to order
-// results. Supported order by fields: * machine_name * device_id
+// results. Supported order by fields: * machine * device_id
 func (c *CustomersReportsFindInstalledAppDevicesCall) OrderBy(orderBy string) *CustomersReportsFindInstalledAppDevicesCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -1022,7 +1022,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Header() http.Header {
 
 func (c *CustomersReportsFindInstalledAppDevicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1134,7 +1134,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Field used to order results. Supported order by fields: * machine_name * device_id",
+	//       "description": "Field used to order results. Supported order by fields: * machine * device_id",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

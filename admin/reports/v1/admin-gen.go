@@ -1114,7 +1114,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1194,7 +1194,6 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//     "applicationName": {
 	//       "description": "Application name for which the events are to be retrieved.",
 	//       "enum": [
-	//         "application_name_undefined",
 	//         "access_transparency",
 	//         "admin",
 	//         "calendar",
@@ -1217,7 +1216,6 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "data_studio"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
 	//         "The Admin console application's activity reports return account information about different types of administrator activity events.",
 	//         "The Google Calendar application's activity reports return information about various Calendar activity events.",
@@ -1534,7 +1532,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1616,7 +1614,6 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//     "applicationName": {
 	//       "description": "Application name for which the events are to be retrieved.",
 	//       "enum": [
-	//         "application_name_unspecified",
 	//         "access_transparency",
 	//         "admin",
 	//         "calendar",
@@ -1639,7 +1636,6 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//         "data_studio"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
 	//         "The Admin console application's activity reports return account information about different types of administrator activity events.",
 	//         "The Google Calendar application's activity reports return information about various Calendar activity events.",
@@ -1787,7 +1783,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1937,7 +1933,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2197,7 +2193,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2287,12 +2283,10 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 	//     "entityKey": {
 	//       "description": "Represents the key of the object to filter the data with.",
 	//       "enum": [
-	//         "entityKeyUndefined",
 	//         "all",
 	//         "entityKey"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Returns activity events for all users.",
 	//         "Represents an app-specific identifier for the entity. For details on how to obtain the `entityKey` for a particular `entityType`, see the Entities Usage parameters reference guides."
 	//       ],
@@ -2303,11 +2297,9 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 	//     "entityType": {
 	//       "description": "Represents the type of entity for the report.",
 	//       "enum": [
-	//         "entity_type_undefined",
 	//         "gplus_communities"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Returns a report on Google+ communities."
 	//       ],
 	//       "location": "path",
@@ -2524,7 +2516,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210322")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

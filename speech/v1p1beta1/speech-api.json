@@ -524,7 +524,7 @@
       }
     }
   },
-  "revision": "20210311",
+  "revision": "20210318",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ClassItem": {
@@ -659,6 +659,11 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "outputConfig": {
+          "$ref": "TranscriptOutputConfig",
+          "description": "Output only. A copy of the TranscriptOutputConfig if it was set in the request.",
+          "readOnly": true
+        },
         "progressPercent": {
           "description": "Approximate percentage of audio processed thus far. Guaranteed to be 100 when the audio is fully processed and the results are available.",
           "format": "int32",
@@ -700,6 +705,14 @@
       "description": "The only message returned to the client by the `LongRunningRecognize` method. It contains the result as zero or more sequential `SpeechRecognitionResult` messages. It is included in the `result.response` field of the `Operation` returned by the `GetOperation` call of the `google::longrunning::Operations` service.",
       "id": "LongRunningRecognizeResponse",
       "properties": {
+        "outputConfig": {
+          "$ref": "TranscriptOutputConfig",
+          "description": "Original output config if present in the request."
+        },
+        "outputError": {
+          "$ref": "Status",
+          "description": "If the transcript output fails this field contains the relevant error."
+        },
         "results": {
           "description": "Sequential list of transcription results corresponding to sequential portions of audio.",
           "items": {

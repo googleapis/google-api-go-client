@@ -434,6 +434,160 @@
                 "https://www.googleapis.com/auth/apps.order"
               ]
             }
+          },
+          "resources": {
+            "customers": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new Customer resource under the reseller or distributor account. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: * Required request parameters are missing or invalid. * Domain field value doesn't match the primary email domain. Return value: The newly created Customer resource.",
+                  "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers",
+                  "httpMethod": "POST",
+                  "id": "cloudchannel.accounts.channelPartnerLinks.customers.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The resource name of reseller account in which to create the customer. Parent uses the format: accounts/{account_id}",
+                      "location": "path",
+                      "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/customers",
+                  "request": {
+                    "$ref": "GoogleCloudChannelV1Customer"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudChannelV1Customer"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/apps.order"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes the given Customer permanently and irreversibly. Possible error codes: * PERMISSION_DENIED: The account making the request does not own this customer. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * FAILED_PRECONDITION: The customer has existing entitlements. * NOT_FOUND: No Customer resource found for the name in the request.",
+                  "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
+                  "httpMethod": "DELETE",
+                  "id": "cloudchannel.accounts.channelPartnerLinks.customers.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The resource name of the customer to delete.",
+                      "location": "path",
+                      "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleProtobufEmpty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/apps.order"
+                  ]
+                },
+                "get": {
+                  "description": "Returns a requested Customer resource. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The customer resource doesn't exist. Usually the result of an invalid name parameter. Return value: The Customer resource.",
+                  "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
+                  "httpMethod": "GET",
+                  "id": "cloudchannel.accounts.channelPartnerLinks.customers.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The resource name of the customer to retrieve. Name uses the format: accounts/{account_id}/customers/{customer_id}",
+                      "location": "path",
+                      "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudChannelV1Customer"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/apps.order"
+                  ]
+                },
+                "list": {
+                  "description": "List Customers. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. Return value: List of Customers, or an empty list if there are no customers.",
+                  "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers",
+                  "httpMethod": "GET",
+                  "id": "cloudchannel.accounts.channelPartnerLinks.customers.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. The maximum number of customers to return. The service may return fewer than this value. If unspecified, returns at most 10 customers. The maximum value is 50.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. A token identifying a page of results other than the first page. Obtained through ListCustomersResponse.next_page_token of the previous CloudChannelService.ListCustomers call.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The resource name of the reseller account to list customers from. Parent uses the format: accounts/{account_id}.",
+                      "location": "path",
+                      "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/customers",
+                  "response": {
+                    "$ref": "GoogleCloudChannelV1ListCustomersResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/apps.order"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates an existing Customer resource for the reseller or distributor. Possible error codes: * PERMISSION_DENIED: The reseller account making the request is different from the reseller account in the API request. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: No Customer resource found for the name in the request. Return value: The updated Customer resource.",
+                  "flatPath": "v1/accounts/{accountsId}/channelPartnerLinks/{channelPartnerLinksId}/customers/{customersId}",
+                  "httpMethod": "PATCH",
+                  "id": "cloudchannel.accounts.channelPartnerLinks.customers.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. Resource name of the customer. Format: accounts/{account_id}/customers/{customer_id}",
+                      "location": "path",
+                      "pattern": "^accounts/[^/]+/channelPartnerLinks/[^/]+/customers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The update mask that applies to the resource. Optional.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudChannelV1Customer"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudChannelV1Customer"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/apps.order"
+                  ]
+                }
+              }
+            }
           }
         },
         "customers": {
@@ -1354,7 +1508,7 @@
       }
     }
   },
-  "revision": "20210317",
+  "revision": "20210319",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {

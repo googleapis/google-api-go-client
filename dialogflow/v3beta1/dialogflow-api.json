@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         },
         "https://www.googleapis.com/auth/dialogflow": {
           "description": "View, manage and query your Dialogflow agents"
@@ -3425,7 +3425,7 @@
       }
     }
   },
-  "revision": "20210314",
+  "revision": "20210320",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -4704,7 +4704,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3WebhookRequest": {
-      "description": "The request message for a webhook call.",
+      "description": "The request message for a webhook call. The request is sent as a JSON object and the field names will be presented in camel cases.",
       "id": "GoogleCloudDialogflowCxV3WebhookRequest",
       "properties": {
         "detectIntentResponseId": {
@@ -8125,7 +8125,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3beta1WebhookRequest": {
-      "description": "The request message for a webhook call.",
+      "description": "The request message for a webhook call. The request is sent as a JSON object and the field names will be presented in camel cases.",
       "id": "GoogleCloudDialogflowCxV3beta1WebhookRequest",
       "properties": {
         "detectIntentResponseId": {

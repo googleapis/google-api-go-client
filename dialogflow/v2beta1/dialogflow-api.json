@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud Platform data"
         },
         "https://www.googleapis.com/auth/dialogflow": {
           "description": "View, manage and query your Dialogflow agents"
@@ -421,7 +421,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
+                  "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment` This field is not used for Fulfillment in an Environment.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/agent/fulfillment$",
                   "required": true,
@@ -2758,7 +2758,7 @@
             "participants": {
               "methods": {
                 "analyzeContent": {
-                  "description": "Adds a text (chat, for example), or audio (phone recording, for example) message from a participant into the conversation. Note: Always use agent versions for production traffic sent to virtual agents. See [Versions and environments(https://cloud.google.com/dialogflow/es/docs/agents-versions).",
+                  "description": "Adds a text (chat, for example), or audio (phone recording, for example) message from a participant into the conversation. Note: Always use agent versions for production traffic sent to virtual agents. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
                   "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}:analyzeContent",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.conversations.participants.analyzeContent",
@@ -3788,7 +3788,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
+                      "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment` This field is not used for Fulfillment in an Environment.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/agent/fulfillment$",
                       "required": true,
@@ -5701,7 +5701,7 @@
                 "participants": {
                   "methods": {
                     "analyzeContent": {
-                      "description": "Adds a text (chat, for example), or audio (phone recording, for example) message from a participant into the conversation. Note: Always use agent versions for production traffic sent to virtual agents. See [Versions and environments(https://cloud.google.com/dialogflow/es/docs/agents-versions).",
+                      "description": "Adds a text (chat, for example), or audio (phone recording, for example) message from a participant into the conversation. Note: Always use agent versions for production traffic sent to virtual agents. See [Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).",
                       "flatPath": "v2beta1/projects/{projectsId}/locations/{locationsId}/conversations/{conversationsId}/participants/{participantsId}:analyzeContent",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.conversations.participants.analyzeContent",
@@ -6548,7 +6548,7 @@
       }
     }
   },
-  "revision": "20210318",
+  "revision": "20210320",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -7827,7 +7827,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3WebhookRequest": {
-      "description": "The request message for a webhook call.",
+      "description": "The request message for a webhook call. The request is sent as a JSON object and the field names will be presented in camel cases.",
       "id": "GoogleCloudDialogflowCxV3WebhookRequest",
       "properties": {
         "detectIntentResponseId": {
@@ -9281,7 +9281,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3beta1WebhookRequest": {
-      "description": "The request message for a webhook call.",
+      "description": "The request message for a webhook call. The request is sent as a JSON object and the field names will be presented in camel cases.",
       "id": "GoogleCloudDialogflowCxV3beta1WebhookRequest",
       "properties": {
         "detectIntentResponseId": {
@@ -12330,7 +12330,7 @@
       "id": "GoogleCloudDialogflowV2beta1Fulfillment",
       "properties": {
         "displayName": {
-          "description": "The human-readable name of the fulfillment, unique within the agent.",
+          "description": "The human-readable name of the fulfillment, unique within the agent. This field is not used for Fulfillment in an Environment.",
           "type": "string"
         },
         "enabled": {
@@ -12349,7 +12349,7 @@
           "description": "Configuration for a generic web service."
         },
         "name": {
-          "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment`",
+          "description": "Required. The unique identifier of the fulfillment. Supported formats: - `projects//agent/fulfillment` - `projects//locations//agent/fulfillment` This field is not used for Fulfillment in an Environment.",
           "type": "string"
         }
       },
@@ -14533,13 +14533,17 @@
             "OUTPUT_AUDIO_ENCODING_UNSPECIFIED",
             "OUTPUT_AUDIO_ENCODING_LINEAR_16",
             "OUTPUT_AUDIO_ENCODING_MP3",
-            "OUTPUT_AUDIO_ENCODING_OGG_OPUS"
+            "OUTPUT_AUDIO_ENCODING_MP3_64_KBPS",
+            "OUTPUT_AUDIO_ENCODING_OGG_OPUS",
+            "OUTPUT_AUDIO_ENCODING_MULAW"
           ],
           "enumDescriptions": [
             "Not specified.",
             "Uncompressed 16-bit signed little-endian samples (Linear PCM). Audio content returned as LINEAR16 also contains a WAV header.",
             "MP3 audio at 32kbps.",
-            "Opus encoded audio wrapped in an ogg container. The result will be a file which can be played natively on Android, and in browsers (at least Chrome and Firefox). The quality of the encoding is considerably higher than MP3 while using approximately the same bitrate."
+            "MP3 audio at 64kbps.",
+            "Opus encoded audio wrapped in an ogg container. The result will be a file which can be played natively on Android, and in browsers (at least Chrome and Firefox). The quality of the encoding is considerably higher than MP3 while using approximately the same bitrate.",
+            "8-bit samples that compand 14-bit audio samples using G.711 PCMU/mu-law."
           ],
           "type": "string"
         },
@@ -14593,6 +14597,10 @@
         "audioConfig": {
           "$ref": "GoogleCloudDialogflowV2beta1InputAudioConfig",
           "description": "Instructs the speech recognizer how to process the speech audio."
+        },
+        "dtmf": {
+          "$ref": "GoogleCloudDialogflowV2beta1TelephonyDtmfEvents",
+          "description": "The DTMF digits used to invoke intent and fill in parameter value."
         },
         "event": {
           "$ref": "GoogleCloudDialogflowV2beta1EventInput",
@@ -15319,6 +15327,58 @@
           "description": "Optional. Volume gain (in dB) of the normal native volume supported by the specific voice, in the range [-96.0, 16.0]. If unset, or set to a value of 0.0 (dB), will play at normal native signal amplitude. A value of -6.0 (dB) will play at approximately half the amplitude of the normal native signal amplitude. A value of +6.0 (dB) will play at approximately twice the amplitude of the normal native signal amplitude. We strongly recommend not to exceed +10 (dB) as there's usually no effective increase in loudness for any value greater than that.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1TelephonyDtmfEvents": {
+      "description": "A wrapper of repeated TelephonyDtmf digits.",
+      "id": "GoogleCloudDialogflowV2beta1TelephonyDtmfEvents",
+      "properties": {
+        "dtmfEvents": {
+          "description": "A sequence of TelephonyDtmf digits.",
+          "items": {
+            "enum": [
+              "TELEPHONY_DTMF_UNSPECIFIED",
+              "DTMF_ONE",
+              "DTMF_TWO",
+              "DTMF_THREE",
+              "DTMF_FOUR",
+              "DTMF_FIVE",
+              "DTMF_SIX",
+              "DTMF_SEVEN",
+              "DTMF_EIGHT",
+              "DTMF_NINE",
+              "DTMF_ZERO",
+              "DTMF_A",
+              "DTMF_B",
+              "DTMF_C",
+              "DTMF_D",
+              "DTMF_STAR",
+              "DTMF_POUND"
+            ],
+            "enumDescriptions": [
+              "Not specified. This value may be used to indicate an absent digit.",
+              "Number: '1'.",
+              "Number: '2'.",
+              "Number: '3'.",
+              "Number: '4'.",
+              "Number: '5'.",
+              "Number: '6'.",
+              "Number: '7'.",
+              "Number: '8'.",
+              "Number: '9'.",
+              "Number: '0'.",
+              "Letter: 'A'.",
+              "Letter: 'B'.",
+              "Letter: 'C'.",
+              "Letter: 'D'.",
+              "Asterisk/star: '*'.",
+              "Pound/diamond/hash/square/gate/octothorpe: '#'."
+            ],
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

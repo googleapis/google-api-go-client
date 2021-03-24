@@ -57,7 +57,7 @@ func validateEnvVars(t *testing.T) {
 }
 
 func TestTokenSourceIntegration(t *testing.T) {
-	if !testing.Short() {
+	if testing.Short() {
 		t.Skip("skipping integration test")
 	}
 	validateEnvVars(t)
@@ -110,7 +110,7 @@ func TestTokenSourceIntegration(t *testing.T) {
 }
 
 func TestIDTokenSourceIntegration(t *testing.T) {
-	if !testing.Short() {
+	if testing.Short() {
 		t.Skip("skipping integration test")
 	}
 	validateEnvVars(t)
@@ -168,7 +168,7 @@ func TestIDTokenSourceIntegration(t *testing.T) {
 
 func TestTokenSourceIntegration_user2(t *testing.T) {
 	t.Skip("skipping until test infrastructure is setup")
-	if !testing.Short() {
+	if testing.Short() {
 		t.Skip("skipping integration test")
 	}
 	validateEnvVars(t)

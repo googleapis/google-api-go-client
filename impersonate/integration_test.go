@@ -167,7 +167,7 @@ func TestIDTokenSourceIntegration(t *testing.T) {
 }
 
 func TestTokenSourceIntegration_user2(t *testing.T) {
-	t.Skip("skipping until test infrastructure is setup")
+	t.Skip("https://github.com/googleapis/google-api-go-client/issues/948")
 	if testing.Short() {
 		t.Skip("skipping integration test")
 	}

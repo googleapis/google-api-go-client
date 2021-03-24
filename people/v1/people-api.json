@@ -33,7 +33,7 @@
           "description": "See and download your personal phone numbers"
         },
         "https://www.googleapis.com/auth/userinfo.email": {
-          "description": "View your email address"
+          "description": "See your primary Google Account email address"
         },
         "https://www.googleapis.com/auth/userinfo.profile": {
           "description": "See your personal info, including any personal info you've made publicly available"
@@ -1136,7 +1136,7 @@
       }
     }
   },
-  "revision": "20210315",
+  "revision": "20210322",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

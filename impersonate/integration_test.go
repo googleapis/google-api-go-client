@@ -56,7 +56,7 @@ func validateEnvVars(t *testing.T) {
 	}
 }
 
-func TestTokenSourceIntegration(t *testing.T) {
+func TestCredentialsTokenSourceIntegration(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping integration test")
 	}
@@ -166,7 +166,7 @@ func TestIDTokenSourceIntegration(t *testing.T) {
 	}
 }
 
-func TestTokenSourceIntegration_user2(t *testing.T) {
+func TestTokenSourceIntegration_user(t *testing.T) {
 	t.Skip("https://github.com/googleapis/google-api-go-client/issues/948")
 	if testing.Short() {
 		t.Skip("skipping integration test")

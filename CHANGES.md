@@ -2,7 +2,7 @@
 
 ## 0.44.0-impersonate-preview
 
-This is a preview release for the new impersonate package. Please try out the
+This is a preview release for the new `google.golang.org/api/impersonate` package. Please try out the
 new package and open an issue if you have any feedback.
 
 * impersonate: add impersonate pacakge [#927](https://github.com/googleapis/google-api-go-client/pull/927)

@@ -1932,9 +1932,9 @@ type FhirStore struct {
 	// non-existent resource return errors. It is strongly advised not to
 	// include or encode any sensitive data such as patient identifiers in
 	// client-specified resource IDs. Those IDs are part of the FHIR
-	// resource path recorded in Cloud audit logs and Cloud Pub/Sub
-	// notifications. Those IDs can also be contained in reference fields
-	// within other resources.
+	// resource path recorded in Cloud audit logs and Pub/Sub notifications.
+	// Those IDs can also be contained in reference fields within other
+	// resources.
 	EnableUpdateCreate bool `json:"enableUpdateCreate,omitempty"`
 
 	// Labels: User-supplied key-value pairs used to organize FHIR stores.
@@ -1953,7 +1953,7 @@ type FhirStore struct {
 	Name string `json:"name,omitempty"`
 
 	// NotificationConfig: If non-empty, publish all resource modifications
-	// of this FHIR store to this destination. The Cloud Pub/Sub message
+	// of this FHIR store to this destination. The Pub/Sub message
 	// attributes contain a map with a string describing the action that has
 	// triggered the notification. For example, "action":"CreateResource".
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
@@ -2295,15 +2295,15 @@ type GoogleCloudHealthcareV1DicomGcsSource struct {
 	// Uri: Points to a Cloud Storage URI containing file(s) with content
 	// only. The URI must be in the following format:
 	// `gs://{bucket_id}/{object_id}`. The URI can include wildcards in
-	// `object_id` and thus identify multiple files. Supported wildcards:
-	// '*' to match 0 or more non-separator characters '**' to match 0 or
+	// `object_id` and thus identify multiple files. Supported wildcards: *
+	// '*' to match 0 or more non-separator characters * '**' to match 0 or
 	// more characters (including separators). Must be used at the end of a
 	// path and with no other wildcards in the path. Can also be used with a
 	// file extension (such as .dcm), which imports all files with the
 	// extension in the specified directory and its sub-directories. For
 	// example, `gs://my-bucket/my-directory/**.dcm` imports all files with
-	// .dcm extensions in `my-directory/` and its sub-directories. '?' to
-	// match 1 character All other URI formats are invalid. Files matching
+	// .dcm extensions in `my-directory/` and its sub-directories. * '?' to
+	// match 1 character. All other URI formats are invalid. Files matching
 	// the wildcard are expected to contain content only, no metadata.
 	Uri string `json:"uri,omitempty"`
 
@@ -2608,12 +2608,12 @@ type Hl7V2NotificationConfig struct {
 	// the existence of a label. For example, `labels."priority":*`.
 	Filter string `json:"filter,omitempty"`
 
-	// PubsubTopic: The Cloud Pub/Sub
-	// (https://cloud.google.com/pubsub/docs/) topic that notifications of
-	// changes are published on. Supplied by the client. The notification is
-	// a `PubsubMessage` with the following fields: * `PubsubMessage.Data`
-	// contains the resource name. * `PubsubMessage.MessageId` is the ID of
-	// this notification. It's guaranteed to be unique within the topic. *
+	// PubsubTopic: The Pub/Sub (https://cloud.google.com/pubsub/docs/)
+	// topic that notifications of changes are published on. Supplied by the
+	// client. The notification is a `PubsubMessage` with the following
+	// fields: * `PubsubMessage.Data` contains the resource name. *
+	// `PubsubMessage.MessageId` is the ID of this notification. It's
+	// guaranteed to be unique within the topic. *
 	// `PubsubMessage.PublishTime` is the time when the message was
 	// published. Note that notifications are only sent if the topic is
 	// non-empty. Topic names
@@ -2622,9 +2622,10 @@ type Hl7V2NotificationConfig struct {
 	// service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com,
 	// must have publisher permissions on the given Pub/Sub topic. Not
 	// having adequate permissions causes the calls that send notifications
-	// to fail. If a notification cannot be published to Cloud Pub/Sub,
-	// errors are logged to Cloud Logging. For more information, see Viewing
-	// error logs in Cloud Logging (/healthcare/docs/how-tos/logging)).
+	// to fail. If a notification cannot be published to Pub/Sub, errors are
+	// logged to Cloud Logging. For more information, see Viewing error logs
+	// in Cloud Logging
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -3670,22 +3671,23 @@ func (s *Message) MarshalJSON() ([]byte, error) {
 // NotificationConfig: Specifies where to send notifications upon
 // changes to a data store.
 type NotificationConfig struct {
-	// PubsubTopic: The Cloud Pub/Sub
-	// (https://cloud.google.com/pubsub/docs/) topic that notifications of
-	// changes are published on. Supplied by the client. PubsubMessage.Data
-	// contains the resource name. PubsubMessage.MessageId is the ID of this
-	// message. It is guaranteed to be unique within the topic.
-	// PubsubMessage.PublishTime is the time at which the message was
-	// published. Notifications are only sent if the topic is non-empty.
-	// Topic names (https://cloud.google.com/pubsub/docs/overview#names)
-	// must be scoped to a project. Cloud Healthcare API service account
-	// must have publisher permissions on the given Cloud Pub/Sub topic. Not
-	// having adequate permissions causes the calls that send notifications
-	// to fail. If a notification can't be published to Cloud Pub/Sub,
-	// errors are logged to Cloud Logging (see Viewing logs
-	// (/healthcare/docs/how-tos/logging)). If the number of errors exceeds
-	// a certain rate, some aren't submitted. Note that not all operations
-	// trigger notifications, see Configuring Pub/Sub notifications
+	// PubsubTopic: The Pub/Sub (https://cloud.google.com/pubsub/docs/)
+	// topic that notifications of changes are published on. Supplied by the
+	// client. PubsubMessage.Data contains the resource name.
+	// PubsubMessage.MessageId is the ID of this message. It is guaranteed
+	// to be unique within the topic. PubsubMessage.PublishTime is the time
+	// at which the message was published. Notifications are only sent if
+	// the topic is non-empty. Topic names
+	// (https://cloud.google.com/pubsub/docs/overview#names) must be scoped
+	// to a project. Cloud Healthcare API service account must have
+	// publisher permissions on the given Pub/Sub topic. Not having adequate
+	// permissions causes the calls that send notifications to fail. If a
+	// notification can't be published to Pub/Sub, errors are logged to
+	// Cloud Logging (see Viewing error logs in Cloud Logging
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging)). If the
+	// number of errors exceeds a certain rate, some aren't submitted. Note
+	// that not all operations trigger notifications, see Configuring
+	// Pub/Sub notifications
 	// (https://cloud.google.com/healthcare/docs/how-tos/pubsub) for
 	// specific details.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
@@ -3796,8 +3798,9 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 
 	// LogsUrl: A link to audit and error logs in the log viewer. Error logs
-	// are generated only by some operations, listed at Viewing logs
-	// (/healthcare/docs/how-tos/logging).
+	// are generated only by some operations, listed at Viewing error logs
+	// in Cloud Logging
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging).
 	LogsUrl string `json:"logsUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiMethodName") to
@@ -4064,9 +4067,9 @@ func (s *ProgressCounter) MarshalJSON() ([]byte, error) {
 // for a given use in the given consent store and writes them to a
 // specified destination. The returned Operation includes a progress
 // counter for the number of User data mappings processed. Errors are
-// logged to Cloud Logging (see [Viewing logs]
-// (/healthcare/docs/how-tos/logging) and [QueryAccessibleData] for a
-// sample log entry).
+// logged to Cloud Logging (see [Viewing error logs in Cloud Logging]
+// (https://cloud.google.com/healthcare/docs/how-tos/logging) and
+// [QueryAccessibleData] for a sample log entry).
 type QueryAccessibleDataRequest struct {
 	// GcsDestination: The Cloud Storage destination. The Cloud Healthcare
 	// API service account must have the `roles/storage.objectAdmin` Cloud
@@ -4707,7 +4710,7 @@ type StreamConfig struct {
 	// mentioned above also filters out duplicates. If a resource mutation
 	// cannot be streamed to BigQuery, errors are logged to Cloud Logging.
 	// For more information, see Viewing error logs in Cloud Logging
-	// (/healthcare/docs/how-tos/logging)).
+	// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 	BigqueryDestination *GoogleCloudHealthcareV1FhirBigQueryDestination `json:"bigqueryDestination,omitempty"`
 
 	// ResourceTypes: Supply a FHIR resource type (such as "Patient" or
@@ -5057,7 +5060,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5165,22 +5168,25 @@ func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall 
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service will select a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5223,7 +5229,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5294,7 +5300,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5306,13 +5312,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service will select a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5406,7 +5412,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5524,8 +5530,8 @@ type ProjectsLocationsDatasetsDeidentifyCall struct {
 // instances. The new de-identified dataset will not contain these
 // failed resources. Failed resource totals are tracked in
 // Operation.metadata. Error details are also logged to Cloud Logging.
-// For more information, see Viewing logs
-// (/healthcare/docs/how-tos/logging).
+// For more information, see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging).
 func (r *ProjectsLocationsDatasetsService) Deidentify(sourceDataset string, deidentifydatasetrequest *DeidentifyDatasetRequest) *ProjectsLocationsDatasetsDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceDataset = sourceDataset
@@ -5560,7 +5566,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5624,7 +5630,7 @@ func (c *ProjectsLocationsDatasetsDeidentifyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new dataset containing de-identified data from the source dataset. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifySummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The new de-identified dataset will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging. For more information, see [Viewing logs](/healthcare/docs/how-tos/logging).",
+	//   "description": "Creates a new dataset containing de-identified data from the source dataset. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifySummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The new de-identified dataset will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:deidentify",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.deidentify",
@@ -5700,7 +5706,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5841,7 +5847,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6001,7 +6007,7 @@ func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6166,7 +6172,7 @@ func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6341,7 +6347,7 @@ func (c *ProjectsLocationsDatasetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6489,7 +6495,7 @@ func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6634,7 +6640,7 @@ func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6776,7 +6782,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsConsentStoresCheckDataAccessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6927,7 +6933,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsConsentStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7071,7 +7077,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsConsentStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7207,7 +7213,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresEvaluateUserConsentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7377,7 +7383,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7537,7 +7543,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7710,7 +7716,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7893,7 +7899,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsConsentStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8008,11 +8014,11 @@ type ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall struct {
 // specified use in the given consent store and writes them to a
 // specified destination. The returned Operation includes a progress
 // counter for the number of User data mappings processed. Errors are
-// logged to Cloud Logging (see [Viewing logs]
-// (cloud.google.com/healthcare/docs/how-tos/logging)). For example, the
-// following sample log entry shows a `failed to evaluate consent
-// policy` error that occurred during a QueryAccessibleData call to
-// consent store
+// logged to Cloud Logging (see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)). For
+// example, the following sample log entry shows a `failed to evaluate
+// consent policy` error that occurred during a QueryAccessibleData call
+// to consent store
 // `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/c
 // onsentStores/{consent_store_id}`. ```json jsonPayload: { @type:
 // "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDa
@@ -8064,7 +8070,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8128,7 +8134,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresQueryAccessibleDataCall) Do(opts 
 	}
 	return ret, nil
 	// {
-	//   "description": "Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. Errors are logged to Cloud Logging (see [Viewing logs] (cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. ```json jsonPayload: { @type: \"type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry\" error: { code: 9 message: \"failed to evaluate consent policy\" } resourceName: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}\" } logName: \"projects/{project_id}/logs/healthcare.googleapis.com%2Fquery_accessible_data\" operation: { id: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/operations/{operation_id}\" producer: \"healthcare.googleapis.com/QueryAccessibleData\" } receiveTimestamp: \"TIMESTAMP\" resource: { labels: { consent_store_id: \"{consent_store_id}\" dataset_id: \"{dataset_id}\" location: \"{location_id}\" project_id: \"{project_id}\" } type: \"healthcare_consent_store\" } severity: \"ERROR\" timestamp: \"TIMESTAMP\" ```",
+	//   "description": "Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. ```json jsonPayload: { @type: \"type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry\" error: { code: 9 message: \"failed to evaluate consent policy\" } resourceName: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}\" } logName: \"projects/{project_id}/logs/healthcare.googleapis.com%2Fquery_accessible_data\" operation: { id: \"projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/operations/{operation_id}\" producer: \"healthcare.googleapis.com/QueryAccessibleData\" } receiveTimestamp: \"TIMESTAMP\" resource: { labels: { consent_store_id: \"{consent_store_id}\" dataset_id: \"{dataset_id}\" location: \"{location_id}\" project_id: \"{project_id}\" } type: \"healthcare_consent_store\" } severity: \"ERROR\" timestamp: \"TIMESTAMP\" ```",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/consentStores/{consentStoresId}:queryAccessibleData",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.consentStores.queryAccessibleData",
@@ -8206,7 +8212,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8351,7 +8357,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) Header() 
 
 func (c *ProjectsLocationsDatasetsConsentStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8503,7 +8509,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) H
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8648,7 +8654,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8789,7 +8795,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) Head
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8956,7 +8962,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) Hea
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9141,7 +9147,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) He
 
 func (c *ProjectsLocationsDatasetsConsentStoresAttributeDefinitionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9287,7 +9293,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9426,7 +9432,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9567,7 +9573,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9760,7 +9766,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentArtifactsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9937,7 +9943,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10077,7 +10083,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10218,7 +10224,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10350,7 +10356,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsDeleteRevisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10492,7 +10498,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10687,7 +10693,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10919,7 +10925,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) Header
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsListRevisionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11105,7 +11111,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11256,7 +11262,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsRejectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11401,7 +11407,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsConsentStoresConsentsRevokeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11541,7 +11547,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) Head
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsArchiveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11681,7 +11687,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11819,7 +11825,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) Heade
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11960,7 +11966,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) Header()
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12151,7 +12157,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) Header(
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12334,7 +12340,7 @@ func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) Header
 
 func (c *ProjectsLocationsDatasetsConsentStoresUserDataMappingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12488,7 +12494,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12605,8 +12611,8 @@ type ProjectsLocationsDatasetsDicomStoresDeidentifyCall struct {
 // result may still be successful if de-identification fails for some
 // DICOM instances. The output DICOM store will not contain these failed
 // resources. Failed resource totals are tracked in Operation.metadata.
-// Error details are also logged to Cloud Logging (see Viewing logs
-// (/healthcare/docs/how-tos/logging)).
+// Error details are also logged to Cloud Logging (see Viewing error
+// logs in Cloud Logging (/healthcare/docs/how-tos/logging)).
 func (r *ProjectsLocationsDatasetsDicomStoresService) Deidentify(sourceStore string, deidentifydicomstorerequest *DeidentifyDicomStoreRequest) *ProjectsLocationsDatasetsDicomStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsDicomStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -12641,7 +12647,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12705,7 +12711,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeidentifyCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyDicomStoreSummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The output DICOM store will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-tos/logging)).",
+	//   "description": "De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyDicomStoreSummary. If errors occur, error is set. The LRO result may still be successful if de-identification fails for some DICOM instances. The output DICOM store will not contain these failed resources. Failed resource totals are tracked in Operation.metadata. Error details are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](/healthcare/docs/how-tos/logging)).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:deidentify",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.deidentify",
@@ -12780,7 +12786,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12879,7 +12885,8 @@ type ProjectsLocationsDatasetsDicomStoresExportCall struct {
 
 // Export: Exports data to the specified destination by copying it from
 // the DICOM store. Errors are also logged to Cloud Logging. For more
-// information, see Viewing logs (/healthcare/docs/how-tos/logging). The
+// information, see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging). The
 // metadata field type is OperationMetadata.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Export(name string, exportdicomdatarequest *ExportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresExportCall {
 	c := &ProjectsLocationsDatasetsDicomStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12915,7 +12922,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12979,7 +12986,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresExportCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports data to the specified destination by copying it from the DICOM store. Errors are also logged to Cloud Logging. For more information, see [Viewing logs](/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.",
+	//   "description": "Exports data to the specified destination by copying it from the DICOM store. Errors are also logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:export",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.export",
@@ -13064,7 +13071,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13224,7 +13231,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13332,7 +13339,8 @@ type ProjectsLocationsDatasetsDicomStoresImportCall struct {
 
 // Import: Imports data into the DICOM store by copying it from the
 // specified source. Errors are logged to Cloud Logging. For more
-// information, see Viewing logs (/healthcare/docs/how-tos/logging). The
+// information, see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging). The
 // metadata field type is OperationMetadata.
 func (r *ProjectsLocationsDatasetsDicomStoresService) Import(name string, importdicomdatarequest *ImportDicomDataRequest) *ProjectsLocationsDatasetsDicomStoresImportCall {
 	c := &ProjectsLocationsDatasetsDicomStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13368,7 +13376,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13432,7 +13440,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresImportCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports data into the DICOM store by copying it from the specified source. Errors are logged to Cloud Logging. For more information, see [Viewing logs](/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.",
+	//   "description": "Imports data into the DICOM store by copying it from the specified source. Errors are logged to Cloud Logging. For more information, see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging). The metadata field type is OperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.dicomStores.import",
@@ -13564,7 +13572,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13744,7 +13752,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsDicomStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13910,7 +13918,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14041,7 +14049,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14172,7 +14180,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Header() http
 
 func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14285,7 +14293,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14435,7 +14443,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14550,7 +14558,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14698,7 +14706,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14858,7 +14866,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Header
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14988,7 +14996,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Header() 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15119,7 +15127,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Head
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15250,7 +15258,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Header(
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15371,7 +15379,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Header()
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15490,7 +15498,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Header() h
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15651,7 +15659,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15781,7 +15789,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) He
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15912,7 +15920,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16029,7 +16037,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) H
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16192,7 +16200,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16324,7 +16332,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16456,7 +16464,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16586,7 +16594,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveFramesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16718,7 +16726,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 
 func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetrieveRenderedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16837,7 +16845,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16951,8 +16959,9 @@ type ProjectsLocationsDatasetsFhirStoresDeidentifyCall struct {
 // the destination store. The metadata field type is OperationMetadata.
 // If the request is successful, the response field type is
 // DeidentifyFhirStoreSummary. If errors occur, error is set. Error
-// details are also logged to Cloud Logging (see Viewing logs
-// (/healthcare/docs/how-tos/logging)).
+// details are also logged to Cloud Logging (see Viewing error logs in
+// Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 func (r *ProjectsLocationsDatasetsFhirStoresService) Deidentify(sourceStore string, deidentifyfhirstorerequest *DeidentifyFhirStoreRequest) *ProjectsLocationsDatasetsFhirStoresDeidentifyCall {
 	c := &ProjectsLocationsDatasetsFhirStoresDeidentifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sourceStore = sourceStore
@@ -16987,7 +16996,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17051,7 +17060,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeidentifyCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyFhirStoreSummary. If errors occur, error is set. Error details are also logged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-tos/logging)).",
+	//   "description": "De-identifies data from the source store and writes it to the destination store. The metadata field type is OperationMetadata. If the request is successful, the response field type is DeidentifyFhirStoreSummary. If errors occur, error is set. Error details are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:deidentify",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.deidentify",
@@ -17126,7 +17135,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17227,7 +17236,8 @@ type ProjectsLocationsDatasetsFhirStoresExportCall struct {
 // destination. This method returns an Operation that can be used to
 // track the status of the export by calling GetOperation. Immediate
 // fatal errors appear in the error field, errors are also logged to
-// Cloud Logging (see Viewing logs (/healthcare/docs/how-tos/logging)).
+// Cloud Logging (see Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
 // Otherwise, when the operation finishes, a detailed response of type
 // ExportResourcesResponse is returned in the response field. The
 // metadata field type for this operation is OperationMetadata.
@@ -17265,7 +17275,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17329,7 +17339,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExportCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Export resources from the FHIR store to the specified destination. This method returns an Operation that can be used to track the status of the export by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type ExportResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
+	//   "description": "Export resources from the FHIR store to the specified destination. This method returns an Operation that can be used to track the status of the export by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type ExportResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:export",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.export",
@@ -17414,7 +17424,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17574,7 +17584,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17692,7 +17702,7 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // enable_update_create setting on the FHIR store. It is strongly
 // advised not to include or encode any sensitive data such as patient
 // identifiers in client-specified resource IDs. Those IDs are part of
-// the FHIR resource path recorded in Cloud audit logs and Cloud Pub/Sub
+// the FHIR resource path recorded in Cloud Audit Logs and Cloud Pub/Sub
 // notifications. Those IDs can also be contained in reference fields
 // within other resources. The import process does not enforce
 // referential integrity, regardless of the
@@ -17735,11 +17745,12 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 // by a FHIR search or Patient-everything operation. This method returns
 // an Operation that can be used to track the status of the import by
 // calling GetOperation. Immediate fatal errors appear in the error
-// field, errors are also logged to Cloud Logging (see Viewing logs
-// (/healthcare/docs/how-tos/logging)). Otherwise, when the operation
-// finishes, a detailed response of type ImportResourcesResponse is
-// returned in the response field. The metadata field type for this
-// operation is OperationMetadata.
+// field, errors are also logged to Cloud Logging (see Viewing error
+// logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)).
+// Otherwise, when the operation finishes, a detailed response of type
+// ImportResourcesResponse is returned in the response field. The
+// metadata field type for this operation is OperationMetadata.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Import(name string, importresourcesrequest *ImportResourcesRequest) *ProjectsLocationsDatasetsFhirStoresImportCall {
 	c := &ProjectsLocationsDatasetsFhirStoresImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17774,7 +17785,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17838,7 +17849,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports resources to the FHIR store by loading data from the specified sources. This method is optimized to load large quantities of data using import semantics that ignore some FHIR store configuration options and are not suitable for all use cases. It is primarily intended to load data into an empty FHIR store that is not being used by other clients. In cases where this method is not appropriate, consider using ExecuteBundle to load data. Every resource in the input must contain a client-supplied ID. Each resource is stored using the supplied ID regardless of the enable_update_create setting on the FHIR store. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud audit logs and Cloud Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. The import process does not enforce referential integrity, regardless of the disable_referential_integrity setting on the FHIR store. This allows the import of resources with arbitrary interdependencies without considering grouping or ordering, but if the input data contains invalid references or if some resources fail to be imported, the FHIR store might be left in a state that violates referential integrity. The import process does not trigger Pub/Sub notification or BigQuery streaming update, regardless of how those are configured on the FHIR store. If a resource with the specified ID already exists, the most recent version of the resource is overwritten without creating a new historical version, regardless of the disable_resource_versioning setting on the FHIR store. If transient failures occur during the import, it's possible that successfully imported resources will be overwritten more than once. The import operation is idempotent unless the input data contains multiple valid resources with the same ID but different contents. In that case, after the import completes, the store contains exactly one resource with that ID but there is no ordering guarantee on which version of the contents it will have. The operation result counters do not count duplicate IDs as an error and count one success for each resource in the input, which might result in a success count larger than the number of resources in the FHIR store. This often occurs when importing data organized in bundles produced by Patient-everything where each bundle contains its own copy of a resource such as Practitioner that might be referred to by many patients. If some resources fail to import, for example due to parsing errors, successfully imported resources are not rolled back. The location and format of the input data is specified by the parameters in ImportResourcesRequest. Note that if no format is specified, this method assumes the `BUNDLE` format. When using the `BUNDLE` format this method ignores the `Bundle.type` field, except that `history` bundles are rejected, and does not apply any of the bundle processing semantics for batch or transaction bundles. Unlike in ExecuteBundle, transaction bundles are not executed as a single transaction and bundle-internal references are not rewritten. The bundle is treated as a collection of resources to be written as provided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As an example, this allows the import of `searchset` bundles produced by a FHIR search or Patient-everything operation. This method returns an Operation that can be used to track the status of the import by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing logs](/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type ImportResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
+	//   "description": "Imports resources to the FHIR store by loading data from the specified sources. This method is optimized to load large quantities of data using import semantics that ignore some FHIR store configuration options and are not suitable for all use cases. It is primarily intended to load data into an empty FHIR store that is not being used by other clients. In cases where this method is not appropriate, consider using ExecuteBundle to load data. Every resource in the input must contain a client-supplied ID. Each resource is stored using the supplied ID regardless of the enable_update_create setting on the FHIR store. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud Audit Logs and Cloud Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. The import process does not enforce referential integrity, regardless of the disable_referential_integrity setting on the FHIR store. This allows the import of resources with arbitrary interdependencies without considering grouping or ordering, but if the input data contains invalid references or if some resources fail to be imported, the FHIR store might be left in a state that violates referential integrity. The import process does not trigger Pub/Sub notification or BigQuery streaming update, regardless of how those are configured on the FHIR store. If a resource with the specified ID already exists, the most recent version of the resource is overwritten without creating a new historical version, regardless of the disable_resource_versioning setting on the FHIR store. If transient failures occur during the import, it's possible that successfully imported resources will be overwritten more than once. The import operation is idempotent unless the input data contains multiple valid resources with the same ID but different contents. In that case, after the import completes, the store contains exactly one resource with that ID but there is no ordering guarantee on which version of the contents it will have. The operation result counters do not count duplicate IDs as an error and count one success for each resource in the input, which might result in a success count larger than the number of resources in the FHIR store. This often occurs when importing data organized in bundles produced by Patient-everything where each bundle contains its own copy of a resource such as Practitioner that might be referred to by many patients. If some resources fail to import, for example due to parsing errors, successfully imported resources are not rolled back. The location and format of the input data is specified by the parameters in ImportResourcesRequest. Note that if no format is specified, this method assumes the `BUNDLE` format. When using the `BUNDLE` format this method ignores the `Bundle.type` field, except that `history` bundles are rejected, and does not apply any of the bundle processing semantics for batch or transaction bundles. Unlike in ExecuteBundle, transaction bundles are not executed as a single transaction and bundle-internal references are not rewritten. The bundle is treated as a collection of resources to be written as provided in `Bundle.entry.resource`, ignoring `Bundle.entry.request`. As an example, this allows the import of `searchset` bundles produced by a FHIR search or Patient-everything operation. This method returns an Operation that can be used to track the status of the import by calling GetOperation. Immediate fatal errors appear in the error field, errors are also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). Otherwise, when the operation finishes, a detailed response of type ImportResourcesResponse is returned in the response field. The metadata field type for this operation is OperationMetadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.import",
@@ -17970,7 +17981,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18150,7 +18161,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18298,7 +18309,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsFhirStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18443,7 +18454,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18556,18 +18567,18 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 // (http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything),
 // R4
 // (http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)).
-// On success, the response body will contain a JSON-encoded
-// representation of a `Bundle` resource of type `searchset`, containing
-// the results of the operation. Errors generated by the FHIR store will
-// contain a JSON-encoded `OperationOutcome` resource describing the
-// reason for the error. If the request cannot be mapped to a valid API
-// method on a FHIR store, a generic GCP error might be returned
-// instead. The resources in scope for the response are: * The patient
-// resource itself. * All the resources directly referenced by the
-// patient resource. * Resources directly referencing the patient
-// resource that meet the inclusion criteria. The inclusion criteria are
-// based on the membership rules in the patient compartment definition
-// (DSTU2 (http://hl7.org/fhir/DSTU2/compartment-patient.html), STU3
+// On success, the response body contains a JSON-encoded representation
+// of a `Bundle` resource of type `searchset`, containing the results of
+// the operation. Errors generated by the FHIR store contain a
+// JSON-encoded `OperationOutcome` resource describing the reason for
+// the error. If the request cannot be mapped to a valid API method on a
+// FHIR store, a generic GCP error might be returned instead. The
+// resources in scope for the response are: * The patient resource
+// itself. * All the resources directly referenced by the patient
+// resource. * Resources directly referencing the patient resource that
+// meet the inclusion criteria. The inclusion criteria are based on the
+// membership rules in the patient compartment definition (DSTU2
+// (http://hl7.org/fhir/DSTU2/compartment-patient.html), STU3
 // (http://www.hl7.org/fhir/stu3/compartmentdefinition-patient.html), R4
 // (http://hl7.org/fhir/R4/compartmentdefinition-patient.html)), which
 // details the eligible resource types and referencing search
@@ -18671,7 +18682,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Header() 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18700,7 +18711,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall) Do(opts .
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Retrieves a Patient resource and resources related to that patient. Implements the FHIR extended operation Patient-everything ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html#everything), [STU3](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything), [R4](http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)). On success, the response body will contain a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the operation. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The resources in scope for the response are: * The patient resource itself. * All the resources directly referenced by the patient resource. * Resources directly referencing the patient resource that meet the inclusion criteria. The inclusion criteria are based on the membership rules in the patient compartment definition ([DSTU2](http://hl7.org/fhir/DSTU2/compartment-patient.html), [STU3](http://www.hl7.org/fhir/stu3/compartmentdefinition-patient.html), [R4](http://hl7.org/fhir/R4/compartmentdefinition-patient.html)), which details the eligible resource types and referencing search parameters. For samples that show how to call `Patient-everything`, see [Getting all patient compartment resources](/healthcare/docs/how-tos/fhir-resources#getting_all_patient_compartment_resources).",
+	//   "description": "Retrieves a Patient resource and resources related to that patient. Implements the FHIR extended operation Patient-everything ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/patient-operations.html#everything), [STU3](http://hl7.org/implement/standards/fhir/STU3/patient-operations.html#everything), [R4](http://hl7.org/implement/standards/fhir/R4/patient-operations.html#everything)). On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the operation. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The resources in scope for the response are: * The patient resource itself. * All the resources directly referenced by the patient resource. * Resources directly referencing the patient resource that meet the inclusion criteria. The inclusion criteria are based on the membership rules in the patient compartment definition ([DSTU2](http://hl7.org/fhir/DSTU2/compartment-patient.html), [STU3](http://www.hl7.org/fhir/stu3/compartmentdefinition-patient.html), [R4](http://hl7.org/fhir/R4/compartmentdefinition-patient.html)), which details the eligible resource types and referencing search parameters. For samples that show how to call `Patient-everything`, see [Getting all patient compartment resources](/healthcare/docs/how-tos/fhir-resources#getting_all_patient_compartment_resources).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/Patient/{PatientId}/$everything",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.Patient-everything",
@@ -18809,7 +18820,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirResourcePurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18920,7 +18931,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall struct {
 // (http://hl7.org/implement/standards/fhir/R4/http.html#capabilities)),
 // or the conformance interaction
 // (http://hl7.org/implement/standards/fhir/DSTU2/http.html#conformance)
-// in the DSTU2 case. On success, the response body will contain a
+// in the DSTU2 case. On success, the response body contains a
 // JSON-encoded representation of a `CapabilityStatement` resource.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Capabilities(name string) *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -18965,7 +18976,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Header() http.
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18994,7 +19005,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCapabilitiesCall) Do(opts ...goo
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Gets the FHIR capability statement ([STU3](http://hl7.org/implement/standards/fhir/STU3/capabilitystatement.html), [R4](http://hl7.org/implement/standards/fhir/R4/capabilitystatement.html)), or the [conformance statement](http://hl7.org/implement/standards/fhir/DSTU2/conformance.html) in the DSTU2 case for the store, which contains a description of functionality supported by the server. Implements the FHIR standard capabilities interaction ([STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#capabilities), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#capabilities)), or the [conformance interaction](http://hl7.org/implement/standards/fhir/DSTU2/http.html#conformance) in the DSTU2 case. On success, the response body will contain a JSON-encoded representation of a `CapabilityStatement` resource.",
+	//   "description": "Gets the FHIR capability statement ([STU3](http://hl7.org/implement/standards/fhir/STU3/capabilitystatement.html), [R4](http://hl7.org/implement/standards/fhir/R4/capabilitystatement.html)), or the [conformance statement](http://hl7.org/implement/standards/fhir/DSTU2/conformance.html) in the DSTU2 case for the store, which contains a description of functionality supported by the server. Implements the FHIR standard capabilities interaction ([STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#capabilities), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#capabilities)), or the [conformance interaction](http://hl7.org/implement/standards/fhir/DSTU2/http.html#conformance) in the DSTU2 case. On success, the response body contains a JSON-encoded representation of a `CapabilityStatement` resource.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/metadata",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.capabilities",
@@ -19041,14 +19052,14 @@ type ProjectsLocationsDatasetsFhirStoresFhirCreateCall struct {
 // which creates a new resource with a server-assigned resource ID. The
 // request body must contain a JSON-encoded FHIR resource, and the
 // request headers must contain `Content-Type: application/fhir+json`.
-// On success, the response body will contain a JSON-encoded
-// representation of the resource as it was created on the server,
-// including the server-assigned resource ID and version ID. Errors
-// generated by the FHIR store will contain a JSON-encoded
-// `OperationOutcome` resource describing the reason for the error. If
-// the request cannot be mapped to a valid API method on a FHIR store, a
-// generic GCP error might be returned instead. For samples that show
-// how to call `create`, see Creating a FHIR resource
+// On success, the response body contains a JSON-encoded representation
+// of the resource as it was created on the server, including the
+// server-assigned resource ID and version ID. Errors generated by the
+// FHIR store contain a JSON-encoded `OperationOutcome` resource
+// describing the reason for the error. If the request cannot be mapped
+// to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. For samples that show how to call `create`, see
+// Creating a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#creating_a_fhir_resource).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Create(parent string, type_ string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirCreateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -19085,7 +19096,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19111,7 +19122,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Creates a FHIR resource. Implements the FHIR standard create interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#create), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#create), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#create)), which creates a new resource with a server-assigned resource ID. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. On success, the response body will contain a JSON-encoded representation of the resource as it was created on the server, including the server-assigned resource ID and version ID. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `create`, see [Creating a FHIR resource](/healthcare/docs/how-tos/fhir-resources#creating_a_fhir_resource).",
+	//   "description": "Creates a FHIR resource. Implements the FHIR standard create interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#create), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#create), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#create)), which creates a new resource with a server-assigned resource ID. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. On success, the response body contains a JSON-encoded representation of the resource as it was created on the server, including the server-assigned resource ID and version ID. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `create`, see [Creating a FHIR resource](/healthcare/docs/how-tos/fhir-resources#creating_a_fhir_resource).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.create",
@@ -19204,7 +19215,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19334,7 +19345,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) Header() http
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirExecuteBundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19407,14 +19418,14 @@ type ProjectsLocationsDatasetsFhirStoresFhirHistoryCall struct {
 // STU3
 // (http://hl7.org/implement/standards/fhir/STU3/http.html#history), R4
 // (http://hl7.org/implement/standards/fhir/R4/http.html#history)). On
-// success, the response body will contain a JSON-encoded representation
-// of a `Bundle` resource of type `history`, containing the version
-// history sorted from most recent to oldest versions. Errors generated
-// by the FHIR store will contain a JSON-encoded `OperationOutcome`
-// resource describing the reason for the error. If the request cannot
-// be mapped to a valid API method on a FHIR store, a generic GCP error
-// might be returned instead. For samples that show how to call
-// `history`, see Listing FHIR resource versions
+// success, the response body contains a JSON-encoded representation of
+// a `Bundle` resource of type `history`, containing the version history
+// sorted from most recent to oldest versions. Errors generated by the
+// FHIR store contain a JSON-encoded `OperationOutcome` resource
+// describing the reason for the error. If the request cannot be mapped
+// to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. For samples that show how to call `history`, see
+// Listing FHIR resource versions
 // (/healthcare/docs/how-tos/fhir-resources#listing_fhir_resource_version
 // s).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) History(name string) *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall {
@@ -19502,7 +19513,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Header() http.Heade
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19531,7 +19542,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirHistoryCall) Do(opts ...googleap
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Lists all the versions of a resource (including the current version and deleted versions) from the FHIR store. Implements the per-resource form of the FHIR standard history interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#history), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#history), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#history)). On success, the response body will contain a JSON-encoded representation of a `Bundle` resource of type `history`, containing the version history sorted from most recent to oldest versions. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `history`, see [Listing FHIR resource versions](/healthcare/docs/how-tos/fhir-resources#listing_fhir_resource_versions).",
+	//   "description": "Lists all the versions of a resource (including the current version and deleted versions) from the FHIR store. Implements the per-resource form of the FHIR standard history interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#history), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#history), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#history)). On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `history`, containing the version history sorted from most recent to oldest versions. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `history`, see [Listing FHIR resource versions](/healthcare/docs/how-tos/fhir-resources#listing_fhir_resource_versions).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}/_history",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.history",
@@ -19598,14 +19609,14 @@ type ProjectsLocationsDatasetsFhirStoresFhirPatchCall struct {
 // doesn't define a patch method, but the server supports it in the same
 // way it supports STU3. The request body must contain a JSON Patch
 // document, and the request headers must contain `Content-Type:
-// application/json-patch+json`. On success, the response body will
-// contain a JSON-encoded representation of the updated resource,
-// including the server-assigned version ID. Errors generated by the
-// FHIR store will contain a JSON-encoded `OperationOutcome` resource
-// describing the reason for the error. If the request cannot be mapped
-// to a valid API method on a FHIR store, a generic GCP error might be
-// returned instead. For samples that show how to call `patch`, see
-// Patching a FHIR resource
+// application/json-patch+json`. On success, the response body contains
+// a JSON-encoded representation of the updated resource, including the
+// server-assigned version ID. Errors generated by the FHIR store
+// contain a JSON-encoded `OperationOutcome` resource describing the
+// reason for the error. If the request cannot be mapped to a valid API
+// method on a FHIR store, a generic GCP error might be returned
+// instead. For samples that show how to call `patch`, see Patching a
+// FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#patching_a_fhir_resource).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Patch(name string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirPatchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -19641,7 +19652,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19666,7 +19677,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirPatchCall) Do(opts ...googleapi.
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Updates part of an existing resource by applying the operations specified in a [JSON Patch](http://jsonpatch.com/) document. Implements the FHIR standard patch interaction ([STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#patch), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#patch)). DSTU2 doesn't define a patch method, but the server supports it in the same way it supports STU3. The request body must contain a JSON Patch document, and the request headers must contain `Content-Type: application/json-patch+json`. On success, the response body will contain a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `patch`, see [Patching a FHIR resource](/healthcare/docs/how-tos/fhir-resources#patching_a_fhir_resource).",
+	//   "description": "Updates part of an existing resource by applying the operations specified in a [JSON Patch](http://jsonpatch.com/) document. Implements the FHIR standard patch interaction ([STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#patch), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#patch)). DSTU2 doesn't define a patch method, but the server supports it in the same way it supports STU3. The request body must contain a JSON Patch document, and the request headers must contain `Content-Type: application/json-patch+json`. On success, the response body contains a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `patch`, see [Patching a FHIR resource](/healthcare/docs/how-tos/fhir-resources#patching_a_fhir_resource).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
 	//   "httpMethod": "PATCH",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.patch",
@@ -19718,12 +19729,12 @@ type ProjectsLocationsDatasetsFhirStoresFhirReadCall struct {
 // (http://hl7.org/implement/standards/fhir/R4/http.html#cread))
 // specified by supplying an `If-Modified-Since` header with a date/time
 // value or an `If-None-Match` header with an ETag value. On success,
-// the response body will contain a JSON-encoded representation of the
-// resource. Errors generated by the FHIR store will contain a
-// JSON-encoded `OperationOutcome` resource describing the reason for
-// the error. If the request cannot be mapped to a valid API method on a
-// FHIR store, a generic GCP error might be returned instead. For
-// samples that show how to call `read`, see Getting a FHIR resource
+// the response body contains a JSON-encoded representation of the
+// resource. Errors generated by the FHIR store contain a JSON-encoded
+// `OperationOutcome` resource describing the reason for the error. If
+// the request cannot be mapped to a valid API method on a FHIR store, a
+// generic GCP error might be returned instead. For samples that show
+// how to call `read`, see Getting a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#getting_a_fhir_resource).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Read(name string) *ProjectsLocationsDatasetsFhirStoresFhirReadCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -19768,7 +19779,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19797,7 +19808,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Do(opts ...googleapi.C
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Gets the contents of a FHIR resource. Implements the FHIR standard read interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#read), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#read), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#read)). Also supports the FHIR standard conditional read interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#cread), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#cread), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#cread)) specified by supplying an `If-Modified-Since` header with a date/time value or an `If-None-Match` header with an ETag value. On success, the response body will contain a JSON-encoded representation of the resource. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `read`, see [Getting a FHIR resource](/healthcare/docs/how-tos/fhir-resources#getting_a_fhir_resource).",
+	//   "description": "Gets the contents of a FHIR resource. Implements the FHIR standard read interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#read), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#read), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#read)). Also supports the FHIR standard conditional read interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#cread), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#cread), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#cread)) specified by supplying an `If-Modified-Since` header with a date/time value or an `If-None-Match` header with an ETag value. On success, the response body contains a JSON-encoded representation of the resource. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `read`, see [Getting a FHIR resource](/healthcare/docs/how-tos/fhir-resources#getting_a_fhir_resource).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.read",
@@ -19854,17 +19865,16 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // same semantics as the `GET` method for the specified type. The `GET`
 // and `POST` methods do not support compartment searches. The `POST`
 // method does not support `application/x-www-form-urlencoded` search
-// parameters. On success, the response body will contain a JSON-encoded
+// parameters. On success, the response body contains a JSON-encoded
 // representation of a `Bundle` resource of type `searchset`, containing
-// the results of the search. Errors generated by the FHIR store will
-// contain a JSON-encoded `OperationOutcome` resource describing the
-// reason for the error. If the request cannot be mapped to a valid API
-// method on a FHIR store, a generic GCP error might be returned
-// instead. The server's capability statement, retrieved through
-// capabilities, indicates what search parameters are supported on each
-// FHIR resource. A list of all search parameters defined by the
-// specification can be found in the FHIR Search Parameter Registry
-// (STU3
+// the results of the search. Errors generated by the FHIR store contain
+// a JSON-encoded `OperationOutcome` resource describing the reason for
+// the error. If the request cannot be mapped to a valid API method on a
+// FHIR store, a generic GCP error might be returned instead. The
+// server's capability statement, retrieved through capabilities,
+// indicates what search parameters are supported on each FHIR resource.
+// A list of all search parameters defined by the specification can be
+// found in the FHIR Search Parameter Registry (STU3
 // (http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html),
 // R4
 // (http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
@@ -19920,7 +19930,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19951,7 +19961,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body will contain a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`. Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` will contain pagination links. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`. Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` will contain pagination links. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search",
@@ -20012,17 +20022,16 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall struct {
 // same semantics as the `GET` method for the specified type. The `GET`
 // and `POST` methods do not support compartment searches. The `POST`
 // method does not support `application/x-www-form-urlencoded` search
-// parameters. On success, the response body will contain a JSON-encoded
+// parameters. On success, the response body contains a JSON-encoded
 // representation of a `Bundle` resource of type `searchset`, containing
-// the results of the search. Errors generated by the FHIR store will
-// contain a JSON-encoded `OperationOutcome` resource describing the
-// reason for the error. If the request cannot be mapped to a valid API
-// method on a FHIR store, a generic GCP error might be returned
-// instead. The server's capability statement, retrieved through
-// capabilities, indicates what search parameters are supported on each
-// FHIR resource. A list of all search parameters defined by the
-// specification can be found in the FHIR Search Parameter Registry
-// (STU3
+// the results of the search. Errors generated by the FHIR store contain
+// a JSON-encoded `OperationOutcome` resource describing the reason for
+// the error. If the request cannot be mapped to a valid API method on a
+// FHIR store, a generic GCP error might be returned instead. The
+// server's capability statement, retrieved through capabilities,
+// indicates what search parameters are supported on each FHIR resource.
+// A list of all search parameters defined by the specification can be
+// found in the FHIR Search Parameter Registry (STU3
 // (http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html),
 // R4
 // (http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
@@ -20079,7 +20088,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20111,7 +20120,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchTypeCall) Do(opts ...googl
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body will contain a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`. Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` will contain pagination links. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](/healthcare/docs/how-tos/fhir-advanced-search).",
+	//   "description": "Searches for resources in the given FHIR store according to criteria specified as query parameters. Implements the FHIR standard search interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#search), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#search), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#search)) using the search semantics described in the FHIR Search specification ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/search.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/search.html), [R4](http://hl7.org/implement/standards/fhir/R4/search.html)). Supports four methods of search defined by the specification: * `GET [base]?[parameters]` to search across all resources. * `GET [base]/[type]?[parameters]` to search resources of a specified type. * `POST [base]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method across all resources. * `POST [base]/[type]/_search?[parameters]` as an alternate form having the same semantics as the `GET` method for the specified type. The `GET` and `POST` methods do not support compartment searches. The `POST` method does not support `application/x-www-form-urlencoded` search parameters. On success, the response body contains a JSON-encoded representation of a `Bundle` resource of type `searchset`, containing the results of the search. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. The server's capability statement, retrieved through capabilities, indicates what search parameters are supported on each FHIR resource. A list of all search parameters defined by the specification can be found in the FHIR Search Parameter Registry ([STU3](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html), [R4](http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)). FHIR search parameters for DSTU2 can be found on each resource's definition page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`. Supported search result parameters: `_sort`, `_count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum number of search results returned defaults to 100, which can be overridden by the `_count` parameter up to a maximum limit of 1000. If there are additional results, the returned `Bundle` will contain pagination links. Resources with a total size larger than 5MB or a field count larger than 50,000 might not be fully searchable as the server might trim its generated search index in those cases. Note: FHIR resources are indexed asynchronously, so there might be a slight delay between the time a resource is created or changes and when the change is reflected in search results. For samples and detailed information, see [Searching for FHIR resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search features](/healthcare/docs/how-tos/fhir-advanced-search).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{resourceType}/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search-type",
@@ -20169,19 +20178,19 @@ type ProjectsLocationsDatasetsFhirStoresFhirUpdateCall struct {
 // client-specified ID. It is strongly advised not to include or encode
 // any sensitive data such as patient identifiers in client-specified
 // resource IDs. Those IDs are part of the FHIR resource path recorded
-// in Cloud audit logs and Cloud Pub/Sub notifications. Those IDs can
-// also be contained in reference fields within other resources. The
-// request body must contain a JSON-encoded FHIR resource, and the
-// request headers must contain `Content-Type: application/fhir+json`.
-// The resource must contain an `id` element having an identical value
-// to the ID in the REST path of the request. On success, the response
-// body will contain a JSON-encoded representation of the updated
-// resource, including the server-assigned version ID. Errors generated
-// by the FHIR store will contain a JSON-encoded `OperationOutcome`
-// resource describing the reason for the error. If the request cannot
-// be mapped to a valid API method on a FHIR store, a generic GCP error
-// might be returned instead. For samples that show how to call
-// `update`, see Updating a FHIR resource
+// in Cloud Audit Logs and Pub/Sub notifications. Those IDs can also be
+// contained in reference fields within other resources. The request
+// body must contain a JSON-encoded FHIR resource, and the request
+// headers must contain `Content-Type: application/fhir+json`. The
+// resource must contain an `id` element having an identical value to
+// the ID in the REST path of the request. On success, the response body
+// contains a JSON-encoded representation of the updated resource,
+// including the server-assigned version ID. Errors generated by the
+// FHIR store contain a JSON-encoded `OperationOutcome` resource
+// describing the reason for the error. If the request cannot be mapped
+// to a valid API method on a FHIR store, a generic GCP error might be
+// returned instead. For samples that show how to call `update`, see
+// Updating a FHIR resource
 // (/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Update(name string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -20217,7 +20226,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Header() http.Header
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20242,7 +20251,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Updates the entire contents of a resource. Implements the FHIR standard update interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#update), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#update), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#update)). If the specified resource does not exist and the FHIR store has enable_update_create set, creates the resource with the client-specified ID. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud audit logs and Cloud Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. The resource must contain an `id` element having an identical value to the ID in the REST path of the request. On success, the response body will contain a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `update`, see [Updating a FHIR resource](/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).",
+	//   "description": "Updates the entire contents of a resource. Implements the FHIR standard update interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#update), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#update), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#update)). If the specified resource does not exist and the FHIR store has enable_update_create set, creates the resource with the client-specified ID. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud Audit Logs and Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources. The request body must contain a JSON-encoded FHIR resource, and the request headers must contain `Content-Type: application/fhir+json`. The resource must contain an `id` element having an identical value to the ID in the REST path of the request. On success, the response body contains a JSON-encoded representation of the updated resource, including the server-assigned version ID. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `update`, see [Updating a FHIR resource](/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
 	//   "httpMethod": "PUT",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.update",
@@ -20289,8 +20298,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirVreadCall struct {
 // (http://hl7.org/implement/standards/fhir/DSTU2/http.html#vread), STU3
 // (http://hl7.org/implement/standards/fhir/STU3/http.html#vread), R4
 // (http://hl7.org/implement/standards/fhir/R4/http.html#vread)). On
-// success, the response body will contain a JSON-encoded representation
-// of the resource. Errors generated by the FHIR store will contain a
+// success, the response body contains a JSON-encoded representation of
+// the resource. Errors generated by the FHIR store contain a
 // JSON-encoded `OperationOutcome` resource describing the reason for
 // the error. If the request cannot be mapped to a valid API method on a
 // FHIR store, a generic GCP error might be returned instead. For
@@ -20341,7 +20350,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Header() http.Header 
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20370,7 +20379,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirVreadCall) Do(opts ...googleapi.
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Gets the contents of a version (current or historical) of a FHIR resource by version ID. Implements the FHIR standard vread interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#vread), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#vread), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#vread)). On success, the response body will contain a JSON-encoded representation of the resource. Errors generated by the FHIR store will contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `vread`, see [Retrieving a FHIR resource version](/healthcare/docs/how-tos/fhir-resources#retrieving_a_fhir_resource_version).",
+	//   "description": "Gets the contents of a version (current or historical) of a FHIR resource by version ID. Implements the FHIR standard vread interaction ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#vread), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#vread), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#vread)). On success, the response body contains a JSON-encoded representation of the resource. Errors generated by the FHIR store contain a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. For samples that show how to call `vread`, see [Retrieving a FHIR resource version](/healthcare/docs/how-tos/fhir-resources#retrieving_a_fhir_resource_version).",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}/_history/{_historyId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.vread",
@@ -20451,7 +20460,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20595,7 +20604,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20736,7 +20745,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20896,7 +20905,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21093,7 +21102,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21273,7 +21282,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21421,7 +21430,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21566,7 +21575,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Header() ht
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21672,11 +21681,11 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall struct {
 }
 
 // Create: Parses and stores an HL7v2 message. This method triggers an
-// asynchronous notification to any Cloud Pub/Sub topic configured in
-// projects.locations.datasets.hl7V2Stores.Hl7V2NotificationConfig, if
-// the filtering matches the message. If an MLLP adapter is configured
-// to listen to a Cloud Pub/Sub topic, the adapter transmits the message
-// when a notification is received.
+// asynchronous notification to any Pub/Sub topic configured in
+// Hl7V2Store.Hl7V2NotificationConfig, if the filtering matches the
+// message. If an MLLP adapter is configured to listen to a Pub/Sub
+// topic, the adapter transmits the message when a notification is
+// received.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Create(parent string, createmessagerequest *CreateMessageRequest) *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21711,7 +21720,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21775,7 +21784,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Parses and stores an HL7v2 message. This method triggers an asynchronous notification to any Cloud Pub/Sub topic configured in projects.locations.datasets.hl7V2Stores.Hl7V2NotificationConfig, if the filtering matches the message. If an MLLP adapter is configured to listen to a Cloud Pub/Sub topic, the adapter transmits the message when a notification is received.",
+	//   "description": "Parses and stores an HL7v2 message. This method triggers an asynchronous notification to any Pub/Sub topic configured in Hl7V2Store.Hl7V2NotificationConfig, if the filtering matches the message. If an MLLP adapter is configured to listen to a Pub/Sub topic, the adapter transmits the message when a notification is received.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.messages.create",
@@ -21849,7 +21858,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22007,7 +22016,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Header() http.Head
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22127,15 +22136,15 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall struct {
 }
 
 // Ingest: Parses and stores an HL7v2 message. This method triggers an
-// asynchronous notification to any Cloud Pub/Sub topic configured in
-// projects.locations.datasets.hl7V2Stores.Hl7V2NotificationConfig, if
-// the filtering matches the message. If an MLLP adapter is configured
-// to listen to a Cloud Pub/Sub topic, the adapter transmits the message
-// when a notification is received. This method also generates a
-// response containing an HL7v2 acknowledgement (`ACK`) message when
-// successful or a negative acknowledgement (`NACK`) message in case of
-// error, suitable for replying to HL7v2 interface systems that expect
-// these acknowledgements.
+// asynchronous notification to any Pub/Sub topic configured in
+// Hl7V2Store.Hl7V2NotificationConfig, if the filtering matches the
+// message. If an MLLP adapter is configured to listen to a Pub/Sub
+// topic, the adapter transmits the message when a notification is
+// received. If the method is successful, it generates a response
+// containing an HL7v2 acknowledgment (`ACK`) message. If the method
+// encounters an error, it returns a negative acknowledgment (`NACK`)
+// message. This behavior is suitable for replying to HL7v2 interface
+// systems that expect these acknowledgments.
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Ingest(parent string, ingestmessagerequest *IngestMessageRequest) *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -22170,7 +22179,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Header() http.H
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22234,7 +22243,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Parses and stores an HL7v2 message. This method triggers an asynchronous notification to any Cloud Pub/Sub topic configured in projects.locations.datasets.hl7V2Stores.Hl7V2NotificationConfig, if the filtering matches the message. If an MLLP adapter is configured to listen to a Cloud Pub/Sub topic, the adapter transmits the message when a notification is received. This method also generates a response containing an HL7v2 acknowledgement (`ACK`) message when successful or a negative acknowledgement (`NACK`) message in case of error, suitable for replying to HL7v2 interface systems that expect these acknowledgements.",
+	//   "description": "Parses and stores an HL7v2 message. This method triggers an asynchronous notification to any Pub/Sub topic configured in Hl7V2Store.Hl7V2NotificationConfig, if the filtering matches the message. If an MLLP adapter is configured to listen to a Pub/Sub topic, the adapter transmits the message when a notification is received. If the method is successful, it generates a response containing an HL7v2 acknowledgment (`ACK`) message. If the method encounters an error, it returns a negative acknowledgment (`NACK`) message. This behavior is suitable for replying to HL7v2 interface systems that expect these acknowledgments.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages:ingest",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.messages.ingest",
@@ -22414,7 +22423,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Header() http.Hea
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22623,7 +22632,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Header() http.He
 
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22778,7 +22787,7 @@ func (c *ProjectsLocationsDatasetsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22929,7 +22938,7 @@ func (c *ProjectsLocationsDatasetsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23103,7 +23112,7 @@ func (c *ProjectsLocationsDatasetsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDatasetsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210324")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210328")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

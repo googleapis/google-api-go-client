@@ -3338,6 +3338,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/container-analysis/docs/on-demand-scanning/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "ondemandscanning:v1",
+      "name": "ondemandscanning",
+      "version": "v1",
+      "title": "On-Demand Scanning API",
+      "description": "A service to scan container images for vulnerabilities.",
+      "discoveryRestUrl": "https://ondemandscanning.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/container-analysis/docs/on-demand-scanning/",
       "preferred": true
     },
     {
